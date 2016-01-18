@@ -1,11 +1,11 @@
-[![Runbot Status](http://runbot.adhoc.com.ar/runbot/badge/flat/4/8.0.svg)](http://runbot.adhoc.com.ar/runbot/repo/github-com-odoo-argentina-config-4)
-[![Build Status](https://travis-ci.org/ingadhoc/odoo-addons.svg?branch=8.0)](https://travis-ci.org/ingadhoc/odoo-addons)
-[![Coverage Status](https://coveralls.io/repos/ingadhoc/odoo-addons/badge.png?branch=8.0)](https://coveralls.io/r/ingadhoc/odoo-addons?branch=8.0)
-[![Code Climate](https://codeclimate.com/github/ingadhoc/odoo-addons/badges/gpa.svg)](https://codeclimate.com/github/ingadhoc/odoo-addons)
+[![Runbot Status](http://runbot.adhoc.com.ar/runbot/badge/flat/29/8.0.svg)](http://runbot.adhoc.com.ar/runbot/repo/github-com-ingadhoc-stock-29)
+[![Build Status](https://travis-ci.org/ingadhoc/stock.svg?branch=8.0)](https://travis-ci.org/ingadhoc/stock)
+[![Coverage Status](https://coveralls.io/repos/ingadhoc/stock/badge.png?branch=8.0)](https://coveralls.io/r/ingadhoc/stock?branch=8.0)
+[![Code Climate](https://codeclimate.com/github/ingadhoc/stock/badges/gpa.svg)](https://codeclimate.com/github/ingadhoc/stock)
 
-# ADHOC Odoo Miscellaneous Addons
+# ADHOC stock
 
-Modules that extend odoo for common needs of ADHOC Customers
+ADHOC Odoo Stock & Warehouse Management Addons
 
 [//]: # (addons)
 This part will be replaced when running the oca-gen-addons-table script from OCA/maintainer-tools.
@@ -13,7 +13,7 @@ This part will be replaced when running the oca-gen-addons-table script from OCA
 
 Translation Status
 ------------------
-[![Transifex Status](https://www.transifex.com/projects/p/ingadhoc-odoo-addons-8-0/chart/image_png)](https://www.transifex.com/projects/p/ingadhoc-odoo-addons-8-0)
+[![Transifex Status](https://www.transifex.com/projects/p/ingadhoc-stock-8-0/chart/image_png)](https://www.transifex.com/projects/p/ingadhoc-stock-8-0)
 
 ----
 
