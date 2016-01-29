@@ -8,6 +8,12 @@
             <field name="arch" type="xml">
                 <form>
                     <field name="book_required" invisible="True"/>
+                    <group>
+                        <field name="automatic_declare_value" invisible="True"/>
+                        <field name="restrict_number_package" invisible="True"/>
+                        <field name="declared_value" attrs="{'invisible':[('automatic_declare_value', '=', False)]}"/>
+                        <field name="number_of_packages" attrs="{'invisible':[('restrict_number_package', '=', False)]}"/>
+                    </group>
                     <!-- <field name="lines_per_voucher" invisible="True"/> -->
                     <!-- <field name="block_estimated_number_of_pages" invisible="True"/> -->
                 </form>

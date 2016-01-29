@@ -5,3 +5,4 @@
 ##############################################################################
 from . import stock
 from . import wizard
+from . import res_company
