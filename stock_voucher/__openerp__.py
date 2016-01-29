@@ -20,7 +20,7 @@
 ##############################################################################
 {
     'name': 'Stock Voucher',
-    'version': '8.0.1.1.0',
+    'version': '8.0.1.2.0',
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
@@ -52,6 +52,7 @@ TODO:
         'stock_menu.xml',
         'views/views_templates.xml',
         'wizard/stock_transfer_details_view.xml',
+        'views/res_company_view.xml',
     ],
     'demo': [
     ],
