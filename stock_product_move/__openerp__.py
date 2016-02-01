@@ -20,7 +20,7 @@
 ##############################################################################
 {
     'name': 'Stock Product Move',
-    'version': '8.0.0.0.0',
+    'version': '8.0.0.1.0',
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
