@@ -13,15 +13,26 @@ class stock_transfer_details(models.TransientModel):
     @api.constrains('item_ids')
     def _check_quantity(self):
         if self.item_ids and self.block_quantity:
-            for move in self.picking_id.move_lines:
-                qty = 0.0
-                for item in self.env['stock.transfer_details_items'].search(
-                    [('id', 'in', self.item_ids.ids),
-                     ('product_id', '=', move.product_id.id)]):
-                    qty = qty + item.quantity
-                if qty > move.product_qty:
-                    raise Warning(
-                        _('Quantity to send for "%s" can not be greater than the remaining quantity for this move.') % (move.product_id.name))
+            items_prod_qty = self.item_ids.read_group(
+                [('id', 'in', self.item_ids.ids)],
+                ['product_id', 'quantity'], ['product_id'])
+            moves = self.picking_id.move_lines
+            for item_prod_qty in items_prod_qty:
+                item_product = item_prod_qty.get('product_id')
+                item_quantity = item_prod_qty.get('quantity')
+                moves_prod_qty = moves.read_group(
+                    [('id', 'in', moves.ids),
+                        ('product_id', '=', item_product[0])],
+                    ['product_id', 'product_qty'], ['product_id'])
+                if not moves_prod_qty:
+                    raise Warning(_(
+                        'You can not transfer a product without a move on the '
+                        'picking!'))
+                if item_quantity > moves_prod_qty[0].get('product_qty'):
+                    raise Warning(_(
+                        'Quantity to send for "%s" can not be greater than the'
+                        ' remaining quantity for this move.') % (
+                        item_product[1]))
 
 
 class stock_move(models.Model):
