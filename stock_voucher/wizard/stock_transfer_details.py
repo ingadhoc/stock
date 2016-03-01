@@ -106,7 +106,7 @@ class stock_transfer_details(models.TransientModel):
         return True
 
     @api.one
-    @api.onchange('item_ids', 'item_ids.quantity')
+    @api.onchange('item_ids')
     def product_onchange(self):
         self.declared_value = 0
         picking = self._get_picking()
