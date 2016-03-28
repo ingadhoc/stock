@@ -36,7 +36,7 @@ restricted to see only this Journals.
     ],
     'data': [
         'res_users_view.xml',
-        'security/location_security_security.xml'],
+        ],
     'demo': [
     ],
     'test': [

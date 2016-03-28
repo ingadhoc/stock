@@ -9,6 +9,8 @@ from openerp import models, api, fields
 class users(models.Model):
     _inherit = 'res.users'
 
+    restrict_locations = fields.Boolean('Restrict Location')
+
     stock_location_ids = fields.Many2many(
         'stock.location',
         'location_security_stock_location_users',
@@ -16,7 +18,7 @@ class users(models.Model):
         'location_id',
         'Stock Locations')
 
-    @api.one
+    @api.model
     def can_move_stock_to_location(self, location_id):
         for stock_location in self.stock_location_ids:
             if stock_location.id == location_id:

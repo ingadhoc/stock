@@ -13,17 +13,16 @@ class stock_transfer_details(models.TransientModel):
 
     @api.multi
     def do_detailed_transfer(self):
-        user = self.env['res.users'].browse(self._uid)
-        if self.user_has_groups('location_security.restrict_locations'):
-            for partial in self:
-                for wizard_line in partial.item_ids:
-                    title = _('Invalid Location')
-                    message = _('You cannot process this move since it is'
-                                ' in a location you do not control.')
-                    if not user.can_move_stock_to_location(
-                            wizard_line.sourceloc_id.id):
-                        raise Warning(title, message)
-                    if not user.can_move_stock_to_location(
-                            wizard_line.destinationloc_id.id):
-                        raise Warning(title, message)
+        self.ensure_one()
+        user = self.env.user
+        if user.restrict_locations:
+            for wizard_line in self.item_ids:
+                message = _('Invalid Location. You cannot process this move '
+                            'since it is in a location you do not control.')
+                if not user.can_move_stock_to_location(
+                        wizard_line.sourceloc_id.id):
+                    raise Warning(message)
+                if not user.can_move_stock_to_location(
+                        wizard_line.destinationloc_id.id):
+                    raise Warning(message)
         return super(stock_transfer_details, self).do_detailed_transfer()
