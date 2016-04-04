@@ -3,7 +3,7 @@
 # For copyright and license notices, see __openerp__.py file in module root
 # directory
 ##############################################################################
-from openerp import models, api, fields
+from openerp import models, fields
 
 
 class users(models.Model):
@@ -17,10 +17,3 @@ class users(models.Model):
         'user_id',
         'location_id',
         'Stock Locations')
-
-    @api.model
-    def can_move_stock_to_location(self, location_id):
-        for stock_location in self.stock_location_ids:
-            if stock_location.id == location_id:
-                return True
-        return False
