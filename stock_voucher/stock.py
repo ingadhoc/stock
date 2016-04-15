@@ -28,17 +28,17 @@ class stock_book(models.Model):
 
     name = fields.Char(
         'Name', required=True,
-        )
+    )
     sequence_id = fields.Many2one(
         'ir.sequence', 'Stock Voucher Sequence',
         domain=[('code', '=', 'stock.voucher')],
         context="{'default_code': 'stock.voucher', 'default_name': name, 'default_prefix': '000X-', 'default_padding': 8}",
         required=True,
-        )
+    )
     lines_per_voucher = fields.Integer(
         'Lines Per Voucher', required=True,
         help="If voucher don't have a limit, then live 0. If not, this number will be used to calculate how many sequence are used on each picking"
-        )
+    )
     # block_estimated_number_of_pages = fields.Boolean(
     #     'Block Estimated Number of Pages?',
     #     )
@@ -46,7 +46,7 @@ class stock_book(models.Model):
         'res.company', 'Company', required=True,
         default=lambda self: self.env[
             'res.company']._company_default_get('stock.book'),
-        )
+    )
 
 
 class stock_picking_voucher(models.Model):
@@ -56,19 +56,17 @@ class stock_picking_voucher(models.Model):
 
     number = fields.Char(
         'Number', copy=False, required=True,
-        )
+    )
     book_id = fields.Many2one(
         'stock.book', 'Voucher Book',
-        required=True,
-        )
+    )
     picking_id = fields.Many2one(
-        'stock.picking', 'Picking', ondelete='cascade',
-        required=True,
-        )
+        'stock.picking', 'Picking', ondelete='cascade', required=True,
+    )
     company_id = fields.Many2one(
-        'res.company', 'Company', required=True,
-        related='picking_id.company_id', readonly=True,
-        )
+        'res.company', 'Company',
+        related='picking_id.company_id', readonly=True
+    )
     # constraint de que el book y el picking deben ser de la misma company
 
     _sql_constraints = [
@@ -81,14 +79,14 @@ class stock_picking(models.Model):
 
     book_id = fields.Many2one(
         'stock.book', 'Voucher Book', copy=False, readonly=True,
-        )
+    )
     voucher_ids = fields.One2many(
         'stock.picking.voucher', 'picking_id', 'Vouchers',
-        copy=False, readonly=True,
-        )
+        copy=False
+    )
     declared_value = fields.Float(
         'Declared Value', digits=dp.get_precision('Account'),
-        )
+    )
     observations = fields.Text('Observations')
 
     @api.multi
@@ -109,6 +107,6 @@ class stock_picking(models.Model):
                 'number': number,
                 'book_id': book.id,
                 'picking_id': self.id,
-                }).id)
+            }).id)
         self.write({
             'book_id': book.id})

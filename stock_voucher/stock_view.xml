@@ -56,8 +56,8 @@
                     <sheet>
                         <group>
                             <field name="number"/>
-                            <field name="book_id"/>
-                            <field name="company_id" groups="base.group_multi_company"/>
+                            <!-- <field name="book_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/> -->
                         </group>
                     </sheet>
                 </form>
@@ -85,7 +85,7 @@
             <field name="arch" type="xml">
                 <field name="partner_id" position="after">
                     <field name="book_id" attrs="{'invisible': [('picking_type_code','=','incoming')]}"/>
-                    <field name="voucher_ids" attrs="{'invisible': [('picking_type_code','=','incoming')]}" widget="many2many_tags"/>
+                    <field name="voucher_ids" attrs="{'readonly': [('picking_type_code','!=','incoming')]}" widget="one2many_tags"/>
                 </field>
                 <field name="number_of_packages" position="before">
                     <field name="declared_value" attrs="{'invisible': [('picking_type_code','=','incoming')]}"/>
