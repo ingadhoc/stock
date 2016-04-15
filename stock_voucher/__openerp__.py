@@ -41,6 +41,7 @@ TODO:
     ],
     'depends': [
         'delivery',
+        'web_widget_one2many_tags'
     ],
     'data': [
         'security/security.xml',
