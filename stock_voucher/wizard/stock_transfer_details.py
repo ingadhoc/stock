@@ -97,6 +97,9 @@ class stock_transfer_details(models.TransientModel):
     def do_detailed_transfer(self):
         self.ensure_one()
         super(stock_transfer_details, self).do_detailed_transfer()
+        if self.picking_id.picking_type_id.code == 'outgoing':
+            if self.restrict_number_package and not self.number_of_packages > 0 :
+                raise Warning(_('The number of packages can not be 0'))
         if self.book_required:
             self.picking_id.assign_numbers(
                 self.get_estimated_number_of_pages(), self.book_id)
@@ -116,9 +119,3 @@ class stock_transfer_details(models.TransientModel):
                  ('product_id', '=', x.product_id.id)], limit=1)
             self.declared_value = self.declared_value + \
                 (order_line.price_reduce * x.quantity)
-
-    @api.one
-    @api.constrains('number_of_packages')
-    def validate_number_of_packages(self):
-        if self.restrict_number_package and not self.number_of_packages > 0:
-            raise Warning(_('The number of packages can not be 0'))
