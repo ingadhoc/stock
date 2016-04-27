@@ -21,7 +21,7 @@
 
 {
     'name': 'Lot Filtering in Stock Transfer',
-    'version': '8.0.0.0.9',
+    'version': '8.0.0.1.9',
     'author': 'Rooms For (Hong Kong) Ltd T/A OSCG',
     'website': 'http://www.openerp-asia.net',
     'category': 'Stock',

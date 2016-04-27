@@ -26,13 +26,15 @@ class stock_production_lot(models.Model):
     ean_128 = fields.Char(
         string="EAN128", compute='action_compute', store=True)
 
+    @api.model
     def name_search(
-            self, cr, uid, name, args=None, operator='ilike', context=None, limit=100):
-        res = super(stock_production_lot, self).name_search(
-            cr, uid, name=name, args=args, operator=operator, context=context, limit=limit)
+            self, name, args=None, operator='ilike', limit=100):
         ids = []
+        args = args or []
         if name:
-            ids = self.search(cr, uid, [('ean_128', operator, name)],
-                              limit=limit, context=context)
-        res += self.name_get(cr, uid, ids, context=context)
-        return res
+            recs = self.search(
+                args + [('ean_128', operator, name)], limit=limit)
+            if ids:
+                return recs.name_get()
+        return super(stock_production_lot, self).name_search(
+            name=name, args=args, operator=operator, limit=limit)
