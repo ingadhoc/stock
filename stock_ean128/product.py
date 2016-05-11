@@ -43,7 +43,7 @@ class product_product(models.Model):
         if len(res) < limit:
             # do not search for lots of products that are already displayed
             actual_product_ids = [x[0] for x in res]
-            if name[0].encode('utf8') == ' ':
+            if name and name[0].encode('utf8') == ' ':
                 name = name[1:]
             products = self.env['stock.production.lot'].search([
                 ('ean_128', operator, name),
