@@ -38,6 +38,7 @@ Stock Picking State
         'stock',
     ],
     'data': [
+        'security/ir.model.access.csv',
         'stock_view.xml',
         'stock_menu.xml'
     ],
