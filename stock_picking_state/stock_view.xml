@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_picking_form" model="ir.ui.view">
+            <field name="name">Stock picking</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <field name="state" position="after">
+                    <field name="code" invisible="1"/>
+                    <field name="state_detail_id" widget="statusbar" clickable="True" domain="[('state','=', state),'|',('picking_type','=', code), ('picking_type','=', False)]"/>
+                </field> 
+            </field>  
+        </record>
+
+
+        <record id="view_picking_detail_form" model="ir.ui.view">
+            <field name="name">stock.picking_detail</field>
+            <field name="model">stock.picking.state_detail</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="name"/>
+                        <field name="sequence"/>
+                        <field name="state"/>
+                        <field name="picking_type"/>
+                        <field name="picking_ids"/>
+                    </group>
+                </form> 
+            </field>  
+        </record>
+
+    </data>
+</openerp>
