@@ -25,7 +25,6 @@
                         <field name="sequence"/>
                         <field name="state"/>
                         <field name="picking_type"/>
-                        <field name="picking_ids"/>
                     </group>
                 </form> 
             </field>  
