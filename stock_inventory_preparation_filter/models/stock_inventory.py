@@ -91,6 +91,8 @@ class StockInventory(models.Model):
         string='Capture Lines')
     import_products = fields.Selection(
         [('only_with_stock', 'Only With Stock'), ('all', 'All')],
+        readonly=True,
+        states={'draft': [('readonly', False)]},
         default='only_with_stock')
 
     @api.model
