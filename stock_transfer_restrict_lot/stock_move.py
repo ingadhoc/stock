@@ -8,7 +8,8 @@ class stock_transfer_details(models.TransientModel):
 
     code = fields.Selection(
         related='picking_id.picking_type_id.code',
-        string='Operation Type')
+        string='Operation Type',
+        readonly=True,)
 
     @api.one
     def do_detailed_transfer(self):
@@ -62,4 +63,5 @@ class stock_transfer_details_items(models.TransientModel):
     lot_required = fields.Boolean(compute='_check_tracking_product')
     code = fields.Selection(
         related='transfer_id.picking_id.picking_type_id.code',
-        string='Operation Type')
+        string='Operation Type',
+        readonly=True,)

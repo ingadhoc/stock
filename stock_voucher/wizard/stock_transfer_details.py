@@ -40,7 +40,8 @@ class stock_transfer_details(models.TransientModel):
         return picking.number_of_packages
 
     book_required = fields.Boolean(
-        related='picking_id.picking_type_id.book_required'
+        related='picking_id.picking_type_id.book_required',
+        readonly=True,
     )
     book_id = fields.Many2one(
         'stock.book',
@@ -65,6 +66,7 @@ class stock_transfer_details(models.TransientModel):
     lines_per_voucher = fields.Integer(
         'Lines Per Voucher',
         related='book_id.lines_per_voucher',
+        readonly=True,
     )
     automatic_declare_value = fields.Boolean(
         compute='_get_automatic_restrict'

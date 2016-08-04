@@ -21,10 +21,12 @@ class stock_move(models.Model):
     create_user_so_id = fields.Many2one(
         'res.users',
         related='picking_id.sale_id.create_uid',
-        string="Usuario Creador de la OE"
+        string="Usuario Creador de la OE",
+        readonly=True,
     )
     create_user_picking_id = fields.Many2one(
         'res.users',
         related='picking_id.user_picking_id',
-        string="Usuario Preparador de la OE"
+        string="Usuario Preparador de la OE",
+        readonly=True,
     )
