@@ -14,8 +14,15 @@ class stock_transfer_details(models.TransientModel):
 
     @api.model
     def _get_picking(self):
-        active_id = self._context.get('active_id', False)
-        return self.env['stock.picking'].browse(active_id)
+        context = self._context
+        picking_ids = context.get('active_ids', [])
+        active_model = context.get('active_model')
+        # Partial Picking Processing may only be done for one picking at a time
+        if not picking_ids or len(picking_ids) != 1:
+            return self.env['stock.picking']
+        assert active_model in ('stock.picking'), 'Bad context propagation'
+        picking_id, = picking_ids
+        return self.env['stock.picking'].browse(picking_id)
 
     @api.model
     def _get_book(self):
@@ -98,7 +105,7 @@ class stock_transfer_details(models.TransientModel):
         self.ensure_one()
         super(stock_transfer_details, self).do_detailed_transfer()
         if self.picking_id.picking_type_id.code == 'outgoing':
-            if self.restrict_number_package and not self.number_of_packages > 0 :
+            if self.restrict_number_package and not self.number_of_packages > 0:
                 raise Warning(_('The number of packages can not be 0'))
         if self.book_required:
             self.picking_id.assign_numbers(
@@ -112,7 +119,7 @@ class stock_transfer_details(models.TransientModel):
     @api.onchange('item_ids')
     def product_onchange(self):
         self.declared_value = 0
-        picking = self._get_picking()
+        picking = self.picking_id or self._get_picking()
         for x in self.item_ids:
             order_line = self.env['sale.order.line'].search(
                 [('order_id', '=', picking.sale_id.id),
