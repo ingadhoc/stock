@@ -20,19 +20,19 @@
 #######################################################s#######################
 {
     'name': 'Stock Picking Locations',
-    'version': '8.0.1.0.0',
+    'version': '9.0.1.0.0',
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
-    'description': """
+    'description': '''
 Stock Picking Locations
 =======================
 Add Location and Destiny Location to stock picking. When stock moves are
 created they are taken by default.
 Add a button to stock picking to update the stock move Location and Destiny
 Location.
-    """,
-    'author':  'ADHOC SA',
+    ''',
+    'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
     'images': [
@@ -47,8 +47,7 @@ Location.
     ],
     'test': [
     ],
-    'installable': True,
+    'installable': False,
     'auto_install': False,
     'application': False,
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

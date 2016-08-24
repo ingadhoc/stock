@@ -20,15 +20,15 @@
 ##############################################################################
 {
     'name': 'Stock Multic Fix',
-    'version': '8.0.1.0.1',
+    'version': '9.0.1.0.0',
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
-    'description': """
+    'description': '''
 Stock Multic Fix
 ==================================
-    """,
-    'author':  'ADHOC SA',
+    ''',
+    'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
     'images': [
@@ -42,7 +42,7 @@ Stock Multic Fix
     ],
     'test': [
     ],
-    'installable': True,
+    'installable': False,
     'auto_install': False,
     'application': False,
 }

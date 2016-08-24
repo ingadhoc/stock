@@ -20,11 +20,11 @@
 ##############################################################################
 {
     'name': 'Stock Voucher',
-    'version': '8.0.1.4.0',
+    'version': '9.0.1.0.0',
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
-    'description': """
+    'description': '''
 Stock Voucher
 =============
 Add stock voucher report on stock picking
@@ -33,8 +33,8 @@ TODO:
 * agregar el boton de enviar por email
 * agregar constraints de company en stock.py
 * que el reporte que se carga no sea el mismo del picking, nosotros no lo usamosportque terminamos usando uno de aeroo
-    """,
-    'author':  'ADHOC SA',
+    ''',
+    'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
     'images': [
@@ -59,8 +59,7 @@ TODO:
     ],
     'test': [
     ],
-    'installable': True,
+    'installable': False,
     'auto_install': False,
     'application': False,
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
