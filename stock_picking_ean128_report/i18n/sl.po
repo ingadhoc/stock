@@ -5,12 +5,12 @@
 # Translators:
 msgid ""
 msgstr ""
-"Project-Id-Version: odoo-addons (8.0)\n"
+"Project-Id-Version: stock (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-05 15:23+0000\n"
-"PO-Revision-Date: 2015-10-22 14:33+0000\n"
-"Last-Translator: <>\n"
-"Language-Team: Slovenian (http://www.transifex.com/adhoc/ingadhoc-odoo-addons-8-0/language/sl/)\n"
+"POT-Creation-Date: 2016-08-05 20:02+0000\n"
+"PO-Revision-Date: 2016-07-29 16:30+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>\n"
+"Language-Team: Slovenian (http://www.transifex.com/adhoc/ingadhoc-stock-8-0/language/sl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -28,35 +28,35 @@ msgstr "Prekliči"
 #: field:stock.picking.print_ean128_report,create_uid:0
 #: field:stock.picking.print_ean128_report_detail,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Ustvaril"
 
 #. module: stock_picking_ean128_report
 #: field:stock.lot.print_ean128_report,create_date:0
 #: field:stock.picking.print_ean128_report,create_date:0
 #: field:stock.picking.print_ean128_report_detail,create_date:0
 msgid "Created on"
-msgstr ""
+msgstr "Ustvarjeno"
 
 #. module: stock_picking_ean128_report
 #: field:stock.lot.print_ean128_report,id:0
 #: field:stock.picking.print_ean128_report,id:0
 #: field:stock.picking.print_ean128_report_detail,id:0
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: stock_picking_ean128_report
 #: field:stock.lot.print_ean128_report,write_uid:0
 #: field:stock.picking.print_ean128_report,write_uid:0
 #: field:stock.picking.print_ean128_report_detail,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Zadnji posodobil"
 
 #. module: stock_picking_ean128_report
 #: field:stock.lot.print_ean128_report,write_date:0
 #: field:stock.picking.print_ean128_report,write_date:0
 #: field:stock.picking.print_ean128_report_detail,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Zadnjič posodobljeno"
 
 #. module: stock_picking_ean128_report
 #: field:stock.picking.print_ean128_report_detail,lot_id:0
@@ -118,7 +118,7 @@ msgstr ""
 #: field:stock.lot.print_ean128_report,quantity:0
 #: field:stock.picking.print_ean128_report_detail,quantity:0
 msgid "Quantity"
-msgstr ""
+msgstr "Količina"
 
 #. module: stock_picking_ean128_report
 #: model:ir.actions.report.xml,name:stock_picking_ean128_report.report_lot_ean128_excel
