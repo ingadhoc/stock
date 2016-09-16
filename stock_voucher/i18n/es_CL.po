@@ -37,7 +37,7 @@ msgstr "Código de barras"
 #: field:stock.print_stock_voucher,book_id:0
 #: field:stock.transfer_details,book_id:0
 msgid "Book"
-msgstr "Talonario"
+msgstr "Talonario de Guías de Despacho"
 
 #. module: stock_voucher
 #: field:stock.picking.type,book_required:0
@@ -54,7 +54,7 @@ msgstr "Book suggested for pickings of this type"
 #: model:ir.ui.menu,name:stock_voucher.menu_books
 #: view:stock.book:stock_voucher.view_stock_book_tree
 msgid "Books"
-msgstr "Talonarios"
+msgstr "Talonarios de Guías de Despacho"
 
 #. module: stock_voucher
 #: view:stock.print_stock_voucher:stock_voucher.view_print_stock_voucher_form
@@ -323,7 +323,7 @@ msgstr "Guías de Despacho"
 #. module: stock_voucher
 #: view:website:stock_voucher.report
 msgid "Warehouse Address:"
-msgstr "Dirección del Bodega"
+msgstr "Dirección de Bodega"
 
 #. module: stock_voucher
 #: view:stock.print_stock_voucher:stock_voucher.view_print_stock_voucher_form
