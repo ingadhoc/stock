@@ -6,11 +6,11 @@
             <field name="model">stock.picking</field>
             <field name="inherit_id" ref="delivery.view_picking_withcarrier_out_form"/>
             <field name="arch" type="xml">
-
                 <field name="carrier_tracking_ref"
                        position="replace">
                     <field name="driver_id"
                         domain="[('is_company', '=', False)]"/>
+                    <field name="vehicle_license_plate"/>
                 </field>
             </field>
         </record>

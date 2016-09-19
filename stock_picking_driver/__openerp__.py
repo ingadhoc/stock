@@ -39,7 +39,7 @@ Adds the driver person information to picking.
         'delivery',
     ],
     'data': [
-    'view/delivery_order_view.xml',
+        'view/delivery_order_view.xml',
     ],
     'demo': [
     ],
