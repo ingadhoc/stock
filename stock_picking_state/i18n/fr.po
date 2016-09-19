@@ -1,0 +1,139 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * stock_picking_state
+# 
+# Translators:
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-08-05 20:02+0000\n"
+"PO-Revision-Date: 2016-08-05 20:02+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016\n"
+"Language-Team: French (https://www.transifex.com/adhoc/teams/46451/fr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: stock_picking_state
+#: selection:stock.picking.state_detail,state:0
+msgid "Cancelled"
+msgstr ""
+
+#. module: stock_picking_state
+#: field:stock.picking.state_detail,create_uid:0
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: stock_picking_state
+#: field:stock.picking.state_detail,create_date:0
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: stock_picking_state
+#: selection:stock.picking.state_detail,state:0
+msgid "Draft"
+msgstr ""
+
+#. module: stock_picking_state
+#: field:stock.picking.state_detail,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: stock_picking_state
+#: selection:stock.picking.state_detail,picking_type:0
+msgid "Incoming"
+msgstr ""
+
+#. module: stock_picking_state
+#: selection:stock.picking.state_detail,picking_type:0
+msgid "Internal"
+msgstr ""
+
+#. module: stock_picking_state
+#: field:stock.picking.state_detail,write_uid:0
+msgid "Last Updated by"
+msgstr "Dernière màj par"
+
+#. module: stock_picking_state
+#: field:stock.picking.state_detail,write_date:0
+msgid "Last Updated on"
+msgstr "Dernière màj le"
+
+#. module: stock_picking_state
+#: field:stock.picking.state_detail,name:0
+msgid "Name"
+msgstr ""
+
+#. module: stock_picking_state
+#: selection:stock.picking.state_detail,picking_type:0
+msgid "Outgoing"
+msgstr ""
+
+#. module: stock_picking_state
+#: selection:stock.picking.state_detail,state:0
+msgid "Partially Available"
+msgstr ""
+
+#. module: stock_picking_state
+#: model:ir.model,name:stock_picking_state.model_stock_picking
+msgid "Picking List"
+msgstr ""
+
+#. module: stock_picking_state
+#: model:ir.ui.menu,name:stock_picking_state.menu_state_detail
+msgid "Picking State Detail"
+msgstr ""
+
+#. module: stock_picking_state
+#: field:stock.picking.state_detail,picking_type:0
+msgid "Picking Type"
+msgstr ""
+
+#. module: stock_picking_state
+#: field:stock.picking.state_detail,picking_ids:0
+msgid "Pickings"
+msgstr ""
+
+#. module: stock_picking_state
+#: selection:stock.picking.state_detail,state:0
+msgid "Ready to Transfer"
+msgstr ""
+
+#. module: stock_picking_state
+#: field:stock.picking.state_detail,sequence:0
+msgid "Sequence"
+msgstr ""
+
+#. module: stock_picking_state
+#: field:stock.picking,state_detail_id:0
+msgid "State Detail"
+msgstr ""
+
+#. module: stock_picking_state
+#: field:stock.picking.state_detail,state:0
+msgid "Status"
+msgstr ""
+
+#. module: stock_picking_state
+#: selection:stock.picking.state_detail,state:0
+msgid "Transferred"
+msgstr ""
+
+#. module: stock_picking_state
+#: selection:stock.picking.state_detail,state:0
+msgid "Waiting Another Operation"
+msgstr ""
+
+#. module: stock_picking_state
+#: selection:stock.picking.state_detail,state:0
+msgid "Waiting Availability"
+msgstr ""
+
+#. module: stock_picking_state
+#: model:ir.actions.act_window,name:stock_picking_state.stock_picking_state_detail_action
+msgid "stock_picking_state_detail"
+msgstr ""
