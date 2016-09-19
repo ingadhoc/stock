@@ -39,6 +39,8 @@ class stock_book(models.Model):
         'Lines Per Voucher', required=True,
         help="If voucher don't have a limit, then live 0. If not, this number will be used to calculate how many sequence are used on each picking"
     )
+    print_inmediatly = fields.Boolean(
+        'Print Inmediatly', default=True, help="If unchecked, voucher printing will be delayed")
     # block_estimated_number_of_pages = fields.Boolean(
     #     'Block Estimated Number of Pages?',
     #     )
@@ -92,6 +94,8 @@ class stock_picking(models.Model):
     @api.multi
     def do_print_voucher(self):
         '''This function prints the voucher'''
+        if not self.book_id.print_inmediatly:
+            return False
         report = self.env['report'].get_action(self, 'stock_voucher.report')
         if self._context.get('keep_wizard_open', False):
             report['type'] = 'ir.actions.report_dont_close_xml'

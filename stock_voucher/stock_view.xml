@@ -26,6 +26,7 @@
                             <field name="name"/>
                             <field name="sequence_id"/>
                             <field name="lines_per_voucher"/>
+                            <field name="print_inmediatly"/>
                             <field name="company_id" groups="base.group_multi_company"/>
                         </group>
                     </sheet>
