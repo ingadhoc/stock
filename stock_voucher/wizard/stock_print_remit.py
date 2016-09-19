@@ -42,6 +42,7 @@ class stock_print_stock_voucher(models.TransientModel):
     lines_per_voucher = fields.Integer(
         'Lines Per Voucher',
         related='book_id.lines_per_voucher',
+        readonly=True,
         )
 
     @api.depends('picking_id', 'picking_id.voucher_ids')

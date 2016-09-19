@@ -50,4 +50,5 @@ class stock_picking(models.Model):
     )
 
     code = fields.Selection(
-        related='picking_type_id.code')
+        related='picking_type_id.code',
+        readonly=True,)

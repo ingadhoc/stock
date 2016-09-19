@@ -1,64 +1,57 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* location_security
-#
+# * location_security
+# 
+# Translators:
+# Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 8.0\n"
+"Project-Id-Version: stock (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-18 14:32+0000\n"
-"PO-Revision-Date: 2016-03-18 11:34-0300\n"
-"Last-Translator: <>\n"
-"Language-Team: \n"
+"POT-Creation-Date: 2016-08-05 20:02+0000\n"
+"PO-Revision-Date: 2016-08-12 14:39+0000\n"
+"Last-Translator: Nicolas Mac Rouillon <nmr@ingadhoc.com>\n"
+"Language-Team: Spanish (http://www.transifex.com/adhoc/ingadhoc-stock-8-0/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
-"X-Generator: Poedit 1.5.4\n"
+"Content-Transfer-Encoding: \n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: location_security
 #: view:res.users:location_security.view_location_security_users_form
-msgid "Access Rights"
-msgstr "Permisos de acceso"
+msgid "Allowed Stock Locations"
+msgstr ""
 
 #. module: location_security
-#: view:res.users:location_security.view_location_security_users_form
-msgid "Extended Access Rights"
-msgstr "Extended Access Rights"
-
-#. module: location_security
-#: code:addons/location_security/stock.py:26
-#: code:addons/location_security/stock.py:72
-#: code:addons/location_security/wizard/stock_partial_picking.py:20
-#: code:addons/sources/adhoc-stock/location_security/stock.py:26
-#: code:addons/sources/adhoc-stock/location_security/stock.py:72
-#: code:addons/sources/adhoc-stock/location_security/wizard/stock_partial_picking.py:20
+#: code:addons/location_security/stock.py:21
 #, python-format
-msgid "Invalid Location"
-msgstr "Ubicación Invalida"
-
-#. module: location_security
-#: model:ir.model,name:location_security.model_stock_location
-msgid "Inventory Locations"
-msgstr "Ubicaciones de inventario"
-
-#. module: location_security
-#: model:ir.model,name:location_security.model_stock_picking
-msgid "Picking List"
-msgstr "Lista de selección"
-
-#. module: location_security
-#: model:ir.model,name:location_security.model_stock_transfer_details
-msgid "Picking wizard"
-msgstr "Asistente de albarán"
-
-#. module: location_security
-#: model:res.groups,name:location_security.restrict_locations
-msgid "Restrict Locations"
-msgstr "Restringir Ubicaciones"
+msgid ""
+"Invalid Location. You cannot process this move since you do not control the "
+"location \"%s\"."
+msgstr "Locación invalida. No se puede procesar este movimiento ya no se controla la ubicación \"%s\"."
 
 #. module: location_security
 #: view:res.users:location_security.view_location_security_users_form
+msgid "Localization"
+msgstr "Localización"
+
+#. module: location_security
+#: view:res.users:location_security.view_location_security_users_form
+msgid "Locations"
+msgstr "Ubicaciones"
+
+#. module: location_security
+#: view:res.users:location_security.view_location_security_users_form
+msgid "Preferences"
+msgstr "Preferencias"
+
+#. module: location_security
+#: field:res.users,restrict_locations:0
+msgid "Restrict Location"
+msgstr "Restringir Localización"
+
+#. module: location_security
 #: field:res.users,stock_location_ids:0
 msgid "Stock Locations"
 msgstr "Stock Locations"
@@ -70,26 +63,5 @@ msgstr "Movimiento stock"
 
 #. module: location_security
 #: model:ir.model,name:location_security.model_res_users
-#: field:stock.location,user_ids:0
 msgid "Users"
 msgstr "Usuarios"
-
-#. module: location_security
-#: code:addons/location_security/stock.py:27
-#: code:addons/location_security/wizard/stock_partial_picking.py:21
-#: code:addons/sources/adhoc-stock/location_security/stock.py:27
-#: code:addons/sources/adhoc-stock/location_security/wizard/stock_partial_picking.py:21
-#, python-format
-msgid ""
-"You cannot process this move since it is in a location you do not control."
-msgstr ""
-"You cannot process this move since it is in a location you do not control."
-
-#. module: location_security
-#: code:addons/location_security/stock.py:73
-#: code:addons/sources/adhoc-stock/location_security/stock.py:73
-#, python-format
-msgid ""
-"You cannot process this move since you do not control the location \"%s\"."
-msgstr ""
-"You cannot process this move since you do not control the location \"%s\"."

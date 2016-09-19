@@ -3,14 +3,15 @@
 # * stock_picking_control
 # 
 # Translators:
+# Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: odoo-addons (8.0)\n"
+"Project-Id-Version: stock (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-09 23:58+0000\n"
-"PO-Revision-Date: 2015-09-01 17:54+0000\n"
-"Last-Translator: Juan Jose Scarafia <scarafia.juanjose@gmail.com>\n"
-"Language-Team: Spanish (http://www.transifex.com/adhoc/ingadhoc-odoo-addons-8-0/language/es/)\n"
+"POT-Creation-Date: 2016-08-05 20:02+0000\n"
+"PO-Revision-Date: 2016-03-01 16:37+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>\n"
+"Language-Team: Spanish (http://www.transifex.com/adhoc/ingadhoc-stock-8-0/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -58,7 +59,7 @@ msgid "Picking wizard"
 msgstr "Asistente de albarán"
 
 #. module: stock_picking_control
-#: code:addons/stock_picking_control/stock_move.py:24
+#: code:addons/stock_picking_control/stock_move.py:32
 #, python-format
 msgid ""
 "Quantity to send for \"%s\" can not be greater than the remaining quantity "
@@ -89,6 +90,12 @@ msgstr "Stock"
 #: model:ir.model,name:stock_picking_control.model_stock_move
 msgid "Stock Move"
 msgstr "Moviemiento de stock"
+
+#. module: stock_picking_control
+#: code:addons/stock_picking_control/stock_move.py:28
+#, python-format
+msgid "You can not transfer a product without a move on the picking!"
+msgstr ""
 
 #. module: stock_picking_control
 #: view:stock.transfer_details:stock_picking_control.view_transfer_details_form
