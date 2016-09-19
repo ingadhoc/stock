@@ -27,7 +27,7 @@
     'description': """
 Stock Picking Driver
 =====================
-
+Adds the driver person information to picking.
     """,
     'author':  'ADHOC SA',
     'website': 'www.adhoc.com.ar',
