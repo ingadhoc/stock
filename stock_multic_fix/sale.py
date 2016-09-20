@@ -11,6 +11,7 @@ from openerp import models, fields, api, _
 class stock_move(models.Model):
     _inherit = "stock.move"
 
+    @api.one
     @api.constrains('company_id', 'location_id', 'location_dest_id')
     def check_company(self):
         location_company = self.location_id.company_id
@@ -28,6 +29,7 @@ class stock_move(models.Model):
 class stock_quant(models.Model):
     _inherit = "stock.quant"
 
+    @api.one
     @api.constrains('company_id', 'location_id', 'negative_dest_location_id')
     def check_company(self):
         location_company = self.location_id.company_id
