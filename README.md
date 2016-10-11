@@ -1,4 +1,4 @@
-[![Runbot Status](http://runbot.adhoc.com.ar/runbot/badge/flat/29/8.0.svg)](http://runbot.adhoc.com.ar/runbot/repo/github-com-ingadhoc-stock-29)
+[![Runbot Status](http://runbot.adhoc.com.ar/runbot/badge/flat/3/8.0.svg)](http://runbot.adhoc.com.ar/runbot/repo/github-com-ingadhoc-stock-3)
 [![Build Status](https://travis-ci.org/ingadhoc/stock.svg?branch=8.0)](https://travis-ci.org/ingadhoc/stock)
 [![Coverage Status](https://coveralls.io/repos/ingadhoc/stock/badge.png?branch=8.0)](https://coveralls.io/r/ingadhoc/stock?branch=8.0)
 [![Code Climate](https://codeclimate.com/github/ingadhoc/stock/badges/gpa.svg)](https://codeclimate.com/github/ingadhoc/stock)
