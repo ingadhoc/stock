@@ -1,5 +1,6 @@
 <openerp>
     <data>
+
      <record id="stock_book_actions" model="ir.actions.act_window">
             <field name="name">Books</field>
             <field name="res_model">stock.book</field>
@@ -16,7 +17,6 @@
             sequence="20"
             action="stock_book_actions"
             parent="stock.menu_stock_configuration"
-            
             />
 
     </data>

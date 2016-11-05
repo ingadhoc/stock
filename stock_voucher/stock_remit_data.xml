@@ -7,8 +7,7 @@
             <field name="name">Stock Voucher</field>
             <field name="code">stock.voucher</field>
         </record>
-    </data>
-    <data>
+
         <report 
             string="Stock Voucher" 
             id="action_report_stock_voucher" 
@@ -17,5 +16,6 @@
             name="stock_voucher.report" 
             file="stock_voucher.report" 
         />
+
     </data>
 </openerp>

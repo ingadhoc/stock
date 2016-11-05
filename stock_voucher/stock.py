@@ -14,11 +14,11 @@ class stock_picking_type(models.Model):
         string='Book Required?',
         help='If true, then a book will be requested on transfers of this '
         'type and a will automatically print the stock voucher.',
-        )
+    )
     book_id = fields.Many2one(
         'stock.book', 'Book',
         help='Book suggested for pickings of this type',
-        )
+    )
     # constraint de que el book y el type deben ser de la misma company_id
 
 
@@ -32,12 +32,14 @@ class stock_book(models.Model):
     sequence_id = fields.Many2one(
         'ir.sequence', 'Stock Voucher Sequence',
         domain=[('code', '=', 'stock.voucher')],
-        context="{'default_code': 'stock.voucher', 'default_name': name, 'default_prefix': '000X-', 'default_padding': 8}",
+        context="{'default_code': 'stock.voucher', 'default_name': name, "
+        "'default_prefix': '000X-', 'default_padding': 8}",
         required=True,
     )
     lines_per_voucher = fields.Integer(
         'Lines Per Voucher', required=True,
-        help="If voucher don't have a limit, then live 0. If not, this number will be used to calculate how many sequence are used on each picking"
+        help="If voucher don't have a limit, then live 0. If not, this number "
+        "will be used to calculate how many sequence are used on each picking"
     )
     # block_estimated_number_of_pages = fields.Boolean(
     #     'Block Estimated Number of Pages?',

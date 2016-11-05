@@ -25,25 +25,25 @@ class stock_print_stock_voucher(models.TransientModel):
         'stock.picking',
         default=_get_picking,
         required=True,
-        )
+    )
     printed = fields.Boolean(
         compute='_get_printed',
-        )
+    )
     book_id = fields.Many2one(
         'stock.book', 'Book', default=_get_book,
-        )
+    )
     next_voucher_number = fields.Integer(
         'Next Voucher Number',
         related='book_id.sequence_id.number_next_actual', readonly=True,
-        )
+    )
     estimated_number_of_pages = fields.Integer(
         'Number of Pages',
-        )
+    )
     lines_per_voucher = fields.Integer(
         'Lines Per Voucher',
         related='book_id.lines_per_voucher',
         readonly=True,
-        )
+    )
 
     @api.depends('picking_id', 'picking_id.voucher_ids')
     def _get_printed(self):
@@ -61,7 +61,7 @@ class stock_print_stock_voucher(models.TransientModel):
             operations = len(self.picking_id.pack_operation_ids)
             estimated_number_of_pages = ceil(
                 float(operations) / float(lines_per_voucher)
-                )
+            )
         self.estimated_number_of_pages = estimated_number_of_pages
 
     @api.multi
