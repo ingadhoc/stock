@@ -1,23 +1,20 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * stock_voucher
-# 
-# Translators:
-# emiq2 <eq@ingadhoc.com>, 2016
-# Iván Todorovich <ivan.todorovich@gmail.com>, 2015
+# 	* stock_voucher
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: stock (8.0)\n"
+"Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-05 20:02+0000\n"
-"PO-Revision-Date: 2016-08-30 21:08+0000\n"
-"Last-Translator: emiq2 <eq@ingadhoc.com>\n"
-"Language-Team: Spanish (http://www.transifex.com/adhoc/ingadhoc-stock-8-0/language/es/)\n"
+"POT-Creation-Date: 2016-01-29 15:26+0000\n"
+"PO-Revision-Date: 2016-01-29 12:28-0300\n"
+"Last-Translator: Daniel Blanco <daniel@blancomartin.cl>\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Language: es\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: Poedit 1.5.4\n"
 
 #. module: stock_voucher
 #: view:stock.print_stock_voucher:stock_voucher.view_print_stock_voucher_form
@@ -40,7 +37,7 @@ msgstr "Código de barras"
 #: field:stock.print_stock_voucher,book_id:0
 #: field:stock.transfer_details,book_id:0
 msgid "Book"
-msgstr "Talonario"
+msgstr "Talonario de Guías de Despacho"
 
 #. module: stock_voucher
 #: field:stock.picking.type,book_required:0
@@ -57,7 +54,7 @@ msgstr "Book suggested for pickings of this type"
 #: model:ir.ui.menu,name:stock_voucher.menu_books
 #: view:stock.book:stock_voucher.view_stock_book_tree
 msgid "Books"
-msgstr "Talonarios"
+msgstr "Talonarios de Guías de Despacho"
 
 #. module: stock_voucher
 #: view:stock.print_stock_voucher:stock_voucher.view_print_stock_voucher_form
@@ -128,14 +125,18 @@ msgstr "ID"
 msgid ""
 "If true, then a book will be requested on transfers of this type and a will "
 "automatically print the stock voucher."
-msgstr "If true, then a book will be requested on transfers of this type and a will automatically print the stock voucher."
+msgstr ""
+"If true, then a book will be requested on transfers of this type and a will "
+"automatically print the stock voucher."
 
 #. module: stock_voucher
 #: help:stock.book,lines_per_voucher:0
 msgid ""
-"If voucher don't have a limit, then live 0. If not, this number will be used"
-" to calculate how many sequence are used on each picking"
-msgstr "If voucher don't have a limit, then live 0. If not, this number will be used to calculate how many sequence are used on each picking"
+"If voucher don't have a limit, then live 0. If not, this number will be used "
+"to calculate how many sequence are used on each picking"
+msgstr ""
+"If voucher don't have a limit, then live 0. If not, this number will be used "
+"to calculate how many sequence are used on each picking"
 
 #. module: stock_voucher
 #: field:stock.book,write_uid:0 field:stock.picking.voucher,write_uid:0
@@ -152,7 +153,7 @@ msgstr "Last Updated on"
 #. module: stock_voucher
 #: field:stock.book,lines_per_voucher:0
 msgid "Lines Per Voucher"
-msgstr "Líneas de Remito"
+msgstr "Líneas de Guía de Despacho"
 
 #. module: stock_voucher
 #: field:stock.book,name:0
@@ -172,7 +173,7 @@ msgstr "Número de bultos"
 #. module: stock_voucher
 #: field:stock.print_stock_voucher,estimated_number_of_pages:0
 msgid "Number of Pages"
-msgstr "Número de páginas"
+msgstr "Número de bultos"
 
 #. module: stock_voucher
 #: field:stock.picking,observations:0
@@ -199,7 +200,7 @@ msgstr "Lista de selección"
 #: view:stock.picking.voucher:stock_voucher.view_stock_picking_voucher_tree
 #: view:stock.transfer_details:stock_voucher.view_stock_enter_transfer_details
 msgid "Picking Voucher"
-msgstr "Remito"
+msgstr "Guía de Despacho"
 
 #. module: stock_voucher
 #: field:stock.print_stock_voucher,picking_id:0
@@ -225,7 +226,7 @@ msgstr "Print Stock Remit"
 #: model:ir.model,name:stock_voucher.model_stock_print_stock_voucher
 #: view:stock.print_stock_voucher:stock_voucher.view_print_stock_voucher_form
 msgid "Print Stock Voucher"
-msgstr "Imprimir Remito"
+msgstr "Imprimir Guía de Despacho"
 
 #. module: stock_voucher
 #: view:stock.print_stock_voucher:stock_voucher.view_print_stock_voucher_form
@@ -265,13 +266,13 @@ msgstr "Provincia"
 #. module: stock_voucher
 #: model:ir.actions.report.xml,name:stock_voucher.action_report_stock_voucher
 msgid "Stock Voucher"
-msgstr "Talonario de Remitos"
+msgstr "Talonario de Guías de Despacho"
 
 #. module: stock_voucher
 #: model:ir.model,name:stock_voucher.model_stock_book
 #: model:ir.model,name:stock_voucher.model_stock_picking_voucher
 msgid "Stock Voucher Book"
-msgstr "Talonario de Remitos"
+msgstr "Talonario de Guías de Despacho"
 
 #. module: stock_voucher
 #: field:stock.book,sequence_id:0
@@ -284,14 +285,16 @@ msgid "Supplier Address:"
 msgstr "Dirección del proveedor:"
 
 #. module: stock_voucher
-#: code:addons/stock_voucher/stock.py:74
+#: code:addons/sources/adhoc-stock/stock_voucher/stock.py:76
+#: code:addons/stock_voucher/stock.py:76
 #: sql_constraint:stock.picking.voucher:0
 #, python-format
 msgid "The field \"Number\" must be unique per book."
 msgstr "El campo  \"Número \" debe ser único por Talonario."
 
 #. module: stock_voucher
-#: code:addons/stock_voucher/wizard/stock_transfer_details.py:77
+#: code:addons/sources/adhoc-stock/stock_voucher/wizard/stock_transfer_details.py:126
+#: code:addons/stock_voucher/wizard/stock_transfer_details.py:126
 #, python-format
 msgid "The number of packages can not be 0"
 msgstr "El numero de bultos no puede ser 0"
@@ -309,25 +312,18 @@ msgstr "IVA:"
 #. module: stock_voucher
 #: field:stock.picking,book_id:0 field:stock.picking.voucher,book_id:0
 msgid "Voucher Book"
-msgstr "Talonario de Remitos"
+msgstr "Talonario de Guías de Despacho"
 
 #. module: stock_voucher
 #: view:stock.picking:stock_voucher.view_picking_withcarrier_out_form
 #: field:stock.picking,voucher_ids:0
 msgid "Vouchers"
-msgstr "Remitos"
+msgstr "Guías de Despacho"
 
 #. module: stock_voucher
 #: view:website:stock_voucher.report
 msgid "Warehouse Address:"
-msgstr "Dirección del almacén"
-
-#. module: stock_voucher
-#: view:stock.picking:stock_voucher.view_picking_internal_search
-msgid ""
-"['|','|',('name','ilike', self),('voucher_ids.number','ilike', "
-"self),('origin','ilike',self)]"
-msgstr ""
+msgstr "Dirección de Bodega"
 
 #. module: stock_voucher
 #: view:stock.print_stock_voucher:stock_voucher.view_print_stock_voucher_form

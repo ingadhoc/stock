@@ -8,6 +8,41 @@
 from openerp import models, fields, api, _
 
 
+class stock_move(models.Model):
+    _inherit = "stock.move"
+
+    @api.one
+    @api.constrains('company_id', 'location_id', 'location_dest_id')
+    def check_company(self):
+        location_company = self.location_id.company_id
+        location_dest_company = self.location_dest_id.company_id
+        if location_company and location_company != self.company_id:
+            raise Warning(_(
+                'The stock move company must be the same as the source '
+                'location company!'))
+        if location_dest_company and location_dest_company != self.company_id:
+            raise Warning(_(
+                'The stock move company must be the same as the destination '
+                ' location company!'))
+
+
+class stock_quant(models.Model):
+    _inherit = "stock.quant"
+
+    @api.one
+    @api.constrains('company_id', 'location_id', 'negative_dest_location_id')
+    def check_company(self):
+        location_company = self.location_id.company_id
+        negative_location = self.negative_dest_location_id.company_id
+        if location_company and location_company != self.company_id:
+            raise Warning(_(
+                'The quant company must be the same as the location company!'))
+        if negative_location and negative_location != self.company_id:
+            raise Warning(_(
+                'The quant company must be the same as the negative location '
+                ' company!'))
+
+
 class stock_invoice_onshipping(models.TransientModel):
 
     _inherit = 'stock.invoice.onshipping'
