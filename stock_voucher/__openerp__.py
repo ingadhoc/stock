@@ -31,18 +31,18 @@
     ],
     'depends': [
         'delivery',
-        'web_widget_one2many_tags'
+        # 'web_widget_one2many_tags'
     ],
     'data': [
         'security/security.xml',
         'security/ir.model.access.csv',
         'wizard/stock_print_remit_view.xml',
         'views/report_stockpicking.xml',
-        'stock_view.xml',
-        'stock_remit_data.xml',
-        'stock_menu.xml',
+        'views/stock_view.xml',
+        'views/stock_remit_data.xml',
+        'views/stock_menu.xml',
         'views/views_templates.xml',
-        'wizard/stock_transfer_details_view.xml',
+        # 'wizard/stock_transfer_details_view.xml',
         'views/res_company_view.xml',
     ],
     'demo': [

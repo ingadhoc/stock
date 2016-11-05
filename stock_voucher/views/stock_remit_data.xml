@@ -2,12 +2,6 @@
 <openerp>
     <data noupdate="1">
 
-        <!-- Sequences for sale.order -->
-        <record id="seq_type_voucher" model="ir.sequence.type">
-            <field name="name">Stock Voucher</field>
-            <field name="code">stock.voucher</field>
-        </record>
-
         <report 
             string="Stock Voucher" 
             id="action_report_stock_voucher" 

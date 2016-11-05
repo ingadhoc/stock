@@ -3,8 +3,7 @@
 # For copyright and license notices, see __openerp__.py file in module root
 # directory
 ##############################################################################
-from openerp import fields, models, _, api
-import openerp.addons.decimal_precision as dp
+from openerp import fields, models, _
 
 
 class stock_picking_type(models.Model):
@@ -74,41 +73,3 @@ class stock_picking_voucher(models.Model):
     _sql_constraints = [
         ('voucher_number_uniq', 'unique(number, book_id)',
             _('The field "Number" must be unique per book.'))]
-
-
-class stock_picking(models.Model):
-    _inherit = 'stock.picking'
-
-    book_id = fields.Many2one(
-        'stock.book', 'Voucher Book', copy=False, readonly=True,
-    )
-    voucher_ids = fields.One2many(
-        'stock.picking.voucher', 'picking_id', 'Vouchers',
-        copy=False
-    )
-    declared_value = fields.Float(
-        'Declared Value', digits=dp.get_precision('Account'),
-    )
-    observations = fields.Text('Observations')
-
-    @api.multi
-    def do_print_voucher(self):
-        '''This function prints the voucher'''
-        report = self.env['report'].get_action(self, 'stock_voucher.report')
-        if self._context.get('keep_wizard_open', False):
-            report['type'] = 'ir.actions.report_dont_close_xml'
-        return report
-
-    @api.one
-    def assign_numbers(self, estimated_number_of_pages, book):
-        voucher_ids = []
-        for page in range(estimated_number_of_pages):
-            number = self.env['ir.sequence'].next_by_id(
-                book.sequence_id.id,)
-            voucher_ids.append(self.env['stock.picking.voucher'].create({
-                'number': number,
-                'book_id': book.id,
-                'picking_id': self.id,
-            }).id)
-        self.write({
-            'book_id': book.id})
