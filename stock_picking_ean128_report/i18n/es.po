@@ -6,12 +6,12 @@
 # Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: odoo-addons (8.0)\n"
+"Project-Id-Version: stock (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-05 15:23+0000\n"
-"PO-Revision-Date: 2016-01-05 13:48+0000\n"
+"POT-Creation-Date: 2016-08-05 20:02+0000\n"
+"PO-Revision-Date: 2016-08-12 14:44+0000\n"
 "Last-Translator: Nicolas Mac Rouillon <nmr@ingadhoc.com>\n"
-"Language-Team: Spanish (http://www.transifex.com/adhoc/ingadhoc-odoo-addons-8-0/language/es/)\n"
+"Language-Team: Spanish (http://www.transifex.com/adhoc/ingadhoc-stock-8-0/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -62,7 +62,7 @@ msgstr "Last Updated on"
 #. module: stock_picking_ean128_report
 #: field:stock.picking.print_ean128_report_detail,lot_id:0
 msgid "Lot"
-msgstr ""
+msgstr "Lote"
 
 #. module: stock_picking_ean128_report
 #: field:stock.lot.print_ean128_report,lot_id:0
@@ -72,12 +72,12 @@ msgstr ""
 #. module: stock_picking_ean128_report
 #: field:stock.picking.print_ean128_report_detail,stock_picking_report_id:0
 msgid "Picking Report EAN Print"
-msgstr ""
+msgstr "Reporte EAN de Remitos"
 
 #. module: stock_picking_ean128_report
 #: field:stock.picking.print_ean128_report,picking_id:0
 msgid "Picking id"
-msgstr ""
+msgstr "Picking id"
 
 #. module: stock_picking_ean128_report
 #: view:stock.lot.print_ean128_report:stock_picking_ean128_report.view_print_stock_lot_remit_form
@@ -113,7 +113,7 @@ msgstr "Producto"
 #. module: stock_picking_ean128_report
 #: field:stock.picking.print_ean128_report,stock_picking_line_ids:0
 msgid "Product Print"
-msgstr ""
+msgstr "Imprimir Producto"
 
 #. module: stock_picking_ean128_report
 #: field:stock.lot.print_ean128_report,quantity:0
@@ -140,7 +140,7 @@ msgstr ""
 #. module: stock_picking_ean128_report
 #: field:stock.picking.print_ean128_report_detail,product_uom_id:0
 msgid "UOM"
-msgstr ""
+msgstr "UdM"
 
 #. module: stock_picking_ean128_report
 #: view:stock.lot.print_ean128_report:stock_picking_ean128_report.view_print_stock_lot_remit_form
