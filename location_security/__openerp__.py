@@ -22,12 +22,6 @@
     'name': 'Location Security',
     'version': '9.0.1.0.0',
     'category': '',
-    'description': '''
-Location Security
-=================
-Users can be assigned many Stock Journals and then they can be
-restricted to see only this Journals.
-    ''',
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
@@ -35,13 +29,13 @@ restricted to see only this Journals.
         'stock',
     ],
     'data': [
-        'res_users_view.xml',
-        ],
+        'views/res_users_view.xml',
+    ],
     'demo': [
     ],
     'test': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }

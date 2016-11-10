@@ -6,10 +6,11 @@
 from openerp import models, fields
 
 
-class users(models.Model):
+class Users(models.Model):
     _inherit = 'res.users'
 
-    restrict_locations = fields.Boolean('Restrict Location')
+    restrict_locations = fields.Boolean(
+        'Restrict Location', help="If True, you can set the location allowed")
 
     stock_location_ids = fields.Many2many(
         'stock.location',
