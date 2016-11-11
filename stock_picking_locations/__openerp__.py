@@ -17,21 +17,13 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-#######################################################s#######################
+##############################################################################
 {
     'name': 'Stock Picking Locations',
     'version': '9.0.1.0.0',
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
-    'description': '''
-Stock Picking Locations
-=======================
-Add Location and Destiny Location to stock picking. When stock moves are
-created they are taken by default.
-Add a button to stock picking to update the stock move Location and Destiny
-Location.
-    ''',
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
@@ -41,13 +33,13 @@ Location.
         'stock',
     ],
     'data': [
-        'stock_view.xml',
+        'view/stock_view.xml',
     ],
     'demo': [
     ],
     'test': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }
