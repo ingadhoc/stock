@@ -20,15 +20,15 @@
 ##############################################################################
 {
     'name': 'Stock Picking State',
-    'version': '8.0.0.1.0',
+    'version': '9.0.1.0.0',
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
-    'description': """
+    'description': '''
 Stock Picking State
 ===================
 
-    """,
+    ''',
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
@@ -46,7 +46,7 @@ Stock Picking State
     ],
     'test': [
     ],
-    'installable': True,
+    'installable': False,
     'auto_install': False,
     'application': False,
 }

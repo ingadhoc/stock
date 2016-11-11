@@ -21,20 +21,19 @@
 
 {
     'name': 'Lot Filtering in Stock Transfer',
-    'version': '8.0.0.1.9',
+    'version': '9.0.1.0.0',
     'author': 'Rooms For (Hong Kong) Ltd T/A OSCG',
     'website': 'http://www.openerp-asia.net',
     'category': 'Stock',
     'depends': [
-        "stock",
+        'stock',
     ],
-    'description': """
+    'description': '''
 * Adds a new function field 'lot_balance' to stock.production.lot for filtering purpose.
 * Limits lot/serial number selection to ones with inventory balance larger than zero (except for incoming picking).
-     """,
+     ''',
     'data': [
         'stock_transfer_details.xml',
     ],
-    'installable': True,
+    'installable': False,
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -3,5 +3,11 @@
 # For copyright and license notices, see __openerp__.py file in module root
 # directory
 ##############################################################################
+from openerp import models, fields
 
-from . import models
+
+class StockPicking(models.Model):
+    _inherit = 'stock.picking'
+
+    partner_id = fields.Many2one(
+        states={'cancel': [('readonly', True)]})

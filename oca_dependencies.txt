@@ -1,2 +1,0 @@
-aeroo_reports https://github.com/aeroo/aeroo_reports.git
-web https://github.com/OCA/web.git

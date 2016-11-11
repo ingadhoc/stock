@@ -4,4 +4,4 @@
 # directory
 ##############################################################################
 from . import stock_print_remit
-from . import stock_transfer_details
+# from . import stock_transfer_details

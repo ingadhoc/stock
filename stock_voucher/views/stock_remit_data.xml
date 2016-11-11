@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+        <report 
+            string="Stock Voucher" 
+            id="action_report_stock_voucher" 
+            model="stock.picking" 
+            report_type="qweb-pdf"
+            name="stock_voucher.report" 
+            file="stock_voucher.report" 
+        />
+
+    </data>
+</openerp>
