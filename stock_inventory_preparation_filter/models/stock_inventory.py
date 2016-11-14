@@ -138,7 +138,7 @@ class StockInventory(models.Model):
             for product_code in tmp_lines.keys():
                 products = product_obj.search([
                     '|', ('default_code', '=', product_code),
-                    ('ean13', '=', product_code),
+                    ('barcode', '=', product_code),
                 ])
                 if products:
                     product = products[0]
