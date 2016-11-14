@@ -1,7 +1,7 @@
 from openerp import models, fields
 
 
-class stock_production_lot(models.Model):
+class StockProductionLot(models.Model):
 
     _inherit = 'stock.production.lot'
 
