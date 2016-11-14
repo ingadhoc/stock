@@ -13,9 +13,6 @@
                     <notebook position="attributes">
                         <attribute name="attrs" />
                     </notebook>
-                    <page string="Inventory Details" position="attributes">
-                        <attribute name="attrs">{'invisible':[('state','=','draft')]}</attribute>
-                    </page>
                     <notebook position="before">
                         <group>
                             <field name="categ_ids"
