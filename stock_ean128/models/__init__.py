@@ -4,4 +4,5 @@
 # directory
 ##############################################################################
 
-from . import models
+from . import product
+from . import stock

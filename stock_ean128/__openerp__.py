@@ -24,11 +24,6 @@
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
-    'description': '''
-Stock EAN128
-============
-
-    ''',
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
@@ -38,14 +33,14 @@ Stock EAN128
         'product_expiry',
     ],
     'data': [
-        'stock_view.xml',
-        'product_view.xml'
+        'views/stock_view.xml',
+        'views/product_view.xml',
     ],
     'demo': [
     ],
     'test': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }

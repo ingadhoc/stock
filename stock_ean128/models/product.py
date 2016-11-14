@@ -6,7 +6,7 @@
 from openerp import models, api, fields
 
 
-class product_template(models.Model):
+class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
     lot_ids = fields.One2many(
@@ -31,14 +31,14 @@ class product_template(models.Model):
         return [('id', 'in', templates.ids)]
 
 
-class product_product(models.Model):
+class ProductProduct(models.Model):
     _inherit = 'product.product'
 
     @api.model
     def name_search(
             self, name, args=None, operator='ilike',
             limit=100):
-        res = super(product_product, self).name_search(
+        res = super(ProductProduct, self).name_search(
             name, args=args, operator=operator, limit=limit)
         if len(res) < limit:
             # do not search for lots of products that are already displayed
@@ -48,7 +48,7 @@ class product_product(models.Model):
             products = self.env['stock.production.lot'].search([
                 ('ean_128', operator, name),
                 ('product_id', 'not in', actual_product_ids),
-                ],
+            ],
                 limit=limit).mapped('product_id')
             res += products.name_get()
         return res
