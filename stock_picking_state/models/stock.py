@@ -6,7 +6,7 @@
 from openerp import models, fields
 
 
-class stock_picking_state_detail(models.Model):
+class StockPickingStateDetail(models.Model):
     _name = 'stock.picking.state_detail'
     _order = 'sequence'
 
@@ -38,7 +38,7 @@ class stock_picking_state_detail(models.Model):
         'Pickings')
 
 
-class stock_picking(models.Model):
+class StockPicking(models.Model):
 
     _inherit = 'stock.picking'
 
