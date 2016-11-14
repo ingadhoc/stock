@@ -24,11 +24,6 @@
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
-    'description': '''
-Stock Picking State
-===================
-
-    ''',
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
@@ -39,14 +34,14 @@ Stock Picking State
     ],
     'data': [
         'security/ir.model.access.csv',
-        'stock_view.xml',
-        'stock_menu.xml'
+        'views/stock_view.xml',
+        'views/stock_menu.xml'
     ],
     'demo': [
     ],
     'test': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }

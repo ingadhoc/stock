@@ -1,7 +1,7 @@
 <openerp>
     <data>
      <record id="stock_picking_state_detail_action" model="ir.actions.act_window">
-            <field name="name">stock_picking_state_detail</field>
+            <field name="name">Picking State Detail</field>
             <field name="res_model">stock.picking.state_detail</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
@@ -15,7 +15,7 @@
             id="menu_state_detail"
             sequence="20"
             action="stock_picking_state_detail_action"
-            parent="stock.menu_stock_configuration"
+            parent="stock.menu_stock_config_settings"
             />
 
     </data>
