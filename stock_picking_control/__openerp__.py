@@ -24,12 +24,6 @@
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
-    'description': '''
-Stock Picking Control
-=====================
-Block edition of out picking
-    ''',
-    'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
     'images': [
@@ -39,13 +33,12 @@ Block edition of out picking
     ],
     'data': [
         'view/stock_view.xml',
-        'view/company_view.xml',
     ],
     'demo': [
     ],
     'test': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }
