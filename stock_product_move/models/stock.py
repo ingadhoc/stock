@@ -6,7 +6,7 @@
 from openerp import models, fields
 
 
-class stock_picking(models.Model):
+class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
     user_picking_id = fields.Many2one(
@@ -15,7 +15,7 @@ class stock_picking(models.Model):
     )
 
 
-class stock_move(models.Model):
+class StockMove(models.Model):
     _inherit = 'stock.move'
 
     create_user_so_id = fields.Many2one(

@@ -24,11 +24,6 @@
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
-    'description': '''
-Stock Product Move
-==================
-
-    ''',
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
@@ -38,15 +33,15 @@ Stock Product Move
         'sale_stock',
     ],
     'data': [
-        'product_view.xml',
-        'stock_move_view.xml',
-        'stock_picking_view.xml',
+        'views/product_view.xml',
+        'views/stock_move_view.xml',
+        'views/stock_picking_view.xml',
     ],
     'demo': [
     ],
     'test': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }

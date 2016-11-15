@@ -8,7 +8,7 @@
             <field name="model">stock.move</field>
             <field name="inherit_id" ref="stock.view_move_search"/>
             <field name="arch" type="xml">
-                 <filter string="Product" position="after">
+                 <filter name="by_product" position="after">
                     <filter string="Picking Type" name="picking_type"  context="{'group_by':'picking_type_id'}"/>
                 </filter>
             </field>
