@@ -6,7 +6,7 @@
 from openerp import models, fields, api
 
 
-class stock_production_lot(models.Model):
+class StockProductionLot(models.Model):
     _inherit = 'stock.production.lot'
 
     @api.one
@@ -36,5 +36,5 @@ class stock_production_lot(models.Model):
                 args + [('ean_128', operator, name)], limit=limit)
             if ids:
                 return recs.name_get()
-        return super(stock_production_lot, self).name_search(
+        return super(StockProductionLot, self).name_search(
             name=name, args=args, operator=operator, limit=limit)
