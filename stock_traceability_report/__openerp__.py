@@ -24,27 +24,23 @@
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
-    'description': '''
-Stock Traceability Report
-=========================
-
-    ''',
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
     'images': [
     ],
     'depends': [
-        'stock',
+        'product_expiry',
         'report_aeroo',
     ],
-    'data': ['report/stock_lot_report.xml'
-             ],
+    'data': [
+        'report/stock_lot_report.xml'
+    ],
     'demo': [
     ],
     'test': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }
