@@ -24,11 +24,6 @@
     'category': 'Stock Warehouse Editable',
     'sequence': 14,
     'summary': '',
-    'description': '''
-Stock Warehouse Editable
-========================
-It allow to change locations linked to a warehouse. Used when you have to fix a migration or something similar.
-    ''',
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
@@ -38,13 +33,13 @@ It allow to change locations linked to a warehouse. Used when you have to fix a 
         'stock',
     ],
     'data': [
-        'stock_view.xml'
+        'view/stock_view.xml'
     ],
     'demo': [
     ],
     'test': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }
