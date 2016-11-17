@@ -24,10 +24,6 @@
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
-    'description': '''
-Stock Picking Labels
-====================
-    ''',
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
@@ -38,13 +34,13 @@ Stock Picking Labels
         'report_aeroo',
     ],
     'data': [
-        'report_data.xml',
+        'report/report_data.xml',
     ],
     'demo': [
     ],
     'test': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }
