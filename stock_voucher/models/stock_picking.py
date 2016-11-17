@@ -114,17 +114,9 @@ class StockPicking(models.Model):
         """
         res = super(StockPicking, self).do_transfer()
         for picking in self:
-            # if picking.picking_type_id.code == 'outgoing':
-            #     if (
-            #             picking.restrict_number_package and
-            #             not picking.number_of_packages > 0):
-            #         raise UserError(_('The number of packages can not be 0'))
             if picking.book_required:
                 picking.assign_numbers(
                     picking.get_estimated_number_of_pages(), picking.book_id)
-                # picking.declared_value = picking.declared_value
-                # picking.number_of_packages = picking.number_of_packages
-                # return self.picking_id.do_print_voucher()
         return res
 
     @api.multi
@@ -140,4 +132,8 @@ class StockPicking(models.Model):
                     raise UserError(_('The number of packages can not be 0'))
             if picking.book_required and not picking.book_id:
                 raise UserError(_('You must select a Voucher Book'))
-        return super(StockPicking, self).do_new_transfer()
+        res = super(StockPicking, self).do_new_transfer()
+        # res none when no wizard  opended
+        if res is None and len(self) == 1 and self.book_required:
+            return picking.do_print_voucher()
+        return res

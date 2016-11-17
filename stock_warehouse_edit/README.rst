@@ -6,7 +6,7 @@
 Stock Warehouse Editable
 ========================
 
-#. This module it allow to change locations linked to a warehouse. Used when you have to fix a migration or something similar.
+This module allows to change locations linked to a warehouse. Used when you have to fix a migration or something similar.
 
 
 Installation
