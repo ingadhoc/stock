@@ -41,7 +41,6 @@
         'views/stock_view.xml',
         'views/stock_remit_data.xml',
         'views/stock_menu.xml',
-        'views/views_templates.xml',
         # 'wizard/stock_transfer_details_view.xml',
         'views/res_company_view.xml',
     ],

@@ -19,7 +19,7 @@ class stock_print_stock_voucher(models.TransientModel):
     @api.model
     def _get_book(self):
         picking = self._get_picking()
-        return picking.picking_type_id.book_id
+        return picking.book_id
 
     picking_id = fields.Many2one(
         'stock.picking',

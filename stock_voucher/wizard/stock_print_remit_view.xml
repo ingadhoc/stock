@@ -18,12 +18,19 @@
                         <field name="estimated_number_of_pages" attrs="{'invisible':[('lines_per_voucher', '=', 0)],'required':[('lines_per_voucher', '!=', 0)]}"/>
                     </group>
                 <footer>
+                    <!-- nuevos botones sin importar si es pre impreso o no -->
+                    <button name="do_print_voucher" type="object" class="oe_highlight" string="Print" attrs="{'invisible':[('printed', '=', False)]}"/>
+                    <button name="do_print_and_assign" type="object" class="oe_highlight" string="Print and Assign " attrs="{'invisible':[('printed', '=', True)]}"/>
+                <!-- depreciamos porque no migramos la funcionalidad de imprimir el reporte yquedar en el wizard -->
                     <!-- Botones para remitos que usan una hoja -->
+                    <!-- 
                     <button name="do_print_voucher" type="object" class="oe_highlight" string="Print" attrs="{'invisible':['|',('lines_per_voucher', '!=', 0),('printed', '=', False)]}"/>
-                    <button name="do_print_and_assign" type="object" class="oe_highlight" string="Print and Assign " attrs="{'invisible':['|',('lines_per_voucher', '!=', 0),('printed', '=', True)]}"/>
+                    <button name="do_print_and_assign" type="object" class="oe_highlight" string="Print and Assign " attrs="{'invisible':['|',('lines_per_voucher', '!=', 0),('printed', '=', True)]}"/> -->
                     <!-- Botones para remitos que usan varias hojas -->
+                    <!-- 
                     <button name="do_print_voucher" type="object" class="oe_highlight" string="Print" attrs="{'invisible':[('lines_per_voucher', '=', 0)]}" context="{'keep_wizard_open':True}"/>
-                    <button name="assign_numbers" type="object" class="oe_highlight" string="Assign Numbers" attrs="{'invisible':['|',('lines_per_voucher', '=', 0),('printed', '=', True)]}"/>
+                    <button name="assign_numbers" type="object" class="oe_highlight" string="Assign Numbers" attrs="{'invisible':['|',('lines_per_voucher', '=', 0),('printed', '=', True)]}"/> -->
+
                     <!-- Clean numbers -->
                     <button name="do_clean" type="object" string="Clean Voucher Data" attrs="{'invisible':[('printed', '=', False)]}"/>
                     or
