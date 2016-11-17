@@ -6,7 +6,7 @@
 Stock Transfer Restrict Lot
 ===========================
 
-#. This module add a constraint to pack operation to restring send for lot more quantity than has in the quants.
+#. This module add a constraint to pack operation to restrict sending more quantity than a lot has in the quants.
 
 
 Installation
