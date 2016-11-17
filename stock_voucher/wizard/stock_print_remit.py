@@ -66,9 +66,6 @@ class stock_print_stock_voucher(models.TransientModel):
 
     @api.multi
     def do_print_voucher(self):
-        print 'bbbbbbbbbb'
-        print 'bbbbbbbbbb'
-        print 'bbbbbbbbbb', self.picking_id
         return self.picking_id.do_print_voucher()
 
     @api.one
