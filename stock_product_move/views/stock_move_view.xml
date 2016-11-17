@@ -2,14 +2,25 @@
 <openerp>
     <data>
 
-
         <record id="view_move_search" model="ir.ui.view">
             <field name="name">stock.move.search.inherit</field>
             <field name="model">stock.move</field>
             <field name="inherit_id" ref="stock.view_move_search"/>
             <field name="arch" type="xml">
-                 <filter name="by_product" position="after">
+                <separator position="after">
+                    <filter string="Incoming" name="incoming" domain="[('picking_type_code','=','incoming')]"/>
+                    <filter string="Internal" name="internal" domain="[('picking_type_code','=','internal')]"/>
+                    <filter string="Outgoing" name="outgoing" domain="[('picking_type_code','=','outgoing')]"/>
+                    <separator/>
+                </separator>
+
+                <field name="name" position="attributes">
+                    <attribute name="context">{'location': self}</attribute>
+                </field>
+
+                <filter name="by_product" position="after">
                     <filter string="Picking Type" name="picking_type"  context="{'group_by':'picking_type_id'}"/>
+                    <filter string="Picking Partner" name="picking_partner_id"  context="{'group_by':'picking_partner_id'}"/>
                 </filter>
             </field>
         </record>
@@ -19,12 +30,15 @@
             <field name="model">stock.move</field>
             <field name="inherit_id" ref="stock.view_move_tree"/>
             <field name="arch" type="xml">
-                <field name="picking_type_id" position="replace"/>
-                <field name="product_uom" position="replace"/>
-                <field name="location_id" position="before">
-                    <field name="partner_id" string="Partner"/>
-                    <field name="create_user_so_id"/>
-                    <field name="create_user_picking_id"/>
+                <field name="product_uom_qty" position="attributes">
+                    <attribute name="invisible">context.get('location', False)</attribute>
+                </field>
+                <field name="product_uom_qty" position="after">
+                    <field name="product_uom_qty_location" sum="Total" invisible="not context.get('location', False)"/>
+                </field>
+                <field name="origin" position="before">
+                    <field name="picking_partner_id" string="Picking Partner"/>
+                    <field name="picking_create_user_id"/>
                 </field>
             </field>
         </record>
