@@ -30,3 +30,7 @@ class stock_move(models.Model):
         string="Usuario Preparador de la OE",
         readonly=True,
     )
+    # Bug port from V9
+    picking_partner_id = fields.Many2one(
+        related='picking_id.partner_id',
+        string='Transfer Destination Address', store=True)
