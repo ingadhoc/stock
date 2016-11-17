@@ -109,15 +109,25 @@
             <field name="model">stock.picking</field>
             <field name="inherit_id" ref="delivery.view_picking_withcarrier_out_form"/>
             <field name="arch" type="xml">
+                <form>
+                    <field name="book_required" invisible="True"/>
+                </form>
+
                 <field name="partner_id" position="after">
-                    <field name="book_id" attrs="{'invisible': [('picking_type_code','=','incoming')]}"/>
+                    <!-- no lo hacemos requerido por vista -->
+                    <field name="book_id" attrs="{'invisible': [('picking_type_code','=','incoming')], 'readonly': [('voucher_ids','!=',[])]}"/>
                     <!-- TODO replace for one2mant_tags when migrated -->
                     <field name="voucher_ids" attrs="{'readonly': [('picking_type_code','!=','incoming')]}" widget="many2many_tags"/>
                     <!-- <field name="voucher_ids" attrs="{'readonly': [('picking_type_code','!=','incoming')]}" widget="one2many_tags"/> -->
                 </field>
-                <field name="number_of_packages" position="before">
+
+                <!-- we move number_of_packages to main form -->
+                <field name="number_of_packages" position="replace"/>
+                <field name="origin" position="after">
+                    <field name="number_of_packages" attrs="{'readonly': [('state', '=', 'done')]}"/>
                     <field name="declared_value" attrs="{'invisible': [('picking_type_code','=','incoming')]}"/>
                 </field>
+
                 <button name="do_print_picking" position="after">
                     <button name="%(action_stock_print_voucher)d" string="Vouchers" type="action" attrs="{'invisible': ['|',('book_id','=',False),'|', ('picking_type_code','=','incoming'), ('state','!=','done'), ]}"/>
                     <button name="%(action_stock_print_voucher)d" string="Vouchers" type="action" attrs="{'invisible': ['|',('book_id','!=',False),'|', ('picking_type_code','=','incoming'), ('state','!=','done'), ]}" class="oe_highlight"/>
