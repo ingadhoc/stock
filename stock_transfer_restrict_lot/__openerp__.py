@@ -24,11 +24,6 @@
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
-    'description': '''
-Stock Transfer Restrict Lot
-===========================
-
-    ''',
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
@@ -38,13 +33,12 @@ Stock Transfer Restrict Lot
         'stock',
     ],
     'data': [
-        'stock_view.xml'
     ],
     'demo': [
     ],
     'test': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }
