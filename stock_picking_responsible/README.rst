@@ -2,19 +2,11 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
-===============
-Stock Usability
-===============
+=========================
+Stock Picking Responsible
+=========================
 
-Several improovements to stock:
-#. Add on stock moves Picking Creator and Picking Partner (last one already exsits but we make it stored)
-#. Allow to filter and group by type of picking type on moves (internal, outgoing and incoming)
-#. Add new field "Net Quantity" on stock moves only visible when you filter by locations. This fields is computed this way:
-    *. If filtered location is found on source location: use negative quantity
-    *. If filtered location is found on destiny location: use positive quantity
-    *. If filtered location is found on source and destiny location: use 0
-#. When accesing stock moves throw products group by picking type and todo
-
+Create a new field "Responsible" on pickings and also show it also in stock move views.
 
 Installation
 ============
