@@ -6,7 +6,7 @@
 from openerp import models, fields, api
 
 
-class stock_picking(models.Model):
+class StockPicking(models.Model):
     _inherit = 'stock.production.lot'
 
     @api.one
