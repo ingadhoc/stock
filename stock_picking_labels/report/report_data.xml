@@ -11,7 +11,7 @@
         <field name="in_format">oo-odt</field>
         <field name="out_format" ref="report_aeroo.report_mimetypes_pdf_odt"/>
         <!-- <field name="parser_loc">report_aeroo_sample/report/parser.py</field> -->
-        <field name="report_rml">stock_picking_labels/picking_label.odt</field>
+        <field name="report_rml">stock_picking_labels/report/picking_label.odt</field>
         <!-- <field name="parser_state">loc</field> -->
         <field name="parser_state">default</field>
         <field name="tml_source">file</field>
