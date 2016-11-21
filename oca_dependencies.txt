@@ -1,1 +1,1 @@
-adhoc-aeroo_reports https://github.com/ingadhoc/aeroo_reports.git 9.0
+ingadhoc-aeroo_reports https://github.com/ingadhoc/aeroo_reports.git
