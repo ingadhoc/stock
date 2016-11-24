@@ -7,10 +7,10 @@
             <field name="inherit_id" ref="sale_stock.view_company_form_inherit_sale_stock"/>
             <field name="priority">30</field>
             <field name="arch" type="xml">
-                <xpath expr="//page[@string='Configuration']//group[@name='logistics_grp']">
+                <group name='logistics_grp'>
                     <field name="automatic_declare_value"/>
                     <field name="restrict_number_package"/>
-                </xpath>
+                </group>
             </field>
         </record>        
     </data>
