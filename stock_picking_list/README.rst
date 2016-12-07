@@ -2,11 +2,11 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
-============
-Stock EAN128
-============
+==================
+Stock Picking List
+==================
 
-#. This module add EAN128 to the lot production and search in product template by this field.
+#. This module print the report for the Picking List product.
 
 
 Installation
@@ -22,14 +22,15 @@ Configuration
 
 To configure this module, you need to:
 
+#. No configuration needed.
+
 
 Usage
 =====
 
 To use this module, you need to:
 
-#. When you generate a lot it will automatically generate the EAN128 code.
-
+#. Go to the picking and print the report "Stock picking List". 
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
