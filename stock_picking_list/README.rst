@@ -6,7 +6,7 @@
 Stock Picking List
 ==================
 
-#. This module print the report for the Picking List product.
+#. This module add an spreadsheet picking list report that can be printed from stock pickings
 
 
 Installation
