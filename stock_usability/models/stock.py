@@ -32,8 +32,12 @@ class StockMove(models.Model):
         location = self._context.get('location')
         if not location:
             return False
+        # because now we use location_id to select location, we have compelte
+        # location name. If y need we can use some code of
+        # _get_domain_locations on stock/product.py
         locations = self.env['stock.location'].search(
-            [('name', 'ilike', location)])
+            # [('name', 'ilike', location)])
+            [('complete_name', 'ilike', location)])
         # from_locations = self.env['stock.location'].search([
         #     '|', ('name', 'ilike', location),
         #     ('location_dest_id', 'ilike', location)
