@@ -124,6 +124,9 @@ class StockPicking(models.Model):
         """
         We make checks before calling transfer
         """
+        # we send picking_id on context so it can be used on wizards because
+        # active_id could not be the picking
+        self = self.with_context(picking_id=self.id)
         for picking in self:
             if picking.picking_type_id.code == 'outgoing':
                 if (

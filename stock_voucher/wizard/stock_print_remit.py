@@ -13,8 +13,12 @@ class stock_print_stock_voucher(models.TransientModel):
 
     @api.model
     def _get_picking(self):
-        active_id = self._context.get('active_id', False)
-        return self.env['stock.picking'].browse(active_id)
+        # if we came, for eg, from a sale order, active_id would be the
+        # sale order id
+        # self._context.get('active_id'))
+        picking_id = self._context.get('picking_id', False)
+        # active_id = self._context.get('active_id', False)
+        return self.env['stock.picking'].browse(picking_id)
 
     @api.model
     def _get_book(self):
