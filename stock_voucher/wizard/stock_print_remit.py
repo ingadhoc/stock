@@ -16,7 +16,8 @@ class stock_print_stock_voucher(models.TransientModel):
         # if we came, for eg, from a sale order, active_id would be the
         # sale order id
         # self._context.get('active_id'))
-        picking_id = self._context.get('picking_id', False)
+        picking_id = self._context.get(
+            'picking_id', self._context.get('active_id', False))
         # active_id = self._context.get('active_id', False)
         return self.env['stock.picking'].browse(picking_id)
 
