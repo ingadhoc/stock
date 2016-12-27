@@ -36,9 +36,14 @@ class StockPickingType(models.Model):
 
     _inherit = 'stock.picking.type'
 
+    # TODO rename field
     block_add_lines = fields.Boolean(
-        string="Block add lines",
-        help="Restrict add lines")
+        string="Block Picking Edit",
+        # string="Block add lines",
+        # help="Restrict add lines")
+        help="Restrict add lines, change parters and other fields edition on "
+        "pickings of this type. This will only apply to users with group "
+        "'Restrict Edit Blocked Pickings'")
     block_additional_quantiy = fields.Boolean(
         string="Block additional quantiy",
         help="Restrict additional quantity")

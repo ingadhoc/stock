@@ -20,7 +20,7 @@
 ##############################################################################
 {
     'name': 'Stock Picking Control',
-    'version': '9.0.1.0.0',
+    'version': '9.0.1.1.0',
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
@@ -29,9 +29,10 @@
     'images': [
     ],
     'depends': [
-        'stock',
+        'stock_voucher',
     ],
     'data': [
+        'security/security.xml',
         'view/stock_view.xml',
     ],
     'demo': [
