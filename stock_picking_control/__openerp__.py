@@ -32,8 +32,8 @@
         'stock_voucher',
     ],
     'data': [
-        'view/stock_view.xml',
         'security/security.xml',
+        'view/stock_view.xml',
     ],
     'demo': [
     ],
