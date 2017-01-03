@@ -96,14 +96,13 @@ class StockPicking(models.Model):
 
     @api.one
     def assign_numbers(self, estimated_number_of_pages, book):
-        voucher_ids = []
         for page in range(estimated_number_of_pages):
             number = book.sequence_id.next_by_id()
-            voucher_ids.append(self.env['stock.picking.voucher'].create({
+            self.env['stock.picking.voucher'].create({
                 'number': number,
                 'book_id': book.id,
                 'picking_id': self.id,
-            }).id)
+            })
         self.write({
             'book_id': book.id})
 
