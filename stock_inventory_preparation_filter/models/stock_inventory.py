@@ -39,6 +39,7 @@ class StockInventoryFake(object):
         self.lot_id = lot
         self.partner_id = inventory.partner_id
         self.package_id = inventory.package_id
+        self.company_id = inventory.company_id
 
     def default_value(self):
         # value = {}
