@@ -19,7 +19,7 @@
 #
 ##############################################################################
 {
-    'name': 'Stock Product Move',
+    'name': 'Stock Usability Improvements',
     'version': '9.0.1.1.0',
     'category': 'Warehouse Management',
     'sequence': 14,

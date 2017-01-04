@@ -2,9 +2,9 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
-===============
-Stock Usability
-===============
+============================
+Stock Usability Improvements
+============================
 
 Several improovements to stock:
 #. Add on stock moves Picking Creator and Picking Partner (last one already exsits but we make it stored)
