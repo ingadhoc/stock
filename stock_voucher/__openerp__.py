@@ -43,6 +43,7 @@
         'views/stock_menu.xml',
         # 'wizard/stock_transfer_details_view.xml',
         'views/res_company_view.xml',
+        'data/stock_book_data.xml',
     ],
     'demo': [
     ],

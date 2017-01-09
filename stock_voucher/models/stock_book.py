@@ -32,7 +32,8 @@ class stock_book(models.Model):
         'ir.sequence', 'Stock Voucher Sequence',
         domain=[('code', '=', 'stock.voucher')],
         context="{'default_code': 'stock.voucher', 'default_name': name, "
-        "'default_prefix': '000X-', 'default_padding': 8}",
+        "'default_prefix': '000X-', 'default_padding': 8, "
+        "'default_implementation': 'no_gap',}",
         required=True,
     )
     lines_per_voucher = fields.Integer(
