@@ -14,6 +14,10 @@ class stock_picking_type(models.Model):
         help='If true, then a book will be requested on transfers of this '
         'type and a will automatically print the stock voucher.',
     )
+    voucher_required = fields.Boolean(
+        string='Book Required?',
+        help='If true, voucher numbers will be required before validation',
+    )
     book_id = fields.Many2one(
         'stock.book', 'Book',
         help='Book suggested for pickings of this type',

@@ -42,6 +42,10 @@ class StockPicking(models.Model):
         related='picking_type_id.book_required',
         readonly=True,
     )
+    voucher_required = fields.Boolean(
+        related='picking_type_id.voucher_required',
+        readonly=True,
+    )
 
     @api.multi
     def get_estimated_number_of_pages(self):
@@ -134,6 +138,9 @@ class StockPicking(models.Model):
                     raise UserError(_('The number of packages can not be 0'))
             if picking.book_required and not picking.book_id:
                 raise UserError(_('You must select a Voucher Book'))
+            elif picking.voucher_required and not picking.voucher_ids:
+                raise UserError(_('You must set stock voucher numbers'))
+
         res = super(StockPicking, self).do_new_transfer()
         # res none when no wizard  opended
         if res is None and len(self) == 1 and self.book_required:
