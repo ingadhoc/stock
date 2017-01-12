@@ -3,7 +3,8 @@
 # For copyright and license notices, see __openerp__.py file in module root
 # directory
 ##############################################################################
-from openerp import fields, models, _
+from openerp import fields, models, api, _
+from openerp.exceptions import UserError
 
 
 class stock_picking_type(models.Model):
@@ -17,6 +18,16 @@ class stock_picking_type(models.Model):
     voucher_required = fields.Boolean(
         string='Book Required?',
         help='If true, voucher numbers will be required before validation',
+    )
+    # only for incoming
+    voucher_number_unique = fields.Boolean(
+        string='Book Unique?',
+        help='If true, voucher numbers will be required to be unique for same'
+        ' partner',
+    )
+    voucher_number_validator_id = fields.Many2one(
+        'base.validator',
+        help='Choose a validation if you want to validate voucher numbers'
     )
     book_id = fields.Many2one(
         'stock.book', 'Book',
@@ -78,3 +89,28 @@ class stock_picking_voucher(models.Model):
     _sql_constraints = [
         ('voucher_number_uniq', 'unique(number, book_id)',
             _('The field "Number" must be unique per book.'))]
+
+    @api.multi
+    @api.constrains('number', 'picking_id')
+    def check_voucher_number_unique(self):
+        """
+        Check internal pickings with voucher number unique
+        """
+        for rec in self:
+            pick_type = rec.picking_id.picking_type_id
+            if pick_type.code == 'incoming':
+                number = pick_type.voucher_number_validator_id.validate_value(
+                    rec.number)
+                if number and number != rec.number:
+                    rec.number = number
+                if pick_type.voucher_number_unique:
+                    same_number_recs = self.search([
+                        ('picking_id.partner_id', '=',
+                            rec.picking_id.partner_id.id),
+                        ('number', '=', rec.number),
+                        ('id', '!=', rec.id),
+                    ])
+                    if same_number_recs:
+                        raise UserError(_(
+                            'Picking voucher number must be unique per '
+                            'partner'))
