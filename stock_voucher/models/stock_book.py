@@ -69,10 +69,15 @@ class stock_book(models.Model):
 class stock_picking_voucher(models.Model):
     _name = 'stock.picking.voucher'
     _description = 'Stock Voucher Book'
-    _rec_name = 'number'
+    # _rec_name = 'number'
 
+    # we keep this for report compatibility
     number = fields.Char(
-        'Number', copy=False, required=True,
+        related='name',
+    )
+    # because m2m tags widget send only values to name field
+    name = fields.Char(
+        'Number', copy=False, required=True, oldname='number',
     )
     book_id = fields.Many2one(
         'stock.book', 'Voucher Book',
@@ -87,11 +92,11 @@ class stock_picking_voucher(models.Model):
     # constraint de que el book y el picking deben ser de la misma company
 
     _sql_constraints = [
-        ('voucher_number_uniq', 'unique(number, book_id)',
+        ('voucher_number_uniq', 'unique(name, book_id)',
             _('The field "Number" must be unique per book.'))]
 
     @api.multi
-    @api.constrains('number', 'picking_id')
+    @api.constrains('name', 'picking_id')
     def check_voucher_number_unique(self):
         """
         Check internal pickings with voucher number unique
@@ -99,15 +104,15 @@ class stock_picking_voucher(models.Model):
         for rec in self:
             pick_type = rec.picking_id.picking_type_id
             if pick_type.code == 'incoming':
-                number = pick_type.voucher_number_validator_id.validate_value(
-                    rec.number)
-                if number and number != rec.number:
-                    rec.number = number
+                name = pick_type.voucher_number_validator_id.validate_value(
+                    rec.name)
+                if name and name != rec.name:
+                    rec.name = name
                 if pick_type.voucher_number_unique:
                     same_number_recs = self.search([
                         ('picking_id.partner_id', '=',
                             rec.picking_id.partner_id.id),
-                        ('number', '=', rec.number),
+                        ('name', '=', rec.name),
                         ('id', '!=', rec.id),
                     ])
                     if same_number_recs:

@@ -39,7 +39,7 @@
             <field name="model">stock.picking.voucher</field>
             <field name="arch" type="xml">
                 <tree string="Picking Voucher">
-                    <field name="number"/>
+                    <field name="name"/>
                     <field name="book_id"/>
                     <field name="company_id" groups="base.group_multi_company"/>
                 </tree>
@@ -55,7 +55,7 @@
                     </header>
                     <sheet>
                         <group>
-                            <field name="number"/>
+                            <field name="name"/>
                             <!-- <field name="book_id"/>
                             <field name="company_id" groups="base.group_multi_company"/> -->
                         </group>
@@ -87,7 +87,7 @@
             <field name="inherit_id" ref="stock.view_picking_internal_search"/>
             <field name="arch" type="xml">
                 <field name="name" position="attributes">
-                    <attribute name="filter_domain">['|','|',('name','ilike', self),('voucher_ids.number','ilike', self),('origin','ilike',self)]</attribute>
+                    <attribute name="filter_domain">['|','|',('name','ilike', self),('voucher_ids.name','ilike', self),('origin','ilike',self)]</attribute>
                 </field>
             </field>
         </record>
@@ -120,7 +120,7 @@
                     <!-- no lo hacemos requerido por vista -->
                     <field name="book_id" attrs="{'invisible': [('picking_type_code','=','incoming')], 'readonly': [('voucher_ids','!=',[])]}"/>
                     <!-- TODO replace for one2mant_tags when migrated -->
-                    <field name="voucher_ids" attrs="{'readonly': [('picking_type_code','!=','incoming')]}" widget="many2many_tags" context="{'default_picking_id': id}" domain="[('id', '=', False)]"  options="{'create':True}"/>
+                    <field name="voucher_ids" attrs="{'readonly': [('picking_type_code','!=','incoming')]}" widget="many2many_tags" context="{'default_picking_id': id}" domain="[('id', '=', False)]"  options="{'create':True, 'create_edit':True}}"/>
                     <!-- <field name="voucher_ids" attrs="{'readonly': [('picking_type_code','!=','incoming')]}" widget="one2many_tags"/> -->
                 </field>
 

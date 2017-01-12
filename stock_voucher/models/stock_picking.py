@@ -101,9 +101,9 @@ class StockPicking(models.Model):
     @api.one
     def assign_numbers(self, estimated_number_of_pages, book):
         for page in range(estimated_number_of_pages):
-            number = book.sequence_id.next_by_id()
+            name = book.sequence_id.next_by_id()
             self.env['stock.picking.voucher'].create({
-                'number': number,
+                'name': name,
                 'book_id': book.id,
                 'picking_id': self.id,
             })
