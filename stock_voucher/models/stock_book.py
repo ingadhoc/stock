@@ -16,7 +16,7 @@ class stock_picking_type(models.Model):
         'type and a will automatically print the stock voucher.',
     )
     voucher_required = fields.Boolean(
-        string='Book Required?',
+        string='Voucher Required?',
         help='If true, voucher numbers will be required before validation',
     )
     # only for incoming
@@ -27,10 +27,12 @@ class stock_picking_type(models.Model):
     )
     voucher_number_validator_id = fields.Many2one(
         'base.validator',
+        string='Voucher Number Validator',
         help='Choose a validation if you want to validate voucher numbers'
     )
     book_id = fields.Many2one(
-        'stock.book', 'Book',
+        'stock.book',
+        'Book',
         help='Book suggested for pickings of this type',
     )
     # constraint de que el book y el type deben ser de la misma company_id
