@@ -31,6 +31,7 @@
     ],
     'depends': [
         'delivery',
+        'base_validator',
         # 'web_widget_one2many_tags'
     ],
     'data': [
