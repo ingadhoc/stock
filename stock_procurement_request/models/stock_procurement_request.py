@@ -4,6 +4,7 @@
 # directory
 ##############################################################################
 from openerp import fields, models, api
+from openerp.addons.procurement import procurement
 # from openerp.exceptions import UserError
 
 
@@ -52,7 +53,29 @@ class StockProcurementRequest(models.Model):
         required=True,
         help="Warehouse to consider for the route selection"
     )
+    priority = fields.Selection(
+        procurement.PROCUREMENT_PRIORITIES,
+        'Priority',
+        required=True,
+        select=True,
+        default='1',
+        # track_visibility='onchange'
+    )
+    date_planned = fields.Datetime(
+        'Scheduled Date',
+        required=True,
+        select=True,
+        default=lambda self: fields.Datetime.now(),
+        # track_visibility='onchange'
+    )
 
     @api.onchange('warehouse_id')
     def change_warehouse_id(self):
         self.location_id = self.warehouse_id.lot_stock_id
+
+    @api.model
+    def create(self, vals):
+        if not vals.get('group_id'):
+            group = self.group_id.create({})
+            vals['group_id'] = group.id
+        return super(StockProcurementRequest, self).create(vals)

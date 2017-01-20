@@ -35,24 +35,28 @@
                     <sheet>
                         <group>
                             <group>
+                                <field name="id" invisible="1"/>
                                 <field name="name"/>
                                 <field name="warehouse_id"/>
                                 <field name="location_id"/>
                                 <field name="route_ids" widget="many2many_tags"/>
                             </group>
                             <group>
+                                <field name="date_planned"/>
+                                <field name="priority"/>
                                 <field name="group_id"/>
                                 <field name="company_id" groups="base.group_multi_company"/>
                             </group>
                         </group>
                         <notebook>
                             <page string="Procurements">
-                                <field name="procurement_ids" context="{'default_name': name, 'default_warehouse_id': warehouse_id, 'default_location_id': location_id, 'default_route_ids': route_ids}">
+                                <field name="procurement_ids" context="{'default_name': name, 'default_warehouse_id': warehouse_id, 'default_location_id': location_id, 'default_route_ids': route_ids, 'default_group_id': group_id}" attrs="{'readonly': [('id', '=', False)]}">
                                     <tree editable="bottom">
                                         <field name="product_id" on_change="onchange_product_id(product_id)" domain="[('type', '=', 'product')]"/>
                                         <field name="product_qty"/>
                                         <field name="product_uom"/>
                                         <field name="warehouse_id" invisible="1"/>
+                                        <field name="group_id" invisible="1"/>
                                         <field name="location_id" invisible="1"/>
                                         <field name="route_ids" invisible="1"/>
                                         <field name="name" invisible="1"/>
@@ -72,7 +76,7 @@
         <field name="view_mode">tree,form</field>
     </record>
 
-    <menuitem action="action_procurement_request" id="menu_procurement_request" parent="stock.menu_stock_warehouse_mgmt" sequence="10"/>
+    <menuitem action="action_procurement_request" id="menu_procurement_request" parent="stock.menu_stock_inventory_control" sequence="20"/>
 
     </data>
 </openerp>
