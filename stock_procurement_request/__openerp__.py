@@ -19,7 +19,7 @@
 #
 ##############################################################################
 {
-    'name': 'Stock Voucher',
+    'name': 'Stock Procurement Request',
     'version': '9.0.1.1.0',
     'category': 'Warehouse Management',
     'sequence': 14,
@@ -30,21 +30,12 @@
     'images': [
     ],
     'depends': [
-        'delivery',
-        'base_validator',
-        # 'web_widget_one2many_tags'
+        'stock',
     ],
     'data': [
+        'views/stock_procurement_request_view.xml',
         'security/security.xml',
         'security/ir.model.access.csv',
-        'wizard/stock_print_remit_view.xml',
-        'views/report_stockpicking.xml',
-        'views/stock_view.xml',
-        'views/stock_remit_data.xml',
-        'views/stock_menu.xml',
-        # 'wizard/stock_transfer_details_view.xml',
-        'views/res_company_view.xml',
-        'data/stock_book_data.xml',
     ],
     'demo': [
     ],

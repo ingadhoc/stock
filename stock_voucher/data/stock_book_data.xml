@@ -7,7 +7,6 @@
             <field name="prefix">000X-</field>
             <field name="padding">8</field>
             <field name="implementation">no_gap</field>
-            <field name="sequence_id"></field>
         </record>
 
         <record model="stock.book" id="stock_book_1" forcecreate="False">
