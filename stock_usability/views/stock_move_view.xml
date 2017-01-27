@@ -46,6 +46,18 @@
                 </tree>
             </field>
         </record>
+
+
+        <record id="view_picking_form" model="ir.ui.view">
+            <field name="name">stock.picking.form.inherit</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                  <button name="add_picking_operation"  class="oe_inline oe_right" type="object" string="Process Products"/>
+                </field>
+            </field>
+        </record>
         
     </data>
 </openerp>
