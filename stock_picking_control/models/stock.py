@@ -12,7 +12,7 @@ class StockPackOperation(models.Model):
     _inherit = 'stock.pack.operation'
 
     block_additional_quantiy = fields.Boolean(
-        related='picking_id.block_additional_quantiy')
+        related='picking_id.block_additional_quantiy', readonly=True,)
 
     @api.multi
     @api.constrains('qty_done')
@@ -54,6 +54,6 @@ class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
     block_add_lines = fields.Boolean(
-        related='picking_type_id.block_add_lines')
+        related='picking_type_id.block_add_lines', readonly=True,)
     block_additional_quantiy = fields.Boolean(
-        related='picking_type_id.block_additional_quantiy')
+        related='picking_type_id.block_additional_quantiy', readonly=True,)
