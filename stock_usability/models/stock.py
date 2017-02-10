@@ -53,3 +53,24 @@ class StockMove(models.Model):
                 else:
                     product_uom_qty_location = -product_uom_qty_location
             rec.product_uom_qty_location = product_uom_qty_location
+
+
+class StockPicking(models.Model):
+    _inherit = 'stock.picking'
+
+    @api.multi
+    def add_picking_operation(self):
+        self.ensure_one()
+        view_id = self.env['ir.model.data'].xmlid_to_res_id(
+            'stock_usability.view_stock_pack_operation_tree')
+        search_view_id = self.env['ir.model.data'].xmlid_to_res_id(
+            'stock_usability.view_pack_operation_search')
+        return {
+            "type": "ir.actions.act_window",
+            "res_model": "stock.pack.operation",
+            "search_view_id": search_view_id,
+            "views": [[view_id, "tree"], [False, "form"]],
+            "domain": [["id", "in", [
+                x.id for x in self.pack_operation_product_ids]]],
+            "context": {"create": False},
+        }
