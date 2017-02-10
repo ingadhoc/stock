@@ -14,7 +14,7 @@ Several improovements to stock:
     *. If filtered location is found on destiny location: use positive quantity
     *. If filtered location is found on source and destiny location: use 0
 #. When accesing stock moves throw products group by picking type and todo
-
+#. Add to orderpoint Rotation and Location Rotation: delivered quantities to customers on last 90 days divided per 3 (to make it monthly)
 
 Installation
 ============

@@ -18,9 +18,11 @@ class StockMove(models.Model):
     picking_partner_id = fields.Many2one(
         related='picking_id.partner_id',
         store=True,
+        readonly=True,
     )
     picking_type_code = fields.Selection(
-        related='picking_type_id.code'
+        related='picking_type_id.code',
+        readonly=True,
     )
     product_uom_qty_location = fields.Float(
         compute='compute_product_uom_qty_location',
