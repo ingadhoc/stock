@@ -18,10 +18,12 @@
             <field name="model">stock.picking</field>
             <field name="inherit_id" ref="stock.view_picking_form"/>
             <field name="arch" type="xml">
-                <field name="state" position="after">
-                    <field name="code" invisible="1"/>
-                    <field name="state_detail_id" widget="statusbar" clickable="True" domain="[('state','=', state),'|',('picking_type','=', code), ('picking_type','=', False)]"/>
-                </field> 
+                <header position="after">
+                    <header>
+                        <field name="code" invisible="1"/>
+                        <field name="state_detail_id" widget="statusbar" clickable="True" domain="[('state','=', state),'|',('picking_type','=', code), ('picking_type','=', False)]"/>
+                    </header>
+                </header>
             </field>  
         </record>
 

@@ -46,7 +46,8 @@ class StockPicking(models.Model):
         'stock.picking.state_detail',
         string='State Detail',
         track_visibility='onchange',
-        select=True
+        select=True,
+        copy=False
     )
 
     code = fields.Selection(
