@@ -11,7 +11,7 @@
                     <field name="tracking" invisible="1"/>
                 </xpath>
                 <xpath expr="//tree//field[@name='prod_lot_id']" position="attributes">
-                    <attribute name="attrs">{'required': [('tracking','=','lot')]}</attribute>
+                    <attribute name="attrs">{'required': [('tracking','in', ['serial', 'lot'])]}</attribute>
                 </xpath>
             </field>  
         </record>
