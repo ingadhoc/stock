@@ -100,7 +100,8 @@
             <field name="arch" type="xml">
                 <field name="name" position="after">
                     <!-- TODO replace for one2mant_tags when migrated -->
-                    <field name="voucher_ids" widget="many2many_tags"/>
+                    <!-- we try to use m2m tags but it doenst display ok on tree view -->
+                    <field name="vouchers"/>
                     <!-- <field name="voucher_ids" widget="one2many_tags"/> -->
                 </field>
             </field>

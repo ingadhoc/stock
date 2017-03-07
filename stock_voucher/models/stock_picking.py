@@ -17,6 +17,9 @@ class StockPicking(models.Model):
         'Voucher Book',
         copy=False,
     )
+    vouchers = fields.Char(
+        compute='_compute_vouchers'
+    )
     voucher_ids = fields.One2many(
         'stock.picking.voucher',
         'picking_id',
@@ -46,6 +49,12 @@ class StockPicking(models.Model):
         related='picking_type_id.voucher_required',
         readonly=True,
     )
+
+    @api.multi
+    @api.depends('voucher_ids.display_name')
+    def _compute_vouchers(self):
+        for rec in self:
+            rec.vouchers = ', '.join(rec.mapped('voucher_ids.display_name'))
 
     @api.multi
     def get_estimated_number_of_pages(self):
