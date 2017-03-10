@@ -58,6 +58,12 @@ class StockMove(models.Model):
 class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
+    # by default picking type is readonly only in done and cancel
+    picking_type_id = fields.Many2one(
+        readonly=True,
+        states={'draft': [('readonly', False)]}
+    )
+
     @api.multi
     def add_picking_operation(self):
         self.ensure_one()
@@ -74,3 +80,17 @@ class StockPicking(models.Model):
                 x.id for x in self.pack_operation_product_ids]]],
             "context": {"create": False},
         }
+
+    @api.onchange('location_id')
+    def change_location(self):
+        # we only change moves locations if picking in draft
+        if self.state == 'draft':
+            for move in self.move_lines:
+                move.location_id = self.location_id
+
+    @api.onchange('location_dest_id')
+    def change_location_dest(self):
+        # we only change moves locations if picking in draft
+        if self.state == 'draft':
+            for move in self.move_lines:
+                move.location_dest_id = self.location_dest_id

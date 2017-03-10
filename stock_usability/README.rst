@@ -15,6 +15,8 @@ Several improovements to stock:
     *. If filtered location is found on source and destiny location: use 0
 #. When accesing stock moves throw products group by picking type and todo
 #. Add to orderpoint Rotation and Location Rotation: delivered quantities to customers on last 90 days divided per 3 (to make it monthly)
+#. On draft pickings, if you change source or target locations, related moves will be update accordingly (by default they where not updated).
+#. Block change of picking type in other state than 'draft'
 
 Installation
 ============
