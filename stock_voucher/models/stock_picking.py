@@ -140,6 +140,15 @@ class StockPicking(models.Model):
         # active_id could not be the picking
         self = self.with_context(picking_id=self.id)
         for picking in self:
+            # con esto arreglamos que odoo dejaria entregar varias veces el
+            # mismo picking si por alguna razon el boton esta presente
+            # en nuestro caso pasaba cuando la impresion da algun error
+            # lo que provoca que el picking se entregue pero la pantalla no
+            # se actualice
+            if picking.state not in ['partially_available', 'assigned']:
+                raise UserError(_(
+                    'No se puede validar un pickign que no esté en estado '
+                    'Parcialmente Disponible o Reservado'))
             if picking.picking_type_id.code == 'outgoing':
                 if (
                         picking.restrict_number_package and
