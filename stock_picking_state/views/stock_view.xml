@@ -20,8 +20,7 @@
             <field name="arch" type="xml">
                 <header position="after">
                     <header>
-                        <field name="code" invisible="1"/>
-                        <field name="state_detail_id" widget="statusbar" clickable="True" domain="[('state','=', state),'|',('picking_type','=', code), ('picking_type','=', False)]"/>
+                        <field name="state_detail_id" widget="statusbar" clickable="True" domain="[('state','=', state),'|',('picking_type','=', picking_type_code), ('picking_type','=', False)]"/>
                     </header>
                 </header>
             </field>  

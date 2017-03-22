@@ -49,7 +49,3 @@ class StockPicking(models.Model):
         select=True,
         copy=False
     )
-
-    code = fields.Selection(
-        related='picking_type_id.code',
-        readonly=True,)
