@@ -3,7 +3,13 @@
 # For copyright and license notices, see __openerp__.py file in module root
 # directory
 ##############################################################################
-from . import stock_book
-from . import stock_picking
-from . import stock_move
-from . import res_company
+from openerp import fields, models
+
+
+class StockMove(models.Model):
+    _inherit = "stock.move"
+
+    vouchers = fields.Char(
+        related='picking_id.vouchers',
+        readonly=True,
+    )
