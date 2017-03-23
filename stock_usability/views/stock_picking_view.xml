@@ -12,7 +12,7 @@
                 <field string="Source Document" name="sale_id" attrs="{'invisible': [('sale_id','=',False)]}"/>
             </field> -->
             <field name="name" position="after">
-              <button name="add_picking_operation"  class="oe_inline oe_right" type="object" string="Process Products"/>
+              <button name="add_picking_operation"  class="oe_inline oe_right" type="object" string="Process Products" attrs="{'invisible': [('state', 'not in', ['partially_available', 'assigned'])]}"/>
             </field>
         </field>
     </record>
