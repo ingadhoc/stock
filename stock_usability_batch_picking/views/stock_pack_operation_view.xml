@@ -1,0 +1,50 @@
+<odoo>
+
+    <record id="view_pack_operation_search" model="ir.ui.view">
+        <field name="name">stock.pack.operation.filter</field>
+        <field name="model">stock.pack.operation</field>
+        <field name="inherit_id" ref="stock_usability.view_pack_operation_search"/>
+        <field name="arch" type="xml">
+            <!-- we only show origin if we came from a batch, on a picking you already have it on the picking -->
+            <field name="product_id" position="before">
+                <field name="origin" invisible="not context.get('from_batch')"/>
+            </field>
+            <filter name="product_id" position="before">
+                <filter string="Origin" name="origin" context="{'group_by':'origin'}" invisible="not context.get('from_batch')"/>
+            </filter>
+        </field>
+    </record>
+
+    <record id="view_stock_pack_operation_tree" model="ir.ui.view">
+        <field name="name">stock.pack.operation.tree</field>
+        <field name="model">stock.pack.operation</field>
+        <field name="inherit_id" ref="stock_usability.view_stock_pack_operation_tree"/>
+        <field name="arch" type="xml">
+            <!-- we only show origin if we came from a batch, on a picking you already have it on the picking -->
+            <field name="product_id" position="before">
+                <field name="origin" invisible="not context.get('from_batch')"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- agregamos accion para agregar todos -->
+    <record model="ir.actions.server" id="action_operation_set_all_done">
+            <field name="name">Set all done</field>
+            <field name="model_id" ref="stock.model_stock_pack_operation"/>
+            <field name="code">
+active_ids = context.get('active_ids', [])
+object.browse(active_ids).set_all_done()
+            </field>
+    </record>
+
+    <!-- agregamos boton para agregar todos -->
+    <record model="ir.values" id="ir_value_action_operation_set_all_done">
+        <field name="model_id" ref="stock.model_stock_pack_operation" />
+        <field name="name">Set all Done</field>
+        <field name="key2">client_action_multi</field>
+        <field name="value" eval="'ir.actions.server,' +str(ref('action_operation_set_all_done'))" />
+        <field name="key">action</field>
+        <field name="model">stock.pack.operation</field>
+    </record>
+
+</odoo>

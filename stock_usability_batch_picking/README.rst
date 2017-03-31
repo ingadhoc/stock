@@ -2,22 +2,13 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
-============================
-Stock Usability Improvements
-============================
+=====================================================
+Stock Usability with Batch Picking and stock vouchers
+=====================================================
 
-Several improovements to stock:
-#. Add on stock moves Picking Creator and Picking Partner (last one already exsits but we make it stored)
-#. Allow to filter and group by type of picking type on moves (internal, outgoing and incoming)
-#. Add new field "Net Quantity" on stock moves only visible when you filter by locations. This fields is computed this way:
-    *. If filtered location is found on source location: use negative quantity
-    *. If filtered location is found on destiny location: use positive quantity
-    *. If filtered location is found on source and destiny location: use 0
-#. When accesing stock moves throw products group by picking type and todo
-#. Add to orderpoint Rotation and Location Rotation: delivered quantities to customers on last 90 days divided per 3 (to make it monthly)
-#. On draft pickings, if you change source or target locations, related moves will be update accordingly (by default they where not updated).
-#. Block change of picking type in other state than 'draft'
-#. Add button "Set all Done" on pack operations
+#. For now, make batch proccessing only available for incoming
+#. Add integration with stock voucher so you can introduce voucher number on the batch
+#. Add picking origin field on operations
 
 Installation
 ============

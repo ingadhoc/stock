@@ -14,6 +14,10 @@
             <field name="name" position="after">
               <button name="add_picking_operation"  class="oe_inline oe_right" type="object" string="Process Products" attrs="{'invisible': [('state', 'not in', ['partially_available', 'assigned'])]}"/>
             </field>
+
+            <button name="split_lot" position="after">
+                <button name="set_all_done" string="Set all Done" type="object" icon="fa-check" attrs="{'invisible': ['|', ('lots_visible', '=', True), ('state', 'not in', ['confirmed', 'assigned', 'waiting', 'partially_available'])]}"/>
+            </button>
         </field>
     </record>
 </odoo>

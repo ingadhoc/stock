@@ -4,7 +4,7 @@
 # directory
 ##############################################################################
 from openerp import fields, models, api, _
-from openerp.exceptions import UserError
+from openerp.exceptions import ValidationError
 
 
 class stock_picking_type(models.Model):
@@ -111,13 +111,18 @@ class stock_picking_voucher(models.Model):
                 if name and name != rec.name:
                     rec.name = name
                 if pick_type.voucher_number_unique:
-                    same_number_recs = self.search([
-                        ('picking_id.partner_id', '=',
-                            rec.picking_id.partner_id.id),
-                        ('name', '=', rec.name),
-                        ('id', '!=', rec.id),
-                    ])
-                    if same_number_recs:
-                        raise UserError(_(
-                            'Picking voucher number must be unique per '
-                            'partner'))
+                    rec._check_voucher_number_unique()
+
+    @api.multi
+    def _check_voucher_number_unique(self):
+        self.ensure_one()
+        same_number_recs = self.search([
+            ('picking_id.partner_id', '=',
+                self.picking_id.partner_id.id),
+            ('name', '=', self.name),
+            ('id', '!=', self.id),
+        ])
+        if same_number_recs:
+            raise ValidationError(_(
+                'Picking voucher number must be unique per '
+                'partner'))

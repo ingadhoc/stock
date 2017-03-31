@@ -19,8 +19,8 @@
 #
 ##############################################################################
 {
-    'name': 'Stock Usability Improvements',
-    'version': '9.0.1.6.0',
+    'name': 'Stock Usability with Batch Picking and stock vouchers',
+    'version': '9.0.1.0.0',
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
@@ -30,20 +30,19 @@
     'images': [
     ],
     'depends': [
-        'sale_stock',
+        'stock_usability',
+        'stock_voucher',
+        'stock_batch_picking',
     ],
     'data': [
-        'views/product_view.xml',
-        'views/stock_picking_view.xml',
-        'views/stock_move_view.xml',
+        'views/stock_batch_picking_view.xml',
         'views/stock_pack_operation_view.xml',
-        'views/stock_warehouse_orderpoint_view.xml',
     ],
     'demo': [
     ],
     'test': [
     ],
     'installable': True,
-    'auto_install': False,
+    'auto_install': True,
     'application': False,
 }
