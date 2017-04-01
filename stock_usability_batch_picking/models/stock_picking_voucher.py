@@ -26,7 +26,6 @@ class StockPickingVoucher(models.Model):
                     self.picking_id.batch_picking_id.id),
                 ('id', '!=', self.id),
             ])
-            print 'same_number_recs', same_number_recs
             if same_number_recs:
                 raise ValidationError(_(
                     'Picking voucher number must be unique per '
