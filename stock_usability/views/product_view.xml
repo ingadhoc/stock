@@ -2,6 +2,11 @@
 <openerp>
     <data>
 
+        <!-- desactivamos esta vista porque la busqeuda por warehouse y location ya viene por la vista de template. TODO hacer PR a odoo -->
+        <record id="stock.product_search_form_view_stock" model="ir.ui.view">
+            <field name="active" eval="False"/>
+        </record>
+
         <record id="view_product_form" model="ir.ui.view">
             <field name="name">product.template.form</field>
             <field name="model">product.template</field>
