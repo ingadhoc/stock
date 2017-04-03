@@ -2,14 +2,15 @@
 <openerp>
     <data noupdate="1">
 
-        <report 
+        <!-- TODO borrar o implementar este reporte que por ahora no funciona y no usamos -->
+        <!-- <report 
             string="Stock Voucher" 
             id="action_report_stock_voucher" 
             model="stock.picking" 
             report_type="qweb-pdf"
             name="stock_voucher.report" 
             file="stock_voucher.report" 
-        />
+        /> -->
 
     </data>
 </openerp>
