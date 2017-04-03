@@ -9,6 +9,8 @@ Stock Usability with Batch Picking and stock vouchers
 #. For now, make batch proccessing only available for incoming
 #. Add integration with stock voucher so you can introduce voucher number on the batch
 #. Add picking origin field on operations
+#. Restrict picking validation only if at least one operation has done quantity (default behaviour of validating everything is confusing)
+#. Alert user when cancelling a batch that all pickings are going to be cancelled
 
 Installation
 ============

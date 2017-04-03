@@ -9,6 +9,7 @@
             <field name="arch" type="xml">
                 <search string="Pack Operation">
                     <field name="product_id"/>
+                    <filter string="With Quantity Done" name="with_quantity_done" domain="[('qty_done', '&gt;', 0.0)]"/>
                     <group expand="1" string="Group By">
                         <filter string="Product" name="product_id" context="{'group_by':'product_id'}"/>
                     </group>

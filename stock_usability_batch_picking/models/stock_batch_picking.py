@@ -3,7 +3,8 @@
 # For copyright and license notices, see __openerp__.py file in module root
 # directory
 ##############################################################################
-from openerp import models, fields, api
+from openerp import models, fields, api, _
+from openerp.exceptions import UserError
 
 
 class StockBatchPicking(models.Model):
@@ -72,12 +73,8 @@ class StockBatchPicking(models.Model):
 
     @api.onchange('picking_type_id', 'partner_id')
     def changes_set_pickings(self):
-        if not self.partner_id or not self.picking_type_id:
-            self.picking_ids = False
-        self.picking_ids = self.picking_ids.search([
-            ('partner_id', '=', self.partner_id.id),
-            ('picking_type_id', '=', self.picking_type_id.id),
-            ('state', 'in', ('confirmed', 'partially_available', 'assigned'))])
+        # if we change type or partner reset pickings
+        self.picking_ids = False
 
     @api.multi
     @api.constrains('voucher_number', 'picking_type_id')
@@ -109,6 +106,13 @@ class StockBatchPicking(models.Model):
     def action_transfer(self):
         # agregamos los numeros de remito
         for rec in self:
+            # al agregar la restriccion de que al menos una tenga que tener
+            # cantidad entonces nunca se manda el force_qty al picking
+            if all(operation.qty_done == 0
+                    for operation in rec.pack_operation_ids):
+                raise UserError(_(
+                    'Debe definir Cantidad Realizada en al menos una '
+                    'operación.'))
             if rec.picking_code == 'incoming' and rec.voucher_number:
                 for picking in rec.active_picking_ids:
                     rec.env['stock.picking.voucher'].create({
