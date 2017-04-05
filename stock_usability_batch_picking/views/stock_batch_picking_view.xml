@@ -48,7 +48,7 @@
                 <field name="picking_code" invisible="1"/>
                 <field name="voucher_required" invisible="1"/>
                 <field name="picking_type_id"/>
-                <!-- como por ahora solo lo usamos para entrada lo restringimos a proveedores -->
+                <!-- como por ahora solo lo usamos para entrada lo restringimos -->
                 <field name="partner_id" context="{'search_default_supplier':1, 'default_supplier':1, 'default_customer':0}" domain="[('supplier','=',True)]"/>
                 <field name="voucher_number" attrs="{'invisible': [('picking_code','!=','incoming')], 'required': [('voucher_required','=',True)]}"/>
                 <!-- <field name="voucher_ids" attrs="{'invisible': [('picking_type_code','!=','incoming')]}" widget="many2many_tags" context="{'default_batch_picking': id}" domain="[('id', '=', False)]"  options="{'create':True, 'create_edit':True}}"/> -->

@@ -11,6 +11,7 @@ Stock Usability with Batch Picking and stock vouchers
 #. Add picking origin field on operations
 #. Restrict picking validation only if at least one operation has done quantity (default behaviour of validating everything is confusing)
 #. Alert user when cancelling a batch that all pickings are going to be cancelled
+#. We deactivate create batch picking from pickings (TODO: por ahora es manual)
 
 Installation
 ============
