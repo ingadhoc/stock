@@ -1,0 +1,38 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * stock_ean128
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: stock (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-02-20 19:37+0000\n"
+"PO-Revision-Date: 2016-01-18 16:20+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: Spanish (Chile) (http://www.transifex.com/adhoc/ingadhoc-stock-8-0/language/es_CL/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: es_CL\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: stock_ean128
+#: field:stock.production.lot,ean_128:0
+msgid "EAN128"
+msgstr ""
+
+#. module: stock_ean128
+#: model:ir.model,name:stock_ean128.model_stock_production_lot
+msgid "Lot/Serial"
+msgstr ""
+
+#. module: stock_ean128
+#: model:ir.model,name:stock_ean128.model_product_product
+msgid "Product"
+msgstr "Producto"
+
+#. module: stock_ean128
+#: model:ir.model,name:stock_ean128.model_product_template
+msgid "Product Template"
+msgstr ""
