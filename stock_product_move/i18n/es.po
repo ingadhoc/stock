@@ -1,0 +1,117 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * stock_product_move
+# 
+# Translators:
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
+# Lisandro Boggio <lboggio@ingenieriaboggio.com.ar>, 2017
+# Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 9.0c\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-11-17 16:27+0000\n"
+"PO-Revision-Date: 2016-11-17 16:27+0000\n"
+"Last-Translator: Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2017\n"
+"Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: stock_product_move
+#: model:ir.ui.view,arch_db:stock_product_move.view_product_form
+msgid ""
+"<?xml version=\"1.0\"?>\n"
+"<button name=\"action_view_stock_moves\" position=\"attributes\">\n"
+"                    <attribute name=\"context\">{'search_default_future': 1,'search_default_picking_type': 1}</attribute>\n"
+"                </button>            \n"
+"            "
+msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<button name=\"action_view_stock_moves\" position=\"attributes\">\n"
+"                    <attribute name=\"context\">{'search_default_future': 1,'search_default_picking_type': 1}</attribute>\n"
+"                </button>            \n"
+"            "
+
+#. module: stock_product_move
+#: model:ir.ui.view,arch_db:stock_product_move.view_move_tree
+msgid ""
+"<?xml version=\"1.0\"?>\n"
+"<data><field name=\"picking_type_id\" position=\"replace\"/>\n"
+"                <field name=\"product_uom\" position=\"replace\"/>\n"
+"                <field name=\"location_id\" position=\"before\">\n"
+"                    <field name=\"partner_id\" string=\"Partner\"/>\n"
+"                    <field name=\"create_user_so_id\"/>\n"
+"                    <field name=\"create_user_picking_id\"/>\n"
+"                </field>\n"
+"            </data>"
+msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<data><field name=\"picking_type_id\" position=\"replace\"/>\n"
+"                <field name=\"product_uom\" position=\"replace\"/>\n"
+"                <field name=\"location_id\" position=\"before\">\n"
+"                    <field name=\"partner_id\" string=\"Partner\"/>\n"
+"                    <field name=\"create_user_so_id\"/>\n"
+"                    <field name=\"create_user_picking_id\"/>\n"
+"                </field>\n"
+"            </data>"
+
+#. module: stock_product_move
+#: model:ir.ui.view,arch_db:stock_product_move.view_picking_form
+msgid ""
+"<?xml version=\"1.0\"?>\n"
+"<field name=\"partner_id\" position=\"after\">\n"
+"                    <field name=\"user_picking_id\" attrs=\"{'readonly': [('state', '=', 'done')]}\"/>\n"
+"                </field>\n"
+"            "
+msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<field name=\"partner_id\" position=\"after\">\n"
+"                    <field name=\"user_picking_id\" attrs=\"{'readonly': [('state', '=', 'done')]}\"/>\n"
+"                </field>\n"
+"            "
+
+#. module: stock_product_move
+#: model:ir.ui.view,arch_db:stock_product_move.view_move_search
+msgid ""
+"<?xml version=\"1.0\"?>\n"
+"<filter name=\"by_product\" position=\"after\">\n"
+"                    <filter string=\"Picking Type\" name=\"picking_type\" context=\"{'group_by':'picking_type_id'}\"/>\n"
+"                </filter>\n"
+"            "
+msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<filter name=\"by_product\" position=\"after\">\n"
+"                    <filter string=\"Picking Type\" name=\"picking_type\" context=\"{'group_by':'picking_type_id'}\"/>\n"
+"                </filter>\n"
+"            "
+
+#. module: stock_product_move
+#: model:ir.model,name:stock_product_move.model_stock_move
+msgid "Stock Move"
+msgstr "Movimiento stock"
+
+#. module: stock_product_move
+#: model:ir.model,name:stock_product_move.model_stock_picking
+msgid "Transfer"
+msgstr "Transferencia"
+
+#. module: stock_product_move
+#: model:ir.model.fields,field_description:stock_product_move.field_stock_picking_user_picking_id
+#: field:stock.picking,user_picking_id:0
+msgid "User Preparer"
+msgstr "Usuario Preparador"
+
+#. module: stock_product_move
+#: model:ir.model.fields,field_description:stock_product_move.field_stock_move_create_user_so_id
+#: field:stock.move,create_user_so_id:0
+msgid "Usuario Creador de la OE"
+msgstr "Usuario creador de la OE"
+
+#. module: stock_product_move
+#: model:ir.model.fields,field_description:stock_product_move.field_stock_move_create_user_picking_id
+#: field:stock.move,create_user_picking_id:0
+msgid "Usuario Preparador de la OE"
+msgstr "Usuario Preparador de la OE"

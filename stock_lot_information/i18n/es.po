@@ -1,27 +1,57 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* stock_lot_information
-#
+# * stock_lot_information
+# 
+# Translators:
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
+# Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 8.0\n"
+"Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-18 14:07+0000\n"
-"PO-Revision-Date: 2015-09-18 11:08-0300\n"
-"Last-Translator: <>\n"
-"Language-Team: \n"
+"POT-Creation-Date: 2017-04-05 15:08+0000\n"
+"PO-Revision-Date: 2017-04-05 15:08+0000\n"
+"Last-Translator: Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2017\n"
+"Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
-"X-Generator: Poedit 1.5.4\n"
+"Content-Transfer-Encoding: \n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: stock_lot_information
+#: model:ir.ui.view,arch_db:stock_lot_information.view_production_lot_view
+msgid ""
+"<?xml version=\"1.0\"?>\n"
+"<xpath expr=\"//group[@name='main_group']\" position=\"after\">\n"
+"                    <group string=\"Other Information\">\n"
+"                        <group>\n"
+"                            <field name=\"ref_initial\"/>\n"
+"                            <field name=\"ref_final\"/>\n"
+"                        </group>\n"
+"                    </group>\n"
+"                </xpath> \n"
+"            "
+msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<xpath expr=\"//group[@name='main_group']\" position=\"after\">\n"
+"                    <group string=\"Other Information\">\n"
+"                        <group>\n"
+"                            <field name=\"ref_initial\"/>\n"
+"                            <field name=\"ref_final\"/>\n"
+"                        </group>\n"
+"                    </group>\n"
+"                </xpath> \n"
+"            "
+
+#. module: stock_lot_information
+#: model:ir.model.fields,field_description:stock_lot_information.field_stock_production_lot_ref_final
 #: field:stock.production.lot,ref_final:0
 msgid "Final reference"
 msgstr "Referencia final"
 
 #. module: stock_lot_information
+#: model:ir.model.fields,field_description:stock_lot_information.field_stock_production_lot_ref_initial
 #: field:stock.production.lot,ref_initial:0
 msgid "Initial reference"
 msgstr "Referencia inicial"
@@ -30,8 +60,3 @@ msgstr "Referencia inicial"
 #: model:ir.model,name:stock_lot_information.model_stock_production_lot
 msgid "Lot/Serial"
 msgstr "Lote/Nº de serie"
-
-#. module: stock_lot_information
-#: view:stock.production.lot:stock_lot_information.view_production_lot_view
-msgid "Other Information"
-msgstr "Otra Informacion"

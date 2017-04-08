@@ -1,0 +1,124 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * stock_picking_responsible
+# 
+# Translators:
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
+# Lisandro Boggio <lboggio@ingenieriaboggio.com.ar>, 2017
+# Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 9.0c\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-04-05 15:08+0000\n"
+"PO-Revision-Date: 2017-04-05 15:08+0000\n"
+"Last-Translator: Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2017\n"
+"Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: stock_picking_responsible
+#: model:ir.ui.view,arch_db:stock_picking_responsible.view_picking_internal_search
+msgid ""
+"<?xml version=\"1.0\"?>\n"
+"<data><field name=\"partner_id\" position=\"after\">\n"
+"                    <field name=\"user_id\"/>\n"
+"                </field>\n"
+"                <group>\n"
+"                    <filter string=\"Responsible\" domain=\"[]\" context=\"{'group_by':'user_id'}\"/>\n"
+"                </group>\n"
+"            </data>"
+msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<data><field name=\"partner_id\" position=\"after\">\n"
+"                    <field name=\"user_id\"/>\n"
+"                </field>\n"
+"                <group>\n"
+"                    <filter string=\"Responsible\" domain=\"[]\" context=\"{'group_by':'user_id'}\"/>\n"
+"                </group>\n"
+"            </data>"
+
+#. module: stock_picking_responsible
+#: model:ir.ui.view,arch_db:stock_picking_responsible.view_picking_form
+msgid ""
+"<?xml version=\"1.0\"?>\n"
+"<field name=\"partner_id\" position=\"after\">\n"
+"                    <field name=\"user_id\" attrs=\"{'readonly': [('state', '=', 'done')]}\"/>\n"
+"                </field>\n"
+"            "
+msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<field name=\"partner_id\" position=\"after\">\n"
+"                    <field name=\"user_id\" attrs=\"{'readonly': [('state', '=', 'done')]}\"/>\n"
+"                </field>\n"
+"            "
+
+#. module: stock_picking_responsible
+#: model:ir.ui.view,arch_db:stock_picking_responsible.vpicktree
+msgid ""
+"<?xml version=\"1.0\"?>\n"
+"<field name=\"partner_id\" position=\"after\">\n"
+"                    <field name=\"user_id\"/>\n"
+"                </field>\n"
+"            "
+msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<field name=\"partner_id\" position=\"after\">\n"
+"                    <field name=\"user_id\"/>\n"
+"                </field>\n"
+"            "
+
+#. module: stock_picking_responsible
+#: model:ir.ui.view,arch_db:stock_picking_responsible.view_move_form
+msgid ""
+"<?xml version=\"1.0\"?>\n"
+"<field name=\"picking_id\" position=\"after\">\n"
+"                    <field name=\"picking_user_id\"/>\n"
+"                </field>\n"
+"            "
+msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<field name=\"picking_id\" position=\"after\">\n"
+"                    <field name=\"picking_user_id\"/>\n"
+"                </field>\n"
+"            "
+
+#. module: stock_picking_responsible
+#: model:ir.ui.view,arch_db:stock_picking_responsible.view_move_tree
+msgid ""
+"<?xml version=\"1.0\"?>\n"
+"<tree>\n"
+"                    <field name=\"picking_user_id\"/>\n"
+"                </tree>\n"
+"            "
+msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<tree>\n"
+"                    <field name=\"picking_user_id\"/>\n"
+"                </tree>\n"
+"            "
+
+#. module: stock_picking_responsible
+#: model:ir.model.fields,field_description:stock_picking_responsible.field_stock_move_picking_user_id
+#: field:stock.move,picking_user_id:0
+msgid "Picking Responsible"
+msgstr "Responsable de Albarán"
+
+#. module: stock_picking_responsible
+#: model:ir.model.fields,field_description:stock_picking_responsible.field_stock_picking_user_id
+#: field:stock.picking,user_id:0
+msgid "Responsible"
+msgstr " Responsable"
+
+#. module: stock_picking_responsible
+#: model:ir.model,name:stock_picking_responsible.model_stock_move
+msgid "Stock Move"
+msgstr "Movimiento stock"
+
+#. module: stock_picking_responsible
+#: model:ir.model,name:stock_picking_responsible.model_stock_picking
+msgid "Transfer"
+msgstr "Transferencia"

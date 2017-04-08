@@ -11,12 +11,12 @@ msgstr ""
 "POT-Creation-Date: 2017-04-05 15:08+0000\n"
 "PO-Revision-Date: 2017-04-05 15:08+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016\n"
-"Language-Team: Portuguese (Brazil) (https://www.transifex.com/adhoc/teams/46451/pt_BR/)\n"
+"Language-Team: Spanish (Chile) (https://www.transifex.com/adhoc/teams/46451/es_CL/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: pt_BR\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: es_CL\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: stock_inventory_preparation_filter
 #: model:ir.ui.view,arch_db:stock_inventory_preparation_filter.stock_inventory_form
@@ -71,13 +71,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_inventory_preparation_filter.field_stock_inventory_line_empty_create_uid
 #: field:stock.inventory.line.empty,create_uid:0
 msgid "Created by"
-msgstr "Criado por"
+msgstr "Created by"
 
 #. module: stock_inventory_preparation_filter
 #: model:ir.model.fields,field_description:stock_inventory_preparation_filter.field_stock_inventory_line_empty_create_date
 #: field:stock.inventory.line.empty,create_date:0
 msgid "Created on"
-msgstr "Criado em"
+msgstr "Created on"
 
 #. module: stock_inventory_preparation_filter
 #: model:ir.model.fields,field_description:stock_inventory_preparation_filter.field_stock_inventory_line_empty_display_name
@@ -121,13 +121,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_inventory_preparation_filter.field_stock_inventory_line_empty_write_uid
 #: field:stock.inventory.line.empty,write_uid:0
 msgid "Last Updated by"
-msgstr "Última atualização por"
+msgstr "Last Updated by"
 
 #. module: stock_inventory_preparation_filter
 #: model:ir.model.fields,field_description:stock_inventory_preparation_filter.field_stock_inventory_line_empty_write_date
 #: field:stock.inventory.line.empty,write_date:0
 msgid "Last Updated on"
-msgstr "Última atualização em"
+msgstr "Last Updated on"
 
 #. module: stock_inventory_preparation_filter
 #: model:ir.model.fields,field_description:stock_inventory_preparation_filter.field_stock_inventory_lot_ids
