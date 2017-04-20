@@ -20,14 +20,14 @@
 ##############################################################################
 {
     'name': 'Stock Picking Driver',
-    'version': '8.0.1.0.0',
+    'version': '8.0.1.1.0',
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
     'description': """
 Stock Picking Driver
 =====================
-
+Adds the driver person information to picking.
     """,
     'author':  'ADHOC SA',
     'website': 'www.adhoc.com.ar',
@@ -39,7 +39,7 @@ Stock Picking Driver
         'delivery',
     ],
     'data': [
-    'view/delivery_order_view.xml',
+        'view/delivery_order_view.xml',
     ],
     'demo': [
     ],
