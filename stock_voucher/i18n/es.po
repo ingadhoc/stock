@@ -5,14 +5,13 @@
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
 # Lisandro Boggio <lboggio@ingenieriaboggio.com.ar>, 2017
-# Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-05 15:08+0000\n"
-"PO-Revision-Date: 2017-04-05 15:08+0000\n"
-"Last-Translator: Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2017\n"
+"POT-Creation-Date: 2017-04-28 11:46+0000\n"
+"PO-Revision-Date: 2017-04-28 11:46+0000\n"
+"Last-Translator: Lisandro Boggio <lboggio@ingenieriaboggio.com.ar>, 2017\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -110,6 +109,7 @@ msgid ""
 "                <field name=\"voucher_required\" attrs=\"{'invisible':[('code','!=','incoming')]}\"/>\n"
 "                <field name=\"voucher_number_unique\" attrs=\"{'invisible':[('code','!=','incoming')]}\"/>\n"
 "                <field name=\"voucher_number_validator_id\" attrs=\"{'invisible':[('code','!=','incoming')]}\"/>\n"
+"                <field name=\"pricelist_id\"/>\n"
 "            </field>\n"
 "        "
 msgstr ""
@@ -413,6 +413,15 @@ msgstr ""
 " to calculate how many sequence are used on each picking"
 
 #. module: stock_voucher
+#: model:ir.model.fields,help:stock_voucher.field_stock_picking_type_pricelist_id
+#: help:stock.picking.type,pricelist_id:0
+msgid ""
+"If you choose a pricelist, \"Automatic Declare Value\" is enable on company "
+"and not sale order is found linked to the picking, we will suggest declared "
+"value using this pricelist"
+msgstr ""
+
+#. module: stock_voucher
 #: model:ir.model,name:stock_voucher.model_stock_immediate_transfer
 msgid "Immediate Transfer"
 msgstr "Transferencia inmediata"
@@ -476,7 +485,7 @@ msgstr ""
 "frecuentemente por lo que que el valor mostrado capaz que ya esté obsoleto."
 
 #. module: stock_voucher
-#: code:addons/stock_voucher/models/stock_picking.py:159
+#: code:addons/stock_voucher/models/stock_picking.py:163
 #, python-format
 msgid ""
 "No se puede validar un pickign que no esté en estado Parcialmente Disponible"
@@ -505,6 +514,11 @@ msgid "Observations"
 msgstr "Observations"
 
 #. module: stock_voucher
+#: model:ir.model,name:stock_voucher.model_stock_pack_operation
+msgid "Packing Operation"
+msgstr " Operación de empaquetado"
+
+#. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_voucher_picking_id
 #: field:stock.picking.voucher,picking_id:0
 msgid "Picking"
@@ -521,6 +535,12 @@ msgstr "Picking id"
 #, python-format
 msgid "Picking voucher number must be unique per partner"
 msgstr "El número de comprobante de albarán debe ser único por partner"
+
+#. module: stock_voucher
+#: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_type_pricelist_id
+#: field:stock.picking.type,pricelist_id:0
+msgid "Pricelist"
+msgstr ""
 
 #. module: stock_voucher
 #: model:ir.actions.act_window,name:stock_voucher.action_stock_print_voucher
@@ -571,7 +591,7 @@ msgid "The field \"Number\" must be unique per book."
 msgstr "El campo  \"Número \" debe ser único por Talonario."
 
 #. module: stock_voucher
-#: code:addons/stock_voucher/models/stock_picking.py:166
+#: code:addons/stock_voucher/models/stock_picking.py:170
 #, python-format
 msgid "The number of packages can not be 0"
 msgstr "El numero de bultos no puede ser 0"
@@ -617,13 +637,13 @@ msgid "Vouchers"
 msgstr "Remitos"
 
 #. module: stock_voucher
-#: code:addons/stock_voucher/models/stock_picking.py:168
+#: code:addons/stock_voucher/models/stock_picking.py:172
 #, python-format
 msgid "You must select a Voucher Book"
 msgstr "Debe seleccionar  un Libro de Comprobante"
 
 #. module: stock_voucher
-#: code:addons/stock_voucher/models/stock_picking.py:170
+#: code:addons/stock_voucher/models/stock_picking.py:174
 #, python-format
 msgid "You must set stock voucher numbers"
 msgstr "Debe ingresar número de bultos"
