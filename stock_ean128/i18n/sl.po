@@ -4,21 +4,19 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
-# Lisandro Boggio <lboggio@ingenieriaboggio.com.ar>, 2017
-# Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-04-05 15:08+0000\n"
 "PO-Revision-Date: 2017-04-05 15:08+0000\n"
-"Last-Translator: Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2017\n"
-"Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016\n"
+"Language-Team: Slovenian (https://www.transifex.com/adhoc/teams/46451/sl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: es\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: sl\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
 
 #. module: stock_ean128
 #: model:ir.ui.view,arch_db:stock_ean128.view_product_template_search
@@ -29,11 +27,6 @@ msgid ""
 "                </field>\n"
 "            "
 msgstr ""
-"<?xml version=\"1.0\"?>\n"
-"<field name=\"name\" position=\"after\">\n"
-"                    <field name=\"lot_ids\"/>\n"
-"                </field>\n"
-"            "
 
 #. module: stock_ean128
 #: model:ir.ui.view,arch_db:stock_ean128.view_stock_lot_search
@@ -44,11 +37,6 @@ msgid ""
 "                </field>\n"
 "            "
 msgstr ""
-"<?xml version=\"1.0\"?>\n"
-"<field name=\"product_id\" position=\"before\">\n"
-"                    <field name=\"ean_128\"/>\n"
-"                </field>\n"
-"            "
 
 #. module: stock_ean128
 #: model:ir.ui.view,arch_db:stock_ean128.view_stock_lot
@@ -59,36 +47,31 @@ msgid ""
 "                </field>\n"
 "            "
 msgstr ""
-"<?xml version=\"1.0\"?>\n"
-"<field name=\"ref\" position=\"after\">\n"
-"                    <field name=\"ean_128\"/>\n"
-"                </field>\n"
-"            "
 
 #. module: stock_ean128
 #: model:ir.model.fields,field_description:stock_ean128.field_stock_production_lot_ean_128
 #: field:stock.production.lot,ean_128:0
 msgid "EAN128"
-msgstr "EAN128"
+msgstr ""
 
 #. module: stock_ean128
 #: model:ir.model,name:stock_ean128.model_stock_production_lot
 msgid "Lot/Serial"
-msgstr "Lote/Nº de serie"
+msgstr ""
 
 #. module: stock_ean128
 #: model:ir.model.fields,field_description:stock_ean128.field_product_product_lot_ids
 #: model:ir.model.fields,field_description:stock_ean128.field_product_template_lot_ids
 #: field:product.product,lot_ids:0 field:product.template,lot_ids:0
 msgid "Lots"
-msgstr "Lotes"
+msgstr "Loti"
 
 #. module: stock_ean128
 #: model:ir.model,name:stock_ean128.model_product_product
 msgid "Product"
-msgstr "Producto"
+msgstr ""
 
 #. module: stock_ean128
 #: model:ir.model,name:stock_ean128.model_product_template
 msgid "Product Template"
-msgstr "Plantilla de producto"
+msgstr ""

@@ -89,15 +89,24 @@ class StockPicking(models.Model):
             done_value = 0.0
             picking_value = 0.0
             inmediate_transfer = True
-
             for x in rec.pack_operation_ids:
                 order_line = rec.env['sale.order.line'].search(
                     [('order_id', '=', rec.sale_id.id),
                      ('product_id', '=', x.product_id.id)], limit=1)
                 if x.qty_done:
                     inmediate_transfer = False
-                picking_value += (order_line.price_reduce * x.product_qty)
-                done_value += (order_line.price_reduce * x.qty_done)
+                if order_line:
+                    picking_value += (order_line.price_reduce * x.product_qty)
+                    done_value += (order_line.price_reduce * x.qty_done)
+                elif rec.picking_type_id.pricelist_id:
+                    price = rec.picking_type_id.pricelist_id.with_context(
+                        uom=x.product_id.uom_id.id).price_get(
+                        x.product_id.id, x.qty_done or 1.0,
+                        partner=rec.partner_id.id)[
+                        rec.picking_type_id.pricelist_id.id]
+                    picking_value += (price * x.product_qty)
+                    done_value += (price * x.qty_done)
+
             if inmediate_transfer:
                 rec.declared_value = picking_value
             else:
@@ -169,3 +178,14 @@ class StockPicking(models.Model):
         if res is None and len(self) == 1 and self.book_required:
             return picking.do_print_voucher()
         return res
+
+
+class StockPickingType(models.Model):
+    _inherit = 'stock.picking.type'
+
+    pricelist_id = fields.Many2one(
+        'product.pricelist',
+        'Pricelist',
+        help='If you choose a pricelist, "Automatic Declare Value" is'
+        ' enable on company and not sale order is found linked to the'
+        ' picking, we will suggest declared value using this pricelist')

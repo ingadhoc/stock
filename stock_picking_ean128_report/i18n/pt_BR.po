@@ -1,0 +1,230 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * stock_picking_ean128_report
+# 
+# Translators:
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 9.0c\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-04-05 15:08+0000\n"
+"PO-Revision-Date: 2017-04-05 15:08+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016\n"
+"Language-Team: Portuguese (Brazil) (https://www.transifex.com/adhoc/teams/46451/pt_BR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: pt_BR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: stock_picking_ean128_report
+#: model:ir.ui.view,arch_db:stock_picking_ean128_report.view_print_stock_lot_remit_form
+msgid ""
+"<?xml version=\"1.0\"?>\n"
+"<form string=\"Print Stock Lot Remit\">\n"
+"                    <group>\n"
+"                        <field name=\"product_id\"/>\n"
+"                        <field name=\"quantity\"/>\n"
+"                    </group>\n"
+"                    \n"
+"                <footer>\n"
+"                    <button name=\"do_print_report\" type=\"object\" class=\"oe_highlight\" string=\"Print\"/>\n"
+"                    or\n"
+"                    <button name=\"do_print_report_excel\" type=\"object\" class=\"oe_highlight\" string=\"Print List\"/>\n"
+"                    or\n"
+"                    <button string=\"Cancel\" class=\"oe_link\" special=\"cancel\"/>\n"
+"                </footer>\n"
+"                </form>\n"
+"            "
+msgstr ""
+
+#. module: stock_picking_ean128_report
+#: model:ir.ui.view,arch_db:stock_picking_ean128_report.view_print_ean128_report_detail_form
+msgid ""
+"<?xml version=\"1.0\"?>\n"
+"<form string=\"Print Stock Picking Remit\">\n"
+"                    <group>\n"
+"                        <field name=\"product_id\"/>\n"
+"                        <field name=\"product_uom_id\"/>\n"
+"                        <field name=\"lot_id\"/>\n"
+"                        <field name=\"quantity\"/>\n"
+"                    </group>\n"
+"                </form>\n"
+"            "
+msgstr ""
+
+#. module: stock_picking_ean128_report
+#: model:ir.ui.view,arch_db:stock_picking_ean128_report.view_print_stock_picking_remit_form
+msgid ""
+"<?xml version=\"1.0\"?>\n"
+"<form string=\"Print Stock Picking Remit\">\n"
+"                    <group>\n"
+"                        <field name=\"stock_picking_line_ids\"/>\n"
+"                    </group>\n"
+"                    \n"
+"                <footer>\n"
+"                    <button name=\"do_print_report\" type=\"object\" class=\"oe_highlight\" string=\"Print\"/>\n"
+"                    or\n"
+"                    <button name=\"do_print_report_excel\" type=\"object\" class=\"oe_highlight\" string=\"Print List\"/>\n"
+"                    or\n"
+"                    <button string=\"Cancel\" class=\"oe_link\" special=\"cancel\"/>\n"
+"                </footer>\n"
+"                </form>\n"
+"            "
+msgstr ""
+
+#. module: stock_picking_ean128_report
+#: model:ir.ui.view,arch_db:stock_picking_ean128_report.view_print_ean128_report_detail_tree
+msgid ""
+"<?xml version=\"1.0\"?>\n"
+"<tree string=\"Print Stock Picking Remit\" editable=\"top\" create=\"0\">\n"
+"                    <field name=\"product_id\"/>\n"
+"                    <field name=\"product_uom_id\"/>\n"
+"                    <field name=\"lot_id\"/>\n"
+"                    <field name=\"quantity\"/>\n"
+"                </tree>\n"
+"            "
+msgstr ""
+
+#. module: stock_picking_ean128_report
+#: model:ir.model.fields,field_description:stock_picking_ean128_report.field_stock_lot_print_ean128_report_create_uid
+#: model:ir.model.fields,field_description:stock_picking_ean128_report.field_stock_picking_print_ean128_report_create_uid
+#: model:ir.model.fields,field_description:stock_picking_ean128_report.field_stock_picking_print_ean128_report_detail_create_uid
+#: field:stock.lot.print_ean128_report,create_uid:0
+#: field:stock.picking.print_ean128_report,create_uid:0
+#: field:stock.picking.print_ean128_report_detail,create_uid:0
+msgid "Created by"
+msgstr "Criado por"
+
+#. module: stock_picking_ean128_report
+#: model:ir.model.fields,field_description:stock_picking_ean128_report.field_stock_lot_print_ean128_report_create_date
+#: model:ir.model.fields,field_description:stock_picking_ean128_report.field_stock_picking_print_ean128_report_create_date
+#: model:ir.model.fields,field_description:stock_picking_ean128_report.field_stock_picking_print_ean128_report_detail_create_date
+#: field:stock.lot.print_ean128_report,create_date:0
+#: field:stock.picking.print_ean128_report,create_date:0
+#: field:stock.picking.print_ean128_report_detail,create_date:0
+msgid "Created on"
+msgstr "Criado em"
+
+#. module: stock_picking_ean128_report
+#: model:ir.model.fields,field_description:stock_picking_ean128_report.field_stock_lot_print_ean128_report_display_name
+#: model:ir.model.fields,field_description:stock_picking_ean128_report.field_stock_picking_print_ean128_report_detail_display_name
+#: model:ir.model.fields,field_description:stock_picking_ean128_report.field_stock_picking_print_ean128_report_display_name
+#: field:stock.lot.print_ean128_report,display_name:0
+#: field:stock.picking.print_ean128_report,display_name:0
+#: field:stock.picking.print_ean128_report_detail,display_name:0
+msgid "Display Name"
+msgstr ""
+
+#. module: stock_picking_ean128_report
+#: model:ir.model.fields,field_description:stock_picking_ean128_report.field_stock_lot_print_ean128_report_id
+#: model:ir.model.fields,field_description:stock_picking_ean128_report.field_stock_picking_print_ean128_report_detail_id
+#: model:ir.model.fields,field_description:stock_picking_ean128_report.field_stock_picking_print_ean128_report_id
+#: field:stock.lot.print_ean128_report,id:0
+#: field:stock.picking.print_ean128_report,id:0
+#: field:stock.picking.print_ean128_report_detail,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: stock_picking_ean128_report
+#: model:ir.model.fields,field_description:stock_picking_ean128_report.field_stock_lot_print_ean128_report___last_update
+#: model:ir.model.fields,field_description:stock_picking_ean128_report.field_stock_picking_print_ean128_report___last_update
+#: model:ir.model.fields,field_description:stock_picking_ean128_report.field_stock_picking_print_ean128_report_detail___last_update
+#: field:stock.lot.print_ean128_report,__last_update:0
+#: field:stock.picking.print_ean128_report,__last_update:0
+#: field:stock.picking.print_ean128_report_detail,__last_update:0
+msgid "Last Modified on"
+msgstr ""
+
+#. module: stock_picking_ean128_report
+#: model:ir.model.fields,field_description:stock_picking_ean128_report.field_stock_lot_print_ean128_report_write_uid
+#: model:ir.model.fields,field_description:stock_picking_ean128_report.field_stock_picking_print_ean128_report_detail_write_uid
+#: model:ir.model.fields,field_description:stock_picking_ean128_report.field_stock_picking_print_ean128_report_write_uid
+#: field:stock.lot.print_ean128_report,write_uid:0
+#: field:stock.picking.print_ean128_report,write_uid:0
+#: field:stock.picking.print_ean128_report_detail,write_uid:0
+msgid "Last Updated by"
+msgstr "Última atualização por"
+
+#. module: stock_picking_ean128_report
+#: model:ir.model.fields,field_description:stock_picking_ean128_report.field_stock_lot_print_ean128_report_write_date
+#: model:ir.model.fields,field_description:stock_picking_ean128_report.field_stock_picking_print_ean128_report_detail_write_date
+#: model:ir.model.fields,field_description:stock_picking_ean128_report.field_stock_picking_print_ean128_report_write_date
+#: field:stock.lot.print_ean128_report,write_date:0
+#: field:stock.picking.print_ean128_report,write_date:0
+#: field:stock.picking.print_ean128_report_detail,write_date:0
+msgid "Last Updated on"
+msgstr "Última atualização em"
+
+#. module: stock_picking_ean128_report
+#: model:ir.model.fields,field_description:stock_picking_ean128_report.field_stock_picking_print_ean128_report_detail_lot_id
+#: field:stock.picking.print_ean128_report_detail,lot_id:0
+msgid "Lot"
+msgstr ""
+
+#. module: stock_picking_ean128_report
+#: model:ir.model.fields,field_description:stock_picking_ean128_report.field_stock_lot_print_ean128_report_lot_id
+#: field:stock.lot.print_ean128_report,lot_id:0
+msgid "Lot id"
+msgstr ""
+
+#. module: stock_picking_ean128_report
+#: model:ir.model.fields,field_description:stock_picking_ean128_report.field_stock_picking_print_ean128_report_detail_stock_picking_report_id
+#: field:stock.picking.print_ean128_report_detail,stock_picking_report_id:0
+msgid "Picking Report EAN Print"
+msgstr ""
+
+#. module: stock_picking_ean128_report
+#: model:ir.actions.act_window,name:stock_picking_ean128_report.action_stock_lot_print_remit
+msgid "Print Stock Lot Remit"
+msgstr ""
+
+#. module: stock_picking_ean128_report
+#: model:ir.actions.act_window,name:stock_picking_ean128_report.action_stock_print_remit
+msgid "Print Stock Picking Remit"
+msgstr ""
+
+#. module: stock_picking_ean128_report
+#: model:ir.model.fields,field_description:stock_picking_ean128_report.field_stock_lot_print_ean128_report_product_id
+#: model:ir.model.fields,field_description:stock_picking_ean128_report.field_stock_picking_print_ean128_report_detail_product_id
+#: field:stock.lot.print_ean128_report,product_id:0
+#: field:stock.picking.print_ean128_report_detail,product_id:0
+msgid "Product"
+msgstr ""
+
+#. module: stock_picking_ean128_report
+#: model:ir.model.fields,field_description:stock_picking_ean128_report.field_stock_picking_print_ean128_report_stock_picking_line_ids
+#: field:stock.picking.print_ean128_report,stock_picking_line_ids:0
+msgid "Product Print"
+msgstr ""
+
+#. module: stock_picking_ean128_report
+#: model:ir.model.fields,field_description:stock_picking_ean128_report.field_stock_lot_print_ean128_report_quantity
+#: model:ir.model.fields,field_description:stock_picking_ean128_report.field_stock_picking_print_ean128_report_detail_quantity
+#: field:stock.lot.print_ean128_report,quantity:0
+#: field:stock.picking.print_ean128_report_detail,quantity:0
+msgid "Quantity"
+msgstr ""
+
+#. module: stock_picking_ean128_report
+#: model:ir.actions.report.xml,name:stock_picking_ean128_report.report_lot_ean128_excel
+#: model:ir.actions.report.xml,name:stock_picking_ean128_report.report_lot_ean128_odt
+msgid "Stock Lot EAN128 Report"
+msgstr ""
+
+#. module: stock_picking_ean128_report
+#: model:ir.actions.report.xml,name:stock_picking_ean128_report.report_picking_ean128_excel
+msgid "Stock Picking EAN128 Report - EXCEL"
+msgstr ""
+
+#. module: stock_picking_ean128_report
+#: model:ir.actions.report.xml,name:stock_picking_ean128_report.report_picking_ean128_odt
+msgid "Stock Picking EAN128 Report - ODT"
+msgstr ""
+
+#. module: stock_picking_ean128_report
+#: model:ir.model.fields,field_description:stock_picking_ean128_report.field_stock_picking_print_ean128_report_detail_product_uom_id
+#: field:stock.picking.print_ean128_report_detail,product_uom_id:0
+msgid "UOM"
+msgstr ""

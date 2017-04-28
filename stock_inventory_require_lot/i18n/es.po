@@ -1,0 +1,52 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * stock_inventory_require_lot
+# 
+# Translators:
+# Lisandro Boggio <lboggio@ingenieriaboggio.com.ar>, 2017
+# Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 9.0c\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-04-05 15:08+0000\n"
+"PO-Revision-Date: 2017-04-05 15:08+0000\n"
+"Last-Translator: Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2017\n"
+"Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: stock_inventory_require_lot
+#: model:ir.ui.view,arch_db:stock_inventory_require_lot.view_inventory_form
+msgid ""
+"<?xml version=\"1.0\"?>\n"
+"<data><xpath expr=\"//tree//field[@name='prod_lot_id']\" position=\"after\">\n"
+"                    <field name=\"tracking\" invisible=\"1\"/>\n"
+"                </xpath>\n"
+"                <xpath expr=\"//tree//field[@name='prod_lot_id']\" position=\"attributes\">\n"
+"                    <attribute name=\"attrs\">{'required': [('tracking','in', ['serial', 'lot'])]}</attribute>\n"
+"                </xpath>\n"
+"            </data>"
+msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<data><xpath expr=\"//tree//field[@name='prod_lot_id']\" position=\"after\">\n"
+"                    <field name=\"tracking\" invisible=\"1\"/>\n"
+"                </xpath>\n"
+"                <xpath expr=\"//tree//field[@name='prod_lot_id']\" position=\"attributes\">\n"
+"                    <attribute name=\"attrs\">{'required': [('tracking','in', ['serial', 'lot'])]}</attribute>\n"
+"                </xpath>\n"
+"            </data>"
+
+#. module: stock_inventory_require_lot
+#: model:ir.model,name:stock_inventory_require_lot.model_stock_inventory_line
+msgid "Inventory Line"
+msgstr "Línea de inventario"
+
+#. module: stock_inventory_require_lot
+#: model:ir.model.fields,field_description:stock_inventory_require_lot.field_stock_inventory_line_tracking
+#: field:stock.inventory.line,tracking:0
+msgid "Tracking"
+msgstr "Seguimiento"

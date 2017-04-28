@@ -1,0 +1,138 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * stock_picking_control
+# 
+# Translators:
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 9.0c\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-04-05 15:08+0000\n"
+"PO-Revision-Date: 2017-04-05 15:08+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016\n"
+"Language-Team: Spanish (Chile) (https://www.transifex.com/adhoc/teams/46451/es_CL/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: es_CL\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: stock_picking_control
+#: model:ir.ui.view,arch_db:stock_picking_control.view_picking_form
+msgid ""
+"<?xml version=\"1.0\"?>\n"
+"<data><field name=\"partner_id\" position=\"after\">\n"
+"                    <field name=\"block_add_lines\" invisible=\"1\"/>\n"
+"                    <field name=\"block_additional_quantiy\" invisible=\"1\"/>\n"
+"                </field>\n"
+"                <field name=\"move_lines_related\" position=\"attributes\">\n"
+"                     <attribute name=\"attrs\">{'readonly':[('block_add_lines','=',True)],'invisible': [('state', 'in', ('draft', 'confirmed', 'waiting', 'done'))]}</attribute>\n"
+"                </field>\n"
+"                <field name=\"move_lines\" position=\"attributes\">\n"
+"                     <attribute name=\"attrs\">{'readonly':[('block_add_lines','=',True)],'invisible':  [('state', 'not in', ('draft', 'confirmed', 'waiting'))]}</attribute>\n"
+"                </field>\n"
+"\n"
+"                <!-- this came from tran.. personalization -->\n"
+"                <field name=\"partner_id\" position=\"attributes\">\n"
+"                    <attribute name=\"attrs\">{'readonly':[('block_add_lines','=',True)]}</attribute>\n"
+"                </field>\n"
+"\n"
+"                <field name=\"min_date\" position=\"attributes\">\n"
+"                    <attribute name=\"attrs\">{'readonly':[('block_add_lines','=',True)]}</attribute>\n"
+"                </field>\n"
+"                <field name=\"origin\" position=\"attributes\">\n"
+"                    <attribute name=\"attrs\">{'readonly':[('block_add_lines','=',True)]}</attribute>\n"
+"                </field>\n"
+"                <field name=\"move_type\" position=\"attributes\">\n"
+"                    <attribute name=\"attrs\">{'readonly':[('block_add_lines','=',True)]}</attribute>\n"
+"                </field>\n"
+"                <field name=\"declared_value\" position=\"attributes\">\n"
+"                    <attribute name=\"attrs\">{'readonly':[('block_add_lines','=',True)]}</attribute>\n"
+"                </field>\n"
+"            </data>"
+msgstr ""
+
+#. module: stock_picking_control
+#: model:ir.ui.view,arch_db:stock_picking_control.view_picking_type_form
+msgid ""
+"<?xml version=\"1.0\"?>\n"
+"<group position=\"inside\">\n"
+"                    <group string=\"Stock\">\n"
+"                        <field name=\"block_add_lines\"/>\n"
+"                        <field name=\"block_additional_quantiy\"/>\n"
+"                    </group>\n"
+"                </group>\n"
+"            "
+msgstr ""
+
+#. module: stock_picking_control
+#: model:ir.model.fields,field_description:stock_picking_control.field_stock_picking_block_add_lines
+#: model:ir.model.fields,field_description:stock_picking_control.field_stock_picking_type_block_add_lines
+#: field:stock.picking,block_add_lines:0
+#: field:stock.picking.type,block_add_lines:0
+msgid "Block Picking Edit"
+msgstr ""
+
+#. module: stock_picking_control
+#: model:ir.model.fields,field_description:stock_picking_control.field_stock_pack_operation_block_additional_quantiy
+#: model:ir.model.fields,field_description:stock_picking_control.field_stock_picking_block_additional_quantiy
+#: model:ir.model.fields,field_description:stock_picking_control.field_stock_picking_type_block_additional_quantiy
+#: field:stock.pack.operation,block_additional_quantiy:0
+#: field:stock.picking,block_additional_quantiy:0
+#: field:stock.picking.type,block_additional_quantiy:0
+msgid "Block additional quantiy"
+msgstr ""
+
+#. module: stock_picking_control
+#: model:ir.model,name:stock_picking_control.model_stock_pack_operation
+msgid "Packing Operation"
+msgstr ""
+
+#. module: stock_picking_control
+#: model:res.groups,name:stock_picking_control.group_restrict_edit_picking
+msgid "Restrict Edit Blocked Pickings"
+msgstr ""
+
+#. module: stock_picking_control
+#: model:ir.model.fields,help:stock_picking_control.field_stock_picking_block_add_lines
+#: model:ir.model.fields,help:stock_picking_control.field_stock_picking_type_block_add_lines
+#: help:stock.picking,block_add_lines:0
+#: help:stock.picking.type,block_add_lines:0
+msgid ""
+"Restrict add lines, change parters and other fields edition on pickings of "
+"this type. This will only apply to users with group 'Restrict Edit Blocked "
+"Pickings'"
+msgstr ""
+
+#. module: stock_picking_control
+#: model:ir.model.fields,help:stock_picking_control.field_stock_pack_operation_block_additional_quantiy
+#: model:ir.model.fields,help:stock_picking_control.field_stock_picking_block_additional_quantiy
+#: model:ir.model.fields,help:stock_picking_control.field_stock_picking_type_block_additional_quantiy
+#: help:stock.pack.operation,block_additional_quantiy:0
+#: help:stock.picking,block_additional_quantiy:0
+#: help:stock.picking.type,block_additional_quantiy:0
+msgid "Restrict additional quantity"
+msgstr ""
+
+#. module: stock_picking_control
+#: model:ir.model,name:stock_picking_control.model_stock_picking_type
+msgid "The picking type determines the picking view"
+msgstr "El tipo de albarán determina la vista de albarán"
+
+#. module: stock_picking_control
+#: model:ir.model,name:stock_picking_control.model_stock_picking
+msgid "Transfer"
+msgstr ""
+
+#. module: stock_picking_control
+#: code:addons/stock_picking_control/models/stock.py:31
+#, python-format
+msgid "You can not add operations to this picking"
+msgstr ""
+
+#. module: stock_picking_control
+#: code:addons/stock_picking_control/models/stock.py:23
+#, python-format
+msgid "You can not transfer a product without a move on the picking!"
+msgstr ""

@@ -1,0 +1,60 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * stock_picking_locations
+# 
+# Translators:
+# Lisandro Boggio <lboggio@ingenieriaboggio.com.ar>, 2017
+# Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 9.0c\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-11-11 16:22+0000\n"
+"PO-Revision-Date: 2016-11-11 16:22+0000\n"
+"Last-Translator: Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2017\n"
+"Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: stock_picking_locations
+#: model:ir.model.fields,field_description:stock_picking_locations.field_stock_picking_new_location_dest_id
+msgid "Destination Location"
+msgstr "Ubicación destino"
+
+#. module: stock_picking_locations
+#: model:ir.model.fields,help:stock_picking_locations.field_stock_picking_new_location_dest_id
+msgid ""
+"Location where the system will stock the finished products.         This "
+"will be the default of the asociated stock moves."
+msgstr ""
+"Lugar donde el sistema almacenará los productos terminados. Este será el "
+"valor predeterminado de los movimientos de acciones asociadas."
+
+#. module: stock_picking_locations
+#: model:ir.model.fields,help:stock_picking_locations.field_stock_picking_new_location_id
+msgid ""
+"Sets a location if you produce at a fixed location.         This can be a "
+"partner location if you subcontract the'          manufacturing operations. "
+"This will be the default of           the asociated stock moves."
+msgstr ""
+"Establece una ubicación si se produce en una ubicación fija. Esto puede ser "
+"una ubicación de Partner si subcontrata las operaciones de fabricación. Este"
+" será el valor predeterminado de los movimientos de acciones asociadas."
+
+#. module: stock_picking_locations
+#: model:ir.model.fields,field_description:stock_picking_locations.field_stock_picking_new_location_id
+msgid "Source Location"
+msgstr "Ubicación Origen"
+
+#. module: stock_picking_locations
+#: model:ir.model,name:stock_picking_locations.model_stock_picking
+msgid "Transfer"
+msgstr "Transferencia"
+
+#. module: stock_picking_locations
+#: model:ir.ui.view,arch_db:stock_picking_locations.stock_picking_location_stock_picking_form
+msgid "Update Locations"
+msgstr "Actualizar Ubicaciones"
