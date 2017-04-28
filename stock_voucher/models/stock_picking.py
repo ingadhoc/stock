@@ -75,13 +75,7 @@ class StockPicking(models.Model):
     def _get_book(self):
         self.book_id = self.picking_type_id.book_id
 
-    @api.one
-    @api.constrains(
-        'recompute_pack_op',
-        'pack_operation_ids',
-        'pack_operation_product_ids',
-        'pack_operation_pack_ids',
-    )
+    @api.multi
     @api.onchange(
         'pack_operation_ids',
         'pack_operation_product_ids',
@@ -89,24 +83,25 @@ class StockPicking(models.Model):
     )
     def product_onchange(self):
         # self.declared_value = 0
-        if not self.automatic_declare_value:
-            return True
-        done_value = 0.0
-        picking_value = 0.0
-        inmediate_transfer = True
+        for rec in self:
+            if not rec.automatic_declare_value:
+                return True
+            done_value = 0.0
+            picking_value = 0.0
+            inmediate_transfer = True
 
-        for x in self.pack_operation_ids:
-            order_line = self.env['sale.order.line'].search(
-                [('order_id', '=', self.sale_id.id),
-                 ('product_id', '=', x.product_id.id)], limit=1)
-            if x.qty_done:
-                inmediate_transfer = False
-            picking_value += (order_line.price_reduce * x.product_qty)
-            done_value += (order_line.price_reduce * x.qty_done)
-        if inmediate_transfer:
-            self.declared_value = picking_value
-        else:
-            self.declared_value = done_value
+            for x in rec.pack_operation_ids:
+                order_line = rec.env['sale.order.line'].search(
+                    [('order_id', '=', rec.sale_id.id),
+                     ('product_id', '=', x.product_id.id)], limit=1)
+                if x.qty_done:
+                    inmediate_transfer = False
+                picking_value += (order_line.price_reduce * x.product_qty)
+                done_value += (order_line.price_reduce * x.qty_done)
+            if inmediate_transfer:
+                rec.declared_value = picking_value
+            else:
+                rec.declared_value = done_value
 
     @api.multi
     def do_print_voucher(self):
