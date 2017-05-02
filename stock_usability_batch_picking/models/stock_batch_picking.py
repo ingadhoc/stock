@@ -115,6 +115,13 @@ class StockBatchPicking(models.Model):
                     'operación.'))
             if rec.picking_code == 'incoming' and rec.voucher_number:
                 for picking in rec.active_picking_ids:
+                    # agregamos esto para que no se asigne a los pickings
+                    # que no se van a recibir ya que todavia no se limpiaron
+                    # y ademas, por lo de arriba, no se fuerza la cantidad
+                    # si son todos cero, se terminan sacando
+                    if all(operation.qty_done == 0
+                            for operation in picking.pack_operation_ids):
+                        continue
                     rec.env['stock.picking.voucher'].create({
                         'picking_id': picking.id,
                         'name': rec.voucher_number,
