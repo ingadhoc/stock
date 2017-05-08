@@ -24,17 +24,23 @@ class stock_transfer_details(models.TransientModel):
                 if lot:
                     quants = self.env['stock.quant'].search(
                         [('id', 'in', lot.quant_ids.ids),
-                         ('location_id', '=', self.item_ids[0].sourceloc_id.id)])
+                         ('location_id', '=', self.item_ids[
+                          0].sourceloc_id.id), '|',
+                         ('reservation_id', '=', False),
+                         ('reservation_id.picking_id', '=', self.
+                            picking_id.id)])
                     if quants:
                         qty = sum([x.qty for x in quants])
                     else:
                         qty = 0.0
                     if qty < item['quantity']:
                         raise Warning(
-                            _('Sending amount can not exceed the quantity in stock for this product in this lot. \
+                            _('Sending amount can not exceed the quantity'
+                              ' in stock for this product in this lot. \
                             \n Product:%s \
                             \n Lot:%s \
-                            \n Stock:%s') % (lot.product_id.name, lot.name, qty))
+                            \n Stock:%s') % (
+                                lot.product_id.name, lot.name, qty))
 
             super(stock_transfer_details, self).do_detailed_transfer()
         else:
