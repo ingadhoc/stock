@@ -18,7 +18,10 @@ class StockPackOperation(models.Model):
             for pack in self.pack_lot_ids:
                 quants = self.env['stock.quant'].search(
                     [('id', 'in', pack.lot_id.quant_ids.ids),
-                     ('location_id', '=', self.location_id.id)])
+                     ('location_id', '=', self.location_id.id), '|',
+                     ('reservation_id', '=', False),
+                     ('reservation_id.picking_id', '=', self.
+                      picking_id.id)])
                 if quants:
                     qty = sum([x.qty for x in quants])
                 else:
