@@ -44,7 +44,6 @@ class StockProcurementRequest(models.Model):
         help="Preferred route to be followed by the procurement order. "
         "Usually copied from the generating document (SO) but could be set "
         "up manually.",
-        required=True,
     )
     warehouse_id = fields.Many2one(
         'stock.warehouse',
