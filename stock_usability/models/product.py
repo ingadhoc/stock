@@ -27,9 +27,9 @@ class ProductProduct(models.Model):
             ('location_id.usage', '=', 'customer')]
 
         if location:
-            base_domain_send += [('location_id', '=', location.id)]
+            base_domain_send += [('location_id', 'child_of', location.id)]
             base_domain_return += [
-                ('location_dest_id', '=', location.id)]
+                ('location_dest_id', 'child_of', location.id)]
 
         # from any location to customers
         rotation = sum(self.env['stock.move'].search(
