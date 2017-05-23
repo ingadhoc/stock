@@ -18,6 +18,7 @@ Several improovements to stock:
 #. On draft pickings, if you change source or target locations, related moves will be update accordingly (by default they where not updated).
 #. Block change of picking type in other state than 'draft'
 #. Add button "Set all Done" on pack operations
+#. Add tracking field and Messaging in "Stock Warehouse Orderpoint".
 
 Installation
 ============

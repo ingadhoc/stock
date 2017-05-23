@@ -14,7 +14,8 @@ logger = logging.getLogger(__name__)
 
 
 class StockWarehouseOrderpoint(models.Model):
-    _inherit = 'stock.warehouse.orderpoint'
+    _name = 'stock.warehouse.orderpoint'
+    _inherit = ['stock.warehouse.orderpoint', 'mail.thread']
 
     rotation = fields.Float(
         help='Cantidades entregadas a clientes en los '
@@ -30,6 +31,11 @@ class StockWarehouseOrderpoint(models.Model):
         compute='_compute_rotation',
         digits=dp.get_precision('Product Unit of Measure'),
     )
+    product_min_qty = fields.Float(track_visibility='always')
+    product_max_qty = fields.Float(track_visibility='always')
+    qty_multiple = fields.Float(track_visibility='always')
+    location_id = fields.Many2one(track_visibility='always')
+    product_id = fields.Many2one(track_visibility='always')
 
     @api.multi
     @api.depends('product_id', 'location_id')
