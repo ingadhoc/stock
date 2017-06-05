@@ -30,7 +30,8 @@ class StockPackOperation(models.Model):
                     raise UserError(
                         _('Sending amount can not exceed the quantity in\
                          stock for this product in this lot. \
-                        \n Product:%s \
-                        \n Lot:%s \
-                        \n Stock:%s') % (pack.lot_id.product_id.
-                                         name, pack.lot_id.name, qty))
+                        \n Product: %s \
+                        \n Lot: %s \
+                        \n Stock: %s') % (
+                            pack.lot_id.product_id.
+                            name, pack.lot_id.name, qty))
