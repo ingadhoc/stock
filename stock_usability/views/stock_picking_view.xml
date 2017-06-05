@@ -11,6 +11,12 @@
             <field name="origin" position="after">
                 <field string="Source Document" name="sale_id" attrs="{'invisible': [('sale_id','=',False)]}"/>
             </field> -->
+
+            <!-- Make moves visible on pickings no matter the state (remove done from attrs) -->
+            <field name="move_lines_related" position="attributes">
+                <attribute name="attrs">{'invisible': [('state', 'in', ('draft', 'confirmed', 'waiting'))]}</attribute>
+            </field>
+
             <field name="name" position="after">
               <button name="add_picking_operation"  class="oe_inline oe_right" type="object" string="Process Products" attrs="{'invisible': [('state', 'not in', ['partially_available', 'assigned'])]}"/>
             </field>

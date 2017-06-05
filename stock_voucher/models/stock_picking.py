@@ -138,6 +138,19 @@ class StockPicking(models.Model):
         """
         If book required then we assign numbers
         """
+        for picking in self:
+            # con esto arreglamos que odoo dejaria entregar varias veces el
+            # mismo picking si por alguna razon el boton esta presente
+            # en nuestro caso pasaba cuando la impresion da algun error
+            # lo que provoca que el picking se entregue pero la pantalla no
+            # se actualice
+            # antes lo haciamo en do_new_transfer, pero como algunas
+            # veces se llama este metodo sin pasar por do_new_transfer
+            if picking.state not in ['partially_available', 'assigned']:
+                raise UserError(_(
+                    'No se puede validar un picking que no esté en estado '
+                    'Parcialmente Disponible o Reservado, probablemente el '
+                    'picking ya fue validado, pruebe refrezcar la ventana!'))
         res = super(StockPicking, self).do_transfer()
         for picking in self:
             if picking.book_required:
@@ -154,15 +167,8 @@ class StockPicking(models.Model):
         # active_id could not be the picking
         self = self.with_context(picking_id=self.id)
         for picking in self:
-            # con esto arreglamos que odoo dejaria entregar varias veces el
-            # mismo picking si por alguna razon el boton esta presente
-            # en nuestro caso pasaba cuando la impresion da algun error
-            # lo que provoca que el picking se entregue pero la pantalla no
-            # se actualice
-            if picking.state not in ['partially_available', 'assigned']:
-                raise UserError(_(
-                    'No se puede validar un pickign que no esté en estado '
-                    'Parcialmente Disponible o Reservado'))
+            # estos chequeos no son tan grosos y preferimos hacerlos aca antes
+            # de llamar al transfer porque demora mucho
             if picking.picking_type_id.code == 'outgoing':
                 if (
                         picking.restrict_number_package and
