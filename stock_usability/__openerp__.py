@@ -38,6 +38,7 @@
         'views/stock_move_view.xml',
         'views/stock_pack_operation_view.xml',
         'views/stock_warehouse_orderpoint_view.xml',
+        'views/procurement_order_view.xml',
     ],
     'demo': [
     ],

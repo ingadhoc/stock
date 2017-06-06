@@ -30,7 +30,7 @@
     'images': [
     ],
     'depends': [
-        'stock',
+        'stock_usability',
     ],
     'data': [
         'views/stock_procurement_request_view.xml',
