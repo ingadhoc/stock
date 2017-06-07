@@ -3,7 +3,8 @@
 # For copyright and license notices, see __openerp__.py file in module root
 # directory
 ##############################################################################
-from openerp import models, fields, api
+from openerp import models, fields, api, _
+from openerp.exceptions import UserError
 
 
 class StockPicking(models.Model):
@@ -45,3 +46,27 @@ class StockPicking(models.Model):
         if self.state == 'draft':
             for move in self.move_lines:
                 move.location_dest_id = self.location_dest_id
+
+    @api.multi
+    def do_transfer(self):
+        """
+        If book required then we assign numbers
+        """
+        for picking in self:
+            # con esto arreglamos que odoo dejaria entregar varias veces el
+            # mismo picking si por alguna razon el boton esta presente
+            # en nuestro caso pasaba cuando la impresion da algun error
+            # lo que provoca que el picking se entregue pero la pantalla no
+            # se actualice
+            # antes lo haciamo en do_new_transfer, pero como algunas
+            # veces se llama este metodo sin pasar por do_new_transfer
+            if picking.state not in ['partially_available', 'assigned']:
+                raise UserError(_(
+                    'No se puede validar un picking que no esté en estado '
+                    'Parcialmente Disponible o Reservado, probablemente el '
+                    'picking ya fue validado, pruebe refrezcar la ventana!'))
+            if not picking.operation_ids:
+                    raise UserError(_(
+                        'No se puede validar un picking que no tiene '
+                        'operationes!'))
+        return super(StockPicking, self).do_transfer()

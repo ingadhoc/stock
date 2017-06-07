@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_pack_operation_lot_form" model="ir.ui.view">
+        <field name="name">Stock pack operation</field>
+        <field name="model">stock.pack.operation</field>
+        <field name="inherit_id" ref="stock.view_pack_operation_lot_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='lot_id']" position="attributes">
+               <attribute name="domain">[('product_id','=', parent.product_id),('qty_available_not_res','&gt;', 0)]</attribute>
+            </xpath> 
+        </field>  
+    </record>
+</odoo>
