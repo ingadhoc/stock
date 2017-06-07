@@ -20,6 +20,7 @@ Several improovements to stock:
 #. Add button "Set all Done" on pack operations
 #. Make moves visible on pickings no matter the state
 #. Add tracking field and Messaging in "Stock Warehouse Orderpoint".
+#. Add new button "cancell remaining" on procurements
 
 Installation
 ============

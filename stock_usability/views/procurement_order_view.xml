@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="procurement_form_view" model="ir.ui.view">
+        <field name="name">procurement.order.form</field>
+        <field name="model">procurement.order</field>
+        <field name="inherit_id" ref="procurement.procurement_form_view"/>
+        <field name="arch" type="xml">
+            <button name="check" position="after">
+                <!-- hacemos solo para tec features ya que la idea es que se use desde ventas o desde los procurement requests -->
+                <button name="button_cancel_remaining" string="Cancelar Pendiente" type="object" help="Se van a cancelar todos los movimientos asociados que no esten realizados." confirm="Se van a cancelar todos los movimientos asociados que no esten realizados. Esto no puede ser revertido, seguro que desea continuar?" attrs="{'invisible': ['|', ('state', '!=', 'running'), ('move_dest_id', '!=', False)]}" groups="base.group_no_one"/>
+            </button>
+        </field>
+    </record>
+</odoo>
