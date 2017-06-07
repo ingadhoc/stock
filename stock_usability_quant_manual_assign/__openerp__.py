@@ -19,8 +19,8 @@
 #
 ##############################################################################
 {
-    'name': 'Stock Transfer Restrict Lot',
-    'version': '9.0.1.2.0',
+    'name': 'Stock Usability with Quant Manual Assign',
+    'version': '9.0.0.0.0',
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
@@ -30,16 +30,17 @@
     'images': [
     ],
     'depends': [
-        'stock',
+        'stock_usability',
+        'stock_quant_manual_assign',
     ],
     'data': [
-        'view/stock_pack_operation.xml'
+        'views/stock_move_manual_quants_view.xml',
     ],
     'demo': [
     ],
     'test': [
     ],
     'installable': True,
-    'auto_install': False,
+    'auto_install': True,
     'application': False,
 }

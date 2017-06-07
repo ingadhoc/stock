@@ -2,20 +2,18 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
-===========================
-Stock Transfer Restrict Lot
-===========================
+========================================
+Stock Usability with Quant Manual Assign
+========================================
 
-#. Add a constraint on pack operations to restrict sending more quantity than the lot has in the quants.
-#. Add lot available quantity on name get and filter on operations for lot that has positive available quantity
-
+#. Add invisble the button "Quant Manuals" if has pack operation in the picking
 
 Installation
 ============
 
 To install this module, you need to:
 
-#. Just install this module
+#. Just install this module.
 
 
 Configuration
@@ -24,14 +22,6 @@ Configuration
 To configure this module, you need to:
 
 #. No configuration nedeed.
-
-
-Usage
-=====
-
-To use this module, you need to:
-
-#. Just use the module.
 
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
