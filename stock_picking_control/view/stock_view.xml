@@ -22,6 +22,8 @@
             <field name="name">stock.picking.form</field>
             <field name="model">stock.picking</field>
             <field name="inherit_id" ref="stock.view_picking_form"/>
+            <!-- por si stock usability esta instalado, queremos que esta pise aquella -->
+            <field name="priority">20</field>
             <field name="groups_id" eval="[(6, 0, [ref('group_restrict_edit_picking')])]"/>
             <field name="arch" type="xml">
                 <field name="partner_id" position="after">
@@ -29,7 +31,8 @@
                     <field name="block_additional_quantiy" invisible="1"/>
                 </field>
                 <field name="move_lines_related" position="attributes">
-                     <attribute name="attrs">{'readonly':[('block_add_lines','=',True)],'invisible': [('state', 'in', ('draft', 'confirmed', 'waiting', 'done'))]}</attribute>
+                     <!-- sacamos el done de invisible porque asi lo queremos y hacemos en stock usablity tambien -->
+                     <attribute name="attrs">{'readonly':[('block_add_lines','=',True)],'invisible': [('state', 'in', ('draft', 'confirmed', 'waiting'))]}</attribute>
                 </field>
                 <field name="move_lines" position="attributes">
                      <attribute name="attrs">{'readonly':[('block_add_lines','=',True)],'invisible':  [('state', 'not in', ('draft', 'confirmed', 'waiting'))]}</attribute>
