@@ -21,6 +21,7 @@ Several improovements to stock:
 #. Make moves visible on pickings no matter the state
 #. Add tracking field and Messaging in "Stock Warehouse Orderpoint".
 #. Add new button "cancell remaining" on procurements
+#. Add partner field on procurement group form view. Also allow to search procurements by group
 
 Installation
 ============

@@ -75,6 +75,10 @@ class StockProcurementRequest(models.Model):
     @api.model
     def create(self, vals):
         if not vals.get('group_id'):
-            group = self.group_id.create({})
+            warehouse = self.warehouse_id.browse(vals.get('warehouse_id'))
+            # setamos al group el partner del warehouse para que se propague
+            # a los pickings
+            group = self.group_id.create(
+                {'partner_id': warehouse.partner_id.id})
             vals['group_id'] = group.id
         return super(StockProcurementRequest, self).create(vals)

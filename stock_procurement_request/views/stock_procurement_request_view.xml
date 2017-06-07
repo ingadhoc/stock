@@ -33,6 +33,12 @@
                     <header>
                     </header>
                     <sheet>
+                        <div class="oe_button_box" name="button_box" >
+                            <!-- TODO ver si lo agregamos o no, el problema es que si crean un procurement desde aca no se setean toods los valores y por ahí es confuso para el usuario -->
+                            <!-- <button class="oe_stat_button" icon="fa-bars" name="%(procurement.procurement_action)d" string="Procurements" type="action" context="{'search_default_group_id': group_id}"/> -->
+
+                            <button class="oe_stat_button" icon="fa-bars" name="%(stock.action_picking_tree_all)d" string="Pickings" type="action" context="{'search_default_group_id': group_id}"/>
+                        </div>
                         <group>
                             <group>
                                 <field name="id" invisible="1"/>
