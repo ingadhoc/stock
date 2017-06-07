@@ -1,12 +1,10 @@
 <odoo>
 
-    <!-- stock.batch.picking tree view -->
     <record model="ir.ui.view" id="stock_move_manual_quants_picking_form_view">
         <field name="name">stock.move.form</field>
         <field name="model">stock.move</field>
         <field name="inherit_id" ref="stock_quant_manual_assign.stock_move_manual_quants_picking_form_view"/>
         <field name="arch" type="xml">
-
             <field name="picking_type_id" position="after">
                 <field name="pack_operation_product_ids" invisible="1"/>
             </field>
@@ -15,5 +13,5 @@
             </button>
         </field>
     </record>
-
+    
 </odoo>
