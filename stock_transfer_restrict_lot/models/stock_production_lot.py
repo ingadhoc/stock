@@ -26,12 +26,16 @@ class StockProductionlot(models.Model):
     @api.multi
     def name_get(self):
         result = []
+        show_locations_qty = self.env.context.get('show_locations_qty')
         for rec in self:
-            locations = rec.quant_ids.mapped('location_id')
-            locations_qty = ['%s: %s' % (
-                location.name, sum(rec.quant_ids.filtered(
-                    lambda x: x.location_id == location).mapped(
-                    'qty'))) for location in locations]
-            name = '%s (%s)' % (rec.name, ', '.join(locations_qty))
+            if show_locations_qty and rec.quant_ids:
+                locations = rec.quant_ids.mapped('location_id')
+                locations_qty = ['%s: %s' % (
+                    location.name, sum(rec.quant_ids.filtered(
+                        lambda x: x.location_id == location).mapped(
+                        'qty'))) for location in locations]
+                name = '%s (%s)' % (rec.name, ', '.join(locations_qty))
+            else:
+                name = rec.name
             result.append((rec.id, name))
         return result
