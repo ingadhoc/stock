@@ -7,7 +7,8 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='lot_id']" position="attributes">
                <attribute name="domain">[('product_id','=', parent.product_id),('qty_available_not_res','&gt;', 0)]</attribute>
-            </xpath> 
+               <attribute name="context">{'show_locations_qty': True}</attribute>
+            </xpath>
         </field>  
     </record>
 </odoo>
