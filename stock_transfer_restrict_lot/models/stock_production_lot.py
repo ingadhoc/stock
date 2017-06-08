@@ -27,11 +27,11 @@ class StockProductionlot(models.Model):
     def name_get(self):
         result = []
         for rec in self:
-            read = rec.quant_ids.read_group(
-                [('lot_id', '=', rec.id)],
-                ['location_id', 'qty'], 'location_id')
-            locations_qty = ', '.join(
-                ['%s: %s' % (x['location_id'][1], x['qty']) for x in read])
-            name = '%s (%s)' % (rec.name, locations_qty)
+            locations = rec.quant_ids.mapped('location_id')
+            locations_qty = ['%s: %s' % (
+                location.name, sum(rec.quant_ids.filtered(
+                    lambda x: x.location_id == location).mapped(
+                    'qty'))) for location in locations]
+            name = '%s (%s)' % (rec.name, ', '.join(locations_qty))
             result.append((rec.id, name))
         return result
