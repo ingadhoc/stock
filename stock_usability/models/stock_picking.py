@@ -66,7 +66,7 @@ class StockPicking(models.Model):
                     'No se puede validar un picking que no esté en estado '
                     'Parcialmente Disponible o Reservado, probablemente el '
                     'picking ya fue validado, pruebe refrezcar la ventana!'))
-            if not picking.operation_ids:
+            if not picking.pack_operation_exist:
                     raise UserError(_(
                         'No se puede validar un picking que no tiene '
                         'operationes!'))
