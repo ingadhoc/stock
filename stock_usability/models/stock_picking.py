@@ -10,7 +10,8 @@ from openerp.exceptions import UserError
 class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
-    # by default picking type is readonly only in done and cancel
+    # by default picking type is readonly only in done and cancel, we make
+    # editable only in draft
     picking_type_id = fields.Many2one(
         readonly=True,
         states={'draft': [('readonly', False)]}
