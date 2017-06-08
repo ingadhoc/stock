@@ -27,6 +27,11 @@ class StockProductionlot(models.Model):
     def name_get(self):
         result = []
         for rec in self:
-            name = '%s (%s u)' % (rec.name, rec.qty_available_not_res or 0.0)
+            read = rec.quant_ids.read_group(
+                [('lot_id', '=', rec.id)],
+                ['location_id', 'qty'], 'location_id')
+            locations_qty = ', '.join(
+                ['%s: %s' % (x['location_id'][1], x['qty']) for x in read])
+            name = '%s (%s)' % (rec.name, locations_qty)
             result.append((rec.id, name))
         return result
