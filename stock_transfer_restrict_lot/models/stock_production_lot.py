@@ -21,13 +21,17 @@ class StockProductionlot(models.Model):
     def _compute_qty_available_not_res(self):
         for rec in self:
             # consideramos available si location es internal solamente
+            # no filtramos por los no resevados porque pueden estar reservados
+            # para el picking actual y entonces no lo muestra
+            # and not x.reservation_id
             rec.qty_available_not_res = sum(rec.quant_ids.filtered(
                 lambda x: (
-                    x.location_id.usage == 'internal' and
-                    not x.reservation_id)).mapped('qty'))
+                    x.location_id.usage == 'internal')).mapped('qty'))
 
     @api.multi
     def name_get(self):
+        # TODO habria que mejorar y mostrar solo el stock disponible, sacar
+        # el reservado excepto para el picking actual
         result = []
         show_locations_qty = self.env.context.get('show_locations_qty')
         for rec in self:
