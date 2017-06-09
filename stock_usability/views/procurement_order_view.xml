@@ -10,6 +10,9 @@
                 <!-- hacemos solo para tec features ya que la idea es que se use desde ventas o desde los procurement requests -->
                 <button name="button_cancel_remaining" string="Cancelar Pendiente" type="object" help="Se van a cancelar todos los movimientos asociados que no esten realizados." confirm="Se van a cancelar todos los movimientos asociados que no esten realizados. Esto no puede ser revertido, seguro que desea continuar?" attrs="{'invisible': ['|', ('state', '!=', 'running'), ('move_dest_id', '!=', False)]}" groups="base.group_no_one"/>
             </button>
+            <field name="group_id" position="after">
+                <field name="move_dest_id" groups="base.group_no_one"/>
+            </field>
         </field>
     </record>
 
