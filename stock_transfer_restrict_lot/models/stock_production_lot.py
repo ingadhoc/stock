@@ -59,11 +59,10 @@ class StockProductionlot(models.Model):
                  ('reservation_id', '=', False)])
             qty = sum(quants.mapped('qty'))
             if qty < quantity:
-                raise UserError(
-                    _('Sending amount can not exceed the quantity in\
-                     stock for this product in this lot. \
-                    \n Product: %s \
-                    \n Lot: %s \
-                    \n Stock: %s') % (
-                        rec.product_id.
-                        name, rec.name, qty))
+                raise UserError(_(
+                    'Sending amount can not exceed the quantity in '
+                    'stock for this product in this lot. '
+                    '* Product: %s \n'
+                    '* Lot: %s \n'
+                    '* Stock: %s \n') % (
+                        rec.product_id.name, rec.name, qty))
