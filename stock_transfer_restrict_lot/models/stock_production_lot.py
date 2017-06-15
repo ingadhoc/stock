@@ -3,7 +3,8 @@
 # For copyright and license notices, see __openerp__.py file in module root
 # directory
 ##############################################################################
-from openerp import models, fields, api
+from openerp import models, fields, api, _
+from openerp.exceptions import UserError
 
 
 class StockProductionlot(models.Model):
@@ -48,3 +49,20 @@ class StockProductionlot(models.Model):
                 name = rec.name
             result.append((rec.id, name))
         return result
+
+    @api.multi
+    def validate_lot_quantity(self, quantity, location_id):
+        for rec in self:
+            quants = self.env['stock.quant'].search(
+                [('id', 'in', rec.quant_ids.ids),
+                 ('location_id', '=', location_id),
+                 ('reservation_id', '=', False)])
+            qty = sum(quants.mapped('qty'))
+            if qty < quantity:
+                raise UserError(_(
+                    'Sending amount can not exceed the quantity in '
+                    'stock for this product in this lot. '
+                    '* Product: %s \n'
+                    '* Lot: %s \n'
+                    '* Stock: %s \n') % (
+                        rec.product_id.name, rec.name, qty))
