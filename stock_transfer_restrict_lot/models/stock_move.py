@@ -21,5 +21,9 @@ class StockPackOperation(models.Model):
         for rec in self:
             if rec.code != 'incoming' and rec.pack_lot_ids:
                 for pack in rec.pack_lot_ids:
+                    domain = [
+                        ('location_id', '=', rec.location_id.id), '|',
+                        ('reservation_id', '=', False),
+                        ('reservation_id.picking_id', '=', rec.picking_id.id)]
                     pack.lot_id.validate_lot_quantity(
-                        pack.qty, rec.location_id.id)
+                        pack.qty, domain)
