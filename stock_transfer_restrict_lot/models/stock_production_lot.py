@@ -59,8 +59,8 @@ class StockProductionlot(models.Model):
             if qty < quantity:
                 raise UserError(_(
                     'Sending amount can not exceed the quantity in '
-                    'stock for this product in this lot. \n'
-                    '* Product: %s \n'
-                    '* Lot: %s \n'
-                    '* Stock: %s \n') % (
+                    'stock for this product in this lot.\n'
+                    '* Product: %s\n'
+                    '* Lot: %s\n'
+                    '* Stock: %s') % (
                         rec.product_id.name, rec.name, qty))
