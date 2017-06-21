@@ -51,17 +51,15 @@ class StockProductionlot(models.Model):
         return result
 
     @api.multi
-    def validate_lot_quantity(self, quantity, location_id):
+    def validate_lot_quantity(self, quantity, domain):
         for rec in self:
             quants = self.env['stock.quant'].search(
-                [('id', 'in', rec.quant_ids.ids),
-                 ('location_id', '=', location_id),
-                 ('reservation_id', '=', False)])
+                [('id', 'in', rec.quant_ids.ids)] + domain)
             qty = sum(quants.mapped('qty'))
             if qty < quantity:
                 raise UserError(_(
                     'Sending amount can not exceed the quantity in '
-                    'stock for this product in this lot. '
+                    'stock for this product in this lot. \n'
                     '* Product: %s \n'
                     '* Lot: %s \n'
                     '* Stock: %s \n') % (
