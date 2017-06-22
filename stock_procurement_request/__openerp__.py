@@ -20,7 +20,7 @@
 ##############################################################################
 {
     'name': 'Stock Procurement Request',
-    'version': '9.0.1.4.0',
+    'version': '9.0.1.5.0',
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
@@ -34,6 +34,7 @@
     ],
     'data': [
         'views/stock_procurement_request_view.xml',
+        'views/stock_move_view.xml',
         'security/security.xml',
         'security/ir.model.access.csv',
     ],

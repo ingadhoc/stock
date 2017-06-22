@@ -20,7 +20,7 @@
 ##############################################################################
 {
     'name': 'Stock Usability Improvements',
-    'version': '9.0.1.12.0',
+    'version': '9.0.1.13.0',
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
@@ -40,6 +40,7 @@
         'views/stock_warehouse_orderpoint_view.xml',
         'views/procurement_order_view.xml',
         'views/procurement_group_view.xml',
+        'views/stock_move_view.xml',
     ],
     'demo': [
     ],

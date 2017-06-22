@@ -1,51 +1,60 @@
 <?xml version="1.0"?>
-<openerp>
-    <data>
+<odoo>
+    <record id="view_move_form" model="ir.ui.view">
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_form"/>
+        <field name="arch" type="xml">
+            <group position="before">
+                <!-- add div to be used by sale usability and other modules -->
+                <div class="oe_button_box" name="button_box">
+                </div>
+            </group>
+        </field>
+    </record>
 
-        <record id="view_move_search" model="ir.ui.view">
-            <field name="name">stock.move.search.inherit</field>
-            <field name="model">stock.move</field>
-            <field name="inherit_id" ref="stock.view_move_search"/>
-            <field name="arch" type="xml">
-                <separator position="after">
-                    <filter string="Incoming" name="incoming" domain="[('picking_type_code','=','incoming')]"/>
-                    <filter string="Internal" name="internal" domain="[('picking_type_code','=','internal')]"/>
-                    <filter string="Outgoing" name="outgoing" domain="[('picking_type_code','=','outgoing')]"/>
-                    <separator/>
-                </separator>
+    <record id="view_move_search" model="ir.ui.view">
+        <field name="name">stock.move.search.inherit</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_search"/>
+        <field name="arch" type="xml">
+            <separator position="after">
+                <filter string="Incoming" name="incoming" domain="[('picking_type_code','=','incoming')]"/>
+                <filter string="Internal" name="internal" domain="[('picking_type_code','=','internal')]"/>
+                <filter string="Outgoing" name="outgoing" domain="[('picking_type_code','=','outgoing')]"/>
+                <separator/>
+            </separator>
 
-                <field name="name" position="attributes">
-                    <!-- we send location in context for computed field -->
-                    <attribute name="context">{'location': self}</attribute>
-                    <!-- we use location_id so it can be selected -->
-                    <attribute name="name">location_id</attribute>
-                </field>
-
-                <filter name="by_product" position="after">
-                    <filter string="Picking Type" name="picking_type"  context="{'group_by':'picking_type_id'}"/>
-                    <filter string="Picking Partner" name="picking_partner_id"  context="{'group_by':'picking_partner_id'}"/>
-                </filter>
+            <field name="name" position="attributes">
+                <!-- we send location in context for computed field -->
+                <attribute name="context">{'location': self}</attribute>
+                <!-- we use location_id so it can be selected -->
+                <attribute name="name">location_id</attribute>
             </field>
-        </record>
 
-        <record id="view_move_tree" model="ir.ui.view">
-            <field name="name">stock.move.tree.inherit</field>
-            <field name="model">stock.move</field>
-            <field name="inherit_id" ref="stock.view_move_tree"/>
-            <field name="arch" type="xml">
-                <field name="location_dest_id" position="after">
-                    <field name="product_uom_qty_location" sum="Total"/>
-                    <!-- on enterprise view is not refres -->
-                    <!-- <field name="product_uom_qty_location" sum="Total" invisible="not context.get('location', False)"/> -->
-                </field>
-                <field name="product_id" position="before">
-                    <field name="picking_partner_id" string="Picking Partner"/>
-                </field>
-                <tree>
-                    <field name="picking_create_user_id"/>
-                </tree>
+            <filter name="by_product" position="after">
+                <filter string="Picking Type" name="picking_type"  context="{'group_by':'picking_type_id'}"/>
+                <filter string="Picking Partner" name="picking_partner_id"  context="{'group_by':'picking_partner_id'}"/>
+            </filter>
+        </field>
+    </record>
+
+    <record id="view_move_tree" model="ir.ui.view">
+        <field name="name">stock.move.tree.inherit</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_tree"/>
+        <field name="arch" type="xml">
+            <field name="location_dest_id" position="after">
+                <field name="product_uom_qty_location" sum="Total"/>
+                <!-- on enterprise view is not refres -->
+                <!-- <field name="product_uom_qty_location" sum="Total" invisible="not context.get('location', False)"/> -->
             </field>
-        </record>
+            <field name="product_id" position="before">
+                <field name="picking_partner_id" string="Picking Partner"/>
+            </field>
+            <tree>
+                <field name="picking_create_user_id"/>
+            </tree>
+        </field>
+    </record>
 
-    </data>
-</openerp>
+</odoo>

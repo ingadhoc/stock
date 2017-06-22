@@ -53,3 +53,18 @@ class StockMove(models.Model):
                 else:
                     product_uom_qty_location = -product_uom_qty_location
             rec.product_uom_qty_location = product_uom_qty_location
+
+    @api.multi
+    def action_view_linked_record(self):
+        """This function returns an action that display existing sales order
+        of given picking.
+        """
+        self.ensure_one()
+        action_ref = self._context.get('action_ref')
+        form_view_ref = self._context.get('form_view_ref')
+        action = self.env.ref(action_ref).read()[0]
+        form_view = self.env.ref(form_view_ref)
+        res_id = self._context.get('res_id')
+        action['views'] = [(form_view.id, 'form')]
+        action['res_id'] = res_id
+        return action
