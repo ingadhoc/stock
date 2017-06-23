@@ -33,6 +33,7 @@
         'sale_stock',
     ],
     'data': [
+        'security/security.xml',
         'views/product_view.xml',
         'views/stock_picking_view.xml',
         'views/stock_move_view.xml',
@@ -41,6 +42,7 @@
         'views/procurement_order_view.xml',
         'views/procurement_group_view.xml',
         'views/stock_move_view.xml',
+        'views/stock_backorder_confirmation_view.xml',
     ],
     'demo': [
     ],

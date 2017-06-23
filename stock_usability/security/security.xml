@@ -1,0 +1,6 @@
+<odoo>
+    <record model="res.groups" id="allow_picking_cancellation">
+        <field name="name">Allow picking cancellation</field>
+        <field name="category_id" ref="base.module_category_usability"/>
+    </record>
+</odoo>

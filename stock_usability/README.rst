@@ -23,6 +23,7 @@ Several improovements to stock:
 #. Add new button "cancell remaining" on procurements
 #. Add partner field on procurement group form view. Also allow to search procurements by group
 #. Add button on moves to destination pickings
+#. We create a new group "Allow picking cancellation", only users with that right can cancel pickings or validate without back orders
 
 Installation
 ============
