@@ -12,29 +12,48 @@ class StockProcurementRequest(models.Model):
     _name = "stock.procurement.request"
     _description = "Stock Procurement Request"
 
+    state = fields.Selection([
+        ('draft', 'Draft'),
+        ('cancel', 'Cancelled'),
+        ('running', 'Running'),
+        ('done', 'Done')],
+        compute='_compute_state',
+        help='* Draft state if not procurements\n'
+        '* Done state if all procurements are on done or cancelled state'
+        '* Running state if at least one procurement on state different from '
+        'done or cancelled'
+    )
     name = fields.Char(
-        required=True
+        required=True,
+        readonly=True,
+        states={'draft': [('readonly', False)]},
     )
     company_id = fields.Many2one(
         'res.company',
         'Company',
         required=True,
         default=lambda self: self.env.user.company_id,
+        readonly=True,
+        states={'draft': [('readonly', False)]},
     )
     group_id = fields.Many2one(
         'procurement.group',
         'Procurement Group',
         copy=False,
+        readonly=True,
+        states={'draft': [('readonly', False)]},
     )
     procurement_ids = fields.One2many(
         'procurement.order',
         'procurement_request_id',
-        'Procurements'
+        'Procurements',
     )
     location_id = fields.Many2one(
         'stock.location',
         'Procurement Location',
         required=True,
+        readonly=True,
+        states={'draft': [('readonly', False)]},
     )
     route_ids = fields.Many2many(
         'stock.location.route',
@@ -45,13 +64,17 @@ class StockProcurementRequest(models.Model):
         help="Preferred route to be followed by the procurement order. "
         "Usually copied from the generating document (SO) but could be set "
         "up manually.",
+        readonly=True,
+        states={'draft': [('readonly', False)]},
     )
     warehouse_id = fields.Many2one(
         'stock.warehouse',
         'Warehouse',
         domain="[('company_id', '=', company_id)]",
         required=True,
-        help="Warehouse to consider for the route selection"
+        help="Warehouse to consider for the route selection",
+        readonly=True,
+        states={'draft': [('readonly', False)]},
     )
     priority = fields.Selection(
         procurement.PROCUREMENT_PRIORITIES,
@@ -60,14 +83,31 @@ class StockProcurementRequest(models.Model):
         select=True,
         default='1',
         # track_visibility='onchange'
+        readonly=True,
+        states={'draft': [('readonly', False)]},
     )
     date_planned = fields.Datetime(
         'Scheduled Date',
         required=True,
         select=True,
         default=lambda self: fields.Datetime.now(),
-        # track_visibility='onchange'
+        # track_visibility='onchange',
+        readonly=True,
+        states={'draft': [('readonly', False)]},
     )
+
+    @api.multi
+    @api.depends('procurement_ids.state')
+    def _compute_state(self):
+        for rec in self:
+            if not rec.procurement_ids:
+                state = 'draft'
+            elif rec.procurement_ids.filtered(
+                    lambda x: x.state not in ['done', 'cancel']):
+                state = 'running'
+            else:
+                state = 'done'
+            rec.state = state
 
     @api.onchange('warehouse_id')
     def change_warehouse_id(self):

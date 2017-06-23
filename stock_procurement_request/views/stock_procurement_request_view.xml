@@ -21,6 +21,7 @@
                     <field name="name"/>
                     <field name="warehouse_id"/>
                     <field name="location_id"/>
+                    <field name="state"/>
                 </tree>
             </field>
         </record>
@@ -31,6 +32,7 @@
             <field name="arch" type="xml">
                 <form string="Procurement Requests">
                     <header>
+                        <field name="state" widget="statusbar"/>
                     </header>
                     <sheet>
                         <div class="oe_button_box" name="button_box">

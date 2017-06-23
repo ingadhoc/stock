@@ -20,7 +20,7 @@
 ##############################################################################
 {
     'name': 'Stock Procurement Request',
-    'version': '9.0.1.5.0',
+    'version': '9.0.1.6.0',
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
