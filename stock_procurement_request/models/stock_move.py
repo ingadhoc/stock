@@ -12,4 +12,5 @@ class StockMove(models.Model):
 
     procurement_request_id = fields.Many2one(
         related='procurement_id.procurement_request_id',
+        readonly=True,
     )

@@ -7,6 +7,16 @@
             <group position="before">
                 <!-- add div to be used by sale usability and other modules -->
                 <div class="oe_button_box" name="button_box">
+                    <field name="picking_dest_id" invisible="1"/>
+                    <button name="action_view_linked_record"
+                            class="oe_stat_button"
+                            icon="fa-truck"
+                            string="Destination Picking"
+                            type="object"
+                            context="{'res_id': picking_dest_id, 'action_ref': 'stock.action_picking_tree_all', 'form_view_ref': 'stock.view_picking_form'}"
+                            attrs="{'invisible': [('picking_dest_id', '=', False)]}"
+                            >
+                    </button>
                 </div>
             </group>
         </field>

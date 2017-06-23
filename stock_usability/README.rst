@@ -22,6 +22,7 @@ Several improovements to stock:
 #. Add tracking field and Messaging in "Stock Warehouse Orderpoint".
 #. Add new button "cancell remaining" on procurements
 #. Add partner field on procurement group form view. Also allow to search procurements by group
+#. Add button on moves to destination pickings
 
 Installation
 ============

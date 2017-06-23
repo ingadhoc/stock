@@ -8,12 +8,12 @@
                 <field name="procurement_request_id" invisible="1"/>
                 <button name="action_view_linked_record"
                         class="oe_stat_button"
-                        icon="fa-dollar"
+                        icon="fa-cubes"
                         string="Procurement Requests"
                         type="object"
                         context="{'res_id': procurement_request_id, 'action_ref': 'stock_procurement_request.action_procurement_request', 'form_view_ref': 'stock_procurement_request.view_procurement_request_form'}"
                         attrs="{'invisible': [('procurement_request_id', '=', False)]}"
-                        groups="stock.group_stock_user">
+                        >
                 </button>
             </xpath>
         </field>

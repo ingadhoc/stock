@@ -28,6 +28,10 @@ class StockMove(models.Model):
         compute='compute_product_uom_qty_location',
         string='Net Quantity',
     )
+    picking_dest_id = fields.Many2one(
+        related='move_dest_id.picking_id',
+        readonly=True,
+    )
 
     @api.multi
     def compute_product_uom_qty_location(self):
