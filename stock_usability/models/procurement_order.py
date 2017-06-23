@@ -39,21 +39,46 @@ class ProcurementOrder(models.Model):
                 raise ValidationError(_(
                     'Cancel remaining in procurements is only implmented for '
                     'rules with action of type "move"'))
+
             not_done_moves = rec.move_ids.filtered(
                 lambda x: x.state != 'done')
 
+            # al final cancelamos por mas que este asignado siempre y cuando
+            # no haya procurements relacionados que esten realizados
             # chequeamos contra reserver para que permita cancelar si se forzo
             # disponibilidad o para compras por ejemplo
             # if not_done_moves.filtered(lambda x: x.state == 'assigned'):
             #     raise UserError(_(
             #         'You can not cancel a procurement if it has assigned '
             #         'moves!'))
-            if not_done_moves.filtered(lambda x: x.reserved_quant_ids):
+            # if not_done_moves.filtered(lambda x: x.reserved_quant_ids):
+            #     raise ValidationError(_(
+            #         'You can not cancel a procurement if it has moves with '
+            #         ' reserved quants!\n'
+            #         'You should unreserve or confirm related pickings first')
+
+            # verificamos en los moves y no en los procurements porque el proc
+            # podria no estar totalmente satisfecho e igual queremos restringir
+            # si al menos un move ya fue confirmado
+            not_done_moves_related_moves = not_done_moves.search([
+                ('move_dest_id', 'in', not_done_moves.ids),
+                ('state', '=', 'done'),
+            ])
+            if not_done_moves_related_moves:
                 raise ValidationError(_(
-                    'You can not cancel a procurement if it has moves with '
-                    ' reserved quants!\n'
-                    'You should unreserve or confirm related pickings first'))
+                    'You can not cancel moves that are destination moves '
+                    'of already done moves.\n'
+                    '* Moves to cancel: %s\n'
+                    '* Done moves: %s') % (
+                        not_done_moves.ids,
+                        not_done_moves_related_moves.ids))
+
+            # raise ValidationError('asda')
             not_done_moves.action_cancel()
+
+            # because cancel dont update operations, we re asign
+            not_done_moves.mapped('picking_id').filtered(
+                lambda x: x.state not in ['draft', 'cancel']).action_assign()
 
             # al fina buscamos en todos los moves relacionados
             # porque los procurements generados (y parcialmente satsifechos)

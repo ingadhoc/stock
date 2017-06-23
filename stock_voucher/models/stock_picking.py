@@ -85,7 +85,7 @@ class StockPicking(models.Model):
         # self.declared_value = 0
         for rec in self:
             if not rec.automatic_declare_value:
-                return True
+                return False
             done_value = 0.0
             picking_value = 0.0
             inmediate_transfer = True

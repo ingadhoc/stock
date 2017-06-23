@@ -24,6 +24,7 @@ class StockProcurementRequest(models.Model):
     group_id = fields.Many2one(
         'procurement.group',
         'Procurement Group',
+        copy=False,
     )
     procurement_ids = fields.One2many(
         'procurement.order',
