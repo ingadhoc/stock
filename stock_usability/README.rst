@@ -24,6 +24,7 @@ Several improovements to stock:
 #. Add partner field on procurement group form view. Also allow to search procurements by group
 #. Add button on moves to destination pickings
 #. We create a new group "Allow picking cancellation", only users with that right can cancel pickings or validate without back orders
+#. Add in the pikcing return wizard a field with the reason for the return and then bring that field to internal notes in the created picking.
 
 Installation
 ============

@@ -1,33 +1,46 @@
 <odoo>
-    <record id="view_picking_form" model="ir.ui.view">
-        <field name="name">stock.picking.form.inherit</field>
-        <field name="model">stock.picking</field>
-        <field name="inherit_id" ref="stock.view_picking_form"/>
-        <field name="arch" type="xml">
-            <!-- TODO borrar, al final para esto usamos Linkstock_picking_sale_order_link -->
-            <!-- <field name="origin" position="attributes">
-                <attribute name="attrs">{'invisible': [('sale_id','!=',False)]}</attribute>
+    <data>
+        <record id="view_picking_form" model="ir.ui.view">
+            <field name="name">stock.picking.form.inherit</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <!-- TODO borrar, al final para esto usamos Linkstock_picking_sale_order_link -->
+                <!-- <field name="origin" position="attributes">
+                    <attribute name="attrs">{'invisible': [('sale_id','!=',False)]}</attribute>
+                </field>
+                <field name="origin" position="after">
+                    <field string="Source Document" name="sale_id" attrs="{'invisible': [('sale_id','=',False)]}"/>
+                </field> -->
+
+                <!-- Make moves visible on pickings no matter the state (remove done from attrs) -->
+                <field name="move_lines_related" position="attributes">
+                    <attribute name="attrs">{'invisible': [('state', 'in', ('draft', 'confirmed', 'waiting'))]}</attribute>
+                </field>
+
+                <field name="name" position="after">
+                  <button name="add_picking_operation"  class="oe_inline oe_right" type="object" string="Process Products" attrs="{'invisible': [('state', 'not in', ['partially_available', 'assigned'])]}"/>
+                </field>
+
+                <button name="split_lot" position="after">
+                    <button name="set_all_done" string="Set all Done" type="object" icon="fa-check" attrs="{'invisible': ['|', ('lots_visible', '=', True), ('state', 'not in', ['confirmed', 'assigned', 'waiting', 'partially_available'])]}"/>
+                </button>
+
+                <button name="action_cancel" position="attributes">
+                    <attribute name="groups">stock_usability.allow_picking_cancellation</attribute>
+                </button>
             </field>
-            <field name="origin" position="after">
-                <field string="Source Document" name="sale_id" attrs="{'invisible': [('sale_id','=',False)]}"/>
-            </field> -->
+        </record>
 
-            <!-- Make moves visible on pickings no matter the state (remove done from attrs) -->
-            <field name="move_lines_related" position="attributes">
-                <attribute name="attrs">{'invisible': [('state', 'in', ('draft', 'confirmed', 'waiting'))]}</attribute>
+        <record id="view_stock_return_picking_form" model="ir.ui.view">
+            <field name="name">stock.return.picking.form.inherit</field>
+            <field name="model">stock.return.picking</field>
+            <field name="inherit_id" ref="stock.view_stock_return_picking_form"/>
+            <field name="arch" type="xml">
+                <field name="location_id" position="after">
+                    <field name="reason"/>
+                </field>
             </field>
-
-            <field name="name" position="after">
-              <button name="add_picking_operation"  class="oe_inline oe_right" type="object" string="Process Products" attrs="{'invisible': [('state', 'not in', ['partially_available', 'assigned'])]}"/>
-            </field>
-
-            <button name="split_lot" position="after">
-                <button name="set_all_done" string="Set all Done" type="object" icon="fa-check" attrs="{'invisible': ['|', ('lots_visible', '=', True), ('state', 'not in', ['confirmed', 'assigned', 'waiting', 'partially_available'])]}"/>
-            </button>
-
-            <button name="action_cancel" position="attributes">
-                <attribute name="groups">stock_usability.allow_picking_cancellation</attribute>
-            </button>
-        </field>
-    </record>
+        </record>
+    </data>
 </odoo>
