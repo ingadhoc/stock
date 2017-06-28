@@ -163,7 +163,8 @@ class StockPicking(models.Model):
                     raise UserError(_('The number of packages can not be 0'))
             if picking.book_required and not picking.book_id:
                 raise UserError(_('You must select a Voucher Book'))
-            elif picking.voucher_required and not picking.voucher_ids:
+            elif not picking.location_id.usage == 'customer' and \
+                    picking.voucher_required and not picking.voucher_ids:
                 raise UserError(_('You must set stock voucher numbers'))
 
         res = super(StockPicking, self).do_new_transfer()
