@@ -50,6 +50,11 @@ class StockBatchPicking(models.Model):
         related='picking_type_id.voucher_required',
         readonly=True,
     )
+    vouchers = fields.Char(
+        related='picking_ids.vouchers',
+        readonly=True,
+    )
+
     # TODO deberiamos ver como hacer para aceptar multiples numeros de remitos
     # si llega a ser necesario
     # voucher_ids = fields.One2many(
@@ -128,4 +133,11 @@ class StockBatchPicking(models.Model):
                 # termina usando do_transfer pero el chequeo se llama solo
                 # con do_new_transfer
                 rec.active_picking_ids.do_stock_voucher_transfer_check()
-        return super(StockBatchPicking, self).action_transfer()
+        res = super(StockBatchPicking, self).action_transfer()
+        # nosotros preferimos que no se haga en muchos pasos y una vez
+        # confirmado se borre lo no hecho y se marque como realizado
+        # lo hago para distinto de incomring porque venia andando bien para
+        # Incoming, pero no debería hacer falta este chequeo
+        if rec.picking_code != 'incoming':
+            self.remove_undone_pickings()
+        return res

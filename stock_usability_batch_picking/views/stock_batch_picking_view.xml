@@ -7,8 +7,13 @@
         <field name="inherit_id" ref="stock_batch_picking.stock_batch_picking_search"/>
         <field name="arch" type="xml">
             <field name="name" position="after">
-                <field name="voucher_number"/>
+                <!-- al buscar por picking busca por nro de remto -->
+                <field name="picking_ids"/>
+                <field name="picking_type_id"/>
             </field>
+            <group>
+                <filter name="picking_type_id" string="Picking Type" context="{'group_by':'picking_type_id'}"/>
+            </group>
         </field>
     </record>
 
@@ -19,7 +24,9 @@
         <field name="inherit_id" ref="stock_batch_picking.stock_batch_picking_tree"/>
         <field name="arch" type="xml">
             <field name="name" position="after">
-                <field name="voucher_number"/>
+                <field name="vouchers"/>
+                <field name="picking_type_id"/>
+                <field name="picking_ids"/>
             </field>
         </field>
     </record>
