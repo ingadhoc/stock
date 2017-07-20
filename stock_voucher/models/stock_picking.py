@@ -146,16 +146,12 @@ class StockPicking(models.Model):
         return res
 
     @api.multi
-    def do_new_transfer(self):
+    def do_stock_voucher_transfer_check(self):
         """
-        We make checks before calling transfer
+        Los separamos para usarlo en otros modulos
         """
-        # we send picking_id on context so it can be used on wizards because
-        # active_id could not be the picking
-        self = self.with_context(picking_id=self.id)
         for picking in self:
-            # estos chequeos no son tan grosos y preferimos hacerlos aca antes
-            # de llamar al transfer porque demora mucho
+
             if picking.picking_type_id.code == 'outgoing':
                 if (
                         picking.restrict_number_package and
@@ -166,11 +162,25 @@ class StockPicking(models.Model):
             elif not picking.location_id.usage == 'customer' and \
                     picking.voucher_required and not picking.voucher_ids:
                 raise UserError(_('You must set stock voucher numbers'))
+        return True
+
+    @api.multi
+    def do_new_transfer(self):
+        """
+        We make checks before calling transfer
+        """
+        # we send picking_id on context so it can be used on wizards because
+        # active_id could not be the picking
+        self = self.with_context(picking_id=self.id)
+
+        # estos chequeos no son tan grosos y preferimos hacerlos aca antes
+        # de llamar al transfer porque demora mucho
+        self.do_stock_voucher_transfer_check()
 
         res = super(StockPicking, self).do_new_transfer()
         # res none when no wizard  opended
         if res is None and len(self) == 1 and self.book_required:
-            return picking.do_print_voucher()
+            return self.do_print_voucher()
         return res
 
 

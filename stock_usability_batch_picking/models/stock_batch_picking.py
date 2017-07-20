@@ -30,9 +30,6 @@ class StockBatchPicking(models.Model):
         'Picking Type',
         states={'done': [('readonly', True)], 'cancel': [('readonly', True)]},
         required=True,
-        # TODO por ahora limitamos solo a entrantes hasta que implementemos
-        # mejor el resto
-        domain=[('code', '=', 'incoming')]
     )
     partner_id = fields.Many2one(
         'res.partner',
@@ -126,4 +123,9 @@ class StockBatchPicking(models.Model):
                         'picking_id': picking.id,
                         'name': rec.voucher_number,
                     })
+            elif rec.picking_code != 'incoming':
+                # llamamos al chequeo de stock voucher ya que este metodo
+                # termina usando do_transfer pero el chequeo se llama solo
+                # con do_new_transfer
+                rec.active_picking_ids.do_stock_voucher_transfer_check()
         return super(StockBatchPicking, self).action_transfer()
