@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-05 15:08+0000\n"
-"PO-Revision-Date: 2017-04-05 15:08+0000\n"
+"POT-Creation-Date: 2017-07-20 21:18+0000\n"
+"PO-Revision-Date: 2017-07-20 21:18+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016\n"
 "Language-Team: Slovenian (https://www.transifex.com/adhoc/teams/46451/sl/)\n"
 "MIME-Version: 1.0\n"
@@ -19,38 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
 
 #. module: stock_ean128
-#: model:ir.ui.view,arch_db:stock_ean128.view_product_template_search
-msgid ""
-"<?xml version=\"1.0\"?>\n"
-"<field name=\"name\" position=\"after\">\n"
-"                    <field name=\"lot_ids\"/>\n"
-"                </field>\n"
-"            "
-msgstr ""
-
-#. module: stock_ean128
-#: model:ir.ui.view,arch_db:stock_ean128.view_stock_lot_search
-msgid ""
-"<?xml version=\"1.0\"?>\n"
-"<field name=\"product_id\" position=\"before\">\n"
-"                    <field name=\"ean_128\"/>\n"
-"                </field>\n"
-"            "
-msgstr ""
-
-#. module: stock_ean128
-#: model:ir.ui.view,arch_db:stock_ean128.view_stock_lot
-msgid ""
-"<?xml version=\"1.0\"?>\n"
-"<field name=\"ref\" position=\"after\">\n"
-"                    <field name=\"ean_128\"/>\n"
-"                </field>\n"
-"            "
-msgstr ""
-
-#. module: stock_ean128
 #: model:ir.model.fields,field_description:stock_ean128.field_stock_production_lot_ean_128
-#: field:stock.production.lot,ean_128:0
 msgid "EAN128"
 msgstr ""
 
@@ -62,7 +31,6 @@ msgstr ""
 #. module: stock_ean128
 #: model:ir.model.fields,field_description:stock_ean128.field_product_product_lot_ids
 #: model:ir.model.fields,field_description:stock_ean128.field_product_template_lot_ids
-#: field:product.product,lot_ids:0 field:product.template,lot_ids:0
 msgid "Lots"
 msgstr "Loti"
 

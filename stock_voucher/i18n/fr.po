@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-05 15:08+0000\n"
-"PO-Revision-Date: 2017-04-05 15:08+0000\n"
+"POT-Creation-Date: 2017-07-20 21:18+0000\n"
+"PO-Revision-Date: 2017-07-20 21:18+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016\n"
 "Language-Team: French (https://www.transifex.com/adhoc/teams/46451/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -19,215 +19,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. module: stock_voucher
-#: model:ir.ui.view,arch_db:stock_voucher.view_move_search
-msgid ""
-"<?xml version=\"1.0\"?>\n"
-"<!-- vista original -->\n"
-"            <!-- <field name=\"origin\" filter_domain=\"['|', '|', ('origin', 'ilike', self), ('name', 'ilike', self), ('picking_id', 'ilike', self)]\" string=\"Reference\"/> -->\n"
-"            <field name=\"origin\" position=\"attributes\">\n"
-"                <attribute name=\"filter_domain\">['|', '|', '|', ('origin', 'ilike', self), ('name', 'ilike', self), ('picking_id', 'ilike', self), ('picking_id.voucher_ids.name', 'ilike', self)]</attribute>\n"
-"            </field>\n"
-"\n"
-"        "
-msgstr ""
-
-#. module: stock_voucher
-#: model:ir.ui.view,arch_db:stock_voucher.view_picking_withcarrier_out_form
-msgid ""
-"<?xml version=\"1.0\"?>\n"
-"<data><form>\n"
-"                <field name=\"book_required\" invisible=\"True\"/>\n"
-"            </form>\n"
-"\n"
-"            <field name=\"partner_id\" position=\"after\">\n"
-"                <!-- no lo hacemos requerido por vista -->\n"
-"                <field name=\"book_id\" attrs=\"{'invisible': [('picking_type_code','=','incoming')], 'readonly': [('voucher_ids','!=',[])]}\"/>\n"
-"                <!-- TODO replace for one2mant_tags when migrated -->\n"
-"                <field name=\"voucher_ids\" attrs=\"{'readonly': [('picking_type_code','!=','incoming')]}\" widget=\"many2many_tags\" context=\"{'default_picking_id': id}\" domain=\"[('id', '=', False)]\" options=\"{'create':True, 'create_edit':True}}\"/>\n"
-"                <!-- <field name=\"voucher_ids\" attrs=\"{'readonly': [('picking_type_code','!=','incoming')]}\" widget=\"one2many_tags\"/> -->\n"
-"            </field>\n"
-"\n"
-"            <!-- we move number_of_packages to main form -->\n"
-"            <field name=\"number_of_packages\" position=\"replace\"/>\n"
-"            <field name=\"origin\" position=\"after\">\n"
-"                <field name=\"number_of_packages\" attrs=\"{'readonly': [('state', '=', 'done')]}\"/>\n"
-"                <field name=\"declared_value\" attrs=\"{'invisible': [('picking_type_code','=','incoming')]}\"/>\n"
-"            </field>\n"
-"\n"
-"            <button name=\"do_print_picking\" position=\"after\">\n"
-"                <button name=\"331\" string=\"Vouchers\" type=\"action\" attrs=\"{'invisible': ['|',('book_id','=',False),'|', ('picking_type_code','=','incoming'), ('state','!=','done'), ]}\" context=\"{'picking_id': id}\"/>\n"
-"                <button name=\"331\" string=\"Vouchers\" type=\"action\" attrs=\"{'invisible': ['|',('book_id','!=',False),'|', ('picking_type_code','=','incoming'), ('state','!=','done'), ]}\" class=\"oe_highlight\" context=\"{'picking_id': id}\"/>\n"
-"            </button>\n"
-"            <field name=\"move_lines\" position=\"after\">\n"
-"                <label for=\"observations\" attrs=\"{'invisible': [('picking_type_code','=','incoming')]}\"/>\n"
-"                <field name=\"observations\" attrs=\"{'invisible': [('picking_type_code','=','incoming')]}\"/>\n"
-"            </field>\n"
-"        </data>"
-msgstr ""
-
-#. module: stock_voucher
-#: model:ir.ui.view,arch_db:stock_voucher.vpicktree
-msgid ""
-"<?xml version=\"1.0\"?>\n"
-"<field name=\"name\" position=\"after\">\n"
-"                <!-- TODO replace for one2mant_tags when migrated -->\n"
-"                <!-- we try to use m2m tags but it doenst display ok on tree view -->\n"
-"                <field name=\"vouchers\"/>\n"
-"                <!-- <field name=\"voucher_ids\" widget=\"one2many_tags\"/> -->\n"
-"            </field>\n"
-"        "
-msgstr ""
-
-#. module: stock_voucher
-#: model:ir.ui.view,arch_db:stock_voucher.view_picking_internal_search
-msgid ""
-"<?xml version=\"1.0\"?>\n"
-"<field name=\"name\" position=\"attributes\">\n"
-"                <attribute name=\"filter_domain\">['|','|',('name','ilike', self),('voucher_ids.name','ilike', self),('origin','ilike',self)]</attribute>\n"
-"            </field>\n"
-"        "
-msgstr ""
-
-#. module: stock_voucher
-#: model:ir.ui.view,arch_db:stock_voucher.view_move_tree
-msgid ""
-"<?xml version=\"1.0\"?>\n"
-"<field name=\"picking_id\" position=\"after\">\n"
-"                <field name=\"vouchers\"/>\n"
-"            </field>\n"
-"        "
-msgstr ""
-
-#. module: stock_voucher
-#: model:ir.ui.view,arch_db:stock_voucher.view_picking_type_form
-msgid ""
-"<?xml version=\"1.0\"?>\n"
-"<field name=\"return_picking_type_id\" position=\"after\">\n"
-"                <field name=\"book_id\" attrs=\"{'invisible':[('code','=','incoming')]}\"/>\n"
-"                <field name=\"book_required\" attrs=\"{'invisible':[('code','=','incoming')]}\"/>\n"
-"                <field name=\"voucher_required\" attrs=\"{'invisible':[('code','!=','incoming')]}\"/>\n"
-"                <field name=\"voucher_number_unique\" attrs=\"{'invisible':[('code','!=','incoming')]}\"/>\n"
-"                <field name=\"voucher_number_validator_id\" attrs=\"{'invisible':[('code','!=','incoming')]}\"/>\n"
-"            </field>\n"
-"        "
-msgstr ""
-
-#. module: stock_voucher
-#: model:ir.ui.view,arch_db:stock_voucher.view_stock_book_form
-msgid ""
-"<?xml version=\"1.0\"?>\n"
-"<form string=\"Book\">\n"
-"                <header>\n"
-"                </header>\n"
-"                <sheet>\n"
-"                    <group>\n"
-"                        <field name=\"name\"/>\n"
-"                        <field name=\"sequence_id\"/>\n"
-"                        <field name=\"lines_per_voucher\"/>\n"
-"                        <field name=\"company_id\" groups=\"base.group_multi_company\"/>\n"
-"                    </group>\n"
-"                </sheet>\n"
-"            </form>\n"
-"        "
-msgstr ""
-
-#. module: stock_voucher
-#: model:ir.ui.view,arch_db:stock_voucher.view_stock_picking_voucher_form
-msgid ""
-"<?xml version=\"1.0\"?>\n"
-"<form string=\"Picking Voucher\">\n"
-"                <header>\n"
-"                </header>\n"
-"                <sheet>\n"
-"                    <group>\n"
-"                        <field name=\"name\"/>\n"
-"                        <!-- <field name=\"book_id\"/>\n"
-"                        <field name=\"company_id\" groups=\"base.group_multi_company\"/> -->\n"
-"                    </group>\n"
-"                </sheet>\n"
-"            </form>\n"
-"        "
-msgstr ""
-
-#. module: stock_voucher
-#: model:ir.ui.view,arch_db:stock_voucher.view_print_stock_voucher_form
-msgid ""
-"<?xml version=\"1.0\"?>\n"
-"<form string=\"Print Stock Voucher\">\n"
-"                    <group>\n"
-"                        <field name=\"picking_id\" invisible=\"1\"/>\n"
-"                        <field name=\"printed\" invisible=\"1\"/>\n"
-"                        <field name=\"lines_per_voucher\" invisible=\"1\"/>\n"
-"                        <field name=\"book_id\" attrs=\"{'invisible':[('printed', '=', True)],'required':[('printed', '=', False)]}\"/>\n"
-"                    </group>\n"
-"                    <group col=\"4\" attrs=\"{'invisible':[('printed', '=', True)]}\">\n"
-"                        <field name=\"next_voucher_number\"/>\n"
-"                        <field name=\"estimated_number_of_pages\" attrs=\"{'invisible':[('lines_per_voucher', '=', 0)],'required':[('lines_per_voucher', '!=', 0)]}\"/>\n"
-"                    </group>\n"
-"                <footer>\n"
-"                    <!-- nuevos botones sin importar si es pre impreso o no -->\n"
-"                    <button name=\"do_print_voucher\" type=\"object\" class=\"oe_highlight\" string=\"Print\" attrs=\"{'invisible':[('printed', '=', False)]}\"/>\n"
-"                    <button name=\"do_print_and_assign\" type=\"object\" class=\"oe_highlight\" string=\"Print and Assign \" attrs=\"{'invisible':[('printed', '=', True)]}\"/>\n"
-"                <!-- depreciamos porque no migramos la funcionalidad de imprimir el reporte yquedar en el wizard -->\n"
-"                    <!-- Botones para remitos que usan una hoja -->\n"
-"                    <!-- \n"
-"                    <button name=\"do_print_voucher\" type=\"object\" class=\"oe_highlight\" string=\"Print\" attrs=\"{'invisible':['|',('lines_per_voucher', '!=', 0),('printed', '=', False)]}\"/>\n"
-"                    <button name=\"do_print_and_assign\" type=\"object\" class=\"oe_highlight\" string=\"Print and Assign \" attrs=\"{'invisible':['|',('lines_per_voucher', '!=', 0),('printed', '=', True)]}\"/> -->\n"
-"                    <!-- Botones para remitos que usan varias hojas -->\n"
-"                    <!-- \n"
-"                    <button name=\"do_print_voucher\" type=\"object\" class=\"oe_highlight\" string=\"Print\" attrs=\"{'invisible':[('lines_per_voucher', '=', 0)]}\" context=\"{'keep_wizard_open':True}\"/>\n"
-"                    <button name=\"assign_numbers\" type=\"object\" class=\"oe_highlight\" string=\"Assign Numbers\" attrs=\"{'invisible':['|',('lines_per_voucher', '=', 0),('printed', '=', True)]}\"/> -->\n"
-"\n"
-"                    <!-- Clean numbers -->\n"
-"                    <button name=\"do_clean\" type=\"object\" string=\"Clean Voucher Data\" attrs=\"{'invisible':[('printed', '=', False)]}\"/>\n"
-"                    or\n"
-"                    <button string=\"Cancel\" class=\"oe_link\" special=\"cancel\"/>\n"
-"                </footer>\n"
-"                </form>\n"
-"            "
-msgstr ""
-
-#. module: stock_voucher
-#: model:ir.ui.view,arch_db:stock_voucher.view_company_form
-msgid ""
-"<?xml version=\"1.0\"?>\n"
-"<group name=\"logistics_grp\">\n"
-"                    <field name=\"automatic_declare_value\"/>\n"
-"                    <field name=\"restrict_number_package\"/>\n"
-"                </group>\n"
-"            "
-msgstr ""
-
-#. module: stock_voucher
-#: model:ir.ui.view,arch_db:stock_voucher.view_stock_book_tree
-msgid ""
-"<?xml version=\"1.0\"?>\n"
-"<tree string=\"Books\">\n"
-"                <field name=\"name\"/>\n"
-"                <field name=\"sequence_id\"/>\n"
-"                <field name=\"lines_per_voucher\"/>\n"
-"                <field name=\"company_id\" groups=\"base.group_multi_company\"/>\n"
-"            </tree>\n"
-"        "
-msgstr ""
-
-#. module: stock_voucher
-#: model:ir.ui.view,arch_db:stock_voucher.view_stock_picking_voucher_tree
-msgid ""
-"<?xml version=\"1.0\"?>\n"
-"<tree string=\"Picking Voucher\">\n"
-"                <field name=\"name\"/>\n"
-"                <field name=\"book_id\"/>\n"
-"                <field name=\"company_id\" groups=\"base.group_multi_company\"/>\n"
-"            </tree>\n"
-"        "
-msgstr ""
-
-#. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_res_company_automatic_declare_value
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_automatic_declare_value
-#: field:res.company,automatic_declare_value:0
-#: field:stock.picking,automatic_declare_value:0
 msgid "Automatic Declare Value"
 msgstr ""
 
@@ -239,41 +32,46 @@ msgstr ""
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_type_book_id
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_print_stock_voucher_book_id
-#: field:stock.picking.type,book_id:0
-#: field:stock.print_stock_voucher,book_id:0
+#: model:ir.ui.view,arch_db:stock_voucher.view_stock_book_form
 msgid "Book"
 msgstr ""
 
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_book_required
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_type_book_required
-#: field:stock.picking,book_required:0
-#: field:stock.picking.type,book_required:0
 msgid "Book Required?"
 msgstr ""
 
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_type_voucher_number_unique
-#: field:stock.picking.type,voucher_number_unique:0
 msgid "Book Unique?"
 msgstr ""
 
 #. module: stock_voucher
 #: model:ir.model.fields,help:stock_voucher.field_stock_picking_type_book_id
-#: help:stock.picking.type,book_id:0
 msgid "Book suggested for pickings of this type"
 msgstr ""
 
 #. module: stock_voucher
 #: model:ir.actions.act_window,name:stock_voucher.stock_book_actions
 #: model:ir.ui.menu,name:stock_voucher.menu_books
+#: model:ir.ui.view,arch_db:stock_voucher.view_stock_book_tree
 msgid "Books"
 msgstr ""
 
 #. module: stock_voucher
+#: model:ir.ui.view,arch_db:stock_voucher.view_print_stock_voucher_form
+msgid "Cancel"
+msgstr ""
+
+#. module: stock_voucher
 #: model:ir.model.fields,help:stock_voucher.field_stock_picking_type_voucher_number_validator_id
-#: help:stock.picking.type,voucher_number_validator_id:0
 msgid "Choose a validation if you want to validate voucher numbers"
+msgstr ""
+
+#. module: stock_voucher
+#: model:ir.ui.view,arch_db:stock_voucher.view_print_stock_voucher_form
+msgid "Clean Voucher Data"
 msgstr ""
 
 #. module: stock_voucher
@@ -284,7 +82,6 @@ msgstr ""
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_book_company_id
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_voucher_company_id
-#: field:stock.book,company_id:0 field:stock.picking.voucher,company_id:0
 msgid "Company"
 msgstr ""
 
@@ -292,8 +89,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_book_create_uid
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_voucher_create_uid
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_print_stock_voucher_create_uid
-#: field:stock.book,create_uid:0 field:stock.picking.voucher,create_uid:0
-#: field:stock.print_stock_voucher,create_uid:0
 msgid "Created by"
 msgstr "Créé par"
 
@@ -301,14 +96,11 @@ msgstr "Créé par"
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_book_create_date
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_voucher_create_date
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_print_stock_voucher_create_date
-#: field:stock.book,create_date:0 field:stock.picking.voucher,create_date:0
-#: field:stock.print_stock_voucher,create_date:0
 msgid "Created on"
 msgstr "Créé le"
 
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_declared_value
-#: field:stock.picking,declared_value:0
 msgid "Declared Value"
 msgstr ""
 
@@ -316,8 +108,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_book_display_name
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_voucher_display_name
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_print_stock_voucher_display_name
-#: field:stock.book,display_name:0 field:stock.picking.voucher,display_name:0
-#: field:stock.print_stock_voucher,display_name:0
 msgid "Display Name"
 msgstr ""
 
@@ -325,15 +115,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_book_id
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_voucher_id
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_print_stock_voucher_id
-#: field:stock.book,id:0 field:stock.picking.voucher,id:0
-#: field:stock.print_stock_voucher,id:0
 msgid "ID"
 msgstr "ID"
 
 #. module: stock_voucher
 #: model:ir.model.fields,help:stock_voucher.field_stock_picking_book_required
 #: model:ir.model.fields,help:stock_voucher.field_stock_picking_type_book_required
-#: help:stock.picking,book_required:0 help:stock.picking.type,book_required:0
 msgid ""
 "If true, then a book will be requested on transfers of this type and a will "
 "automatically print the stock voucher."
@@ -342,14 +129,11 @@ msgstr ""
 #. module: stock_voucher
 #: model:ir.model.fields,help:stock_voucher.field_stock_picking_type_voucher_required
 #: model:ir.model.fields,help:stock_voucher.field_stock_picking_voucher_required
-#: help:stock.picking,voucher_required:0
-#: help:stock.picking.type,voucher_required:0
 msgid "If true, voucher numbers will be required before validation"
 msgstr ""
 
 #. module: stock_voucher
 #: model:ir.model.fields,help:stock_voucher.field_stock_picking_type_voucher_number_unique
-#: help:stock.picking.type,voucher_number_unique:0
 msgid ""
 "If true, voucher numbers will be required to be unique for same partner"
 msgstr ""
@@ -357,11 +141,17 @@ msgstr ""
 #. module: stock_voucher
 #: model:ir.model.fields,help:stock_voucher.field_stock_book_lines_per_voucher
 #: model:ir.model.fields,help:stock_voucher.field_stock_print_stock_voucher_lines_per_voucher
-#: help:stock.book,lines_per_voucher:0
-#: help:stock.print_stock_voucher,lines_per_voucher:0
 msgid ""
 "If voucher don't have a limit, then live 0. If not, this number will be used"
 " to calculate how many sequence are used on each picking"
+msgstr ""
+
+#. module: stock_voucher
+#: model:ir.model.fields,help:stock_voucher.field_stock_picking_type_pricelist_id
+msgid ""
+"If you choose a pricelist, \"Automatic Declare Value\" is enable on company "
+"and not sale order is found linked to the picking, we will suggest declared "
+"value using this pricelist"
 msgstr ""
 
 #. module: stock_voucher
@@ -373,9 +163,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_book___last_update
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_voucher___last_update
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_print_stock_voucher___last_update
-#: field:stock.book,__last_update:0
-#: field:stock.picking.voucher,__last_update:0
-#: field:stock.print_stock_voucher,__last_update:0
 msgid "Last Modified on"
 msgstr ""
 
@@ -383,8 +170,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_book_write_uid
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_voucher_write_uid
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_print_stock_voucher_write_uid
-#: field:stock.book,write_uid:0 field:stock.picking.voucher,write_uid:0
-#: field:stock.print_stock_voucher,write_uid:0
 msgid "Last Updated by"
 msgstr "Dernière màj par"
 
@@ -392,75 +177,66 @@ msgstr "Dernière màj par"
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_book_write_date
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_voucher_write_date
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_print_stock_voucher_write_date
-#: field:stock.book,write_date:0 field:stock.picking.voucher,write_date:0
-#: field:stock.print_stock_voucher,write_date:0
 msgid "Last Updated on"
 msgstr "Dernière màj le"
 
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_book_lines_per_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_print_stock_voucher_lines_per_voucher
-#: field:stock.book,lines_per_voucher:0
-#: field:stock.print_stock_voucher,lines_per_voucher:0
 msgid "Lines Per Voucher"
 msgstr ""
 
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_book_name
-#: field:stock.book,name:0
 msgid "Name"
 msgstr ""
 
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_print_stock_voucher_next_voucher_number
-#: field:stock.print_stock_voucher,next_voucher_number:0
 msgid "Next Voucher Number"
 msgstr ""
 
 #. module: stock_voucher
 #: model:ir.model.fields,help:stock_voucher.field_stock_print_stock_voucher_next_voucher_number
-#: help:stock.print_stock_voucher,next_voucher_number:0
 msgid ""
 "Next number that will be used. This number can be incremented frequently so "
 "the displayed value might already be obsolete"
 msgstr ""
 
 #. module: stock_voucher
-#: code:addons/stock_voucher/models/stock_picking.py:159
-#, python-format
-msgid ""
-"No se puede validar un pickign que no esté en estado Parcialmente Disponible"
-" o Reservado"
-msgstr ""
-
-#. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_voucher_name
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_voucher_number
-#: field:stock.picking.voucher,name:0 field:stock.picking.voucher,number:0
 msgid "Number"
 msgstr ""
 
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_print_stock_voucher_estimated_number_of_pages
-#: field:stock.print_stock_voucher,estimated_number_of_pages:0
 msgid "Number of Pages"
 msgstr ""
 
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_observations
-#: field:stock.picking,observations:0
 msgid "Observations"
 msgstr ""
 
 #. module: stock_voucher
+#: model:ir.model,name:stock_voucher.model_stock_pack_operation
+msgid "Packing Operation"
+msgstr ""
+
+#. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_voucher_picking_id
-#: field:stock.picking.voucher,picking_id:0
 msgid "Picking"
 msgstr ""
 
 #. module: stock_voucher
+#: model:ir.ui.view,arch_db:stock_voucher.view_stock_picking_voucher_form
+#: model:ir.ui.view,arch_db:stock_voucher.view_stock_picking_voucher_tree
+msgid "Picking Voucher"
+msgstr ""
+
+#. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_print_stock_voucher_picking_id
-#: field:stock.print_stock_voucher,picking_id:0
 msgid "Picking id"
 msgstr ""
 
@@ -471,26 +247,39 @@ msgid "Picking voucher number must be unique per partner"
 msgstr ""
 
 #. module: stock_voucher
+#: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_type_pricelist_id
+msgid "Pricelist"
+msgstr ""
+
+#. module: stock_voucher
+#: model:ir.ui.view,arch_db:stock_voucher.view_print_stock_voucher_form
+msgid "Print"
+msgstr ""
+
+#. module: stock_voucher
 #: model:ir.actions.act_window,name:stock_voucher.action_stock_print_voucher
 msgid "Print Stock Remit"
 msgstr ""
 
 #. module: stock_voucher
 #: model:ir.model,name:stock_voucher.model_stock_print_stock_voucher
+#: model:ir.ui.view,arch_db:stock_voucher.view_print_stock_voucher_form
 msgid "Print Stock Voucher"
 msgstr ""
 
 #. module: stock_voucher
+#: model:ir.ui.view,arch_db:stock_voucher.view_print_stock_voucher_form
+msgid "Print and Assign"
+msgstr ""
+
+#. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_print_stock_voucher_printed
-#: field:stock.print_stock_voucher,printed:0
 msgid "Printed"
 msgstr ""
 
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_res_company_restrict_number_package
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_restrict_number_package
-#: field:res.company,restrict_number_package:0
-#: field:stock.picking,restrict_number_package:0
 msgid "Restrict number of Package"
 msgstr ""
 
@@ -507,7 +296,6 @@ msgstr ""
 
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_book_sequence_id
-#: field:stock.book,sequence_id:0
 msgid "Stock Voucher Sequence"
 msgstr ""
 
@@ -519,7 +307,7 @@ msgid "The field \"Number\" must be unique per book."
 msgstr ""
 
 #. module: stock_voucher
-#: code:addons/stock_voucher/models/stock_picking.py:166
+#: code:addons/stock_voucher/models/stock_picking.py:159
 #, python-format
 msgid "The number of packages can not be 0"
 msgstr ""
@@ -537,21 +325,17 @@ msgstr ""
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_book_id
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_voucher_book_id
-#: field:stock.picking,book_id:0 field:stock.picking.voucher,book_id:0
 msgid "Voucher Book"
 msgstr ""
 
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_type_voucher_number_validator_id
-#: field:stock.picking.type,voucher_number_validator_id:0
 msgid "Voucher Number Validator"
 msgstr ""
 
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_type_voucher_required
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_voucher_required
-#: field:stock.picking,voucher_required:0
-#: field:stock.picking.type,voucher_required:0
 msgid "Voucher Required?"
 msgstr ""
 
@@ -559,19 +343,23 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_move_vouchers
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_voucher_ids
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_vouchers
-#: field:stock.move,vouchers:0 field:stock.picking,voucher_ids:0
-#: field:stock.picking,vouchers:0
+#: model:ir.ui.view,arch_db:stock_voucher.view_picking_withcarrier_out_form
 msgid "Vouchers"
 msgstr ""
 
 #. module: stock_voucher
-#: code:addons/stock_voucher/models/stock_picking.py:168
+#: code:addons/stock_voucher/models/stock_picking.py:161
 #, python-format
 msgid "You must select a Voucher Book"
 msgstr ""
 
 #. module: stock_voucher
-#: code:addons/stock_voucher/models/stock_picking.py:170
+#: code:addons/stock_voucher/models/stock_picking.py:164
 #, python-format
 msgid "You must set stock voucher numbers"
+msgstr ""
+
+#. module: stock_voucher
+#: model:ir.ui.view,arch_db:stock_voucher.view_print_stock_voucher_form
+msgid "or"
 msgstr ""
