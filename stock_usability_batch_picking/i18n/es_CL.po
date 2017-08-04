@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-20 21:18+0000\n"
-"PO-Revision-Date: 2017-07-20 21:18+0000\n"
+"POT-Creation-Date: 2017-08-04 16:16+0000\n"
+"PO-Revision-Date: 2017-08-04 16:16+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2017\n"
 "Language-Team: Spanish (Chile) (https://www.transifex.com/adhoc/teams/46451/es_CL/)\n"
 "MIME-Version: 1.0\n"
@@ -31,14 +31,14 @@ msgid "Batch Picking List"
 msgstr ""
 
 #. module: stock_usability_batch_picking
-#: code:addons/stock_usability_batch_picking/models/stock_batch_picking.py:115
-#, python-format
-msgid "Debe definir Cantidad Realizada en al menos una operación."
+#: selection:stock.batch.picking,picking_code:0
+msgid "Customers"
 msgstr ""
 
 #. module: stock_usability_batch_picking
-#: model:ir.model.fields,help:stock_usability_batch_picking.field_stock_batch_picking_voucher_required
-msgid "If true, voucher numbers will be required before validation"
+#: code:addons/stock_usability_batch_picking/models/stock_batch_picking.py:156
+#, python-format
+msgid "Debe definir Cantidad Realizada en al menos una operación."
 msgstr ""
 
 #. module: stock_usability_batch_picking
@@ -49,6 +49,11 @@ msgid ""
 msgstr ""
 
 #. module: stock_usability_batch_picking
+#: selection:stock.batch.picking,picking_code:0
+msgid "Internal"
+msgstr ""
+
+#. module: stock_usability_batch_picking
 #: model:ir.ui.view,arch_db:stock_usability_batch_picking.stock_batch_picking_form
 msgid "Lot Split"
 msgstr ""
@@ -56,6 +61,11 @@ msgstr ""
 #. module: stock_usability_batch_picking
 #: model:ir.ui.view,arch_db:stock_usability_batch_picking.stock_batch_picking_form
 msgid "Modify"
+msgstr ""
+
+#. module: stock_usability_batch_picking
+#: model:ir.model.fields,field_description:stock_usability_batch_picking.field_stock_batch_picking_number_of_packages
+msgid "Number of Packages"
 msgstr ""
 
 #. module: stock_usability_batch_picking
@@ -74,9 +84,8 @@ msgid "Partner"
 msgstr ""
 
 #. module: stock_usability_batch_picking
-#: model:ir.model.fields,field_description:stock_usability_batch_picking.field_stock_batch_picking_picking_type_id
-#: model:ir.ui.view,arch_db:stock_usability_batch_picking.stock_batch_picking_search
-msgid "Picking Type"
+#: model:ir.model.fields,field_description:stock_usability_batch_picking.field_stock_batch_picking_picking_type_ids
+msgid "Picking type ids"
 msgstr ""
 
 #. module: stock_usability_batch_picking
@@ -93,6 +102,11 @@ msgstr ""
 #. module: stock_usability_batch_picking
 #: model:ir.model.fields,help:stock_usability_batch_picking.field_stock_pack_operation_origin
 msgid "Reference of the document"
+msgstr ""
+
+#. module: stock_usability_batch_picking
+#: model:ir.model.fields,field_description:stock_usability_batch_picking.field_stock_batch_picking_restrict_number_package
+msgid "Restrict number package"
 msgstr ""
 
 #. module: stock_usability_batch_picking
@@ -116,7 +130,24 @@ msgid "Stock Voucher Book"
 msgstr "Talonario de Guías de Despacho"
 
 #. module: stock_usability_batch_picking
+#: selection:stock.batch.picking,picking_code:0
+msgid "Suppliers"
+msgstr ""
+
+#. module: stock_usability_batch_picking
+#: code:addons/stock_usability_batch_picking/models/stock_batch_picking.py:161
+#, python-format
+msgid "The number of packages can not be 0"
+msgstr "El numero de bultos no puede ser 0"
+
+#. module: stock_usability_batch_picking
+#: model:ir.model,name:stock_usability_batch_picking.model_stock_picking
+msgid "Transfer"
+msgstr ""
+
+#. module: stock_usability_batch_picking
 #: model:ir.model.fields,field_description:stock_usability_batch_picking.field_stock_batch_picking_picking_code
+#: model:ir.ui.view,arch_db:stock_usability_batch_picking.stock_batch_picking_search
 msgid "Type of Operation"
 msgstr ""
 
@@ -127,7 +158,7 @@ msgstr ""
 
 #. module: stock_usability_batch_picking
 #: model:ir.model.fields,field_description:stock_usability_batch_picking.field_stock_batch_picking_voucher_required
-msgid "Voucher Required?"
+msgid "Voucher required"
 msgstr ""
 
 #. module: stock_usability_batch_picking
