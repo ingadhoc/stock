@@ -72,3 +72,12 @@ class StockMove(models.Model):
         action['views'] = [(form_view.id, 'form')]
         action['res_id'] = res_id
         return action
+
+    @api.multi
+    def action_cancel(self):
+        """
+        Si se cancela un move y hay operations vinculadas, las borramos
+        """
+        res = super(StockMove, self).action_cancel()
+        self.mapped('linked_move_operation_ids.operation_id').unlink()
+        return res

@@ -73,12 +73,14 @@ class ProcurementOrder(models.Model):
                         not_done_moves.ids,
                         not_done_moves_related_moves.ids))
 
-            # raise ValidationError('asda')
             not_done_moves.action_cancel()
 
+            # ya no seria necesario porque modificamos el action_cancel
+            # de los moves ya que no siempre este metodo borraba las operations
+            # y quedaban en algunos casos moves cancelados con operations
             # because cancel dont update operations, we re asign
-            not_done_moves.mapped('picking_id').filtered(
-                lambda x: x.state not in ['draft', 'cancel']).action_assign()
+            # not_done_moves.mapped('picking_id').filtered(
+            #     lambda x: x.state not in ['draft', 'cancel']).action_assign()
 
             # al fina buscamos en todos los moves relacionados
             # porque los procurements generados (y parcialmente satsifechos)
