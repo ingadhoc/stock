@@ -21,16 +21,25 @@ class StockBatchPicking(models.Model):
     # preferimos limitar por picking type para no confundir a los usuarios
     # porque si no podrian imaginar que al seleccionar recepciones de distintos
     # lugares van a estar recibiendo todo en una misma
-    picking_code = fields.Selection(
-        related='picking_type_id.code',
-        readonly=True,
-    )
-    picking_type_id = fields.Many2one(
-        'stock.picking.type',
-        'Picking Type',
-        states={'done': [('readonly', True)], 'cancel': [('readonly', True)]},
+    picking_code = fields.Selection([
+        ('incoming', 'Suppliers'),
+        ('outgoing', 'Customers'),
+        ('internal', 'Internal'),
+    ],
+        'Type of Operation',
+        # related='picking_type_id.code',
+        # readonly=True,
         required=True,
+        # el default sobre todo para que no necesitemos script de migracion
+        default='incoming',
+        states={'done': [('readonly', True)], 'cancel': [('readonly', True)]},
     )
+    # picking_type_id = fields.Many2one(
+    #     'stock.picking.type',
+    #     'Picking Type',
+    #    states={'done': [('readonly', True)], 'cancel': [('readonly', True)]},
+    #     required=True,
+    # )
     partner_id = fields.Many2one(
         'res.partner',
         'Partner',
@@ -47,14 +56,40 @@ class StockBatchPicking(models.Model):
         states={'done': [('readonly', True)], 'cancel': [('readonly', True)]},
     )
     voucher_required = fields.Boolean(
-        related='picking_type_id.voucher_required',
-        readonly=True,
+        # related='picking_type_id.voucher_required',
+        compute='_compute_picking_type_data',
+    )
+    restrict_number_package = fields.Boolean(
+        compute='_compute_picking_type_data',
+    )
+    number_of_packages = fields.Integer(
+        string='Number of Packages',
+        copy=False,
+    )
+    picking_type_ids = fields.Many2many(
+        'stock.picking.type',
+        # related='picking_type_id.voucher_required',
+        compute='_compute_picking_type_data',
     )
     vouchers = fields.Char(
         related='picking_ids.vouchers',
         readonly=True,
     )
 
+    @api.multi
+    @api.depends('picking_ids')
+    def _compute_picking_type_data(self):
+        for rec in self:
+            types = rec.picking_ids.mapped('picking_type_id')
+            rec.picking_type_ids = types
+            rec.voucher_required = any(x.voucher_required for x in types)
+            # este viene exigido desde la cia pero seguramente lo movamos a
+            # exigir desde picking type
+            # solo es requerido para outgoings
+            if rec.picking_code == 'outgoing':
+                companies = rec.picking_ids.mapped('company_id')
+                rec.restrict_number_package = any(
+                    x.restrict_number_package for x in companies)
     # TODO deberiamos ver como hacer para aceptar multiples numeros de remitos
     # si llega a ser necesario
     # voucher_ids = fields.One2many(
@@ -73,17 +108,23 @@ class StockBatchPicking(models.Model):
     #     for rec in self:
     #         rec.vouchers = ', '.join(rec.mapped('voucher_ids.display_name'))
 
-    @api.onchange('picking_type_id', 'partner_id')
+    # @api.onchange('picking_type_id', 'partner_id')
+    @api.onchange('picking_code', 'partner_id')
     def changes_set_pickings(self):
         # if we change type or partner reset pickings
         self.picking_ids = False
 
     @api.multi
-    @api.constrains('voucher_number', 'picking_type_id')
-    def check_voucher_number_unique(self):
+    # @api.constrains('voucher_number', 'picking_type_id')
+    @api.constrains('voucher_number', 'picking_ids')
+    def format_voucher_number(self):
         for rec in self:
-            validator = rec.picking_type_id.voucher_number_validator_id
-            voucher_number = validator.validate_value(
+            # TODO, mejorarlo, por ahora tomamos un solo validador
+            validators = rec.picking_type_ids.mapped(
+                'voucher_number_validator_id')
+            if not validators:
+                continue
+            voucher_number = validators[0].validate_value(
                 rec.voucher_number)
             if voucher_number and voucher_number != rec.voucher_number:
                 rec.voucher_number = voucher_number
@@ -115,6 +156,13 @@ class StockBatchPicking(models.Model):
                 raise UserError(_(
                     'Debe definir Cantidad Realizada en al menos una '
                     'operación.'))
+
+            if rec.restrict_number_package and not rec.number_of_packages > 0:
+                raise UserError(_('The number of packages can not be 0'))
+            if rec.number_of_packages:
+                rec.picking_ids.write({
+                    'number_of_packages': rec.number_of_packages})
+
             if rec.picking_code == 'incoming' and rec.voucher_number:
                 for picking in rec.active_picking_ids:
                     # agregamos esto para que no se asigne a los pickings
@@ -133,11 +181,11 @@ class StockBatchPicking(models.Model):
                 # termina usando do_transfer pero el chequeo se llama solo
                 # con do_new_transfer
                 rec.active_picking_ids.do_stock_voucher_transfer_check()
+
         res = super(StockBatchPicking, self).action_transfer()
         # nosotros preferimos que no se haga en muchos pasos y una vez
         # confirmado se borre lo no hecho y se marque como realizado
         # lo hago para distinto de incomring porque venia andando bien para
         # Incoming, pero no debería hacer falta este chequeo
-        if rec.picking_code != 'incoming':
-            self.remove_undone_pickings()
+        self.remove_undone_pickings()
         return res

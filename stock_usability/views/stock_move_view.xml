@@ -67,4 +67,19 @@
         </field>
     </record>
 
+
+    <!-- stock.batch.picking tree view -->
+    <record model="ir.ui.view" id="view_move_picking_tree">
+        <field name="name">stock.move.tree</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_picking_tree"/>
+        <field name="arch" type="xml">
+            <field name="product_id" position="before">
+                <!-- por ejemplo, lo usamos para mostrar este campo en stock_usability_batch_picking -->
+                <field name="picking_id" invisible="not context.get('show_picking', False)"/>
+            </field>
+        </field>
+    </record>
+
+
 </odoo>

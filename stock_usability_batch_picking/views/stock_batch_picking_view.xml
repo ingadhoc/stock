@@ -9,10 +9,12 @@
             <field name="name" position="after">
                 <!-- al buscar por picking busca por nro de remto -->
                 <field name="picking_ids"/>
-                <field name="picking_type_id"/>
+                <field name="picking_code"/>
+                <!-- <field name="picking_type_id"/> -->
             </field>
             <group>
-                <filter name="picking_type_id" string="Picking Type" context="{'group_by':'picking_type_id'}"/>
+                <filter name="picking_code" string="Type of Operation" context="{'group_by':'picking_code'}"/>
+                <!-- <filter name="picking_type_id" string="Picking Type" context="{'group_by':'picking_type_id'}"/> -->
             </group>
         </field>
     </record>
@@ -25,8 +27,9 @@
         <field name="arch" type="xml">
             <field name="name" position="after">
                 <field name="vouchers"/>
-                <field name="picking_type_id"/>
-                <field name="picking_ids"/>
+                <!-- <field name="picking_type_id"/> -->
+                <field name="picking_code"/>
+                <!-- <field name="picking_ids"/> -->
             </field>
         </field>
     </record>
@@ -44,6 +47,7 @@
             </button>
 
             <button name="action_cancel" position="attributes">
+                <attribute name="groups">stock_usability.allow_picking_cancellation</attribute>
                 <attribute name="confirm">ATENCION! Al cancelar un picking batch todos los pickings relacionados también se van a cancelar. Seguro desea continuar?</attribute>
             </button>
 
@@ -54,15 +58,20 @@
             <field name="picker_id" position="before">
                 <field name="picking_code" invisible="1"/>
                 <field name="voucher_required" invisible="1"/>
-                <field name="picking_type_id"/>
+                <field name="picking_code"/>
+                <!-- <field name="picking_type_id"/> -->
+                <!-- al final lo sacamos porque ya lo estamos usando para otros tipos -->
                 <!-- como por ahora solo lo usamos para entrada lo restringimos -->
-                <field name="partner_id" context="{'search_default_supplier':1, 'default_supplier':1, 'default_customer':0}" domain="[('supplier','=',True)]"/>
+                <field name="partner_id"/>
+                <!-- <field name="partner_id" context="{'search_default_supplier':1, 'default_supplier':1, 'default_customer':0}" domain="[('supplier','=',True)]"/> -->
                 <field name="voucher_number" attrs="{'invisible': [('picking_code','!=','incoming')], 'required': [('voucher_required','=',True)]}"/>
+                <field name="number_of_packages"/>
                 <!-- <field name="voucher_ids" attrs="{'invisible': [('picking_type_code','!=','incoming')]}" widget="many2many_tags" context="{'default_batch_picking': id}" domain="[('id', '=', False)]"  options="{'create':True, 'create_edit':True}}"/> -->
             </field>
 
             <field name="picking_ids" position="attributes">
-                <attribute name="domain">[('partner_id', '=', partner_id), ('picking_type_id', '=', picking_type_id), ('state', 'in', ('confirmed', 'partially_available', 'assigned'))]</attribute>
+                <attribute name="domain">[('partner_id', '=', partner_id), ('picking_type_id.code', '=', picking_code), ('state', 'in', ('confirmed', 'partially_available', 'assigned'))]</attribute>
+                <!-- <attribute name="domain">[('partner_id', '=', partner_id), ('picking_type_id', '=', picking_type_id), ('state', 'in', ('confirmed', 'partially_available', 'assigned'))]</attribute> -->
             </field>
 
             <!-- TODO this should go on a PR to oca module -->
@@ -72,6 +81,11 @@
 
             <field name="pack_operation_ids" position="attributes">
                 <attribute name="context">{'from_batch': True}</attribute>
+            </field>
+
+            <field name="move_ids" position="attributes">
+                <!-- usamos de vista tree la misma que se usan en los pickins y ademas mostramos el campo del picking -->
+                <attribute name="context">{'show_picking': True, 'tree_view_ref': 'stock.view_move_picking_tree'}</attribute>
             </field>
 
             <field name="product_qty" position="after">
