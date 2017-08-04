@@ -79,6 +79,10 @@
                 <field name="origin"/>
             </field>
 
+            <field name="package_id" position="before">
+                <field name="picking_id" readonly="1"/>
+            </field>
+
             <field name="pack_operation_ids" position="attributes">
                 <attribute name="context">{'from_batch': True}</attribute>
             </field>
