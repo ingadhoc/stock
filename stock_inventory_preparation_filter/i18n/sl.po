@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-05 15:08+0000\n"
-"PO-Revision-Date: 2017-04-05 15:08+0000\n"
+"POT-Creation-Date: 2017-07-20 21:18+0000\n"
+"PO-Revision-Date: 2017-07-20 21:18+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016\n"
 "Language-Team: Slovenian (https://www.transifex.com/adhoc/teams/46451/sl/)\n"
 "MIME-Version: 1.0\n"
@@ -19,69 +19,33 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
 
 #. module: stock_inventory_preparation_filter
-#: model:ir.ui.view,arch_db:stock_inventory_preparation_filter.stock_inventory_form
-msgid ""
-"<?xml version=\"1.0\"?>\n"
-"<data>\n"
-"                    <field name=\"filter\" position=\"after\">\n"
-"                        <field name=\"import_products\" attrs=\"{'invisible':[('filter','not in',['categories','none'])], 'required':[('filter','in',['categories','none'])]}\"/>\n"
-"                    </field>\n"
-"                    <notebook position=\"attributes\">\n"
-"                        <attribute name=\"attrs\"/>\n"
-"                    </notebook>\n"
-"                    <notebook position=\"before\">\n"
-"                        <group>\n"
-"                            <field name=\"categ_ids\" nolabel=\"1\" attrs=\"{'invisible':[('filter','!=','categories')]}\"/>\n"
-"                            <field name=\"product_ids\" nolabel=\"1\" attrs=\"{'invisible':[('filter','!=','products')]}\"/>\n"
-"                            <field name=\"lot_ids\" nolabel=\"1\" attrs=\"{'invisible':[('filter','!=','lots')]}\"/>\n"
-"                        </group>\n"
-"                    </notebook>\n"
-"                    <notebook position=\"inside\">\n"
-"                        <page string=\"Capture Lines\" attrs=\"{'invisible':[('filter','!=','empty')]}\">\n"
-"                            <field name=\"empty_line_ids\" nolabel=\"1\">\n"
-"                                <tree editable=\"bottom\">\n"
-"                                    <field name=\"product_code\"/>\n"
-"                                    <field name=\"product_qty\"/>\n"
-"                                </tree>\n"
-"                            </field>\n"
-"                        </page>\n"
-"                    </notebook>\n"
-"                </data>\n"
-"            "
-msgstr ""
-
-#. module: stock_inventory_preparation_filter
 #: selection:stock.inventory,import_products:0
 msgid "All"
 msgstr ""
 
 #. module: stock_inventory_preparation_filter
 #: model:ir.model.fields,field_description:stock_inventory_preparation_filter.field_stock_inventory_empty_line_ids
-#: field:stock.inventory,empty_line_ids:0
+#: model:ir.ui.view,arch_db:stock_inventory_preparation_filter.stock_inventory_form
 msgid "Capture Lines"
 msgstr "Zajem postavk"
 
 #. module: stock_inventory_preparation_filter
 #: model:ir.model.fields,field_description:stock_inventory_preparation_filter.field_stock_inventory_categ_ids
-#: field:stock.inventory,categ_ids:0
 msgid "Categories"
 msgstr "Kategorije"
 
 #. module: stock_inventory_preparation_filter
 #: model:ir.model.fields,field_description:stock_inventory_preparation_filter.field_stock_inventory_line_empty_create_uid
-#: field:stock.inventory.line.empty,create_uid:0
 msgid "Created by"
 msgstr "Ustvaril"
 
 #. module: stock_inventory_preparation_filter
 #: model:ir.model.fields,field_description:stock_inventory_preparation_filter.field_stock_inventory_line_empty_create_date
-#: field:stock.inventory.line.empty,create_date:0
 msgid "Created on"
 msgstr "Ustvarjeno"
 
 #. module: stock_inventory_preparation_filter
 #: model:ir.model.fields,field_description:stock_inventory_preparation_filter.field_stock_inventory_line_empty_display_name
-#: field:stock.inventory.line.empty,display_name:0
 msgid "Display Name"
 msgstr ""
 
@@ -94,44 +58,37 @@ msgstr "Prazen seznam"
 
 #. module: stock_inventory_preparation_filter
 #: model:ir.model.fields,field_description:stock_inventory_preparation_filter.field_stock_inventory_line_empty_id
-#: field:stock.inventory.line.empty,id:0
 msgid "ID"
 msgstr "ID"
 
 #. module: stock_inventory_preparation_filter
 #: model:ir.model.fields,field_description:stock_inventory_preparation_filter.field_stock_inventory_import_products
-#: field:stock.inventory,import_products:0
 msgid "Import products"
 msgstr ""
 
 #. module: stock_inventory_preparation_filter
 #: model:ir.model,name:stock_inventory_preparation_filter.model_stock_inventory
 #: model:ir.model.fields,field_description:stock_inventory_preparation_filter.field_stock_inventory_line_empty_inventory_id
-#: field:stock.inventory.line.empty,inventory_id:0
 msgid "Inventory"
 msgstr "Inventar"
 
 #. module: stock_inventory_preparation_filter
 #: model:ir.model.fields,field_description:stock_inventory_preparation_filter.field_stock_inventory_line_empty___last_update
-#: field:stock.inventory.line.empty,__last_update:0
 msgid "Last Modified on"
 msgstr ""
 
 #. module: stock_inventory_preparation_filter
 #: model:ir.model.fields,field_description:stock_inventory_preparation_filter.field_stock_inventory_line_empty_write_uid
-#: field:stock.inventory.line.empty,write_uid:0
 msgid "Last Updated by"
 msgstr "Zadnji posodobil"
 
 #. module: stock_inventory_preparation_filter
 #: model:ir.model.fields,field_description:stock_inventory_preparation_filter.field_stock_inventory_line_empty_write_date
-#: field:stock.inventory.line.empty,write_date:0
 msgid "Last Updated on"
 msgstr "Zadnjič posodobljeno"
 
 #. module: stock_inventory_preparation_filter
 #: model:ir.model.fields,field_description:stock_inventory_preparation_filter.field_stock_inventory_lot_ids
-#: field:stock.inventory,lot_ids:0
 msgid "Lots"
 msgstr "Loti"
 
@@ -142,19 +99,16 @@ msgstr ""
 
 #. module: stock_inventory_preparation_filter
 #: model:ir.model.fields,field_description:stock_inventory_preparation_filter.field_stock_inventory_line_empty_product_code
-#: field:stock.inventory.line.empty,product_code:0
 msgid "Product Code"
 msgstr "Koda proizvoda"
 
 #. module: stock_inventory_preparation_filter
 #: model:ir.model.fields,field_description:stock_inventory_preparation_filter.field_stock_inventory_product_ids
-#: field:stock.inventory,product_ids:0
 msgid "Products"
 msgstr "Proizvodi"
 
 #. module: stock_inventory_preparation_filter
 #: model:ir.model.fields,field_description:stock_inventory_preparation_filter.field_stock_inventory_line_empty_product_qty
-#: field:stock.inventory.line.empty,product_qty:0
 msgid "Quantity"
 msgstr "Količina"
 
@@ -178,3 +132,8 @@ msgstr "Izbrani loti"
 #, python-format
 msgid "Selected Products"
 msgstr "Izbrani proizvodi"
+
+#. module: stock_inventory_preparation_filter
+#: model:ir.model,name:stock_inventory_preparation_filter.model_stock_inventory_line_empty
+msgid "stock.inventory.line.empty"
+msgstr ""

@@ -4,15 +4,13 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
-# Lisandro Boggio <lboggio@ingenieriaboggio.com.ar>, 2017
-# Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-05 15:08+0000\n"
-"PO-Revision-Date: 2017-04-05 15:08+0000\n"
-"Last-Translator: Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2017\n"
+"POT-Creation-Date: 2017-07-20 21:18+0000\n"
+"PO-Revision-Date: 2017-07-20 21:18+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,84 +19,22 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: stock_picking_state
-#: model:ir.ui.view,arch_db:stock_picking_state.view_vpicktree
-msgid ""
-"<?xml version=\"1.0\"?>\n"
-"<field name=\"state\" position=\"after\">\n"
-"                    <field name=\"state_detail_id\"/>\n"
-"                </field> \n"
-"            "
-msgstr ""
-"<?xml version=\"1.0\"?>\n"
-"<field name=\"state\" position=\"after\">\n"
-"                    <field name=\"state_detail_id\"/>\n"
-"                </field> \n"
-"            "
-
-#. module: stock_picking_state
-#: model:ir.ui.view,arch_db:stock_picking_state.view_picking_detail_form
-msgid ""
-"<?xml version=\"1.0\"?>\n"
-"<form>\n"
-"                    <group>\n"
-"                        <field name=\"name\"/>\n"
-"                        <field name=\"sequence\"/>\n"
-"                        <field name=\"state\"/>\n"
-"                        <field name=\"picking_type\"/>\n"
-"                    </group>\n"
-"                </form> \n"
-"            "
-msgstr ""
-"<?xml version=\"1.0\"?>\n"
-"<form>\n"
-"                    <group>\n"
-"                        <field name=\"name\"/>\n"
-"                        <field name=\"sequence\"/>\n"
-"                        <field name=\"state\"/>\n"
-"                        <field name=\"picking_type\"/>\n"
-"                    </group>\n"
-"                </form> \n"
-"            "
-
-#. module: stock_picking_state
-#: model:ir.ui.view,arch_db:stock_picking_state.view_picking_form
-msgid ""
-"<?xml version=\"1.0\"?>\n"
-"<header position=\"after\">\n"
-"                    <header>\n"
-"                        <field name=\"state_detail_id\" widget=\"statusbar\" clickable=\"True\" domain=\"[('state','=', state),'|',('picking_type','=', picking_type_code), ('picking_type','=', False)]\"/>\n"
-"                    </header>\n"
-"                </header>\n"
-"            "
-msgstr ""
-"<?xml version=\"1.0\"?>\n"
-"<header position=\"after\">\n"
-"                    <header>\n"
-"                        <field name=\"state_detail_id\" widget=\"statusbar\" clickable=\"True\" domain=\"[('state','=', state),'|',('picking_type','=', picking_type_code), ('picking_type','=', False)]\"/>\n"
-"                    </header>\n"
-"                </header>\n"
-"            "
-
-#. module: stock_picking_state
 #: selection:stock.picking.state_detail,state:0
 msgid "Cancelled"
 msgstr "Cancelado"
 
 #. module: stock_picking_state
 #: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail_create_uid
-#: field:stock.picking.state_detail,create_uid:0
 msgid "Created by"
 msgstr "Created by"
 
 #. module: stock_picking_state
 #: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail_create_date
-#: field:stock.picking.state_detail,create_date:0
 msgid "Created on"
 msgstr "Created on"
 
 #. module: stock_picking_state
 #: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail_display_name
-#: field:stock.picking.state_detail,display_name:0
 msgid "Display Name"
 msgstr "Mostrar Nombre"
 
@@ -109,7 +45,6 @@ msgstr "Borrador"
 
 #. module: stock_picking_state
 #: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail_id
-#: field:stock.picking.state_detail,id:0
 msgid "ID"
 msgstr "ID"
 
@@ -125,25 +60,21 @@ msgstr "Interno"
 
 #. module: stock_picking_state
 #: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail___last_update
-#: field:stock.picking.state_detail,__last_update:0
 msgid "Last Modified on"
 msgstr "Última modificación en"
 
 #. module: stock_picking_state
 #: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail_write_uid
-#: field:stock.picking.state_detail,write_uid:0
 msgid "Last Updated by"
 msgstr "Last Updated by"
 
 #. module: stock_picking_state
 #: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail_write_date
-#: field:stock.picking.state_detail,write_date:0
 msgid "Last Updated on"
 msgstr "Last Updated on"
 
 #. module: stock_picking_state
 #: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail_name
-#: field:stock.picking.state_detail,name:0
 msgid "Name"
 msgstr "Nombre"
 
@@ -165,13 +96,11 @@ msgstr "Detalle de Estados de Remitos"
 
 #. module: stock_picking_state
 #: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail_picking_type
-#: field:stock.picking.state_detail,picking_type:0
 msgid "Picking Type"
 msgstr "Tipo de operación"
 
 #. module: stock_picking_state
 #: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail_picking_ids
-#: field:stock.picking.state_detail,picking_ids:0
 msgid "Pickings"
 msgstr "Pickings"
 
@@ -182,19 +111,16 @@ msgstr "Listo Para Transferir"
 
 #. module: stock_picking_state
 #: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail_sequence
-#: field:stock.picking.state_detail,sequence:0
 msgid "Sequence"
 msgstr "Sequencia"
 
 #. module: stock_picking_state
 #: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail_id_4706
-#: field:stock.picking,state_detail_id:0
 msgid "State Detail"
 msgstr "Subestado"
 
 #. module: stock_picking_state
 #: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail_state
-#: field:stock.picking.state_detail,state:0
 msgid "Status"
 msgstr "Estado"
 
@@ -217,3 +143,8 @@ msgstr "Esperando Otra Operacion"
 #: selection:stock.picking.state_detail,state:0
 msgid "Waiting Availability"
 msgstr "Esperando Disponibilidad"
+
+#. module: stock_picking_state
+#: model:ir.model,name:stock_picking_state.model_stock_picking_state_detail
+msgid "stock.picking.state_detail"
+msgstr ""

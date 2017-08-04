@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * stock_inventory_require_lot
+# * stock_usability_quant_manual_assign
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2017
@@ -18,12 +18,12 @@ msgstr ""
 "Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#. module: stock_inventory_require_lot
-#: model:ir.model,name:stock_inventory_require_lot.model_stock_inventory_line
-msgid "Inventory Line"
-msgstr "Línea de inventario"
+#. module: stock_usability_quant_manual_assign
+#: model:ir.model.fields,field_description:stock_usability_quant_manual_assign.field_stock_move_pack_operation_product_ids
+msgid "Non pack"
+msgstr ""
 
-#. module: stock_inventory_require_lot
-#: model:ir.model.fields,field_description:stock_inventory_require_lot.field_stock_inventory_line_tracking
-msgid "Tracking"
-msgstr "Seguimiento"
+#. module: stock_usability_quant_manual_assign
+#: model:ir.model,name:stock_usability_quant_manual_assign.model_stock_move
+msgid "Stock Move"
+msgstr "Movimiento stock"

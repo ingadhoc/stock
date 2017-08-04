@@ -5,14 +5,13 @@
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2017
 # Lisandro Boggio <lboggio@ingenieriaboggio.com.ar>, 2017
-# Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-05 15:08+0000\n"
-"PO-Revision-Date: 2017-04-05 15:08+0000\n"
-"Last-Translator: Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2017\n"
+"POT-Creation-Date: 2017-07-20 21:18+0000\n"
+"PO-Revision-Date: 2017-07-20 21:18+0000\n"
+"Last-Translator: Lisandro Boggio <lboggio@ingenieriaboggio.com.ar>, 2017\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,179 +20,76 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: stock_procurement_request
+#: model:ir.model.fields,help:stock_procurement_request.field_stock_procurement_request_state
+msgid ""
+"* Draft state if not procurements\n"
+"* Done state if all procurements are on done or cancelled state* Running state if at least one procurement on state different from done or cancelled"
+msgstr ""
+
+#. module: stock_procurement_request
 #: model:ir.ui.view,arch_db:stock_procurement_request.view_procurement_request_form
 msgid ""
-"<?xml version=\"1.0\"?>\n"
-"<form string=\"Procurement Requests\">\n"
-"                    <header>\n"
-"                    </header>\n"
-"                    <sheet>\n"
-"                        <group>\n"
-"                            <group>\n"
-"                                <field name=\"id\" invisible=\"1\"/>\n"
-"                                <field name=\"name\"/>\n"
-"                                <field name=\"warehouse_id\"/>\n"
-"                                <field name=\"location_id\"/>\n"
-"                                <field name=\"route_ids\" widget=\"many2many_tags\"/>\n"
-"                            </group>\n"
-"                            <group>\n"
-"                                <field name=\"date_planned\"/>\n"
-"                                <field name=\"priority\"/>\n"
-"                                <field name=\"group_id\"/>\n"
-"                                <field name=\"company_id\" groups=\"base.group_multi_company\"/>\n"
-"                            </group>\n"
-"                        </group>\n"
-"                        <notebook>\n"
-"                            <page string=\"Procurements\">\n"
-"                                <field name=\"procurement_ids\" context=\"{'default_name': name, 'default_warehouse_id': warehouse_id, 'default_location_id': location_id, 'default_route_ids': route_ids, 'default_group_id': group_id}\" attrs=\"{'readonly': [('id', '=', False)]}\">\n"
-"                                    <tree editable=\"bottom\">\n"
-"                                        <field name=\"product_id\" on_change=\"onchange_product_id(product_id)\" domain=\"[('type', '=', 'product')]\"/>\n"
-"                                        <field name=\"product_qty\"/>\n"
-"                                        <field name=\"product_uom\"/>\n"
-"                                        <field name=\"warehouse_id\" invisible=\"1\"/>\n"
-"                                        <field name=\"group_id\" invisible=\"1\"/>\n"
-"                                        <field name=\"location_id\" invisible=\"1\"/>\n"
-"                                        <field name=\"route_ids\" invisible=\"1\"/>\n"
-"                                        <field name=\"name\" invisible=\"1\"/>\n"
-"                                        <field name=\"state\" readonly=\"1\"/>\n"
-"                                    </tree>\n"
-"                                </field>\n"
-"                            </page>\n"
-"                        </notebook>\n"
-"                    </sheet>\n"
-"                </form>\n"
-"            "
+"Cancelar Pendiente. Se van a cancelar todos los movimientos asociados que no"
+" esten realizados."
 msgstr ""
-"<?xml version=\"1.0\"?>\n"
-"<form string=\"Procurement Requests\">\n"
-"                    <header>\n"
-"                    </header>\n"
-"                    <sheet>\n"
-"                        <group>\n"
-"                            <group>\n"
-"                                <field name=\"id\" invisible=\"1\"/>\n"
-"                                <field name=\"name\"/>\n"
-"                                <field name=\"warehouse_id\"/>\n"
-"                                <field name=\"location_id\"/>\n"
-"                                <field name=\"route_ids\" widget=\"many2many_tags\"/>\n"
-"                            </group>\n"
-"                            <group>\n"
-"                                <field name=\"date_planned\"/>\n"
-"                                <field name=\"priority\"/>\n"
-"                                <field name=\"group_id\"/>\n"
-"                                <field name=\"company_id\" groups=\"base.group_multi_company\"/>\n"
-"                            </group>\n"
-"                        </group>\n"
-"                        <notebook>\n"
-"                            <page string=\"Procurements\">\n"
-"                                <field name=\"procurement_ids\" context=\"{'default_name': name, 'default_warehouse_id': warehouse_id, 'default_location_id': location_id, 'default_route_ids': route_ids, 'default_group_id': group_id}\" attrs=\"{'readonly': [('id', '=', False)]}\">\n"
-"                                    <tree editable=\"bottom\">\n"
-"                                        <field name=\"product_id\" on_change=\"onchange_product_id(product_id)\" domain=\"[('type', '=', 'product')]\"/>\n"
-"                                        <field name=\"product_qty\"/>\n"
-"                                        <field name=\"product_uom\"/>\n"
-"                                        <field name=\"warehouse_id\" invisible=\"1\"/>\n"
-"                                        <field name=\"group_id\" invisible=\"1\"/>\n"
-"                                        <field name=\"location_id\" invisible=\"1\"/>\n"
-"                                        <field name=\"route_ids\" invisible=\"1\"/>\n"
-"                                        <field name=\"name\" invisible=\"1\"/>\n"
-"                                        <field name=\"state\" readonly=\"1\"/>\n"
-"                                    </tree>\n"
-"                                </field>\n"
-"                            </page>\n"
-"                        </notebook>\n"
-"                    </sheet>\n"
-"                </form>\n"
-"            "
 
 #. module: stock_procurement_request
-#: model:ir.ui.view,arch_db:stock_procurement_request.view_procurement_request_search
-msgid ""
-"<?xml version=\"1.0\"?>\n"
-"<search string=\"Procurement Requests\">\n"
-"                    <field name=\"name\"/>\n"
-"                    <field name=\"warehouse_id\"/>\n"
-"                    <field name=\"location_id\"/>\n"
-"                </search>\n"
-"            "
-msgstr ""
-"<?xml version=\"1.0\"?>\n"
-"<search string=\"Procurement Requests\">\n"
-"                    <field name=\"name\"/>\n"
-"                    <field name=\"warehouse_id\"/>\n"
-"                    <field name=\"location_id\"/>\n"
-"                </search>\n"
-"            "
-
-#. module: stock_procurement_request
-#: model:ir.ui.view,arch_db:stock_procurement_request.view_procurement_request_tree
-msgid ""
-"<?xml version=\"1.0\"?>\n"
-"<tree string=\"Procurement Requests\">\n"
-"                    <field name=\"name\"/>\n"
-"                    <field name=\"warehouse_id\"/>\n"
-"                    <field name=\"location_id\"/>\n"
-"                </tree>\n"
-"            "
-msgstr ""
-"<?xml version=\"1.0\"?>\n"
-"<tree string=\"Procurement Requests\">\n"
-"                    <field name=\"name\"/>\n"
-"                    <field name=\"warehouse_id\"/>\n"
-"                    <field name=\"location_id\"/>\n"
-"                </tree>\n"
-"            "
+#: selection:stock.procurement.request,state:0
+msgid "Cancelled"
+msgstr "Cancelado"
 
 #. module: stock_procurement_request
 #: model:ir.model.fields,field_description:stock_procurement_request.field_stock_procurement_request_company_id
-#: field:stock.procurement.request,company_id:0
 msgid "Company"
 msgstr "Compania"
 
 #. module: stock_procurement_request
 #: model:ir.model.fields,field_description:stock_procurement_request.field_stock_procurement_request_create_uid
-#: field:stock.procurement.request,create_uid:0
 msgid "Created by"
 msgstr "Creado por"
 
 #. module: stock_procurement_request
 #: model:ir.model.fields,field_description:stock_procurement_request.field_stock_procurement_request_create_date
-#: field:stock.procurement.request,create_date:0
 msgid "Created on"
 msgstr "Creado el"
 
 #. module: stock_procurement_request
 #: model:ir.model.fields,field_description:stock_procurement_request.field_stock_procurement_request_display_name
-#: field:stock.procurement.request,display_name:0
 msgid "Display Name"
 msgstr "Mostrar Nombre"
 
 #. module: stock_procurement_request
+#: selection:stock.procurement.request,state:0
+msgid "Done"
+msgstr ""
+
+#. module: stock_procurement_request
+#: selection:stock.procurement.request,state:0
+msgid "Draft"
+msgstr "Borrador"
+
+#. module: stock_procurement_request
 #: model:ir.model.fields,field_description:stock_procurement_request.field_stock_procurement_request_id
-#: field:stock.procurement.request,id:0
 msgid "ID"
 msgstr "ID"
 
 #. module: stock_procurement_request
 #: model:ir.model.fields,field_description:stock_procurement_request.field_stock_procurement_request___last_update
-#: field:stock.procurement.request,__last_update:0
 msgid "Last Modified on"
 msgstr "Última modificación en"
 
 #. module: stock_procurement_request
 #: model:ir.model.fields,field_description:stock_procurement_request.field_stock_procurement_request_write_uid
-#: field:stock.procurement.request,write_uid:0
 msgid "Last Updated by"
 msgstr "Actualizado por"
 
 #. module: stock_procurement_request
 #: model:ir.model.fields,field_description:stock_procurement_request.field_stock_procurement_request_write_date
-#: field:stock.procurement.request,write_date:0
 msgid "Last Updated on"
 msgstr "Actualizado el"
 
 #. module: stock_procurement_request
 #: model:ir.model.fields,field_description:stock_procurement_request.field_stock_procurement_request_name
-#: field:stock.procurement.request,name:0
 msgid "Name"
 msgstr "Nombre"
 
@@ -208,14 +104,17 @@ msgid "Not urgent"
 msgstr "No Urgente"
 
 #. module: stock_procurement_request
+#: model:ir.ui.view,arch_db:stock_procurement_request.view_procurement_request_form
+msgid "Pickings"
+msgstr "Pickings"
+
+#. module: stock_procurement_request
 #: model:ir.model.fields,field_description:stock_procurement_request.field_stock_procurement_request_route_ids
-#: field:stock.procurement.request,route_ids:0
 msgid "Preferred Routes"
 msgstr "Ruta Preferida"
 
 #. module: stock_procurement_request
 #: model:ir.model.fields,help:stock_procurement_request.field_stock_procurement_request_route_ids
-#: help:stock.procurement.request,route_ids:0
 msgid ""
 "Preferred route to be followed by the procurement order. Usually copied from"
 " the generating document (SO) but could be set up manually."
@@ -225,7 +124,6 @@ msgstr ""
 
 #. module: stock_procurement_request
 #: model:ir.model.fields,field_description:stock_procurement_request.field_stock_procurement_request_priority
-#: field:stock.procurement.request,priority:0
 msgid "Priority"
 msgstr "Prioridad"
 
@@ -236,39 +134,62 @@ msgstr "Obtención"
 
 #. module: stock_procurement_request
 #: model:ir.model.fields,field_description:stock_procurement_request.field_stock_procurement_request_group_id
-#: field:stock.procurement.request,group_id:0
 msgid "Procurement Group"
 msgstr "Grupo de abastecimiento"
 
 #. module: stock_procurement_request
 #: model:ir.model.fields,field_description:stock_procurement_request.field_stock_procurement_request_location_id
-#: field:stock.procurement.request,location_id:0
 msgid "Procurement Location"
 msgstr "Ubicación de abastecimiento"
 
 #. module: stock_procurement_request
 #: model:ir.model.fields,field_description:stock_procurement_request.field_procurement_order_procurement_request_id
-#: field:procurement.order,procurement_request_id:0
+#: model:ir.model.fields,field_description:stock_procurement_request.field_stock_move_procurement_request_id
 msgid "Procurement Request"
 msgstr "Solicitud de abastecimiento"
 
 #. module: stock_procurement_request
 #: model:ir.actions.act_window,name:stock_procurement_request.action_procurement_request
 #: model:ir.ui.menu,name:stock_procurement_request.menu_procurement_request
+#: model:ir.ui.view,arch_db:stock_procurement_request.view_move_form
+#: model:ir.ui.view,arch_db:stock_procurement_request.view_procurement_request_form
+#: model:ir.ui.view,arch_db:stock_procurement_request.view_procurement_request_search
+#: model:ir.ui.view,arch_db:stock_procurement_request.view_procurement_request_tree
 msgid "Procurement Requests"
 msgstr "Pedidos de Abastecimientos"
 
 #. module: stock_procurement_request
 #: model:ir.model.fields,field_description:stock_procurement_request.field_stock_procurement_request_procurement_ids
-#: field:stock.procurement.request,procurement_ids:0
+#: model:ir.ui.view,arch_db:stock_procurement_request.view_procurement_request_form
 msgid "Procurements"
 msgstr "Abastecimientos"
 
 #. module: stock_procurement_request
+#: selection:stock.procurement.request,state:0
+msgid "Running"
+msgstr ""
+
+#. module: stock_procurement_request
 #: model:ir.model.fields,field_description:stock_procurement_request.field_stock_procurement_request_date_planned
-#: field:stock.procurement.request,date_planned:0
 msgid "Scheduled Date"
 msgstr "Fecha prevista"
+
+#. module: stock_procurement_request
+#: model:ir.ui.view,arch_db:stock_procurement_request.view_procurement_request_form
+msgid ""
+"Se van a cancelar todos los movimientos asociados que no esten realizados. "
+"Esto no puede ser revertido, seguro que desea continuar?"
+msgstr ""
+
+#. module: stock_procurement_request
+#: model:ir.model.fields,field_description:stock_procurement_request.field_stock_procurement_request_state
+msgid "State"
+msgstr "Estado"
+
+#. module: stock_procurement_request
+#: model:ir.model,name:stock_procurement_request.model_stock_move
+msgid "Stock Move"
+msgstr "Movimiento stock"
 
 #. module: stock_procurement_request
 #: model:ir.model,name:stock_procurement_request.model_stock_procurement_request
@@ -287,12 +208,10 @@ msgstr "Muy urgente"
 
 #. module: stock_procurement_request
 #: model:ir.model.fields,field_description:stock_procurement_request.field_stock_procurement_request_warehouse_id
-#: field:stock.procurement.request,warehouse_id:0
 msgid "Warehouse"
 msgstr "Almacen"
 
 #. module: stock_procurement_request
 #: model:ir.model.fields,help:stock_procurement_request.field_stock_procurement_request_warehouse_id
-#: help:stock.procurement.request,warehouse_id:0
 msgid "Warehouse to consider for the route selection"
 msgstr "Almacén a considerar para la selección de ruta"
