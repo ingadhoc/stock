@@ -4,14 +4,14 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2017
-# Lisandro Boggio <lboggio@ingenieriaboggio.com.ar>, 2017
+# emiquinodoz <eq@ingadhoc.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-04 16:16+0000\n"
-"PO-Revision-Date: 2017-08-04 16:16+0000\n"
-"Last-Translator: Lisandro Boggio <lboggio@ingenieriaboggio.com.ar>, 2017\n"
+"POT-Creation-Date: 2017-08-04 20:37+0000\n"
+"PO-Revision-Date: 2017-08-04 20:37+0000\n"
+"Last-Translator: emiquinodoz <eq@ingadhoc.com>, 2017\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -34,13 +34,13 @@ msgstr ""
 #. module: stock_usability_batch_picking
 #: selection:stock.batch.picking,picking_code:0
 msgid "Customers"
-msgstr ""
+msgstr "Clientes"
 
 #. module: stock_usability_batch_picking
 #: code:addons/stock_usability_batch_picking/models/stock_batch_picking.py:156
 #, python-format
 msgid "Debe definir Cantidad Realizada en al menos una operación."
-msgstr ""
+msgstr "Debe definir Cantidad Realizada en al menos una operación."
 
 #. module: stock_usability_batch_picking
 #: model:ir.model.fields,help:stock_usability_batch_picking.field_stock_batch_picking_partner_id
@@ -57,12 +57,12 @@ msgstr "Interno"
 #. module: stock_usability_batch_picking
 #: model:ir.ui.view,arch_db:stock_usability_batch_picking.stock_batch_picking_form
 msgid "Lot Split"
-msgstr ""
+msgstr "División de Lote"
 
 #. module: stock_usability_batch_picking
 #: model:ir.ui.view,arch_db:stock_usability_batch_picking.stock_batch_picking_form
 msgid "Modify"
-msgstr ""
+msgstr "Modificar"
 
 #. module: stock_usability_batch_picking
 #: model:ir.model.fields,field_description:stock_usability_batch_picking.field_stock_batch_picking_number_of_packages
@@ -72,7 +72,7 @@ msgstr ""
 #. module: stock_usability_batch_picking
 #: model:ir.ui.view,arch_db:stock_usability_batch_picking.view_pack_operation_search
 msgid "Origin"
-msgstr ""
+msgstr "Origen"
 
 #. module: stock_usability_batch_picking
 #: model:ir.model,name:stock_usability_batch_picking.model_stock_pack_operation
@@ -98,12 +98,12 @@ msgstr "El número de comprobante de albarán debe ser único por partner"
 #. module: stock_usability_batch_picking
 #: model:ir.ui.view,arch_db:stock_usability_batch_picking.stock_batch_picking_form
 msgid "Process Operations"
-msgstr ""
+msgstr "Operaciones del proceso"
 
 #. module: stock_usability_batch_picking
 #: model:ir.model.fields,help:stock_usability_batch_picking.field_stock_pack_operation_origin
 msgid "Reference of the document"
-msgstr ""
+msgstr "Referencia de el Documento"
 
 #. module: stock_usability_batch_picking
 #: model:ir.model.fields,field_description:stock_usability_batch_picking.field_stock_batch_picking_restrict_number_package
@@ -113,12 +113,12 @@ msgstr ""
 #. module: stock_usability_batch_picking
 #: model:ir.ui.view,arch_db:stock_usability_batch_picking.stock_batch_picking_form
 msgid "Set all Done"
-msgstr ""
+msgstr "Establecer todo Realizado"
 
 #. module: stock_usability_batch_picking
 #: model:ir.actions.server,name:stock_usability_batch_picking.action_operation_set_all_done
 msgid "Set all done"
-msgstr ""
+msgstr "Establecer todo Realizado"
 
 #. module: stock_usability_batch_picking
 #: model:ir.model.fields,field_description:stock_usability_batch_picking.field_stock_pack_operation_origin
@@ -133,7 +133,7 @@ msgstr "Talonario de Remitos"
 #. module: stock_usability_batch_picking
 #: selection:stock.batch.picking,picking_code:0
 msgid "Suppliers"
-msgstr ""
+msgstr "Proveedor"
 
 #. module: stock_usability_batch_picking
 #: code:addons/stock_usability_batch_picking/models/stock_batch_picking.py:161
@@ -155,7 +155,7 @@ msgstr "Tipo de operación"
 #. module: stock_usability_batch_picking
 #: model:ir.model.fields,field_description:stock_usability_batch_picking.field_stock_batch_picking_voucher_number
 msgid "Voucher Number"
-msgstr ""
+msgstr "Numero de Comprobante"
 
 #. module: stock_usability_batch_picking
 #: model:ir.model.fields,field_description:stock_usability_batch_picking.field_stock_batch_picking_voucher_required
@@ -170,4 +170,4 @@ msgstr "Remitos"
 #. module: stock_usability_batch_picking
 #: model:ir.model,name:stock_usability_batch_picking.model_stock_batch_picking
 msgid "stock.batch.picking"
-msgstr ""
+msgstr "stock.batch.picking"
