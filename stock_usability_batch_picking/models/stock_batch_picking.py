@@ -116,6 +116,7 @@ class StockBatchPicking(models.Model):
 
     @api.multi
     # @api.constrains('voucher_number', 'picking_type_id')
+    @api.onchange('voucher_number', 'picking_ids')
     @api.constrains('voucher_number', 'picking_ids')
     def format_voucher_number(self):
         for rec in self:
