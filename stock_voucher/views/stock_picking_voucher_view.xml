@@ -22,6 +22,8 @@
                 </header>
                 <sheet>
                     <group>
+                        <!-- lo agregamos para poder hacer el onchange de base validator -->
+                        <field name="picking_id" invisible="1"/>
                         <field name="name"/>
                         <!-- <field name="book_id"/>
                         <field name="company_id" groups="base.group_multi_company"/> -->

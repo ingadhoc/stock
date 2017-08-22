@@ -99,6 +99,7 @@ class stock_picking_voucher(models.Model):
 
     @api.multi
     @api.constrains('name', 'picking_id')
+    @api.onchange('name', 'picking_id')
     def check_voucher_number_unique(self):
         """
         Check internal pickings with voucher number unique
