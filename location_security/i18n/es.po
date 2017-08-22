@@ -4,13 +4,14 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
+# emiquinodoz <eq@ingadhoc.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-20 21:18+0000\n"
-"PO-Revision-Date: 2017-07-20 21:18+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016\n"
+"POT-Creation-Date: 2017-08-04 20:36+0000\n"
+"PO-Revision-Date: 2017-08-04 20:36+0000\n"
+"Last-Translator: emiquinodoz <eq@ingadhoc.com>, 2017\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -36,7 +37,7 @@ msgstr "Cuenta a cobrar"
 #. module: location_security
 #: model:ir.ui.view,arch_db:location_security.view_location_security_users_form
 msgid "Allowed Stock Locations"
-msgstr ""
+msgstr "Ubicaciones de stock permitidas"
 
 #. module: location_security
 #: model:ir.model.fields,field_description:location_security.field_res_users_bank_account_count
