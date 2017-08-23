@@ -79,5 +79,6 @@ class StockMove(models.Model):
         Si se cancela un move y hay operations vinculadas, las borramos
         """
         res = super(StockMove, self).action_cancel()
-        self.mapped('linked_move_operation_ids.operation_id').unlink()
+        self.mapped('linked_move_operation_ids.operation_id').with_context(
+            force_op_unlink=True).unlink()
         return res
