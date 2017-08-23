@@ -139,10 +139,13 @@ class StockPicking(models.Model):
         If book required then we assign numbers
         """
         res = super(StockPicking, self).do_transfer()
+        if self._context.get('do_not_assign_numbers'):
+            return res
         for picking in self:
             if picking.book_required:
                 picking.assign_numbers(
-                    picking.get_estimated_number_of_pages(), picking.book_id)
+                    picking.get_estimated_number_of_pages(),
+                    picking.book_id)
         return res
 
     @api.multi

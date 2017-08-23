@@ -183,7 +183,8 @@ class StockBatchPicking(models.Model):
                 # con do_new_transfer
                 rec.active_picking_ids.do_stock_voucher_transfer_check()
 
-        res = super(StockBatchPicking, self).action_transfer()
+        res = super(StockBatchPicking, self.with_context(
+            do_not_assign_numbers=True)).action_transfer()
         # nosotros preferimos que no se haga en muchos pasos y una vez
         # confirmado se borre lo no hecho y se marque como realizado
         # lo hago para distinto de incomring porque venia andando bien para

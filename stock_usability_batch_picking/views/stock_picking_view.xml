@@ -1,0 +1,14 @@
+<odoo>
+    <record model="ir.ui.view" id="vpicktree">
+        <field name="name">stock.picking.tree</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.vpicktree"/>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="book_id" invisible="1"/>
+                <field name="picking_type_code" invisible="1"/>
+                <button name="%(stock_voucher.action_stock_print_voucher)d" string="Vouchers" type="action" attrs="{'invisible': ['|', ('picking_type_code','=','incoming'), ('state','!=','done')]}" icon="fa-print" context="{'picking_id': id}" invisible="not context.get('show_print_button', False)"/>
+            </tree>
+        </field>
+    </record>
+</odoo>

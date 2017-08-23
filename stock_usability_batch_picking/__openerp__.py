@@ -20,7 +20,7 @@
 ##############################################################################
 {
     'name': 'Stock Usability with Batch Picking and stock vouchers',
-    'version': '9.0.1.6.0',
+    'version': '9.0.1.7.0',
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
@@ -37,6 +37,7 @@
     'data': [
         'views/stock_batch_picking_view.xml',
         'views/stock_pack_operation_view.xml',
+        'views/stock_picking_view.xml',
         'report/batch_picking_list_data.xml',
     ],
     'demo': [

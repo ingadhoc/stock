@@ -216,7 +216,7 @@ msgstr "Numero"
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_print_stock_voucher_estimated_number_of_pages
 msgid "Number of Pages"
-msgstr "Número de bultos"
+msgstr "Número de Páginas"
 
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_observations

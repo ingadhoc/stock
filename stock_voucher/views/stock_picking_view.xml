@@ -52,8 +52,8 @@
             </field>
 
             <button name="do_print_picking" position="after">
-                <button name="%(action_stock_print_voucher)d" string="Vouchers" type="action" attrs="{'invisible': ['|',('book_id','=',False),'|', ('picking_type_code','=','incoming'), ('state','!=','done'), ]}" context="{'picking_id': id}"/>
-                <button name="%(action_stock_print_voucher)d" string="Vouchers" type="action" attrs="{'invisible': ['|',('book_id','!=',False),'|', ('picking_type_code','=','incoming'), ('state','!=','done'), ]}" class="oe_highlight" context="{'picking_id': id}"/>
+                <button name="%(action_stock_print_voucher)d" string="Vouchers" type="action" attrs="{'invisible': ['|',('book_id','=',False),'|', ('picking_type_code','=','incoming'), ('state','!=','done')]}" context="{'picking_id': id}"/>
+                <button name="%(action_stock_print_voucher)d" string="Vouchers" type="action" attrs="{'invisible': ['|',('book_id','!=',False),'|', ('picking_type_code','=','incoming'), ('state','!=','done')]}" class="oe_highlight" context="{'picking_id': id}"/>
             </button>
             <field name="move_lines" position="after">
                 <label for="observations" attrs="{'invisible': [('picking_type_code','=','incoming')]}"/>

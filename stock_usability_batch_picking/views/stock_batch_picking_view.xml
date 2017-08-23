@@ -71,6 +71,7 @@
             </field>
 
             <field name="picking_ids" position="attributes">
+                <attribute name="context">{'show_print_button': 1}</attribute>
                 <attribute name="domain">[('partner_id', '=', partner_id), ('picking_type_id.code', '=', picking_code), ('state', 'in', ('confirmed', 'partially_available', 'assigned'))]</attribute>
                 <!-- <attribute name="domain">[('partner_id', '=', partner_id), ('picking_type_id', '=', picking_type_id), ('state', 'in', ('confirmed', 'partially_available', 'assigned'))]</attribute> -->
             </field>
