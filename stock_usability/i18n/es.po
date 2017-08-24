@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-04 20:37+0000\n"
-"PO-Revision-Date: 2017-08-04 20:37+0000\n"
+"POT-Creation-Date: 2017-08-23 19:22+0000\n"
+"PO-Revision-Date: 2017-08-23 19:22+0000\n"
 "Last-Translator: emiquinodoz <eq@ingadhoc.com>, 2017\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
@@ -22,12 +22,12 @@ msgstr ""
 #. module: stock_usability
 #: model:ir.model.fields,field_description:stock_usability.field_stock_warehouse_orderpoint_message_needaction
 msgid "Action Needed"
-msgstr ""
+msgstr "Accion necesaria"
 
 #. module: stock_usability
 #: model:res.groups,name:stock_usability.allow_picking_cancellation
 msgid "Allow picking cancellation"
-msgstr ""
+msgstr "Permitir la cancelación de la orden de movimiento"
 
 #. module: stock_usability
 #: code:addons/stock_usability/models/procurement_order.py:39
@@ -36,11 +36,13 @@ msgid ""
 "Cancel remaining in procurements is only implmented for rules with action of"
 " type \"move\""
 msgstr ""
+"Cancelar restante en adquisiciones solo se implementa para reglas con acción"
+" de tipo \"mover\""
 
 #. module: stock_usability
 #: model:ir.ui.view,arch_db:stock_usability.procurement_form_view
 msgid "Cancelar Pendiente"
-msgstr ""
+msgstr "Cancelar Pendiente"
 
 #. module: stock_usability
 #: model:ir.model.fields,help:stock_usability.field_stock_warehouse_orderpoint_rotation
@@ -63,42 +65,42 @@ msgstr ""
 #. module: stock_usability
 #: model:ir.model.fields,help:stock_usability.field_stock_warehouse_orderpoint_message_last_post
 msgid "Date of the last message posted on the record."
-msgstr ""
+msgstr "Fecha del último mensaje publicado en el registro."
 
 #. module: stock_usability
 #: model:ir.ui.view,arch_db:stock_usability.view_move_form
 msgid "Destination Picking"
-msgstr ""
+msgstr "Destino de orden de movimiento"
 
 #. module: stock_usability
 #: model:ir.model.fields,field_description:stock_usability.field_stock_warehouse_orderpoint_message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "Seguidores"
 
 #. module: stock_usability
 #: model:ir.model.fields,field_description:stock_usability.field_stock_warehouse_orderpoint_message_channel_ids
 msgid "Followers (Channels)"
-msgstr ""
+msgstr "Seguidores (Canales)"
 
 #. module: stock_usability
 #: model:ir.model.fields,field_description:stock_usability.field_stock_warehouse_orderpoint_message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "Seguidores (Partners)"
 
 #. module: stock_usability
 #: model:ir.ui.view,arch_db:stock_usability.view_pack_operation_search
 msgid "Group By"
-msgstr ""
+msgstr "Grupo Por"
 
 #. module: stock_usability
 #: model:ir.model.fields,help:stock_usability.field_stock_warehouse_orderpoint_message_unread
 msgid "If checked new messages require your attention."
-msgstr ""
+msgstr "Si está marcado, hay nuevos mensajes que requieren su atención."
 
 #. module: stock_usability
 #: model:ir.model.fields,help:stock_usability.field_stock_warehouse_orderpoint_message_needaction
 msgid "If checked, new messages require your attention."
-msgstr ""
+msgstr "Si está marcado, hay nuevos mensajes que requieren su atención."
 
 #. module: stock_usability
 #: model:ir.ui.view,arch_db:stock_usability.view_move_search
@@ -113,12 +115,12 @@ msgstr "Interno"
 #. module: stock_usability
 #: model:ir.model.fields,field_description:stock_usability.field_stock_warehouse_orderpoint_message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "Es seguidor"
 
 #. module: stock_usability
 #: model:ir.model.fields,field_description:stock_usability.field_stock_warehouse_orderpoint_message_last_post
 msgid "Last Message Date"
-msgstr ""
+msgstr "Fecha del último mensaje"
 
 #. module: stock_usability
 #: model:ir.model.fields,field_description:stock_usability.field_stock_warehouse_orderpoint_location_rotation
@@ -133,7 +135,7 @@ msgstr "División de Lote"
 #. module: stock_usability
 #: model:ir.model.fields,field_description:stock_usability.field_stock_warehouse_orderpoint_message_ids
 msgid "Messages"
-msgstr ""
+msgstr "Mensajes"
 
 #. module: stock_usability
 #: model:ir.model,name:stock_usability.model_stock_warehouse_orderpoint
@@ -158,27 +160,30 @@ msgid ""
 " o Reservado, probablemente el picking ya fue validado, pruebe refrezcar la "
 "ventana!"
 msgstr ""
+"No se puede validar un picking que no esté en estado Parcialmente Disponible"
+" o Reservado, probablemente el picking ya fue validado, pruebe refrezcar la "
+"ventana!"
 
 #. module: stock_usability
 #: code:addons/stock_usability/models/stock_picking.py:73
 #, python-format
 msgid "No se puede validar un picking que no tiene operationes!"
-msgstr ""
+msgstr "No se puede validar una orden de movimiento que no tiene operaciones!"
 
 #. module: stock_usability
 #: model:ir.model.fields,field_description:stock_usability.field_stock_warehouse_orderpoint_message_needaction_counter
 msgid "Number of Actions"
-msgstr ""
+msgstr "Número de acciones"
 
 #. module: stock_usability
 #: model:ir.model.fields,help:stock_usability.field_stock_warehouse_orderpoint_message_needaction_counter
 msgid "Number of messages which requires an action"
-msgstr ""
+msgstr "Número de mensajes que requiere una acción"
 
 #. module: stock_usability
 #: model:ir.model.fields,help:stock_usability.field_stock_warehouse_orderpoint_message_unread_counter
 msgid "Number of unread messages"
-msgstr ""
+msgstr "Número de mensajes no leídos"
 
 #. module: stock_usability
 #: model:ir.ui.view,arch_db:stock_usability.view_move_search
@@ -204,7 +209,7 @@ msgstr "Creador del Albarán"
 #: model:ir.ui.view,arch_db:stock_usability.view_move_search
 #: model:ir.ui.view,arch_db:stock_usability.view_move_tree
 msgid "Picking Partner"
-msgstr ""
+msgstr "Partner de orden de movimiento"
 
 #. module: stock_usability
 #: model:ir.ui.view,arch_db:stock_usability.view_move_search
@@ -230,7 +235,7 @@ msgstr "Producto"
 #. module: stock_usability
 #: model:ir.model.fields,field_description:stock_usability.field_stock_return_picking_reason
 msgid "Reason for the return"
-msgstr ""
+msgstr "Motivo de la devolución"
 
 #. module: stock_usability
 #: model:ir.model,name:stock_usability.model_stock_return_picking
@@ -247,6 +252,7 @@ msgstr "Rotación"
 msgid ""
 "Se van a cancelar todos los movimientos asociados que no esten realizados."
 msgstr ""
+"Se van a cancelar todos los movimientos asociados que no esten realizados."
 
 #. module: stock_usability
 #: model:ir.ui.view,arch_db:stock_usability.procurement_form_view
@@ -265,7 +271,7 @@ msgstr "Establecer todo Realizado"
 #: code:addons/stock_usability/models/procurement_order.py:35
 #, python-format
 msgid "Solo puede cancelar abastecimientos primarios no los encadenados"
-msgstr ""
+msgstr "Solo puede cancelar abastecimientos primarios no los encadenados"
 
 #. module: stock_usability
 #: model:ir.model,name:stock_usability.model_stock_move
@@ -275,7 +281,7 @@ msgstr "Movimiento stock"
 #. module: stock_usability
 #: model:ir.ui.view,arch_db:stock_usability.view_move_tree
 msgid "Total"
-msgstr ""
+msgstr "Total"
 
 #. module: stock_usability
 #: model:ir.model,name:stock_usability.model_stock_picking
@@ -285,25 +291,25 @@ msgstr "Transferencia"
 #. module: stock_usability
 #: model:ir.model.fields,field_description:stock_usability.field_stock_move_picking_dest_id
 msgid "Transfer Reference"
-msgstr ""
+msgstr "Referencia de transferencia"
 
 #. module: stock_usability
 #: model:ir.model.fields,field_description:stock_usability.field_stock_warehouse_orderpoint_message_unread
 msgid "Unread Messages"
-msgstr ""
+msgstr "Mensajes no leídos"
 
 #. module: stock_usability
 #: model:ir.model.fields,field_description:stock_usability.field_stock_warehouse_orderpoint_message_unread_counter
 msgid "Unread Messages Counter"
-msgstr ""
+msgstr "Contador de mensajes no leídos"
 
 #. module: stock_usability
 #: model:ir.ui.view,arch_db:stock_usability.view_pack_operation_search
 msgid "With Quantity Done"
-msgstr ""
+msgstr "Con Cantidad Hecha"
 
 #. module: stock_usability
-#: code:addons/stock_usability/models/stock_pack_operation.py:18
+#: code:addons/stock_usability/models/stock_pack_operation.py:19
 #, python-format
 msgid ""
 "You can not Set all Done for product \"%s\" because it requires lot on "
@@ -317,4 +323,10 @@ msgid ""
 "You can not cancel moves that are destination moves of already done moves.\n"
 "* Moves to cancel: %s\n"
 "* Done moves: %s"
+msgstr ""
+
+#. module: stock_usability
+#: code:addons/stock_usability/models/stock_pack_operation.py:34
+#, python-format
+msgid "You can not delete pack operations of a done picking"
 msgstr ""
