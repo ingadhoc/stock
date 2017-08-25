@@ -62,7 +62,6 @@
                 <!-- <field name="picking_type_id"/> -->
                 <!-- al final lo sacamos porque ya lo estamos usando para otros tipos -->
                 <!-- como por ahora solo lo usamos para entrada lo restringimos -->
-                <field name="partner_id"/>
                 <field name="partner_id" context="{'default_supplier': picking_code == 'incoming', 'default_customer': picking_code == 'outgoing'}" domain="picking_code == 'incoming' and ['|', ('parent_id.supplier', '=', True), ('supplier', '=', True)] or picking_code == 'outgoing' and ['|', ('parent_id.customer', '=', True), ('customer', '=', True)] or []"/>
                 <!-- <field name="partner_id" context="{'search_default_supplier':1, 'default_supplier':1, 'default_customer':0}" domain="[('supplier','=',True)]"/> -->
                 <field name="voucher_number" attrs="{'invisible': [('picking_code','!=','incoming')], 'required': [('voucher_required','=',True)]}"/>
