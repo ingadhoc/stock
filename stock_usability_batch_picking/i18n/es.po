@@ -4,13 +4,14 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2017
+# emiquinodoz <eq@ingadhoc.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-23 18:13+0000\n"
-"PO-Revision-Date: 2017-08-23 18:13+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2017\n"
+"POT-Creation-Date: 2017-08-25 17:26+0000\n"
+"PO-Revision-Date: 2017-08-25 17:26+0000\n"
+"Last-Translator: emiquinodoz <eq@ingadhoc.com>, 2017\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -24,11 +25,13 @@ msgid ""
 "ATENCION! Al cancelar un picking batch todos los pickings relacionados "
 "también se van a cancelar. Seguro desea continuar?"
 msgstr ""
+"ATENCION! Al cancelar un lote de órdenes de movimiento todas las órdenes de "
+"movimiento relacionadas también se van a cancelar. Seguro desea continuar?"
 
 #. module: stock_usability_batch_picking
 #: model:ir.actions.report.xml,name:stock_usability_batch_picking.batch_picking_list
 msgid "Batch Picking List"
-msgstr ""
+msgstr "Lista de lotes de Ordenes de Movimiento"
 
 #. module: stock_usability_batch_picking
 #: selection:stock.batch.picking,picking_code:0
@@ -47,6 +50,8 @@ msgid ""
 "If you choose a partner then only pickings of this partner willbe "
 "sellectable"
 msgstr ""
+"Si elige un Partner, entonces solo las ordenes de movimiento de este Partner"
+" serán elegibles"
 
 #. module: stock_usability_batch_picking
 #: selection:stock.batch.picking,picking_code:0
@@ -66,7 +71,7 @@ msgstr "Modificar"
 #. module: stock_usability_batch_picking
 #: model:ir.model.fields,field_description:stock_usability_batch_picking.field_stock_batch_picking_number_of_packages
 msgid "Number of Packages"
-msgstr ""
+msgstr "Numero de paquetes"
 
 #. module: stock_usability_batch_picking
 #: model:ir.ui.view,arch_db:stock_usability_batch_picking.view_pack_operation_search
@@ -86,7 +91,7 @@ msgstr "Partner"
 #. module: stock_usability_batch_picking
 #: model:ir.model.fields,field_description:stock_usability_batch_picking.field_stock_batch_picking_picking_type_ids
 msgid "Picking type ids"
-msgstr ""
+msgstr "Identificación de tipo de \"orden de movimiento\""
 
 #. module: stock_usability_batch_picking
 #: code:addons/stock_usability_batch_picking/models/stock_picking_voucher.py:30
@@ -107,7 +112,7 @@ msgstr "Referencia de el Documento"
 #. module: stock_usability_batch_picking
 #: model:ir.model.fields,field_description:stock_usability_batch_picking.field_stock_batch_picking_restrict_number_package
 msgid "Restrict number package"
-msgstr ""
+msgstr "Paquete de número restringido"
 
 #. module: stock_usability_batch_picking
 #: model:ir.ui.view,arch_db:stock_usability_batch_picking.stock_batch_picking_form

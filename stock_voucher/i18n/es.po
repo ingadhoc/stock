@@ -4,14 +4,14 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
-# Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2017
+# emiquinodoz <eq@ingadhoc.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-20 21:18+0000\n"
-"PO-Revision-Date: 2017-07-20 21:18+0000\n"
-"Last-Translator: Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2017\n"
+"POT-Creation-Date: 2017-08-25 17:26+0000\n"
+"PO-Revision-Date: 2017-08-25 17:26+0000\n"
+"Last-Translator: emiquinodoz <eq@ingadhoc.com>, 2016\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -23,7 +23,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_voucher.field_res_company_automatic_declare_value
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_automatic_declare_value
 msgid "Automatic Declare Value"
-msgstr "Valor declarado automatico"
+msgstr "Valor declarado automático"
 
 #. module: stock_voucher
 #: model:ir.model,name:stock_voucher.model_stock_backorder_confirmation
@@ -161,6 +161,9 @@ msgid ""
 "and not sale order is found linked to the picking, we will suggest declared "
 "value using this pricelist"
 msgstr ""
+"Si elige una lista de precios, \"Valor Declarado Automático\" se habilita en"
+" la empresa y no se encuentra la orden de venta vinculada a la orden de "
+"movimiento, sugeriremos valor declarado utilizando esta lista de precios"
 
 #. module: stock_voucher
 #: model:ir.model,name:stock_voucher.model_stock_immediate_transfer
@@ -251,7 +254,7 @@ msgid "Picking id"
 msgstr "Picking id"
 
 #. module: stock_voucher
-#: code:addons/stock_voucher/models/stock_book.py:126
+#: code:addons/stock_voucher/models/stock_book.py:127
 #, python-format
 msgid "Picking voucher number must be unique per partner"
 msgstr "El número de comprobante de albarán debe ser único por partner"
@@ -259,7 +262,7 @@ msgstr "El número de comprobante de albarán debe ser único por partner"
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_type_pricelist_id
 msgid "Pricelist"
-msgstr ""
+msgstr "Lista de precios"
 
 #. module: stock_voucher
 #: model:ir.ui.view,arch_db:stock_voucher.view_print_stock_voucher_form
@@ -317,7 +320,7 @@ msgid "The field \"Number\" must be unique per book."
 msgstr "El campo  \"Número \" debe ser único por Talonario."
 
 #. module: stock_voucher
-#: code:addons/stock_voucher/models/stock_picking.py:159
+#: code:addons/stock_voucher/models/stock_picking.py:162
 #, python-format
 msgid "The number of packages can not be 0"
 msgstr "El numero de bultos no puede ser 0"
@@ -358,13 +361,13 @@ msgid "Vouchers"
 msgstr "Remitos"
 
 #. module: stock_voucher
-#: code:addons/stock_voucher/models/stock_picking.py:161
+#: code:addons/stock_voucher/models/stock_picking.py:164
 #, python-format
 msgid "You must select a Voucher Book"
 msgstr "Debe seleccionar  un Libro de Comprobante"
 
 #. module: stock_voucher
-#: code:addons/stock_voucher/models/stock_picking.py:164
+#: code:addons/stock_voucher/models/stock_picking.py:167
 #, python-format
 msgid "You must set stock voucher numbers"
 msgstr "Debe ingresar los números de remito"
