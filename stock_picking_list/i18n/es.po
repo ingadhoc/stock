@@ -3,14 +3,14 @@
 # * stock_picking_list
 # 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
+# Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-05 15:08+0000\n"
-"PO-Revision-Date: 2017-04-05 15:08+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016\n"
+"POT-Creation-Date: 2017-08-25 19:24+0000\n"
+"PO-Revision-Date: 2017-08-25 19:24+0000\n"
+"Last-Translator: Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2016\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,4 +21,4 @@ msgstr ""
 #. module: stock_picking_list
 #: model:ir.actions.report.xml,name:stock_picking_list.picking_list
 msgid "Picking List"
-msgstr "Lista de Remitos"
+msgstr "Preparación de entrega"
