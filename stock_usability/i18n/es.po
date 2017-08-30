@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-23 19:22+0000\n"
-"PO-Revision-Date: 2017-08-23 19:22+0000\n"
+"POT-Creation-Date: 2017-08-25 19:24+0000\n"
+"PO-Revision-Date: 2017-08-25 19:24+0000\n"
 "Last-Translator: emiquinodoz <eq@ingadhoc.com>, 2017\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
@@ -22,7 +22,7 @@ msgstr ""
 #. module: stock_usability
 #: model:ir.model.fields,field_description:stock_usability.field_stock_warehouse_orderpoint_message_needaction
 msgid "Action Needed"
-msgstr "Accion necesaria"
+msgstr "Acción necesaria"
 
 #. module: stock_usability
 #: model:res.groups,name:stock_usability.allow_picking_cancellation
@@ -260,6 +260,8 @@ msgid ""
 "Se van a cancelar todos los movimientos asociados que no esten realizados. "
 "Esto no puede ser revertido, seguro que desea continuar?"
 msgstr ""
+"Se van a cancelar todos los movimientos asociados que no esten realizados. "
+"Esto no puede ser revertido, seguro que desea continuar?"
 
 #. module: stock_usability
 #: model:ir.ui.view,arch_db:stock_usability.view_picking_form

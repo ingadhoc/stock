@@ -4,14 +4,14 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2017
-# Lisandro Boggio <lboggio@ingenieriaboggio.com.ar>, 2017
+# emiquinodoz <eq@ingadhoc.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-20 21:18+0000\n"
-"PO-Revision-Date: 2017-07-20 21:18+0000\n"
-"Last-Translator: Lisandro Boggio <lboggio@ingenieriaboggio.com.ar>, 2017\n"
+"POT-Creation-Date: 2017-08-25 19:24+0000\n"
+"PO-Revision-Date: 2017-08-25 19:24+0000\n"
+"Last-Translator: emiquinodoz <eq@ingadhoc.com>, 2017\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -180,6 +180,8 @@ msgid ""
 "Se van a cancelar todos los movimientos asociados que no esten realizados. "
 "Esto no puede ser revertido, seguro que desea continuar?"
 msgstr ""
+"Se van a cancelar todos los movimientos asociados que no esten realizados. "
+"Esto no puede ser revertido, seguro que desea continuar?"
 
 #. module: stock_procurement_request
 #: model:ir.model.fields,field_description:stock_procurement_request.field_stock_procurement_request_state
