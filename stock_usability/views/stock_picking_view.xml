@@ -23,7 +23,7 @@
                 </field>
 
                 <button name="split_lot" position="after">
-                    <button name="set_all_done" string="Set all Done" type="object" icon="fa-check" attrs="{'invisible': ['|', ('lots_visible', '=', True), ('state', 'not in', ['confirmed', 'assigned', 'waiting', 'partially_available'])]}"/>
+                    <button name="set_all_done" string="Set all Done" type="object" icon="fa-check" states="confirmed,assigned,waiting,partially_available"/>
                 </button>
 
                 <button name="action_cancel" position="attributes">

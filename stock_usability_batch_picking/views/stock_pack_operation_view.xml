@@ -27,24 +27,4 @@
         </field>
     </record>
 
-    <!-- agregamos accion para agregar todos -->
-    <record model="ir.actions.server" id="action_operation_set_all_done">
-            <field name="name">Set all done</field>
-            <field name="model_id" ref="stock.model_stock_pack_operation"/>
-            <field name="code">
-active_ids = context.get('active_ids', [])
-object.browse(active_ids).set_all_done()
-            </field>
-    </record>
-
-    <!-- agregamos boton para agregar todos -->
-    <record model="ir.values" id="ir_value_action_operation_set_all_done">
-        <field name="model_id" ref="stock.model_stock_pack_operation" />
-        <field name="name">Set all Done</field>
-        <field name="key2">client_action_multi</field>
-        <field name="value" eval="'ir.actions.server,' +str(ref('action_operation_set_all_done'))" />
-        <field name="key">action</field>
-        <field name="model">stock.pack.operation</field>
-    </record>
-
 </odoo>

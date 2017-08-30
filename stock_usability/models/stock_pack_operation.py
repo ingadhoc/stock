@@ -4,7 +4,7 @@
 # directory
 ##############################################################################
 from openerp import models, api, _
-from openerp.exceptions import ValidationError, UserError
+from openerp.exceptions import UserError
 from openerp.addons.stock.stock import stock_pack_operation
 
 
@@ -16,11 +16,8 @@ class StockPackOperation(models.Model):
     def set_all_done(self):
         for rec in self:
             if rec.lots_visible:
-                raise ValidationError(_(
-                    'You can not Set all Done for product "%s" because it '
-                    'requires lot on operation "%s"') % (
-                    rec.product_id.name,
-                    rec.picking_id.picking_type_id.name))
+                for lot in rec.pack_lot_ids:
+                    lot.qty = lot.qty_todo
             rec.qty_done = rec.product_qty
 
 
