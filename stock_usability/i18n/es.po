@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-25 19:24+0000\n"
-"PO-Revision-Date: 2017-08-25 19:24+0000\n"
+"POT-Creation-Date: 2017-08-30 22:35+0000\n"
+"PO-Revision-Date: 2017-08-30 22:35+0000\n"
 "Last-Translator: emiquinodoz <eq@ingadhoc.com>, 2017\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
@@ -270,6 +270,11 @@ msgid "Set all Done"
 msgstr "Establecer todo Realizado"
 
 #. module: stock_usability
+#: model:ir.actions.server,name:stock_usability.action_operation_set_all_done
+msgid "Set all done"
+msgstr "Establecer todo Realizado"
+
+#. module: stock_usability
 #: code:addons/stock_usability/models/procurement_order.py:35
 #, python-format
 msgid "Solo puede cancelar abastecimientos primarios no los encadenados"
@@ -311,14 +316,6 @@ msgid "With Quantity Done"
 msgstr "Con Cantidad Hecha"
 
 #. module: stock_usability
-#: code:addons/stock_usability/models/stock_pack_operation.py:19
-#, python-format
-msgid ""
-"You can not Set all Done for product \"%s\" because it requires lot on "
-"operation \"%s\""
-msgstr ""
-
-#. module: stock_usability
 #: code:addons/stock_usability/models/procurement_order.py:68
 #, python-format
 msgid ""
@@ -328,7 +325,7 @@ msgid ""
 msgstr ""
 
 #. module: stock_usability
-#: code:addons/stock_usability/models/stock_pack_operation.py:34
+#: code:addons/stock_usability/models/stock_pack_operation.py:31
 #, python-format
 msgid "You can not delete pack operations of a done picking"
 msgstr ""
