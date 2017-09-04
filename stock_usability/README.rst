@@ -7,6 +7,7 @@ Stock Usability Improvements
 ============================
 
 Several improovements to stock:
+#. Make partner visible also in internal transfers (required to print valid stock vouchers when moving products between warehouses)
 #. Add on stock moves Picking Creator and Picking Partner (last one already exsits but we make it stored)
 #. Allow to filter and group by type of picking type on moves (internal, outgoing and incoming)
 #. Add new field "Net Quantity" on stock moves only visible when you filter by locations. This fields is computed this way:

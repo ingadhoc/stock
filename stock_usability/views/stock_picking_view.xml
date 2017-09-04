@@ -5,6 +5,9 @@
             <field name="model">stock.picking</field>
             <field name="inherit_id" ref="stock.view_picking_form"/>
             <field name="arch" type="xml">
+                <field name="partner_id" position="attributes">
+                    <attribute name="attrs"></attribute>
+                </field>
                 <!-- TODO borrar, al final para esto usamos Linkstock_picking_sale_order_link -->
                 <!-- <field name="origin" position="attributes">
                     <attribute name="attrs">{'invisible': [('sale_id','!=',False)]}</attribute>
