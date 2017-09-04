@@ -4,14 +4,13 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2017
-# emiquinodoz <eq@ingadhoc.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-25 17:26+0000\n"
-"PO-Revision-Date: 2017-08-25 17:26+0000\n"
-"Last-Translator: emiquinodoz <eq@ingadhoc.com>, 2017\n"
+"POT-Creation-Date: 2017-08-30 22:35+0000\n"
+"PO-Revision-Date: 2017-08-30 22:35+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2017\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -117,11 +116,6 @@ msgstr "Paquete de número restringido"
 #. module: stock_usability_batch_picking
 #: model:ir.ui.view,arch_db:stock_usability_batch_picking.stock_batch_picking_form
 msgid "Set all Done"
-msgstr "Establecer todo Realizado"
-
-#. module: stock_usability_batch_picking
-#: model:ir.actions.server,name:stock_usability_batch_picking.action_operation_set_all_done
-msgid "Set all done"
 msgstr "Establecer todo Realizado"
 
 #. module: stock_usability_batch_picking
