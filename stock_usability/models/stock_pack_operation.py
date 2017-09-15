@@ -18,7 +18,8 @@ class StockPackOperation(models.Model):
             if rec.lots_visible:
                 for lot in rec.pack_lot_ids:
                     lot.qty = lot.qty_todo
-            rec.qty_done = rec.product_qty
+            else:
+                rec.qty_done = rec.product_qty
 
 
 @api.multi
