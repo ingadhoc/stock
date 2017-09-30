@@ -3,7 +3,7 @@
 # For copyright and license notices, see __openerp__.py file in module root
 # directory
 ##############################################################################
-from openerp import models, api, _
+from openerp import models, api, fields, _
 from openerp.exceptions import UserError
 from openerp.addons.stock.stock import stock_pack_operation
 
@@ -12,14 +12,31 @@ class StockPackOperation(models.Model):
 
     _inherit = 'stock.pack.operation'
 
+    used_lots = fields.Char(
+        compute='_compute_used_lots'
+    )
+
+    @api.multi
+    @api.depends(
+        'pack_lot_ids.qty',
+        'pack_lot_ids.lot_name',
+    )
+    def _compute_used_lots(self):
+        for rec in self:
+            rec.used_lots = ", ".join(rec.pack_lot_ids.mapped(
+                lambda x: "%s (%s)" % (x.lot_id.display_name, x.qty)))
+
     @api.multi
     def set_all_done(self):
         for rec in self:
             if rec.lots_visible:
+                product_qty = 0.0
                 for lot in rec.pack_lot_ids:
                     lot.qty = lot.qty_todo
+                    product_qty += lot.qty_todo
             else:
-                rec.qty_done = rec.product_qty
+                product_qty = rec.product_qty
+            rec.qty_done = product_qty
 
 
 @api.multi

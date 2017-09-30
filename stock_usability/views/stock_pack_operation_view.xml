@@ -2,6 +2,17 @@
 <openerp>
     <data>
 
+        <record id="view_pack_operation_lot_form" model="ir.ui.view">
+            <field name="name">stock.pack.operation.lots.form</field>
+            <field name="model">stock.pack.operation</field>
+            <field name="inherit_id" ref="stock.view_pack_operation_lot_form"/>
+            <field name="arch" type="xml">
+                <button name="do_plus" position="after">
+                    <button name="set_all_done" string="Set all Done" type="object" icon="fa-check" invisible="not context.get('show_reserved') or context.get('state_done')" attrs="{'invisible': [('plus_visible', '=', False)]}"/>
+                </button>
+            </field>
+        </record>
+
         <!-- creamos vista search que no existe -->
         <record id="view_pack_operation_search" model="ir.ui.view">
             <field name="name">stock.pack.operation.filter</field>

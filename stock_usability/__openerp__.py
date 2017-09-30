@@ -43,6 +43,7 @@
         'views/procurement_group_view.xml',
         'views/stock_move_view.xml',
         'views/stock_backorder_confirmation_view.xml',
+        'views/res_config_view.xml',
     ],
     'demo': [
     ],

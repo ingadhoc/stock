@@ -26,6 +26,7 @@
                 </field>
 
                 <button name="split_lot" position="after">
+                    <field name="used_lots" groups="stock_usability.group_operation_used_lots" attrs="{'invisible': ['|', ('lots_visible', '=', False), ('state', 'not in', ['confirmed', 'assigned', 'waiting', 'partially_available','done'])]}"/>
                     <button name="set_all_done" string="Set all Done" type="object" icon="fa-check" states="confirmed,assigned,waiting,partially_available"/>
                 </button>
 
