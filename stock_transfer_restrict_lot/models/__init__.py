@@ -3,5 +3,5 @@
 # For copyright and license notices, see __openerp__.py file in module root
 # directory
 ##############################################################################
-from . import stock_move
+from . import stock_pack_operation
 from . import stock_production_lot

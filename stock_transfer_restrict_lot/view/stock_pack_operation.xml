@@ -5,10 +5,21 @@
         <field name="model">stock.pack.operation</field>
         <field name="inherit_id" ref="stock.view_pack_operation_lot_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='lot_id']" position="attributes">
-               <attribute name="domain">[('product_id','=', parent.product_id),('qty_available_not_res','&gt;', 0)]</attribute>
+            <form>
+                <field name="code"/>
+            </form>
+            <!-- tenemos que pasar el code por contexto porque al crear nuevo registor no se setea hsata guardar -->
+            <field name="pack_lot_ids" position="attributes">
+               <attribute name="context">{'default_code': code}</attribute>
+            </field>
+            <field name="lot_id" position="after">
+                <field name="code"/>
+            </field>
+            <field name="lot_id" position="attributes">
+               <!-- if incoming, allow to select all product lots (not only with stock) -->
+               <attribute name="domain">code != 'incoming' and  [('product_id','=', parent.product_id),('qty_available_not_res','&gt;', 0)] or [('product_id', '=', parent.product_id)]</attribute>
                <attribute name="context">{'show_locations_qty': True, 'product_id': parent.product_id}</attribute>
-            </xpath>
+            </field>
         </field>  
     </record>
 </odoo>

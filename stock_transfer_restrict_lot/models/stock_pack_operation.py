@@ -6,6 +6,15 @@
 from openerp import models, fields, api
 
 
+class StockPackOperationLot(models.Model):
+
+    _inherit = 'stock.pack.operation.lot'
+
+    code = fields.Selection(
+        related='operation_id.code'
+    )
+
+
 class StockPackOperation(models.Model):
 
     _inherit = 'stock.pack.operation'
