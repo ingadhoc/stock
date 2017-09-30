@@ -19,7 +19,9 @@
                     </group>
                 <footer>
                     <!-- nuevos botones sin importar si es pre impreso o no -->
-                    <button name="do_print_voucher" type="object" class="oe_highlight" string="Print" attrs="{'invisible':[('printed', '=', False)]}"/>
+                    <!-- <button name="do_print_voucher" type="object" class="oe_highlight" string="Print" attrs="{'invisible':[('printed', '=', False)]}"/> -->
+                    <!-- hacemos que se pueda imprimir solamente para verificar cantidad de paginas -->
+                    <button name="do_print_voucher" type="object" string="Print"/>
                     <button name="do_print_and_assign" type="object" class="oe_highlight" string="Print and Assign " attrs="{'invisible':[('printed', '=', True)]}"/>
                 <!-- depreciamos porque no migramos la funcionalidad de imprimir el reporte yquedar en el wizard -->
                     <!-- Botones para remitos que usan una hoja -->
