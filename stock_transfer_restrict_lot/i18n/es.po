@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-20 21:18+0000\n"
-"PO-Revision-Date: 2017-07-20 21:18+0000\n"
+"POT-Creation-Date: 2017-10-01 00:45+0000\n"
+"PO-Revision-Date: 2017-10-01 00:45+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2017\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
@@ -25,6 +25,7 @@ msgstr "Lote/Nº de serie"
 
 #. module: stock_transfer_restrict_lot
 #: model:ir.model.fields,field_description:stock_transfer_restrict_lot.field_stock_pack_operation_code
+#: model:ir.model.fields,field_description:stock_transfer_restrict_lot.field_stock_pack_operation_lot_code
 msgid "Operation Type"
 msgstr "Tipo de Operación"
 
@@ -42,8 +43,13 @@ msgstr ""
 #: code:addons/stock_transfer_restrict_lot/models/stock_production_lot.py:60
 #, python-format
 msgid ""
-"Sending amount can not exceed the quantity in stock for this product in this lot.\n"
+"Sending amount can not exceed the quantity in stock for this product in the lot.\n"
 "* Product: %s\n"
 "* Lot: %s\n"
 "* Stock: %s"
+msgstr ""
+
+#. module: stock_transfer_restrict_lot
+#: model:ir.model,name:stock_transfer_restrict_lot.model_stock_pack_operation_lot
+msgid "Specifies lot/serial number for pack operations that need it"
 msgstr ""
