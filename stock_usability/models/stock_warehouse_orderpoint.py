@@ -41,6 +41,7 @@ class StockWarehouseOrderpoint(models.Model):
     @api.depends('product_id', 'location_id')
     def _compute_rotation(self):
         for rec in self:
-            rec.rotation = rec.product_id.get_product_rotation()
-            rec.location_rotation = rec.product_id.get_product_rotation(
-                rec.location_id)
+            if rec.product_id:
+                rec.rotation = rec.product_id.get_product_rotation()
+                rec.location_rotation = rec.product_id.get_product_rotation(
+                    rec.location_id)
