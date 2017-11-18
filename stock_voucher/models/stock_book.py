@@ -66,6 +66,9 @@ class stock_book(models.Model):
         default=lambda self: self.env[
             'res.company']._company_default_get('stock.book'),
     )
+    next_number = fields.Integer(
+        related='sequence_id.number_next_actual',
+    )
 
 
 class stock_picking_voucher(models.Model):

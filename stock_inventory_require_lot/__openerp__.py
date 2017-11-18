@@ -20,11 +20,11 @@
 ##############################################################################
 {
     'name': 'Stock Inventory Require Lot',
-    'version': '9.0.1.1.0',
+    'version': '9.0.1.2.0',
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
-    'author': 'ADHOC SA',
+    'author': 'ADHOC SA, Odoo Community Association (OCA)',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
     'images': [
