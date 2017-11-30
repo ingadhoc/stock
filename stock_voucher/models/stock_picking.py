@@ -49,6 +49,10 @@ class StockPicking(models.Model):
         related='picking_type_id.voucher_required',
         readonly=True,
     )
+    next_number = fields.Integer(
+        related='book_id.next_number',
+        readonly=True,
+    )
 
     @api.multi
     @api.depends('voucher_ids.display_name')
