@@ -73,7 +73,17 @@ class ProcurementOrder(models.Model):
                         not_done_moves.ids,
                         not_done_moves_related_moves.ids))
 
+            # similar a como hace sale_stock, vemos la cantidad que representan
+            # estos moves que se cancelan y los descontamos del procurement
+            # para que si luego, por ejemplo, una venta intenta agregar
+            # cantidades, entonces funcione bien
+            # qty = 0.0
+            # for move in not_done_moves:
+            not_done_qty = sum([rec.env['product.uom']._compute_qty_obj(
+                x.product_uom, x.product_uom_qty, rec.product_uom) for x in
+                not_done_moves])
             not_done_moves.action_cancel()
+            rec.product_qty -= not_done_qty
 
             # ya no seria necesario porque modificamos el action_cancel
             # de los moves ya que no siempre este metodo borraba las operations
