@@ -4,14 +4,13 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
-# emiquinodoz <eq@ingadhoc.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-25 17:26+0000\n"
-"PO-Revision-Date: 2017-08-25 17:26+0000\n"
-"Last-Translator: emiquinodoz <eq@ingadhoc.com>, 2016\n"
+"POT-Creation-Date: 2017-11-30 19:16+0000\n"
+"PO-Revision-Date: 2017-11-30 19:16+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -203,11 +202,19 @@ msgid "Name"
 msgstr "Nombre"
 
 #. module: stock_voucher
+#: model:ir.model.fields,field_description:stock_voucher.field_stock_book_next_number
+#: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_next_number
+msgid "Next Number"
+msgstr ""
+
+#. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_print_stock_voucher_next_voucher_number
 msgid "Next Voucher Number"
 msgstr "Número del siguiente comprobante"
 
 #. module: stock_voucher
+#: model:ir.model.fields,help:stock_voucher.field_stock_book_next_number
+#: model:ir.model.fields,help:stock_voucher.field_stock_picking_next_number
 #: model:ir.model.fields,help:stock_voucher.field_stock_print_stock_voucher_next_voucher_number
 msgid ""
 "Next number that will be used. This number can be incremented frequently so "
@@ -254,7 +261,7 @@ msgid "Picking id"
 msgstr "Picking id"
 
 #. module: stock_voucher
-#: code:addons/stock_voucher/models/stock_book.py:127
+#: code:addons/stock_voucher/models/stock_book.py:130
 #, python-format
 msgid "Picking voucher number must be unique per partner"
 msgstr "El número de comprobante de albarán debe ser único por partner"
@@ -313,14 +320,14 @@ msgid "Stock Voucher Sequence"
 msgstr "Secuencia de Talonario"
 
 #. module: stock_voucher
-#: code:addons/stock_voucher/models/stock_book.py:98
+#: code:addons/stock_voucher/models/stock_book.py:101
 #: sql_constraint:stock.picking.voucher:0
 #, python-format
 msgid "The field \"Number\" must be unique per book."
 msgstr "El campo  \"Número \" debe ser único por Talonario."
 
 #. module: stock_voucher
-#: code:addons/stock_voucher/models/stock_picking.py:162
+#: code:addons/stock_voucher/models/stock_picking.py:166
 #, python-format
 msgid "The number of packages can not be 0"
 msgstr "El numero de bultos no puede ser 0"
@@ -361,13 +368,13 @@ msgid "Vouchers"
 msgstr "Remitos"
 
 #. module: stock_voucher
-#: code:addons/stock_voucher/models/stock_picking.py:164
+#: code:addons/stock_voucher/models/stock_picking.py:168
 #, python-format
 msgid "You must select a Voucher Book"
 msgstr "Debe seleccionar  un Libro de Comprobante"
 
 #. module: stock_voucher
-#: code:addons/stock_voucher/models/stock_picking.py:167
+#: code:addons/stock_voucher/models/stock_picking.py:171
 #, python-format
 msgid "You must set stock voucher numbers"
 msgstr "Debe ingresar los números de remito"
