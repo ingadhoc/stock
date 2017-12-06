@@ -57,3 +57,14 @@ class StockPicking(models.Model):
         related='picking_type_id.block_add_lines', readonly=True,)
     block_additional_quantiy = fields.Boolean(
         related='picking_type_id.block_additional_quantiy', readonly=True,)
+
+    @api.multi
+    def copy(self, default=None):
+        self.ensure_one()
+        # si tiene bloeado agregar líneas entonces tiene bloqueado duplicar
+        if self.block_add_lines:
+            raise UserError(_(
+                'You can not duplicate a Picking because "Block Pikcking Edit"'
+                ' is enable on the picking type "%s"') % (
+                self.picking_type_id.name))
+        return super(StockPicking, self).copy(default=default)

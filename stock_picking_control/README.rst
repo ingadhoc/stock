@@ -9,6 +9,8 @@ Stock Picking Control
 This module adds functionality to restrict the addition in the movements of the pickings and the quantities to send in the operations. 
 It is configurable in Stock Picking Type.
 
+It also block duplication of pickings of picking types with "Block Picking Edit" enable
+
 Installation
 ============
 
