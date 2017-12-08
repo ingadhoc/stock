@@ -61,8 +61,9 @@ class StockPicking(models.Model):
     @api.multi
     def copy(self, default=None):
         self.ensure_one()
+        # si no viene default entonces es por interfaz y
         # si tiene bloeado agregar líneas entonces tiene bloqueado duplicar
-        if self.block_add_lines:
+        if not default and self.block_add_lines:
             raise UserError(_(
                 'You can not duplicate a Picking because "Block Pikcking Edit"'
                 ' is enable on the picking type "%s"') % (
