@@ -102,11 +102,12 @@ class StockProcurementRequest(models.Model):
         for rec in self:
             if not rec.procurement_ids:
                 state = 'draft'
-            elif rec.procurement_ids.filtered(
-                    lambda x: x.state not in ['done', 'cancel']):
-                state = 'running'
-            else:
+            elif all([x.state == 'done' for x in rec.procurement_ids]):
                 state = 'done'
+            elif all([x.state == 'cancel' for x in rec.procurement_ids]):
+                state = 'cancel'
+            else:
+                state = 'running'
             rec.state = state
 
     @api.onchange('warehouse_id')
