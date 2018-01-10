@@ -134,8 +134,16 @@ class StockPicking(models.Model):
                 'book_id': book.id,
                 'picking_id': self.id,
             })
+        self.message_post(body=_(
+            'Números de remitos asignados: %s') % (self.vouchers))
         self.write({
             'book_id': book.id})
+
+    @api.multi
+    def clean_voucher_data(self):
+        self.voucher_ids.unlink()
+        self.book_id = False
+        self.message_post(_('Se borraron los remitos asignados'))
 
     @api.multi
     def do_transfer(self):

@@ -86,5 +86,4 @@ class stock_print_stock_voucher(models.TransientModel):
 
     @api.multi
     def do_clean(self):
-        self.picking_id.voucher_ids.unlink()
-        self.picking_id.book_id = False
+        self.picking_id.clean_voucher_data()
