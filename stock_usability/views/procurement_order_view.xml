@@ -12,6 +12,7 @@
             </button>
             <field name="group_id" position="after">
                 <field name="move_dest_id" groups="base.group_no_one"/>
+                <field name="move_ids" groups="base.group_no_one"/>
             </field>
         </field>
     </record>
