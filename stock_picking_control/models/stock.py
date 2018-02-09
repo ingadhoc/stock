@@ -43,10 +43,14 @@ class StockPickingType(models.Model):
         # help="Restrict add lines")
         help="Restrict add lines, change parters and other fields edition on "
         "pickings of this type. This will only apply to users with group "
-        "'Restrict Edit Blocked Pickings'")
+        "'Restrict Edit Blocked Pickings'. It also block pickings duplicate.")
     block_additional_quantiy = fields.Boolean(
         string="Block additional quantiy",
         help="Restrict additional quantity")
+    block_picking_deletion = fields.Boolean(
+        string="Block picking deletion",
+        default=True,
+        help="Do not allow to remove pickings")
 
 
 class StockPicking(models.Model):
@@ -69,3 +73,19 @@ class StockPicking(models.Model):
                 ' is enable on the picking type "%s"') % (
                 self.picking_type_id.name))
         return super(StockPicking, self).copy(default=default)
+
+    @api.multi
+    def unlink(self):
+        """
+        To avoid errors we block deletion of pickings in other state than
+        draft or cancel
+        """
+        not_del_pickings = self.filtered(
+            lambda x: x.picking_type_id.block_picking_deletion)
+        if not_del_pickings:
+            raise UserError(_(
+                'You can not delete this pickings because "Block picking '
+                'deletion" is enable on the picking type "%s".\n'
+                'Picking Ids: %s') % (
+                    not_del_pickings.ids, self.picking_type_id.name))
+        return super(StockPicking, self).unlink()

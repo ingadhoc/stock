@@ -6,10 +6,11 @@
 Stock Picking Control
 =====================
 
-This module adds functionality to restrict the addition in the movements of the pickings and the quantities to send in the operations. 
-It is configurable in Stock Picking Type.
+This module add this optional constraints configurable by Picking Type:
+* Block Picking Edit: Restrict add lines, change parters and other fields edition on pickings of this type. This will only apply to users with group Restrict Edit Blocked Pickings. It also block pickings duplicate.
+* Block additional quantiy: Block in pack operation line to send more quantity for products than has in the sale order.
+* Block picking deletion: Do not allow to remove pickings.
 
-It also block duplication of pickings of picking types with "Block Picking Edit" enable
 
 Installation
 ============
@@ -24,11 +25,7 @@ Configuration
 
 To configure this module, you need to:
 
-#. Go to Picking Type in "Stock" and set the options to block:
-
-* Block add lines: Block create new lines in move and pack operation.
-
-* Block additional quantiy: Block in pack operation line to send more quantity for products than has in the sale order.
+#. Set your options on each picking type
 
 
 Usage

@@ -75,6 +75,19 @@ class StockPicking(models.Model):
                     'operationes!'))
         return super(StockPicking, self).do_transfer()
 
+    @api.multi
+    def unlink(self):
+        """
+        To avoid errors we block deletion of pickings in other state than
+        draft or cancel
+        """
+        not_del_pickings = self.filtered(
+            lambda x: x.state not in ('draft', 'cancel'))
+        if not_del_pickings:
+            raise UserError(_(
+                'You can only delete draft/cancel pickings. Pikcing Ids: %s') %
+                not_del_pickings.ids)
+        return super(StockPicking, self).unlink()
 
 class StockReturnPicking(models.TransientModel):
     _inherit = 'stock.return.picking'

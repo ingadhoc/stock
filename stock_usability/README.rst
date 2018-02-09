@@ -27,6 +27,7 @@ Several improovements to stock:
 #. We create a new group "Allow picking cancellation", only users with that right can cancel pickings or validate without back orders
 #. Add in the pikcing return wizard a field with the reason for the return and then bring that field to internal notes in the created picking.
 #. Backport from 10 of fix on domain of "Products" filter in Products search view.
+#. Only allow to delete pickings on draft/cancel state.
 
 Installation
 ============
