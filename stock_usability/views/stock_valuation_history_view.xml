@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <!-- Remove tecnical factures group for this menu item -->
+        <record model="ir.ui.menu" id="stock_account.menu_action_wizard_valuation_history">
+            <field name="groups_id" eval="[(3, ref('base.group_no_one'))]"/>
+        </record>
+    </data>
+</odoo>
