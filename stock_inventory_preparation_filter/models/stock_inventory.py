@@ -125,7 +125,6 @@ class StockInventory(models.Model):
                     fake_inventory)
                 if inventory.import_products == 'all' and not value:
                     value = fake_inventory.default_value()
-
                 vals += value
         elif inventory.filter == 'empty':
             tmp_lines = {}
@@ -158,7 +157,7 @@ class StockInventory(models.Model):
                             })
                     vals += values
         else:
-            products = product_obj.search([])
+            products = product_obj.search([('type', '=', 'product')])
             for product in products:
                 fake_inventory = StockInventoryFake(inventory, product=product)
                 value = super(StockInventory, self)._get_inventory_lines(
