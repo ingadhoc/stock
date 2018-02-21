@@ -157,7 +157,13 @@ class StockInventory(models.Model):
                             })
                     vals += values
         else:
-            products = product_obj.search([('type', '=', 'product')])
+            # si bien odoo por vista usa filtro de = product, en su
+            # codigo original, al popular un inventario, trae todo lo que tenga
+            # quants (y los consu tienen quants), por lo cual en esto donde
+            # queremos forzar inventario para todo, tmb es logico traer los
+            # consumibles
+            products = product_obj.search(
+                [('type', 'in', ['product', 'consu'])])
             for product in products:
                 fake_inventory = StockInventoryFake(inventory, product=product)
                 value = super(StockInventory, self)._get_inventory_lines(
