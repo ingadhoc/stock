@@ -100,8 +100,15 @@ class StockPicking(models.Model):
                 if x.qty_done:
                     inmediate_transfer = False
                 if order_line:
-                    picking_value += (order_line.price_reduce * x.product_qty)
-                    done_value += (order_line.price_reduce * x.qty_done)
+                    # convertimos cantidades a uom de la sale order
+                    so_product_qty = self.env['product.uom']._compute_qty_obj(
+                        x.product_id.uom_id, x.product_qty,
+                        order_line.product_uom)
+                    so_qty_done = self.env['product.uom']._compute_qty_obj(
+                        x.product_id.uom_id, x.qty_done,
+                        order_line.product_uom)
+                    picking_value += (order_line.price_reduce * so_product_qty)
+                    done_value += (order_line.price_reduce * so_qty_done)
                 elif rec.picking_type_id.pricelist_id:
                     price = rec.picking_type_id.pricelist_id.with_context(
                         uom=x.product_id.uom_id.id).price_get(
