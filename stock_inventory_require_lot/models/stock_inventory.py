@@ -13,4 +13,4 @@ class StockChangeProductQty(models.TransientModel):
     _inherit = 'stock.change.product.qty'
 
     tracking = fields.Selection(
-        related='product_id.tracking')
+        related='product_id.tracking', readonly=True)
