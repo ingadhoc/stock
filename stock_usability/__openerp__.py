@@ -20,7 +20,7 @@
 ##############################################################################
 {
     'name': 'Stock Usability Improvements',
-    'version': '9.0.1.21.0',
+    'version': '9.0.1.20.0',
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
@@ -44,7 +44,6 @@
         'views/stock_move_view.xml',
         'views/stock_backorder_confirmation_view.xml',
         'views/res_config_view.xml',
-        'views/stock_valuation_history_view.xml',
     ],
     'demo': [
     ],
