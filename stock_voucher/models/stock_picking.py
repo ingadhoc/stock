@@ -119,9 +119,13 @@ class StockPicking(models.Model):
                     done_value += (price * x.qty_done)
 
             if inmediate_transfer:
-                rec.declared_value = picking_value
+                declared_value = picking_value
             else:
-                rec.declared_value = done_value
+                declared_value = done_value
+
+            # convertimos el declared_value a la moneda de la cia
+            rec.declared_value = rec.sale_id.pricelist_id.currency_id.compute(
+                declared_value, rec.company_id.currency_id)
 
     @api.multi
     def do_print_voucher(self):
