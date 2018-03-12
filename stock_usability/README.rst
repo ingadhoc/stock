@@ -28,6 +28,7 @@ Several improovements to stock:
 #. Add in the pikcing return wizard a field with the reason for the return and then bring that field to internal notes in the created picking.
 #. Backport from 10 of fix on domain of "Products" filter in Products search view.
 #. Only allow to delete pickings on draft/cancel state.
+#. Add a wizard accion in Operation to change locations.
 
 Installation
 ============
