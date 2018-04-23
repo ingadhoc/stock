@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    Copyright (C) 2015  ADHOC SA  (http://www.adhoc.com.ar)
@@ -47,8 +46,6 @@
         'wizard/stock_operation_wizard_view.xml',
     ],
     'demo': [
-    ],
-    'test': [
     ],
     'installable': False,
     'auto_install': False,

@@ -1,4 +1,4 @@
-<openerp>
+<odoo>
     <data>
 
      <record id="stock_book_actions" model="ir.actions.act_window">
@@ -20,4 +20,4 @@
             />
 
     </data>
-</openerp>
+</odoo>

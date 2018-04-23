@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<openerp>
+<odoo>
 <data noupdate="1">
 
     <record id="batch_picking_list" model="ir.actions.report.xml">
@@ -28,5 +28,5 @@
     </ir_set>
 
 </data>
-</openerp>
+</odoo>
 

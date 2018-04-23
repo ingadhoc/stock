@@ -1,11 +1,10 @@
-# -*- coding: utf-8 -*-
 ##############################################################################
-# For copyright and license notices, see __openerp__.py file in module root
+# For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from openerp import fields, models, api
-from openerp.addons.procurement import procurement
-# from openerp.exceptions import UserError
+from odoo import fields, models, api
+from odoo.addons.procurement import procurement
+# from odoo.exceptions import UserError
 
 
 class StockProcurementRequest(models.Model):
@@ -80,7 +79,7 @@ class StockProcurementRequest(models.Model):
         procurement.PROCUREMENT_PRIORITIES,
         'Priority',
         required=True,
-        select=True,
+        index=True,
         default='1',
         # track_visibility='onchange'
         readonly=True,
@@ -89,7 +88,7 @@ class StockProcurementRequest(models.Model):
     date_planned = fields.Datetime(
         'Scheduled Date',
         required=True,
-        select=True,
+        index=True,
         default=lambda self: fields.Datetime.now(),
         # track_visibility='onchange',
         readonly=True,

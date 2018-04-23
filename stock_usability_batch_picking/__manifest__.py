@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    Copyright (C) 2015  ADHOC SA  (http://www.adhoc.com.ar)
@@ -41,8 +40,6 @@
         'report/batch_picking_list_data.xml',
     ],
     'demo': [
-    ],
-    'test': [
     ],
     'installable': False,
     'auto_install': True,

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    Copyright (C) 2015  ADHOC SA  (http://www.adhoc.com.ar)
@@ -32,8 +31,6 @@
         'views/res_users_view.xml',
     ],
     'demo': [
-    ],
-    'test': [
     ],
     'installable': False,
     'auto_install': False,
