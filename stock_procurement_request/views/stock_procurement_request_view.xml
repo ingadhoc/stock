@@ -1,4 +1,4 @@
-<openerp>
+<odoo>
     <data>
 
         <record id="view_procurement_request_search" model="ir.ui.view">
@@ -88,4 +88,4 @@
     <menuitem action="action_procurement_request" id="menu_procurement_request" parent="stock.menu_stock_inventory_control" sequence="20"/>
 
     </data>
-</openerp>
+</odoo>

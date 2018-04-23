@@ -1,4 +1,4 @@
-<openerp>
+<odoo>
     <data>
      <record id="stock_picking_state_detail_action" model="ir.actions.act_window">
             <field name="name">Picking State Detail</field>
@@ -19,4 +19,4 @@
             />
 
     </data>
-</openerp>
+</odoo>

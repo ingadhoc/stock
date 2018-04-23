@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
     <data noupdate="1">
 
         <!-- TODO borrar o implementar este reporte que por ahora no funciona y no usamos -->
@@ -13,4 +13,4 @@
         /> -->
 
     </data>
-</openerp>
+</odoo>

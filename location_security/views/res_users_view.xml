@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<openerp>
+<odoo>
     <data>
         <record id="view_location_security_users_form" model="ir.ui.view">
             <field name="name">location_security.users.form</field>
@@ -19,4 +19,4 @@
             </field>
         </record>
     </data>
-</openerp>
+</odoo>
