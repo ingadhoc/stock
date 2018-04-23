@@ -45,6 +45,6 @@ class StockPicking(models.Model):
         'stock.picking.state_detail',
         string='State Detail',
         track_visibility='onchange',
-        select=True,
-        copy=False
+        index=True,
+        copy=False,
     )

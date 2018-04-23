@@ -79,7 +79,7 @@ class StockProcurementRequest(models.Model):
         procurement.PROCUREMENT_PRIORITIES,
         'Priority',
         required=True,
-        select=True,
+        index=True,
         default='1',
         # track_visibility='onchange'
         readonly=True,
@@ -88,7 +88,7 @@ class StockProcurementRequest(models.Model):
     date_planned = fields.Datetime(
         'Scheduled Date',
         required=True,
-        select=True,
+        index=True,
         default=lambda self: fields.Datetime.now(),
         # track_visibility='onchange',
         readonly=True,
