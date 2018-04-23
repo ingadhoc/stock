@@ -3,8 +3,8 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from openerp import fields, models
-# from openerp.exceptions import UserError
+from odoo import fields, models
+# from odoo.exceptions import UserError
 
 
 class StockMove(models.Model):

@@ -3,9 +3,9 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from openerp import fields, models, api
-from openerp.addons.procurement import procurement
-# from openerp.exceptions import UserError
+from odoo import fields, models, api
+from odoo.addons.procurement import procurement
+# from odoo.exceptions import UserError
 
 
 class StockProcurementRequest(models.Model):

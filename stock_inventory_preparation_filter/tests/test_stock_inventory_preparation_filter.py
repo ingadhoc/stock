@@ -15,7 +15,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import openerp.tests.common as common
+import odoo.tests.common as common
 
 
 class TestStockInventoryPreparationFilterCategories(common.TransactionCase):

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from openerp import fields, models
-# from openerp.tools.translate import _
+from odoo import fields, models
+# from odoo.tools.translate import _
 
 
 class stock_config_settings(models.TransientModel):

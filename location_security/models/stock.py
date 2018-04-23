@@ -4,8 +4,8 @@
 # directory
 ##############################################################################
 
-from openerp import models, api, _
-from openerp.exceptions import UserError
+from odoo import models, api, _
+from odoo.exceptions import UserError
 
 
 class StockMove(models.Model):
