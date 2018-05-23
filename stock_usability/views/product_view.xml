@@ -15,7 +15,10 @@
             <field name="arch" type="xml">
                 <button name="action_view_stock_moves" position="attributes">
                     <attribute name="context">{'search_default_future': 1,'search_default_picking_type': 1}</attribute>
-                </button>            
+                </button>
+                <xpath expr="//span[contains(@class,'o_stat_value')]//span" position="attributes">
+                    <attribute name="groups"></attribute>
+                </xpath>
             </field>
         </record>
 
