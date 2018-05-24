@@ -29,6 +29,8 @@ Several improovements to stock:
 #. Backport from 10 of fix on domain of "Products" filter in Products search view.
 #. Only allow to delete pickings on draft/cancel state.
 #. Add a wizard accion in Operation to change locations.
+#. Remove the technical features group in the "Forecasted" button from the product template view, to see the breakdown of incoming and outgoing stock.
+
 
 Installation
 ============
