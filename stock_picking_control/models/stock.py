@@ -17,7 +17,7 @@ class StockPackOperation(models.Model):
     @api.constrains('qty_done')
     def _check_quantity(self):
         for pack in self:
-            if pack.block_additional_quantiy and pack.\
+            if pack.picking_id.block_additional_quantiy and pack.\
                     product_qty < pack.qty_done:
                 raise UserError(_(
                     'You can not transfer a product without a move on the '
