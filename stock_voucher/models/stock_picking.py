@@ -93,6 +93,7 @@ class StockPicking(models.Model):
             done_value = 0.0
             picking_value = 0.0
             inmediate_transfer = True
+            pricelist = False
             for x in rec.pack_operation_ids:
                 order_line = rec.env['sale.order.line'].search(
                     [('order_id', '=', rec.sale_id.id),
@@ -100,6 +101,7 @@ class StockPicking(models.Model):
                 if x.qty_done:
                     inmediate_transfer = False
                 if order_line:
+                    pricelist = rec.sale_id.pricelist_id
                     # convertimos cantidades a uom de la sale order
                     so_product_qty = self.env['product.uom']._compute_qty_obj(
                         x.product_id.uom_id, x.product_qty,
@@ -110,6 +112,7 @@ class StockPicking(models.Model):
                     picking_value += (order_line.price_reduce * so_product_qty)
                     done_value += (order_line.price_reduce * so_qty_done)
                 elif rec.picking_type_id.pricelist_id:
+                    pricelist = rec.picking_type_id.pricelist_id
                     price = rec.picking_type_id.pricelist_id.with_context(
                         uom=x.product_id.uom_id.id).price_get(
                         x.product_id.id, x.qty_done or 1.0,
@@ -119,9 +122,15 @@ class StockPicking(models.Model):
                     done_value += (price * x.qty_done)
 
             if inmediate_transfer:
-                rec.declared_value = picking_value
+                declared_value = picking_value
             else:
-                rec.declared_value = done_value
+                declared_value = done_value
+            if pricelist:
+                # convertimos el declared_value a la moneda de la cia
+                rec.declared_value = pricelist.currency_id.compute(
+                    declared_value, rec.company_id.currency_id)
+            else:
+                rec.declared_value = declared_value
 
     @api.multi
     def do_print_voucher(self):

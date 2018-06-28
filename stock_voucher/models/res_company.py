@@ -10,7 +10,8 @@ class res_company(models.Model):
     _inherit = 'res.company'
 
     automatic_declare_value = fields.Boolean(
-        'Automatic Declare Value'
+        'Automatic Declare Value',
+        help="The declared value will be on the currency of the company"
     )
     restrict_number_package = fields.Boolean(
         'Restrict number of Package'
