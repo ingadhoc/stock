@@ -28,7 +28,8 @@ class StockPackOperation(models.Model):
     @api.constrains('pack_lot_ids')
     def validate_quantity(self):
         for rec in self:
-            if rec.code != 'incoming' and rec.pack_lot_ids:
+            if rec.picking_id.picking_type_id.code != 'incoming' and \
+                    rec.pack_lot_ids:
                 for pack in rec.pack_lot_ids:
                     domain = [
                         ('location_id', '=', rec.location_id.id), '|',
