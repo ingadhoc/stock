@@ -26,15 +26,17 @@ class StockLotEan128Report(models.TransientModel):
     def do_print_report(self):
 
         self.ensure_one()
-        return self.env['report'].get_action(
-            self, 'report_stock_lot_EAN128')
+        return self.env['ir.actions.report'].search(
+            [('report_name', '=', 'report_stock_lot_EAN128')],
+            limit=1).report_action(self)
 
     @api.multi
     def do_print_report_excel(self):
 
         self.ensure_one()
-        return self.env['report'].get_action(
-            self, 'report_stock_lot_EAN128_excel')
+        return self.env['ir.actions.report'].search(
+            [('report_name', '=', 'report_stock_lot_EAN128_excel')],
+            limit=1).report_action(self)
 
 
 class StockPickingEan128ReportDetail(models.TransientModel):
@@ -83,12 +85,14 @@ class StockPickingEan128Report(models.TransientModel):
     def do_print_report(self):
 
         self.ensure_one()
-        return self.env['report'].get_action(
-            self, 'report_stock_picking_EAN128')
+        return self.env['ir.actions.report'].search(
+            [('report_name', '=', 'report_stock_picking_EAN128')],
+            limit=1).report_action(self)
 
     @api.multi
     def do_print_report_excel(self):
 
         self.ensure_one()
-        return self.env['report'].get_action(
-            self, 'report_stock_picking_EAN128_excel')
+        return self.env['ir.actions.report'].search(
+            [('report_name', '=', 'report_stock_picking_EAN128_excel')],
+            limit=1).report_action(self)

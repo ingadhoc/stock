@@ -2,9 +2,8 @@
 <odoo>
 <data noupdate="1">
 
-    <record id="picking_labels_report" model="ir.actions.report.xml">
+    <record id="picking_labels_report" model="ir.actions.report">
         <field name="name">Picking Labels Report</field>
-        <field name="type">ir.actions.report.xml</field>
         <field name="model">stock.picking</field>
         <field name="report_name">picking_labels</field>
         <field name="report_type">aeroo</field>

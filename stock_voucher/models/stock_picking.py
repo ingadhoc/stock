@@ -134,7 +134,8 @@ class StockPicking(models.Model):
     @api.multi
     def do_print_voucher(self):
         '''This function prints the voucher'''
-        report = self.env['report'].get_action(self, 'stock_voucher.report')
+        report = self.env['ir.actions.report'].search(
+            [('report_name', '=', 'stock_voucher.report')], limit=1).report_action(self)
         # funcionalidad depreciada
         # if self._context.get('keep_wizard_open', False):
         #     report['type'] = 'ir.actions.report_dont_close_xml'

@@ -2,9 +2,8 @@
 <odoo>
 <data noupdate="1">
 
-    <record id="batch_picking_list" model="ir.actions.report.xml">
+    <record id="batch_picking_list" model="ir.actions.report">
         <field name="name">Batch Picking List</field>
-        <field name="type">ir.actions.report.xml</field>
         <field name="model">stock.batch.picking</field>
         <field name="report_name">batch_picking_list</field>
         <field name="report_type">aeroo</field>

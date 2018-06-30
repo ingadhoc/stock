@@ -2,9 +2,8 @@
 <odoo>
 <data>
   
-    <record id="stock_traceability_report" model="ir.actions.report.xml">
+    <record id="stock_traceability_report" model="ir.actions.report">
         <field name="name">Stock Traceability Report</field>
-        <field name="type">ir.actions.report.xml</field>
         <field name="model">stock.production.lot</field>
         <field name="report_name">stock_traceability_report</field>
         <field name="report_type">aeroo</field>
