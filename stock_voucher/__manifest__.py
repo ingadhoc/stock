@@ -36,7 +36,7 @@
     'data': [
         'security/security.xml',
         'security/ir.model.access.csv',
-        'wizard/stock_print_remit_view.xml',
+        'wizards/stock_print_remit_view.xml',
         'views/report_stockpicking.xml',
         'views/stock_book_view.xml',
         'views/stock_picking_voucher_view.xml',
