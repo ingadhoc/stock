@@ -3,7 +3,8 @@
 # directory
 ##############################################################################
 from . import stock_book
+from . import stock_picking_type
 from . import stock_picking
+from . import stock_picking_voucher
 from . import stock_move
-from . import stock_pack_operation
-from . import res_company
+from . import stock_move_line

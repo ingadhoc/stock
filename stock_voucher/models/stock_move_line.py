@@ -5,15 +5,10 @@
 from odoo import models, api
 
 
-class StockPicking(models.Model):
-    _inherit = 'stock.pack.operation'
+class StockMoveLine(models.Model):
+    _inherit = "stock.move.line"
 
-    @api.multi
     @api.constrains(
-        # product_qty no seria necesario y ademas hace que se recompute al
-        # validar el picking, cosa que no queremos por si el usuario puso
-        # algun valor a mano
-        # 'product_qty',
         'qty_done',
     )
     def recompute_declared_value(self):

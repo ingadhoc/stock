@@ -18,10 +18,7 @@
         <field name="inherit_id" ref="stock.vpicktree"/>
         <field name="arch" type="xml">
             <field name="name" position="after">
-                <!-- TODO replace for one2mant_tags when migrated -->
-                <!-- we try to use m2m tags but it doenst display ok on tree view -->
-                <field name="vouchers"/>
-                <!-- <field name="voucher_ids" widget="one2many_tags"/> -->
+                <field name="vouchers" widget="many2many_tags"/>
             </field>
         </field>
     </record>
@@ -40,9 +37,7 @@
                 <!-- no lo hacemos requerido por vista -->
                 <field name="book_id" attrs="{'invisible': [('picking_type_code','=','incoming')], 'readonly': [('voucher_ids','!=',[])]}"/>
                 <field name="next_number" attrs="{'invisible': [('book_id','=',False)]}"/>
-                <!-- TODO replace for one2mant_tags when migrated -->
                 <field name="voucher_ids" attrs="{'readonly': [('picking_type_code','!=','incoming')]}" widget="many2many_tags" context="{'default_picking_id': id}" domain="[('id', '=', False)]"  options="{'create':True, 'create_edit':True}}"/>
-                <!-- <field name="voucher_ids" attrs="{'readonly': [('picking_type_code','!=','incoming')]}" widget="one2many_tags"/> -->
             </field>
 
             <!-- we move number_of_packages to main form -->

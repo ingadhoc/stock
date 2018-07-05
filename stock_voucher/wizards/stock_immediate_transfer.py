@@ -5,7 +5,7 @@
 from odoo import api, models
 
 
-class stock_immediate_transfer(models.TransientModel):
+class StockImmediateTransfer(models.TransientModel):
     _inherit = 'stock.immediate.transfer'
 
     # @api.model
@@ -19,7 +19,7 @@ class stock_immediate_transfer(models.TransientModel):
 
     @api.multi
     def process(self):
-        super(stock_immediate_transfer, self).process()
+        super(StockImmediateTransfer, self).process()
         picking = self.env['stock.picking'].browse(
             # if we came, for eg, from a sale order, active_id would be the
             # sale order id

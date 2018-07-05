@@ -14,13 +14,8 @@
 Stock Voucher
 =============
 
-Add stock voucher report on stock picking
-
-TODO:
------
-* agregar el boton de enviar por email
-* agregar constraints de company en stock.py
-* que el reporte que se carga no sea el mismo del picking, nosotros no lo usamosportque terminamos usando uno de aeroo
+This module add stock voucher report on stock picking 
+Also add parameters in stock picking type to set declared value and number_package in the pickings.
 
 Installation
 ============
@@ -41,7 +36,7 @@ Usage
 
 To use this module, you need to:
 
-#. Go to ...
+#. Go to Stock / Configurations / Books to confirgure the Books to use in pickings.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
@@ -51,7 +46,7 @@ Bug Tracker
 ===========
 
 Bugs are tracked on `GitHub Issues
-<https://github.com/ingadhoc/{project_repo}/issues>`_. In case of trouble, please
+<https://github.com/ingadhoc/stock/issues>`_. In case of trouble, please
 check there if your issue has already been reported. If you spotted it first,
 help us smashing it by providing a detailed and welcomed feedback.
 

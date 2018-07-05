@@ -1,0 +1,26 @@
+<odoo>
+    <!-- stock.picking.type -->
+    <record id="view_picking_type_form" model="ir.ui.view">
+        <field name="name">stock.picking.type</field>
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.view_picking_type_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet//group" position="after">
+                <group id="stock_voucher">
+                    <group>
+                        <field name="book_id" attrs="{'invisible':[('code','=','incoming')]}"/>
+                        <field name="voucher_number_unique" attrs="{'invisible':[('code','!=','incoming')]}"/>
+                        <field name="voucher_number_validator_id" attrs="{'invisible':[('code','!=','incoming')]}"/>
+                        <field name="pricelist_id"/>
+                    </group>
+                    <group>
+                        <field name="book_required" attrs="{'invisible':[('code','=','incoming')]}"/>
+                        <field name="voucher_required" attrs="{'invisible':[('code','!=','incoming')]}"/>
+                        <field name="automatic_declare_value"/>
+                        <field name="restrict_number_package"/>
+                     </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

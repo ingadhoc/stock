@@ -5,7 +5,7 @@
 from odoo import api, models
 
 
-class stock_backorder_confirmation(models.TransientModel):
+class StockBackorderConfirmation(models.TransientModel):
     """
     we inherit to return report if book_required
     """
@@ -13,7 +13,7 @@ class stock_backorder_confirmation(models.TransientModel):
 
     @api.multi
     def process(self):
-        super(stock_backorder_confirmation, self).process()
+        super(StockBackorderConfirmation, self).process()
         picking = self.env['stock.picking'].browse(
             # if we came, for eg, from a sale order, active_id would be the
             # sale order id
@@ -25,7 +25,7 @@ class stock_backorder_confirmation(models.TransientModel):
 
     @api.multi
     def process_cancel_backorder(self):
-        super(stock_backorder_confirmation, self).process_cancel_backorder()
+        super(StockBackorderConfirmation, self).process_cancel_backorder()
         picking = self.env['stock.picking'].browse(
             # if we came, for eg, from a sale order, active_id would be the
             # sale order id

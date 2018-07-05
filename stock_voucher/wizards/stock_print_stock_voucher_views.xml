@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<odoo>
+    <record model="ir.ui.view" id="view_print_stock_voucher_form">
+        <field name="name">print_stock_picking.form</field>
+        <field name="model">stock.print_stock_voucher</field>
+        <field name="arch" type="xml">
+            <form string="Print Stock Voucher">
+            <div attrs="{'invisible':[('printed', '!=', True),('with_vouchers', '!=', True)]}">
+            <h3><strong>THE VOUCHER IT'S PRINTED AND ASSIGNED.</strong></h3>
+            </div>
+                <group>
+                    <field name="picking_id" invisible="1"/>
+                    <field name="printed" invisible="1"/>
+                    <field name="with_vouchers" invisible="1"/>
+                    <field name="lines_per_voucher" invisible="1"/>
+                    <field name="book_id" attrs="{'invisible':[('with_vouchers', '=', True)],'required':[('with_vouchers', '=', False)],'readonly':[('printed', '=', True)]}"/>
+                </group>
+                <group attrs="{'invisible':[('with_vouchers', '=', True)]}">
+                    <field name="next_voucher_number"/>
+                    <field name="estimated_number_of_pages" attrs="{'invisible':[('lines_per_voucher', '=', 0)],'required':[('lines_per_voucher', '!=', 0)]}"/>
+                </group>
+            <footer>
+                <!-- Botones para remitos que usan una hoja -->
+                <button name="do_print_voucher" type="object" string="Print" attrs="{'invisible':['|',('lines_per_voucher', '!=', 0),('with_vouchers', '=', False)]}"/>
+                <button name="do_print_and_assign" type="object" class="oe_highlight" string="Print and Assign" attrs="{'invisible':['|',('lines_per_voucher', '!=', 0),('with_vouchers', '=', True)]}"/>
+                <!-- Botones para remitos que usan varias hojas -->
+                <button name="do_print_voucher" type="object" string="Print" attrs="{'invisible':['|','|',('lines_per_voucher', '=', 0),('with_vouchers', '=', True),('printed', '=', True)]}" class="oe_highlight"/>
+                <button name="do_print_voucher" type="object" string="Print" attrs="{'invisible':['|','|',('lines_per_voucher', '=', 0),('with_vouchers', '=', True),('printed', '=', False)]}"/>
+                <button name="do_print_and_assign" type="object" string="Print and Assign" attrs="{'invisible':['|',('lines_per_voucher', '=', 0),('with_vouchers', '=', True)]}"/>
+                <button name="assign_numbers" type="object" string="Assign Numbers" attrs="{'invisible':['|','|',('lines_per_voucher', '=', 0),('with_vouchers', '=', True),('printed', '=', True)]}"/>
+                <button name="assign_numbers" type="object" string="Assign Numbers"  attrs="{'invisible':['|','|',('lines_per_voucher', '=', 0),('with_vouchers', '=', True),('printed', '=', False)]}" class="oe_highlight"/>
+
+                <!-- Clean numbers -->
+                <button name="do_clean" type="object" string="Clean Voucher Data" attrs="{'invisible':[('with_vouchers', '=', False)]}"/>
+                or
+                <button string="Close" class="oe_link" special="cancel"/>
+            </footer>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_stock_print_voucher">
+        <field name="name">Print Stock Remit</field>
+        <field name="res_model">stock.print_stock_voucher</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_print_stock_voucher_form"/>
+        <field name="target">new</field>
+    </record>
+
+</odoo>
