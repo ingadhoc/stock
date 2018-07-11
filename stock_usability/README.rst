@@ -29,6 +29,7 @@ Several improovements to stock:
 #. Backport from 10 of fix on domain of "Products" filter in Products search view.
 #. Only allow to delete pickings on draft/cancel state.
 #. Add a wizard accion in Operation to change locations.
+#. Remove the group Tecnical Features to the seccion "Locations" in "stock move" form view from the picking view.
 
 Installation
 ============
