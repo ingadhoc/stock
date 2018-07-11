@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<odoo noupdate="1">
+    <record id="picking_labels_report" model="ir.actions.report">
+        <field name="name">Picking Labels Report</field>
+        <field name="model">stock.picking</field>
+        <field name="binding_model_id" ref="stock.model_stock_picking"/>
+        <field name="report_name">picking_labels</field>
+        <field name="report_type">aeroo</field>
+        <field name="in_format">oo-odt</field>
+        <field name="out_format" ref="report_aeroo.report_mimetypes_pdf_odt"/>
+        <field name="report_file">stock_picking_labels/report/picking_label.odt</field>
+        <field name="parser_state">default</field>
+        <field name="tml_source">file</field>
+    </record>
+</odoo>
+
