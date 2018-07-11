@@ -20,7 +20,7 @@
 ##############################################################################
 {
     'name': 'Stock Usability Improvements',
-    'version': '9.0.1.24.0',
+    'version': '9.0.1.25.0',
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
