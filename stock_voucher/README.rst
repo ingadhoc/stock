@@ -14,8 +14,8 @@
 Stock Voucher
 =============
 
-This module add stock voucher report on stock picking 
-Also add parameters in stock picking type to set declared value and number_package in the pickings.
+#. This module adds stock voucher report on stock picking to generate a voucher for each Customers pickings.
+#. Also adds parameters in stock picking type to set declared value and number_package in the pickings.
 
 Installation
 ============
@@ -29,14 +29,15 @@ Configuration
 
 To configure this module, you need to:
 
-#. Nothing to configure
+#. To configure Books:  Go to Stock / Configurations / Books.
+#. To configure the Declared Value , Book Required and Restrict Number Package: Go to Stock Pincking Type.
 
 Usage
 =====
 
 To use this module, you need to:
 
-#. Go to Stock / Configurations / Books to confirgure the Books to use in pickings.
+#. Just create a sale order, confirm and transfer the products.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
