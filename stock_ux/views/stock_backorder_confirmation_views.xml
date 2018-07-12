@@ -1,0 +1,12 @@
+<odoo>
+    <record id="view_backorder_confirmation" model="ir.ui.view">
+        <field name="name">stock_backorder_confirmation</field>
+        <field name="model">stock.backorder.confirmation</field>
+        <field name="inherit_id" ref="stock.view_backorder_confirmation"/>
+        <field name="arch" type="xml">
+            <button name="process_cancel_backorder" position="attributes">
+                <attribute name="groups">stock_ux.allow_picking_cancellation</attribute>
+            </button>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<odoo>
+    <!-- desactivamos esta vista porque la busqeuda por warehouse y location ya viene por la vista de template. TODO hacer PR a odoo -->
+    <record id="stock.product_search_form_view_stock" model="ir.ui.view">
+        <field name="active" eval="False"/>
+    </record>
+
+    <record id="view_product_form" model="ir.ui.view">
+        <field name="name">product.template.form</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="stock.product_template_form_view_procurement_button"/>
+        <field name="priority">20</field>
+        <field name="arch" type="xml">
+            <button name="action_view_stock_move_lines" position="attributes">
+                <attribute name="context">{'search_default_future': 1,'search_default_picking_type': 1}</attribute>
+            </button>
+            <xpath expr="//div//span[contains(@class ,'o_stat_value')]//span" position="attributes">
+                <attribute name="groups"></attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="stock.act_product_stock_move_open" model="ir.actions.act_window">
+        <field name="context">{'search_default_future': 1,'search_default_picking_type': 1, 'search_default_product_id': active_id, 'default_product_id': active_id}</field>
+    </record>
+
+</odoo>
