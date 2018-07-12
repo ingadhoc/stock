@@ -3,10 +3,9 @@
 # directory
 ##############################################################################
 from odoo import fields, api, models
-from math import ceil
 
 
-class stock_print_stock_voucher(models.TransientModel):
+class StockPrintStockVoucher(models.TransientModel):
     _name = 'stock.print_stock_voucher'
     _description = "Print Stock Voucher"
 
@@ -28,18 +27,23 @@ class stock_print_stock_voucher(models.TransientModel):
 
     picking_id = fields.Many2one(
         'stock.picking',
-        default=_get_picking,
+        default=lambda self: self._get_picking(),
         required=True,
     )
     printed = fields.Boolean(
-        compute='_get_printed',
+    )
+    with_vouchers = fields.Boolean(
+        compute='_compute_with_vouchers',
     )
     book_id = fields.Many2one(
-        'stock.book', 'Book', default=_get_book,
+        'stock.book',
+        'Book',
+        default=lambda self: self._get_book(),
     )
     next_voucher_number = fields.Integer(
         'Next Voucher Number',
-        related='book_id.sequence_id.number_next_actual', readonly=True,
+        related='book_id.sequence_id.number_next_actual',
+        readonly=True,
     )
     estimated_number_of_pages = fields.Integer(
         'Number of Pages',
@@ -51,29 +55,28 @@ class stock_print_stock_voucher(models.TransientModel):
     )
 
     @api.depends('picking_id', 'picking_id.voucher_ids')
-    def _get_printed(self):
-        printed = False
-        if self.picking_id.voucher_ids:
-            printed = True
-        self.printed = printed
+    def _compute_with_vouchers(self):
+        for rec in self:
+            rec.update({'with_vouchers': bool(rec.picking_id.voucher_ids)})
 
     @api.onchange('book_id', 'picking_id')
     def get_estimated_number_of_pages(self):
         lines_per_voucher = self.lines_per_voucher
         if lines_per_voucher == 0:
-            estimated_number_of_pages = 1
-        else:
-            operations = len(self.picking_id.pack_operation_ids)
-            estimated_number_of_pages = ceil(
-                float(operations) / float(lines_per_voucher)
-            )
+            self.estimated_number_of_pages = 1
+            return
+
+        operations = len(self.picking_id.move_line_ids)
+        estimated_number_of_pages = int(
+            -(-float(operations) // float(lines_per_voucher)))
         self.estimated_number_of_pages = estimated_number_of_pages
 
     @api.multi
     def do_print_voucher(self):
+        self.printed = True
         return self.picking_id.do_print_voucher()
 
-    @api.one
+    @api.multi
     def assign_numbers(self):
         self.picking_id.assign_numbers(
             self.estimated_number_of_pages, self.book_id)

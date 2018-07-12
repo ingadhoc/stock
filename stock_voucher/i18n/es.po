@@ -1,26 +1,35 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * stock_voucher
-# 
-# Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016
+# 	* stock_voucher
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 9.0c\n"
+"Project-Id-Version: Odoo Server 11.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-30 19:16+0000\n"
-"PO-Revision-Date: 2017-11-30 19:16+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2016\n"
-"Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
+"POT-Creation-Date: 2018-07-11 17:22+0000\n"
+"PO-Revision-Date: 2018-07-11 14:23-0300\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
 "Language: es\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.8.7.1\n"
 
 #. module: stock_voucher
-#: model:ir.model.fields,field_description:stock_voucher.field_res_company_automatic_declare_value
+#: model:ir.ui.view,arch_db:stock_voucher.view_print_stock_voucher_form
+msgid "<span><strong>The voucher it's printed and assigned.</strong></span>"
+msgstr "<span><strong>The voucher it's printed and assigned.</strong></span>"
+
+#. module: stock_voucher
+#: model:ir.ui.view,arch_db:stock_voucher.view_print_stock_voucher_form
+msgid "Assign Numbers"
+msgstr "Assign Numbers"
+
+#. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_automatic_declare_value
+#: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_type_automatic_declare_value
 msgid "Automatic Declare Value"
 msgstr "Valor declarado automático"
 
@@ -32,7 +41,6 @@ msgstr "Confirmación de entrega parcial"
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_type_book_id
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_print_stock_voucher_book_id
-#: model:ir.ui.view,arch_db:stock_voucher.view_stock_book_form
 msgid "Book"
 msgstr "Talonario"
 
@@ -55,14 +63,8 @@ msgstr "Book suggested for pickings of this type"
 #. module: stock_voucher
 #: model:ir.actions.act_window,name:stock_voucher.stock_book_actions
 #: model:ir.ui.menu,name:stock_voucher.menu_books
-#: model:ir.ui.view,arch_db:stock_voucher.view_stock_book_tree
 msgid "Books"
 msgstr "Talonarios"
-
-#. module: stock_voucher
-#: model:ir.ui.view,arch_db:stock_voucher.view_print_stock_voucher_form
-msgid "Cancel"
-msgstr "Cancelar"
 
 #. module: stock_voucher
 #: model:ir.model.fields,help:stock_voucher.field_stock_picking_type_voucher_number_validator_id
@@ -75,29 +77,29 @@ msgid "Clean Voucher Data"
 msgstr "Clean Voucher Data"
 
 #. module: stock_voucher
-#: model:ir.model,name:stock_voucher.model_res_company
-msgid "Companies"
-msgstr "Compañías"
+#: model:ir.ui.view,arch_db:stock_voucher.view_print_stock_voucher_form
+msgid "Close"
+msgstr "Cerrar"
 
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_book_company_id
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_voucher_company_id
 msgid "Company"
-msgstr "Compania"
+msgstr "Compañía"
 
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_book_create_uid
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_voucher_create_uid
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_print_stock_voucher_create_uid
 msgid "Created by"
-msgstr "Created by"
+msgstr "Creado por"
 
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_book_create_date
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_voucher_create_date
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_print_stock_voucher_create_date
 msgid "Created on"
-msgstr "Created on"
+msgstr "Creado en"
 
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_declared_value
@@ -112,6 +114,11 @@ msgid "Display Name"
 msgstr "Mostrar Nombre"
 
 #. module: stock_voucher
+#: sql_constraint:stock.picking.voucher:0
+msgid "El campo  \"Número \" debe ser único por Talonario."
+msgstr "El campo  \"Número \" debe ser único por Talonario."
+
+#. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_book_id
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_voucher_id
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_print_stock_voucher_id
@@ -121,48 +128,30 @@ msgstr "ID"
 #. module: stock_voucher
 #: model:ir.model.fields,help:stock_voucher.field_stock_picking_book_required
 #: model:ir.model.fields,help:stock_voucher.field_stock_picking_type_book_required
-msgid ""
-"If true, then a book will be requested on transfers of this type and a will "
-"automatically print the stock voucher."
-msgstr ""
-"If true, then a book will be requested on transfers of this type and a will "
-"automatically print the stock voucher."
+msgid "If true, then a book will be requested on transfers of this type and a will automatically print the stock voucher."
+msgstr "If true, then a book will be requested on transfers of this type and a will automatically print the stock voucher."
 
 #. module: stock_voucher
 #: model:ir.model.fields,help:stock_voucher.field_stock_picking_type_voucher_required
 #: model:ir.model.fields,help:stock_voucher.field_stock_picking_voucher_required
 msgid "If true, voucher numbers will be required before validation"
-msgstr ""
-"Si es verdadero, se requerirán números de comprobante antes de la validación"
+msgstr "Si es verdadero, se requerirán números de comprobante antes de la validación"
 
 #. module: stock_voucher
 #: model:ir.model.fields,help:stock_voucher.field_stock_picking_type_voucher_number_unique
-msgid ""
-"If true, voucher numbers will be required to be unique for same partner"
-msgstr ""
-"Si es cierto, se requerirá que los números de comprobante sean únicos para "
-"el mismo partner"
+msgid "If true, voucher numbers will be required to be unique for same partner"
+msgstr "Si es cierto, se requerirá que los números de comprobante sean únicos para el mismo partner"
 
 #. module: stock_voucher
 #: model:ir.model.fields,help:stock_voucher.field_stock_book_lines_per_voucher
 #: model:ir.model.fields,help:stock_voucher.field_stock_print_stock_voucher_lines_per_voucher
-msgid ""
-"If voucher don't have a limit, then live 0. If not, this number will be used"
-" to calculate how many sequence are used on each picking"
-msgstr ""
-"If voucher don't have a limit, then live 0. If not, this number will be used"
-" to calculate how many sequence are used on each picking"
+msgid "If voucher don't have a limit, then live 0. If not, this number will be used to calculate how many sequence are used on each picking"
+msgstr "If voucher don't have a limit, then live 0. If not, this number will be used to calculate how many sequence are used on each picking"
 
 #. module: stock_voucher
 #: model:ir.model.fields,help:stock_voucher.field_stock_picking_type_pricelist_id
-msgid ""
-"If you choose a pricelist, \"Automatic Declare Value\" is enable on company "
-"and not sale order is found linked to the picking, we will suggest declared "
-"value using this pricelist"
-msgstr ""
-"Si elige una lista de precios, \"Valor Declarado Automático\" se habilita en"
-" la empresa y no se encuentra la orden de venta vinculada a la orden de "
-"movimiento, sugeriremos valor declarado utilizando esta lista de precios"
+msgid "If you choose a pricelist, \"Automatic Declare Value\" is enable on company and not sale order is found linked to the picking, we will suggest declared value using this pricelist"
+msgstr "Si elige una lista de precios, \"Valor Declarado Automático\" se habilita en la empresa y no se encuentra la orden de venta vinculada a la orden de movimiento, sugeriremos valor declarado utilizando esta lista de precios"
 
 #. module: stock_voucher
 #: model:ir.model,name:stock_voucher.model_stock_immediate_transfer
@@ -181,14 +170,14 @@ msgstr "Última modificación en"
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_voucher_write_uid
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_print_stock_voucher_write_uid
 msgid "Last Updated by"
-msgstr "Last Updated by"
+msgstr "Última actualización realizada por"
 
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_book_write_date
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_voucher_write_date
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_print_stock_voucher_write_date
 msgid "Last Updated on"
-msgstr "Last Updated on"
+msgstr "Última actualización el"
 
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_book_lines_per_voucher
@@ -205,7 +194,7 @@ msgstr "Nombre"
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_book_next_number
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_next_number
 msgid "Next Number"
-msgstr ""
+msgstr "Próximo número"
 
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_print_stock_voucher_next_voucher_number
@@ -216,12 +205,8 @@ msgstr "Número del siguiente comprobante"
 #: model:ir.model.fields,help:stock_voucher.field_stock_book_next_number
 #: model:ir.model.fields,help:stock_voucher.field_stock_picking_next_number
 #: model:ir.model.fields,help:stock_voucher.field_stock_print_stock_voucher_next_voucher_number
-msgid ""
-"Next number that will be used. This number can be incremented frequently so "
-"the displayed value might already be obsolete"
-msgstr ""
-"Próximo número que será utilizado. Este número puede ser incrementado "
-"frecuentemente por lo que que el valor mostrado capaz que ya esté obsoleto."
+msgid "Next number that will be used. This number can be incremented frequently so the displayed value might already be obsolete"
+msgstr "Próximo número que será utilizado. Este número puede ser incrementado frecuentemente por lo que que el valor mostrado capaz que ya esté obsoleto."
 
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_voucher_name
@@ -235,17 +220,24 @@ msgid "Number of Pages"
 msgstr "Número de páginas"
 
 #. module: stock_voucher
+#: code:addons/stock_voucher/models/stock_picking.py:144
+#, python-format
+msgid "NÃºmeros de remitos asignados: %s"
+msgstr "NÃºmeros de remitos asignados: %s"
+
+#. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_observations
 msgid "Observations"
 msgstr "Observations"
 
 #. module: stock_voucher
-#: model:ir.model,name:stock_voucher.model_stock_pack_operation
+#: model:ir.model,name:stock_voucher.model_stock_move_line
 msgid "Packing Operation"
-msgstr " Operación de empaquetado"
+msgstr "Operación de empaquetado"
 
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_voucher_picking_id
+#: model:ir.model.fields,field_description:stock_voucher.field_stock_print_stock_voucher_picking_id
 msgid "Picking"
 msgstr "Picking"
 
@@ -256,15 +248,10 @@ msgid "Picking Voucher"
 msgstr "Remito"
 
 #. module: stock_voucher
-#: model:ir.model.fields,field_description:stock_voucher.field_stock_print_stock_voucher_picking_id
-msgid "Picking id"
-msgstr "Picking id"
-
-#. module: stock_voucher
-#: code:addons/stock_voucher/models/stock_book.py:130
+#: code:addons/stock_voucher/models/stock_picking_voucher.py:74
 #, python-format
 msgid "Picking voucher number must be unique per partner"
-msgstr "El número de comprobante de albarán debe ser único por partner"
+msgstr "Picking voucher number must be unique per partner"
 
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_type_pricelist_id
@@ -298,15 +285,15 @@ msgid "Printed"
 msgstr "Impreso"
 
 #. module: stock_voucher
-#: model:ir.model.fields,field_description:stock_voucher.field_res_company_restrict_number_package
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_restrict_number_package
-msgid "Restrict number of Package"
-msgstr "Restringir número de bultos"
+#: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_type_restrict_number_package
+msgid "Restrict Number Package"
+msgstr "Restrict Number Package"
 
 #. module: stock_voucher
 #: model:ir.model,name:stock_voucher.model_stock_move
 msgid "Stock Move"
-msgstr "Movimiento stock"
+msgstr "Movimiento de Stock"
 
 #. module: stock_voucher
 #: model:ir.model,name:stock_voucher.model_stock_book
@@ -320,27 +307,38 @@ msgid "Stock Voucher Sequence"
 msgstr "Secuencia de Talonario"
 
 #. module: stock_voucher
-#: code:addons/stock_voucher/models/stock_book.py:101
-#: sql_constraint:stock.picking.voucher:0
+#: code:addons/stock_voucher/models/stock_picking.py:153
 #, python-format
-msgid "The field \"Number\" must be unique per book."
-msgstr "El campo  \"Número \" debe ser único por Talonario."
+msgid "The assigned voucher were deleted"
+msgstr "The assigned voucher were deleted"
 
 #. module: stock_voucher
-#: code:addons/stock_voucher/models/stock_picking.py:166
+#: model:ir.model.fields,help:stock_voucher.field_stock_picking_automatic_declare_value
+#: model:ir.model.fields,help:stock_voucher.field_stock_picking_type_automatic_declare_value
+msgid "The declared value will be on the currency of the company"
+msgstr "The declared value will be on the currency of the company"
+
+#. module: stock_voucher
+#: code:addons/stock_voucher/models/stock_picking_voucher.py:46
+#, python-format
+msgid "The field \"Number\" must be unique per book."
+msgstr "The field \"Number\" must be unique per book."
+
+#. module: stock_voucher
+#: code:addons/stock_voucher/models/stock_picking.py:180
 #, python-format
 msgid "The number of packages can not be 0"
 msgstr "El numero de bultos no puede ser 0"
 
 #. module: stock_voucher
 #: model:ir.model,name:stock_voucher.model_stock_picking_type
-msgid "The picking type determines the picking view"
-msgstr "El tipo de albarán determina la vista de albarán"
+msgid "The operation type determines the picking view"
+msgstr "El tipo de operación determina la vista de la operación"
 
 #. module: stock_voucher
 #: model:ir.model,name:stock_voucher.model_stock_picking
 msgid "Transfer"
-msgstr "Transferencia"
+msgstr "Transferir"
 
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_book_id
@@ -368,13 +366,18 @@ msgid "Vouchers"
 msgstr "Remitos"
 
 #. module: stock_voucher
-#: code:addons/stock_voucher/models/stock_picking.py:168
+#: model:ir.model.fields,field_description:stock_voucher.field_stock_print_stock_voucher_with_vouchers
+msgid "With Vouchers"
+msgstr "With Vouchers"
+
+#. module: stock_voucher
+#: code:addons/stock_voucher/models/stock_picking.py:182
 #, python-format
 msgid "You must select a Voucher Book"
 msgstr "Debe seleccionar  un Libro de Comprobante"
 
 #. module: stock_voucher
-#: code:addons/stock_voucher/models/stock_picking.py:171
+#: code:addons/stock_voucher/models/stock_picking.py:185
 #, python-format
 msgid "You must set stock voucher numbers"
 msgstr "Debe ingresar los números de remito"

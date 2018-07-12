@@ -1,10 +1,10 @@
 <odoo>
-<!-- stock.book -->
+    <!-- stock.book -->
     <record id="view_stock_book_tree" model="ir.ui.view">
         <field name="name">stock.book.tree</field>
         <field name="model">stock.book</field>
         <field name="arch" type="xml">
-            <tree string="Books">
+            <tree>
                 <field name="name"/>
                 <field name="sequence_id"/>
                 <field name="lines_per_voucher"/>
@@ -17,7 +17,7 @@
         <field name="name">stock.book.form</field>
         <field name="model">stock.book</field>
         <field name="arch" type="xml">
-            <form string="Book">
+            <form>
                 <header>
                 </header>
                 <sheet>
@@ -32,4 +32,13 @@
             </form>
         </field>
     </record>
+
+    <record id="stock_book_actions" model="ir.actions.act_window">
+        <field name="name">Books</field>
+        <field name="res_model">stock.book</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Books" id="menu_books" sequence="20" action="stock_book_actions" parent="stock.menu_stock_config_settings" />
 </odoo>

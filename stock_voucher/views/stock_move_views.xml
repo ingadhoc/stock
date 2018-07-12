@@ -1,16 +1,15 @@
 <odoo>
-    <!-- stock.picking.type -->
     <record id="view_move_tree" model="ir.ui.view">
         <field name="name">stock.move</field>
         <field name="model">stock.move</field>
         <field name="inherit_id" ref="stock.view_move_tree"/>
         <field name="arch" type="xml">
-            <field name="picking_id" position="after">
+            <field name="picking_type_id" position="after">
                 <field name="vouchers"/>
             </field>
         </field>
     </record>
-    <!-- stock.picking.type -->
+
     <record id="view_move_search" model="ir.ui.view">
         <field name="name">stock.move</field>
         <field name="model">stock.move</field>

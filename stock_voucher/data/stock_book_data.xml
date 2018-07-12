@@ -1,18 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
-    <data noupdate="1">
-        <record model="ir.sequence" forcecreate="False" id="stock_book_sequence_1">
-            <field name="code">stock.voucher</field>
-            <field name="name">Comprobante de Entrega</field>
-            <field name="prefix">000X-</field>
-            <field name="padding">8</field>
-            <field name="implementation">no_gap</field>
-        </record>
-
-        <record model="stock.book" id="stock_book_1" forcecreate="False">
-            <field name="name">Comprobante de Entrega</field>
-            <field name="sequence_id" ref="stock_book_sequence_1"/>
-            <field name="lines_per_voucher" eval="0"/>
-        </record>
-    </data>
+<odoo noupdate="1">
+    <record model="stock.book" id="stock_book_1" forcecreate="False">
+        <field name="name">Comprobante de Entrega</field>
+        <field name="sequence_id" ref="stock_book_sequence_1"/>
+        <field name="lines_per_voucher" eval="0"/>
+    </record>
 </odoo>

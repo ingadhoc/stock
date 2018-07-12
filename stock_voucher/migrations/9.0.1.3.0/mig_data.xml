@@ -1,3 +1,0 @@
-<odoo>
-    <delete model="ir.actions.report" id="stock_voucher.action_report_stock_voucher"/>
-</odoo>

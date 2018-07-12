@@ -1,6 +1,5 @@
 <odoo>
 
-<!-- stock.picking.voucher -->
     <record id="view_stock_picking_voucher_tree" model="ir.ui.view">
         <field name="name">stock.picking.voucher.form</field>
         <field name="model">stock.picking.voucher</field>
