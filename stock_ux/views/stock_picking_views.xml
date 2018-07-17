@@ -1,0 +1,33 @@
+<odoo>
+    <record id="view_picking_form" model="ir.ui.view">
+        <field name="name">stock.picking.form.inherit</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="attributes">
+                <attribute name="attrs"></attribute>
+            </field>
+            <field name="name" position="after">
+                <button name="add_picking_operation"  class="oe_inline oe_right" type="object" string="Process Products" attrs="{'invisible': [('state', 'not in', ['confirmed', 'assigned'])]}"/>
+            </field>
+
+            <field name="product_uom" position="before">
+                <field name="lots_visible" invisible="1"/>
+                <field name="used_lots" groups="stock_ux.group_operation_used_lots" attrs="{'invisible': ['|', ('lots_visible', '=', False), ('state', 'not in', ['confirmed', 'assigned', 'waiting', 'partially_available','done'])]}"/>
+                <button name="set_all_done" string="Set all Done" type="object" icon="fa-check" attrs="{'invisible': ['|', ('show_details_visible', '=', False), ('state', 'not in', ['confirmed', 'assigned', 'waiting', 'partially_available'])]}"/>
+            </field>
+            <xpath expr="//field[@name='move_line_ids']/tree/field[@name='qty_done']" position="after">
+                <button name="set_all_done" string="Set all Done" type="object" icon="fa-check" states="confirmed,assigned,waiting,partially_available"/>
+            </xpath>
+
+            <button name="action_cancel" position="attributes">
+                <attribute name="groups">stock_ux.allow_picking_cancellation</attribute>
+            </button>
+            <field name="move_lines" position="after">
+                <label for="note"/>
+                <field name="note"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

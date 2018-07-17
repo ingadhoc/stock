@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="view_move_line_form" model="ir.ui.view">
+        <field name="name">stock.move.line.form</field>
+        <field name="model">stock.move.line</field>
+        <field name="inherit_id" ref="stock.view_move_line_form"/>
+        <field name="arch" type="xml">
+            <field name="lot_id" position="after">
+                <field name="move_id" readonly="1"/>
+                <field name="picking_create_user_id"/>
+                <field name="picking_partner_id"/>
+                <field name="picking_code"/>
+            </field>
+            <field name="qty_done" position="after">
+                <button name="set_all_done" string="Set all Done" type="object" icon="fa-check" invisible="not context.get('show_reserved') or context.get('state_done')"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="stock_move_line_view_search" model="ir.ui.view">
+        <field name="name">stock.move.line.filter</field>
+        <field name="model">stock.move.line</field>
+        <field name="inherit_id" ref="stock.stock_move_line_view_search"/>
+        <field name="arch" type="xml">
+            <filter name="manufacturing" position="after">
+                <filter string="With Quantity Done" name="with_quantity_done" domain="[('qty_done', '&gt;', 0.0)]"/>
+            </filter>
+            <filter name="by_state" position="after">
+                <filter string="Product" name="product_id" context="{'group_by':'product_id'}"/>
+            </filter>
+        </field>
+    </record>
+
+
+    <record id="view_move_line_tree" model="ir.ui.view">
+        <field name="name">stock.move.line.tree</field>
+        <field name="model">stock.move.line</field>
+        <field name="mode">primary</field>
+        <field name="priority">50</field>
+        <field name="inherit_id" ref="stock.view_move_line_tree"/>
+        <field name="arch" type="xml">
+            <tree position="attributes">
+                <attribute name="editable">bottom</attribute>
+            </tree>
+            <field name="product_id" position="attributes">
+                <attribute name="readonly">1</attribute>
+            </field>
+            <field name="date" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="state" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="product_id" position="after">
+                <field name="picking_id" invisible="1"/>
+                <field name="in_entire_package" invisible="1"/>
+                <field name="product_uom_id" string="Unit of Measure" groups="product.group_uom" readonly="1"/>
+                <field name="lots_visible" invisible="1"/>
+                <field name="owner_id" readonly="1"/>
+                <field name="lot_id" attrs="{'readonly': [('in_entire_package', '=', True)]}" domain="[('product_id', '=', product_id)]" groups="stock.group_production_lot" context="{'default_product_id': product_id, 'active_picking_id': picking_id}"/>
+            </field>
+            <field name="qty_done" position="after">
+                <button name="set_all_done" string="Set all Done" type="object" icon="fa-check" states="confirmed,assigned,waiting,partially_available"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_stock_move_line_operation_tree" model="ir.ui.view">
+        <field name="name">stock.move.line.tree</field>
+        <field name="model">stock.move.line</field>
+        <field name="inherit_id" ref="stock.view_stock_move_line_operation_tree"/>
+        <field name="arch" type="xml">
+            <field name="qty_done" position="after">
+                <button name="set_all_done" string="Set all Done" type="object" icon="fa-check" states="confirmed,assigned,waiting,partially_available" context="{'from_popup':True}"/>
+            </field>
+        </field>
+    </record>
+
+
+    <!-- adds action to add all move lines -->
+    <record model="ir.actions.server" id="action_operation_set_all_done">
+        <field name="name">Set all done</field>
+        <field name="model_id" ref="stock.model_stock_move_line"/>
+        <field name="binding_model_id" ref="stock.model_stock_move_line"/>
+        <field name="state">code</field>
+        <field name="code">
+records.set_all_done()
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="view_move_form" model="ir.ui.view">
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_form"/>
+        <field name="arch" type="xml">
+            <field name="origin" position="before">
+                <field name="picking_id" readonly="1"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_move_search" model="ir.ui.view">
+        <field name="name">stock.move.search.inherit</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_search"/>
+        <field name="arch" type="xml">
+
+            <field name="name" position="attributes">
+                <!-- we send location in context for computed field -->
+                <attribute name="context">{'location': self}</attribute>
+                <!-- we use location_id so it can be selected -->
+                <attribute name="name">location_id</attribute>
+            </field>
+
+            <filter name="by_product" position="after">
+                <filter string="Picking Type" name="picking_type"  context="{'group_by':'picking_type_id'}"/>
+                <filter string="Picking Partner" name="picking_partner_id"  context="{'group_by':'picking_partner_id'}"/>
+            </filter>
+            <filter name="outgoing" position="after">
+                <filter string="Internal" name="internal" domain="[('picking_code','=','internal')]"/>
+                <filter string="Manufacturing" name="manufacturing" domain="[('picking_code','=','mrp_operation')]"/>
+            </filter>
+        </field>
+    </record>
+
+    <record id="view_move_tree" model="ir.ui.view">
+        <field name="name">stock.move.tree.inherit</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_tree"/>
+        <field name="arch" type="xml">
+            <field name="location_dest_id" position="after">
+                <field name="product_uom_qty_location" sum="Total"/>
+                <!-- on enterprise view is not refres -->
+                <!-- <field name="product_uom_qty_location" sum="Total" invisible="not context.get('location', False)"/> -->
+            </field>
+            <tree>
+                <field name="picking_create_user_id"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="view_move_picking_tree">
+        <field name="name">stock.move.tree</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_picking_tree"/>
+        <field name="arch" type="xml">
+            <field name="product_id" position="before">
+                <!-- por ejemplo, lo usamos para mostrar este campo en stock_usability_batch_picking -->
+                <field name="picking_id" invisible="not context.get('show_picking', False)"/>
+            </field>
+        </field>
+    </record>
+
+
+</odoo>
