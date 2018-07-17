@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
-    <data>
+<odoo noupdate="1">
 
-    
     <record id="report_picking_ean128_odt" model="ir.actions.report">
         <field name="name">Stock Picking EAN128 Report - ODT</field>
         <field name="model">stock.picking.print_ean128_report</field>
@@ -10,11 +8,10 @@
         <field name="report_type">aeroo</field>
         <field name="in_format">oo-odt</field>
         <field name="out_format" ref="report_aeroo.report_mimetypes_pdf_odt"/>
-        <!-- <field name="parser_loc">/report/</field> -->
-        <field name="report_rml">stock_picking_ean128_report/report/stock_picking_EAN128_report.odt</field>
+        <field name="report_file">stock_picking_ean128_report/report/stock_picking_EAN128_report.odt</field>
         <field name="parser_state">default</field>
         <field name="tml_source">file</field>
-    </record> 
+    </record>
 
     <record id="report_picking_ean128_excel" model="ir.actions.report">
         <field name="name">Stock Picking EAN128 Report - EXCEL</field>
@@ -23,11 +20,10 @@
         <field name="report_type">aeroo</field>
         <field name="in_format">oo-ods</field>
         <field name="out_format" ref="report_aeroo.report_mimetypes_xls_odt"/>
-        <!-- <field name="parser_loc">/report/</field> -->
-        <field name="report_rml">stock_picking_ean128_report/report/stock_picking_EAN128_report.ods</field>
+        <field name="report_file">stock_picking_ean128_report/report/stock_picking_EAN128_report.ods</field>
         <field name="parser_state">default</field>
         <field name="tml_source">file</field>
-    </record> 
+    </record>
 
     <record id="report_lot_ean128_odt" model="ir.actions.report">
         <field name="name">Stock Lot EAN128 Report</field>
@@ -36,11 +32,10 @@
         <field name="report_type">aeroo</field>
         <field name="in_format">oo-odt</field>
         <field name="out_format" ref="report_aeroo.report_mimetypes_pdf_odt"/>
-        <!-- <field name="parser_loc">/report/</field> -->
-        <field name="report_rml">stock_picking_ean128_report/report/stock_lot_EAN128_report.odt</field>
+        <field name="report_file">stock_picking_ean128_report/report/stock_lot_EAN128_report.odt</field>
         <field name="parser_state">default</field>
         <field name="tml_source">file</field>
-    </record> 
+    </record>
 
     <record id="report_lot_ean128_excel" model="ir.actions.report">
         <field name="name">Stock Lot EAN128 Report</field>
@@ -49,8 +44,7 @@
         <field name="report_type">aeroo</field>
         <field name="in_format">oo-ods</field>
         <field name="out_format" ref="report_aeroo.report_mimetypes_xls_odt"/>
-        <!-- <field name="parser_loc">/report/</field> -->
-        <field name="report_rml">stock_picking_ean128_report/report/stock_lot_EAN128_report.ods</field>
+        <field name="report_file">stock_picking_ean128_report/report/stock_lot_EAN128_report.ods</field>
         <field name="parser_state">default</field>
         <field name="tml_source">file</field>
     </record>
