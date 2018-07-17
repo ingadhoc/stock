@@ -16,7 +16,6 @@ Stock Inventory Require Lot
 
 Add in the inventory adjustment lines, if a product has tracking by "lot", the field number of lot has required.
 
-
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
    :target: http://runbot.adhoc.com.ar/
