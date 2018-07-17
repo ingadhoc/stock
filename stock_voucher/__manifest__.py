@@ -41,6 +41,7 @@
         'views/stock_picking_type_views.xml',
         'views/stock_picking_views.xml',
         'views/stock_move_views.xml',
+        'views/delivery_carrier_views.xml',
         'data/ir_sequence_data.xml',
         'data/stock_book_data.xml',
     ],
