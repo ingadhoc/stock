@@ -33,6 +33,8 @@ Several improvements to stock:
 #. Only allow to delete pickings on draft/cancel state.
 #. Add a wizard accion in Operation to change locations.
 #. Remove the technical features group in the "Forecasted" button from the product template view, to see the breakdown of incoming and outgoing stock.
+#. Remove the group Tecnical Features to the seccion "Locations" in "stock move" form view from the picking view.
+
 
 Installation
 ============
