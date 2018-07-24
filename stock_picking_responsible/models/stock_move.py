@@ -5,15 +5,6 @@
 from odoo import models, fields
 
 
-class StockPicking(models.Model):
-    _inherit = 'stock.picking'
-
-    user_id = fields.Many2one(
-        'res.users',
-        string="Responsible"
-    )
-
-
 class StockMove(models.Model):
     _inherit = 'stock.move'
 
