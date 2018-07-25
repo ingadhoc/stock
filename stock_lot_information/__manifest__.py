@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Stock Lot Information',
-    'version': '9.0.1.0.0',
+    'version': '11.0.1.0.0',
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
@@ -32,11 +32,11 @@
         'stock',
     ],
     'data': [
-        'views/stock_view.xml'
+        'views/stock_production_lot_views.xml'
     ],
     'demo': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }
