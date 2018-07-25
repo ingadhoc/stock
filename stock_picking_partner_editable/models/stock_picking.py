@@ -9,4 +9,5 @@ class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
     partner_id = fields.Many2one(
-        states={'cancel': [('readonly', True)]})
+        states={'cancel': [('readonly', True)]}
+    )
