@@ -6,6 +6,7 @@ from odoo import models, fields
 
 
 class StockPickingStateDetail(models.Model):
+
     _name = 'stock.picking.state_detail'
     _order = 'sequence'
 
