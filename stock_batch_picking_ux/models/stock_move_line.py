@@ -5,9 +5,9 @@
 from odoo import models, fields
 
 
-class StockPackOperation(models.Model):
+class StockMoveLine(models.Model):
 
-    _inherit = 'stock.pack.operation'
+    _inherit = 'stock.move.line'
 
     origin = fields.Char(
         related='picking_id.origin',

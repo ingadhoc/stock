@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record model="stock.picking.batch" id="stock_picking_batch.stock_picking_batch_freeze_1">
+        <field name="partner_id" ref="base.res_partner_1"/>
+    </record>
+</odoo>

@@ -1,0 +1,76 @@
+<odoo>
+
+    <record model="ir.ui.view" id="stock_picking_batch_filter">
+        <field name="name">stock.picking.batch.search</field>
+        <field name="model">stock.picking.batch</field>
+        <field name="inherit_id" ref="stock_picking_batch.stock_picking_batch_filter"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <!-- al buscar por picking busca por nro de remto -->
+                <field name="picking_ids"/>
+                <field name="picking_code"/>
+            </field>
+            <group>
+                <filter name="picking_code" string="Type of Operation" context="{'group_by':'picking_code'}"/>
+            </group>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="stock_picking_batch_tree">
+        <field name="name">stock.picking.batch.form</field>
+        <field name="model">stock.picking.batch</field>
+        <field name="inherit_id" ref="stock_picking_batch.stock_picking_batch_tree"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="vouchers"/>
+                <field name="picking_code"/>
+            </field>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="stock_picking_batch_form">
+        <field name="name">stock.picking.batch.form</field>
+        <field name="model">stock.picking.batch</field>
+        <field name="inherit_id" ref="stock_picking_batch.stock_picking_batch_form"/>
+        <field name="arch" type="xml">
+
+            <!-- hacemos este boton invisible porque para recepciones no tiene sentido y, si se confirma y cambia de estado no se pueden agregar mas pickings y luego el usuario se puede tentar en cancelar en cuyo caso se cancelan los pickings tambien -->
+            <button name="action_assign" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </button>
+
+            <button name="action_cancel" position="attributes">
+                <attribute name="groups">stock_ux.allow_picking_cancellation</attribute>
+                <attribute name="confirm">ATENCION! Al cancelar un picking batch todos los pickings relacionados también se van a cancelar. Seguro desea continuar?</attribute>
+            </button>
+
+            <field name="name" position="after">
+                <button name="add_picking_operation" class="oe_inline oe_right" type="object" string="Process Operations" attrs="{'invisible': [('state', 'in', ['cancel', 'done'])]}"/>
+            </field>
+
+            <field name="user_id" position="before">
+                <field name="picking_code" invisible="1"/>
+                <field name="voucher_required" invisible="1"/>
+                <field name="picking_code"/>
+                <!-- <field name="picking_type_id"/> -->
+                <!-- al final lo sacamos porque ya lo estamos usando para otros tipos -->
+                <!-- como por ahora solo lo usamos para entrada lo restringimos -->
+                <field name="partner_id" context="{'default_supplier': picking_code == 'incoming', 'default_customer': picking_code == 'outgoing'}" domain="picking_code == 'incoming' and ['|', ('parent_id.supplier', '=', True), ('supplier', '=', True)] or picking_code == 'outgoing' and ['|', ('parent_id.customer', '=', True), ('customer', '=', True)] or []"/>
+                <field name="voucher_number" attrs="{'invisible': [('picking_code','!=','incoming')], 'required': [('voucher_required','=',True)]}"/>
+                <field name="number_of_packages"/>
+            </field>
+
+            <field name="picking_ids" position="attributes">
+                <attribute name="context">{'show_print_button': 1}</attribute>
+                <attribute name="domain">[('partner_id', '=', partner_id), ('picking_type_id.code', '=', picking_code), ('state', 'in', ('confirmed', 'partially_available', 'assigned'))]</attribute>
+            </field>
+            <field name="picking_ids" position="after">
+                <div attrs="{'invisible': [('state', '!=','done')]}">
+                    <separator string="Operations Pickings"/>
+                    <field name="move_line_ids"/>
+                </div>
+            </field>
+        </field>
+    </record>
+
+</odoo>

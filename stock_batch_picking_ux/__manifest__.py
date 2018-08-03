@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Stock Usability with Batch Picking and stock vouchers',
-    'version': '9.0.1.8.0',
+    'version': '11.0.1.0.0',
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
@@ -29,19 +29,21 @@
     'images': [
     ],
     'depends': [
-        'stock_usability',
+        'stock_ux',
         'stock_voucher',
-        'stock_batch_picking',
+        'stock_picking_batch',
+        'report_aeroo',
     ],
     'data': [
-        'views/stock_batch_picking_view.xml',
-        'views/stock_pack_operation_view.xml',
-        'views/stock_picking_view.xml',
+        'data/res_partner_data.xml',
+        'views/stock_picking_batch_views.xml',
+        'views/stock_move_line_views.xml',
+        'views/stock_picking_views.xml',
         'report/batch_picking_list_data.xml',
     ],
     'demo': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': True,
     'application': False,
 }
