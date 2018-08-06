@@ -6,20 +6,21 @@ from odoo import models, fields
 
 
 class StockPickingStateDetail(models.Model):
+
     _name = 'stock.picking.state_detail'
     _order = 'sequence'
 
-    name = fields.Char('Name')
-    sequence = fields.Integer('Sequence')
+    name = fields.Char()
+    sequence = fields.Integer()
     picking_type = fields.Selection(
         selection=[
             ('internal', 'Internal'),
             ('outgoing', 'Outgoing'),
             ('incoming', 'Incoming'),
         ],
-        string="Picking Type",
     )
     state = fields.Selection(
+        string='Status',
         store=True,
         selection=[
             ('draft', 'Draft'),
@@ -29,22 +30,10 @@ class StockPickingStateDetail(models.Model):
             ('partially_available', 'Partially Available'),
             ('assigned', 'Ready to Transfer'),
             ('done', 'Transferred'),
-        ], string='Status'
+        ],
     )
     picking_ids = fields.One2many(
         'stock.picking',
         'state_detail_id',
-        'Pickings')
-
-
-class StockPicking(models.Model):
-
-    _inherit = 'stock.picking'
-
-    state_detail_id = fields.Many2one(
-        'stock.picking.state_detail',
-        string='State Detail',
-        track_visibility='onchange',
-        index=True,
-        copy=False,
+        'Pickings',
     )
