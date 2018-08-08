@@ -4,13 +4,12 @@
 ##############################################################################
 
 from odoo import models, api, _
-from odoo.exceptions import UserError
+from odoo.exceptions import ValidationError
 
 
 class StockMove(models.Model):
     _inherit = 'stock.move'
 
-    @api.multi
     @api.constrains('state', 'location_id', 'location_dest_id')
     def check_user_location_rights(self):
         if self.env.user.restrict_locations:
@@ -20,6 +19,6 @@ class StockMove(models.Model):
                 'not control the location "%s".')
             for rec in self.filtered(lambda x: x.state != 'draft'):
                 if rec.location_id not in user_locations:
-                    raise UserError(message % rec.location_id.name)
+                    raise ValidationError(message % rec.location_id.name)
                 elif rec.location_dest_id not in user_locations:
-                    raise UserError(message % rec.location_dest_id.name)
+                    raise ValidationError(message % rec.location_dest_id.name)

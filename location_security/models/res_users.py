@@ -5,15 +5,17 @@
 from odoo import models, fields
 
 
-class Users(models.Model):
+class ResUsers(models.Model):
     _inherit = 'res.users'
 
     restrict_locations = fields.Boolean(
-        'Restrict Location', help="If True, you can set the location allowed")
+        help="If True, you can set the location allowed",
+    )
 
     stock_location_ids = fields.Many2many(
         'stock.location',
         'location_security_stock_location_users',
         'user_id',
         'location_id',
-        'Stock Locations')
+        'Stock Locations',
+    )
