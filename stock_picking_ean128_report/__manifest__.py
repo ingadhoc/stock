@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Stock Picking EAN128 Report',
-    'version': '9.0.1.1.0',
+    'version': '11.0.1.0.0',
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
@@ -30,15 +30,19 @@
     ],
     'depends': [
         'stock_ean128',
+        'product_expiry',
         'report_aeroo',
     ],
     'data': [
-        'wizard/stock_print_remit_view.xml',
-        'report/stock_report.xml'
+        'wizards/stock_lot_print_ean128_report_views.xml',
+        'wizards/stock_picking_print_ean128_report_views.xml',
+        'wizards/stock_picking_print_ean128_report_detail_views.xml',
+        'report/stock_lot_print_ean128_report.xml',
+        'report/stock_picking_print_ean128_report.xml',
     ],
     'demo': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }
