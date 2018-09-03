@@ -64,3 +64,15 @@ class StockMove(models.Model):
             product_uom_qty_location = 0.0 if \
                 rec.location_dest_id in locations else -rec.product_uom_qty
             rec.update({'product_uom_qty_location': product_uom_qty_location})
+
+    @api.model
+    def _prepare_account_move_line(
+            self, qty, cost, credit_account_id, debit_account_id):
+        if self.product_id.currency_id != self.company_id.currency_id:
+            self = self.with_context(
+                force_valuation_amount=self.product_id.currency_id.compute(
+                    cost, self.company_id.currency_id, round=True))
+        return super(
+            StockMove, self)._prepare_account_move_line(
+            qty=qty, cost=cost, credit_account_id=credit_account_id,
+            debit_account_id=debit_account_id)
