@@ -30,6 +30,7 @@ Several improovements to stock:
 #. Only allow to delete pickings on draft/cancel state.
 #. Add a wizard accion in Operation to change locations.
 #. Remove the group Tecnical Features to the seccion "Locations" in "stock move" form view from the picking view.
+#. Fix in the calculation cost of the merchandise sold when the currency of the product is different from the currency of the company.
 
 Installation
 ============
