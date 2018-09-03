@@ -16,26 +16,21 @@ class StockPickingEan128ReportDetail(models.TransientModel):
         'Picking Report EAN Print',
     )
     quantity = fields.Integer()
-    product_id_readonly = fields.Many2one(
-        related='product_id',
-        readonly=True,
+    move_line_id = fields.Many2one(
+        'stock.move.line',
     )
     product_id = fields.Many2one(
         'product.product',
         string="Product",
-    )
-    lot_id_readonly = fields.Many2one(
         readonly=True,
     )
     lot_id = fields.Many2one(
         'stock.production.lot',
         string='Lot',
-    )
-    product_uom_id_readonly = fields.Many2one(
-        related='product_uom_id',
         readonly=True,
     )
     product_uom_id = fields.Many2one(
         'product.uom',
         string='UOM',
+        readonly=True,
     )

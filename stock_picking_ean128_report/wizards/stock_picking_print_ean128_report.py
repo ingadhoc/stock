@@ -27,6 +27,7 @@ class StockPickingEan128Report(models.TransientModel):
                     'quantity': line.qty_done,
                     'lot_id': line.lot_id.id,
                     'product_uom_id': line.product_uom_id.id,
+                    'move_line_id': line.id,
                 }
                 lines.append((0, 0, values))
             return lines
