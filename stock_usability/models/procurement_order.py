@@ -35,10 +35,10 @@ class ProcurementOrder(models.Model):
                 raise ValidationError(_(
                     'Solo puede cancelar abastecimientos primarios no los '
                     'encadenados'))
-            if rec.rule_id.action != 'move':
+            if rec.rule_id.action not in ['move', 'buy']:
                 raise ValidationError(_(
                     'Cancel remaining in procurements is only implmented for '
-                    'rules with action of type "move"'))
+                    'rules with action of type "move" or "buy"'))
 
             not_done_moves = rec.move_ids.filtered(
                 lambda x: x.state != 'done')
