@@ -1,11 +1,8 @@
 <?xml version="1.0"?>
 <odoo>
-    <data>
 
     <record model="res.groups" id="group_restrict_edit_picking">
         <field name="name">Restrict Edit Blocked Pickings</field>
     </record>
-     
-    </data> 
-</odoo>
 
+</odoo>

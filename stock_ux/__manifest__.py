@@ -42,6 +42,8 @@
         'views/stock_move_views.xml',
         'views/stock_backorder_confirmation_views.xml',
         'views/stock_return_picking_views.xml',
+        'view/stock_picking_view.xml',
+        'view/stock_picking_type_view.xml',
         'wizards/stock_operation_wizard_views.xml',
         'wizards/res_config_settings_views.xml',
     ],

@@ -19,8 +19,9 @@
 ##############################################################################
 {
     'name': 'Stock Picking Control',
-    'version': '9.0.1.3.0',
+    'version': '11.0.1.0.0',
     'category': 'Warehouse Management',
+    'author': 'ADHOC SA',
     'sequence': 14,
     'summary': '',
     'website': 'www.adhoc.com.ar',
@@ -32,11 +33,12 @@
     ],
     'data': [
         'security/security.xml',
-        'view/stock_view.xml',
+        'view/stock_picking_view.xml',
+        'view/stock_picking_type_view.xml',
     ],
     'demo': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }
