@@ -35,6 +35,7 @@ Several improvements to stock:
 #. Remove the technical features group in the "Forecasted" button from the product template view, to see the breakdown of incoming and outgoing stock.
 #. Remove the group Tecnical Features to the seccion "Locations" in "stock move" form view from the picking view.
 #. Fix in the calculation cost of the merchandise sold when the currency of the product is different from the currency of the company.
+#. Add a stock picking list report to stock pickings.
 #. Add optional constraints configurable by Picking Type:
 
 * Block Picking Edit: Restrict add lines, change parters and other fields edition on pickings of this type. This will only apply to users with group Restrict Edit Blocked Pickings. It also block pickings duplicate.
