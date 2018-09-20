@@ -20,7 +20,7 @@
 ##############################################################################
 {
     'name': 'Stock Usability Improvements',
-    'version': '9.0.1.26.0',
+    'version': '9.0.1.27.0',
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
@@ -31,6 +31,7 @@
     ],
     'depends': [
         'sale_stock',
+        'report_aeroo',
     ],
     'data': [
         'security/security.xml',
