@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Stock UX',
-    'version': '11.0.1.0.0',
+    'version': '11.0.1.1.0',
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
@@ -30,6 +30,7 @@
     ],
     'depends': [
         'sale_stock',
+        'report_aeroo',
     ],
     'data': [
         'security/stock_ux_security.xml',
@@ -45,6 +46,7 @@
         'views/stock_picking_type_views.xml',
         'wizards/stock_operation_wizard_views.xml',
         'wizards/res_config_settings_views.xml',
+        'report/stock_ux_report.xml',
     ],
     'demo': [
     ],
