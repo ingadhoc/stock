@@ -22,11 +22,13 @@ class StockPicking(models.Model):
         draft or cancel
         """
         not_del_pickings = self.filtered(
-            lambda x: x.picking_type_id.block_picking_deletion)
+            lambda x: x.picking_type_id.block_picking_deletion or x.state
+            not in ('draft', 'cancel'))
         if not_del_pickings:
             raise ValidationError(_(
                 'You can not delete this pickings because "Block picking '
-                'deletion" is enable on the picking type "%s".\n'
+                'deletion" is enable on the picking type "%s" '
+                'or the state of the picking is not draft or cancel.\n'
                 'Picking Ids: %s') % (
                     not_del_pickings.ids, self.picking_type_id.name))
         return super(StockPicking, self).unlink()
@@ -76,17 +78,3 @@ class StockPicking(models.Model):
                     'Parcialmente Disponible o Reservado, probablemente el '
                     'picking ya fue validado, pruebe refrezcar la ventana!'))
         return super(StockPicking, self).action_done()
-
-    @api.multi
-    def unlink(self):
-        """
-        To avoid errors we block deletion of pickings in other state than
-        draft or cancel
-        """
-        not_del_pickings = self.filtered(
-            lambda x: x.state not in ('draft', 'cancel'))
-        if not_del_pickings:
-            raise UserError(_(
-                'You can only delete draft/cancel pickings. Pikcing Ids: %s') %
-                not_del_pickings.ids)
-        return super(StockPicking, self).unlink()
