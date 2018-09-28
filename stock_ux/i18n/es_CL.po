@@ -11,17 +11,17 @@ msgstr ""
 "POT-Creation-Date: 2018-09-21 17:48+0000\n"
 "PO-Revision-Date: 2018-09-21 17:48+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018\n"
-"Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
+"Language-Team: Spanish (Chile) (https://www.transifex.com/adhoc/teams/46451/es_CL/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: es\n"
+"Language: es_CL\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: stock_ux
 #: model:res.groups,name:stock_ux.allow_picking_cancellation
 msgid "Allow picking cancellation"
-msgstr "Allow picking cancellation"
+msgstr ""
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_picking_type_block_picking_deletion
@@ -33,7 +33,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_ux.field_stock_picking_block_additional_quantiy
 #: model:ir.model.fields,field_description:stock_ux.field_stock_picking_type_block_additional_quantiy
 msgid "Block additional quantiy"
-msgstr "Bloquear cantidad adicional"
+msgstr ""
 
 #. module: stock_ux
 #: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint_rotation
@@ -41,8 +41,6 @@ msgid ""
 "Cantidades entregadas a clientes en los últimos 90 días dividido por 3 para "
 "mensualizar (restadas devoluciones)."
 msgstr ""
-"Cantidades entregadas a clientes en los últimos 90 días dividido por 3 para "
-"mensualizar (restadas devoluciones)."
 
 #. module: stock_ux
 #: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint_location_rotation
@@ -50,46 +48,44 @@ msgid ""
 "Cantidades entregadas desde esta ubicación a clientes en los últimos 90 días"
 " dividido por 3 para mensualizar(restadas devoluciones)."
 msgstr ""
-"Cantidades entregadas desde esta ubicación a clientes en los últimos 90 días"
-" dividido por 3 para mensualizar(restadas devoluciones)."
 
 #. module: stock_ux
 #: model:ir.actions.act_window,name:stock_ux.action_stock_operation_wizard
 #: model:ir.ui.view,arch_db:stock_ux.view_stock_operation_wizard_form
 msgid "Change Locations"
-msgstr "Cambiar Ubicaciones"
+msgstr ""
 
 #. module: stock_ux
 #: code:addons/stock_ux/wizards/stock_operation_wizard.py:18
 #, python-format
 msgid "Change location must be called from operations of same picking!"
-msgstr "Change location must be called from operations of same picking!"
+msgstr ""
 
 #. module: stock_ux
 #: model:ir.ui.view,arch_db:stock_ux.view_stock_operation_wizard_form
 msgid "Confirm"
-msgstr "Confirmar"
+msgstr ""
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_operation_wizard_create_uid
 msgid "Created by"
-msgstr "Creado por"
+msgstr "Created by"
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_operation_wizard_create_date
 msgid "Created on"
-msgstr "Creado en"
+msgstr "Created on"
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_operation_wizard_location_dest_id
 #: model:ir.model.fields,field_description:stock_ux.field_stock_operation_wizard_picking_destination_location_id
 msgid "Destination Location"
-msgstr "Ubicación destino"
+msgstr ""
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_operation_wizard_display_name
 msgid "Display Name"
-msgstr "Mostrar Nombre"
+msgstr ""
 
 #. module: stock_ux
 #: model:ir.model.fields,help:stock_ux.field_stock_picking_type_block_picking_deletion
@@ -104,52 +100,52 @@ msgstr "ID"
 #. module: stock_ux
 #: model:ir.ui.view,arch_db:stock_ux.view_move_search
 msgid "Internal"
-msgstr "Interno"
+msgstr ""
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_operation_wizard___last_update
 msgid "Last Modified on"
-msgstr "Última modificación en"
+msgstr ""
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_operation_wizard_write_uid
 msgid "Last Updated by"
-msgstr "Última actualización realizada por"
+msgstr "Last Updated by"
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_operation_wizard_write_date
 msgid "Last Updated on"
-msgstr "Última actualización el"
+msgstr "Last Updated on"
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint_location_rotation
 msgid "Location Rotation"
-msgstr "Location Rotation"
+msgstr ""
 
 #. module: stock_ux
 #: model:ir.ui.view,arch_db:stock_ux.view_stock_operation_wizard_form
 msgid "Locations"
-msgstr "Ubicaciones"
+msgstr ""
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_move_lots_visible
 msgid "Lots Visible"
-msgstr "Lotes visibles"
+msgstr ""
 
 #. module: stock_ux
 #: model:ir.ui.view,arch_db:stock_ux.view_move_search
 msgid "Manufacturing"
-msgstr "Fabricación"
+msgstr ""
 
 #. module: stock_ux
 #: model:ir.model,name:stock_ux.model_stock_warehouse_orderpoint
 msgid "Minimum Inventory Rule"
-msgstr "Regla de inventario mínimo"
+msgstr ""
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_move_product_uom_qty_location
 msgid "Net Quantity"
-msgstr "Net Quantity"
+msgstr ""
 
 #. module: stock_ux
 #: code:addons/stock_ux/models/stock_picking.py:76
@@ -159,35 +155,32 @@ msgid ""
 "Disponible o Reservado, probablemente el picking ya fue validado, pruebe "
 "refrezcar la ventana!"
 msgstr ""
-"No se puede validar un picking que no estÃ© en estado Parcialmente "
-"Disponible o Reservado, probablemente el picking ya fue validado, pruebe "
-"refrezcar la ventana!"
 
 #. module: stock_ux
 #: model:ir.model,name:stock_ux.model_stock_move_line
 msgid "Packing Operation"
-msgstr "Operación de empaquetado"
+msgstr ""
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_operation_wizard_picking_id
 msgid "Picking"
-msgstr "Picking"
+msgstr ""
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_move_line_picking_create_user_id
 #: model:ir.model.fields,field_description:stock_ux.field_stock_move_picking_create_user_id
 msgid "Picking Creator"
-msgstr "Picking Creator"
+msgstr ""
 
 #. module: stock_ux
 #: model:ir.ui.view,arch_db:stock_ux.view_move_search
 msgid "Picking Partner"
-msgstr "Picking Partner"
+msgstr ""
 
 #. module: stock_ux
 #: model:ir.ui.view,arch_db:stock_ux.view_move_search
 msgid "Picking Type"
-msgstr "Picking Type"
+msgstr ""
 
 #. module: stock_ux
 #: model:ir.actions.report,name:stock_ux.picking_waybill
@@ -197,40 +190,40 @@ msgstr ""
 #. module: stock_ux
 #: model:ir.ui.view,arch_db:stock_ux.view_picking_form
 msgid "Process Products"
-msgstr "Process Products"
+msgstr ""
 
 #. module: stock_ux
 #: model:ir.model,name:stock_ux.model_product_product
 #: model:ir.ui.view,arch_db:stock_ux.stock_move_line_view_search
 msgid "Product"
-msgstr "Producto"
+msgstr ""
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_return_picking_reason
 msgid "Reason for the return"
-msgstr "Reason for the return"
+msgstr ""
 
 #. module: stock_ux
 #: model:res.groups,name:stock_ux.group_restrict_edit_picking
 msgid "Restrict Edit Blocked Pickings"
-msgstr "Restringir Edición de de Albaranes Bloqueados"
+msgstr ""
 
 #. module: stock_ux
 #: model:ir.model.fields,help:stock_ux.field_stock_move_line_block_additional_quantiy
 #: model:ir.model.fields,help:stock_ux.field_stock_picking_block_additional_quantiy
 #: model:ir.model.fields,help:stock_ux.field_stock_picking_type_block_additional_quantiy
 msgid "Restrict additional quantity"
-msgstr "Restringir cantidad adicional"
+msgstr ""
 
 #. module: stock_ux
 #: model:ir.model,name:stock_ux.model_stock_return_picking
 msgid "Return Picking"
-msgstr "Devolver remito"
+msgstr ""
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint_rotation
 msgid "Rotation"
-msgstr "Rotation"
+msgstr ""
 
 #. module: stock_ux
 #: model:ir.ui.view,arch_db:stock_ux.view_move_line_form
@@ -238,33 +231,33 @@ msgstr "Rotation"
 #: model:ir.ui.view,arch_db:stock_ux.view_picking_form
 #: model:ir.ui.view,arch_db:stock_ux.view_stock_move_line_operation_tree
 msgid "Set all Done"
-msgstr "Set all Done"
+msgstr ""
 
 #. module: stock_ux
 #: model:ir.actions.server,name:stock_ux.action_operation_set_all_done
 msgid "Set all done"
-msgstr "Set all done"
+msgstr ""
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_res_config_settings_group_operation_used_lots
 msgid "Show Used Lots on Picking Operations"
-msgstr "Show Used Lots on Picking Operations"
+msgstr ""
 
 #. module: stock_ux
 #: model:res.groups,name:stock_ux.group_operation_used_lots
 msgid "Show Used Lots on Stock Moves"
-msgstr "Show Used Lots on Stock Moves"
+msgstr ""
 
 #. module: stock_ux
 #: model:ir.ui.view,arch_db:stock_ux.res_config_settings_view_form
 msgid "Show selected lots on stock moves"
-msgstr "Show selected lots on stock moves"
+msgstr ""
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_operation_wizard_location_id
 #: model:ir.model.fields,field_description:stock_ux.field_stock_operation_wizard_picking_source_location_id
 msgid "Source Location"
-msgstr "Ubicación de origen"
+msgstr ""
 
 #. module: stock_ux
 #: model:ir.ui.view,arch_db:stock_ux.view_picking_type_form
@@ -274,52 +267,52 @@ msgstr ""
 #. module: stock_ux
 #: model:ir.model,name:stock_ux.model_stock_move
 msgid "Stock Move"
-msgstr "Movimiento de Stock"
+msgstr ""
 
 #. module: stock_ux
 #: model:ir.model,name:stock_ux.model_stock_picking_type
 msgid "The operation type determines the picking view"
-msgstr "El tipo de operación determina la vista de la operación"
+msgstr ""
 
 #. module: stock_ux
 #: model:ir.ui.view,arch_db:stock_ux.view_move_tree
 msgid "Total"
-msgstr "Total"
+msgstr ""
 
 #. module: stock_ux
 #: model:ir.model,name:stock_ux.model_stock_picking
 msgid "Transfer"
-msgstr "Transferir"
+msgstr ""
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_move_line_picking_partner_id
 msgid "Transfer Destination Address"
-msgstr "Dirección de destino de la transferencia"
+msgstr ""
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_move_picking_dest_id
 msgid "Transfer Reference"
-msgstr "Referencia de transferencia"
+msgstr ""
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_move_line_picking_code
 msgid "Type of Operation"
-msgstr "Tipo de operación"
+msgstr ""
 
 #. module: stock_ux
 #: model:ir.ui.view,arch_db:stock_ux.view_move_line_tree
 msgid "Unit of Measure"
-msgstr "Unidad de Medida"
+msgstr ""
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_move_used_lots
 msgid "Used Lots"
-msgstr "Lotes Usados"
+msgstr ""
 
 #. module: stock_ux
 #: model:ir.ui.view,arch_db:stock_ux.stock_move_line_view_search
 msgid "With Quantity Done"
-msgstr "With Quantity Done"
+msgstr ""
 
 #. module: stock_ux
 #: code:addons/stock_ux/models/stock_picking.py:28
@@ -333,14 +326,14 @@ msgstr ""
 #: code:addons/stock_ux/models/stock_move_line.py:50
 #, python-format
 msgid "You can not transfer a product without a move on the picking!"
-msgstr "¡No puedes transferir un producto sin un movimiento en el albarán!"
+msgstr ""
 
 #. module: stock_ux
 #: model:ir.model,name:stock_ux.model_res_config_settings
 msgid "res.config.settings"
-msgstr "res.config.settings"
+msgstr ""
 
 #. module: stock_ux
 #: model:ir.model,name:stock_ux.model_stock_operation_wizard
 msgid "stock.operation.wizard"
-msgstr "stock.operation.wizard"
+msgstr ""
