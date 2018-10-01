@@ -32,7 +32,11 @@ class StockMoveLine(models.Model):
     block_additional_quantiy = fields.Boolean(
         related='picking_id.block_additional_quantiy',
         readonly=True,
-        default=True,
+    )
+
+    product_uom_qty_location = fields.Float(
+        compute='_compute_product_uom_qty_location',
+        string='Net Quantity',
     )
 
     @api.multi
@@ -50,3 +54,25 @@ class StockMoveLine(models.Model):
             raise ValidationError(_(
                 'You can not transfer a product without a move on the '
                 'picking!'))
+
+    @api.multi
+    def _compute_product_uom_qty_location(self):
+        location = self._context.get('location')
+        if not location:
+            return False
+        # because now we use location_id to select location, we have compelte
+        # location name. If y need we can use some code of
+        # _get_domain_locations on stock/product.py
+        locations = self.env['stock.location'].search(
+            [('complete_name', 'ilike', location)])
+        # from_locations = self.env['stock.location'].search([
+        #     '|', ('name', 'ilike', location),
+        #     ('location_dest_id', 'ilike', location)
+        #     ])
+        for rec in self:
+            product_uom_qty_location = rec.qty_done
+            if rec.location_id in locations:
+                # if location is source and destiny, then 0
+                product_uom_qty_location = 0.0 if \
+                    rec.location_dest_id in locations else -rec.qty_done
+            rec.product_uom_qty_location = product_uom_qty_location

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="product_form_view_procurement_button" model="ir.ui.view">
+        <field name="name">product.product.form</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="stock.product_form_view_procurement_button"/>
+        <field name="priority">20</field>
+        <field name="arch" type="xml">
+            <button name="action_view_stock_move_lines" position="attributes">
+                <attribute name="context">{'search_default_product_id': active_id, 'default_product_id': active_id}</attribute>
+            </button>
+        </field>
+    </record>
+
+</odoo>

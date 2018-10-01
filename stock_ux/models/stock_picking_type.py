@@ -12,9 +12,10 @@ class StockPickingType(models.Model):
     block_additional_quantiy = fields.Boolean(
         string="Block additional quantiy",
         help="Restrict additional quantity",
+        default=True,
     )
 
     block_picking_deletion = fields.Boolean(
-        default=True,
         help="Do not allow to remove pickings",
+        default=True,
     )

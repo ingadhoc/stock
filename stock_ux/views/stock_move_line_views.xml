@@ -23,6 +23,9 @@
         <field name="model">stock.move.line</field>
         <field name="inherit_id" ref="stock.stock_move_line_view_search"/>
         <field name="arch" type="xml">
+            <field name="location_id" position="before">
+                <field name="location_id" string="Net Quantity Location" filter_domain="['|',('location_id','ilike',self),('location_dest_id','ilike',self)]" context="{'location': self}"/>
+            </field>
             <filter name="manufacturing" position="after">
                 <filter string="With Quantity Done" name="with_quantity_done" domain="[('qty_done', '&gt;', 0.0)]"/>
             </filter>
@@ -32,6 +35,18 @@
         </field>
     </record>
 
+    <record id="view_move_line_tree2" model="ir.ui.view">
+        <field name="name">stock.move.line.tree</field>
+        <field name="model">stock.move.line</field>
+        <field name="inherit_id" ref="stock.view_move_line_tree"/>
+        <field name="arch" type="xml">
+            <field name="location_dest_id" position="after">
+                <field name="product_uom_qty_location" sum="Total"/>
+                <!-- on enterprise view is not refres -->
+                <!-- <field name="product_uom_qty_location" sum="Total" invisible="not context.get('location', False)"/> -->
+            </field>
+        </field>
+    </record>
 
     <record id="view_move_line_tree" model="ir.ui.view">
         <field name="name">stock.move.line.tree</field>
@@ -88,5 +103,10 @@
 records.set_all_done()
         </field>
     </record>
+
+    <record id="stock.stock_move_line_action" model="ir.actions.act_window">
+        <field name="context">{'search_default_todo': 1,'search_default_done': 1}</field>
+    </record>
+
 
 </odoo>
