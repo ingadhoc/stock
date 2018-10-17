@@ -9,8 +9,8 @@ class StockPickingType(models.Model):
 
     _inherit = 'stock.picking.type'
 
-    block_additional_quantiy = fields.Boolean(
-        string="Block additional quantiy",
+    block_additional_quantity = fields.Boolean(
+        string="Block additional quantity",
         help="Restrict additional quantity",
         default=True,
     )
@@ -18,4 +18,9 @@ class StockPickingType(models.Model):
     block_picking_deletion = fields.Boolean(
         help="Do not allow to remove pickings",
         default=True,
+    )
+
+    block_manual_lines = fields.Boolean(
+        default=True,
+        help="Do not allow manual lines (for eg. to block force availability)",
     )

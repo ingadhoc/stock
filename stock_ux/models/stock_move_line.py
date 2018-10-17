@@ -29,11 +29,6 @@ class StockMoveLine(models.Model):
         readonly=True,
     )
 
-    block_additional_quantiy = fields.Boolean(
-        related='picking_id.block_additional_quantiy',
-        readonly=True,
-    )
-
     product_uom_qty_location = fields.Float(
         compute='_compute_product_uom_qty_location',
         string='Net Quantity',
@@ -45,15 +40,6 @@ class StockMoveLine(models.Model):
             rec.update({'qty_done': rec.move_id.product_uom_qty})
         if self._context.get('from_popup', False):
             return self[0].move_id.action_show_details()
-
-    @api.constrains('qty_done')
-    def _check_quantity(self):
-        for pack in self.filtered(
-                lambda x: x.picking_id.block_additional_quantiy
-                and x.product_qty < x.qty_done):
-            raise ValidationError(_(
-                'You can not transfer a product without a move on the '
-                'picking!'))
 
     @api.multi
     def _compute_product_uom_qty_location(self):
@@ -76,3 +62,16 @@ class StockMoveLine(models.Model):
                 product_uom_qty_location = 0.0 if \
                     rec.location_dest_id in locations else -rec.qty_done
             rec.product_uom_qty_location = product_uom_qty_location
+
+    @api.constrains('qty_done')
+    def _check_manual_lines(self):
+        for rec in self.filtered(
+                lambda x: x.picking_id.picking_type_id.block_manual_lines
+                and x.product_qty < x.qty_done):
+            raise ValidationError(_(
+                "You can't transfer more quantity than reserved one!"))
+
+    @api.constrains('qty_done')
+    def _check_quantity(self):
+        """If we work on move lines we want to ensure quantities are ok"""
+        self.mapped('move_id')._check_quantity()

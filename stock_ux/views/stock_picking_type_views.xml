@@ -8,7 +8,8 @@
         <field name="arch" type="xml">
             <group position="inside">
                 <group string="Stock">
-                    <field name="block_additional_quantiy"/>
+                    <field name="block_additional_quantity"/>
+                    <field name="block_manual_lines"/>
                     <field name="block_picking_deletion"/>
                 </group>
             </group>
