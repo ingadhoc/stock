@@ -25,14 +25,6 @@
         <field name="model">stock.move</field>
         <field name="inherit_id" ref="stock.view_move_search"/>
         <field name="arch" type="xml">
-
-            <field name="name" position="attributes">
-                <!-- we send location in context for computed field -->
-                <attribute name="context">{'location': self}</attribute>
-                <!-- we use location_id so it can be selected -->
-                <attribute name="name">location_id</attribute>
-            </field>
-
             <filter name="by_product" position="after">
                 <filter string="Picking Type" name="picking_type"  context="{'group_by':'picking_type_id'}"/>
                 <filter string="Picking Partner" name="picking_partner_id"  context="{'group_by':'picking_partner_id'}"/>
@@ -49,11 +41,6 @@
         <field name="model">stock.move</field>
         <field name="inherit_id" ref="stock.view_move_tree"/>
         <field name="arch" type="xml">
-            <field name="location_dest_id" position="after">
-                <field name="product_uom_qty_location" sum="Total"/>
-                <!-- on enterprise view is not refres -->
-                <!-- <field name="product_uom_qty_location" sum="Total" invisible="not context.get('location', False)"/> -->
-            </field>
             <tree>
                 <field name="picking_create_user_id"/>
             </tree>
