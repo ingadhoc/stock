@@ -4,6 +4,9 @@
         <field name="model">stock.picking</field>
         <field name="inherit_id" ref="stock.view_picking_form"/>
         <field name="arch" type="xml">
+            <button name="button_validate" position="after">
+                <button name="new_force_availability" string="Force Availability" attrs="{'invisible': ['|', ('state', 'not in', ('confirmed', 'waiting', 'assigned')), ('is_locked', '=', False)]}" groups="base.group_no_one" type="object"/>
+            </button>
             <field name="partner_id" position="attributes">
                 <attribute name="attrs"></attribute>
             </field>
@@ -26,19 +29,6 @@
             <field name="move_lines" position="after">
                 <label for="note"/>
                 <field name="note"/>
-            </field>
-        </field>
-    </record>
-
-    <record id="view_picking_form2" model="ir.ui.view">
-        <field name="name">stock.picking.form</field>
-        <field name="model">stock.picking</field>
-        <field name="inherit_id" ref="stock.view_picking_form"/>
-        <field name="priority">20</field>
-        <field name="groups_id" eval="[(6, 0, [ref('group_restrict_edit_picking')])]"/>
-        <field name="arch" type="xml">
-            <field name="partner_id" position="after">
-                <field name="block_additional_quantiy" invisible="1"/>
             </field>
         </field>
     </record>

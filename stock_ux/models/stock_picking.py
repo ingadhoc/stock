@@ -2,18 +2,13 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import models, fields, api, _
+from odoo import models, api, _
 from odoo.exceptions import ValidationError, UserError
 
 
 class StockPicking(models.Model):
 
     _inherit = 'stock.picking'
-
-    block_additional_quantiy = fields.Boolean(
-        related='picking_type_id.block_additional_quantiy',
-        readonly=True,
-    )
 
     @api.multi
     def unlink(self):
@@ -78,3 +73,9 @@ class StockPicking(models.Model):
                     'Parcialmente Disponible o Reservado, probablemente el '
                     'picking ya fue validado, pruebe refrezcar la ventana!'))
         return super(StockPicking, self).action_done()
+
+    @api.multi
+    def new_force_availability(self):
+        self.action_assign()
+        for rec in self.mapped('move_lines'):
+            rec.quantity_done = rec.product_uom_qty

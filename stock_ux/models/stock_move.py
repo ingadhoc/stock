@@ -2,7 +2,8 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import models, fields, api
+from odoo import models, fields, api, _
+from odoo.exceptions import ValidationError
 
 
 class StockMove(models.Model):
@@ -51,3 +52,12 @@ class StockMove(models.Model):
             StockMove, self)._prepare_account_move_line(
             qty=qty, cost=cost, credit_account_id=credit_account_id,
             debit_account_id=debit_account_id)
+
+    @api.constrains('quantity_done')
+    def _check_quantity(self):
+        for rec in self.filtered(
+            lambda x: x.picking_id.picking_type_id
+            .block_additional_quantity and
+                x.product_uom_qty < x.quantity_done):
+            raise ValidationError(_(
+                'You can not transfer more than the initial demand!'))
