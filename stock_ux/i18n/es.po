@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-21 17:48+0000\n"
-"PO-Revision-Date: 2018-09-21 17:48+0000\n"
+"POT-Creation-Date: 2018-10-17 17:52+0000\n"
+"PO-Revision-Date: 2018-10-17 17:52+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
@@ -147,9 +147,14 @@ msgid "Minimum Inventory Rule"
 msgstr "Regla de inventario mínimo"
 
 #. module: stock_ux
-#: model:ir.model.fields,field_description:stock_ux.field_stock_move_product_uom_qty_location
+#: model:ir.model.fields,field_description:stock_ux.field_stock_move_line_product_uom_qty_location
 msgid "Net Quantity"
 msgstr "Net Quantity"
+
+#. module: stock_ux
+#: model:ir.ui.view,arch_db:stock_ux.stock_move_line_view_search
+msgid "Net Quantity Location"
+msgstr ""
 
 #. module: stock_ux
 #: code:addons/stock_ux/models/stock_picking.py:76
@@ -282,7 +287,7 @@ msgid "The operation type determines the picking view"
 msgstr "El tipo de operación determina la vista de la operación"
 
 #. module: stock_ux
-#: model:ir.ui.view,arch_db:stock_ux.view_move_tree
+#: model:ir.ui.view,arch_db:stock_ux.view_move_line_tree2
 msgid "Total"
 msgstr "Total"
 
@@ -330,7 +335,7 @@ msgid ""
 msgstr ""
 
 #. module: stock_ux
-#: code:addons/stock_ux/models/stock_move_line.py:50
+#: code:addons/stock_ux/models/stock_move_line.py:54
 #, python-format
 msgid "You can not transfer a product without a move on the picking!"
 msgstr "¡No puedes transferir un producto sin un movimiento en el albarán!"
