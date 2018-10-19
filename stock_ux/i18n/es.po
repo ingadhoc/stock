@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-17 17:52+0000\n"
-"PO-Revision-Date: 2018-10-17 17:52+0000\n"
+"POT-Creation-Date: 2018-10-18 18:57+0000\n"
+"PO-Revision-Date: 2018-10-18 18:57+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
@@ -24,16 +24,19 @@ msgid "Allow picking cancellation"
 msgstr "Allow picking cancellation"
 
 #. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_picking_type_block_manual_lines
+msgid "Block Manual Lines"
+msgstr ""
+
+#. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_picking_type_block_picking_deletion
 msgid "Block Picking Deletion"
 msgstr ""
 
 #. module: stock_ux
-#: model:ir.model.fields,field_description:stock_ux.field_stock_move_line_block_additional_quantiy
-#: model:ir.model.fields,field_description:stock_ux.field_stock_picking_block_additional_quantiy
-#: model:ir.model.fields,field_description:stock_ux.field_stock_picking_type_block_additional_quantiy
-msgid "Block additional quantiy"
-msgstr "Bloquear cantidad adicional"
+#: model:ir.model.fields,field_description:stock_ux.field_stock_picking_type_block_additional_quantity
+msgid "Block additional quantity"
+msgstr ""
 
 #. module: stock_ux
 #: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint_rotation
@@ -92,8 +95,18 @@ msgid "Display Name"
 msgstr "Mostrar Nombre"
 
 #. module: stock_ux
+#: model:ir.model.fields,help:stock_ux.field_stock_picking_type_block_manual_lines
+msgid "Do not allow manual lines (for eg. to block force availability)"
+msgstr ""
+
+#. module: stock_ux
 #: model:ir.model.fields,help:stock_ux.field_stock_picking_type_block_picking_deletion
 msgid "Do not allow to remove pickings"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.ui.view,arch_db:stock_ux.view_picking_form
+msgid "Force Availability"
 msgstr ""
 
 #. module: stock_ux
@@ -157,7 +170,7 @@ msgid "Net Quantity Location"
 msgstr ""
 
 #. module: stock_ux
-#: code:addons/stock_ux/models/stock_picking.py:76
+#: code:addons/stock_ux/models/stock_picking.py:71
 #, python-format
 msgid ""
 "No se puede validar un picking que no estÃ© en estado Parcialmente "
@@ -221,9 +234,7 @@ msgid "Restrict Edit Blocked Pickings"
 msgstr "Restringir Edición de de Albaranes Bloqueados"
 
 #. module: stock_ux
-#: model:ir.model.fields,help:stock_ux.field_stock_move_line_block_additional_quantiy
-#: model:ir.model.fields,help:stock_ux.field_stock_picking_block_additional_quantiy
-#: model:ir.model.fields,help:stock_ux.field_stock_picking_type_block_additional_quantiy
+#: model:ir.model.fields,help:stock_ux.field_stock_picking_type_block_additional_quantity
 msgid "Restrict additional quantity"
 msgstr "Restringir cantidad adicional"
 
@@ -327,7 +338,7 @@ msgid "With Quantity Done"
 msgstr "With Quantity Done"
 
 #. module: stock_ux
-#: code:addons/stock_ux/models/stock_picking.py:28
+#: code:addons/stock_ux/models/stock_picking.py:23
 #, python-format
 msgid ""
 "You can not delete this pickings because \"Block picking deletion\" is enable on the picking type \"%s\" or the state of the picking is not draft or cancel.\n"
@@ -335,10 +346,16 @@ msgid ""
 msgstr ""
 
 #. module: stock_ux
-#: code:addons/stock_ux/models/stock_move_line.py:54
+#: code:addons/stock_ux/models/stock_move.py:62
 #, python-format
-msgid "You can not transfer a product without a move on the picking!"
-msgstr "¡No puedes transferir un producto sin un movimiento en el albarán!"
+msgid "You can not transfer more than the initial demand!"
+msgstr ""
+
+#. module: stock_ux
+#: code:addons/stock_ux/models/stock_move_line.py:71
+#, python-format
+msgid "You can't transfer more quantity than reserved one!"
+msgstr ""
 
 #. module: stock_ux
 #: model:ir.model,name:stock_ux.model_res_config_settings
