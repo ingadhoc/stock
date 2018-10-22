@@ -11,7 +11,8 @@ class StockPickingType(models.Model):
 
     block_additional_quantity = fields.Boolean(
         string="Block additional quantity",
-        help="Restrict additional quantity",
+        help="Do not allow to confirm pickings with more quantity than the "
+        "initial demand and also block pickings duplication",
         default=True,
     )
 
@@ -21,6 +22,7 @@ class StockPickingType(models.Model):
     )
 
     block_manual_lines = fields.Boolean(
-        default=True,
-        help="Do not allow manual lines (for eg. to block force availability)",
+        string="Block force availability",
+        help="Do not allow to confirm pickings with more quantity than the "
+        "reserved one",
     )
