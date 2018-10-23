@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-18 18:57+0000\n"
-"PO-Revision-Date: 2018-10-18 18:57+0000\n"
+"POT-Creation-Date: 2018-10-22 23:35+0000\n"
+"PO-Revision-Date: 2018-10-22 23:35+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
@@ -24,11 +24,6 @@ msgid "Allow picking cancellation"
 msgstr "Allow picking cancellation"
 
 #. module: stock_ux
-#: model:ir.model.fields,field_description:stock_ux.field_stock_picking_type_block_manual_lines
-msgid "Block Manual Lines"
-msgstr ""
-
-#. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_picking_type_block_picking_deletion
 msgid "Block Picking Deletion"
 msgstr ""
@@ -36,6 +31,11 @@ msgstr ""
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_picking_type_block_additional_quantity
 msgid "Block additional quantity"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_picking_type_block_manual_lines
+msgid "Block force availability"
 msgstr ""
 
 #. module: stock_ux
@@ -95,8 +95,16 @@ msgid "Display Name"
 msgstr "Mostrar Nombre"
 
 #. module: stock_ux
+#: model:ir.model.fields,help:stock_ux.field_stock_picking_type_block_additional_quantity
+msgid ""
+"Do not allow to confirm pickings with more quantity than the initial demand "
+"and also block pickings duplication"
+msgstr ""
+
+#. module: stock_ux
 #: model:ir.model.fields,help:stock_ux.field_stock_picking_type_block_manual_lines
-msgid "Do not allow manual lines (for eg. to block force availability)"
+msgid ""
+"Do not allow to confirm pickings with more quantity than the reserved one"
 msgstr ""
 
 #. module: stock_ux
@@ -170,7 +178,7 @@ msgid "Net Quantity Location"
 msgstr ""
 
 #. module: stock_ux
-#: code:addons/stock_ux/models/stock_picking.py:71
+#: code:addons/stock_ux/models/stock_picking.py:85
 #, python-format
 msgid ""
 "No se puede validar un picking que no estÃ© en estado Parcialmente "
@@ -232,11 +240,6 @@ msgstr "Reason for the return"
 #: model:res.groups,name:stock_ux.group_restrict_edit_picking
 msgid "Restrict Edit Blocked Pickings"
 msgstr "Restringir Edición de de Albaranes Bloqueados"
-
-#. module: stock_ux
-#: model:ir.model.fields,help:stock_ux.field_stock_picking_type_block_additional_quantity
-msgid "Restrict additional quantity"
-msgstr "Restringir cantidad adicional"
 
 #. module: stock_ux
 #: model:ir.model,name:stock_ux.model_stock_return_picking
@@ -343,6 +346,14 @@ msgstr "With Quantity Done"
 msgid ""
 "You can not delete this pickings because \"Block picking deletion\" is enable on the picking type \"%s\" or the state of the picking is not draft or cancel.\n"
 "Picking Ids: %s"
+msgstr ""
+
+#. module: stock_ux
+#: code:addons/stock_ux/models/stock_picking.py:38
+#, python-format
+msgid ""
+"You can not duplicate a Picking because \"Block Additional Quantity\" is "
+"enable on the picking type \"%s\""
 msgstr ""
 
 #. module: stock_ux
