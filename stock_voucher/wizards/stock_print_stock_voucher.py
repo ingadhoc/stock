@@ -57,7 +57,7 @@ class StockPrintStockVoucher(models.TransientModel):
     @api.depends('picking_id', 'picking_id.voucher_ids')
     def _compute_with_vouchers(self):
         for rec in self:
-            rec.update({'with_vouchers': bool(rec.picking_id.voucher_ids)})
+            rec.with_vouchers = bool(rec.picking_id.voucher_ids)
 
     @api.onchange('book_id', 'picking_id')
     def get_estimated_number_of_pages(self):

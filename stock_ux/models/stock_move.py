@@ -33,13 +33,13 @@ class StockMove(models.Model):
     )
     def _compute_used_lots(self):
         for rec in self:
-            rec.update({'used_lots': ", ".join(rec.move_line_ids.mapped(
-                lambda x: "%s (%s)" % (x.lot_id.name, x.qty_done)))})
+            rec.used_lots = ", ".join(rec.move_line_ids.mapped(
+                lambda x: "%s (%s)" % (x.lot_id.name, x.qty_done)))
 
     @api.multi
     def set_all_done(self):
         for rec in self:
-            rec.update({'quantity_done': rec.product_uom_qty})
+            rec.quantity_done = rec.product_uom_qty
 
     @api.model
     def _prepare_account_move_line(

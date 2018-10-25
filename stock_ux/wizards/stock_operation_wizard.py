@@ -50,7 +50,7 @@ class StockOperationWizard(models.TransientModel):
         move_lines = self.env['stock.move.line'].browse(
             self._context.get('active_ids', []))
         if move_lines:
-            move_lines.update({
+            move_lines.write({
                 'location_id': self.location_id.id,
                 'location_dest_id': self.location_dest_id.id
             })

@@ -53,9 +53,7 @@ class StockPicking(models.Model):
     @api.depends('voucher_ids.display_name')
     def _compute_vouchers(self):
         for rec in self:
-            rec.update({
-                'vouchers': ', '.join(rec.mapped('voucher_ids.display_name'))
-            })
+            rec.vouchers = ', '.join(rec.mapped('voucher_ids.display_name'))
 
     def get_estimated_number_of_pages(self):
         self.ensure_one()
@@ -72,7 +70,7 @@ class StockPicking(models.Model):
     @api.onchange('picking_type_id')
     def _get_book(self):
         for rec in self:
-            rec.update({'book_id': rec.picking_type_id.book_id.id})
+            rec.book_id = rec.picking_type_id.book_id.id
 
     @api.multi
     def do_print_voucher(self):

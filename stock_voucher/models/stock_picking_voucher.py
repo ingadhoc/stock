@@ -57,7 +57,7 @@ class StockPickingVoucher(models.Model):
             name = pick_type.voucher_number_validator_id.validate_value(
                 rec.name)
             if name and name != rec.name:
-                rec.update({'name': name})
+                rec.name = name
             if pick_type.voucher_number_unique:
                 rec._check_voucher_number_unique()
 
