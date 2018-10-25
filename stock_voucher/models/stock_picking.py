@@ -74,53 +74,6 @@ class StockPicking(models.Model):
         for rec in self:
             rec.update({'book_id': rec.picking_type_id.book_id.id})
 
-    @api.constrains('move_lines')
-    @api.onchange('move_lines')
-    def product_onchange(self):
-        # self.declared_value = 0
-        SaleOrderLine = self.env['sale.order.line']
-        for rec in self.filtered(lambda x: x.automatic_declare_value):
-            done_value = 0.0
-            picking_value = 0.0
-            inmediate_transfer = True
-            pricelist = False
-            for move_line in rec.move_lines:
-                order_line = SaleOrderLine.search(
-                    [('order_id', '=', rec.sale_id.id),
-                     ('product_id', '=', move_line.product_id.id)], limit=1)
-                if move_line.quantity_done:
-                    inmediate_transfer = False
-                if order_line:
-                    pricelist = rec.sale_id.pricelist_id
-                    # convert quantities to uom of the sale order
-                    so_product_qty = move_line.product_id.uom_id.\
-                        _compute_quantity(
-                            move_line.ordered_qty, order_line.product_uom)
-                    so_qty_done = move_line.product_id.uom_id.\
-                        _compute_quantity(
-                            move_line.quantity_done, order_line.product_uom)
-                    picking_value += (order_line.price_reduce * so_product_qty)
-                    done_value += (order_line.price_reduce * so_qty_done)
-                elif rec.picking_type_id.pricelist_id:
-                    pricelist = rec.picking_type_id.pricelist_id
-                    price = rec.picking_type_id.pricelist_id.with_context(
-                        uom=move_line.product_id.uom_id.id).price_get(
-                        move_line.product_id.id,
-                        move_line.quantity_done or 1.0,
-                        partner=rec.partner_id.id)[
-                        rec.picking_type_id.pricelist_id.id]
-                    picking_value += (price * move_line.ordered_qty)
-                    done_value += (price * move_line.quantity_done)
-
-            declared_value = picking_value if inmediate_transfer\
-                else done_value
-            if pricelist:
-                # we convert the declared_value to the currency of the company
-                rec.declared_value = pricelist.currency_id.compute(
-                    declared_value, rec.company_id.currency_id)
-            else:
-                rec.declared_value = declared_value
-
     @api.multi
     def do_print_voucher(self):
         '''This function prints the voucher'''
@@ -199,3 +152,47 @@ class StockPicking(models.Model):
         if res is None and len(self) == 1 and self.book_required:
             return self.do_print_voucher()
         return res
+
+    @api.multi
+    def compute_declared_value(self):
+        for rec in self.filtered(
+                lambda x: x.picking_type_id.automatic_declare_value):
+            done_value = 0.0
+            picking_value = 0.0
+            inmediate_transfer = True
+            pricelist = False
+            for move_line in rec.move_lines.filtered(
+                    lambda x: x.state != 'cancel'):
+                order_line = move_line.sale_line_id
+                if move_line.quantity_done:
+                    inmediate_transfer = False
+                if order_line:
+                    pricelist = rec.sale_id.pricelist_id
+                    # convert quantities to uom of the sale order
+                    so_product_qty = move_line.product_id.uom_id.\
+                        _compute_quantity(
+                            move_line.product_uom_qty, order_line.product_uom)
+                    so_qty_done = move_line.product_id.uom_id.\
+                        _compute_quantity(
+                            move_line.quantity_done, order_line.product_uom)
+                    picking_value += (order_line.price_reduce * so_product_qty)
+                    done_value += (order_line.price_reduce * so_qty_done)
+                elif rec.picking_type_id.pricelist_id:
+                    pricelist = rec.picking_type_id.pricelist_id
+                    price = rec.picking_type_id.pricelist_id.with_context(
+                        uom=move_line.product_id.uom_id.id).price_get(
+                        move_line.product_id.id,
+                        move_line.quantity_done or 1.0,
+                        partner=rec.partner_id.id)[
+                        rec.picking_type_id.pricelist_id.id]
+                    picking_value += (price * move_line.ordered_qty)
+                    done_value += (price * move_line.quantity_done)
+
+            declared_value = picking_value if inmediate_transfer\
+                else done_value
+            if pricelist:
+                # we convert the declared_value to the currency of the company
+                rec.declared_value = pricelist.currency_id.compute(
+                    declared_value, rec.company_id.currency_id)
+            else:
+                rec.declared_value = declared_value
