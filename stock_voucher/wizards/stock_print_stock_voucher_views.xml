@@ -33,7 +33,7 @@
                 <!-- Clean numbers -->
                 <button name="do_clean" type="object" string="Clean Voucher Data" attrs="{'invisible':[('with_vouchers', '=', False)]}"/>
                 or
-                <button string="Close" class="oe_link" special="cancel"/>
+                <button string="Close" special="cancel"/>
             </footer>
             </form>
         </field>

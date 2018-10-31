@@ -34,7 +34,7 @@ class StockPicking(models.Model):
         # si no viene default entonces es por interfaz y
         # si tiene bloqueado agregar cantidades entonces
         # tiene bloqueado duplicar
-        if not default and self.block_additional_quantity:
+        if not default and self.picking_type_id.block_additional_quantity:
             raise UserError(_(
                 'You can not duplicate a Picking because "Block'
                 ' Additional Quantity"'
