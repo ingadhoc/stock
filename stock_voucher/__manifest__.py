@@ -31,6 +31,7 @@
     'depends': [
         'delivery',
         'base_validator',
+        'web_ir_actions_act_multi',
     ],
     'data': [
         'security/stock_voucher_security.xml',

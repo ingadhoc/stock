@@ -27,4 +27,10 @@ class StockImmediateTransfer(models.TransientModel):
             # TODO we should also fix odoo methods
             self._context.get('picking_id'))
         if picking.book_required:
-            return picking.do_print_voucher()
+            return {
+                'actions': [
+                    {'type': 'ir.actions.act_window_close'},
+                    picking.do_print_voucher(),
+                ],
+                'type': 'ir.actions.act_multi',
+            }
