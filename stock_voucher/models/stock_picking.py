@@ -166,19 +166,22 @@ class StockPicking(models.Model):
                     inmediate_transfer = False
                 if order_line:
                     pricelist = rec.sale_id.pricelist_id
-                    # convert quantities to uom of the sale order
-                    so_product_qty = move_line.product_id.uom_id.\
-                        _compute_quantity(
+                    so_product_qty = move_line.product_uom_qty
+                    so_qty_done = move_line.quantity_done
+                    # convert quantities if move line uom and sale line uom
+                    # are different
+                    if move_line.product_uom != order_line.product_uom:
+                        so_product_qty = move_line.\
+                         product_uom._compute_quantity(
                             move_line.product_uom_qty, order_line.product_uom)
-                    so_qty_done = move_line.product_id.uom_id.\
-                        _compute_quantity(
+                        so_qty_done = move_line.product_uom._compute_quantity(
                             move_line.quantity_done, order_line.product_uom)
                     picking_value += (order_line.price_reduce * so_product_qty)
                     done_value += (order_line.price_reduce * so_qty_done)
                 elif rec.picking_type_id.pricelist_id:
                     pricelist = rec.picking_type_id.pricelist_id
                     price = rec.picking_type_id.pricelist_id.with_context(
-                        uom=move_line.product_id.uom_id.id).price_get(
+                        uom=move_line.product_uom.id).price_get(
                         move_line.product_id.id,
                         move_line.quantity_done or 1.0,
                         partner=rec.partner_id.id)[
