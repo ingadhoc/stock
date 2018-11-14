@@ -19,7 +19,7 @@ class StockImmediateTransfer(models.TransientModel):
 
     @api.multi
     def process(self):
-        super(StockImmediateTransfer, self).process()
+        res = super(StockImmediateTransfer, self).process()
         picking = self.env['stock.picking'].browse(
             # if we came, for eg, from a sale order, active_id would be the
             # sale order id
@@ -29,8 +29,10 @@ class StockImmediateTransfer(models.TransientModel):
         if picking.book_required:
             return {
                 'actions': [
-                    {'type': 'ir.actions.act_window_close'},
+                    res,
                     picking.do_print_voucher(),
                 ],
                 'type': 'ir.actions.act_multi',
             }
+        else:
+            return res
