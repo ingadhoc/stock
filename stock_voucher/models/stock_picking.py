@@ -171,11 +171,14 @@ class StockPicking(models.Model):
                     # convert quantities if move line uom and sale line uom
                     # are different
                     if move_line.product_uom != order_line.product_uom:
-                        so_product_qty = move_line.\
-                         product_uom._compute_quantity(
-                            move_line.product_uom_qty, order_line.product_uom)
-                        so_qty_done = move_line.product_uom._compute_quantity(
-                            move_line.quantity_done, order_line.product_uom)
+                        so_product_qty = \
+                            move_line.product_uom._compute_quantity(
+                                move_line.product_uom_qty,
+                                order_line.product_uom)
+                        so_qty_done = \
+                            move_line.product_uom._compute_quantity(
+                                move_line.quantity_done,
+                                order_line.product_uom)
                     picking_value += (order_line.price_reduce * so_product_qty)
                     done_value += (order_line.price_reduce * so_qty_done)
                 elif rec.picking_type_id.pricelist_id:
