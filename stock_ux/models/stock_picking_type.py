@@ -24,5 +24,6 @@ class StockPickingType(models.Model):
     block_manual_lines = fields.Boolean(
         string="Block force availability",
         help="Do not allow to confirm pickings with more quantity than the "
-        "reserved one",
+        "reserved one. This will only apply for moves where origin location "
+        "is not of type 'supplier', 'customer', 'inventory', 'production'",
     )

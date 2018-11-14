@@ -66,8 +66,10 @@ class StockMoveLine(models.Model):
     @api.constrains('qty_done')
     def _check_manual_lines(self):
         for rec in self.filtered(
-                lambda x: x.picking_id.picking_type_id.block_manual_lines
-                and x.product_qty < x.qty_done):
+                lambda x:
+                not x.location_id.should_bypass_reservation() and
+                x.picking_id.picking_type_id.block_manual_lines and
+                x.product_qty < x.qty_done):
             raise ValidationError(_(
                 "You can't transfer more quantity than reserved one!"))
 
