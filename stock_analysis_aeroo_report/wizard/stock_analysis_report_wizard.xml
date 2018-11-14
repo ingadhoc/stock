@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="stock_analysis_report_wizard_form" model="ir.ui.view">
+        <field name="name">stock_analysis_report_wizard_form</field>
+        <field name="model">stock.analysis.report.wizard</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Stock Analysis">
+                <group>
+                    <group>
+                        <field name="filter_domain" widget="domain" options="{'model': 'product.product', 'in_dialog': True}" />
+                    </group>
+                    <group>
+                        <field name="from_date"/>
+                        <field name="to_date"/>
+                        <field name="company_id"/>
+                        <field name="location_id"/>
+                    </group>
+                    <!-- TODO?
+                    <group name="columns" string="Aditional Columns">
+                        <field name="show_stock_valuation"/>
+                        <field name="show_stock_reordering_rules" attrs="{'readonly': [('location_id', '=', False)]}"/>
+                        <field name="show_computed_monthly_demand"/>
+                        <field name="show_computed_stock_remaining_months" attrs="{'readonly': [('show_computed_monthly_demand', '=', False)]}"/>
+                        <field name="show_computed_reordering_suggestion" attrs="{'readonly': [('show_computed_monthly_demand', '=', False)]}"/>
+                    </group>
+                    -->
+                </group>
+                <footer>
+                    <button string="Confirm" name="confirm" type="object" class="oe_highlight"/>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <act_window id="action_stock_analysis_report_wizard"
+        name="Stock Analysis Report"
+        res_model="stock.analysis.report.wizard"
+        target="new"
+        view_mode="form"
+        view_type="form"
+    />
+
+    <menuitem id="menu_stock_analysis_report_wizard"
+        name="Stock Analysis"
+        action="action_stock_analysis_report_wizard"
+        parent="stock.menu_warehouse_report"
+        sequence="200"
+    />
+
+</odoo>
