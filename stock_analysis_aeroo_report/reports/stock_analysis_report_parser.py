@@ -156,13 +156,6 @@ class Parser(models.AbstractModel):
             month_data = [months.get(el, 0) for el in self.months]
             # remove zero or lower readings
             data = list(filter(lambda x: x > 0, month_data))
-            # remove possible out-of-stock months
-            if len(data) > 4:
-                for i in range(1, int(len(data)/2)):
-                    if (min(data) < (max(data)*0.5)):
-                        data = filter(lambda x: x > min(data), data)
-                    else:
-                        break
             # avg remaining data
             monthly = \
                 round(sum(data)/(len(data)*1.0), 0) if len(data) > 0 else 0.0
