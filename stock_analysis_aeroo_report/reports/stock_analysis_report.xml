@@ -9,12 +9,9 @@
         <field name="in_format">oo-ods</field>
         <field name="parser_state">loc</field>
         <field name="parser_loc">stock_analysis_aeroo_report/reports/stock_analysis_report_parser.py</field>
-        <!--<field name="report_file">stock_analysis_aeroo_report/reports/prueba.ods</field>-->
         <field name="report_file">stock_analysis_aeroo_report/reports/stock_analysis_report.ods</field>
         <field name="tml_source">file</field>
         <field name="out_format" ref="report_aeroo.report_mimetypes_xls_odt"/>
-        <field name="binding_model_id" ref="product.model_product_product"/>
-        <field name="binding_type">report</field>
     </record>
 
 </odoo>
