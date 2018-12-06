@@ -20,8 +20,9 @@
                     <field name="estimated_number_of_pages" attrs="{'invisible':[('lines_per_voucher', '=', 0)],'required':[('lines_per_voucher', '!=', 0)]}"/>
                 </group>
             <footer>
+                <!-- Boton compartido una vez que se asignaro -->
+                <button name="do_print_voucher" type="object" string="Print" attrs="{'invisible':[('with_vouchers', '=', False)]}"/>
                 <!-- Botones para remitos que usan una hoja -->
-                <button name="do_print_voucher" type="object" string="Print" attrs="{'invisible':['|',('lines_per_voucher', '!=', 0),('with_vouchers', '=', False)]}"/>
                 <button name="do_print_and_assign" type="object" class="oe_highlight" string="Print and Assign" attrs="{'invisible':['|',('lines_per_voucher', '!=', 0),('with_vouchers', '=', True)]}"/>
                 <!-- Botones para remitos que usan varias hojas -->
                 <button name="do_print_voucher" type="object" string="Print" attrs="{'invisible':['|','|',('lines_per_voucher', '=', 0),('with_vouchers', '=', True),('printed', '=', True)]}" class="oe_highlight"/>
