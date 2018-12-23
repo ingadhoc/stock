@@ -4,6 +4,7 @@
 ##############################################################################
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
+from odoo.tools import float_compare
 
 
 class StockMove(models.Model):
@@ -55,9 +56,13 @@ class StockMove(models.Model):
 
     @api.constrains('quantity_done')
     def _check_quantity(self):
+        precision = self.env['decimal.precision'].precision_get(
+            'Product Unit of Measure')
         for rec in self.filtered(
-            lambda x: x.picking_id.picking_type_id
-            .block_additional_quantity and
-                x.product_uom_qty < x.quantity_done):
+            lambda
+            x: x.picking_id.picking_type_id.
+            block_additional_quantity and float_compare(
+                x.product_uom_qty, x.quantity_done,
+                precision_digits=precision) == -1):
             raise ValidationError(_(
                 'You can not transfer more than the initial demand!'))
