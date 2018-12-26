@@ -20,25 +20,26 @@ class StockPickingBatch(models.Model):
     ],
         'Type of Operation',
         # related='picking_type_id.code',
-        # readonly=True,
+        readonly=True,
         required=True,
         # el default sobre todo para que no necesitemos script de migracion
         default='incoming',
-        states={'done': [('readonly', True)], 'cancel': [('readonly', True)]},
+        states={'draft': [('readonly', False)]},
     )
     partner_id = fields.Many2one(
         'res.partner',
-        'Partner',
         # por ahora lo hacemos requerido porque si no tenemos que hacer algun
         # maneje en la vista para que si esta seteado pase dominio
         # y si no esta seteado no
-        required=True,
+        # required=True,
+        readonly=True,
         help='If you choose a partner then only pickings of this partner will'
         'be sellectable',
-        states={'done': [('readonly', True)], 'cancel': [('readonly', True)]}
+        states={'draft': [('readonly', False)]},
     )
     voucher_number = fields.Char(
-        states={'done': [('readonly', True)], 'cancel': [('readonly', True)]},
+        readonly=True,
+        states={'draft': [('readonly', False)]},
     )
     voucher_required = fields.Boolean(
         compute='_compute_picking_type_data',
@@ -48,6 +49,8 @@ class StockPickingBatch(models.Model):
     )
     number_of_packages = fields.Integer(
         copy=False,
+        readonly=True,
+        states={'draft': [('readonly', False)]},
     )
     picking_type_ids = fields.Many2many(
         'stock.picking.type',
@@ -138,7 +141,7 @@ class StockPickingBatch(models.Model):
             if rec.restrict_number_package and not rec.number_of_packages > 0:
                 raise UserError(_('The number of packages can not be 0'))
             if rec.number_of_packages:
-                rec.picking_ids.update({
+                rec.picking_ids.write({
                     'number_of_packages': rec.number_of_packages})
 
             if rec.picking_code == 'incoming' and rec.voucher_number:

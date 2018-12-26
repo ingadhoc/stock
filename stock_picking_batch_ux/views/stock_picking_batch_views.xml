@@ -45,7 +45,7 @@
             </button>
 
             <field name="name" position="after">
-                <button name="add_picking_operation" class="oe_inline oe_right" type="object" string="Process Operations" attrs="{'invisible': [('state', 'in', ['cancel', 'done'])]}"/>
+                <button name="add_picking_operation" class="oe_inline oe_right" type="object" string="Process Operations" attrs="{'invisible': [('state', 'in', ['draft','cancel', 'done'])]}"/>
             </field>
 
             <field name="user_id" position="before">
@@ -55,19 +55,22 @@
                 <!-- <field name="picking_type_id"/> -->
                 <!-- al final lo sacamos porque ya lo estamos usando para otros tipos -->
                 <!-- como por ahora solo lo usamos para entrada lo restringimos -->
-                <field name="partner_id" context="{'default_supplier': picking_code == 'incoming', 'default_customer': picking_code == 'outgoing'}" domain="picking_code == 'incoming' and ['|', ('parent_id.supplier', '=', True), ('supplier', '=', True)] or picking_code == 'outgoing' and ['|', ('parent_id.customer', '=', True), ('customer', '=', True)] or []"/>
+                <field name="partner_id" context="{'default_supplier': picking_code == 'incoming', 'default_customer': picking_code == 'outgoing'}" domain="picking_code == 'incoming' and ['|', ('parent_id.supplier', '=', True), ('supplier', '=', True)] or picking_code == 'outgoing' and ['|', ('parent_id.customer', '=', True), ('customer', '=', True)] or []" />
                 <field name="voucher_number" attrs="{'invisible': [('picking_code','!=','incoming')], 'required': [('voucher_required','=',True)]}"/>
-                <field name="number_of_packages"/>
+                <field name="number_of_packages" />
             </field>
-
+            <field name="user_id" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', '!=', 'draft')]}</attribute>
+            </field>
             <field name="picking_ids" position="attributes">
                 <attribute name="context">{'show_print_button': 1}</attribute>
                 <attribute name="domain">[('partner_id', '=', partner_id), ('picking_type_id.code', '=', picking_code), ('state', 'in', ('confirmed', 'partially_available', 'assigned'))]</attribute>
+                <attribute name="attrs">{'readonly': [('state', '!=', 'draft')]}</attribute>
             </field>
             <field name="picking_ids" position="after">
-                <div attrs="{'invisible': [('state', '!=','done')]}">
+                <div attrs="{'invisible': [('state', 'in',['draft','cancel'])]}">
                     <separator string="Operations Pickings"/>
-                    <field name="move_line_ids"/>
+                    <field name="move_line_ids" context="{'tree_view_ref': 'stock_picking_batch_ux.view_move_line_tree2'}"/>
                 </div>
             </field>
         </field>
