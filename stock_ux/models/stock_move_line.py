@@ -4,6 +4,7 @@
 ##############################################################################
 from odoo import models, api, fields, _
 from odoo.exceptions import ValidationError
+from odoo.tools import float_is_zero
 
 
 class StockMoveLine(models.Model):
@@ -36,8 +37,14 @@ class StockMoveLine(models.Model):
 
     @api.multi
     def set_all_done(self):
+        precision = self.env['decimal.precision'].precision_get(
+            'Product Unit of Measure')
         for rec in self:
-            rec.qty_done = rec.move_id.product_uom_qty
+            rec.qty_done = rec.move_id.reserved_availability\
+                if not float_is_zero(
+                    rec.move_id.reserved_availability,
+                    precision_digits=precision) else\
+                rec.move_id.product_uom_qty
         if self._context.get('from_popup', False):
             return self[0].move_id.action_show_details()
 
