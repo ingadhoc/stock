@@ -42,7 +42,6 @@ class StockMove(models.Model):
         for rec in self:
             rec.quantity_done = rec.product_uom_qty
 
-    @api.model
     def _prepare_account_move_line(
             self, qty, cost, credit_account_id, debit_account_id):
         if self.product_id.currency_id != self.company_id.currency_id:
