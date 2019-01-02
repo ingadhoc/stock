@@ -5,12 +5,12 @@
 from odoo import models, fields
 
 
-class StockPackOperation(models.Model):
+class StockMoveLine(models.Model):
 
-    _inherit = 'stock.pack.operation'
+    _inherit = 'stock.move.line'
 
     origin = fields.Char(
-        related='picking_id.origin',
+        related='move_id.picking_id.origin',
         readonly=True,
         # we store so we can group
         store=True,
