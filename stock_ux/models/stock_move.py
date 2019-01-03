@@ -4,7 +4,7 @@
 ##############################################################################
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
-from odoo.tools import float_compare
+from odoo.tools import float_compare, float_is_zero
 
 
 class StockMove(models.Model):
@@ -39,8 +39,14 @@ class StockMove(models.Model):
 
     @api.multi
     def set_all_done(self):
+        precision = self.env['decimal.precision'].precision_get(
+            'Product Unit of Measure')
         for rec in self:
-            rec.quantity_done = rec.product_uom_qty
+            rec.quantity_done = rec.reserved_availability\
+                if not float_is_zero(
+                    rec.reserved_availability,
+                    precision_digits=precision) else\
+                rec.product_uom_qty
 
     def _prepare_account_move_line(
             self, qty, cost, credit_account_id, debit_account_id):
