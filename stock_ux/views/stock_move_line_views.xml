@@ -34,8 +34,8 @@
                 <filter string="Product" name="product_id" context="{'group_by':'product_id'}"/>
                 <filter string="Picking" name="picking"  context="{'group_by':'picking_id'}"/>
                 <!-- Si queremos agregar group by estos campos habria que hacerlos store o hacer una vista sql -->
-                <!-- <filter string="Picking Type" name="picking_type"  context="{'group_by':'picking_type_id'}"/>
-                <filter string="Picking Partner" name="picking_partner_id"  context="{'group_by':'picking_partner_id'}"/> -->
+                <filter string="Picking Type" name="picking_type"  context="{'group_by':'picking_type_id'}"/>
+                <!-- <filter string="Picking Partner" name="picking_partner_id"  context="{'group_by':'picking_partner_id'}"/> -->
             </filter>
         </field>
     </record>
