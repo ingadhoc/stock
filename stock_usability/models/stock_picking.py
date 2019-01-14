@@ -89,6 +89,7 @@ class StockPicking(models.Model):
                 not_del_pickings.ids)
         return super(StockPicking, self).unlink()
 
+
 class StockReturnPicking(models.TransientModel):
     _inherit = 'stock.return.picking'
 
