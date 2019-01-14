@@ -31,11 +31,13 @@ class StockQuant(models.Model):
             self, move, qty, cost, credit_account_id, debit_account_id):
         if move.product_id.currency_id != move.company_id.currency_id:
             if move.product_id.cost_method == 'average':
-                valuation_amount = cost if move.location_id.usage != 'internal'\
+                valuation_amount = cost if move.location_id.usage\
+                    != 'internal'\
                     and move.location_dest_id.usage == 'internal'\
                     else move.product_id.standard_price
             else:
-                valuation_amount = cost if move.product_id.cost_method == 'real'\
+                valuation_amount = cost\
+                    if move.product_id.cost_method == 'real'\
                     else move.product_id.standard_price
             self = self.with_context(
                 force_valuation_amount=move.product_id.currency_id.compute(
