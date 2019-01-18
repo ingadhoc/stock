@@ -48,17 +48,6 @@ class StockMove(models.Model):
                     precision_digits=precision) else\
                 rec.product_uom_qty
 
-    def _prepare_account_move_line(
-            self, qty, cost, credit_account_id, debit_account_id):
-        if self.product_id.currency_id != self.company_id.currency_id:
-            self = self.with_context(
-                force_valuation_amount=self.product_id.currency_id.compute(
-                    cost, self.company_id.currency_id, round=True))
-        return super(
-            StockMove, self)._prepare_account_move_line(
-            qty=qty, cost=cost, credit_account_id=credit_account_id,
-            debit_account_id=debit_account_id)
-
     @api.constrains('quantity_done')
     def _check_quantity(self):
         precision = self.env['decimal.precision'].precision_get(
