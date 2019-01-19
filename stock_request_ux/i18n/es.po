@@ -1,0 +1,71 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * stock_request_ux
+# 
+# Translators:
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-01-10 19:46+0000\n"
+"PO-Revision-Date: 2019-01-10 12:32+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019\n"
+"Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: stock_request_ux
+#: model:ir.model.fields,field_description:stock_request_ux.field_stock_request_order_route_id
+#: model:ir.model.fields,field_description:stock_request_ux.field_stock_request_order_route_ids
+msgid "Route"
+msgstr "Ruta"
+
+#. module: stock_request_ux
+#: model:ir.model,name:stock_request_ux.model_stock_request
+msgid "Stock Request"
+msgstr "Solicitud de existencias"
+
+#. module: stock_request_ux
+#: model:ir.model,name:stock_request_ux.model_stock_request_order
+msgid "Stock Request Order"
+msgstr "Pedido de existencias"
+
+#. module: stock_request_ux
+#: model:ir.model,name:stock_request_ux.model_stock_request_abstract
+msgid "Stock Request Template"
+msgstr "Plantilla de solicitud de existencias"
+
+#. module: stock_request_ux
+#: code:addons/stock_request_ux/models/stock_request.py:76
+#, python-format
+msgid ""
+"You can not repeat product on procurement group!\n"
+"* Product: %s\n"
+"* Procurement Group: %s"
+msgstr ""
+"No puede repetir el producto en un grupo de abastecimiento!\n"
+"* Producto: %s\n"
+"* Grupo de abastecimiento: %s"
+
+#. module: stock_request_ux
+#: code:addons/stock_request_ux/models/stock_request_abstract.py:28
+#, python-format
+msgid "You have entered a location that is assigned to another company."
+msgstr "Ha ingresado una ubicación asignada a otra compañía."
+
+#. module: stock_request_ux
+#: code:addons/stock_request_ux/models/stock_request_abstract.py:37
+#, python-format
+msgid "You have entered a route that is assigned to another company."
+msgstr "Ha introducido una ruta que está asignada a otra compañía."
+
+#. module: stock_request_ux
+#: code:addons/stock_request_ux/models/stock_request_abstract.py:32
+#, python-format
+msgid "You have entered a warehouse that is assigned to another company."
+msgstr "Ha introducido un almacén que está asignada a otra compañía."

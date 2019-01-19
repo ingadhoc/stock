@@ -3,14 +3,15 @@
 # * stock_picking_control
 # 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-09-04 16:06+0000\n"
 "PO-Revision-Date: 2018-09-04 16:06+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,7 +22,7 @@ msgstr ""
 #. module: stock_picking_control
 #: model:ir.model.fields,field_description:stock_picking_control.field_stock_picking_type_block_picking_deletion
 msgid "Block Picking Deletion"
-msgstr ""
+msgstr "Bloquear borrado de Transferencias"
 
 #. module: stock_picking_control
 #: model:ir.model.fields,field_description:stock_picking_control.field_stock_move_line_block_additional_quantiy
@@ -33,7 +34,7 @@ msgstr "Bloquear cantidad adicional"
 #. module: stock_picking_control
 #: model:ir.model.fields,help:stock_picking_control.field_stock_picking_type_block_picking_deletion
 msgid "Do not allow to remove pickings"
-msgstr ""
+msgstr "No permitir borrado de transferencias"
 
 #. module: stock_picking_control
 #: model:ir.model,name:stock_picking_control.model_stock_move_line
@@ -55,7 +56,7 @@ msgstr "Restringir cantidad adicional"
 #. module: stock_picking_control
 #: model:ir.ui.view,arch_db:stock_picking_control.view_picking_type_form
 msgid "Stock"
-msgstr ""
+msgstr "Stock"
 
 #. module: stock_picking_control
 #: model:ir.model,name:stock_picking_control.model_stock_picking_type
@@ -74,6 +75,8 @@ msgid ""
 "You can not delete this pickings because \"Block picking deletion\" is enable on the picking type \"%s\".\n"
 "Picking Ids: %s"
 msgstr ""
+"No puede borrar esta transferencia porque \"Bloquear borrado de Transferencias\" está marcado en el tipo de operación \"%s\".\n"
+"Ids de Transferencias: %s"
 
 #. module: stock_picking_control
 #: code:addons/stock_picking_control/models/stock_move_line.py:24
