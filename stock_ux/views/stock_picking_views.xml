@@ -5,13 +5,14 @@
         <field name="inherit_id" ref="stock.view_picking_form"/>
         <field name="arch" type="xml">
             <button name="button_validate" position="after">
-                <button name="new_force_availability" string="Force Availability" attrs="{'invisible': ['|', ('state', 'not in', ('confirmed', 'waiting', 'assigned')), ('is_locked', '=', False)]}" groups="base.group_no_one" type="object"/>
+                <field name="block_manual_lines" invisible="1"/>
+                <button name="new_force_availability" string="Force Availability" attrs="{'invisible': ['|', '|', ('block_manual_lines', '=', True), ('state', 'not in', ('confirmed', 'waiting', 'assigned')), ('is_locked', '=', False)]}" type="object"/>
             </button>
             <field name="partner_id" position="attributes">
                 <attribute name="attrs"></attribute>
             </field>
             <field name="name" position="after">
-                <button name="add_picking_operation"  class="oe_inline oe_right" type="object" string="Process Products" attrs="{'invisible': [('state', 'not in', ['confirmed', 'assigned'])]}"/>
+                <button name="add_picking_operation" class="oe_inline oe_right" type="object" string="Process Products" attrs="{'invisible': [('state', 'not in', ['confirmed', 'assigned'])]}"/>
             </field>
 
             <field name="product_uom" position="before">
