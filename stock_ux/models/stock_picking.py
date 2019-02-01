@@ -2,13 +2,18 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import models, api, _
+from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError, UserError
 
 
 class StockPicking(models.Model):
 
     _inherit = 'stock.picking'
+
+    block_manual_lines = fields.Boolean(
+        related='picking_type_id.block_manual_lines',
+        readonly=True,
+    )
 
     @api.multi
     def unlink(self):
