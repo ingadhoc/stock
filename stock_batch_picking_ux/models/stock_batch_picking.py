@@ -81,6 +81,13 @@ class StockBatchPicking(models.Model):
     def _inverse_move_line_ids(self):
         pass
 
+    # overwrite this because we need only takes the moves with are not cancel
+    @api.depends('picking_ids')
+    def _compute_move_lines(self):
+        for batch in self:
+            batch.move_lines = batch.picking_ids.mapped(
+                "move_lines").filtered(lambda x: x.state != 'cancel')
+
     @api.depends('picking_ids')
     def _compute_picking_type_data(self):
         for rec in self:
@@ -91,9 +98,8 @@ class StockBatchPicking(models.Model):
             # exigir desde picking type
             # solo es requerido para outgoings
             if rec.picking_code == 'outgoing':
-                companies = rec.picking_ids.mapped('company_id')
                 rec.restrict_number_package = any(
-                    x.restrict_number_package for x in companies)
+                    x.restrict_number_package for x in rec.picking_ids)
     # TODO deberiamos ver como hacer para aceptar multiples numeros de remitos
     # si llega a ser necesario
     # voucher_ids = fields.One2many(
