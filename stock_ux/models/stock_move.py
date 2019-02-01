@@ -4,6 +4,7 @@
 ##############################################################################
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
+from odoo.tools import float_compare, float_is_zero
 
 
 class StockMove(models.Model):
@@ -38,26 +39,24 @@ class StockMove(models.Model):
 
     @api.multi
     def set_all_done(self):
+        precision = self.env['decimal.precision'].precision_get(
+            'Product Unit of Measure')
         for rec in self:
-            rec.quantity_done = rec.product_uom_qty
-
-    @api.model
-    def _prepare_account_move_line(
-            self, qty, cost, credit_account_id, debit_account_id):
-        if self.product_id.currency_id != self.company_id.currency_id:
-            self = self.with_context(
-                force_valuation_amount=self.product_id.currency_id.compute(
-                    cost, self.company_id.currency_id, round=True))
-        return super(
-            StockMove, self)._prepare_account_move_line(
-            qty=qty, cost=cost, credit_account_id=credit_account_id,
-            debit_account_id=debit_account_id)
+            rec.quantity_done = rec.reserved_availability\
+                if not float_is_zero(
+                    rec.reserved_availability,
+                    precision_digits=precision) else\
+                rec.product_uom_qty
 
     @api.constrains('quantity_done')
     def _check_quantity(self):
+        precision = self.env['decimal.precision'].precision_get(
+            'Product Unit of Measure')
         for rec in self.filtered(
-            lambda x: x.picking_id.picking_type_id
-            .block_additional_quantity and
-                x.product_uom_qty < x.quantity_done):
+            lambda
+            x: x.picking_id.picking_type_id.
+            block_additional_quantity and float_compare(
+                x.product_uom_qty, x.quantity_done,
+                precision_digits=precision) == -1):
             raise ValidationError(_(
                 'You can not transfer more than the initial demand!'))

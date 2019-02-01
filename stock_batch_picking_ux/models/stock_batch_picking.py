@@ -41,17 +41,15 @@ class StockBatchPicking(models.Model):
     # )
     partner_id = fields.Many2one(
         'res.partner',
-        'Partner',
         # por ahora lo hacemos requerido porque si no tenemos que hacer algun
         # maneje en la vista para que si esta seteado pase dominio
         # y si no esta seteado no
-        required=True,
+        # required=True,
         help='If you choose a partner then only pickings of this partner will'
         'be sellectable',
         states={'done': [('readonly', True)], 'cancel': [('readonly', True)]}
     )
     voucher_number = fields.Char(
-        string='Voucher Number',
         states={'done': [('readonly', True)], 'cancel': [('readonly', True)]},
     )
     voucher_required = fields.Boolean(
@@ -62,7 +60,6 @@ class StockBatchPicking(models.Model):
         compute='_compute_picking_type_data',
     )
     number_of_packages = fields.Integer(
-        string='Number of Packages',
         copy=False,
     )
     picking_type_ids = fields.Many2many(
@@ -74,8 +71,16 @@ class StockBatchPicking(models.Model):
         related='picking_ids.vouchers',
         readonly=True,
     )
+    # do this because if not allow to set the qty_done value in sml in
+    #  the tree view
+    move_line_ids = fields.One2many(
+        'stock.move.line',
+        inverse='_inverse_move_line_ids'
+    )
 
-    @api.multi
+    def _inverse_move_line_ids(self):
+        pass
+
     @api.depends('picking_ids')
     def _compute_picking_type_data(self):
         for rec in self:
@@ -113,7 +118,6 @@ class StockBatchPicking(models.Model):
         # if we change type or partner reset pickings
         self.picking_ids = False
 
-    @api.multi
     # @api.constrains('voucher_number', 'picking_type_id')
     @api.onchange('voucher_number', 'picking_ids')
     @api.constrains('voucher_number', 'picking_ids')
@@ -132,16 +136,15 @@ class StockBatchPicking(models.Model):
     @api.multi
     def add_picking_operation(self):
         self.ensure_one()
-        view_id = self.env['ir.model.data'].xmlid_to_res_id(
-            'stock_usability.view_stock_pack_operation_tree')
-        search_view_id = self.env['ir.model.data'].xmlid_to_res_id(
-            'stock_usability.view_pack_operation_search')
+        view_id = self.env.ref('stock_ux.view_move_line_tree').id
+        search_view_id = self.env.ref(
+            'stock_ux.stock_move_line_view_search').id
         return {
             "type": "ir.actions.act_window",
-            "res_model": "stock.pack.operation",
+            "res_model": "stock.move.line",
             "search_view_id": search_view_id,
             "views": [[view_id, "tree"], [False, "form"]],
-            "domain": [["id", "in", self.mapped('pack_operation_ids').ids]],
+            "domain": [["id", "in", self.move_line_ids.ids]],
             "context": {"create": False, "from_batch": True},
         }
 
@@ -152,7 +155,7 @@ class StockBatchPicking(models.Model):
             # al agregar la restriccion de que al menos una tenga que tener
             # cantidad entonces nunca se manda el force_qty al picking
             if all(operation.qty_done == 0
-                    for operation in rec.pack_operation_ids):
+                    for operation in rec.move_line_ids):
                 raise UserError(_(
                     'Debe definir Cantidad Realizada en al menos una '
                     'operación.'))
@@ -170,7 +173,7 @@ class StockBatchPicking(models.Model):
                     # y ademas, por lo de arriba, no se fuerza la cantidad
                     # si son todos cero, se terminan sacando
                     if all(operation.qty_done == 0
-                            for operation in picking.pack_operation_ids):
+                            for operation in picking.move_line_ids):
                         continue
                     rec.env['stock.picking.voucher'].create({
                         'picking_id': picking.id,

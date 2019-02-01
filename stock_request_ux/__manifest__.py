@@ -18,8 +18,8 @@
 #
 ##############################################################################
 {
-    'name': 'Stock Usability with Batch Picking and stock vouchers',
-    'version': '9.0.1.8.0',
+    'name': 'Stock Request UX',
+    'version': '11.0.1.6.0',
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
@@ -29,19 +29,14 @@
     'images': [
     ],
     'depends': [
-        'stock_usability',
-        'stock_voucher',
-        'stock_batch_picking',
+        'stock_request',
     ],
     'data': [
-        'views/stock_batch_picking_view.xml',
-        'views/stock_pack_operation_view.xml',
-        'views/stock_picking_view.xml',
-        'report/batch_picking_list_data.xml',
+        'views/stock_request_order_views.xml',
     ],
     'demo': [
     ],
-    'installable': False,
-    'auto_install': True,
+    'installable': True,
+    'auto_install': False,
     'application': False,
 }

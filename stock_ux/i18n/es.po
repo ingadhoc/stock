@@ -3,14 +3,15 @@
 # * stock_ux
 # 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-22 23:35+0000\n"
-"PO-Revision-Date: 2018-10-22 23:35+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018\n"
+"POT-Creation-Date: 2019-01-10 19:46+0000\n"
+"PO-Revision-Date: 2018-08-23 20:45+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -26,17 +27,17 @@ msgstr "Allow picking cancellation"
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_picking_type_block_picking_deletion
 msgid "Block Picking Deletion"
-msgstr ""
+msgstr "Bloquear borrado de Transferencias"
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_picking_type_block_additional_quantity
 msgid "Block additional quantity"
-msgstr ""
+msgstr "Bloquear cantidades adicionales"
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_picking_type_block_manual_lines
 msgid "Block force availability"
-msgstr ""
+msgstr "Bloquear forzar disponibilidad"
 
 #. module: stock_ux
 #: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint_rotation
@@ -100,22 +101,29 @@ msgid ""
 "Do not allow to confirm pickings with more quantity than the initial demand "
 "and also block pickings duplication"
 msgstr ""
+"No permitir confirmar transferencias con más cantidad que la demanda inicial"
+" y tampoco dejar duplicar transferencias"
 
 #. module: stock_ux
 #: model:ir.model.fields,help:stock_ux.field_stock_picking_type_block_manual_lines
 msgid ""
-"Do not allow to confirm pickings with more quantity than the reserved one"
+"Do not allow to confirm pickings with more quantity than the reserved one. "
+"This will only apply for moves where origin location is not of type "
+"'supplier', 'customer', 'inventory', 'production'"
 msgstr ""
+"No permitir confirmar transferencias con mas cantidad que la reservada. Esto"
+" solo va a aplicar para movimientos donde la ubicación de origen no es del "
+"tip 'proveedor', 'cliente', 'inventario', 'producción'"
 
 #. module: stock_ux
 #: model:ir.model.fields,help:stock_ux.field_stock_picking_type_block_picking_deletion
 msgid "Do not allow to remove pickings"
-msgstr ""
+msgstr "No permitir borrado de transferencias (pickings)"
 
 #. module: stock_ux
 #: model:ir.ui.view,arch_db:stock_ux.view_picking_form
 msgid "Force Availability"
-msgstr ""
+msgstr "Forzar Disponibilidad"
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_operation_wizard_id
@@ -175,7 +183,7 @@ msgstr "Net Quantity"
 #. module: stock_ux
 #: model:ir.ui.view,arch_db:stock_ux.stock_move_line_view_search
 msgid "Net Quantity Location"
-msgstr ""
+msgstr "Cantidad neta en ubicación"
 
 #. module: stock_ux
 #: code:addons/stock_ux/models/stock_picking.py:85
@@ -190,12 +198,18 @@ msgstr ""
 "refrezcar la ventana!"
 
 #. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_move_line_picking_type_id
+msgid "Operation Type"
+msgstr "Tipo de Operación"
+
+#. module: stock_ux
 #: model:ir.model,name:stock_ux.model_stock_move_line
 msgid "Packing Operation"
 msgstr "Operación de empaquetado"
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_operation_wizard_picking_id
+#: model:ir.ui.view,arch_db:stock_ux.stock_move_line_view_search
 msgid "Picking"
 msgstr "Picking"
 
@@ -211,6 +225,7 @@ msgid "Picking Partner"
 msgstr "Picking Partner"
 
 #. module: stock_ux
+#: model:ir.ui.view,arch_db:stock_ux.stock_move_line_view_search
 #: model:ir.ui.view,arch_db:stock_ux.view_move_search
 msgid "Picking Type"
 msgstr "Picking Type"
@@ -218,7 +233,7 @@ msgstr "Picking Type"
 #. module: stock_ux
 #: model:ir.actions.report,name:stock_ux.picking_waybill
 msgid "Picking Waybill"
-msgstr ""
+msgstr "Hoja de ruta"
 
 #. module: stock_ux
 #: model:ir.ui.view,arch_db:stock_ux.view_picking_form
@@ -288,7 +303,7 @@ msgstr "Ubicación de origen"
 #. module: stock_ux
 #: model:ir.ui.view,arch_db:stock_ux.view_picking_type_form
 msgid "Stock"
-msgstr ""
+msgstr "Stock"
 
 #. module: stock_ux
 #: model:ir.model,name:stock_ux.model_stock_move
@@ -347,6 +362,8 @@ msgid ""
 "You can not delete this pickings because \"Block picking deletion\" is enable on the picking type \"%s\" or the state of the picking is not draft or cancel.\n"
 "Picking Ids: %s"
 msgstr ""
+"No puede borrar esta transferencia porque \"Bloquear borrado de transferencias\" está establecido en el tipo de operación \"%s\" o el estado de la transferencia no es borrador o cancelada.\n"
+"Ids de Transferencias: %s"
 
 #. module: stock_ux
 #: code:addons/stock_ux/models/stock_picking.py:38
@@ -355,18 +372,20 @@ msgid ""
 "You can not duplicate a Picking because \"Block Additional Quantity\" is "
 "enable on the picking type \"%s\""
 msgstr ""
+"No puede duplicar la transferencia porque \"Bloquear cantidades "
+"adicionales\" está marcado en el tipo de operación \"%s\""
 
 #. module: stock_ux
-#: code:addons/stock_ux/models/stock_move.py:62
+#: code:addons/stock_ux/models/stock_move.py:72
 #, python-format
 msgid "You can not transfer more than the initial demand!"
-msgstr ""
+msgstr "No puede transferir más de la demanda inicial!"
 
 #. module: stock_ux
-#: code:addons/stock_ux/models/stock_move_line.py:71
+#: code:addons/stock_ux/models/stock_move_line.py:84
 #, python-format
 msgid "You can't transfer more quantity than reserved one!"
-msgstr ""
+msgstr "No puede transferir más cantidad que la reservada!"
 
 #. module: stock_ux
 #: model:ir.model,name:stock_ux.model_res_config_settings

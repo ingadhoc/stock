@@ -18,8 +18,8 @@
 #
 ##############################################################################
 {
-    'name': 'Stock UX',
-    'version': '11.0.1.8.0',
+    'name': 'Stock Usability with Batch Picking and stock vouchers',
+    'version': '11.0.1.0.0',
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
@@ -29,30 +29,19 @@
     'images': [
     ],
     'depends': [
-        'sale_stock',
-        'report_aeroo',
+        'stock_ux',
         'stock_voucher',
+        'stock_batch_picking',
     ],
     'data': [
-        'security/stock_ux_security.xml',
-        'views/product_template_views.xml',
-        'views/product_product_views.xml',
-        'views/stock_picking_views.xml',
-        'views/stock_move_views.xml',
+        'views/stock_batch_picking_views.xml',
         'views/stock_move_line_views.xml',
-        'views/stock_warehouse_orderpoint_views.xml',
-        'views/procurement_group_views.xml',
-        'views/stock_move_views.xml',
-        'views/stock_backorder_confirmation_views.xml',
-        'views/stock_return_picking_views.xml',
-        'views/stock_picking_type_views.xml',
-        'wizards/stock_operation_wizard_views.xml',
-        'wizards/res_config_settings_views.xml',
-        'report/stock_ux_report.xml',
+        'views/stock_picking_views.xml',
+        'report/batch_picking_list_data.xml',
     ],
     'demo': [
     ],
     'installable': True,
-    'auto_install': False,
+    'auto_install': True,
     'application': False,
 }

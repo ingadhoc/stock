@@ -1,0 +1,49 @@
+<odoo>
+
+    <record id="stock_move_line_view_search" model="ir.ui.view">
+        <field name="name">stock.move.line.filter</field>
+        <field name="model">stock.move.line</field>
+        <field name="inherit_id" ref="stock_ux.stock_move_line_view_search"/>
+        <field name="arch" type="xml">
+            <!-- we only show origin if we came from a batch, on a picking you already have it on the picking -->
+            <field name="product_id" position="before">
+                <field name="origin" invisible="not context.get('from_batch')"/>
+            </field>
+            <filter name="product_id" position="before">
+                <filter name="origin" context="{'group_by':'origin'}" invisible="not context.get('from_batch')"/>
+            </filter>
+        </field>
+    </record>
+
+    <record id="view_move_line_tree" model="ir.ui.view">
+        <field name="name">stock.move.line.tree</field>
+        <field name="model">stock.move.line</field>
+        <field name="inherit_id" ref="stock_ux.view_move_line_tree"/>
+        <field name="arch" type="xml">
+            <!-- we only show origin if we came from a batch, on a picking you already have it on the picking -->
+            <field name="product_id" position="before">
+                <field name="origin" invisible="not context.get('from_batch')"/>
+            </field>
+            <field name="product_uom_qty_location" position="attributes">
+                <attribute name="invisible">context.get('from_batch')</attribute>
+            </field>
+            <field name="qty_done" position="before">
+                <field name="ordered_qty" readonly="1"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_move_line_tree2" model="ir.ui.view">
+        <field name="name">stock.move.line.tree</field>
+        <field name="model">stock.move.line</field>
+        <field name="mode">primary</field>
+        <field name="priority">50</field>
+        <field name="inherit_id" ref="view_move_line_tree"/>
+        <field name="arch" type="xml">
+            <field name="product_uom_qty_location" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+        </field>
+    </record>
+
+</odoo>

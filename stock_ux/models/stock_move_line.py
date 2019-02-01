@@ -4,6 +4,7 @@
 ##############################################################################
 from odoo import models, api, fields, _
 from odoo.exceptions import ValidationError
+from odoo.tools import float_is_zero
 
 
 class StockMoveLine(models.Model):
@@ -12,23 +13,27 @@ class StockMoveLine(models.Model):
 
     picking_create_user_id = fields.Many2one(
         'res.users',
-        related='move_id.picking_create_user_id',
+        # vamos a traves de picking para legar mas rapido y no pasar por move
+        related='picking_id.create_uid',
         string="Picking Creator",
         readonly=True,
     )
-
     picking_partner_id = fields.Many2one(
         'res.partner',
         'Transfer Destination Address',
-        related='move_id.picking_partner_id',
+        # vamos a traves de picking para legar mas rapido y no pasar por move
+        related='picking_id.partner_id',
         readonly=True,
     )
-
     picking_code = fields.Selection(
-        related='move_id.picking_code',
+        related='picking_type_id.code',
         readonly=True,
     )
-
+    picking_type_id = fields.Many2one(
+        related='picking_id.picking_type_id',
+        readonly=True,
+        store=True,
+    )
     product_uom_qty_location = fields.Float(
         compute='_compute_product_uom_qty_location',
         string='Net Quantity',
@@ -36,8 +41,14 @@ class StockMoveLine(models.Model):
 
     @api.multi
     def set_all_done(self):
+        precision = self.env['decimal.precision'].precision_get(
+            'Product Unit of Measure')
         for rec in self:
-            rec.qty_done = rec.move_id.product_uom_qty
+            rec.qty_done = rec.move_id.reserved_availability\
+                if not float_is_zero(
+                    rec.move_id.reserved_availability,
+                    precision_digits=precision) else\
+                rec.move_id.product_uom_qty
         if self._context.get('from_popup', False):
             return self[0].move_id.action_show_details()
 
