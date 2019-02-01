@@ -68,8 +68,7 @@ class StockPickingVoucher(models.Model):
             ('picking_id.partner_id', '=',
                 self.picking_id.partner_id.id),
             ('name', '=', self.name),
-            ('id', '!=', self.id),
-        ])
+        ]) - self
         if same_number_recs:
             raise ValidationError(_(
                 'Picking voucher number must be unique per '
