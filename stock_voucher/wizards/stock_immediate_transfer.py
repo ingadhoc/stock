@@ -26,7 +26,10 @@ class StockImmediateTransfer(models.TransientModel):
             # self._context.get('active_id'))
             # TODO we should also fix odoo methods
             self._context.get('picking_id'))
-        if picking.book_required:
+        # solo viene con vouchers en entrega total, sin backorder
+        # si hay backorder se termina imprimiendo desde el backorder
+        # confirmation
+        if picking.book_required and picking.voucher_ids:
             return {
                 'actions': [
                     res,
