@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Stock Picking EAN128 Report',
-    'version': '11.0.1.0.0',
+    'version': '11.0.1.1.0',
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
@@ -32,6 +32,7 @@
         'stock_ean128',
         'product_expiry',
         'report_aeroo',
+        'web_ir_actions_act_multi',
     ],
     'data': [
         'wizards/stock_lot_print_ean128_report_views.xml',
