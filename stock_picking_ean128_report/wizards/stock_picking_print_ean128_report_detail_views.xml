@@ -20,9 +20,9 @@
         <field name="model">stock.picking.print_ean128_report_detail</field>
         <field name="arch" type="xml">
             <tree string="Print Stock Picking Remit" editable="top" create="0">
-                <field name="product_id"/>
-                <field name="product_uom_id"/>
-                <field name="lot_id"/>
+                <field name="product_id" force_save="1"/>
+                <field name="product_uom_id" force_save="1"/>
+                <field name="lot_id" force_save="1"/>
                 <field name="quantity"/>
             </tree>
         </field>
