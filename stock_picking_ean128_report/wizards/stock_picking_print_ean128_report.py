@@ -36,13 +36,27 @@ class StockPickingEan128Report(models.TransientModel):
     @api.multi
     def do_print_report(self):
         self.ensure_one()
-        return self.env['ir.actions.report'].search(
+        action = self.env['ir.actions.report'].search(
             [('report_name', '=', 'report_stock_picking_EAN128')],
             limit=1).report_action(self)
+        return {
+            'actions': [
+                {'type': 'ir.actions.act_window_close'},
+                action,
+            ],
+            'type': 'ir.actions.act_multi',
+        }
 
     @api.multi
     def do_print_report_excel(self):
         self.ensure_one()
-        return self.env['ir.actions.report'].search(
+        action = self.env['ir.actions.report'].search(
             [('report_name', '=', 'report_stock_picking_EAN128_excel')],
             limit=1).report_action(self)
+        return {
+            'actions': [
+                {'type': 'ir.actions.act_window_close'},
+                action,
+            ],
+            'type': 'ir.actions.act_multi',
+        }

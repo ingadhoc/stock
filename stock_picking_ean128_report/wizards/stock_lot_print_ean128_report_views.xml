@@ -8,7 +8,7 @@
         <field name="arch" type="xml">
             <form string="Print Stock Lot Remit">
                 <group>
-                    <field name="product_id"/>
+                    <field name="product_id" force_save="1"/>
                     <field name="quantity"/>
                 </group>
 
