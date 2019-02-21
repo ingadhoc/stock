@@ -20,6 +20,8 @@ Several improvements to Stock Request:
 #. Gracias a lo anterior, si cancelamos un request order se cancelan todos los pickings vinculados
 #. Agregamos ruta en request order que se lleva por defecto a los request, al cambiar la ruta tambien te las cambia en los request.
 #. Al crear los procurements order creamos el procurement group, propagamos que al crearse los requests tambien se lleve ese mismo group.
+#. Upon duplication of request order, duplicate lines
+#. Order requests from last to first created
 
 Installation
 ============

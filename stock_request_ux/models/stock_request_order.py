@@ -8,7 +8,11 @@ from odoo import api, fields, models
 
 class StockRequestOrder(models.Model):
     _inherit = 'stock.request.order'
+    _order = 'id desc'
 
+    stock_request_ids = fields.One2many(
+        copy=True,
+    )
     route_id = fields.Many2one(
         'stock.location.route',
     )
