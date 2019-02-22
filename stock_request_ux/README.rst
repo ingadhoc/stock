@@ -22,6 +22,7 @@ Several improvements to Stock Request:
 #. Al crear los procurements order creamos el procurement group, propagamos que al crearse los requests tambien se lleve ese mismo group.
 #. Upon duplication of request order, duplicate lines
 #. Order requests from last to first created
+#. Automatically reserve the picking from stock when a request is confirmed
 
 Installation
 ============

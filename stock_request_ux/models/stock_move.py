@@ -3,8 +3,7 @@
 # directory
 ##############################################################################
 
-from odoo import api, fields, models, _
-from odoo.exceptions import ValidationError
+from odoo import models
 
 
 class StockMove(models.Model):
