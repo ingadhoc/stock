@@ -53,7 +53,7 @@ class StockRequest(models.Model):
         # ahora sobre escribimos y llamamos a nuestro cancel que propaga
         # deberiamos ver de hacer monkey patch mejor para que sea
         # heredable por otros modulos
-        self.sudo().mapped('move_ids').cancel_move()
+        self.sudo().mapped('move_ids')._cancel_quantity()
         self.state = 'cancel'
         return True
 
