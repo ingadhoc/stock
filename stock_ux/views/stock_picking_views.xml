@@ -31,6 +31,12 @@
                 <label for="note"/>
                 <field name="note"/>
             </field>
+
+            <!-- for compatibility with web_m2x_options we force allowing create lots -->
+            <field name="lot_id" position="attributes">
+                <attribute name="options">{'create':True, 'create_edit':True}</attribute>
+            </field>
+
         </field>
     </record>
 

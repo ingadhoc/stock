@@ -35,6 +35,7 @@ Several improvements to stock:
 #. Remove the group Tecnical Features to the seccion "Locations" in "stock move" form view from the picking view.
 #. Fix in the calculation cost of the merchandise sold when the currency of the product is different from the currency of the company.
 #. Add a stock picking list report to stock pickings.
+#. Add compatibility with web_m2x_options by allowing to create lots on m2o fields
 #. Add optional constraints configurable by Picking Type:
 
 * Block Picking Edit: Restrict to add lines or to send more quantity than the original quantity. This will only apply to users with group Restrict Edit Blocked Pickings.
