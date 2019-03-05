@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-01 02:35+0000\n"
+"POT-Creation-Date: 2019-03-04 15:15+0000\n"
 "PO-Revision-Date: 2018-08-23 20:45+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
@@ -123,6 +123,15 @@ msgid "Do not allow to remove pickings"
 msgstr "No permitir borrado de transferencias (pickings)"
 
 #. module: stock_ux
+#: code:addons/stock_ux/models/stock_move.py:93
+#, python-format
+msgid ""
+"Error de programaciÃ³n. Se llamÃ³ a cancel quantity para movimientos de distintos productos y/o pickings.\n"
+"* Id de Movimientos: %s\n"
+"* Productos: %s"
+msgstr ""
+
+#. module: stock_ux
 #: model:ir.ui.view,arch_db:stock_ux.view_picking_form
 msgid "Force Availability"
 msgstr "Forzar Disponibilidad"
@@ -188,7 +197,19 @@ msgid "Net Quantity Location"
 msgstr "Cantidad neta en ubicación"
 
 #. module: stock_ux
-#: code:addons/stock_ux/models/stock_picking.py:90
+#: code:addons/stock_ux/models/stock_move.py:119
+#, python-format
+msgid ""
+"No hay suficiente cantidad disponible para cancelar.\n"
+"Probablemente deba finalizar primero los movimientos encandenados con disponibilidad.* Id de Movimientos: %s\n"
+"* Producto (id): %s (%s)\n"
+"* Pickings: %s\n"
+"* Cantidad a cancelar: %s\n"
+"* Cantidad disponible para cancelar: %s"
+msgstr ""
+
+#. module: stock_ux
+#: code:addons/stock_ux/models/stock_picking.py:91
 #, python-format
 msgid ""
 "No se puede validar un picking que no estÃ© en estado Parcialmente "
@@ -272,7 +293,6 @@ msgstr "Rotation"
 #: model:ir.ui.view,arch_db:stock_ux.view_move_line_form
 #: model:ir.ui.view,arch_db:stock_ux.view_move_line_tree
 #: model:ir.ui.view,arch_db:stock_ux.view_picking_form
-#: model:ir.ui.view,arch_db:stock_ux.view_stock_move_line_operation_tree
 msgid "Set all Done"
 msgstr "Set all Done"
 
@@ -358,7 +378,7 @@ msgid "With Quantity Done"
 msgstr "With Quantity Done"
 
 #. module: stock_ux
-#: code:addons/stock_ux/models/stock_picking.py:28
+#: code:addons/stock_ux/models/stock_picking.py:29
 #, python-format
 msgid ""
 "You can not delete this pickings because \"Block picking deletion\" is enable on the picking type \"%s\" or the state of the picking is not draft or cancel.\n"
@@ -368,7 +388,7 @@ msgstr ""
 "Ids de Transferencias: %s"
 
 #. module: stock_ux
-#: code:addons/stock_ux/models/stock_picking.py:43
+#: code:addons/stock_ux/models/stock_picking.py:44
 #, python-format
 msgid ""
 "You can not duplicate a Picking because \"Block Additional Quantity\" is "
@@ -378,7 +398,7 @@ msgstr ""
 "adicionales\" está marcado en el tipo de operación \"%s\""
 
 #. module: stock_ux
-#: code:addons/stock_ux/models/stock_move.py:61
+#: code:addons/stock_ux/models/stock_move.py:62
 #, python-format
 msgid "You can not transfer more than the initial demand!"
 msgstr "No puede transferir más de la demanda inicial!"
