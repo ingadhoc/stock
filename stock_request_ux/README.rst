@@ -23,6 +23,7 @@ Several improvements to Stock Request:
 #. Upon duplication of request order, duplicate lines
 #. Order requests from last to first created
 #. Automatically reserve the picking from stock when a request is confirmed
+#. Add to stock request field "order_id" ondelete=cascade to delete stock request when stock request order related are deleted.
 
 Installation
 ============
