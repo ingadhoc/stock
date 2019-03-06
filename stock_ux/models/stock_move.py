@@ -40,14 +40,9 @@ class StockMove(models.Model):
 
     @api.multi
     def set_all_done(self):
-        precision = self.env['decimal.precision'].precision_get(
-            'Product Unit of Measure')
-        for rec in self:
-            rec.quantity_done = rec.reserved_availability\
-                if not float_is_zero(
-                    rec.reserved_availability,
-                    precision_digits=precision) else\
-                rec.product_uom_qty
+        self.mapped('move_line_ids').set_all_done()
+        for rec in self.filtered(lambda x: not x.move_line_ids):
+            rec.quantity_done = rec.product_uom_qty
 
     @api.constrains('quantity_done')
     def _check_quantity(self):
