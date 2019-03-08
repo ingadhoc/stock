@@ -7,6 +7,7 @@ import datetime
 from odoo import api, fields, models
 from odoo.exceptions import UserError
 
+
 class ProductReplenish(models.TransientModel):
     """
     This is a backport from odoo v12, replaces the "request procurement"
