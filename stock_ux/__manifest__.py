@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Stock UX',
-    'version': '11.0.1.10.0',
+    'version': '11.0.1.11.0',
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
@@ -35,6 +35,7 @@
     ],
     'data': [
         'security/stock_ux_security.xml',
+        'wizards/product_replenish_views.xml',
         'views/product_template_views.xml',
         'views/product_product_views.xml',
         'views/stock_picking_views.xml',
