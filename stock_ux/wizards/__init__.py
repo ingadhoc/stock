@@ -3,4 +3,5 @@
 # directory
 ##############################################################################
 from . import stock_operation_wizard
+from . import product_replenish
 from . import res_config_settings
