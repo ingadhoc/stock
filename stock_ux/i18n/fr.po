@@ -3,14 +3,15 @@
 # * stock_ux
 # 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-21 17:48+0000\n"
-"PO-Revision-Date: 2018-09-21 17:48+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018\n"
+"POT-Creation-Date: 2019-03-08 13:21+0000\n"
+"PO-Revision-Date: 2018-08-23 20:45+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019\n"
 "Language-Team: French (https://www.transifex.com/adhoc/teams/46451/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -24,15 +25,26 @@ msgid "Allow picking cancellation"
 msgstr ""
 
 #. module: stock_ux
+#: model:ir.model.fields,help:stock_ux.field_product_replenish_route_ids
+msgid ""
+"Apply specific route(s) for the replenishment instead of product's default "
+"routes."
+msgstr ""
+
+#. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_picking_type_block_picking_deletion
 msgid "Block Picking Deletion"
 msgstr ""
 
 #. module: stock_ux
-#: model:ir.model.fields,field_description:stock_ux.field_stock_move_line_block_additional_quantiy
-#: model:ir.model.fields,field_description:stock_ux.field_stock_picking_block_additional_quantiy
-#: model:ir.model.fields,field_description:stock_ux.field_stock_picking_type_block_additional_quantiy
-msgid "Block additional quantiy"
+#: model:ir.model.fields,field_description:stock_ux.field_stock_picking_type_block_additional_quantity
+msgid "Block additional quantity"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_picking_block_manual_lines
+#: model:ir.model.fields,field_description:stock_ux.field_stock_picking_type_block_manual_lines
+msgid "Block force availability"
 msgstr ""
 
 #. module: stock_ux
@@ -50,6 +62,11 @@ msgid ""
 msgstr ""
 
 #. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_product_replenish_product_uom_category_id
+msgid "Category"
+msgstr ""
+
+#. module: stock_ux
 #: model:ir.actions.act_window,name:stock_ux.action_stock_operation_wizard
 #: model:ir.ui.view,arch_db:stock_ux.view_stock_operation_wizard_form
 msgid "Change Locations"
@@ -62,19 +79,34 @@ msgid "Change location must be called from operations of same picking!"
 msgstr ""
 
 #. module: stock_ux
+#: model:ir.ui.view,arch_db:stock_ux.view_product_replenish
 #: model:ir.ui.view,arch_db:stock_ux.view_stock_operation_wizard_form
 msgid "Confirm"
 msgstr ""
 
 #. module: stock_ux
+#: model:ir.model.fields,help:stock_ux.field_product_replenish_product_uom_category_id
+msgid ""
+"Conversion between Units of Measure can only occur if they belong to the "
+"same category. The conversion will be made based on the ratios."
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_product_replenish_create_uid
 #: model:ir.model.fields,field_description:stock_ux.field_stock_operation_wizard_create_uid
 msgid "Created by"
 msgstr "Créé par"
 
 #. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_product_replenish_create_date
 #: model:ir.model.fields,field_description:stock_ux.field_stock_operation_wizard_create_date
 msgid "Created on"
 msgstr "Créé le"
+
+#. module: stock_ux
+#: model:ir.model.fields,help:stock_ux.field_product_replenish_date_planned
+msgid "Date at which the replenishment should take place."
+msgstr ""
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_operation_wizard_location_dest_id
@@ -83,8 +115,30 @@ msgid "Destination Location"
 msgstr ""
 
 #. module: stock_ux
+#: model:ir.ui.view,arch_db:stock_ux.view_product_replenish
+msgid "Discard"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_product_replenish_display_name
 #: model:ir.model.fields,field_description:stock_ux.field_stock_operation_wizard_display_name
 msgid "Display Name"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,help:stock_ux.field_stock_picking_type_block_additional_quantity
+msgid ""
+"Do not allow to confirm pickings with more quantity than the initial demand "
+"and also block pickings duplication"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,help:stock_ux.field_stock_picking_block_manual_lines
+#: model:ir.model.fields,help:stock_ux.field_stock_picking_type_block_manual_lines
+msgid ""
+"Do not allow to confirm pickings with more quantity than the reserved one. "
+"This will only apply for moves where origin location is not of type "
+"'supplier', 'customer', 'inventory', 'production'"
 msgstr ""
 
 #. module: stock_ux
@@ -93,6 +147,26 @@ msgid "Do not allow to remove pickings"
 msgstr ""
 
 #. module: stock_ux
+#: code:addons/stock_ux/models/stock_move.py:88
+#, python-format
+msgid ""
+"Error de programaciÃ³n. Se llamÃ³ a cancel quantity para movimientos de distintos productos y/o pickings.\n"
+"* Id de Movimientos: %s\n"
+"* Productos: %s"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.ui.view,arch_db:stock_ux.view_picking_form
+msgid "Force Availability"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_product_replenish_product_has_variants
+msgid "Has variants"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_product_replenish_id
 #: model:ir.model.fields,field_description:stock_ux.field_stock_operation_wizard_id
 msgid "ID"
 msgstr "ID"
@@ -103,16 +177,19 @@ msgid "Internal"
 msgstr ""
 
 #. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_product_replenish___last_update
 #: model:ir.model.fields,field_description:stock_ux.field_stock_operation_wizard___last_update
 msgid "Last Modified on"
 msgstr ""
 
 #. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_product_replenish_write_uid
 #: model:ir.model.fields,field_description:stock_ux.field_stock_operation_wizard_write_uid
 msgid "Last Updated by"
 msgstr "Dernière màj par"
 
 #. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_product_replenish_write_date
 #: model:ir.model.fields,field_description:stock_ux.field_stock_operation_wizard_write_date
 msgid "Last Updated on"
 msgstr "Dernière màj le"
@@ -143,17 +220,39 @@ msgid "Minimum Inventory Rule"
 msgstr ""
 
 #. module: stock_ux
-#: model:ir.model.fields,field_description:stock_ux.field_stock_move_product_uom_qty_location
+#: model:ir.model.fields,field_description:stock_ux.field_stock_move_line_product_uom_qty_location
 msgid "Net Quantity"
 msgstr ""
 
 #. module: stock_ux
-#: code:addons/stock_ux/models/stock_picking.py:76
+#: model:ir.ui.view,arch_db:stock_ux.stock_move_line_view_search
+msgid "Net Quantity Location"
+msgstr ""
+
+#. module: stock_ux
+#: code:addons/stock_ux/models/stock_move.py:114
+#, python-format
+msgid ""
+"No hay suficiente cantidad disponible para cancelar.\n"
+"Probablemente deba finalizar primero los movimientos encandenados con disponibilidad.* Id de Movimientos: %s\n"
+"* Producto (id): %s (%s)\n"
+"* Pickings: %s\n"
+"* Cantidad a cancelar: %s\n"
+"* Cantidad disponible para cancelar: %s"
+msgstr ""
+
+#. module: stock_ux
+#: code:addons/stock_ux/models/stock_picking.py:91
 #, python-format
 msgid ""
 "No se puede validar un picking que no estÃ© en estado Parcialmente "
 "Disponible o Reservado, probablemente el picking ya fue validado, pruebe "
 "refrezcar la ventana!"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_move_line_picking_type_id
+msgid "Operation Type"
 msgstr ""
 
 #. module: stock_ux
@@ -163,6 +262,7 @@ msgstr ""
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_operation_wizard_picking_id
+#: model:ir.ui.view,arch_db:stock_ux.stock_move_line_view_search
 msgid "Picking"
 msgstr ""
 
@@ -178,6 +278,7 @@ msgid "Picking Partner"
 msgstr ""
 
 #. module: stock_ux
+#: model:ir.ui.view,arch_db:stock_ux.stock_move_line_view_search
 #: model:ir.ui.view,arch_db:stock_ux.view_move_search
 msgid "Picking Type"
 msgstr ""
@@ -188,15 +289,36 @@ msgid "Picking Waybill"
 msgstr ""
 
 #. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_product_replenish_route_ids
+msgid "Preferred Routes"
+msgstr ""
+
+#. module: stock_ux
 #: model:ir.ui.view,arch_db:stock_ux.view_picking_form
 msgid "Process Products"
 msgstr ""
 
 #. module: stock_ux
 #: model:ir.model,name:stock_ux.model_product_product
+#: model:ir.model.fields,field_description:stock_ux.field_product_replenish_product_id
 #: model:ir.ui.view,arch_db:stock_ux.stock_move_line_view_search
 msgid "Product"
 msgstr ""
+
+#. module: stock_ux
+#: model:ir.model,name:stock_ux.model_product_replenish
+msgid "Product Replenish"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_product_replenish_product_tmpl_id
+msgid "Product Tmpl"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_product_replenish_quantity
+msgid "Quantity"
+msgstr "Quantité"
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_return_picking_reason
@@ -204,15 +326,20 @@ msgid "Reason for the return"
 msgstr ""
 
 #. module: stock_ux
-#: model:res.groups,name:stock_ux.group_restrict_edit_picking
-msgid "Restrict Edit Blocked Pickings"
+#: model:ir.actions.act_window,name:stock_ux.action_product_replenish
+#: model:ir.ui.view,arch_db:stock_ux.product_product_view_form_easy_inherit_stock
+#: model:ir.ui.view,arch_db:stock_ux.product_template_form_view_procurement_button
+msgid "Replenish"
 msgstr ""
 
 #. module: stock_ux
-#: model:ir.model.fields,help:stock_ux.field_stock_move_line_block_additional_quantiy
-#: model:ir.model.fields,help:stock_ux.field_stock_picking_block_additional_quantiy
-#: model:ir.model.fields,help:stock_ux.field_stock_picking_type_block_additional_quantiy
-msgid "Restrict additional quantity"
+#: model:ir.ui.view,arch_db:stock_ux.view_product_replenish
+msgid "Replenish wizard"
+msgstr ""
+
+#. module: stock_ux
+#: model:res.groups,name:stock_ux.group_restrict_edit_picking
+msgid "Restrict Edit Blocked Pickings"
 msgstr ""
 
 #. module: stock_ux
@@ -226,10 +353,14 @@ msgid "Rotation"
 msgstr ""
 
 #. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_product_replenish_date_planned
+msgid "Scheduled Date"
+msgstr ""
+
+#. module: stock_ux
 #: model:ir.ui.view,arch_db:stock_ux.view_move_line_form
 #: model:ir.ui.view,arch_db:stock_ux.view_move_line_tree
 #: model:ir.ui.view,arch_db:stock_ux.view_picking_form
-#: model:ir.ui.view,arch_db:stock_ux.view_stock_move_line_operation_tree
 msgid "Set all Done"
 msgstr ""
 
@@ -275,7 +406,7 @@ msgid "The operation type determines the picking view"
 msgstr ""
 
 #. module: stock_ux
-#: model:ir.ui.view,arch_db:stock_ux.view_move_tree
+#: model:ir.ui.view,arch_db:stock_ux.view_move_line_tree2
 msgid "Total"
 msgstr ""
 
@@ -305,8 +436,26 @@ msgid "Unit of Measure"
 msgstr ""
 
 #. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_product_replenish_product_uom_id
+msgid "Unity of measure"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.ui.view,arch_db:stock_ux.view_product_replenish
+msgid ""
+"Use this assistant to replenish your stock.\n"
+"                Depending on your product configuration, launching a replenishment may trigger a request for quotation,\n"
+"                a manufacturing order or a transfer."
+msgstr ""
+
+#. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_move_used_lots
 msgid "Used Lots"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_product_replenish_warehouse_id
+msgid "Warehouse"
 msgstr ""
 
 #. module: stock_ux
@@ -315,7 +464,7 @@ msgid "With Quantity Done"
 msgstr ""
 
 #. module: stock_ux
-#: code:addons/stock_ux/models/stock_picking.py:28
+#: code:addons/stock_ux/models/stock_picking.py:29
 #, python-format
 msgid ""
 "You can not delete this pickings because \"Block picking deletion\" is enable on the picking type \"%s\" or the state of the picking is not draft or cancel.\n"
@@ -323,9 +472,23 @@ msgid ""
 msgstr ""
 
 #. module: stock_ux
-#: code:addons/stock_ux/models/stock_move_line.py:50
+#: code:addons/stock_ux/models/stock_picking.py:44
 #, python-format
-msgid "You can not transfer a product without a move on the picking!"
+msgid ""
+"You can not duplicate a Picking because \"Block Additional Quantity\" is "
+"enable on the picking type \"%s\""
+msgstr ""
+
+#. module: stock_ux
+#: code:addons/stock_ux/models/stock_move.py:57
+#, python-format
+msgid "You can not transfer more than the initial demand!"
+msgstr ""
+
+#. module: stock_ux
+#: code:addons/stock_ux/models/stock_move_line.py:84
+#, python-format
+msgid "You can't transfer more quantity than reserved one!"
 msgstr ""
 
 #. module: stock_ux
