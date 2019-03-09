@@ -19,6 +19,9 @@ class StockRequest(models.Model):
     procurement_group_id = fields.Many2one(
         copy=False,
     )
+    order_id = fields.Many2one(
+        ondelete='cascade',
+    )
 
     @api.onchange('product_id')
     def onchange_product_id(self):

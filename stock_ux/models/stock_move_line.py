@@ -44,10 +44,10 @@ class StockMoveLine(models.Model):
         precision = self.env['decimal.precision'].precision_get(
             'Product Unit of Measure')
         for rec in self:
-            rec.qty_done = rec.move_id.reserved_availability\
+            rec.qty_done = rec.product_uom_qty \
                 if not float_is_zero(
-                    rec.move_id.reserved_availability,
-                    precision_digits=precision) else\
+                    rec.product_uom_qty,
+                    precision_digits=precision) else \
                 rec.move_id.product_uom_qty
         if self._context.get('from_popup', False):
             return self[0].move_id.action_show_details()
