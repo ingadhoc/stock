@@ -37,6 +37,9 @@ class StockRequestOrder(models.Model):
     procurement_group_id = fields.Many2one(
         copy=False,
     )
+    warehouse_id = fields.Many2one(
+        change_default=True,
+    )
 
     @api.depends('procurement_group_id')
     def _compute_picking_ids(self):
