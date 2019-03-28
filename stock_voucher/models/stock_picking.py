@@ -159,6 +159,7 @@ class StockPicking(models.Model):
             picking_value = 0.0
             inmediate_transfer = True
             pricelist = False
+            stock_bom_lines = self.env['stock.move']
             for move_line in rec.move_lines.filtered(
                     lambda x: x.state != 'cancel'):
                 order_line = move_line.sale_line_id
@@ -166,6 +167,10 @@ class StockPicking(models.Model):
                     inmediate_transfer = False
                 if order_line:
                     pricelist = rec.sale_id.pricelist_id
+                    # this should happends only if on SO it's a bom kit
+                    if not order_line.product_id == move_line.product_id:
+                        stock_bom_lines |= move_line
+                        continue
                     so_product_qty = move_line.product_uom_qty
                     so_qty_done = move_line.quantity_done
                     # convert quantities if move line uom and sale line uom
@@ -191,6 +196,28 @@ class StockPicking(models.Model):
                         rec.picking_type_id.pricelist_id.id]
                     picking_value += (price * move_line.ordered_qty)
                     done_value += (price * move_line.quantity_done)
+
+            # This is for product in a kit (should only happen if sale_mrp ins
+            # installed). If it is bom we only compute amount if all bom
+            # components are deliverd (same as in bom _get_delivered_qty)
+            for so_bom_line in stock_bom_lines.mapped('sale_line_id'):
+                bom = self.env['mrp.bom']._bom_find(
+                    product=so_bom_line.product_id,
+                    company_id=so_bom_line.company_id.id)
+                if bom and bom.type == 'phantom':
+                    bom_moves = so_bom_line.move_ids & stock_bom_lines
+                    done_avg = []
+                    picking_avg = []
+                    for move in bom_moves:
+                        bom_quantity = bom.bom_line_ids.filtered(
+                            lambda x: x.product_id == move.product_id
+                        ).product_qty
+                        picking_avg.append((move.ordered_qty / bom_quantity))
+                        done_avg.append((move.quantity_done / bom_quantity))
+                    picking_value += so_bom_line.price_reduce * (
+                        sum(picking_avg) / len(picking_avg))
+                    done_value += so_bom_line.price_reduce * (
+                        sum(done_avg) / len(done_avg))
 
             declared_value = picking_value if inmediate_transfer\
                 else done_value

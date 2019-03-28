@@ -73,7 +73,9 @@ class ProductReplenish(models.TransientModel):
         self.quantity = self.product_uom_id._compute_quantity(
             self.quantity, uom_reference)
         try:
-            self.env['procurement.group'].run(
+            context = {k: v for k, v in self.env.context.items()
+                       if not k.startswith('default_')}
+            self.env['procurement.group'].with_context(context).run(
                 self.product_id,
                 self.quantity,
                 uom_reference,
