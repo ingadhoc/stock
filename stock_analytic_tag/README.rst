@@ -10,9 +10,9 @@
    :target: https://www.gnu.org/licenses/agpl
    :alt: License: AGPL-3
 
-====================
-Stock Analytic
-====================
+==================
+Stock Analytic Tag
+==================
 
 It adds Analytic Tags in stock moves.
 
