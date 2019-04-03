@@ -37,6 +37,9 @@ Several improvements to stock:
 #. Add a stock picking list report to stock pickings.
 #. Add compatibility with web_m2x_options by allowing to create lots on m2o fields
 #. Add wizard in products to allows the stock users to replenish a product using the routes applied to this product. A specific route can also be applied to bypass the default route.TODO remove in v12
+#. Remove tecnical features to Stock moves menu in inventory/reports.
+#. Add in products (template and variants) button to access to stock moves related.
+#. Change name to the menus Product Move and Product Move lines.
 #. Add optional constraints configurable by Picking Type:
 
 * Block Picking Edit: Restrict to add lines or to send more quantity than the original quantity. This will only apply to users with group Restrict Edit Blocked Pickings.

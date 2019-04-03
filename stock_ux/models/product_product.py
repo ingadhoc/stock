@@ -37,3 +37,14 @@ class ProductProduct(models.Model):
         rotation -= sum(self.env['stock.move'].search(
             base_domain_return).mapped('product_qty'))
         return rotation / 3.0
+
+    @api.multi
+    def action_view_stock_move(self):
+        self.ensure_one()
+        action = self.env.ref('stock.stock_move_action').read()[0]
+        action['domain'] = [('product_id', '=', self.id)]
+        action['context'] = {
+            'search_default_product_id': self.id,
+            'default_product_id': self.id,
+            }
+        return action

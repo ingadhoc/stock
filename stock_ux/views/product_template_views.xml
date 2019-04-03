@@ -25,6 +25,14 @@
             <button name="%(stock.action_view_change_product_quantity)d" position="after">
                 <button string="Replenish" type="action" name="%(action_product_replenish)d" context="{'default_product_tmpl_id': id}" groups="stock.group_stock_user" attrs="{'invisible': [('type', '!=', 'product')]}"/>
             </button>
+            <button name="action_view_stock_move_lines" position="attributes">
+                <attribute name="string">Products Moves Detailed</attribute>
+                <attribute name="help">They are only stock movements made or reserved, includes information of batches and storage locations.</attribute>
+            </button>
+            <button name="action_view_stock_move_lines" position="before">
+                <button string="Products Moves" type="object" name= "action_view_stock_move" attrs="{'invisible':[('type', 'not in', ['product', 'consu'])]}" class="oe_stat_button" icon="fa-arrows-v" groups="stock.group_stock_user" help="Are all stock movements without lot detail or save locations." context="{'search_default_future': 1,'search_default_picking_type': 1}"/>
+            </button>
+
         </field>
     </record>
 
