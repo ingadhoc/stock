@@ -69,7 +69,7 @@ class StockPicking(models.Model):
     @api.constrains('picking_type_id')
     @api.onchange('picking_type_id')
     def _get_book(self):
-        for rec in self:
+        for rec in self.filtered(lambda x: x.picking_type_id.book_id):
             rec.book_id = rec.picking_type_id.book_id.id
 
     @api.multi
