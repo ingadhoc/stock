@@ -84,7 +84,7 @@
                 <field name="product_uom_id" string="Unit of Measure" groups="product.group_uom" readonly="1"/>
                 <field name="lots_visible" invisible="1"/>
                 <field name="owner_id" readonly="1"/>
-                <field name="lot_id" attrs="{'readonly': [('in_entire_package', '=', True)]}" domain="[('product_id', '=', product_id)]" groups="stock.group_production_lot" context="{'default_product_id': product_id, 'active_picking_id': picking_id}"/>
+                <field name="lot_id" attrs="{'readonly': [('in_entire_package', '=', True)]}" domain="[('product_id', '=', product_id)]" groups="stock.group_production_lot" context="{'default_product_id': product_id, 'active_picking_id': picking_id}" options="{'create':True, 'create_edit':True}"/>
             </field>
             <field name="qty_done" position="after">
                 <button name="set_all_done" string="Set all Done" type="object" icon="fa-check" states="confirmed,assigned,waiting,partially_available"/>
@@ -99,6 +99,10 @@
         <field name="arch" type="xml">
             <field name="qty_done" position="after">
                 <button name="set_all_done" string="Set all Done" type="object" icon="fa-check" states="confirmed,assigned,waiting,partially_available" context="{'from_popup':True}"/>
+            </field>
+            <!-- for compatibility with web_m2x_options we force allowing create lots -->
+            <field name="lot_id" position="attributes">
+                <attribute name="options">{'create':True, 'create_edit':True}</attribute>
             </field>
         </field>
     </record>
