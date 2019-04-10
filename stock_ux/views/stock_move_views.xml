@@ -67,18 +67,6 @@
         </field>
     </record>
 
-    <!-- for compatibility with web_m2x_options we force allowing create lots -->
-    <record id="view_stock_move_line_operation_tree" model="ir.ui.view">
-        <field name="name">stock.move.line.tree</field>
-        <field name="model">stock.move.line</field>
-        <field name="inherit_id" ref="stock.view_stock_move_line_operation_tree"/>
-        <field name="arch" type="xml">
-            <field name="lot_id" position="attributes">
-                <attribute name="options">{'create':True, 'create_edit':True}</attribute>
-            </field>
-        </field>
-    </record>
-
     <record id="stock.stock_move_menu" model="ir.ui.menu">
         <field name="name">Products Moves</field>
         <field name="groups_id" eval="[(3, ref('base.group_no_one'))]"/>
