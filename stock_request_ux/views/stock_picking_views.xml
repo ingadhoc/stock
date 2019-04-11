@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_picking_form" model="ir.ui.view">
+        <field name="name">stock.picking.form</field>
+        <field name="model">stock.picking</field>
+        <field name="groups_id" eval="[(4, ref('stock_request.group_stock_request_order'))]"/>
+        <field name="inherit_id" ref="stock_request.view_picking_form"/>
+        <field name="arch" type="xml">
+            <button name="action_view_stock_request" position="replace">
+                <button type="object" name="action_view_stock_order_request" class="oe_stat_button" icon="fa-chain" attrs="{'invisible':[('stock_request_order_ids', '=', [])]}">
+                    <field name="stock_request_order_count" widget="statinfo" string="Stock Request Orders"/>
+                    <field name="stock_request_order_ids" invisible="1"/>
+                </button>
+            </button>
+        </field>
+    </record>
+</odoo>
