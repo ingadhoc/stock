@@ -140,3 +140,18 @@ class StockMove(models.Model):
                 propagate(move, quantity=to_cancel, stream=stream)
                 move._action_cancel()
                 break
+
+    @api.multi
+    def action_view_linked_record(self):
+        """This function returns an action that display existing sales order
+        of given picking.
+        """
+        self.ensure_one()
+        action_ref = self._context.get('action_ref')
+        form_view_ref = self._context.get('form_view_ref')
+        action = self.env.ref(action_ref).read()[0]
+        form_view = self.env.ref(form_view_ref)
+        res_id = self._context.get('res_id')
+        action['views'] = [(form_view.id, 'form')]
+        action['res_id'] = res_id
+        return action
