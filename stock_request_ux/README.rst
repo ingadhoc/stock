@@ -25,6 +25,7 @@ Several improvements to Stock Request:
 #. Automatically reserve the picking from stock when a request is confirmed
 #. Add to stock request field "order_id" ondelete=cascade to delete stock request when stock request order related are deleted.
 #. Add new button in pickings to access to the stock request order if has the group "Stock Request Order"
+#. Add new button in Stock moves to access to the stock request order related.
 
 Installation
 ============

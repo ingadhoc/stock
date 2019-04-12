@@ -3,11 +3,16 @@
 # directory
 ##############################################################################
 
-from odoo import models
+from odoo import models, fields
 
 
 class StockMove(models.Model):
     _inherit = 'stock.move'
+
+    request_order_id = fields.Many2one(
+        related='stock_request_ids.order_id',
+        readonly=True,
+    )
 
     def _split(self, qty, restrict_partner_id=False):
         """ When we are on a move created by a stock_request and we create a
@@ -28,7 +33,7 @@ class StockMove(models.Model):
             allocation.copy({
                 'stock_move_id': new_move_id,
                 'requested_product_uom_qty': to_allocate,
-                })
+            })
             allocation.requested_product_uom_qty -= to_allocate
 
         return new_move_id

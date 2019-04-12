@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Stock Request UX',
-    'version': '11.0.1.8.0',
+    'version': '11.0.1.9.0',
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
@@ -35,6 +35,7 @@
     'data': [
         'views/stock_request_order_views.xml',
         'views/stock_request_views.xml',
+        'views/stock_move_views.xml',
         'views/stock_picking_views.xml',
     ],
     'demo': [
