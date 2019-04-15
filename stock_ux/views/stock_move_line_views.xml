@@ -62,6 +62,9 @@
         <field name="arch" type="xml">
             <tree position="attributes">
                 <attribute name="editable">bottom</attribute>
+                <attribute name="decoration-muted">result_package_id</attribute>
+                <attribute name="decoration-danger">qty_done&gt;product_qty</attribute>
+                <attribute name="decoration-success">qty_done==product_qty and state!='done' and not result_package_id</attribute>
             </tree>
             <field name="location_dest_id" position="attributes">
                 <attribute name="readonly">1</attribute>
@@ -79,6 +82,8 @@
                 <attribute name="invisible">1</attribute>
             </field>
             <field name="product_id" position="after">
+                <field name="result_package_id" invisible="1"/>
+                <field name="product_qty" invisible="1"/>
                 <field name="picking_id" invisible="1"/>
                 <field name="in_entire_package" invisible="1"/>
                 <field name="product_uom_id" string="Unit of Measure" groups="product.group_uom" readonly="1"/>
