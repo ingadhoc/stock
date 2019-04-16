@@ -3,16 +3,16 @@
 # * stock_request_ux
 # 
 # Translators:
-# Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2019
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019
+# Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2019
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-11 16:30+0000\n"
+"POT-Creation-Date: 2019-04-15 18:17+0000\n"
 "PO-Revision-Date: 2019-01-10 12:32+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019\n"
+"Last-Translator: Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2019\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -38,9 +38,19 @@ msgstr ""
 " esten realizados."
 
 #. module: stock_request_ux
+#: model:ir.model.fields,field_description:stock_request_ux.field_stock_move_request_order_id
+msgid "Order"
+msgstr "Orden"
+
+#. module: stock_request_ux
 #: model:ir.model,name:stock_request_ux.model_procurement_rule
 msgid "Procurement Rule"
 msgstr ""
+
+#. module: stock_request_ux
+#: model:ir.ui.view,arch_db:stock_request_ux.view_move_form
+msgid "Request Orders"
+msgstr "Pedidos de Existencias"
 
 #. module: stock_request_ux
 #: model:ir.model.fields,field_description:stock_request_ux.field_stock_request_order_route_id
@@ -75,13 +85,13 @@ msgstr "Pedido de existencias"
 #. module: stock_request_ux
 #: model:ir.model.fields,field_description:stock_request_ux.field_stock_picking_stock_request_order_count
 msgid "Stock Request Order #"
-msgstr ""
+msgstr "Pedido de existencias #"
 
 #. module: stock_request_ux
 #: model:ir.model.fields,field_description:stock_request_ux.field_stock_picking_stock_request_order_ids
 #: model:ir.ui.view,arch_db:stock_request_ux.view_picking_form
 msgid "Stock Request Orders"
-msgstr ""
+msgstr "Pedido de existencias"
 
 #. module: stock_request_ux
 #: model:ir.model,name:stock_request_ux.model_stock_request_abstract
