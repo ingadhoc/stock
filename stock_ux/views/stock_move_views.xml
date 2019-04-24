@@ -34,6 +34,9 @@
                 <filter string="Internal" name="internal" domain="[('picking_code','=','internal')]"/>
                 <filter string="Manufacturing" name="manufacturing" domain="[('picking_code','=','mrp_operation')]"/>
             </filter>
+            <filter name="future" position="attributes">
+                <attribute name="domain">[('state','in',('assigned','confirmed','waiting', 'partially_available'))]</attribute>
+            </filter>
         </field>
     </record>
 

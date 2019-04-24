@@ -40,6 +40,7 @@ Several improvements to stock:
 #. Remove tecnical features to Stock moves menu in inventory/reports.
 #. Add in products (template and variants) button to access to stock moves related.
 #. Change name to the menus Product Move and Product Move lines.
+#. Add to "To Do" filter in stock move the state "partially_available".
 #. Add optional constraints configurable by Picking Type:
 
 * Block Picking Edit: Restrict to add lines or to send more quantity than the original quantity. This will only apply to users with group Restrict Edit Blocked Pickings.
