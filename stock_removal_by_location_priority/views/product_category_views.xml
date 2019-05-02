@@ -1,0 +1,14 @@
+<odoo>
+
+    <record id="product_category_form_view" model="ir.ui.view">
+        <field name="name">product_category_form_view</field>
+        <field name="model">product.category</field>
+        <field name="inherit_id" ref="stock.product_category_form_view_inherit"/>
+        <field name="arch" type="xml">
+            <field name="removal_strategy_id" position="before">
+                <field name="removal_by_location_priority"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>
