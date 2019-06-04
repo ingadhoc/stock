@@ -9,12 +9,10 @@ class ProductProduct(models.Model):
     _inherit = 'product.product'
 
     @api.model
-    def name_search(
-            self, name, args=None, operator='ilike',
-            limit=100):
+    def name_search(self, name, args=None, operator='ilike', limit=100):
         res = super(ProductProduct, self).name_search(
             name, args=args, operator=operator, limit=limit)
-        if len(res) < limit:
+        if not limit or len(res) < limit:
             # do not search for lots of products that are already displayed
             actual_product_ids = [x[0] for x in res]
             if name and name[0].encode('utf8') == ' ':
@@ -22,7 +20,6 @@ class ProductProduct(models.Model):
             products = self.env['stock.production.lot'].search([
                 ('ean_128', operator, name),
                 ('product_id', 'not in', actual_product_ids),
-            ],
-                limit=limit).mapped('product_id')
+            ], limit=limit).mapped('product_id')
             res += products.name_get()
         return res
