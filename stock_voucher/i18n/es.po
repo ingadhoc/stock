@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-10 19:46+0000\n"
+"POT-Creation-Date: 2019-06-05 12:37+0000\n"
 "PO-Revision-Date: 2018-08-23 20:45+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
@@ -247,8 +247,8 @@ msgstr "Número de páginas"
 #. module: stock_voucher
 #: code:addons/stock_voucher/models/stock_picking.py:94
 #, python-format
-msgid "NÃºmeros de remitos asignados: %s"
-msgstr "NÃºmeros de remitos asignados: %s"
+msgid "Números de remitos asignados: %s"
+msgstr ""
 
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_observations
@@ -273,7 +273,7 @@ msgid "Picking Voucher"
 msgstr "Remito"
 
 #. module: stock_voucher
-#: code:addons/stock_voucher/models/stock_picking_voucher.py:74
+#: code:addons/stock_voucher/models/stock_picking_voucher.py:73
 #, python-format
 msgid "Picking voucher number must be unique per partner"
 msgstr "Picking voucher number must be unique per partner"
