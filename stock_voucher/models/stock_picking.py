@@ -166,7 +166,8 @@ class StockPicking(models.Model):
                 if move_line.quantity_done:
                     inmediate_transfer = False
                 if order_line:
-                    pricelist = rec.sale_id.pricelist_id
+                    pricelist = rec.picking_type_id.pricelist_id\
+                        or rec.sale_id.pricelist_id
                     # this should happends only if on SO it's a bom kit
                     if not order_line.product_id == move_line.product_id:
                         stock_bom_lines |= move_line
@@ -184,8 +185,16 @@ class StockPicking(models.Model):
                             move_line.product_uom._compute_quantity(
                                 move_line.quantity_done,
                                 order_line.product_uom)
-                    picking_value += (order_line.price_reduce * so_product_qty)
-                    done_value += (order_line.price_reduce * so_qty_done)
+                    if rec.picking_type_id.pricelist_id:
+                        price = pricelist.with_context(
+                            uom=move_line.product_uom.id).price_get(
+                            move_line.product_id.id,
+                            move_line.quantity_done or 1.0,
+                            partner=rec.partner_id.id)[pricelist.id]
+                    else:
+                        price = order_line.price_reduce
+                    picking_value += (price * so_product_qty)
+                    done_value += (price * so_qty_done)
                 elif rec.picking_type_id.pricelist_id:
                     pricelist = rec.picking_type_id.pricelist_id
                     price = rec.picking_type_id.pricelist_id.with_context(
