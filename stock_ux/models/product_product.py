@@ -36,7 +36,7 @@ class ProductProduct(models.Model):
                 base_domain_return).mapped(lambda x: -x.product_qty)
         rotation = sum(quantities) / 4.0
         if compute_stdev:
-            stdev = len(quantities) > 2 and statistics.stdev(quantities) or 0.0
+            stdev = len(quantities) > 1 and statistics.stdev(quantities) or 0.0
             return rotation, stdev
         return rotation
 

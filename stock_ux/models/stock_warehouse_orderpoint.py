@@ -17,12 +17,16 @@ class StockWarehouseOrderpoint(models.Model):
     _inherit = ['stock.warehouse.orderpoint', 'mail.thread']
 
     rotation_stdev = fields.Float(
+        compute='_compute_rotation',
         help="Desvío estandar de las cantidades entregas a clientes en los "
-        "últimos 120 días."
+        "últimos 120 días.",
+        digits=dp.get_precision('Product Unit of Measure'),
     )
     location_rotation_stdev = fields.Float(
+        compute='_compute_rotation',
         help="Desvío estandar de las cantidades entregas desde este almacen"
-        " a clientes en los últimos 120 días."
+        " a clientes en los últimos 120 días.",
+        digits=dp.get_precision('Product Unit of Measure'),
     )
     rotation = fields.Float(
         help='Cantidades entregadas a clientes en los '
