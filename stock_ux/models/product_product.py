@@ -4,17 +4,18 @@
 ##############################################################################
 from odoo import models, fields,  api
 from datetime import timedelta, datetime
+import statistics
 
 
 class ProductProduct(models.Model):
     _inherit = 'product.product'
 
     @api.multi
-    def get_product_rotation(self, location=False):
+    def get_product_rotation(self, location=False, compute_stdev=False):
         self.ensure_one()
         # we should use cache for this date
         from_date = fields.Datetime.to_string(
-            datetime.now() + timedelta(-90))
+            datetime.now() + timedelta(-120))
         base_domain = [
             ('date', '>=', from_date),
             ('state', '=', 'done'),
@@ -30,13 +31,14 @@ class ProductProduct(models.Model):
             base_domain_return += [
                 ('location_dest_id', 'child_of', location.id)]
 
-        # from any location to customers
-        rotation = sum(self.env['stock.move'].search(
-            base_domain_send).mapped('product_qty'))
-        # from customers to any location
-        rotation -= sum(self.env['stock.move'].search(
-            base_domain_return).mapped('product_qty'))
-        return rotation / 3.0
+        quantities = self.env['stock.move'].search(base_domain_send).mapped(
+            'product_qty') + self.env['stock.move'].search(
+                base_domain_return).mapped(lambda x: -x.product_qty)
+        rotation = sum(quantities) / 4.0
+        if compute_stdev:
+            stdev = len(quantities) > 2 and statistics.stdev(quantities) or 0.0
+            return rotation, stdev
+        return rotation
 
     @api.multi
     def action_view_stock_move(self):
