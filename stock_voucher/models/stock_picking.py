@@ -208,10 +208,17 @@ class StockPicking(models.Model):
                     bom_moves = so_bom_line.move_ids & stock_bom_lines
                     done_avg = []
                     picking_avg = []
+                    boms, lines = bom.sudo().explode(
+                        so_bom_line.product_id,
+                        so_bom_line.product_uom_qty,
+                        picking_type=bom.picking_type_id)
                     for move in bom_moves:
-                        bom_quantity = bom.bom_line_ids.filtered(
-                            lambda x: x.product_id == move.product_id
-                        ).product_qty
+                        bom_quantity = 0.0
+                        for bom_line, line_data in lines:
+                            if bom_line.product_id == move.product_id:
+                                bom_quantity += line_data['qty']
+                        if not bom_quantity:
+                            continue
                         picking_avg.append((move.ordered_qty / bom_quantity))
                         done_avg.append((move.quantity_done / bom_quantity))
                     picking_value += so_bom_line.price_reduce * (
