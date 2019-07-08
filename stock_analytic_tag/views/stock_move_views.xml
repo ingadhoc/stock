@@ -12,7 +12,6 @@
                     groups="analytic.group_analytic_accounting"
                     widget="many2many_tags"
                     options="{'color_field':'color'}"
-                    readonly="1"
                 />
             </xpath>
         </field>

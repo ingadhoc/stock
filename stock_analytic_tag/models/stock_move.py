@@ -9,7 +9,8 @@ class StockMove(models.Model):
     _inherit = 'stock.move'
 
     analytic_tag_ids = fields.Many2many(
-        'account.analytic.tag'
+        'account.analytic.tag',
+        states={'done': [('readonly', True)]},
     )
 
     def _prepare_account_move_line(
