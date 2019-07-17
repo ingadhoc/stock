@@ -17,7 +17,6 @@ class StockPicking(models.Model):
     observations = fields.Text(
     )
 
-
     def unlink(self):
         """
         To avoid errors we block deletion of pickings in other state than
@@ -92,7 +91,22 @@ class StockPicking(models.Model):
                     'No se puede validar un picking que no esté en estado '
                     'Parcialmente Disponible o Reservado, probablemente el '
                     'picking ya fue validado, pruebe refrezcar la ventana!'))
-        return super().action_done()
+        res = super().action_done()
+        for rec in self.with_context(mail_notify_force_send=False).filtered('picking_type_id.mail_template_id'):
+            try:
+                rec.message_post_with_template(rec.picking_type_id.mail_template_id.id)
+            except Exception as error:
+                title = _(
+                    "ERROR: Picking was not sent via email"
+                )
+                rec.message_post("<br/><br/>".join([
+                    "<b>" + title + "</b>",
+                    _("Please check the email template associated with"
+                      " the picking type."),
+                    "<code>" + str(error) + "</code>"
+                ]),
+                )
+        return res
 
     def new_force_availability(self):
         self.action_assign()
