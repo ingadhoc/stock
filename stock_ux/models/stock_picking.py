@@ -92,7 +92,36 @@ class StockPicking(models.Model):
                     'No se puede validar un picking que no esté en estado '
                     'Parcialmente Disponible o Reservado, probablemente el '
                     'picking ya fue validado, pruebe refrezcar la ventana!'))
-        return super(StockPicking, self).action_done()
+        res = super(StockPicking, self).action_done()
+        for rec in self.with_context(
+                mail_notify_force_send=False).filtered(
+                'picking_type_id.mail_template_id'):
+            try:
+                rec.message_post_with_template(
+                    rec.picking_type_id.mail_template_id.id,
+                )
+            except Exception as error:
+                title = _(
+                    "ERROR: Picking was not sent via email"
+                )
+                message = _(
+                    "Picking %s was correctly validate but was not send"
+                    " via email. Please review picking chatter for more"
+                    " information" % rec.display_name
+                )
+                self.env.user.notify_warning(
+                    title=title,
+                    message=message,
+                    sticky=True,
+                )
+                rec.message_post("<br/><br/>".join([
+                    "<b>" + title + "</b>",
+                    _("Please check the email template associated with"
+                      " the picking type."),
+                    "<code>" + str(error) + "</code>"
+                ]),
+                )
+        return res
 
     @api.multi
     def new_force_availability(self):
