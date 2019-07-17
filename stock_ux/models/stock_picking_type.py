@@ -27,3 +27,11 @@ class StockPickingType(models.Model):
         "reserved one. This will only apply for moves where origin location "
         "is not of type 'supplier', 'customer', 'inventory', 'production'",
     )
+
+    mail_template_id = fields.Many2one(
+        'mail.template',
+        'Email Template',
+        domain=[('model', '=', 'stock.picking')],
+        help="If set an email will be sent to the customer after the picking"
+        " related to this picking type has been validated.",
+    )

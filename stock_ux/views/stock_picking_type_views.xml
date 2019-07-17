@@ -13,6 +13,9 @@
                     <field name="block_picking_deletion"/>
                 </group>
             </group>
+            <field name="sequence_id" position="after">
+                <field name="mail_template_id"  context="{'default_model': 'stock.picking'}"/>
+            </field>
         </field>
     </record>
 
