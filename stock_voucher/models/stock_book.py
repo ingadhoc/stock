@@ -35,4 +35,5 @@ class StockBook(models.Model):
     )
     next_number = fields.Integer(
         related='sequence_id.number_next_actual',
+        readonly=False
     )

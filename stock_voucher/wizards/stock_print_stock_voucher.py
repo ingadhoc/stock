@@ -43,7 +43,6 @@ class StockPrintStockVoucher(models.TransientModel):
     next_voucher_number = fields.Integer(
         'Next Voucher Number',
         related='book_id.sequence_id.number_next_actual',
-        readonly=True,
     )
     estimated_number_of_pages = fields.Integer(
         'Number of Pages',
@@ -51,7 +50,6 @@ class StockPrintStockVoucher(models.TransientModel):
     lines_per_voucher = fields.Integer(
         'Lines Per Voucher',
         related='book_id.lines_per_voucher',
-        readonly=True,
     )
 
     @api.depends('picking_id', 'picking_id.voucher_ids')

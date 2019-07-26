@@ -31,19 +31,15 @@ class StockPicking(models.Model):
     )
     automatic_declare_value = fields.Boolean(
         related='picking_type_id.automatic_declare_value',
-        readonly=True,
     )
     book_required = fields.Boolean(
         related='picking_type_id.book_required',
-        readonly=True,
     )
     voucher_required = fields.Boolean(
         related='picking_type_id.voucher_required',
-        readonly=True,
     )
     next_number = fields.Integer(
         related='book_id.next_number',
-        readonly=True,
     )
 
     @api.depends('voucher_ids.display_name')
@@ -103,7 +99,7 @@ class StockPicking(models.Model):
         """
         If book required then we assign numbers
         """
-        res = super(StockPicking, self).action_done()
+        res = super().action_done()
         if self._context.get('do_not_assign_numbers', False):
             return res
         for picking in self.filtered('book_required'):
@@ -135,7 +131,7 @@ class StockPicking(models.Model):
         self = self.with_context(picking_id=self.id)
         self.do_stock_voucher_transfer_check()
 
-        res = super(StockPicking, self).button_validate()
+        res = super().button_validate()
         # res none when no wizard opended
         if res is None and len(self) == 1 and self.book_required:
             return self.do_print_voucher()

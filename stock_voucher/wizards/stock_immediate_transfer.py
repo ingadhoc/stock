@@ -19,7 +19,7 @@ class StockImmediateTransfer(models.TransientModel):
 
     @api.multi
     def process(self):
-        res = super(StockImmediateTransfer, self).process()
+        res = super().process()
         picking = self.env['stock.picking'].browse(
             # if we came, for eg, from a sale order, active_id would be the
             # sale order id
