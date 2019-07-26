@@ -48,7 +48,7 @@
                 <button name="%(action_stock_print_voucher)d" string="Vouchers" type="action" attrs="{'invisible': ['|',('book_id','=',False),'|', ('picking_type_code','=','incoming'), ('state','!=','done')]}" context="{'picking_id': id}"/>
                 <button name="%(action_stock_print_voucher)d" string="Vouchers" type="action" attrs="{'invisible': ['|',('book_id','!=',False),'|', ('picking_type_code','=','incoming'), ('state','!=','done')]}" class="oe_highlight" context="{'picking_id': id}"/>
             </button>
-            <field name="move_lines" position="after">
+            <field name="move_ids_without_package" position="after">
                 <label for="observations" attrs="{'invisible': [('picking_type_code','=','incoming')]}"/>
                 <field name="observations" attrs="{'invisible': [('picking_type_code','=','incoming')]}"/>
             </field>
