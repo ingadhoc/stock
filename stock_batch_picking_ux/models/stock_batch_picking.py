@@ -71,15 +71,6 @@ class StockBatchPicking(models.Model):
         related='picking_ids.vouchers',
         readonly=True,
     )
-    # do this because if not allow to set the qty_done value in sml in
-    #  the tree view
-    move_line_ids = fields.One2many(
-        'stock.move.line',
-        inverse='_inverse_move_line_ids'
-    )
-
-    def _inverse_move_line_ids(self):
-        pass
 
     # overwrite this because we need only takes the moves with are not cancel
     @api.depends('picking_ids')
