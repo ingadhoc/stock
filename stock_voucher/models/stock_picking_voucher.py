@@ -20,7 +20,6 @@ class StockPickingVoucher(models.Model):
         'Number',
         copy=False,
         required=True,
-        oldname='number',
     )
     book_id = fields.Many2one(
         'stock.book',
@@ -37,7 +36,6 @@ class StockPickingVoucher(models.Model):
         'res.company',
         'Company',
         related='picking_id.company_id',
-        readonly=True,
     )
     # constraint de que el book y el picking deben ser de la misma company
 
