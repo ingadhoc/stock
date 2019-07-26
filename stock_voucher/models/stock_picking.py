@@ -75,18 +75,17 @@ class StockPicking(models.Model):
     @api.multi
     def assign_numbers(self, estimated_number_of_pages, book):
         self.ensure_one()
-        StockPickingVoucher = self.env['stock.picking.voucher']
+        list_of_vouchers = []
         for page in range(estimated_number_of_pages):
-            name = book.sequence_id.next_by_id()
-            StockPickingVoucher.create({
-                'name': name,
+            list_of_vouchers.append({
+                'name': book.sequence_id.next_by_id(),
                 'book_id': book.id,
                 'picking_id': self.id,
             })
+        self.env['stock.picking.voucher'].create(list_of_vouchers)
         self.message_post(body=_(
             'Números de remitos asignados: %s') % (self.vouchers))
-        self.write({
-            'book_id': book.id})
+        self.write({'book_id': book.id})
 
     @api.multi
     def clean_voucher_data(self):
