@@ -26,9 +26,6 @@ class StockBook(models.Model):
         help="If voucher don't have a limit, then live 0. If not, this number "
         "will be used to calculate how many sequence are used on each picking",
     )
-    # block_estimated_number_of_pages = fields.Boolean(
-    #     'Block Estimated Number of Pages?',
-    #     )
     company_id = fields.Many2one(
         'res.company',
         'Company',

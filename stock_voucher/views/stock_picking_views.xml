@@ -40,10 +40,7 @@
                 <field name="voucher_ids" attrs="{'readonly': [('picking_type_code','!=','incoming')]}" widget="many2many_tags" context="{'default_picking_id': id}" domain="[('id', '=', False)]"  options="{'create':True, 'create_edit':True}"/>
             </field>
 
-            <!-- we move number_of_packages to main form -->
-            <field name="number_of_packages" position="replace"/>
             <field name="origin" position="after">
-                <field name="number_of_packages" attrs="{'readonly': [('state', '=', 'done')]}"/>
                 <field name="declared_value" attrs="{'invisible': [('picking_type_code','=','incoming')]}"/>
             </field>
 

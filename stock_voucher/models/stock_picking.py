@@ -29,10 +29,6 @@ class StockPicking(models.Model):
     )
     observations = fields.Text(
     )
-    restrict_number_package = fields.Boolean(
-        related='picking_type_id.restrict_number_package',
-        readonly=True,
-    )
     automatic_declare_value = fields.Boolean(
         related='picking_type_id.automatic_declare_value',
         readonly=True,
@@ -122,12 +118,6 @@ class StockPicking(models.Model):
         We separe to use it in other modules
         """
         for picking in self:
-
-            if picking.picking_type_id.code == 'outgoing':
-                if (
-                        picking.restrict_number_package and
-                        not picking.number_of_packages > 0):
-                    raise UserError(_('The number of packages can not be 0'))
             if picking.book_required and not picking.book_id:
                 raise UserError(_('You must select a Voucher Book'))
             elif not picking.location_id.usage == 'customer' and \
