@@ -215,7 +215,8 @@ class StockPicking(models.Model):
                 else done_value
             if pricelist:
                 # we convert the declared_value to the currency of the company
-                rec.declared_value = pricelist.currency_id.compute(
-                    declared_value, rec.company_id.currency_id)
+                rec.declared_value = pricelist.currency_id._convert(
+                    declared_value, rec.company_id.currency_id, rec.company_id,
+                    rec.sale_id.confirmation_date or fields.Date.today())
             else:
                 rec.declared_value = declared_value
