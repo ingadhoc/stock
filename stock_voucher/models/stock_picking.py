@@ -91,7 +91,7 @@ class StockPicking(models.Model):
     def clean_voucher_data(self):
         self.voucher_ids.unlink()
         self.book_id = False
-        self.message_post(_('The assigned voucher were deleted'))
+        self.message_post(body=_('The assigned voucher were deleted'))
 
     @api.multi
     def action_done(self):
