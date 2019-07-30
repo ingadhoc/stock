@@ -35,7 +35,6 @@
     ],
     'data': [
         'security/stock_ux_security.xml',
-        'wizards/product_replenish_views.xml',
         'views/product_template_views.xml',
         'views/product_product_views.xml',
         'views/stock_picking_views.xml',
