@@ -29,25 +29,17 @@ class StockPicking(models.Model):
     )
     observations = fields.Text(
     )
-    restrict_number_package = fields.Boolean(
-        related='picking_type_id.restrict_number_package',
-        readonly=True,
-    )
     automatic_declare_value = fields.Boolean(
         related='picking_type_id.automatic_declare_value',
-        readonly=True,
     )
     book_required = fields.Boolean(
         related='picking_type_id.book_required',
-        readonly=True,
     )
     voucher_required = fields.Boolean(
         related='picking_type_id.voucher_required',
-        readonly=True,
     )
     next_number = fields.Integer(
         related='book_id.next_number',
-        readonly=True,
     )
 
     @api.depends('voucher_ids.display_name')
@@ -83,31 +75,30 @@ class StockPicking(models.Model):
     @api.multi
     def assign_numbers(self, estimated_number_of_pages, book):
         self.ensure_one()
-        StockPickingVoucher = self.env['stock.picking.voucher']
+        list_of_vouchers = []
         for page in range(estimated_number_of_pages):
-            name = book.sequence_id.next_by_id()
-            StockPickingVoucher.create({
-                'name': name,
+            list_of_vouchers.append({
+                'name': book.sequence_id.next_by_id(),
                 'book_id': book.id,
                 'picking_id': self.id,
             })
+        self.env['stock.picking.voucher'].create(list_of_vouchers)
         self.message_post(body=_(
             'Números de remitos asignados: %s') % (self.vouchers))
-        self.write({
-            'book_id': book.id})
+        self.write({'book_id': book.id})
 
     @api.multi
     def clean_voucher_data(self):
         self.voucher_ids.unlink()
         self.book_id = False
-        self.message_post(_('The assigned voucher were deleted'))
+        self.message_post(body=_('The assigned voucher were deleted'))
 
     @api.multi
     def action_done(self):
         """
         If book required then we assign numbers
         """
-        res = super(StockPicking, self).action_done()
+        res = super().action_done()
         if self._context.get('do_not_assign_numbers', False):
             return res
         for picking in self.filtered('book_required'):
@@ -122,12 +113,6 @@ class StockPicking(models.Model):
         We separe to use it in other modules
         """
         for picking in self:
-
-            if picking.picking_type_id.code == 'outgoing':
-                if (
-                        picking.restrict_number_package and
-                        not picking.number_of_packages > 0):
-                    raise UserError(_('The number of packages can not be 0'))
             if picking.book_required and not picking.book_id:
                 raise UserError(_('You must select a Voucher Book'))
             elif not picking.location_id.usage == 'customer' and \
@@ -145,7 +130,7 @@ class StockPicking(models.Model):
         self = self.with_context(picking_id=self.id)
         self.do_stock_voucher_transfer_check()
 
-        res = super(StockPicking, self).button_validate()
+        res = super().button_validate()
         # res none when no wizard opended
         if res is None and len(self) == 1 and self.book_required:
             return self.do_print_voucher()
@@ -230,7 +215,8 @@ class StockPicking(models.Model):
                 else done_value
             if pricelist:
                 # we convert the declared_value to the currency of the company
-                rec.declared_value = pricelist.currency_id.compute(
-                    declared_value, rec.company_id.currency_id)
+                rec.declared_value = pricelist.currency_id._convert(
+                    declared_value, rec.company_id.currency_id, rec.company_id,
+                    rec.sale_id.confirmation_date or fields.Date.today())
             else:
                 rec.declared_value = declared_value

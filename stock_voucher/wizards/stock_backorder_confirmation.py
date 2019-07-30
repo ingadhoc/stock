@@ -13,7 +13,7 @@ class StockBackorderConfirmation(models.TransientModel):
 
     @api.multi
     def process(self):
-        super(StockBackorderConfirmation, self).process()
+        super().process()
         picking = self.env['stock.picking'].browse(
             # if we came, for eg, from a sale order, active_id would be the
             # sale order id
@@ -31,7 +31,7 @@ class StockBackorderConfirmation(models.TransientModel):
 
     @api.multi
     def process_cancel_backorder(self):
-        super(StockBackorderConfirmation, self).process_cancel_backorder()
+        super().process_cancel_backorder()
         picking = self.env['stock.picking'].browse(
             # if we came, for eg, from a sale order, active_id would be the
             # sale order id

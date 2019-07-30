@@ -8,18 +8,9 @@ from odoo import api, models
 class StockImmediateTransfer(models.TransientModel):
     _inherit = 'stock.immediate.transfer'
 
-    # @api.model
-    # def default_get(self, fields):
-    #     res = {}
-    #     print ' xxxxxxxxxxx'
-    #     active_id = self._context.get('picking_id')
-    #     if active_id:
-    #         res = {'pick_id': active_id}
-    #     return res
-
     @api.multi
     def process(self):
-        res = super(StockImmediateTransfer, self).process()
+        res = super().process()
         picking = self.env['stock.picking'].browse(
             # if we came, for eg, from a sale order, active_id would be the
             # sale order id

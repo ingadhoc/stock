@@ -17,7 +17,6 @@
                         <field name="book_required" attrs="{'invisible':[('code','=','incoming')]}"/>
                         <field name="voucher_required" attrs="{'invisible':[('code','!=','incoming')]}"/>
                         <field name="automatic_declare_value"/>
-                        <field name="restrict_number_package"/>
                      </group>
                 </group>
             </xpath>

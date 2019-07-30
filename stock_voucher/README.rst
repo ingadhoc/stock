@@ -31,7 +31,7 @@ Configuration
 To configure this module, you need to:
 
 #. To configure Books:  Go to Stock / Configurations / Books.
-#. To configure the Declared Value , Book Required and Restrict Number Package: Go to Stock Pincking Type.
+#. To configure the Declared Value , Book Required: Go to Stock Pincking Type.
 
 Usage
 =====
