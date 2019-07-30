@@ -20,14 +20,14 @@
                 <field name="used_lots" groups="stock_ux.group_operation_used_lots" attrs="{'invisible': ['|', ('lots_visible', '=', False), ('state', 'not in', ['confirmed', 'assigned', 'waiting', 'partially_available','done'])]}"/>
                 <button name="set_all_done" string="Set all Done" type="object" icon="fa-check" states="confirmed,assigned,waiting,partially_available"/>
             </field>
-            <xpath expr="//field[@name='move_line_ids']/tree/field[@name='qty_done']" position="after">
+            <xpath expr="//field[@name='move_line_ids_without_package']/tree/field[@name='qty_done']" position="after">
                 <button name="set_all_done" string="Set all Done" type="object" icon="fa-check" states="confirmed,assigned,waiting,partially_available"/>
             </xpath>
 
             <button name="action_cancel" position="attributes">
                 <attribute name="groups">stock_ux.allow_picking_cancellation</attribute>
             </button>
-            <field name="move_lines" position="after">
+            <field name="move_ids_without_package" position="after">
                 <label for="note"/>
                 <field name="note"/>
             </field>
