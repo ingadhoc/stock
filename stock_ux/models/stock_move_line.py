@@ -16,22 +16,18 @@ class StockMoveLine(models.Model):
         # vamos a traves de picking para legar mas rapido y no pasar por move
         related='picking_id.create_uid',
         string="Picking Creator",
-        readonly=True,
     )
     picking_partner_id = fields.Many2one(
         'res.partner',
         'Transfer Destination Address',
         # vamos a traves de picking para legar mas rapido y no pasar por move
         related='picking_id.partner_id',
-        readonly=True,
     )
     picking_code = fields.Selection(
         related='picking_type_id.code',
-        readonly=True,
     )
     picking_type_id = fields.Many2one(
         related='picking_id.picking_type_id',
-        readonly=True,
         store=True,
     )
     product_uom_qty_location = fields.Float(

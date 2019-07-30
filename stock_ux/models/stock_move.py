@@ -17,15 +17,12 @@ class StockMove(models.Model):
         'res.users',
         related='picking_id.create_uid',
         string="Picking Creator",
-        readonly=True,
     )
     picking_dest_id = fields.Many2one(
         related='move_dest_ids.picking_id',
-        readonly=True,
     )
     lots_visible = fields.Boolean(
         related='move_line_ids.lots_visible',
-        readonly=True,
     )
 
     @api.depends(
