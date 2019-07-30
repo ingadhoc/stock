@@ -10,16 +10,6 @@ class StockOperationWizard(models.TransientModel):
 
     _name = "stock.operation.wizard"
 
-    @api.model
-    def default_picking_id(self):
-        picking = self.env['stock.move.line'].browse(
-            self._context.get('active_ids', [])).mapped('picking_id')
-        if len(picking) != 1:
-            raise UserError(_(
-                'Change location must be called from operations of same '
-                'picking!'))
-        return picking.id
-
     location_id = fields.Many2one(
         'stock.location',
         'Source Location',
@@ -42,6 +32,16 @@ class StockOperationWizard(models.TransientModel):
         'stock.picking',
         default=lambda self: self.default_picking_id(),
     )
+
+    @api.model
+    def default_picking_id(self):
+        picking = self.env['stock.move.line'].browse(
+            self._context.get('active_ids', [])).mapped('picking_id')
+        if len(picking) != 1:
+            raise UserError(_(
+                'Change location must be called from operations of same '
+                'picking!'))
+        return picking.id
 
     @api.multi
     def action_change_location(self):
