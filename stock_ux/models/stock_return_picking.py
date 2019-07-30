@@ -13,8 +13,7 @@ class StockReturnPicking(models.TransientModel):
     @api.multi
     def _create_returns(self):
         # add to new picking for return the reason for the return
-        new_picking, pick_type_id = super(
-            StockReturnPicking, self)._create_returns()
+        new_picking, pick_type_id = super()._create_returns()
         picking = self.env['stock.picking'].browse(new_picking)
         picking.write({'note': self.reason})
         return new_picking, pick_type_id

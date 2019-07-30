@@ -31,7 +31,7 @@ class StockPicking(models.Model):
                 'or the state of the picking is not draft or cancel.\n'
                 'Picking Ids: %s') % (
                     not_del_pickings.ids, self.picking_type_id.name))
-        return super(StockPicking, self).unlink()
+        return super().unlink()
 
     @api.multi
     def copy(self, default=None):
@@ -45,7 +45,7 @@ class StockPicking(models.Model):
                 ' Additional Quantity"'
                 ' is enable on the picking type "%s"') % (
                 self.picking_type_id.name))
-        return super(StockPicking, self).copy(default=default)
+        return super().copy(default=default)
 
     @api.multi
     def add_picking_operation(self):
@@ -91,7 +91,7 @@ class StockPicking(models.Model):
                     'No se puede validar un picking que no esté en estado '
                     'Parcialmente Disponible o Reservado, probablemente el '
                     'picking ya fue validado, pruebe refrezcar la ventana!'))
-        return super(StockPicking, self).action_done()
+        return super().action_done()
 
     @api.multi
     def new_force_availability(self):
