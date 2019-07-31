@@ -12,5 +12,4 @@ class StockMove(models.Model):
         'res.users',
         related='picking_id.user_id',
         string="Picking Responsible",
-        readonly=True,
     )
