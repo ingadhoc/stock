@@ -17,15 +17,12 @@ class StockMove(models.Model):
         'res.users',
         related='picking_id.create_uid',
         string="Picking Creator",
-        readonly=True,
     )
     picking_dest_id = fields.Many2one(
         related='move_dest_ids.picking_id',
-        readonly=True,
     )
     lots_visible = fields.Boolean(
         related='move_line_ids.lots_visible',
-        readonly=True,
     )
 
     @api.depends(
@@ -48,12 +45,11 @@ class StockMove(models.Model):
     def _check_quantity(self):
         precision = self.env['decimal.precision'].precision_get(
             'Product Unit of Measure')
-        for rec in self.filtered(
-            lambda
-            x: x.picking_id.picking_type_id.
+        if any(self.filtered(
+            lambda x: x.picking_id.picking_type_id.
             block_additional_quantity and float_compare(
                 x.product_uom_qty, x.quantity_done,
-                precision_digits=precision) == -1):
+                precision_digits=precision) == -1)):
             raise ValidationError(_(
                 'You can not transfer more than the initial demand!'))
 
@@ -65,7 +61,6 @@ class StockMove(models.Model):
         backorders
         """
         def propagate(move, quantity, stream=None):
-            # import pdb; pdb.set_trace()
             if not stream or stream == "downstream":
                 move.move_orig_ids._cancel_quantity(quantity, "downstream")
             if not stream or stream == "upstream":

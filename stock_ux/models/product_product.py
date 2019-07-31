@@ -3,7 +3,6 @@
 # directory
 ##############################################################################
 from odoo import models, fields,  api
-from datetime import timedelta, datetime
 import statistics
 
 
@@ -14,8 +13,8 @@ class ProductProduct(models.Model):
     def get_product_rotation(self, location=False, compute_stdev=False):
         self.ensure_one()
         # we should use cache for this date
-        from_date = fields.Datetime.to_string(
-            datetime.now() + timedelta(-120))
+        from_date = fields.Datetime.subtract(
+            fields.Datetime.now(self), days=120)
         base_domain = [
             ('date', '>=', from_date),
             ('state', '=', 'done'),
@@ -48,5 +47,5 @@ class ProductProduct(models.Model):
         action['context'] = {
             'search_default_product_id': self.id,
             'default_product_id': self.id,
-            }
+        }
         return action
