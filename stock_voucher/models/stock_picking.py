@@ -179,7 +179,7 @@ class StockPicking(models.Model):
                         move_line.quantity_done or 1.0,
                         partner=rec.partner_id.id)[
                         rec.picking_type_id.pricelist_id.id]
-                    picking_value += (price * move_line.ordered_qty)
+                    picking_value += (price * move_line.product_uom_qty)
                     done_value += (price * move_line.quantity_done)
 
             # This is for product in a kit (should only happen if sale_mrp ins
@@ -204,7 +204,8 @@ class StockPicking(models.Model):
                                 bom_quantity += line_data['qty']
                         if not bom_quantity:
                             continue
-                        picking_avg.append((move.ordered_qty / bom_quantity))
+                        picking_avg.append((
+                            move.product_uom_qty / bom_quantity))
                         done_avg.append((move.quantity_done / bom_quantity))
                     picking_value += so_bom_line.price_reduce * (
                         sum(picking_avg) / len(picking_avg))
