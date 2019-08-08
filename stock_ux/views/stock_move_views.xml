@@ -55,7 +55,7 @@
                 <field name="origin"/>
             </field>
             <field name="product_uom" position="after">
-                <field name="product_qty" string="Q. UdM Producto" groups="product.group_uom"/>
+                <field name="product_qty" string="Q. UdM Producto" groups="uom.group_uom"/>
             </field>
         </field>
     </record>

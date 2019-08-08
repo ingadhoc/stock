@@ -9,6 +9,7 @@ from odoo.exceptions import UserError
 class StockOperationWizard(models.TransientModel):
 
     _name = "stock.operation.wizard"
+    _description = 'Stock Operation Wizard'
 
     location_id = fields.Many2one(
         'stock.location',

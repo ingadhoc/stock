@@ -85,7 +85,7 @@
                 <field name="result_package_id" invisible="1"/>
                 <field name="product_qty" invisible="1"/>
                 <field name="picking_id" invisible="1"/>
-                <field name="product_uom_id" string="Unit of Measure" groups="product.group_uom" readonly="1"/>
+                <field name="product_uom_id" string="Unit of Measure" groups="uom.group_uom" readonly="1"/>
                 <field name="lots_visible" invisible="1"/>
                 <field name="owner_id" readonly="1"/>
                 <field name="lot_id" attrs="{'invisible': [('lots_visible', '=', False)]}" domain="[('product_id', '=', product_id)]" groups="stock.group_production_lot" context="{'default_product_id': product_id, 'active_picking_id': picking_id}" options="{'create':True, 'create_edit':True}"/>
