@@ -43,3 +43,5 @@ class StockPickingType(models.Model):
     automatic_declare_value = fields.Boolean(
         help="The declared value will be on the currency of the company",
     )
+    restrict_number_package = fields.Boolean(
+    )

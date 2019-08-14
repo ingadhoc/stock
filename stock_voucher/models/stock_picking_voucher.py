@@ -14,6 +14,7 @@ class StockPickingVoucher(models.Model):
     # we keep this for report compatibility
     number = fields.Char(
         related='name',
+        string='Number (for backward compatibility)',
     )
     # because m2m tags widget send only values to name field
     name = fields.Char(

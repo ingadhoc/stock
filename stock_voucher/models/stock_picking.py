@@ -10,6 +10,10 @@ import odoo.addons.decimal_precision as dp
 class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
+    number_of_packages = fields.Integer(
+        string='Number of Packages',
+        copy=False,
+    )
     book_id = fields.Many2one(
         'stock.book',
         'Voucher Book',
@@ -17,6 +21,7 @@ class StockPicking(models.Model):
     )
     vouchers = fields.Char(
         compute='_compute_vouchers',
+        string='Vouchers (string)'
     )
     voucher_ids = fields.One2many(
         'stock.picking.voucher',
@@ -113,6 +118,12 @@ class StockPicking(models.Model):
         We separe to use it in other modules
         """
         for picking in self:
+
+            if picking.picking_type_id.code == 'outgoing':
+                if (
+                        picking.picking_type_id.restrict_number_package and
+                        not picking.number_of_packages > 0):
+                    raise UserError(_('The number of packages can not be 0'))
             if picking.book_required and not picking.book_id:
                 raise UserError(_('You must select a Voucher Book'))
             elif not picking.location_id.usage == 'customer' and \

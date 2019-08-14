@@ -23,10 +23,12 @@ class StockOperationWizard(models.TransientModel):
     )
     picking_source_location_id = fields.Many2one(
         'stock.location',
+        string='Original Source Location',
         related='picking_id.location_id',
     )
     picking_destination_location_id = fields.Many2one(
         'stock.location',
+        string='Original Destination Location',
         related='picking_id.location_dest_id',
     )
     picking_id = fields.Many2one(

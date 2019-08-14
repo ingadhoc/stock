@@ -20,6 +20,7 @@ class StockMove(models.Model):
     )
     picking_dest_id = fields.Many2one(
         related='move_dest_ids.picking_id',
+        string='Destination Transfer',
     )
     lots_visible = fields.Boolean(
         related='move_line_ids.lots_visible',
