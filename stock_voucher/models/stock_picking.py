@@ -17,6 +17,7 @@ class StockPicking(models.Model):
     )
     vouchers = fields.Char(
         compute='_compute_vouchers',
+        string='Vouchers (string)'
     )
     voucher_ids = fields.One2many(
         'stock.picking.voucher',
