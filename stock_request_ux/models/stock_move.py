@@ -37,14 +37,3 @@ class StockMove(models.Model):
             allocation.requested_product_uom_qty -= to_allocate
 
         return new_move_id
-
-    # TODO remove in v12 if this part are not implemented
-    def copy_data(self, default=None):
-        """ Nosotros ya copiamos la allocation en el split de arriba y ademas
-        si se copiasen en el copy data, con algunas rutas se esta duplicando
-        el allocation en casos donde no debe hacerlo, solo queremos duplicar
-        allocation en entregas parciales (con el split)
-        """
-        if 'allocation_ids' in default:
-            default.pop('allocation_ids')
-        return super(StockMove, self).copy_data(default)
