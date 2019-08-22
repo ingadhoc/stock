@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-20 01:30+0000\n"
+"POT-Creation-Date: 2019-08-21 18:15+0000\n"
 "PO-Revision-Date: 2018-08-23 20:45+0000\n"
 "Last-Translator: Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2019\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
@@ -66,7 +66,7 @@ msgid ""
 msgstr ""
 
 #. module: stock_ux
-#: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint_location_rotation
+#: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint_warehouse_rotation
 msgid ""
 "Cantidades entregadas desde este almacen a clientes en los últimos 120 días "
 "dividido por 4 para mensualizar(restadas devoluciones)."
@@ -135,7 +135,7 @@ msgid ""
 msgstr ""
 
 #. module: stock_ux
-#: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint_location_rotation_stdev
+#: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint_warehouse_rotation_stdev
 msgid ""
 "Desvío estandar de las cantidades entregas desde este almacen a clientes en "
 "los últimos 120 días."
@@ -179,6 +179,17 @@ msgid "Do not allow to remove pickings"
 msgstr "No permitir borrado de transferencias"
 
 #. module: stock_ux
+#: code:addons/stock_ux/models/stock_picking.py:104
+#, python-format
+msgid "ERROR: Picking was not sent via email"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_picking_type_mail_template_id
+msgid "Email Template"
+msgstr ""
+
+#. module: stock_ux
 #: code:addons/stock_ux/models/stock_move.py:88
 #, python-format
 msgid ""
@@ -204,6 +215,13 @@ msgid "ID"
 msgstr "ID"
 
 #. module: stock_ux
+#: model:ir.model.fields,help:stock_ux.field_stock_picking_type_mail_template_id
+msgid ""
+"If set an email will be sent to the customer after the picking related to "
+"this picking type has been validated."
+msgstr ""
+
+#. module: stock_ux
 #: model:ir.ui.view,arch_db:stock_ux.view_move_search
 msgid "Internal"
 msgstr "Interno"
@@ -225,16 +243,6 @@ msgstr "Actualizado por"
 #: model:ir.model.fields,field_description:stock_ux.field_stock_operation_wizard_write_date
 msgid "Last Updated on"
 msgstr "Actualizado el"
-
-#. module: stock_ux
-#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint_location_rotation
-msgid "Location Rotation"
-msgstr "Location Rotation"
-
-#. module: stock_ux
-#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint_location_rotation_stdev
-msgid "Location Rotation Stdev"
-msgstr ""
 
 #. module: stock_ux
 #: model:ir.ui.view,arch_db:stock_ux.view_stock_operation_wizard_form
@@ -310,6 +318,14 @@ msgid "Picking"
 msgstr "Picking"
 
 #. module: stock_ux
+#: code:addons/stock_ux/models/stock_picking.py:107
+#, python-format
+msgid ""
+"Picking %s was correctly validate but was not send via email. Please review "
+"picking chatter for more information"
+msgstr ""
+
+#. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_move_line_picking_create_user_id
 #: model:ir.model.fields,field_description:stock_ux.field_stock_move_picking_create_user_id
 msgid "Picking Creator"
@@ -330,6 +346,12 @@ msgstr "Picking Type"
 #: model:ir.actions.report,name:stock_ux.picking_waybill
 msgid "Picking Waybill"
 msgstr "Hoja de ruta"
+
+#. module: stock_ux
+#: code:addons/stock_ux/models/stock_picking.py:119
+#, python-format
+msgid "Please check the email template associated with the picking type."
+msgstr ""
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_product_replenish_route_ids
@@ -374,6 +396,11 @@ msgstr "Movimientos de productos"
 #: model:ir.ui.view,arch_db:stock_ux.product_template_form_view_procurement_button
 msgid "Products Moves Detailed"
 msgstr "Movimientos de productos detallados"
+
+#. module: stock_ux
+#: model:ir.ui.view,arch_db:stock_ux.view_move_tree
+msgid "Q. UdM Producto"
+msgstr ""
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_product_replenish_quantity
@@ -536,6 +563,16 @@ msgstr "Lotes Usados"
 #: model:ir.model.fields,field_description:stock_ux.field_product_replenish_warehouse_id
 msgid "Warehouse"
 msgstr "Almacén"
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint_warehouse_rotation
+msgid "Warehouse Rotation"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint_warehouse_rotation_stdev
+msgid "Warehouse Rotation Stdev"
+msgstr ""
 
 #. module: stock_ux
 #: model:ir.ui.view,arch_db:stock_ux.stock_move_line_view_search
