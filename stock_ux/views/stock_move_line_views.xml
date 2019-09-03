@@ -111,7 +111,6 @@
         </field>
     </record>
 
-
     <!-- adds action to add all move lines -->
     <record model="ir.actions.server" id="action_operation_set_all_done">
         <field name="name">Set all done</field>
@@ -120,6 +119,17 @@
         <field name="state">code</field>
         <field name="code">
 records.set_all_done()
+        </field>
+    </record>
+
+    <!-- adds action to add all move lines -->
+    <record model="ir.actions.server" id="action_operation_set_all_undone">
+        <field name="name">Set all undone</field>
+        <field name="model_id" ref="stock.model_stock_move_line"/>
+        <field name="binding_model_id" ref="stock.model_stock_move_line"/>
+        <field name="state">code</field>
+        <field name="code">
+records.filtered(lambda x: x.state not in ['draft', 'done', 'cancel']).write({'qty_done': False})
         </field>
     </record>
 
