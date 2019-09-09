@@ -21,11 +21,6 @@ class StockProductionLot(models.Model):
             if rec.product_id.default_code:
                 name += ' 01 ' + rec.product_id.default_code
             name += ' 10 ' + rec.name
-            # if self.life_date:
-            #     life_date = fields.Datetime.from_string(self.life_date)
-            #     name += ' 17 ' + life_date.strftime('%d%m%y')
-            # else:
-            #     name += ' 17 ' + 'N.A'
             rec.ean_128 = name
 
     @api.model
@@ -37,5 +32,5 @@ class StockProductionLot(models.Model):
                 args + [('ean_128', operator, name)], limit=limit)
             if recs:
                 return recs.name_get()
-        return super(StockProductionLot, self).name_search(
+        return super().name_search(
             name=name, args=args, operator=operator, limit=limit)
