@@ -77,7 +77,7 @@ class Parser(models.AbstractModel):
             'get_data': self.get_data,
             })
 
-        return super(Parser, self).aeroo_report(docids, data)
+        return super().aeroo_report(docids, data)
 
     def get_data(self):
 
