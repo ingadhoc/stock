@@ -22,7 +22,6 @@
     'version': '12.0.1.0.0',
     'category': 'Aeroo Reporting',
     'sequence': 14,
-    'summary': '',
     'author': 'ADHOC SA, Iván Todorovich <ivan.todorovich@gmail.com>',
     'website': 'www.adhoc.com.ar',
     'license': 'AGPL-3',
@@ -37,11 +36,7 @@
         'reports/stock_analysis_report.xml',
         'wizard/stock_analysis_report_wizard.xml',
     ],
-    'demo': [
-    ],
-    'test': [
-    ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }
