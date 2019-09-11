@@ -6,6 +6,7 @@ from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
+from odoo.tools.safe_eval import safe_eval
 
 
 class StockAnalysisReportWizard(models.TransientModel):
@@ -85,7 +86,8 @@ class StockAnalysisReportWizard(models.TransientModel):
 
     @api.multi
     def confirm(self):
-        products = self.env['product.product'].browse(self.filter_domain)
+        domain = safe_eval(self.filter_domain) if self.filter_domain else []
+        products = self.env['product.product'].search(domain)
         return self.env.ref(
             'stock_analysis_aeroo_report.action_aeroo_stock_analysis_report'
-            ).with_context(self.read()[0]).report_action(products)
+        ).with_context(self.read()[0]).report_action(products)

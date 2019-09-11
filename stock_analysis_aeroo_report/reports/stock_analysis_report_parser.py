@@ -100,7 +100,7 @@ class Parser(models.AbstractModel):
         out_domain = list(common_domain)
         if self.context.get('location_id'):
             out_domain.append(
-                ('location_id', '=', self.context.get('location_id')))
+                ('location_id', '=', self.context.get('location_id')[0]))
         else:
             out_domain.append(
                 ('location_dest_id.usage', 'in', ['internal']))
@@ -109,7 +109,7 @@ class Parser(models.AbstractModel):
         in_domain = list(common_domain)
         if self.context.get('location_id'):
             in_domain.append(
-                ('location_dest_id', '=', self.context.get('location_id')))
+                ('location_dest_id', '=', self.context.get('location_id')[0]))
         else:
             in_domain.append(('location_id.usage', 'not in', ['internal']))
 
