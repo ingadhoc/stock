@@ -30,7 +30,7 @@ class StockPickingEan128ReportDetail(models.TransientModel):
         readonly=True,
     )
     product_uom_id = fields.Many2one(
-        'product.uom',
+        'uom.uom',
         string='UOM',
         readonly=True,
     )

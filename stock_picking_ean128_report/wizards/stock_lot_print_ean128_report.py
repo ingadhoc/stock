@@ -24,7 +24,6 @@ class StockLotEan128Report(models.TransientModel):
     product_id = fields.Many2one(
         'product.product',
         related='lot_id.product_id',
-        readonly=True,
     )
 
     @api.multi
