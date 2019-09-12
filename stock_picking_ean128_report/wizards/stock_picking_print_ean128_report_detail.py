@@ -10,6 +10,7 @@ class StockPickingEan128ReportDetail(models.TransientModel):
     view doesn't save the values
     """
     _name = 'stock.picking.print_ean128_report_detail'
+    _description = 'Stock Picking Print EAN128 Report Detail'
 
     stock_picking_report_id = fields.Many2one(
         'stock.picking.print_ean128_report',
@@ -30,7 +31,7 @@ class StockPickingEan128ReportDetail(models.TransientModel):
         readonly=True,
     )
     product_uom_id = fields.Many2one(
-        'product.uom',
+        'uom.uom',
         string='UOM',
         readonly=True,
     )
