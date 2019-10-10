@@ -10,7 +10,7 @@ class ProductProduct(models.Model):
 
     @api.model
     def name_search(self, name, args=None, operator='ilike', limit=100):
-        res = super(ProductProduct, self).name_search(
+        res = super().name_search(
             name, args=args, operator=operator, limit=limit)
         if not limit or len(res) < limit:
             # do not search for lots of products that are already displayed

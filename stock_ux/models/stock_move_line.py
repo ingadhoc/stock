@@ -39,14 +39,15 @@ class StockMoveLine(models.Model):
     def set_all_done(self):
         precision = self.env['decimal.precision'].precision_get(
             'Product Unit of Measure')
-        for rec in self:
+        for rec in self.filtered(
+                lambda x: x.state not in ['draft', 'done', 'cancel']):
             rec.qty_done = rec.product_uom_qty \
                 if not float_is_zero(
                     rec.product_uom_qty,
                     precision_digits=precision) else \
                 rec.move_id.product_uom_qty
-        if self._context.get('from_popup', False):
-            return self[0].move_id.action_show_details()
+            if self._context.get('from_popup', False):
+                return self[0].move_id.action_show_details()
 
     @api.multi
     def _compute_product_uom_qty_location(self):

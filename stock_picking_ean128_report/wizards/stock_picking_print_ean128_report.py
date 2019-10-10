@@ -7,6 +7,7 @@ from odoo import fields, api, models
 
 class StockPickingEan128Report(models.TransientModel):
     _name = 'stock.picking.print_ean128_report'
+    _description = 'Stock Picking Print EAN128 Report'
 
     stock_picking_line_ids = fields.One2many(
         'stock.picking.print_ean128_report_detail',

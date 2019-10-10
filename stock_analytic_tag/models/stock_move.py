@@ -15,8 +15,7 @@ class StockMove(models.Model):
 
     def _prepare_account_move_line(
             self, qty, cost, credit_account_id, debit_account_id):
-        result = super(
-            StockMove, self)._prepare_account_move_line(
+        result = super()._prepare_account_move_line(
             qty=qty, cost=cost, credit_account_id=credit_account_id,
             debit_account_id=debit_account_id)
         for res in result:

@@ -20,7 +20,7 @@ class StockWarehouseOrderpoint(models.Model):
         "últimos 120 días.",
         digits=dp.get_precision('Product Unit of Measure'),
     )
-    location_rotation_stdev = fields.Float(
+    warehouse_rotation_stdev = fields.Float(
         compute='_compute_rotation',
         help="Desvío estandar de las cantidades entregas desde este almacen"
         " a clientes en los últimos 120 días.",
@@ -33,7 +33,7 @@ class StockWarehouseOrderpoint(models.Model):
         compute='_compute_rotation',
         digits=dp.get_precision('Product Unit of Measure'),
     )
-    location_rotation = fields.Float(
+    warehouse_rotation = fields.Float(
         help='Cantidades entregadas desde este almacen a clientes en los '
         'últimos 120 días dividido por 4 para mensualizar'
         '(restadas devoluciones).',
@@ -51,12 +51,12 @@ class StockWarehouseOrderpoint(models.Model):
         for rec in self.filtered('product_id'):
             rotation, rotation_stdev = rec.product_id.get_product_rotation(
                 compute_stdev=True)
-            location_rotation, location_rotation_stdev = \
+            warehouse_rotation, warehouse_rotation_stdev = \
                 rec.product_id.get_product_rotation(
                     rec.warehouse_id.view_location_id, compute_stdev=True)
             rec.update({
                 'rotation': rotation,
                 'rotation_stdev': rotation_stdev,
-                'location_rotation_stdev': location_rotation_stdev,
-                'location_rotation': location_rotation,
+                'warehouse_rotation_stdev': warehouse_rotation_stdev,
+                'warehouse_rotation': warehouse_rotation,
             })
