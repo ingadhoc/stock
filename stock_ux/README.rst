@@ -41,6 +41,7 @@ Several improvements to stock:
 #. Add in products (template and variants) button to access to stock moves related.
 #. Change name to the menus Product Move and Product Move lines.
 #. Add to "To Do" filter in stock move the state "partially_available".
+#. Add a "value" field on the quants, usable in a current inventory valuation report. This brings the possibility to get the correct value by locations for standard (not for AVCO products or FIFO products).
 #. Add optional constraints configurable by Picking Type:
 
 * Block Picking Edit: Restrict to add lines or to send more quantity than the original quantity. This will only apply to users with group Restrict Edit Blocked Pickings.
