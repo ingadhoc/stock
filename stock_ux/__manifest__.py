@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Stock UX',
-    'version': '12.0.1.1.0',
+    'version': '12.0.1.2.0',
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
@@ -46,6 +46,7 @@
         'views/stock_backorder_confirmation_views.xml',
         'views/stock_return_picking_views.xml',
         'views/stock_picking_type_views.xml',
+        'views/stock_quant_views.xml',
         'wizards/stock_operation_wizard_views.xml',
         'wizards/res_config_settings_views.xml',
         'report/stock_ux_report.xml',

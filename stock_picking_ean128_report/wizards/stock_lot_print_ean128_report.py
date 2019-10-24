@@ -8,6 +8,7 @@ from odoo import fields, api, models
 class StockLotEan128Report(models.TransientModel):
 
     _name = 'stock.lot.print_ean128_report'
+    _description = 'Stock Lot Print EAN128 Report'
 
     @api.model
     def _get_lot(self):
@@ -24,7 +25,6 @@ class StockLotEan128Report(models.TransientModel):
     product_id = fields.Many2one(
         'product.product',
         related='lot_id.product_id',
-        readonly=True,
     )
 
     @api.multi
