@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-06 15:01+0000\n"
+"POT-Creation-Date: 2019-10-24 23:51+0000\n"
 "PO-Revision-Date: 2018-08-23 20:45+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018\n"
 "Language-Team: Spanish (Chile) (https://www.transifex.com/adhoc/teams/46451/es_CL/)\n"
@@ -45,7 +45,7 @@ msgid "Draft"
 msgstr ""
 
 #. module: stock_picking_state
-#: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail_id_5051
+#: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail_id_5031
 msgid "ID"
 msgstr "ID"
 
