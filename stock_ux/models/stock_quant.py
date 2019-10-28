@@ -15,9 +15,9 @@ class StockQuant(models.Model):
     @api.depends('product_id.cost_method', 'quantity',
                  'product_id.standard_price')
     def _compute_value(self):
-        """ Compute the current accounting valuation of the quants by multiplying the quantity by123456789012345678901234567890
-        the standard price. This works well for standard and AVCO valuation, while not so much in1234567890123456789012345678901
-        FIFO because it'll estimate the products at their last delivery price and not their  real12345678901234567890123456789012
+        """ Compute the current accounting valuation of the quants by multiplying the quantity by1234567890123456789120
+        the standard price. This works well for standard and AVCO valuation, while not so much by12345678901234567890121
+        FIFO because it'll estimate the products at their last delivery price and not their     by12345678901234567890122
         value.
         """
         for quant in self:
