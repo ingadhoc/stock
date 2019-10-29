@@ -44,7 +44,7 @@ class StockMoveLine(models.Model):
         precision = self.env['decimal.precision'].precision_get(
             'Product Unit of Measure')
         for rec in self.filtered(
-            lambda x: x.state not in ['draft', 'done', 'cancel']):
+                lambda x: x.state not in ['draft', 'done', 'cancel']):
             rec.qty_done = rec.product_uom_qty \
                 if not float_is_zero(
                     rec.product_uom_qty,
