@@ -18,6 +18,7 @@ class StockPicking(models.Model):
         'stock.book',
         'Voucher Book',
         copy=False,
+        ondelete='restrict',
     )
     vouchers = fields.Char(
         compute='_compute_vouchers',
