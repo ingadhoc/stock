@@ -89,3 +89,6 @@ class StockMoveLine(models.Model):
     def _check_quantity(self):
         """If we work on move lines we want to ensure quantities are ok"""
         self.mapped('move_id')._check_quantity()
+        # We verify the case that does not have 'move_id' to restrict how does_check_quantity() in moves
+        if any(self.filtered(lambda x: not x.move_id and x.picking_id.picking_type_id.block_additional_quantity)):
+            raise ValidationError(_('You can not transfer more than the initial demand!'))
