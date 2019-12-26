@@ -7,10 +7,10 @@
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 11.0\n"
+"Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-10 19:45+0000\n"
-"PO-Revision-Date: 2018-08-23 20:44+0000\n"
+"POT-Creation-Date: 2019-12-26 00:56+0000\n"
+"PO-Revision-Date: 2019-10-24 23:40+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
@@ -20,17 +20,17 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: location_security
-#: model:ir.ui.view,arch_db:location_security.view_location_security_users_form
+#: model_terms:ir.ui.view,arch_db:location_security.view_location_security_users_form
 msgid "Allowed Stock Locations"
 msgstr "Ubicaciones de stock permitidas"
 
 #. module: location_security
-#: model:ir.model.fields,help:location_security.field_res_users_restrict_locations
+#: model:ir.model.fields,help:location_security.field_res_users__restrict_locations
 msgid "If True, you can set the location allowed"
 msgstr "Si es Verdadero, usted puede definir la ubicación permitida"
 
 #. module: location_security
-#: code:addons/location_security/models/stock_move.py:17
+#: code:addons/location_security/models/stock_move.py:23
 #, python-format
 msgid ""
 "Invalid Location. You cannot process this move since you do not control the "
@@ -40,17 +40,17 @@ msgstr ""
 " ubicación \"%s\"."
 
 #. module: location_security
-#: model:ir.ui.view,arch_db:location_security.view_location_security_users_form
+#: model_terms:ir.ui.view,arch_db:location_security.view_location_security_users_form
 msgid "Locations"
 msgstr "Ubicaciones"
 
 #. module: location_security
-#: model:ir.model.fields,field_description:location_security.field_res_users_restrict_locations
+#: model:ir.model.fields,field_description:location_security.field_res_users__restrict_locations
 msgid "Restrict Locations"
 msgstr "Restringir Ubicaciones"
 
 #. module: location_security
-#: model:ir.model.fields,field_description:location_security.field_res_users_stock_location_ids
+#: model:ir.model.fields,field_description:location_security.field_res_users__stock_location_ids
 msgid "Stock Locations"
 msgstr "Stock Locations"
 
