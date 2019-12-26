@@ -91,7 +91,7 @@ class StockRequest(models.Model):
         for rec in self:
             reassign = rec.picking_ids.filtered(
                 lambda x: x.state == 'confirmed' or (
-                    x.state in ['waiting', 'assigned'] and not x.printed))
+                    x.state in ['waiting', 'assigned'] and not x.printed)).sudo()
             if reassign:
                 reassign.do_unreserve()
                 reassign.action_assign()
