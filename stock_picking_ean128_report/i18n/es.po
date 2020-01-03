@@ -4,14 +4,15 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019
+# Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2020
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-26 00:56+0000\n"
+"POT-Creation-Date: 2019-12-26 01:42+0000\n"
 "PO-Revision-Date: 2019-09-12 00:57+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019\n"
+"Last-Translator: Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2020\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -142,7 +143,7 @@ msgstr "Stock Lot EAN128 Report"
 #. module: stock_picking_ean128_report
 #: model:ir.model,name:stock_picking_ean128_report.model_stock_lot_print_ean128_report
 msgid "Stock Lot Print EAN128 Report"
-msgstr ""
+msgstr "Imprimir Reporte de lote EAN128"
 
 #. module: stock_picking_ean128_report
 #: model:ir.actions.report,name:stock_picking_ean128_report.report_picking_ean128_excel
@@ -157,12 +158,12 @@ msgstr "Stock Picking EAN128 Report - ODT"
 #. module: stock_picking_ean128_report
 #: model:ir.model,name:stock_picking_ean128_report.model_stock_picking_print_ean128_report
 msgid "Stock Picking Print EAN128 Report"
-msgstr ""
+msgstr "Stock Picking Print EAN128 Report"
 
 #. module: stock_picking_ean128_report
 #: model:ir.model,name:stock_picking_ean128_report.model_stock_picking_print_ean128_report_detail
 msgid "Stock Picking Print EAN128 Report Detail"
-msgstr ""
+msgstr "Stock Picking Print EAN128 Report Detail"
 
 #. module: stock_picking_ean128_report
 #: model:ir.model.fields,field_description:stock_picking_ean128_report.field_stock_picking_print_ean128_report_detail__product_uom_id

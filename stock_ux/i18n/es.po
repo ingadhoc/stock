@@ -4,14 +4,15 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019
+# Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2020
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-26 00:56+0000\n"
+"POT-Creation-Date: 2019-12-26 01:42+0000\n"
 "PO-Revision-Date: 2019-07-31 13:03+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019\n"
+"Last-Translator: Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2020\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -54,6 +55,8 @@ msgid ""
 "Cantidades entregadas a clientes en los últimos 120 días dividido por 4 para"
 " mensualizar (restadas devoluciones)."
 msgstr ""
+"Cantidades entregadas a clientes en los últimos 120 días dividido por 4 para"
+" mensualizar (restadas devoluciones)."
 
 #. module: stock_ux
 #: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint__warehouse_rotation
@@ -61,6 +64,8 @@ msgid ""
 "Cantidades entregadas desde este almacen a clientes en los últimos 120 días "
 "dividido por 4 para mensualizar(restadas devoluciones)."
 msgstr ""
+"Cantidades entregadas desde este almacén a clientes en los últimos 120 días "
+"dividido por 4 para mensualizar(restadas devoluciones)."
 
 #. module: stock_ux
 #: model:ir.actions.act_window,name:stock_ux.action_stock_operation_wizard
@@ -77,7 +82,7 @@ msgstr "Change location must be called from operations of same picking!"
 #. module: stock_ux
 #: model:ir.model,name:stock_ux.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Ajustes de Configuración"
 
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_stock_operation_wizard_form
@@ -102,7 +107,7 @@ msgstr "Ubicación destino"
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_move__picking_dest_id
 msgid "Destination Transfer"
-msgstr ""
+msgstr "Transferencia de destino"
 
 #. module: stock_ux
 #: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint__rotation_stdev
@@ -110,6 +115,8 @@ msgid ""
 "Desvío estandar de las cantidades entregas a clientes en los últimos 120 "
 "días."
 msgstr ""
+"Desvío estándar de las cantidades entregas a clientes en los últimos 120 "
+"días."
 
 #. module: stock_ux
 #: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint__warehouse_rotation_stdev
@@ -117,6 +124,8 @@ msgid ""
 "Desvío estandar de las cantidades entregas desde este almacen a clientes en "
 "los últimos 120 días."
 msgstr ""
+"Desvío estándar de las cantidades entregas desde este almacén a clientes en "
+"los últimos 120 días."
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_operation_wizard__display_name
@@ -157,6 +166,9 @@ msgid ""
 "* Id de Movimientos: %s\n"
 "* Productos: %s"
 msgstr ""
+"Error de programación. Se llamó a cancel quantity para movimientos de distintos productos y/o pickings.\n"
+"* Id de Movimientos: %s\n"
+"* Productos: %s"
 
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_form
@@ -191,7 +203,7 @@ msgstr "Actualizado el"
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__location_id
 msgid "Location"
-msgstr ""
+msgstr "Ubicación"
 
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_stock_operation_wizard_form
@@ -211,7 +223,7 @@ msgstr "Fabricación"
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__product_max_qty
 msgid "Maximum Quantity"
-msgstr ""
+msgstr "Cantidad máxima"
 
 #. module: stock_ux
 #: model:ir.model,name:stock_ux.model_stock_warehouse_orderpoint
@@ -221,7 +233,7 @@ msgstr "Regla de inventario mínimo"
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__product_min_qty
 msgid "Minimum Quantity"
-msgstr ""
+msgstr "Cantidad Mínima"
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_move_line__product_uom_qty_location
@@ -259,6 +271,9 @@ msgid ""
 " o Reservado, probablemente el picking ya fue validado, pruebe refrezcar la "
 "ventana!"
 msgstr ""
+"No se puede validar un picking que no esté en estado Parcialmente Disponible"
+" o Reservado, probablemente el picking ya fue validado, pruebe refrescar la "
+"ventana!"
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_move_line__picking_type_id
@@ -268,12 +283,12 @@ msgstr "Tipo de Operación"
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_operation_wizard__picking_destination_location_id
 msgid "Original Destination Location"
-msgstr ""
+msgstr "Ubicación original de Destino"
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_operation_wizard__picking_source_location_id
 msgid "Original Source Location"
-msgstr ""
+msgstr "Ubicación original de Origen"
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_operation_wizard__picking_id
@@ -319,7 +334,7 @@ msgstr "Producto"
 #. module: stock_ux
 #: model:ir.model,name:stock_ux.model_stock_move_line
 msgid "Product Moves (Stock Move Line)"
-msgstr ""
+msgstr "Movimiento de Productos(Líneas de Movimientos de Productos)"
 
 #. module: stock_ux
 #: model:ir.model,name:stock_ux.model_product_template
@@ -341,17 +356,17 @@ msgstr "Movimientos de productos detallados"
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_move_tree
 msgid "Q. UdM Producto"
-msgstr ""
+msgstr "Q. UdM Producto"
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__qty_multiple
 msgid "Qty Multiple"
-msgstr ""
+msgstr "Qty Múltiple"
 
 #. module: stock_ux
 #: model:ir.model,name:stock_ux.model_stock_quant
 msgid "Quants"
-msgstr ""
+msgstr "Quants"
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_return_picking__reason
@@ -394,7 +409,7 @@ msgstr "Set all done"
 #. module: stock_ux
 #: model:ir.actions.server,name:stock_ux.action_operation_set_all_undone
 msgid "Set all undone"
-msgstr ""
+msgstr "Establecer todo sin realizar"
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_res_config_settings__group_operation_used_lots
@@ -429,7 +444,7 @@ msgstr "Movimiento de Stock"
 #. module: stock_ux
 #: model:ir.model,name:stock_ux.model_stock_operation_wizard
 msgid "Stock Operation Wizard"
-msgstr ""
+msgstr "Asistente de Operaciones de Stock"
 
 #. module: stock_ux
 #: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint__qty_multiple
@@ -437,6 +452,8 @@ msgid ""
 "The procurement quantity will be rounded up to this multiple.  If it is 0, "
 "the exact quantity will be used."
 msgstr ""
+"La cantidad de abastecimiento se redondeará a este múltiplo. Si es 0, se "
+"usará la cantidad exacta."
 
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.product_form_view_procurement_button
@@ -481,12 +498,12 @@ msgstr "Lotes Usados"
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_quant__value
 msgid "Value"
-msgstr ""
+msgstr "Valor"
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__warehouse_rotation
 msgid "Warehouse Rotation"
-msgstr ""
+msgstr "Rotación de Almacén"
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__warehouse_rotation_stdev
@@ -500,6 +517,9 @@ msgid ""
 " Odoo generates a procurement to bring the forecasted quantity to the Max "
 "Quantity."
 msgstr ""
+"Cuando el stock virtual cae por debajo de la Cantidad mínima especificada "
+"para este campo, Odoo genera un abastecimiento para llevar la cantidad "
+"prevista a la Cantidad máxima."
 
 #. module: stock_ux
 #: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint__product_max_qty
@@ -508,6 +528,9 @@ msgid ""
 "procurement to bring the forecasted quantity to the Quantity specified as "
 "Max Quantity."
 msgstr ""
+"Cuando el stock virtual cae por debajo de la Cantidad mínima, Odoo genera un"
+" abastecimiento para llevar la cantidad prevista a la Cantidad especificada "
+"como Cantidad máxima."
 
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.stock_move_line_view_search

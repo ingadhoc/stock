@@ -4,14 +4,15 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019
+# Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2020
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-26 00:56+0000\n"
+"POT-Creation-Date: 2019-12-26 01:42+0000\n"
 "PO-Revision-Date: 2019-07-30 12:03+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019\n"
+"Last-Translator: Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2020\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -28,7 +29,7 @@ msgstr "EL COMPROBANTE ESTÁ IMPRESO Y ASIGNADO.</strong>"
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_book__next_number
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking__next_number
 msgid "Actual Next Number"
-msgstr ""
+msgstr "Próximo Número Actual"
 
 #. module: stock_voucher
 #: model_terms:ir.ui.view,arch_db:stock_voucher.view_print_stock_voucher_form
@@ -117,7 +118,7 @@ msgstr "Valor declarado"
 #. module: stock_voucher
 #: model:ir.model,name:stock_voucher.model_delivery_carrier
 msgid "Delivery Methods"
-msgstr ""
+msgstr "Métodos de Entrega"
 
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_book__display_name
@@ -241,12 +242,12 @@ msgstr "Numero"
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_voucher__number
 msgid "Number (for backward compatibility)"
-msgstr ""
+msgstr "Número (Por compatibilidad hacia atrás)"
 
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking__number_of_packages
 msgid "Number of Packages"
-msgstr ""
+msgstr "Número de paquetes"
 
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_print_stock_voucher__estimated_number_of_pages
@@ -257,7 +258,7 @@ msgstr "Número de páginas"
 #: code:addons/stock_voucher/models/stock_picking.py:92
 #, python-format
 msgid "Números de remitos asignados: %s"
-msgstr ""
+msgstr "Números de remitos asignados: %s"
 
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking__observations
@@ -321,12 +322,12 @@ msgstr "Impreso"
 #. module: stock_voucher
 #: model:ir.model,name:stock_voucher.model_stock_move_line
 msgid "Product Moves (Stock Move Line)"
-msgstr ""
+msgstr "Movimiento de Productos(Líneas de Movimientos de Productos)"
 
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_type__restrict_number_package
 msgid "Restrict Number Package"
-msgstr ""
+msgstr "Restriccion de Numero de Paquetes"
 
 #. module: stock_voucher
 #: model:ir.model,name:stock_voucher.model_stock_move
@@ -367,7 +368,7 @@ msgstr "The field \"Number\" must be unique per book."
 #: code:addons/stock_voucher/models/stock_picking.py:127
 #, python-format
 msgid "The number of packages can not be 0"
-msgstr ""
+msgstr "El numero de paquetes no puede ser 0"
 
 #. module: stock_voucher
 #: model:ir.model.fields,help:stock_voucher.field_delivery_carrier__partner_id
@@ -411,7 +412,7 @@ msgstr "Remitos"
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_move__vouchers
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking__vouchers
 msgid "Vouchers (string)"
-msgstr ""
+msgstr "Remitos (Cadena)"
 
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_print_stock_voucher__with_vouchers
