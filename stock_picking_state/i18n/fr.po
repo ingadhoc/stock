@@ -3,15 +3,15 @@
 # * stock_picking_state
 # 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 11.0\n"
+"Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-06 15:01+0000\n"
-"PO-Revision-Date: 2018-08-23 20:45+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2018\n"
+"POT-Creation-Date: 2019-12-26 00:56+0000\n"
+"PO-Revision-Date: 2019-08-01 17:41+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019\n"
 "Language-Team: French (https://www.transifex.com/adhoc/teams/46451/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -25,17 +25,17 @@ msgid "Cancelled"
 msgstr ""
 
 #. module: stock_picking_state
-#: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail_create_uid
+#: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail__create_uid
 msgid "Created by"
 msgstr "Créé par"
 
 #. module: stock_picking_state
-#: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail_create_date
+#: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail__create_date
 msgid "Created on"
 msgstr "Créé le"
 
 #. module: stock_picking_state
-#: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail_display_name
+#: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail__display_name
 msgid "Display Name"
 msgstr ""
 
@@ -45,7 +45,7 @@ msgid "Draft"
 msgstr ""
 
 #. module: stock_picking_state
-#: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail_id_5051
+#: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail__id
 msgid "ID"
 msgstr "ID"
 
@@ -60,22 +60,22 @@ msgid "Internal"
 msgstr ""
 
 #. module: stock_picking_state
-#: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail___last_update
+#: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail____last_update
 msgid "Last Modified on"
 msgstr ""
 
 #. module: stock_picking_state
-#: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail_write_uid
+#: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail__write_uid
 msgid "Last Updated by"
 msgstr "Dernière màj par"
 
 #. module: stock_picking_state
-#: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail_write_date
+#: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail__write_date
 msgid "Last Updated on"
 msgstr "Dernière màj le"
 
 #. module: stock_picking_state
-#: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail_name
+#: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail__name
 msgid "Name"
 msgstr ""
 
@@ -96,12 +96,12 @@ msgid "Picking State Detail"
 msgstr ""
 
 #. module: stock_picking_state
-#: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail_picking_type
+#: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail__picking_type
 msgid "Picking Type"
 msgstr ""
 
 #. module: stock_picking_state
-#: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail_picking_ids
+#: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail__picking_ids
 msgid "Pickings"
 msgstr ""
 
@@ -111,17 +111,17 @@ msgid "Ready to Transfer"
 msgstr ""
 
 #. module: stock_picking_state
-#: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail_sequence
+#: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail__sequence
 msgid "Sequence"
 msgstr ""
 
 #. module: stock_picking_state
-#: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail_id
+#: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking__state_detail_id
 msgid "State Detail"
 msgstr ""
 
 #. module: stock_picking_state
-#: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail_state
+#: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail__state
 msgid "Status"
 msgstr ""
 
