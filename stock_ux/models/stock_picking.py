@@ -127,7 +127,14 @@ class StockPicking(models.Model):
     def new_force_availability(self):
         self.action_assign()
         for rec in self.mapped('move_lines'):
-            rec.quantity_done = rec.product_uom_qty
+            # this two could go together but we keep similar to odoo sm._quantity_done_set
+            if not rec.move_line_ids:
+                rec.quantity_done = rec.product_uom_qty
+            elif len(rec.move_line_ids) == 1:
+                rec.quantity_done = rec.product_uom_qty
+            else:
+                for line in rec.move_line_ids:
+                    line.qty_done = line.product_uom_qty
 
     # overwrite of odoo method so that we dont suggest backorder because of
     # canceled moves. Search for "CHANGE FROM HERE"
