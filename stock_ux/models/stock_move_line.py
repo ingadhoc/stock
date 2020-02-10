@@ -4,7 +4,7 @@
 ##############################################################################
 from odoo import models, api, fields, _
 from odoo.exceptions import ValidationError
-from odoo.tools import float_is_zero, float_compare
+from odoo.tools import float_is_zero
 
 
 class StockMoveLine(models.Model):
