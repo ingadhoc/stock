@@ -3,12 +3,12 @@
     <record id="stock_book_rule" model="ir.rule">
         <field name="name">Stock Book Multi-Company</field>
         <field name="model_id" ref="model_stock_book"/>
-        <field name="domain_force">[('company_id','child_of',[user.company_id.id])]</field>
+        <field name="domain_force">[('company_id','in',company_ids)]</field>
     </record>
 
     <record id="stock_picking_voucher_rule" model="ir.rule">
         <field name="name">Stock Picking Voucher Multi-Company</field>
         <field name="model_id" ref="model_stock_picking_voucher"/>
-        <field name="domain_force">[('company_id','child_of',[user.company_id.id])]</field>
+        <field name="domain_force">[('company_id','in',company_ids)]</field>
     </record>
 </odoo>

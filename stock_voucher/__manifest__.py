@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Stock Voucher',
-    'version': '12.0.1.1.0',
+    'version': "13.0.1.0.0",
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
@@ -29,9 +29,8 @@
     'images': [
     ],
     'depends': [
-        'delivery',
-        'base_validator',
-        'web_ir_actions_act_multi',
+        'stock',
+        # 'web_ir_actions_act_multi',
     ],
     'data': [
         'security/stock_voucher_security.xml',
@@ -48,7 +47,7 @@
     ],
     'demo': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }

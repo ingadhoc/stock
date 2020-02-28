@@ -4,7 +4,6 @@
 ##############################################################################
 from odoo import fields, models, api, _
 from odoo.exceptions import UserError
-import odoo.addons.decimal_precision as dp
 
 
 class StockPicking(models.Model):
@@ -31,7 +30,7 @@ class StockPicking(models.Model):
         copy=False,
     )
     declared_value = fields.Float(
-        digits=dp.get_precision('Account'),
+        digits='Account',
     )
     observations = fields.Text(
     )
@@ -70,7 +69,6 @@ class StockPicking(models.Model):
         for rec in self.filtered(lambda x: x.picking_type_id.book_id):
             rec.book_id = rec.picking_type_id.book_id.id
 
-    @api.multi
     def do_print_voucher(self):
         '''This function prints the voucher'''
         report = self.env['ir.actions.report'].search(
@@ -78,7 +76,6 @@ class StockPicking(models.Model):
             limit=1).report_action(self)
         return report
 
-    @api.multi
     def assign_numbers(self, estimated_number_of_pages, book):
         self.ensure_one()
         list_of_vouchers = []
@@ -93,13 +90,11 @@ class StockPicking(models.Model):
             'Números de remitos asignados: %s') % (self.vouchers))
         self.write({'book_id': book.id})
 
-    @api.multi
     def clean_voucher_data(self):
         self.voucher_ids.unlink()
         self.book_id = False
         self.message_post(body=_('The assigned voucher were deleted'))
 
-    @api.multi
     def action_done(self):
         """
         If book required then we assign numbers
@@ -113,7 +108,6 @@ class StockPicking(models.Model):
                 picking.book_id)
         return res
 
-    @api.multi
     def do_stock_voucher_transfer_check(self):
         """
         We separe to use it in other modules
@@ -132,7 +126,6 @@ class StockPicking(models.Model):
                 raise UserError(_('You must set stock voucher numbers'))
         return True
 
-    @api.multi
     def button_validate(self):
         """
         We make checks before calling transfer
@@ -148,7 +141,6 @@ class StockPicking(models.Model):
             return self.do_print_voucher()
         return res
 
-    @api.multi
     def compute_declared_value(self):
         for rec in self.filtered(
                 lambda x: x.picking_type_id.automatic_declare_value):
@@ -232,6 +224,6 @@ class StockPicking(models.Model):
                 # we convert the declared_value to the currency of the company
                 rec.declared_value = pricelist.currency_id._convert(
                     declared_value, rec.company_id.currency_id, rec.company_id,
-                    rec.sale_id.confirmation_date or fields.Date.today())
+                    rec.sale_id.date_order or fields.Date.today())
             else:
                 rec.declared_value = declared_value

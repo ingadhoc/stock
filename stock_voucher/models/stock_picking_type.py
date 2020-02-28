@@ -23,11 +23,6 @@ class StockPickingType(models.Model):
         help='If true, voucher numbers will be required to be unique for same'
         ' partner',
     )
-    voucher_number_validator_id = fields.Many2one(
-        'base.validator',
-        string='Voucher Number Validator',
-        help='Choose a validation if you want to validate voucher numbers'
-    )
     book_id = fields.Many2one(
         'stock.book',
         'Book',

@@ -15,9 +15,7 @@ class StockPrintStockVoucher(models.TransientModel):
         # sale order id
         # self._context.get('active_id'))
         picking_id = self._context.get(
-            # 'picking_id', self._context.get('active_id', False))
             'picking_id')
-        # active_id = self._context.get('active_id', False)
         return self.env['stock.picking'].browse(picking_id)
 
     @api.model
@@ -69,17 +67,14 @@ class StockPrintStockVoucher(models.TransientModel):
             -(-float(operations) // float(lines_per_voucher)))
         self.estimated_number_of_pages = estimated_number_of_pages
 
-    @api.multi
     def do_print_voucher(self):
         self.printed = True
         return self.picking_id.do_print_voucher()
 
-    @api.multi
     def assign_numbers(self):
         self.picking_id.assign_numbers(
             self.estimated_number_of_pages, self.book_id)
 
-    @api.multi
     def do_print_and_assign(self):
         self.assign_numbers()
         return {
@@ -90,6 +85,5 @@ class StockPrintStockVoucher(models.TransientModel):
             'type': 'ir.actions.act_multi',
         }
 
-    @api.multi
     def do_clean(self):
         self.picking_id.clean_voucher_data()

@@ -2,13 +2,12 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import api, models
+from odoo import models
 
 
 class StockImmediateTransfer(models.TransientModel):
     _inherit = 'stock.immediate.transfer'
 
-    @api.multi
     def process(self):
         res = super().process()
         picking = self.env['stock.picking'].browse(

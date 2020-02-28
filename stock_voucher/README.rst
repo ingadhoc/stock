@@ -16,7 +16,6 @@ Stock Voucher
 
 #. This module adds stock voucher report on stock picking to generate a voucher for each Customers pickings.
 #. Also adds parameters in stock picking type to set declared value and number_package in the pickings.
-#. Restore partner_id field on delivery that was deprecated on v11.
 
 Installation
 ============
