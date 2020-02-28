@@ -1,6 +1,6 @@
-[![Runbot Status](http://runbot.adhoc.com.ar/runbot/badge/flat/13/12.0.svg)](http://runbot.adhoc.com.ar/runbot/repo/github-com-ingadhoc-stock-13)
-[![Build Status](https://travis-ci.org/ingadhoc/stock.svg?branch=12.0)](https://travis-ci.org/ingadhoc/stock)
-[![Coverage Status](https://coveralls.io/repos/ingadhoc/stock/badge.png?branch=12.0)](https://coveralls.io/r/ingadhoc/stock?branch=12.0)
+[![Runbot Status](http://runbot.adhoc.com.ar/runbot/badge/flat/13/13.0.svg)](http://runbot.adhoc.com.ar/runbot/repo/github-com-ingadhoc-stock-13)
+[![Build Status](https://travis-ci.org/ingadhoc/stock.svg?branch=13.0)](https://travis-ci.org/ingadhoc/stock)
+[![Coverage Status](https://coveralls.io/repos/ingadhoc/stock/badge.png?branch=13.0)](https://coveralls.io/r/ingadhoc/stock?branch=13.0)
 [![Code Climate](https://codeclimate.com/github/ingadhoc/stock/badges/gpa.svg)](https://codeclimate.com/github/ingadhoc/stock)
 
 # ADHOC stock
@@ -12,7 +12,7 @@ ADHOC Odoo Stock & Warehouse Management Addons
 
 Translation Status
 ------------------
-[![Transifex Status](https://www.transifex.com/projects/p/ingadhoc-stock-8-12-0/chart/image_png)](https://www.transifex.com/projects/p/ingadhoc-stock-12-0)
+[![Transifex Status](https://www.transifex.com/projects/p/ingadhoc-stock-8-13-0/chart/image_png)](https://www.transifex.com/projects/p/ingadhoc-stock-13-0)
 
 ----
 
