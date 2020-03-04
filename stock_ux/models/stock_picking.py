@@ -27,10 +27,9 @@ class StockPicking(models.Model):
         if not_del_pickings:
             raise ValidationError(_(
                 'You can not delete this pickings because "Block picking '
-                'deletion" is enable on the picking type "%s" '
+                'deletion" is enable on the picking type/s "%s" '
                 'or the state of the picking is not draft or cancel.\n'
-                'Picking Ids: %s') % (
-                    not_del_pickings.ids, self.picking_type_id.name))
+                'Picking Ids: %s') % (','.join(not_del_pickings.mapped('picking_type_id.name')), not_del_pickings.ids))
         return super().unlink()
 
     @api.multi
