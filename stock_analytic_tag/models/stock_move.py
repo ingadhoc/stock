@@ -14,10 +14,10 @@ class StockMove(models.Model):
     )
 
     def _prepare_account_move_line(
-            self, qty, cost, credit_account_id, debit_account_id):
+            self, qty, cost, credit_account_id, debit_account_id, description):
         result = super()._prepare_account_move_line(
             qty=qty, cost=cost, credit_account_id=credit_account_id,
-            debit_account_id=debit_account_id)
+            debit_account_id=debit_account_id, description=description)
         for res in result:
             res[2]['analytic_tag_ids'] = [(6, 0, self.analytic_tag_ids.ids)]
         return result
