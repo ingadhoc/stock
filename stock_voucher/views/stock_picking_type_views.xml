@@ -10,7 +10,6 @@
                     <group>
                         <field name="book_id" attrs="{'invisible':[('code','=','incoming')]}"/>
                         <field name="voucher_number_unique" attrs="{'invisible':[('code','!=','incoming')]}"/>
-                        <field name="voucher_number_validator_id" attrs="{'invisible':[('code','!=','incoming')]}"/>
                         <field name="pricelist_id"/>
                     </group>
                     <group>

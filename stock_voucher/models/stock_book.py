@@ -30,8 +30,7 @@ class StockBook(models.Model):
         'res.company',
         'Company',
         required=True,
-        default=lambda self: self.env[
-            'res.company']._company_default_get('stock.book'),
+        default=lambda self: self.env.company,
     )
     next_number = fields.Integer(
         related='sequence_id.number_next_actual',

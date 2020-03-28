@@ -10,12 +10,11 @@
    :target: https://www.gnu.org/licenses/agpl
    :alt: License: AGPL-3
 
-=============
-Stock Voucher
-=============
+===========
+Delivery Ux
+===========
 
-#. This module adds stock voucher report on stock picking to generate a voucher for each Customers pickings.
-#. Also adds parameters in stock picking type to set declared value and number_package in the pickings.
+#. Restore partner_id field on delivery that was deprecated on v11.
 
 Installation
 ============
@@ -29,15 +28,14 @@ Configuration
 
 To configure this module, you need to:
 
-#. To configure Books:  Go to Stock / Configurations / Books.
-#. To configure the Declared Value , Book Required: Go to Stock Pincking Type.
+#. Just select the partner in the carrier.
 
 Usage
 =====
 
 To use this module, you need to:
 
-#. Just create a sale order, confirm and transfer the products.
+#. Just use it.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot

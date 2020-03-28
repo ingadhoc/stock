@@ -2,7 +2,7 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import api, models
+from odoo import models
 
 
 class StockBackorderConfirmation(models.TransientModel):
@@ -11,7 +11,6 @@ class StockBackorderConfirmation(models.TransientModel):
     """
     _inherit = 'stock.backorder.confirmation'
 
-    @api.multi
     def process(self):
         super().process()
         picking = self.env['stock.picking'].browse(
@@ -29,7 +28,6 @@ class StockBackorderConfirmation(models.TransientModel):
                 'type': 'ir.actions.act_multi',
             }
 
-    @api.multi
     def process_cancel_backorder(self):
         super().process_cancel_backorder()
         picking = self.env['stock.picking'].browse(

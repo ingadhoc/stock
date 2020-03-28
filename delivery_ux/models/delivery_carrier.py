@@ -6,6 +6,6 @@ class DeliveryCarrier(models.Model):
 
     partner_id = fields.Many2one(
         'res.partner',
-        string='Transporter Company',
-        help="The partner that is doing the delivery service."
+        string='Carrier Address',
+        help="Utilizado para el remito."
     )
