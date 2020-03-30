@@ -2,14 +2,13 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import models, fields,  api
+from odoo import models, fields
 import statistics
 
 
 class ProductProduct(models.Model):
     _inherit = 'product.product'
 
-    @api.multi
     def get_product_rotation(self, location=False, compute_stdev=False):
         self.ensure_one()
         # we should use cache for this date
@@ -39,7 +38,6 @@ class ProductProduct(models.Model):
             return rotation, stdev
         return rotation
 
-    @api.multi
     def action_view_stock_move(self):
         self.ensure_one()
         action = self.env.ref('stock.stock_move_action').read()[0]

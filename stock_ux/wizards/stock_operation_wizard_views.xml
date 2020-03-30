@@ -22,6 +22,6 @@
         </field>
     </record>
 
-    <act_window id="action_stock_operation_wizard" name="Change Locations" view_mode="form" multi="True" key2="client_action_multi" target="new" res_model="stock.operation.wizard" src_model="stock.move.line" groups="stock.group_stock_multi_locations"/>
+    <act_window id="action_stock_operation_wizard" name="Change Locations" view_mode="form" target="new" res_model="stock.operation.wizard" binding_model="stock.move.line" binding_views="list" groups="stock.group_stock_multi_locations"/>
 
 </odoo>

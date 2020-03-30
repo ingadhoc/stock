@@ -35,7 +35,6 @@ class StockMoveLine(models.Model):
         string='Net Quantity',
     )
 
-    @api.multi
     def set_all_done(self):
         precision = self.env['decimal.precision'].precision_get(
             'Product Unit of Measure')
@@ -49,10 +48,11 @@ class StockMoveLine(models.Model):
             if self._context.get('from_popup', False):
                 return self[0].move_id.action_show_details()
 
-    @api.multi
+    @api.depends_context('location')
     def _compute_product_uom_qty_location(self):
         location = self._context.get('location')
         if not location:
+            self.update({'product_uom_qty_location': 0.0})
             return False
         # because now we use location_id to select location, we have compelte
         # location name. If y need we can use some code of
@@ -87,4 +87,5 @@ class StockMoveLine(models.Model):
         self.mapped('move_id')._check_quantity()
         # We verify the case that does not have 'move_id' to restrict how does_check_quantity() in moves
         if any(self.filtered(lambda x: not x.move_id and x.picking_id.picking_type_id.block_additional_quantity)):
-            raise ValidationError(_('You can not transfer more than the initial demand!'))
+            raise ValidationError(
+                _('You can not transfer more than the initial demand!'))

@@ -46,7 +46,6 @@ class StockOperationWizard(models.TransientModel):
                 'picking!'))
         return picking.id
 
-    @api.multi
     def action_change_location(self):
         move_lines = self.env['stock.move.line'].browse(
             self._context.get('active_ids', []))

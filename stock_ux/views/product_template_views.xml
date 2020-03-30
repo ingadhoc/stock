@@ -5,18 +5,6 @@
         <field name="active" eval="False"/>
     </record>
 
-    <record id="view_product_form" model="ir.ui.view">
-        <field name="name">product.template.form</field>
-        <field name="model">product.template</field>
-        <field name="inherit_id" ref="stock.product_template_form_view_procurement_button"/>
-        <field name="priority">20</field>
-        <field name="arch" type="xml">
-            <xpath expr="//div//span[hasclass('o_stat_value')]//span" position="attributes">
-                <attribute name="groups"></attribute>
-            </xpath>
-        </field>
-    </record>
-
     <record model="ir.ui.view" id="product_template_form_view_procurement_button">
         <field name="name">product.template_procurement.inherit</field>
         <field name="model">product.template</field>

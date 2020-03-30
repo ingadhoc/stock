@@ -36,7 +36,6 @@ class StockMove(models.Model):
                 rec.move_line_ids.filtered('lot_id').mapped(
                     lambda x: "%s (%s)" % (x.lot_id.name, x.qty_done)))
 
-    @api.multi
     def set_all_done(self):
         self.mapped('move_line_ids').set_all_done()
         for rec in self.filtered(lambda x: not x.move_line_ids):
@@ -54,7 +53,6 @@ class StockMove(models.Model):
             raise ValidationError(_(
                 'You can not transfer more than the initial demand!'))
 
-    @api.multi
     def _cancel_quantity(self, quantity=None, stream=None):
         """ Metodo que para un conjunto de moves (self), de mismo producto,
         trata de cancelar una cantidad (quantity)
@@ -137,7 +135,6 @@ class StockMove(models.Model):
                 move._action_cancel()
                 break
 
-    @api.multi
     def action_view_linked_record(self):
         """This function returns an action that display existing sales order
         of given picking.
