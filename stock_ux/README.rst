@@ -32,7 +32,6 @@ Several improvements to stock:
 #. Only allow to delete pickings on draft/cancel state.
 #. Add a wizard accion in Operation to change locations.
 #. Remove the technical features group in the "Forecasted" button from the product template view, to see the breakdown of incoming and outgoing stock.
-#. Remove the group Tecnical Features to the seccion "Locations" in "stock move" form view from the picking view.
 #. Fix in the calculation cost of the merchandise sold when the currency of the product is different from the currency of the company.
 #. Add a stock picking list report to stock pickings.
 #. Add compatibility with web_m2x_options by allowing to create lots on m2o fields
@@ -40,7 +39,6 @@ Several improvements to stock:
 #. Add in products (template and variants) button to access to stock moves related.
 #. Change name to the menus Product Move and Product Move lines.
 #. Add to "To Do" filter in stock move the state "partially_available".
-#. Add a "value" field on the quants, usable in a current inventory valuation report. This brings the possibility to get the correct value by locations for standard (not for AVCO products or FIFO products).
 #. Add optional constraints configurable by Picking Type:
 
 * Block Picking Edit: Restrict to add lines or to send more quantity than the original quantity. This will only apply to users with group Restrict Edit Blocked Pickings.

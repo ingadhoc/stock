@@ -1,0 +1,32 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * stock_ux
+#
+# Translators:
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019
+# Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2020
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-12-26 01:42+0000\n"
+"PO-Revision-Date: 2019-07-31 13:03+0000\n"
+"Last-Translator: Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2020\n"
+"Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+#. module: stock
+#: model:ir.actions.act_window,name:stock.stock_move_action
+#: model:ir.ui.menu,name:stock.stock_move_menu
+msgid "Stock Moves"
+msgstr "Movimientos de productos"
+
+#. module: stock
+#: model:ir.actions.act_window,name:stock.stock_move_line_action
+#: model:ir.ui.menu,name:stock.stock_move_line_menu
+msgid "Product Moves"
+msgstr "Movimientos de productos detallados"

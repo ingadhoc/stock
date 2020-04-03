@@ -15,7 +15,6 @@ class StockPicking(models.Model):
         related='picking_type_id.block_manual_lines',
     )
 
-    @api.multi
     def unlink(self):
         """
         To avoid errors we block deletion of pickings in other state than
@@ -25,14 +24,16 @@ class StockPicking(models.Model):
             lambda x: x.picking_type_id.block_picking_deletion or x.state
             not in ('draft', 'cancel'))
         if not_del_pickings:
-            raise ValidationError(_(
-                'You can not delete this pickings because "Block picking '
-                'deletion" is enable on the picking type/s "%s" '
-                'or the state of the picking is not draft or cancel.\n'
-                'Picking Ids: %s') % (','.join(not_del_pickings.mapped('picking_type_id.name')), not_del_pickings.ids))
+            raise ValidationError(
+                _(
+                    'You can not delete this pickings because "Block picking '
+                    'deletion" is enable on the picking type/s "%s" '
+                    'or the state of the picking is not draft or cancel.\n'
+                    'Picking Ids: %s') %
+                (','.join(not_del_pickings.mapped('picking_type_id.name')),
+                 not_del_pickings.ids))
         return super().unlink()
 
-    @api.multi
     def copy(self, default=None):
         self.ensure_one()
         # si no viene default entonces es por interfaz y
@@ -46,7 +47,6 @@ class StockPicking(models.Model):
                 self.picking_type_id.name))
         return super().copy(default=default)
 
-    @api.multi
     def add_picking_operation(self):
         self.ensure_one()
         view_id = self.env.ref(
@@ -75,7 +75,6 @@ class StockPicking(models.Model):
             self.move_lines.update(
                 {'location_dest_id': self.location_dest_id.id})
 
-    @api.multi
     def action_done(self):
         for picking in self:
             # con esto arreglamos que odoo dejaria entregar varias veces el
@@ -92,7 +91,6 @@ class StockPicking(models.Model):
                     'picking ya fue validado, pruebe refrezcar la ventana!'))
         return super().action_done()
 
-    @api.multi
     def new_force_availability(self):
         self.action_assign()
         for rec in self.mapped('move_lines'):
@@ -121,17 +119,21 @@ class StockPicking(models.Model):
         # CHANGE FROM HERE
         for move in self.mapped('move_lines').filtered(
                 lambda x: x.state not in 'cancel'):
-        # for move in self.mapped('move_lines'):
-        # TO HERE
+            # for move in self.mapped('move_lines'):
+            # TO HERE
             quantity_todo.setdefault(move.product_id.id, 0)
             quantity_done.setdefault(move.product_id.id, 0)
             quantity_todo[move.product_id.id] += move.product_uom_qty
             quantity_done[move.product_id.id] += move.quantity_done
-        for ops in self.mapped('move_line_ids').filtered(lambda x: x.package_id and not x.product_id and not x.move_id):
+        for ops in self.mapped('move_line_ids').filtered(
+                lambda x: x.package_id and not x.product_id and not x.move_id):
             for quant in ops.package_id.quant_ids:
                 quantity_done.setdefault(quant.product_id.id, 0)
                 quantity_done[quant.product_id.id] += quant.qty
-        for pack in self.mapped('move_line_ids').filtered(lambda x: x.product_id and not x.move_id):
+        for pack in self.mapped('move_line_ids').filtered(
+                lambda x: x.product_id and not x.move_id):
             quantity_done.setdefault(pack.product_id.id, 0)
-            quantity_done[pack.product_id.id] += pack.product_uom_id._compute_quantity(pack.qty_done, pack.product_id.uom_id)
-        return any(quantity_done[x] < quantity_todo.get(x, 0) for x in quantity_done)
+            quantity_done[pack.product_id.id] += pack.product_uom_id._compute_quantity(
+                pack.qty_done, pack.product_id.uom_id)
+        return any(quantity_done[x] < quantity_todo.get(x, 0)
+                   for x in quantity_done)
