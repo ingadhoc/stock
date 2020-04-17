@@ -148,3 +148,11 @@ class StockMove(models.Model):
         action['views'] = [(form_view.id, 'form')]
         action['res_id'] = res_id
         return action
+
+    @api.model
+    def create(self, vals):
+        if not vals.get('sale_line_id', False) and not vals.get('purchase_line_id', False) \
+                and 'picking_type_id' in vals and\
+                self.env['stock.picking.type'].browse(vals.get('picking_type_id')).block_additional_quantity:
+            raise ValidationError(_('You can not transfer more than the initial demand!'))
+        return super().create(vals)
