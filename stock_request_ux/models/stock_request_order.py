@@ -20,6 +20,7 @@ class StockRequestOrder(models.Model):
         'stock.location.route',
         compute='_compute_route_ids',
         readonly=True,
+        string="Routes"
     )
     # este pickings es analogo al pickings de venta pero implementado mas facil
     # odoo en ventas agrega un campo en el procurement group y related en

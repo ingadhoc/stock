@@ -60,7 +60,6 @@ class StockRequest(models.Model):
         self.state = 'cancel'
         return True
 
-    @api.multi
     def button_cancel_remaining(self):
         for rec in self:
             old_product_uom_qty = rec.product_uom_qty
@@ -82,7 +81,6 @@ class StockRequest(models.Model):
                         old_product_uom_qty, rec.product_uom_qty))
             rec.check_done()
 
-    @api.multi
     def _action_launch_procurement_rule(self):
         """ TODO we could create an option or check if procurement_jit
         is installed
