@@ -25,14 +25,19 @@ class StockRequest(models.Model):
 
     @api.onchange('product_id')
     def onchange_product_id(self):
-        res = super(StockRequest, self).onchange_product_id()
+        res = super().onchange_product_id()
         if self.order_id.route_id in self.route_ids:
             self.route_id = self.order_id.route_id.id
         return res
 
     @api.depends('allocation_ids')
     def _compute_picking_ids(self):
-        for rec in self.filtered('procurement_group_id'):
+        sro_with_procurement = self.filtered('procurement_group_id')
+        (self - sro_with_procurement).update({
+            'picking_ids': self.env['stock.picking'],
+            'picking_count': 0
+            })
+        for rec in sro_with_procurement:
             all_moves = self.env['stock.move'].search(
                 [('group_id', '=', rec.procurement_group_id.id)])
             rec.picking_ids = all_moves.mapped('picking_id')
@@ -85,7 +90,7 @@ class StockRequest(models.Model):
         """ TODO we could create an option or check if procurement_jit
         is installed
         """
-        res = super(StockRequest, self)._action_launch_procurement_rule()
+        res = super()._action_launch_procurement_rule()
         for rec in self:
             reassign = rec.picking_ids.filtered(
                 lambda x: x.state == 'confirmed' or (

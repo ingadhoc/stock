@@ -44,7 +44,12 @@ class StockRequestOrder(models.Model):
 
     @api.depends('procurement_group_id')
     def _compute_picking_ids(self):
-        for rec in self.filtered('procurement_group_id'):
+        sro_with_procurement = self.filtered('procurement_group_id')
+        (self - sro_with_procurement).update({
+            'picking_ids': self.env['stock.picking'],
+            'picking_count': 0
+            })
+        for rec in sro_with_procurement:
             all_moves = self.env['stock.move'].search(
                 [('group_id', '=', rec.procurement_group_id.id)]
             )
@@ -53,7 +58,7 @@ class StockRequestOrder(models.Model):
 
     @api.model
     def create(self, vals):
-        rec = super(StockRequestOrder, self).create(vals)
+        rec = super().create(vals)
         if not rec.procurement_group_id:
             # setamos al group el partner del warehouse para que se propague
             # a los pickings
@@ -74,7 +79,7 @@ class StockRequestOrder(models.Model):
                  ('company_id', '=', False)])
             parents = rec.get_parents().ids
             rec.route_ids = routes.filtered(lambda r: any(
-                p.location_id.id in parents for p in r.pull_ids))
+                p.action == 'pull' and p.location_id.id in parents for p in r.rule_ids))
 
     def get_parents(self):
         location = self.location_id
