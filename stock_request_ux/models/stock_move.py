@@ -11,7 +11,6 @@ class StockMove(models.Model):
 
     request_order_id = fields.Many2one(
         related='stock_request_ids.order_id',
-        readonly=True,
     )
 
     def _split(self, qty, restrict_partner_id=False):
@@ -19,8 +18,7 @@ class StockMove(models.Model):
         backorder, we create a new allocation linked to this new move and
         update quantities
         """
-        new_move_id = super(StockMove, self)._split(
-            qty, restrict_partner_id=restrict_partner_id)
+        new_move_id = super()._split(qty, restrict_partner_id=restrict_partner_id)
 
         remaining_to_allocate = qty
         for allocation in self.allocation_ids:
