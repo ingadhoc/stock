@@ -153,9 +153,14 @@ class StockMove(models.Model):
         return action
 
     @api.model
-    def create(self, vals):
-        if not vals.get('sale_line_id', False) and not vals.get('purchase_line_id', False) \
-                and 'picking_type_id' in vals and\
-                self.env['stock.picking.type'].browse(vals.get('picking_type_id')).block_additional_quantity:
-            raise ValidationError(_('You can not transfer more than the initial demand!'))
-        return super().create(vals)
+    def default_get(self, fields_list):
+        # We override the default_get to make stock moves created when the picking
+        # was confirmed , this way restrict to add more quantity that initial demand
+        defaults = super().default_get(fields_list)
+        if self.env.context.get('default_picking_id'):
+            picking_id = self.env['stock.picking'].browse(self.env.context['default_picking_id'])
+            if picking_id.state == 'confirmed':
+                defaults['state'] = 'confirmed'
+                defaults['product_uom_qty'] = 0.0
+                defaults['additional'] = True
+        return defaults
