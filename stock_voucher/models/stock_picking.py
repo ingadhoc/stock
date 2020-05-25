@@ -72,7 +72,7 @@ class StockPicking(models.Model):
     def do_print_voucher(self):
         '''This function prints the voucher'''
         report = self.env['ir.actions.report'].search(
-            [('report_name', '=', 'stock.report_picking')],
+            [('report_name', '=', 'stock.report_delivery_document')],
             limit=1).report_action(self)
         return report
 
