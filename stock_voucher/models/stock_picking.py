@@ -71,10 +71,7 @@ class StockPicking(models.Model):
 
     def do_print_voucher(self):
         '''This function prints the voucher'''
-        report = self.env['ir.actions.report'].search(
-            [('report_name', '=', 'stock.report_delivery_document')],
-            limit=1).report_action(self)
-        return report
+        return self.env.ref('stock.action_report_delivery').report_action(self)
 
     def assign_numbers(self, estimated_number_of_pages, book):
         self.ensure_one()
