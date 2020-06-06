@@ -32,8 +32,6 @@ class StockPicking(models.Model):
     declared_value = fields.Float(
         digits='Account',
     )
-    observations = fields.Text(
-    )
     automatic_declare_value = fields.Boolean(
         related='picking_type_id.automatic_declare_value',
     )
