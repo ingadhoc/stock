@@ -2,7 +2,6 @@
     <record id="stock_picking_state_detail_action" model="ir.actions.act_window">
         <field name="name">Picking State Detail</field>
         <field name="res_model">stock.picking.state_detail</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref=""/>
         <field name="search_view_id" ref=""/>
