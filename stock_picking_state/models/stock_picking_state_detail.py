@@ -11,9 +11,13 @@ class StockPickingStateDetail(models.Model):
     _description = 'stock.picking.state_detail'
     _order = 'sequence'
 
-    name = fields.Char()
-    sequence = fields.Integer()
+    name = fields.Char(
+        copy=False,
+        required=True,
+    )
+    sequence = fields.Integer(copy=False)
     picking_type = fields.Selection(
+        required=True,
         selection=[
             ('internal', 'Internal'),
             ('outgoing', 'Outgoing'),
@@ -22,15 +26,14 @@ class StockPickingStateDetail(models.Model):
     )
     state = fields.Selection(
         string='Status',
-        store=True,
+        required=True,
         selection=[
             ('draft', 'Draft'),
             ('cancel', 'Cancelled'),
             ('waiting', 'Waiting Another Operation'),
-            ('confirmed', 'Waiting Availability'),
-            ('partially_available', 'Partially Available'),
-            ('assigned', 'Ready to Transfer'),
-            ('done', 'Transferred'),
+            ('confirmed', 'Waiting'),
+            ('assigned', 'Ready'),
+            ('done', 'Done'),
         ],
     )
     picking_ids = fields.One2many(
