@@ -23,10 +23,16 @@
             <button name="action_cancel" position="attributes">
                 <attribute name="groups">stock_ux.allow_picking_cancellation</attribute>
             </button>
-            <field name="move_ids_without_package" position="after">
-                <label for="note"/>
-                <field name="note"/>
-            </field>
+
+            <!-- move notes and add observations as we have on SO and invoices -->
+            <page name="note" position="attributes">
+                <attribute name="string">Internal Notes</attribute>
+            </page>
+            <page name="note" position="before">
+                <page name="observations" string="Observations" attrs="{'invisible': [('picking_type_code','=','incoming')]}">
+                    <field name="observations" placeholder="Add any observation that you would like to be included on the deliverslip"/>
+                </page>
+            </page>
         </field>
     </record>
 

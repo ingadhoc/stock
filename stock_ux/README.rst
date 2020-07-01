@@ -24,6 +24,7 @@ Several improvements to stock:
 #. When accesing stock moves lines throw products group by picking type and todo
 #. Add to orderpoint Rotation and Location Rotation: delivered quantities to customers on last 90 days divided per 3 (to make it monthly)
 #. Add button "Set all Done" on Moves lines
+#. Add observations on pickings (and deliveryslip)
 #. Add tracking field and Messaging in "Stock Warehouse Orderpoint".
 #. Add partner field on procurement group form view.
 #. Add button on moves to destination pickings
