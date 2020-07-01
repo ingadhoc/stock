@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_delivery_document" inherit_id="stock.report_delivery_document">
+        <table name="stock_move_line_table" position="after">
+            <p t-if="o.observations" name="comment">
+                <span t-field="o.observations"/>
+            </p>
+        </table>
+    </template>
+
+</odoo>
