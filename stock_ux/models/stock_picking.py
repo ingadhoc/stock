@@ -95,7 +95,7 @@ class StockPicking(models.Model):
     @api.multi
     def new_force_availability(self):
         self.action_assign()
-        for rec in self.mapped('move_lines'):
+        for rec in self.mapped('move_lines').filtered(lambda m: m.state not in ['cancel', 'done']):
             # this two could go together but we keep similar to odoo sm._quantity_done_set
             if not rec.move_line_ids:
                 rec.quantity_done = rec.product_uom_qty
