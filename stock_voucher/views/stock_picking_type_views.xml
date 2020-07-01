@@ -8,7 +8,7 @@
             <xpath expr="//sheet//group" position="after">
                 <group id="stock_voucher">
                     <group>
-                        <field name="book_id" attrs="{'invisible':[('code','=','incoming')]}"/>
+                        <field name="book_id" attrs="{'invisible':[('code','=','incoming')]}" domain="[('company_id', '=', company_id)]"/>
                         <field name="voucher_number_unique" attrs="{'invisible':[('code','!=','incoming')]}"/>
                         <field name="pricelist_id"/>
                     </group>
