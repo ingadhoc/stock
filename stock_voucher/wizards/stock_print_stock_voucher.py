@@ -21,7 +21,7 @@ class StockPrintStockVoucher(models.TransientModel):
     @api.model
     def _get_book(self):
         picking = self._get_picking()
-        return picking.book_id
+        return picking.book_id or self.env['stock.book'].search([('company_id', '=', picking.company_id.id)], limit=1)
 
     picking_id = fields.Many2one(
         'stock.picking',
@@ -54,6 +54,14 @@ class StockPrintStockVoucher(models.TransientModel):
     def _compute_with_vouchers(self):
         for rec in self:
             rec.with_vouchers = bool(rec.picking_id.voucher_ids)
+
+    @api.onchange('picking_id')
+    def set_book_domain(self):
+        picking = self._get_picking()
+        if not picking:
+            return {}
+        else:
+            return {'domain': {'book_id': [('company_id', '=', picking.company_id.id)]}}
 
     @api.onchange('book_id', 'picking_id')
     def get_estimated_number_of_pages(self):
