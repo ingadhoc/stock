@@ -41,7 +41,7 @@
             </field>
 
             <field name="origin" position="after">
-                <field name="number_of_packages" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                <field name="number_of_packages" attrs="{'invisible': [('picking_type_code','=','incoming')]}"/>
                 <field name="declared_value" attrs="{'invisible': [('picking_type_code','=','incoming')]}"/>
             </field>
 
