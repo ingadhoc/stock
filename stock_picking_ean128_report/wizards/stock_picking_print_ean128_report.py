@@ -34,7 +34,6 @@ class StockPickingEan128Report(models.TransientModel):
             return lines
         return False
 
-    @api.multi
     def do_print_report(self):
         self.ensure_one()
         action = self.env['ir.actions.report'].search(
@@ -48,7 +47,6 @@ class StockPickingEan128Report(models.TransientModel):
             'type': 'ir.actions.act_multi',
         }
 
-    @api.multi
     def do_print_report_excel(self):
         self.ensure_one()
         action = self.env['ir.actions.report'].search(
