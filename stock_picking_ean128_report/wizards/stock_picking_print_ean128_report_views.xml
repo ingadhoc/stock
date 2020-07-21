@@ -25,7 +25,6 @@
         <field name="name">Print Stock Picking Remit</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">stock.picking.print_ean128_report</field>
-        <field name="view_type">form</field>
         <field name="view_mode">form</field>
         <field name="view_id" ref="view_print_stock_picking_remit_form"/>
         <field name="target">new</field>

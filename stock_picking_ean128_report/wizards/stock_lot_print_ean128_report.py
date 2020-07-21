@@ -27,7 +27,6 @@ class StockLotEan128Report(models.TransientModel):
         related='lot_id.product_id',
     )
 
-    @api.multi
     def do_print_report(self):
         self.ensure_one()
         action = self.env['ir.actions.report'].search(
@@ -41,7 +40,6 @@ class StockLotEan128Report(models.TransientModel):
             'type': 'ir.actions.act_multi',
         }
 
-    @api.multi
     def do_print_report_excel(self):
         self.ensure_one()
         action = self.env['ir.actions.report'].search(
