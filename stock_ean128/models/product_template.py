@@ -15,7 +15,6 @@ class ProductTemplate(models.Model):
         string='Lots',
     )
 
-    @api.multi
     def _compute_get_lots(self):
         for rec in self:
             rec.lot_ids = self.env['stock.production.lot'].search(

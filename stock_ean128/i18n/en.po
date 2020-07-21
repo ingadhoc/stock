@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: stock_ean128
-#: field:stock.production.lot,ean_128:0
+#: model:ir.model.fields,field_description:stock.production.lot.ean_128
 msgid "EAN128"
 msgstr "EAN128"
 
