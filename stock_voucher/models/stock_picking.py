@@ -203,31 +203,33 @@ class StockPicking(models.Model):
             # This is for product in a kit (should only happen if sale_mrp ins
             # installed). If it is bom we only compute amount if all bom
             # components are deliverd (same as in bom _get_delivered_qty)
-            for so_bom_line in stock_bom_lines.mapped('sale_line_id'):
-                bom = self.env['mrp.bom']._bom_find(
-                    product=so_bom_line.product_id,
-                    company_id=so_bom_line.company_id.id)
-                if bom and bom.type == 'phantom':
-                    bom_moves = so_bom_line.move_ids & stock_bom_lines
-                    done_avg = []
-                    picking_avg = []
-                    boms, lines = bom.sudo().explode(
-                        so_bom_line.product_id,
-                        so_bom_line.product_uom_qty,
-                        picking_type=bom.picking_type_id)
-                    for move in bom_moves:
-                        bom_quantity = 0.0
-                        for bom_line, line_data in lines:
-                            if bom_line.product_id == move.product_id:
-                                bom_quantity += line_data['qty']
-                        if not bom_quantity:
-                            continue
-                        picking_avg.append((move.ordered_qty / bom_quantity))
-                        done_avg.append((move.quantity_done / bom_quantity))
-                    picking_value += so_bom_line.price_reduce_taxexcl * (
-                        sum(picking_avg) / len(picking_avg))
-                    done_value += so_bom_line.price_reduce_taxexcl * (
-                        sum(done_avg) / len(done_avg))
+            bom_enable = 'bom_ids' in self.env['product.template']._fields
+            if bom_enable:
+                for so_bom_line in stock_bom_lines.mapped('sale_line_id'):
+                    bom = self.env['mrp.bom']._bom_find(
+                        product=so_bom_line.product_id,
+                        company_id=so_bom_line.company_id.id)
+                    if bom and bom.type == 'phantom':
+                        bom_moves = so_bom_line.move_ids & stock_bom_lines
+                        done_avg = []
+                        picking_avg = []
+                        boms, lines = bom.sudo().explode(
+                            so_bom_line.product_id,
+                            so_bom_line.product_uom_qty,
+                            picking_type=bom.picking_type_id)
+                        for move in bom_moves:
+                            bom_quantity = 0.0
+                            for bom_line, line_data in lines:
+                                if bom_line.product_id == move.product_id:
+                                    bom_quantity += line_data['qty']
+                            if not bom_quantity:
+                                continue
+                            picking_avg.append((move.ordered_qty / bom_quantity))
+                            done_avg.append((move.quantity_done / bom_quantity))
+                        picking_value += so_bom_line.price_reduce_taxexcl * (
+                            sum(picking_avg) / len(picking_avg))
+                        done_value += so_bom_line.price_reduce_taxexcl * (
+                            sum(done_avg) / len(done_avg))
 
             declared_value = picking_value if inmediate_transfer\
                 else done_value
