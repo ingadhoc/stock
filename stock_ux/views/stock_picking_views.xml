@@ -11,6 +11,9 @@
             <field name="partner_id" position="attributes">
                 <attribute name="attrs"></attribute>
             </field>
+            <field name="description_picking" position="after">
+                <field name="name" string="Descripción de origen" optional="hide"/>
+            </field>
             <field name="name" position="after">
                 <button name="add_picking_operation" class="oe_inline oe_right" type="object" string="Process Products" attrs="{'invisible': [('state', 'not in', ['confirmed', 'assigned'])]}"/>
             </field>
