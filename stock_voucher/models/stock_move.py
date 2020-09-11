@@ -11,8 +11,3 @@ class StockMove(models.Model):
     vouchers = fields.Char(
         related='picking_id.vouchers',
     )
-
-    def _action_cancel(self):
-        res = super()._action_cancel()
-        self.mapped('picking_id').compute_declared_value()
-        return res
