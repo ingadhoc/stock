@@ -31,6 +31,9 @@ class StockPicking(models.Model):
     )
     declared_value = fields.Float(
         digits='Account',
+        compute='_compute_declared_value',
+        store=True,
+        readonly=False,
     )
     automatic_declare_value = fields.Boolean(
         related='picking_type_id.automatic_declare_value',
@@ -136,9 +139,13 @@ class StockPicking(models.Model):
             return self.do_print_voucher()
         return res
 
-    def compute_declared_value(self):
-        for rec in self.filtered(
-                lambda x: x.picking_type_id.automatic_declare_value):
+    @api.depends(
+        'automatic_declare_value',
+        'move_lines.state',
+        'move_lines.quantity_done',
+        )
+    def _compute_declared_value(self):
+        for rec in self.filtered('automatic_declare_value'):
             done_value = 0.0
             picking_value = 0.0
             inmediate_transfer = True
