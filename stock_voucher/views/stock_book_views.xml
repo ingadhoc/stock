@@ -39,5 +39,5 @@
         <field name="view_mode">tree,form</field>
     </record>
 
-    <menuitem name="Books" id="menu_books" sequence="20" action="stock_book_actions" parent="stock.menu_stock_config_settings" />
+    <menuitem name="Books" id="menu_books" sequence="20" action="stock_book_actions" parent="stock.menu_warehouse_config" />
 </odoo>
