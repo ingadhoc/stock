@@ -16,13 +16,13 @@ class StockPickingVoucher(models.Model):
         pikcing
         """
         self.ensure_one()
-        if self.picking_id.batch_picking_id:
+        if self.picking_id.batch_id:
             same_number_recs = self.search([
                 ('picking_id.partner_id', '=',
                     self.picking_id.partner_id.id),
                 ('name', '=', self.name),
-                ('picking_id.batch_picking_id', '!=',
-                    self.picking_id.batch_picking_id.id),
+                ('picking_id.batch_id', '!=',
+                    self.picking_id.batch_id.id),
                 ('id', '!=', self.id),
             ])
             if same_number_recs:

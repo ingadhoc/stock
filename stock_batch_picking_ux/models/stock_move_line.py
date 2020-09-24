@@ -11,7 +11,6 @@ class StockMoveLine(models.Model):
 
     origin = fields.Char(
         related='move_id.picking_id.origin',
-        readonly=True,
         # we store so we can group
         store=True,
     )
