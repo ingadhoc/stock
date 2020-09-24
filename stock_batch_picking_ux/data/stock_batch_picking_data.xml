@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <function model="res.company" name="write">
+        <value model="res.company" eval="obj().search([]).ids"/>
+        <value model="res.company" eval="{'use_oca_batch_validation': True}"/>
+    </function>
+</odoo>
