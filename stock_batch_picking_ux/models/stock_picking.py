@@ -2,6 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import models
+from odoo.tools import float_is_zero
 
 
 class StockPicking(models.Model):
@@ -33,15 +34,17 @@ class StockPicking(models.Model):
                 for pack in pick.move_line_ids:
                     pack.qty_done = pack.product_uom_qty
             else:
-                if all(pack.qty_done == 0 for pack in pick.move_line_ids):
+                if all(
+                        float_is_zero(
+                            pack.qty_done,
+                            precision_rounding=pack.product_uom_id.rounding)
+                        for pack in pick.move_line_ids):
                     # No qties to process, release out of the batch
-                    pick.batch_picking_id = False
+                    pick.batch_id = False
                     continue
                 else:
                     for pack in pick.move_line_ids:
                         if not pack.qty_done:
                             pack.unlink()
-                        else:
-                            pack.product_uom_qty = pack.qty_done
 
             pick.do_transfer()

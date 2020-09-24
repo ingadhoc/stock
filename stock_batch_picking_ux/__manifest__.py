@@ -31,9 +31,10 @@
     'depends': [
         'stock_ux',
         'stock_voucher',
-        'stock_batch_picking',
+        'stock_picking_batch_extended',
     ],
     'data': [
+        'data/stock_batch_picking_data.xml',
         'views/stock_batch_picking_views.xml',
         'views/stock_move_line_views.xml',
         'views/stock_picking_views.xml',
@@ -41,7 +42,7 @@
     ],
     'demo': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': True,
     'application': False,
 }

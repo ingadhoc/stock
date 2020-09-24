@@ -6,9 +6,9 @@ from odoo import models, fields, api, _
 from odoo.exceptions import UserError
 
 
-class StockBatchPicking(models.Model):
+class StockPickingBatch(models.Model):
 
-    _inherit = 'stock.batch.picking'
+    _inherit = 'stock.picking.batch'
 
     # operation_type = fields.Selection([
     #     ('incoming', 'Suppliers'),
@@ -71,15 +71,6 @@ class StockBatchPicking(models.Model):
         related='picking_ids.vouchers',
         readonly=True,
     )
-    # do this because if not allow to set the qty_done value in sml in
-    #  the tree view
-    move_line_ids = fields.One2many(
-        'stock.move.line',
-        inverse='_inverse_move_line_ids'
-    )
-
-    def _inverse_move_line_ids(self):
-        pass
 
     # overwrite this because we need only takes the moves with are not cancel
     @api.depends('picking_ids')
@@ -99,7 +90,8 @@ class StockBatchPicking(models.Model):
             # solo es requerido para outgoings
             if rec.picking_code == 'outgoing':
                 rec.restrict_number_package = any(
-                    x.restrict_number_package for x in rec.picking_ids)
+                    x.picking_type_id.restrict_number_package
+                    for x in rec.picking_ids)
     # TODO deberiamos ver como hacer para aceptar multiples numeros de remitos
     # si llega a ser necesario
     # voucher_ids = fields.One2many(
@@ -111,12 +103,6 @@ class StockBatchPicking(models.Model):
     # vouchers = fields.Char(
     #     compute='_compute_vouchers'
     # )
-
-    # @api.multi
-    # @api.depends('voucher_ids.display_name')
-    # def _compute_vouchers(self):
-    #     for rec in self:
-    #         rec.vouchers = ', '.join(rec.mapped('voucher_ids.display_name'))
 
     # @api.onchange('picking_type_id', 'partner_id')
     @api.onchange('picking_code', 'partner_id')
@@ -191,11 +177,11 @@ class StockBatchPicking(models.Model):
                 # con do_new_transfer
                 rec.active_picking_ids.do_stock_voucher_transfer_check()
 
-        res = super(StockBatchPicking, self.with_context(
+        res = super(StockPickingBatch, self.with_context(
             do_not_assign_numbers=True)).action_transfer()
         # nosotros preferimos que no se haga en muchos pasos y una vez
         # confirmado se borre lo no hecho y se marque como realizado
         # lo hago para distinto de incomring porque venia andando bien para
         # Incoming, pero no debería hacer falta este chequeo
-        self.remove_undone_pickings()
+        # self.remove_undone_pickings()
         return res

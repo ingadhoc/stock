@@ -28,7 +28,7 @@
                 <attribute name="invisible">context.get('from_batch')</attribute>
             </field>
             <field name="qty_done" position="before">
-                <field name="ordered_qty" readonly="1"/>
+                <field name="product_uom_qty" readonly="1"/>
             </field>
         </field>
     </record>
