@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<odoo noupdate="1">
+     <record id="picking_labels_report" model="ir.actions.report">
+        <field name="process_sep" eval="True"/>
+    </record>
+</odoo>
