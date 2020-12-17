@@ -69,7 +69,8 @@ class StockRequest(models.Model):
     def button_cancel_remaining(self):
         for rec in self:
             old_product_uom_qty = rec.product_uom_qty
-            rec.product_uom_qty = rec.qty_done
+            # we need to do this using direct write because this constraints "_check_type" in original module.
+            rec._write({'product_uom_qty': rec.qty_done})
             to_cancel_moves = rec.move_ids.filtered(
                 lambda x: x.state not in ['done', 'cancel'])
             # to_cancel_moves.cancel_move()
