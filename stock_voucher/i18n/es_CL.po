@@ -1,17 +1,17 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * stock_voucher
+# 	* stock_voucher
 # 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2020
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0\n"
+"Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-26 00:56+0000\n"
-"PO-Revision-Date: 2019-07-30 12:03+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019\n"
+"POT-Creation-Date: 2020-12-18 18:55+0000\n"
+"PO-Revision-Date: 2020-03-28 11:47+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2020\n"
 "Language-Team: Spanish (Chile) (https://www.transifex.com/adhoc/teams/46451/es_CL/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -75,11 +75,6 @@ msgid "Books"
 msgstr ""
 
 #. module: stock_voucher
-#: model:ir.model.fields,help:stock_voucher.field_stock_picking_type__voucher_number_validator_id
-msgid "Choose a validation if you want to validate voucher numbers"
-msgstr ""
-
-#. module: stock_voucher
 #: model_terms:ir.ui.view,arch_db:stock_voucher.view_print_stock_voucher_form
 msgid "Clean Voucher Data"
 msgstr ""
@@ -112,11 +107,6 @@ msgstr "Created on"
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking__declared_value
 msgid "Declared Value"
-msgstr ""
-
-#. module: stock_voucher
-#: model:ir.model,name:stock_voucher.model_delivery_carrier
-msgid "Delivery Methods"
 msgstr ""
 
 #. module: stock_voucher
@@ -241,14 +231,9 @@ msgid "Number of Pages"
 msgstr ""
 
 #. module: stock_voucher
-#: code:addons/stock_voucher/models/stock_picking.py:92
+#: code:addons/stock_voucher/models/stock_picking.py:0
 #, python-format
 msgid "Números de remitos asignados: %s"
-msgstr ""
-
-#. module: stock_voucher
-#: model:ir.model.fields,field_description:stock_voucher.field_stock_picking__observations
-msgid "Observations"
 msgstr ""
 
 #. module: stock_voucher
@@ -269,7 +254,7 @@ msgid "Picking Voucher"
 msgstr ""
 
 #. module: stock_voucher
-#: code:addons/stock_voucher/models/stock_picking_voucher.py:72
+#: code:addons/stock_voucher/models/stock_picking_voucher.py:0
 #, python-format
 msgid "Picking voucher number must be unique per partner"
 msgstr ""
@@ -306,11 +291,6 @@ msgid "Printed"
 msgstr ""
 
 #. module: stock_voucher
-#: model:ir.model,name:stock_voucher.model_stock_move_line
-msgid "Product Moves (Stock Move Line)"
-msgstr ""
-
-#. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_type__restrict_number_package
 msgid "Restrict Number Package"
 msgstr ""
@@ -332,7 +312,7 @@ msgid "Stock Voucher Sequence"
 msgstr ""
 
 #. module: stock_voucher
-#: code:addons/stock_voucher/models/stock_picking.py:100
+#: code:addons/stock_voucher/models/stock_picking.py:0
 #, python-format
 msgid "The assigned voucher were deleted"
 msgstr ""
@@ -344,21 +324,25 @@ msgid "The declared value will be on the currency of the company"
 msgstr ""
 
 #. module: stock_voucher
-#: code:addons/stock_voucher/models/stock_picking_voucher.py:45
-#: sql_constraint:stock.picking.voucher:0
+#: code:addons/stock_voucher/models/stock_picking_voucher.py:0
+#, python-format
+msgid ""
+"The document number must be entered with a dash (-) and a maximum of 4 characters for the first partand 8 for the second. The following are examples of valid numbers:\n"
+"* 1-1\n"
+"* 0001-00000001\n"
+msgstr ""
+
+#. module: stock_voucher
+#: code:addons/stock_voucher/models/stock_picking_voucher.py:0
+#: model:ir.model.constraint,message:stock_voucher.constraint_stock_picking_voucher_voucher_number_uniq
 #, python-format
 msgid "The field \"Number\" must be unique per book."
 msgstr ""
 
 #. module: stock_voucher
-#: code:addons/stock_voucher/models/stock_picking.py:127
+#: code:addons/stock_voucher/models/stock_picking.py:0
 #, python-format
 msgid "The number of packages can not be 0"
-msgstr ""
-
-#. module: stock_voucher
-#: model:ir.model.fields,help:stock_voucher.field_delivery_carrier__partner_id
-msgid "The partner that is doing the delivery service."
 msgstr ""
 
 #. module: stock_voucher
@@ -367,19 +351,9 @@ msgid "Transfer"
 msgstr ""
 
 #. module: stock_voucher
-#: model:ir.model.fields,field_description:stock_voucher.field_delivery_carrier__partner_id
-msgid "Transporter Company"
-msgstr ""
-
-#. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking__book_id
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_voucher__book_id
 msgid "Voucher Book"
-msgstr ""
-
-#. module: stock_voucher
-#: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_type__voucher_number_validator_id
-msgid "Voucher Number Validator"
 msgstr ""
 
 #. module: stock_voucher
@@ -390,7 +364,7 @@ msgstr ""
 
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking__voucher_ids
-#: model_terms:ir.ui.view,arch_db:stock_voucher.view_picking_withcarrier_out_form
+#: model_terms:ir.ui.view,arch_db:stock_voucher.view_picking_form
 msgid "Vouchers"
 msgstr "Guías de Despacho"
 
@@ -406,15 +380,21 @@ msgid "With Vouchers"
 msgstr ""
 
 #. module: stock_voucher
-#: code:addons/stock_voucher/models/stock_picking.py:129
+#: code:addons/stock_voucher/models/stock_picking.py:0
 #, python-format
 msgid "You must select a Voucher Book"
 msgstr ""
 
 #. module: stock_voucher
-#: code:addons/stock_voucher/models/stock_picking.py:132
+#: code:addons/stock_voucher/models/stock_picking.py:0
 #, python-format
 msgid "You must set stock voucher numbers"
+msgstr ""
+
+#. module: stock_voucher
+#: code:addons/stock_voucher/models/stock_picking_voucher.py:0
+#, python-format
+msgid "is not a valid value for"
 msgstr ""
 
 #. module: stock_voucher

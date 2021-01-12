@@ -12,11 +12,11 @@ msgstr ""
 "POT-Creation-Date: 2020-12-18 18:55+0000\n"
 "PO-Revision-Date: 2020-04-26 18:59+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2020\n"
-"Language-Team: German (https://www.transifex.com/adhoc/teams/46451/de/)\n"
+"Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: de\n"
+"Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: stock_request_ux
@@ -33,6 +33,8 @@ msgid ""
 "Cancelar Pendiente. Se van a cancelar todos los movimientos asociados que no"
 " esten realizados."
 msgstr ""
+"Cancelar Pendiente. Se van a cancelar todos los movimientos asociados que no"
+" esten realizados."
 
 #. module: stock_request_ux
 #: model:ir.model.fields,field_description:stock_request_ux.field_stock_request__picking_count
@@ -53,13 +55,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_request_ux.field_stock_move__request_order_id
 #: model:ir.model.fields,field_description:stock_request_ux.field_stock_request__order_id
 msgid "Order"
-msgstr ""
+msgstr "Orden"
 
 #. module: stock_request_ux
 #: model:ir.model.fields,field_description:stock_request_ux.field_stock_request__picking_ids
 #: model:ir.model.fields,field_description:stock_request_ux.field_stock_request_order__picking_ids
 msgid "Pickings"
-msgstr ""
+msgstr "Pickings"
 
 #. module: stock_request_ux
 #: model:ir.model.fields,field_description:stock_request_ux.field_stock_request__procurement_group_id
@@ -70,12 +72,12 @@ msgstr ""
 #. module: stock_request_ux
 #: model_terms:ir.ui.view,arch_db:stock_request_ux.view_move_form
 msgid "Request Orders"
-msgstr ""
+msgstr "Pedidos de Existencias"
 
 #. module: stock_request_ux
 #: model:ir.model.fields,field_description:stock_request_ux.field_stock_request_order__route_id
 msgid "Route"
-msgstr "Route"
+msgstr "Ruta"
 
 #. module: stock_request_ux
 #: model:ir.model.fields,field_description:stock_request_ux.field_stock_request_order__route_ids
@@ -88,38 +90,40 @@ msgid ""
 "Se van a cancelar todos los movimientos asociados que no esten realizados. "
 "Esto no puede ser revertido, seguro que desea continuar?"
 msgstr ""
+"Se van a cancelar todos los movimientos asociados que no esten realizados. "
+"Esto no puede ser revertido, seguro que desea continuar?"
 
 #. module: stock_request_ux
 #: model:ir.model,name:stock_request_ux.model_stock_move
 msgid "Stock Move"
-msgstr ""
+msgstr "Movimiento de Stock"
 
 #. module: stock_request_ux
 #: model:ir.model,name:stock_request_ux.model_stock_request
 #: model:ir.model.fields,field_description:stock_request_ux.field_stock_request_order__stock_request_ids
 msgid "Stock Request"
-msgstr "Bestandsforderung"
+msgstr "Solicitud de existencias"
 
 #. module: stock_request_ux
 #: model:ir.model,name:stock_request_ux.model_stock_request_order
 msgid "Stock Request Order"
-msgstr "Bestandsauftrag"
+msgstr "Pedido de existencias"
 
 #. module: stock_request_ux
 #: model:ir.model.fields,field_description:stock_request_ux.field_stock_picking__stock_request_order_count
 msgid "Stock Request Order #"
-msgstr ""
+msgstr "Pedido de existencias #"
 
 #. module: stock_request_ux
 #: model:ir.model.fields,field_description:stock_request_ux.field_stock_picking__stock_request_order_ids
 #: model_terms:ir.ui.view,arch_db:stock_request_ux.view_picking_form
 msgid "Stock Request Orders"
-msgstr ""
+msgstr "Pedido de existencias"
 
 #. module: stock_request_ux
 #: model:ir.model,name:stock_request_ux.model_stock_request_abstract
 msgid "Stock Request Template"
-msgstr "Bestandauftragsvorlage"
+msgstr "Plantilla de solicitud de existencias"
 
 #. module: stock_request_ux
 #: model:ir.model,name:stock_request_ux.model_stock_rule
@@ -129,7 +133,7 @@ msgstr ""
 #. module: stock_request_ux
 #: model:ir.model,name:stock_request_ux.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Transferencia"
 
 #. module: stock_request_ux
 #: model:ir.model.fields,field_description:stock_request_ux.field_stock_request_order__warehouse_id
@@ -140,21 +144,16 @@ msgstr ""
 #: code:addons/stock_request_ux/models/stock_request_abstract.py:0
 #, python-format
 msgid "You have entered a location that is assigned to another company."
-msgstr ""
-"Sie haben einen Platz angegeben, der einem anderen Unternehmen zugeordnet "
-"ist."
+msgstr "Ha ingresado una ubicación asignada a otra compañía."
 
 #. module: stock_request_ux
 #: code:addons/stock_request_ux/models/stock_request_abstract.py:0
 #, python-format
 msgid "You have entered a route that is assigned to another company."
-msgstr ""
-"Sie haben eine Route angegeben, die einem anderen Unternehmen zugeordnet "
-"ist."
+msgstr "Ha introducido una ruta que está asignada a otra compañía."
 
 #. module: stock_request_ux
 #: code:addons/stock_request_ux/models/stock_request_abstract.py:0
 #, python-format
 msgid "You have entered a warehouse that is assigned to another company."
-msgstr ""
-"Sie haben ein Lager angegeben, das einem anderen Unternehmen zugeordnet ist."
+msgstr "Ha introducido un almacén que está asignada a otra compañía."

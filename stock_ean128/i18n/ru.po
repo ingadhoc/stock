@@ -1,0 +1,46 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_ean128
+# 
+# Translators:
+# Irina Fedulova <istartlin@gmail.com>, 2020
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-12-18 18:55+0000\n"
+"PO-Revision-Date: 2020-07-21 20:58+0000\n"
+"Last-Translator: Irina Fedulova <istartlin@gmail.com>, 2020\n"
+"Language-Team: Russian (https://www.transifex.com/adhoc/teams/46451/ru/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: ru\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#. module: stock_ean128
+#: model:ir.model.fields,field_description:stock_ean128.field_stock_production_lot__ean_128
+msgid "EAN128"
+msgstr "EAN128"
+
+#. module: stock_ean128
+#: model:ir.model,name:stock_ean128.model_stock_production_lot
+msgid "Lot/Serial"
+msgstr ""
+
+#. module: stock_ean128
+#: model:ir.model.fields,field_description:stock_ean128.field_product_product__lot_ids
+#: model:ir.model.fields,field_description:stock_ean128.field_product_template__lot_ids
+msgid "Lots"
+msgstr ""
+
+#. module: stock_ean128
+#: model:ir.model,name:stock_ean128.model_product_product
+msgid "Product"
+msgstr "Товар"
+
+#. module: stock_ean128
+#: model:ir.model,name:stock_ean128.model_product_template
+msgid "Product Template"
+msgstr "Шаблон товара"

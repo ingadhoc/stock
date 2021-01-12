@@ -1,18 +1,17 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * stock_voucher
+# 	* stock_voucher
 # 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019
-# Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2020
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2020
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0\n"
+"Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-26 01:42+0000\n"
-"PO-Revision-Date: 2019-07-30 12:03+0000\n"
-"Last-Translator: Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2020\n"
+"POT-Creation-Date: 2020-12-18 18:55+0000\n"
+"PO-Revision-Date: 2020-03-28 11:47+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2020\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -76,11 +75,6 @@ msgid "Books"
 msgstr "Talonarios"
 
 #. module: stock_voucher
-#: model:ir.model.fields,help:stock_voucher.field_stock_picking_type__voucher_number_validator_id
-msgid "Choose a validation if you want to validate voucher numbers"
-msgstr "Elija una validación si desea validar los números de bono"
-
-#. module: stock_voucher
 #: model_terms:ir.ui.view,arch_db:stock_voucher.view_print_stock_voucher_form
 msgid "Clean Voucher Data"
 msgstr "Clean Voucher Data"
@@ -114,11 +108,6 @@ msgstr "Creado en"
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking__declared_value
 msgid "Declared Value"
 msgstr "Valor declarado"
-
-#. module: stock_voucher
-#: model:ir.model,name:stock_voucher.model_delivery_carrier
-msgid "Delivery Methods"
-msgstr "Métodos de Entrega"
 
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_book__display_name
@@ -255,15 +244,10 @@ msgid "Number of Pages"
 msgstr "Número de páginas"
 
 #. module: stock_voucher
-#: code:addons/stock_voucher/models/stock_picking.py:92
+#: code:addons/stock_voucher/models/stock_picking.py:0
 #, python-format
 msgid "Números de remitos asignados: %s"
 msgstr "Números de remitos asignados: %s"
-
-#. module: stock_voucher
-#: model:ir.model.fields,field_description:stock_voucher.field_stock_picking__observations
-msgid "Observations"
-msgstr "Observations"
 
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_voucher__picking_id
@@ -283,7 +267,7 @@ msgid "Picking Voucher"
 msgstr "Remito"
 
 #. module: stock_voucher
-#: code:addons/stock_voucher/models/stock_picking_voucher.py:72
+#: code:addons/stock_voucher/models/stock_picking_voucher.py:0
 #, python-format
 msgid "Picking voucher number must be unique per partner"
 msgstr "Picking voucher number must be unique per partner"
@@ -320,11 +304,6 @@ msgid "Printed"
 msgstr "Impreso"
 
 #. module: stock_voucher
-#: model:ir.model,name:stock_voucher.model_stock_move_line
-msgid "Product Moves (Stock Move Line)"
-msgstr "Movimiento de Productos(Líneas de Movimientos de Productos)"
-
-#. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_type__restrict_number_package
 msgid "Restrict Number Package"
 msgstr "Restriccion de Numero de Paquetes"
@@ -346,7 +325,7 @@ msgid "Stock Voucher Sequence"
 msgstr "Secuencia de Talonario"
 
 #. module: stock_voucher
-#: code:addons/stock_voucher/models/stock_picking.py:100
+#: code:addons/stock_voucher/models/stock_picking.py:0
 #, python-format
 msgid "The assigned voucher were deleted"
 msgstr "The assigned voucher were deleted"
@@ -358,22 +337,26 @@ msgid "The declared value will be on the currency of the company"
 msgstr "The declared value will be on the currency of the company"
 
 #. module: stock_voucher
-#: code:addons/stock_voucher/models/stock_picking_voucher.py:45
-#: sql_constraint:stock.picking.voucher:0
+#: code:addons/stock_voucher/models/stock_picking_voucher.py:0
+#, python-format
+msgid ""
+"The document number must be entered with a dash (-) and a maximum of 4 characters for the first partand 8 for the second. The following are examples of valid numbers:\n"
+"* 1-1\n"
+"* 0001-00000001\n"
+msgstr ""
+
+#. module: stock_voucher
+#: code:addons/stock_voucher/models/stock_picking_voucher.py:0
+#: model:ir.model.constraint,message:stock_voucher.constraint_stock_picking_voucher_voucher_number_uniq
 #, python-format
 msgid "The field \"Number\" must be unique per book."
 msgstr "The field \"Number\" must be unique per book."
 
 #. module: stock_voucher
-#: code:addons/stock_voucher/models/stock_picking.py:127
+#: code:addons/stock_voucher/models/stock_picking.py:0
 #, python-format
 msgid "The number of packages can not be 0"
 msgstr "El numero de paquetes no puede ser 0"
-
-#. module: stock_voucher
-#: model:ir.model.fields,help:stock_voucher.field_delivery_carrier__partner_id
-msgid "The partner that is doing the delivery service."
-msgstr "La empresa que está haciendo el servicio de entrega."
 
 #. module: stock_voucher
 #: model:ir.model,name:stock_voucher.model_stock_picking
@@ -381,20 +364,10 @@ msgid "Transfer"
 msgstr "Transferir"
 
 #. module: stock_voucher
-#: model:ir.model.fields,field_description:stock_voucher.field_delivery_carrier__partner_id
-msgid "Transporter Company"
-msgstr "Empresa transportista"
-
-#. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking__book_id
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_voucher__book_id
 msgid "Voucher Book"
 msgstr "Talonario de Remitos"
-
-#. module: stock_voucher
-#: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_type__voucher_number_validator_id
-msgid "Voucher Number Validator"
-msgstr "Validador de número de comprobante"
 
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking__voucher_required
@@ -404,7 +377,7 @@ msgstr "¿Se requiere un comprobante?"
 
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking__voucher_ids
-#: model_terms:ir.ui.view,arch_db:stock_voucher.view_picking_withcarrier_out_form
+#: model_terms:ir.ui.view,arch_db:stock_voucher.view_picking_form
 msgid "Vouchers"
 msgstr "Remitos"
 
@@ -420,16 +393,22 @@ msgid "With Vouchers"
 msgstr "With Vouchers"
 
 #. module: stock_voucher
-#: code:addons/stock_voucher/models/stock_picking.py:129
+#: code:addons/stock_voucher/models/stock_picking.py:0
 #, python-format
 msgid "You must select a Voucher Book"
 msgstr "Debe seleccionar  un Libro de Comprobante"
 
 #. module: stock_voucher
-#: code:addons/stock_voucher/models/stock_picking.py:132
+#: code:addons/stock_voucher/models/stock_picking.py:0
 #, python-format
 msgid "You must set stock voucher numbers"
 msgstr "Debe ingresar los números de remito"
+
+#. module: stock_voucher
+#: code:addons/stock_voucher/models/stock_picking_voucher.py:0
+#, python-format
+msgid "is not a valid value for"
+msgstr ""
 
 #. module: stock_voucher
 #: model_terms:ir.ui.view,arch_db:stock_voucher.view_print_stock_voucher_form
