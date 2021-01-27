@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="view_stock_operation_wizard_form" model="ir.ui.view">
+        <field name="name">stock.mass.cancel.remaining.wizard.form</field>
+        <field name="model">stock.mass.cancel.remaining.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Cancel Remaining">
+             <div class="alert alert-warning" colspan="4" role="alert">
+                        <p>
+                        Note that this action cannot be undone and check the list of movements below.
+                        </p>
+                    </div>
+                <group>
+                    <group string="Moves">
+                        <field name="move_ids" nolabel="1"/>
+                    </group>
+                </group>
+                <footer>
+                    <button string="Confirm" name="action_confirm" type="object" class="oe_highlight"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

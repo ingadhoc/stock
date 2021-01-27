@@ -4,3 +4,4 @@
 ##############################################################################
 from . import res_config_settings
 from . import stock_operation_wizard
+from . import stock_mass_cancel_remaining_wizard
