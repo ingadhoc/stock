@@ -18,7 +18,7 @@
         <field name="inherit_id" ref="stock.vpicktree"/>
         <field name="arch" type="xml">
             <field name="name" position="after">
-                <field name="voucher_ids" widget="many2many_tags"/>
+                <field name="vouchers"/>
             </field>
         </field>
     </record>
