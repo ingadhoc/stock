@@ -154,3 +154,9 @@ class StockPicking(models.Model):
                 pack.qty_done, pack.product_id.uom_id)
         return any(quantity_done[x] < quantity_todo.get(x, 0)
                    for x in quantity_done)
+
+    @api.constrains('state')
+    def check_cancel(self):
+        if self.filtered(
+            lambda x: x.state == 'cancel' and not self.user_has_groups('stock_ux.allow_picking_cancellation')):
+            raise ValidationError("Only User with 'Picking cancelation allow' rights can cancel pickings")
