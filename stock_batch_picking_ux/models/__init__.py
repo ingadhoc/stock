@@ -6,4 +6,3 @@ from . import stock_batch_picking
 from . import stock_move_line
 from . import stock_picking_voucher
 from . import stock_picking
-from . import mass_action

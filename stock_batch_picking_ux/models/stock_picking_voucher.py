@@ -2,7 +2,7 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import models, api, _
+from odoo import models, _
 from odoo.exceptions import ValidationError
 
 
@@ -30,5 +30,4 @@ class StockPickingVoucher(models.Model):
                     'partner'))
 
         else:
-            return super(
-                StockPickingVoucher, self)._check_voucher_number_unique()
+            return super()._check_voucher_number_unique()
