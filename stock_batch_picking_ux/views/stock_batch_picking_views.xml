@@ -62,7 +62,8 @@
                 <!-- <field name="picking_type_id"/> -->
                 <!-- al final lo sacamos porque ya lo estamos usando para otros tipos -->
                 <!-- como por ahora solo lo usamos para entrada lo restringimos -->
-                <field name="partner_id" context="{'default_supplier': picking_code == 'incoming', 'default_customer': picking_code == 'outgoing'}" domain="picking_code == 'incoming' and ['|', ('parent_id.supplier', '=', True), ('supplier', '=', True)] or picking_code == 'outgoing' and ['|', ('parent_id.customer', '=', True), ('customer', '=', True)] or []"/>
+                <field name="partner_id" context="{'res_partner_search_mode': picking_code == 'incoming' and 'supplier' or 'customer'}"/>
+                <field name="company_id" groups="base.group_multi_company" attrs="{'readonly': [('picking_ids', '!=', [])]}" force_save="1"/>
                 <!-- <field name="partner_id" context="{'search_default_supplier':1, 'default_supplier':1, 'default_customer':0}" domain="[('supplier','=',True)]"/> -->
                 <field name="voucher_number" attrs="{'invisible': [('picking_code','!=','incoming')], 'required': [('voucher_required','=',True)]}"/>
                 <field name="number_of_packages"/>
@@ -71,7 +72,7 @@
 
             <field name="picking_ids" position="attributes">
                 <attribute name="context">{'show_print_button': 1}</attribute>
-                <attribute name="domain">[('partner_id', '=', partner_id), ('picking_type_id.code', '=', picking_code), ('state', 'in', ('confirmed', 'partially_available', 'assigned'))]</attribute>
+                <attribute name="domain">[('company_id', '=', company_id), ('partner_id', '=', partner_id), ('picking_type_id.code', '=', picking_code), ('state', 'in', ('confirmed', 'partially_available', 'assigned'))]</attribute>
                 <!-- <attribute name="domain">[('partner_id', '=', partner_id), ('picking_type_id', '=', picking_type_id), ('state', 'in', ('confirmed', 'partially_available', 'assigned'))]</attribute> -->
             </field>
 

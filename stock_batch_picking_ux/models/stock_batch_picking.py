@@ -69,7 +69,6 @@ class StockPickingBatch(models.Model):
     )
     vouchers = fields.Char(
         related='picking_ids.vouchers',
-        readonly=True,
     )
 
     # overwrite this because we need only takes the moves with are not cancel
@@ -85,6 +84,7 @@ class StockPickingBatch(models.Model):
             types = rec.picking_ids.mapped('picking_type_id')
             rec.picking_type_ids = types
             rec.voucher_required = any(x.voucher_required for x in types)
+            rec.restrict_number_package = False
             # este viene exigido desde la cia pero seguramente lo movamos a
             # exigir desde picking type
             # solo es requerido para outgoings
@@ -110,20 +110,21 @@ class StockPickingBatch(models.Model):
         # if we change type or partner reset pickings
         self.picking_ids = False
 
-    # @api.constrains('voucher_number', 'picking_type_id')
     @api.onchange('voucher_number', 'picking_ids')
-    @api.constrains('voucher_number', 'picking_ids')
     def format_voucher_number(self):
         for rec in self:
-            # TODO, mejorarlo, por ahora tomamos un solo validador
-            validators = rec.picking_type_ids.mapped(
-                'voucher_number_validator_id')
-            if not validators:
+            if not rec.voucher_number:
                 continue
-            voucher_number = validators[0].validate_value(
-                rec.voucher_number)
+            voucher_number = self.env['stock.picking.voucher']._format_document_number(rec.voucher_number)
             if voucher_number and voucher_number != rec.voucher_number:
                 rec.voucher_number = voucher_number
+
+    def write(self, vals):
+        if 'voucher_number' in vals and vals.get('voucher_number'):
+            voucher_number = self.env['stock.picking.voucher']._format_document_number(vals.get('voucher_number'))
+            if voucher_number and voucher_number != vals.get('voucher_number'):
+                vals['voucher_number'] = voucher_number
+        return super().write(vals)
 
     def add_picking_operation(self):
         self.ensure_one()
