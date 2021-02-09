@@ -9,7 +9,6 @@ from odoo.exceptions import ValidationError
 class StockPickingVoucher(models.Model):
     _inherit = 'stock.picking.voucher'
 
-    @api.multi
     def _check_voucher_number_unique(self):
         """
         We modify it to make it unique per batch (if available) or per

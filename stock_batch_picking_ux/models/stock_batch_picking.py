@@ -112,7 +112,6 @@ class StockBatchPicking(models.Model):
     #     compute='_compute_vouchers'
     # )
 
-    # @api.multi
     # @api.depends('voucher_ids.display_name')
     # def _compute_vouchers(self):
     #     for rec in self:
@@ -139,7 +138,6 @@ class StockBatchPicking(models.Model):
             if voucher_number and voucher_number != rec.voucher_number:
                 rec.voucher_number = voucher_number
 
-    @api.multi
     def add_picking_operation(self):
         self.ensure_one()
         view_id = self.env.ref('stock_ux.view_move_line_tree').id
@@ -154,7 +152,6 @@ class StockBatchPicking(models.Model):
             "context": {"create": False, "from_batch": True},
         }
 
-    @api.multi
     def action_transfer(self):
         # agregamos los numeros de remito
         for rec in self:
