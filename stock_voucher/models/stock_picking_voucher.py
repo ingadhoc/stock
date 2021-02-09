@@ -69,6 +69,8 @@ class StockPickingVoucher(models.Model):
                 'The document number must be entered with a dash (-) and a maximum of 4 characters for the first part'
                 'and 8 for the second. The following are examples of valid numbers:\n* 1-1\n* 0001-00000001'
                 '\n')))
+        else:
+            return document_number
 
     @api.constrains('name', 'picking_id')
     @api.onchange('name', 'picking_id')
