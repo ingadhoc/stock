@@ -1,17 +1,17 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * stock_batch_picking_ux
+# 	* stock_batch_picking_ux
 # 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2021
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 11.0\n"
+"Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-10 19:45+0000\n"
-"PO-Revision-Date: 2019-01-03 14:51+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019\n"
+"POT-Creation-Date: 2021-02-11 10:44+0000\n"
+"PO-Revision-Date: 2021-02-11 10:12+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2021\n"
 "Language-Team: Spanish (Chile) (https://www.transifex.com/adhoc/teams/46451/es_CL/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: stock_batch_picking_ux
-#: model:ir.ui.view,arch_db:stock_batch_picking_ux.stock_batch_picking_form
+#: model_terms:ir.ui.view,arch_db:stock_batch_picking_ux.stock_batch_picking_form
 msgid ""
 "ATENCION! Al cancelar un picking batch todos los pickings relacionados "
 "también se van a cancelar. Seguro desea continuar?"
@@ -32,87 +32,87 @@ msgid "Batch Picking List"
 msgstr ""
 
 #. module: stock_batch_picking_ux
-#: selection:stock.batch.picking,picking_code:0
+#: model:ir.model,name:stock_batch_picking_ux.model_stock_picking_batch
+msgid "Batch Transfer"
+msgstr ""
+
+#. module: stock_batch_picking_ux
+#: model:ir.model.fields.selection,name:stock_batch_picking_ux.selection__stock_picking_batch__picking_code__outgoing
 msgid "Customers"
 msgstr ""
 
 #. module: stock_batch_picking_ux
-#: code:addons/stock_batch_picking_ux/models/stock_batch_picking.py:159
+#: code:addons/stock_batch_picking_ux/models/stock_batch_picking.py:0
 #, python-format
-msgid "Debe definir Cantidad Realizada en al menos una operaciÃ³n."
+msgid "Debe definir Cantidad Realizada en al menos una operación."
 msgstr ""
 
 #. module: stock_batch_picking_ux
-#: model:ir.model.fields,help:stock_batch_picking_ux.field_stock_batch_picking_partner_id
+#: model:ir.model.fields,help:stock_batch_picking_ux.field_stock_picking_batch__partner_id
 msgid ""
 "If you choose a partner then only pickings of this partner willbe "
 "sellectable"
 msgstr ""
 
 #. module: stock_batch_picking_ux
-#: selection:stock.batch.picking,picking_code:0
+#: model:ir.model.fields.selection,name:stock_batch_picking_ux.selection__stock_picking_batch__picking_code__internal
 msgid "Internal"
 msgstr ""
 
 #. module: stock_batch_picking_ux
-#: model:ir.ui.view,arch_db:stock_batch_picking_ux.stock_batch_picking_form
+#: model_terms:ir.ui.view,arch_db:stock_batch_picking_ux.stock_batch_picking_form
 msgid "Lot Split"
 msgstr ""
 
 #. module: stock_batch_picking_ux
-#: model:ir.ui.view,arch_db:stock_batch_picking_ux.stock_batch_picking_form
-msgid "Modify"
-msgstr ""
-
-#. module: stock_batch_picking_ux
-#: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_batch_picking_number_of_packages
+#: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_picking_batch__number_of_packages
 msgid "Number Of Packages"
 msgstr ""
 
 #. module: stock_batch_picking_ux
-#: model:ir.model,name:stock_batch_picking_ux.model_stock_move_line
-msgid "Packing Operation"
-msgstr ""
-
-#. module: stock_batch_picking_ux
-#: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_batch_picking_partner_id
+#: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_picking_batch__partner_id
 msgid "Partner"
 msgstr ""
 
 #. module: stock_batch_picking_ux
-#: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_batch_picking_picking_type_ids
+#: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_picking_batch__picking_type_ids
 msgid "Picking Type"
 msgstr ""
 
 #. module: stock_batch_picking_ux
-#: code:addons/stock_batch_picking_ux/models/stock_picking_voucher.py:29
+#: code:addons/stock_batch_picking_ux/models/stock_picking_voucher.py:0
 #, python-format
 msgid "Picking voucher number must be unique per partner"
 msgstr ""
 
 #. module: stock_batch_picking_ux
-#: model:ir.ui.view,arch_db:stock_batch_picking_ux.stock_batch_picking_form
+#: model_terms:ir.ui.view,arch_db:stock_batch_picking_ux.stock_batch_picking_form
 msgid "Process Operations"
 msgstr ""
 
 #. module: stock_batch_picking_ux
-#: model:ir.model.fields,help:stock_batch_picking_ux.field_stock_move_line_origin
+#: model:ir.model,name:stock_batch_picking_ux.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr ""
+
+#. module: stock_batch_picking_ux
+#: model:ir.model.fields,help:stock_batch_picking_ux.field_stock_move_line__origin
 msgid "Reference of the document"
 msgstr ""
 
 #. module: stock_batch_picking_ux
-#: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_batch_picking_restrict_number_package
+#: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_picking_batch__restrict_number_package
 msgid "Restrict Number Package"
 msgstr ""
 
 #. module: stock_batch_picking_ux
-#: model:ir.ui.view,arch_db:stock_batch_picking_ux.stock_batch_picking_form
+#: model_terms:ir.ui.view,arch_db:stock_batch_picking_ux.stock_batch_picking_form
 msgid "Set all Done"
 msgstr ""
 
 #. module: stock_batch_picking_ux
-#: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_move_line_origin
-msgid "Source Document"
+#: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_move_line__origin
+msgid "Source"
 msgstr ""
 
 #. module: stock_batch_picking_ux
@@ -121,12 +121,12 @@ msgid "Stock Voucher Book"
 msgstr "Talonario de Guías de Despacho"
 
 #. module: stock_batch_picking_ux
-#: selection:stock.batch.picking,picking_code:0
+#: model:ir.model.fields.selection,name:stock_batch_picking_ux.selection__stock_picking_batch__picking_code__incoming
 msgid "Suppliers"
 msgstr ""
 
 #. module: stock_batch_picking_ux
-#: code:addons/stock_batch_picking_ux/models/stock_batch_picking.py:164
+#: code:addons/stock_batch_picking_ux/models/stock_batch_picking.py:0
 #, python-format
 msgid "The number of packages can not be 0"
 msgstr "El numero de bultos no puede ser 0"
@@ -137,28 +137,27 @@ msgid "Transfer"
 msgstr ""
 
 #. module: stock_batch_picking_ux
-#: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_batch_picking_picking_code
-#: model:ir.ui.view,arch_db:stock_batch_picking_ux.stock_batch_picking_search
+#: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_picking_batch__picking_code
+#: model_terms:ir.ui.view,arch_db:stock_batch_picking_ux.stock_batch_picking_search
 msgid "Type of Operation"
 msgstr ""
 
 #. module: stock_batch_picking_ux
-#: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_batch_picking_voucher_number
+#: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_picking_batch__voucher_number
 msgid "Voucher Number"
 msgstr ""
 
 #. module: stock_batch_picking_ux
-#: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_batch_picking_voucher_required
+#: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_picking_batch__voucher_required
 msgid "Voucher Required"
 msgstr ""
 
 #. module: stock_batch_picking_ux
-#: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_batch_picking_vouchers
-#: model:ir.ui.view,arch_db:stock_batch_picking_ux.vpicktree
+#: model_terms:ir.ui.view,arch_db:stock_batch_picking_ux.vpicktree
 msgid "Vouchers"
 msgstr "Guías de Despacho"
 
 #. module: stock_batch_picking_ux
-#: model:ir.model,name:stock_batch_picking_ux.model_stock_batch_picking
-msgid "stock.batch.picking"
+#: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_picking_batch__vouchers
+msgid "Vouchers (string)"
 msgstr ""
