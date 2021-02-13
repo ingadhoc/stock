@@ -4,14 +4,15 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2020
+# Juan Rivero <jr@adhoc.com.ar>, 2021
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-12-18 18:55+0000\n"
+"POT-Creation-Date: 2021-02-12 10:19+0000\n"
 "PO-Revision-Date: 2020-03-28 11:47+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2020\n"
+"Last-Translator: Juan Rivero <jr@adhoc.com.ar>, 2021\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -102,7 +103,7 @@ msgstr "Creado por"
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_voucher__create_date
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_print_stock_voucher__create_date
 msgid "Created on"
-msgstr "Creado en"
+msgstr "Creado el"
 
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking__declared_value
@@ -180,7 +181,7 @@ msgstr "Transferencia inmediata"
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_voucher____last_update
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_print_stock_voucher____last_update
 msgid "Last Modified on"
-msgstr "Última modificación en"
+msgstr "Última modificación el"
 
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_book__write_uid
@@ -344,6 +345,9 @@ msgid ""
 "* 1-1\n"
 "* 0001-00000001\n"
 msgstr ""
+"Este número de documento debe ser ingresado con un guión (-) y con un máximo de 4 caracteres para la primer parte y de 8 para la segunda. Los siguientes son ejemplos de números  válidos:\n"
+"* 1-1\n"
+"* 0001-00000001\n"
 
 #. module: stock_voucher
 #: code:addons/stock_voucher/models/stock_picking_voucher.py:0
@@ -408,7 +412,7 @@ msgstr "Debe ingresar los números de remito"
 #: code:addons/stock_voucher/models/stock_picking_voucher.py:0
 #, python-format
 msgid "is not a valid value for"
-msgstr ""
+msgstr "no es un valor válido para"
 
 #. module: stock_voucher
 #: model_terms:ir.ui.view,arch_db:stock_voucher.view_print_stock_voucher_form
