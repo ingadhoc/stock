@@ -77,6 +77,8 @@ class StockPrintStockVoucher(models.TransientModel):
 
     def do_print_voucher(self):
         self.printed = True
+        if self.book_id:
+            self.picking_id.book_id = self.book_id.id
         return self.picking_id.do_print_voucher()
 
     def assign_numbers(self):
