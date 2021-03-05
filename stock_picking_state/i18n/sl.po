@@ -1,0 +1,146 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_picking_state
+# 
+# Translators:
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2020
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-02-13 10:12+0000\n"
+"PO-Revision-Date: 2020-06-10 03:21+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2020\n"
+"Language-Team: Slovenian (https://www.transifex.com/adhoc/teams/46451/sl/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: sl\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
+
+#. module: stock_picking_state
+#: model:ir.model.fields.selection,name:stock_picking_state.selection__stock_picking_state_detail__state__cancel
+msgid "Cancelled"
+msgstr ""
+
+#. module: stock_picking_state
+#: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail__create_uid
+msgid "Created by"
+msgstr "Ustvaril"
+
+#. module: stock_picking_state
+#: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail__create_date
+msgid "Created on"
+msgstr "Ustvarjeno"
+
+#. module: stock_picking_state
+#: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: stock_picking_state
+#: model:ir.model.fields.selection,name:stock_picking_state.selection__stock_picking_state_detail__state__done
+msgid "Done"
+msgstr ""
+
+#. module: stock_picking_state
+#: model:ir.model.fields.selection,name:stock_picking_state.selection__stock_picking_state_detail__state__draft
+msgid "Draft"
+msgstr ""
+
+#. module: stock_picking_state
+#: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail__id
+msgid "ID"
+msgstr "ID"
+
+#. module: stock_picking_state
+#: model:ir.model.fields.selection,name:stock_picking_state.selection__stock_picking_state_detail__picking_type__incoming
+msgid "Incoming"
+msgstr ""
+
+#. module: stock_picking_state
+#: model:ir.model.fields.selection,name:stock_picking_state.selection__stock_picking_state_detail__picking_type__internal
+msgid "Internal"
+msgstr ""
+
+#. module: stock_picking_state
+#: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: stock_picking_state
+#: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail__write_uid
+msgid "Last Updated by"
+msgstr "Zadnji posodobil"
+
+#. module: stock_picking_state
+#: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail__write_date
+msgid "Last Updated on"
+msgstr "Zadnjič posodobljeno"
+
+#. module: stock_picking_state
+#: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail__name
+msgid "Name"
+msgstr ""
+
+#. module: stock_picking_state
+#: model:ir.model.fields.selection,name:stock_picking_state.selection__stock_picking_state_detail__picking_type__outgoing
+msgid "Outgoing"
+msgstr ""
+
+#. module: stock_picking_state
+#: model:ir.actions.act_window,name:stock_picking_state.stock_picking_state_detail_action
+#: model:ir.ui.menu,name:stock_picking_state.menu_state_detail
+msgid "Picking State Detail"
+msgstr ""
+
+#. module: stock_picking_state
+#: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail__picking_type
+msgid "Picking Type"
+msgstr ""
+
+#. module: stock_picking_state
+#: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail__picking_ids
+msgid "Pickings"
+msgstr ""
+
+#. module: stock_picking_state
+#: model:ir.model.fields.selection,name:stock_picking_state.selection__stock_picking_state_detail__state__assigned
+msgid "Ready"
+msgstr ""
+
+#. module: stock_picking_state
+#: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail__sequence
+msgid "Sequence"
+msgstr ""
+
+#. module: stock_picking_state
+#: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking__state_detail_id
+msgid "State Detail"
+msgstr ""
+
+#. module: stock_picking_state
+#: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail__state
+msgid "Status"
+msgstr ""
+
+#. module: stock_picking_state
+#: model:ir.model,name:stock_picking_state.model_stock_picking
+msgid "Transfer"
+msgstr ""
+
+#. module: stock_picking_state
+#: model:ir.model.fields.selection,name:stock_picking_state.selection__stock_picking_state_detail__state__confirmed
+msgid "Waiting"
+msgstr ""
+
+#. module: stock_picking_state
+#: model:ir.model.fields.selection,name:stock_picking_state.selection__stock_picking_state_detail__state__waiting
+msgid "Waiting Another Operation"
+msgstr ""
+
+#. module: stock_picking_state
+#: model:ir.model,name:stock_picking_state.model_stock_picking_state_detail
+msgid "stock.picking.state_detail"
+msgstr ""

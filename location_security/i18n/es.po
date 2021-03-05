@@ -1,0 +1,65 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* location_security
+# 
+# Translators:
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2020
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-02-13 10:12+0000\n"
+"PO-Revision-Date: 2020-06-18 12:46+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2020\n"
+"Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: location_security
+#: model_terms:ir.ui.view,arch_db:location_security.view_location_security_users_form
+msgid "Allowed Stock Locations"
+msgstr "Ubicaciones de stock permitidas"
+
+#. module: location_security
+#: model:ir.model.fields,help:location_security.field_res_users__restrict_locations
+msgid "If True, you can set the location allowed"
+msgstr "Si es Verdadero, usted puede definir la ubicación permitida"
+
+#. module: location_security
+#: code:addons/location_security/models/stock_move.py:0
+#, python-format
+msgid ""
+"Invalid Location. You cannot process this move since you do not control the "
+"location \"%s\"."
+msgstr ""
+"Locación invalida. No se puede procesar este movimiento ya no se controla la"
+" ubicación \"%s\"."
+
+#. module: location_security
+#: model_terms:ir.ui.view,arch_db:location_security.view_location_security_users_form
+msgid "Locations"
+msgstr "Ubicaciones"
+
+#. module: location_security
+#: model:ir.model.fields,field_description:location_security.field_res_users__restrict_locations
+msgid "Restrict Locations"
+msgstr "Restringir Ubicaciones"
+
+#. module: location_security
+#: model:ir.model.fields,field_description:location_security.field_res_users__stock_location_ids
+msgid "Stock Locations"
+msgstr "Ubicaciones"
+
+#. module: location_security
+#: model:ir.model,name:location_security.model_stock_move
+msgid "Stock Move"
+msgstr "Movimiento stock"
+
+#. module: location_security
+#: model:ir.model,name:location_security.model_res_users
+msgid "Users"
+msgstr "Usuarios"
