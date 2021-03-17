@@ -14,9 +14,9 @@
             <field name="description_picking" position="after">
                 <field name="name" string="Descripción de origen" optional="hide"/>
             </field>
-            <field name="name" position="after">
-                <button name="add_picking_operation" class="oe_inline oe_right" type="object" string="Process Products" attrs="{'invisible': [('state', 'not in', ['confirmed', 'assigned'])]}"/>
-            </field>
+            <div name="button_box">
+                <button name="add_picking_operation" class="oe_inline oe_right"  icon="fa-list" type="object" string="Process Products" attrs="{'invisible': [('state', 'not in', ['confirmed', 'assigned'])]}"/>
+            </div>
 
             <field name="product_uom" position="before">
                 <field name="lots_visible" invisible="1"/>
