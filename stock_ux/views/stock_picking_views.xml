@@ -28,14 +28,13 @@
             </button>
 
             <!-- move notes and add observations as we have on SO and invoices -->
-            <page name="note" position="attributes">
-                <attribute name="string">Internal Notes</attribute>
-            </page>
-            <page name="note" position="before">
-                <page name="observations" string="Observations" attrs="{'invisible': [('picking_type_code','=','incoming')]}">
-                    <field name="observations" placeholder="Add any observation that you would like to be included on the deliverslip"/>
-                </page>
-            </page>
+            <field name="move_ids_without_package" position="after">
+                <label for="note" string="Internal Notes"/>
+                <field name="note" placeholder="Add an internal note that will be printed on the Picking Operations sheet"/>
+                <label for="observations"/>
+                <field name="observations" placeholder="Add any observation that you would like to be included on the deliverslip"/>
+            </field>
+            <page name="note" position="replace"/>
         </field>
     </record>
 
