@@ -86,7 +86,7 @@ class StockPicking(models.Model):
             # se actualice
             # antes lo haciamo en do_new_transfer, pero como algunas
             # veces se llama este metodo sin pasar por do_new_transfer
-            if picking.state not in ['confirmed', 'assigned']:
+            if picking.state not in ['draft', 'confirmed', 'assigned']:
                 raise UserError(_(
                     'No se puede validar un picking que no esté en estado '
                     'Parcialmente Disponible o Reservado, probablemente el '
