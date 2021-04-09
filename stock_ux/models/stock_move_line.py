@@ -34,6 +34,10 @@ class StockMoveLine(models.Model):
         compute='_compute_product_uom_qty_location',
         string='Net Quantity',
     )
+    name = fields.Char(
+        related="move_id.name",
+        related_sudo=False,
+    )
 
     def set_all_done(self):
         precision = self.env['decimal.precision'].precision_get(
@@ -91,3 +95,13 @@ class StockMoveLine(models.Model):
         if any(self.filtered(lambda x: not x.move_id and x.picking_id.picking_type_id.block_additional_quantity)):
             raise ValidationError(
                 _('You can not transfer more than the initial demand!'))
+
+    @api.model
+    def create(self, values):
+        """ This is to solve a bug when create the sml (the value is not completed after creation)
+         and should be reported to odoo to solve."""
+        res = super().create(values)
+        if res.picking_id:
+            product = res.product_id.with_context(lang=res.picking_id.partner_id.lang or res.env.user.lang)
+            res.description_picking = product._get_description(res.picking_id.picking_type_id)
+        return res
