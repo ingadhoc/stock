@@ -41,9 +41,10 @@
         <field name="inherit_id" ref="stock_picking_batch_extended.stock_batch_picking_form"/>
         <field name="arch" type="xml">
 
-            <!-- hacemos este boton invisible porque para recepciones no tiene sentido y, si se confirma y cambia de estado no se pueden agregar mas pickings y luego el usuario se puede tentar en cancelar en cuyo caso se cancelan los pickings tambien -->
-            <button name="action_assign" position="attributes">
-                <attribute name="invisible">1</attribute>
+            <button name="action_assign" position="after">
+                <button name="do_unreserve_picking" string="Unreserve all"
+                        type="object"
+                        attrs="{'invisible': ['|',('use_oca_batch_validation', '!=', True),('state', 'not in', ['assigned', 'in_progress'])]}"/>
             </button>
 
             <button name="action_cancel" position="attributes">
