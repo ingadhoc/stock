@@ -83,7 +83,7 @@ class StockMove(models.Model):
                 )))
 
         active_moves = self.filtered(
-            lambda x: x.state not in ['done', 'cancel'])
+            lambda x: x.state not in ['done', 'cancel']).with_context(cancel_from_order=True)
 
         available_to_cancel = sum(active_moves.mapped('product_qty'))
 
