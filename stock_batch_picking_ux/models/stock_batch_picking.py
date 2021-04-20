@@ -184,3 +184,11 @@ class StockPickingBatch(models.Model):
         # Incoming, pero no debería hacer falta este chequeo
         # self.remove_undone_pickings()
         return res
+
+    def do_unreserve_picking(self):
+        batches = self.get_not_empties()
+        if not batches.verify_state("in_progress"):
+            self._check_company()
+            pickings_todo = self.mapped('picking_ids')
+            self.write({'state': 'draft'})
+            pickings_todo.do_unreserve()
