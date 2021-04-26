@@ -93,8 +93,8 @@
             <field name="lot_id" position="attributes">
                 <attribute name="attrs">{'invisible': [('lots_visible', '=', False)]}</attribute>
                 <attribute name="domain">[('product_id', '=', product_id)]</attribute>
-                <attribute name="context">{'default_product_id': product_id, 'active_picking_id': picking_id, 'default_company_id':company_id}</attribute>
                 <attribute name="options">{'create':True, 'create_edit':True}</attribute>
+                <attribute name="context">{'default_product_id': product_id, 'active_picking_id': picking_id, 'default_company_id':company_id, 'display_complete':True}</attribute>
             </field>
             <field name="qty_done" position="before">
                 <field name="product_uom_qty" readonly="1"/>
@@ -119,6 +119,7 @@
                 <!-- for compatibility with web_m2x_options we force allowing create lots -->
                 <field name="lot_id" position="attributes">
                     <attribute name="options">{'create':True, 'create_edit':True}</attribute>
+                    <attribute name="context">{'default_product_id': product_id, 'default_company_id': company_id, 'active_picking_id': picking_id, 'display_complete':True}</attribute>
                 </field>
             </field>
         </record>
@@ -134,6 +135,12 @@
             <!-- for compatibility with web_m2x_options we force allowing create lots -->
             <field name="lot_id" position="attributes">
                 <attribute name="options">{'create':True, 'create_edit':True}</attribute>
+                <attribute name="context">{
+                            'active_picking_id': picking_id,
+                            'default_company_id': parent.company_id,
+                            'default_product_id': parent.product_id,
+                            'display_complete':True
+                        }</attribute>
             </field>
         </field>
     </record>
