@@ -41,6 +41,7 @@ Several improvements to stock:
 #. Change name to the menus Product Move and Product Move lines.
 #. Add to "To Do" filter in stock move the state "partially_available".
 #. Add optional constraints configurable by Picking Type:
+#. Add optional print of origin description insted of product name in Delivery Slip report on transfers.
 
 * Block Picking Edit: Restrict to add lines or to send more quantity than the original quantity. This will only apply to users with group Restrict Edit Blocked Pickings.
 
