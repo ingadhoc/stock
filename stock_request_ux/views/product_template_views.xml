@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="product_template_form_view_procurement_button" model="ir.ui.view">
+        <field name="name">product.template.procurement</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="stock.product_template_form_view_procurement_button"/>
+        <field name="arch" type="xml">
+            <button name="%(stock.action_product_replenish)d" position="attributes">
+                <attribute name="invisible">True</attribute>
+                <attribute name="groups"></attribute>
+                <attribute name="attrs">{}</attribute>
+            </button>
+        </field>
+    </record>
+</odoo>
