@@ -13,3 +13,8 @@ class ResConfigSettings(models.TransientModel):
         'Show Used Lots on Picking Operations',
         implied_group='stock_ux.group_operation_used_lots',
     )
+
+    delivery_slip_use_origin = fields.Boolean(
+        'En Comprobantes de Transferencia usar Descripción de Origen',
+        config_parameter='stock_ux.delivery_slip_use_origin'
+    )
