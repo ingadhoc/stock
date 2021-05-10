@@ -2,7 +2,7 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import models, fields
+from odoo import models, fields, _
 import statistics
 
 
@@ -47,3 +47,16 @@ class ProductProduct(models.Model):
             'default_product_id': self.id,
         }
         return action
+
+    def action_revaluation(self):
+        self.ensure_one()
+        ctx = dict(self._context, default_product_id=self.id, default_company_id=self.env.company.id)
+        return {
+            'name': _("Product Revaluation"),
+            'view_mode': 'form',
+            'res_model': 'stock.valuation.layer.revaluation',
+            'view_id': self.env.ref('stock_ux.stock_valuation_layer_revaluation_form_view').id,
+            'type': 'ir.actions.act_window',
+            'context': ctx,
+            'target': 'new'
+        }

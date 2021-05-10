@@ -47,8 +47,10 @@
         'views/stock_return_picking_views.xml',
         'views/stock_picking_type_views.xml',
         'views/report_deliveryslip.xml',
+        'views/stock_valuation_layer_views.xml',
         'wizards/stock_operation_wizard_views.xml',
         'wizards/res_config_settings_views.xml',
+        'wizards/stock_valuation_layer_revaluation_views.xml',
         'report/stock_ux_report.xml',
     ],
     'demo': [
