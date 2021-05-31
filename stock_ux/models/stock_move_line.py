@@ -77,6 +77,8 @@ class StockMoveLine(models.Model):
 
     @api.constrains('qty_done')
     def _check_manual_lines(self):
+        if self._context.get('put_in_pack', False):
+            return
         if any(self.filtered(
                 lambda x:
                 not x.location_id.should_bypass_reservation() and
