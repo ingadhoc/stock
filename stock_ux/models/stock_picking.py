@@ -99,7 +99,7 @@ class StockPicking(models.Model):
                 title = _(
                     "ERROR: Picking was not sent via email"
                 )
-                rec.message_post("<br/><br/>".join([
+                rec.message_post(body="<br/><br/>".join([
                     "<b>" + title + "</b>",
                     _("Please check the email template associated with"
                       " the picking type."),
