@@ -92,7 +92,7 @@
             </field>
             <field name="lot_id" position="attributes">
                 <attribute name="attrs">{'invisible': [('lots_visible', '=', False)]}</attribute>
-                <attribute name="domain">[('product_id', '=', product_id)]</attribute>
+                <attribute name="domain">[('product_id', '=', product_id), ('company_id', '=', company_id)]</attribute>
                 <attribute name="options">{'create':True, 'create_edit':True}</attribute>
                 <attribute name="context">{'default_product_id': product_id, 'active_picking_id': picking_id, 'default_company_id':company_id, 'display_complete':True}</attribute>
             </field>
