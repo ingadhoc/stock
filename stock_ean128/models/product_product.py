@@ -21,5 +21,6 @@ class ProductProduct(models.Model):
                 ('ean_128', operator, name),
                 ('product_id', 'not in', actual_product_ids),
             ], limit=limit).mapped('product_id')
-            res += products.name_get()
+            prods = self.search([('id', 'in', products.ids)] + args, limit=limit)
+            res += prods.name_get()
         return res
