@@ -7,6 +7,11 @@
             <field name="integration_level" position="after">
                 <field name="partner_id"/>
             </field>
+            <group name="zip_to" position="after">
+                <group name="zip_codes">
+                    <field name="zip_codes"/>
+                </group>
+            </group>
         </field>
     </record>
 </odoo>
