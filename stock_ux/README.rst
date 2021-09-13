@@ -41,6 +41,7 @@ Several improvements to stock:
 #. Change name to the menus Product Move and Product Move lines.
 #. Add to "To Do" filter in stock move the state "partially_available".
 #. Show always visible the notebook pages in lot form view when create and edit a lot from a stock move line.
+#. Restriction for stock inventory for several products with a parameter "stock_ux.inventory_max_lines" or by default of 30k lines.
 #. Add optional constraints configurable by Picking Type:
 #. Add optional print of origin description insted of product name in Delivery Slip report on transfers.
 

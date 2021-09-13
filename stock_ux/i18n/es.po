@@ -603,3 +603,20 @@ msgstr "No puede transferir más de la demanda inicial!"
 #, python-format
 msgid "You can't transfer more quantity than reserved one!"
 msgstr "No puede transferir más cantidad que la reservada!"
+
+#. module: stock_ux
+#: code:addons/stock_ux/models/stock_inventory.py:0
+#, python-format
+msgid ""
+"You are performing an inventory adjustment of more than 30.000 lines. It is "
+"recommended to make inventory adjustments in smaller batches (different "
+"subsets of products).If you also want to modify this maximum, you can do so "
+"by creating / adjusting the system parameter "
+"stock_ux.inventory_max_lines\".Note that larger inventories may not be "
+"processed correctly due to system timeouts."
+msgstr ""
+"Está realizando un ajuste de inventario de más de 30.000 líneas."
+"Se recomienda hacer ajustes de inventario en batches más chicos (distintos subconjuntos de productos)."
+"Si igualmente quiere modificar este máximo puede hacerlo creando/ajustando el parámetro del sistema"
+" 'stock_ux.inventory_max_lines'.Tenga en cuenta que inventarios más grande puede ser que no se procesen "
+"correctamente por los timeouts del sistema."
