@@ -26,7 +26,7 @@ class StockRequest(models.Model):
     @api.onchange('product_id')
     def onchange_product_id(self):
         res = super().onchange_product_id()
-        if self.order_id.route_id in self.route_ids:
+        if self.order_id.route_id.id in self.route_ids.ids:
             self.route_id = self.order_id.route_id.id
         return res
 
