@@ -92,5 +92,5 @@ class StockRequestOrder(models.Model):
     @api.onchange('route_id')
     def onchange_procurement_group_id(self):
         for line in self.stock_request_ids:
-            if self.route_id in line.route_ids:
+            if self.route_id.id in line.route_ids.ids:
                 line.route_id = self.route_id.id
