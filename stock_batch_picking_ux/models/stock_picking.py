@@ -48,3 +48,12 @@ class StockPicking(models.Model):
                             pack.unlink()
 
             pick.do_transfer()
+
+    def action_generate_backorder_wizard(self):
+        if self._context.get('picking_batches', False):
+            wiz = self.env['stock.backorder.confirmation'].create({'pick_ids': [(4, p.id) for p in self]})
+            wiz.process()
+            self._context.get('picking_batches').write({'state': 'done'})
+            return True
+        else:
+            return super().action_generate_backorder_wizard()
