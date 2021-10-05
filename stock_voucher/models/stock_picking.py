@@ -146,7 +146,7 @@ class StockPicking(models.Model):
         'move_lines.quantity_done',
         )
     def _compute_declared_value(self):
-        for rec in self.filtered('automatic_declare_value'):
+        for rec in self.filtered(lambda p: p.automatic_declare_value and p.state not in ['done', 'cancel']):
             done_value = 0.0
             picking_value = 0.0
             inmediate_transfer = True
