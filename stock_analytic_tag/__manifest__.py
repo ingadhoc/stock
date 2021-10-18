@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Stock Analytic Tag',
-    'version': '13.0.1.0.0',
+    'version': '13.0.1.1.0',
     'category': 'Sales',
     'sequence': 14,
     'summary': '',
@@ -29,6 +29,7 @@
     'images': [
     ],
     'depends': [
+        'analytic',
         'stock_account',
     ],
     'data': [

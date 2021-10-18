@@ -20,6 +20,11 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: stock_analytic_tag
+#: model:ir.model.fields,field_description:stock_analytic_tag.field_stock_move__analytic_account_id
+msgid "Analytic Account"
+msgstr "Cuenta Analítica"
+
+#. module: stock_analytic_tag
 #: model:ir.model.fields,field_description:stock_analytic_tag.field_stock_move__analytic_tag_ids
 msgid "Analytic Tag"
 msgstr "Etiqueta Analítica"
