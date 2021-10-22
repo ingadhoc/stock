@@ -1,4 +1,4 @@
-[![Coverage Status](https://coveralls.io/repos/ingadhoc/stock/badge.png?branch=13.0)](https://coveralls.io/r/ingadhoc/stock?branch=13.0)
+[![Coverage Status](https://coveralls.io/repos/ingadhoc/stock/badge.png?branch=15.0)](https://coveralls.io/r/ingadhoc/stock?branch=15.0)
 [![Code Climate](https://codeclimate.com/github/ingadhoc/stock/badges/gpa.svg)](https://codeclimate.com/github/ingadhoc/stock)
 
 # ADHOC stock
@@ -10,7 +10,7 @@ ADHOC Odoo Stock & Warehouse Management Addons
 
 Translation Status
 ------------------
-[![Transifex Status](https://www.transifex.com/projects/p/ingadhoc-stock-8-13-0/chart/image_png)](https://www.transifex.com/projects/p/ingadhoc-stock-13-0)
+[![Transifex Status](https://www.transifex.com/projects/p/ingadhoc-stock-8-15-0/chart/image_png)](https://www.transifex.com/projects/p/ingadhoc-stock-15-0)
 
 ----
 
