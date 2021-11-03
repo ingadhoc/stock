@@ -199,12 +199,6 @@ class StockPickingBatch(models.Model):
             picking_without_qty_done = self.env['stock.picking']
             for picking in rec.picking_ids.filtered(lambda picking: picking.state not in ('cancel', 'done')):
                 if all([x.qty_done == 0.0 for x in picking.move_line_ids]):
-                    # If no lots when needed, raise error
-                    picking_type = picking.picking_type_id
-                    if (picking_type.use_create_lots or picking_type.use_existing_lots):
-                        for ml in picking.move_line_ids:
-                            if ml.product_id.tracking != 'none' and not ml.lot_id and not ml.lot_name:
-                                raise UserError(_('Some products require lots/serial numbers.'))
                     # Check if we need to set some qty done.
                     picking_without_qty_done |= picking
             rec.picking_ids -= picking_without_qty_done
