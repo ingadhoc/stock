@@ -94,11 +94,11 @@ class StockPicking(models.Model):
         self.book_id = False
         self.message_post(body=_('The assigned voucher were deleted'))
 
-    def action_done(self):
+    def _action_done(self):
         """
         If book required then we assign numbers
         """
-        res = super().action_done()
+        res = super()._action_done()
         if self._context.get('do_not_assign_numbers', False):
             return res
         for picking in self.filtered('book_required'):
