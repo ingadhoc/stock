@@ -21,13 +21,7 @@ class StockImmediateTransfer(models.TransientModel):
         # confirmation
         if picking.book_required and picking.voucher_ids:
             if isinstance(res, bool):
-                res = {'type': 'ir.actions.act_window_close'}
-            return {
-                'actions': [
-                    res,
-                    picking.do_print_voucher(),
-                ],
-                'type': 'ir.actions.act_multi',
-            }
-        else:
-            return res
+                return picking.do_print_voucher()
+            else:
+                picking.do_print_voucher()
+                return res
