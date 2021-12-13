@@ -96,7 +96,6 @@
             </field>
 
             <field name="qty_done" position="after">
-                <button name="split_lot" string="Lot Split" type="object" icon="fa-list" groups="stock.group_production_lot" attrs="{'invisible': ['|', ('lots_visible', '=', False), ('state', 'not in', ['confirmed', 'assigned', 'waiting', 'partially_available','done'])]}"/>
                 <button name="set_all_done" string="Set all Done" type="object" icon="fa-check" attrs="{'invisible': ['|', ('lots_visible', '=', True), ('state', 'not in', ['confirmed', 'assigned', 'waiting', 'partially_available'])]}"/>
             </field>
         </field>
