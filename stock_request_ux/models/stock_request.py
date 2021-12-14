@@ -85,7 +85,7 @@ class StockRequest(models.Model):
                     'Cancel remaining call for line "%s" (id %s), line '
                     'qty updated from %s to %s') % (
                         rec.name, rec.id,
-                        old_product_uom_qty, rec.product_uom_qty))
+                        old_product_uom_qty, rec.qty_done))
             rec.check_done()
 
     def _action_launch_procurement_rule(self):
