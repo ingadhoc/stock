@@ -28,7 +28,9 @@ Configuration
 
 To configure this module, you need to:
 
-#. Nothing to configure
+1. Install the module
+2. Set in the user the checkbox "Analytic Accounting Tags"
+3. To be able to edit the tags, the user has to  check the "Analytic Accounting" box
 
 Usage
 =====
