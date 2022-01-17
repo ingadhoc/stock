@@ -103,7 +103,7 @@ class StockMoveLine(models.Model):
         """ This is to solve a bug when create the sml (the value is not completed after creation)
          and should be reported to odoo to solve."""
         res = super().create(values)
-        if res.picking_id:
+        if res.picking_id and not res.description_picking:
             product = res.product_id.with_context(lang=res.picking_id.partner_id.lang or res.env.user.lang)
             res.description_picking = product._get_description(res.picking_id.picking_type_id)
         return res
