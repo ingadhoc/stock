@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Stock UX',
-    'version': '13.0.1.13.0',
+    'version': "15.0.1.0.0",
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
@@ -35,6 +35,7 @@
     ],
     'data': [
         'security/stock_ux_security.xml',
+        'security/ir.model.access.csv',
         'views/product_template_views.xml',
         'views/product_product_views.xml',
         'views/stock_picking_views.xml',
@@ -46,7 +47,6 @@
         'views/stock_backorder_confirmation_views.xml',
         'views/stock_return_picking_views.xml',
         'views/stock_picking_type_views.xml',
-        'views/stock_inventory_views.xml',
         'views/report_deliveryslip.xml',
         'wizards/stock_operation_wizard_views.xml',
         'wizards/res_config_settings_views.xml',
@@ -54,7 +54,7 @@
     ],
     'demo': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }

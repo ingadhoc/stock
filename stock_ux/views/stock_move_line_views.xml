@@ -86,6 +86,7 @@
                 <field name="result_package_id" invisible="1"/>
                 <field name="product_qty" invisible="1"/>
                 <field name="picking_id" invisible="1"/>
+                <field name="product_uom_category_id" invisible="1"/>
                 <field name="product_uom_id" string="Unit of Measure" groups="uom.group_uom" readonly="1"/>
                 <field name="lots_visible" invisible="1"/>
                 <field name="owner_id" readonly="1"/>

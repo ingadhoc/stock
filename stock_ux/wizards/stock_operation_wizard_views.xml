@@ -22,6 +22,14 @@
         </field>
     </record>
 
-    <act_window id="action_stock_operation_wizard" name="Change Locations" view_mode="form" target="new" res_model="stock.operation.wizard" binding_model="stock.move.line" binding_views="list" groups="stock.group_stock_multi_locations"/>
+    <record id="action_stock_operation_wizard" model="ir.actions.act_window">
+        <field name="name">Change Locations</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="res_model">stock.operation.wizard</field>
+        <field name="binding_model_id" ref="stock.model_stock_move_line"/>
+        <field name="binding_view_types">list</field>
+        <field name="groups_id" eval="[(4, ref('stock.group_stock_multi_locations'))]"/>
+    </record>
 
 </odoo>
