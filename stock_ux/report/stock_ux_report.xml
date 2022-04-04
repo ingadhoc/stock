@@ -10,9 +10,7 @@
         <field name="in_format">oo-ods</field>
         <field name="report_file">stock_ux/report/picking_waybill.ods</field>
         <field name="out_format" ref="report_aeroo.report_mimetypes_xls_odt"/>
-        <field name="parser_state">default</field>
         <field name="tml_source">file</field>
     </record>
 
 </odoo>
-

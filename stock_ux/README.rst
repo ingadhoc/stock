@@ -14,38 +14,29 @@
 Stock UX
 ========
 
-Several improvements to stock:
+1. Add button "Set all Done" on moves lines in the picking
+2. Add observations on pickings (and deliveryslip)
+3. Add a wizard accion in the stock move lines of a picking to change locations for several lines at the same time.
+4. Show always visible (for an existing lots configuration in the type operation) the notebook pages in lot form view when create and edit a lot from a stock move line.
+5. Add in the picking return wizard a field with the reason for the return and then bring that field to internal notes in the created picking.
+6. Add a stock picking list report to stock pickings.
+7. Add an optional setting to print in Develiry Slip reports the origin description insted of the product name.
+8. We create a new group "Allow picking cancellation", only users with that right can cancel pickings or validate without back orders
+9. Only allow to delete pickings on draft/cancel state.
+10. Block Picking Edit: Restrict to add lines or to send a different quantity than the original quantity. This will only apply to users with group Restrict Edit Blocked Pickings.
+11. Change the name of the menus "Product Move" and "Product Move lines".
+12. Remove tecnical features to Stock Moves menu in Inventory>Reports.
+13. Add the state "partially_available" in the "To Do" filter in stock moves
+14. Add new field ""Net Quantity"" on stock moves lines. When you filter by locations, the field will be computed this way:
+      1. If filtered location is found on source location: use negative quantity.
+      2. If filtered location is found on destiny location: use positive quantity.
+      3. If filtered location is found on source and destiny location: use "0".
 
-#. Add new field "Net Quantity" on stock moves lines only visible when you filter by locations. This fields is computed this way:
-
-    #. If filtered location is found on source location: use negative quantity
-    #. If filtered location is found on destiny location: use positive quantity
-    #. If filtered location is found on source and destiny location: use 0
-#. When accesing stock moves lines throw products group by picking type and todo
-#. Add to orderpoint Rotation and Location Rotation: delivered quantities to customers on last 90 days divided per 3 (to make it monthly)
-#. Add button "Set all Done" on Moves lines
-#. Add observations on pickings (and deliveryslip)
-#. Add tracking field and Messaging in "Stock Warehouse Orderpoint".
-#. Add partner field on procurement group form view.
-#. Add button on moves to destination pickings
-#. We create a new group "Allow picking cancellation", only users with that right can cancel pickings or validate without back orders
-#. Add in the picking return wizard a field with the reason for the return and then bring that field to internal notes in the created picking.
-#. Only allow to delete pickings on draft/cancel state.
-#. Add a wizard accion in Operation to change locations.
-#. Remove the technical features group in the "Forecasted" button from the product template view, to see the breakdown of incoming and outgoing stock.
-#. Fix in the calculation cost of the merchandise sold when the currency of the product is different from the currency of the company.
-#. Add a stock picking list report to stock pickings.
-#. Add compatibility with web_m2x_options by allowing to create lots on m2o fields
-#. Remove tecnical features to Stock moves menu in inventory/reports.
-#. Add in products (template and variants) button to access to stock moves related.
-#. Change name to the menus Product Move and Product Move lines.
-#. Add to "To Do" filter in stock move the state "partially_available".
-#. Show always visible the notebook pages in lot form view when create and edit a lot from a stock move line.
-#. Restriction for stock inventory for several products with a parameter "stock_ux.inventory_max_lines" or by default of 30k lines.
-#. Add optional constraints configurable by Picking Type:
-#. Add optional print of origin description insted of product name in Delivery Slip report on transfers.
-
-* Block Picking Edit: Restrict to add lines or to send more quantity than the original quantity. This will only apply to users with group Restrict Edit Blocked Pickings.
+15. Add in products (template and variants) a button to access to stock moves related.
+16. When accesing stock moves through the products form group by picking type and filter according to do.
+17. Add to orderpoint Rotation and Location Rotation: delivered quantities to customers on last 120 days divided per 4 (to make it monthly)
+18. Add optional constraints configurable by Picking Type
+19. Add partner field on procurement group form view.
 
 Installation
 ============

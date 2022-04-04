@@ -17,12 +17,6 @@ class StockMoveLine(models.Model):
         related='picking_id.create_uid',
         string="Picking Creator",
     )
-    picking_partner_id = fields.Many2one(
-        'res.partner',
-        'Transfer Destination Address',
-        # vamos a traves de picking para legar mas rapido y no pasar por move
-        related='picking_id.partner_id',
-    )
     picking_code = fields.Selection(
         related='picking_type_id.code',
     )
@@ -61,12 +55,10 @@ class StockMoveLine(models.Model):
         # because now we use location_id to select location, we have compelte
         # location name. If y need we can use some code of
         # _get_domain_locations on stock/product.py
-        locations = self.env['stock.location'].search(
-            [('complete_name', 'ilike', location)])
-        # from_locations = self.env['stock.location'].search([
-        #     '|', ('name', 'ilike', location),
-        #     ('location_dest_id', 'ilike', location)
-        #     ])
+        location_name = location[0]
+        if isinstance(location[0], int):
+            location_name = self.env['stock.location'].browse(location[0]).name
+        locations = self.env['stock.location'].search([('complete_name', 'ilike', location_name)])
         for rec in self:
             product_uom_qty_location = rec.qty_done
             if rec.location_id in locations:
@@ -107,3 +99,11 @@ class StockMoveLine(models.Model):
             product = res.product_id.with_context(lang=res.picking_id.partner_id.lang or res.env.user.lang)
             res.description_picking = product._get_description(res.picking_id.picking_type_id)
         return res
+
+    def _get_aggregated_product_quantities(self, **kwargs):
+        aggregated_move_lines = super()._get_aggregated_product_quantities(**kwargs)
+        if bool(self.env['ir.config_parameter'].sudo().get_param('stock_ux.delivery_slip_use_origin', 'False')) == True:
+            for line in aggregated_move_lines:
+                moves = self.filtered(lambda sml: sml.product_id == aggregated_move_lines[line]['product']).mapped('move_id')
+                aggregated_move_lines[line]['name'] =', '.join(moves.mapped('name'))
+        return aggregated_move_lines
