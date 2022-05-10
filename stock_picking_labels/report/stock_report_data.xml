@@ -9,7 +9,6 @@
         <field name="in_format">oo-odt</field>
         <field name="out_format" ref="report_aeroo.report_mimetypes_pdf_odt"/>
         <field name="report_file">stock_picking_labels/report/picking_label.odt</field>
-        <field name="parser_state">default</field>
         <field name="process_sep" eval="True"/>
         <field name="tml_source">file</field>
     </record>
