@@ -166,13 +166,3 @@ class StockPicking(models.Model):
     def _put_in_pack(self, move_line_ids):
         # we send to skip a process of check qty when is sending through the copy method.
         return super()._put_in_pack(move_line_ids.with_context(put_in_pack=True))
-
-    # Esto es pu parche para evitar la advertencia que agregó odoo a movimientos internos
-    # y que interrumpen la operatoria.
-    @api.onchange('location_id', 'location_dest_id', 'picking_type_id')
-    def onchange_locations(self):
-        from_wh = self.location_id.get_warehouse()
-        to_wh = self.location_dest_id.get_warehouse()
-        is_immediate = self.immediate_transfer if self.id else self._context.get('default_immediate_transfer')
-        if not (self.picking_type_id.code == 'internal' and not is_immediate and from_wh and to_wh and from_wh != to_wh):
-            return super().onchange_locations()
