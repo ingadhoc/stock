@@ -140,8 +140,8 @@ class StockMove(models.Model):
         of given picking.
         """
         self.ensure_one()
-        action_ref = self._context.get('action_ref')
-        form_view_ref = self._context.get('form_view_ref')
+        action_ref = self._context.get('action')
+        form_view_ref = self._context.get('form_view')
         action = self.env.ref(action_ref).read()[0]
         form_view = self.env.ref(form_view_ref)
         res_id = self._context.get('res_id')
