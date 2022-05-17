@@ -6,7 +6,7 @@
         <field name="arch" type="xml">
             <xpath expr="//div[@name='button_box']" position="inside">
                 <field name="request_order_id" invisible="1"/>
-                <button name="action_view_linked_record" class="oe_stat_button" icon="fa-cubes" string="Request Orders" type="object" context="{'res_id': request_order_id, 'action_ref': 'stock_request.stock_request_order_action', 'form_view_ref': 'stock_request.stock_request_order_form'}" attrs="{'invisible': [('request_order_id', '=', False)]}">
+                <button name="action_view_linked_record" class="oe_stat_button" icon="fa-cubes" string="Request Orders" type="object" context="{'res_id': request_order_id, 'action': 'stock_request.stock_request_order_action', 'form_view': 'stock_request.stock_request_order_form'}" attrs="{'invisible': [('request_order_id', '=', False)]}">
                 </button>
             </xpath>
         </field>
