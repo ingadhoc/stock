@@ -12,7 +12,7 @@ class StockMove(models.Model):
 
     @api.constrains('state', 'location_id', 'location_dest_id')
     def check_user_location_rights(self):
-        moves = self.filtered(lambda x: x.state in ['done', 'cancel'])
+        moves = self.filtered(lambda x: x.state not in ['done', 'cancel'])
         if not moves or not self.env.user.restrict_locations:
             return True
         user_locations = self.env.user.stock_location_ids
