@@ -14,7 +14,7 @@ class StockPicking(models.Model):
     block_manual_lines = fields.Boolean(
         related='picking_type_id.block_manual_lines',
     )
-    observations = fields.Text(
+    observations = fields.Html(
     )
 
     def unlink(self):
