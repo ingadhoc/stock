@@ -11,7 +11,6 @@
         <field name="inherit_id" ref="stock.product_template_form_view_procurement_button"/>
         <field name="arch" type="xml">
             <button name="action_view_stock_move_lines" position="attributes">
-                <attribute name="string">Products Moves Detailed</attribute>
                 <attribute name="help">They are only stock movements made or reserved, includes information of batches and storage locations.</attribute>
             </button>
             <button name="action_view_stock_move_lines" position="before">
