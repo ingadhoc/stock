@@ -1,33 +1,40 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * stock_ean128
+# 	* stock_ean128
 # 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2022
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0\n"
+"Project-Id-Version: Odoo Server 15.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-26 00:56+0000\n"
-"PO-Revision-Date: 2019-09-10 00:12+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2019\n"
-"Language-Team: Spanish (https://www.transifex.com/adhoc/teams/46451/es/)\n"
+"POT-Creation-Date: 2022-08-05 15:39+0000\n"
+"PO-Revision-Date: 2022-08-05 15:39+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2022\n"
+"Language-Team: Spanish (https://www.transifex.com/adhoc/teams/133229/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: es\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+
+#. module: stock_ean128
+#: model:ir.model.fields,field_description:stock_ean128.field_product_product__algolia_search
+#: model:ir.model.fields,field_description:stock_ean128.field_product_template__algolia_search
+#: model:ir.model.fields,field_description:stock_ean128.field_stock_production_lot__algolia_search
+msgid "Algolia Search"
+msgstr ""
 
 #. module: stock_ean128
 #: model:ir.model.fields,field_description:stock_ean128.field_stock_production_lot__ean_128
 msgid "EAN128"
-msgstr "EAN128"
+msgstr ""
 
 #. module: stock_ean128
 #: model:ir.model,name:stock_ean128.model_stock_production_lot
 msgid "Lot/Serial"
-msgstr "Lote/Nº de serie"
+msgstr "Lote/Número de serie"
 
 #. module: stock_ean128
 #: model:ir.model.fields,field_description:stock_ean128.field_product_product__lot_ids
