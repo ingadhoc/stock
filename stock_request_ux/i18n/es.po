@@ -4,30 +4,21 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2022
+# Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2022
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-05 15:40+0000\n"
+"POT-Creation-Date: 2022-08-05 16:33+0000\n"
 "PO-Revision-Date: 2022-08-02 18:26+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2022\n"
+"Last-Translator: Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2022\n"
 "Language-Team: Spanish (https://www.transifex.com/adhoc/teams/133229/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: es\n"
 "Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
-
-#. module: stock_request_ux
-#: model:ir.model.fields,field_description:stock_request_ux.field_stock_move__algolia_search
-#: model:ir.model.fields,field_description:stock_request_ux.field_stock_picking__algolia_search
-#: model:ir.model.fields,field_description:stock_request_ux.field_stock_request__algolia_search
-#: model:ir.model.fields,field_description:stock_request_ux.field_stock_request_abstract__algolia_search
-#: model:ir.model.fields,field_description:stock_request_ux.field_stock_request_order__algolia_search
-#: model:ir.model.fields,field_description:stock_request_ux.field_stock_rule__algolia_search
-msgid "Algolia Search"
-msgstr ""
 
 #. module: stock_request_ux
 #: code:addons/stock_request_ux/models/stock_request.py:0
@@ -155,7 +146,7 @@ msgstr "Almacén"
 #: code:addons/stock_request_ux/models/stock_request_abstract.py:0
 #, python-format
 msgid "You have entered a location that is assigned to another company."
-msgstr ""
+msgstr "Ha introducido una ubicación que está asignada a otra compania."
 
 #. module: stock_request_ux
 #: code:addons/stock_request_ux/models/stock_request_abstract.py:0
