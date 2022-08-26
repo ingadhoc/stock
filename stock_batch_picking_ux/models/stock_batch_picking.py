@@ -193,7 +193,7 @@ class StockPickingBatch(models.Model):
             self.write({'state': 'draft'})
             pickings_todo.do_unreserve()
 
-    def done(self):
+    def action_done(self):
         # limpiamos todos los pickings que no tienen cantidades hechas en lo moves
         for rec in self:
             picking_without_qty_done = self.env['stock.picking']
@@ -202,4 +202,4 @@ class StockPickingBatch(models.Model):
                     # Check if we need to set some qty done.
                     picking_without_qty_done |= picking
             rec.picking_ids -= picking_without_qty_done
-        return super(StockPickingBatch, self.with_context(picking_batches=self)).done()
+        return super(StockPickingBatch, self.with_context(picking_batches=self)).action_done()
