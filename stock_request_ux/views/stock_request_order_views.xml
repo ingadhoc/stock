@@ -10,7 +10,7 @@
                 <field name="route_id" domain="[('id', 'in', route_ids)]"/>
             </field>
             <field name="product_uom_qty" position="after">
-                <button name="button_cancel_remaining" icon="fa-ban" type="object" string="Cancelar Pendiente. Se van a cancelar todos los movimientos asociados que no esten realizados." confirm="Se van a cancelar todos los movimientos asociados que no esten realizados. Esto no puede ser revertido, seguro que desea continuar?" states="open"/>
+                <button name="button_cancel_remaining" icon="fa-ban" type="object" title="Cancelar Pendiente. Se van a cancelar todos los movimientos asociados que no esten realizados." confirm="Se van a cancelar todos los movimientos asociados que no esten realizados. Esto no puede ser revertido, seguro que desea continuar?" states="open"/>
             </field>
         </field>
     </record>

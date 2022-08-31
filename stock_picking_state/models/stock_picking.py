@@ -12,7 +12,7 @@ class StockPicking(models.Model):
     state_detail_id = fields.Many2one(
         'stock.picking.state_detail',
         string='State Detail',
-        track_visibility='onchange',
+        tracking=True,
         index=True,
         copy=False,
     )
