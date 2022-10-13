@@ -14,4 +14,8 @@
         <field name="name">Restrict Edit Blocked Pickings</field>
     </record>
 
+    <record model="res.groups" id="group_restrict_to_modify_reservations_from_planned">
+        <field name="name">Restrict to modify reservations from planned</field>
+    </record>
+
 </odoo>
