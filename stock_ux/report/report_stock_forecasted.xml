@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_product_product_replenishment_ux" inherit_id="stock.report_product_product_replenishment">
+        <xpath expr="//button[@name='unreserve_link']" position="attributes">
+            <attribute name="groups">!stock_ux.group_restrict_to_modify_reservations_from_planned</attribute>
+        </xpath>
+        <xpath expr="//button[@name='reserve_link']" position="attributes">
+            <attribute name="groups">!stock_ux.group_restrict_to_modify_reservations_from_planned</attribute>
+        </xpath>
+    </template>
+</odoo>

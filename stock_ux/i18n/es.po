@@ -748,3 +748,8 @@ msgstr "No puede transferir más de la demanda inicial!"
 #, python-format
 msgid "You can't transfer more quantity than reserved one!"
 msgstr "No puede transferir más cantidad que la reservada!"
+
+#. module: stock_ux
+#: model:res.groups,name:stock_ux.group_restrict_to_modify_reservations_from_planned
+msgid "Restrict to modify reservations from planned"
+msgstr "No permitir modificar reservas desde previsto"

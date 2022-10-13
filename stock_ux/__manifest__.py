@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Stock UX',
-    'version': "15.0.1.1.0",
+    'version': "15.0.1.2.0",
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
@@ -51,6 +51,7 @@
         'wizards/stock_operation_wizard_views.xml',
         'wizards/res_config_settings_views.xml',
         'report/stock_ux_report.xml',
+        'report/report_stock_forecasted.xml',
     ],
     'demo': [
     ],
