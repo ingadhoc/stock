@@ -10,7 +10,7 @@ class ProductTemplate(models.Model):
 
     def action_view_stock_move(self):
         self.ensure_one()
-        action = self.env.ref('stock.stock_move_action').read()[0]
+        action = self.env.ref('stock.stock_move_action').sudo().read()[0]
         action['domain'] = [('product_id.product_tmpl_id', 'in', self.ids)]
         action['context'] = {
             'search_default_product_id': self.product_variant_id.id,
