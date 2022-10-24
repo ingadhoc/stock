@@ -148,7 +148,7 @@ class StockMove(models.Model):
         self.ensure_one()
         action_ref = self._context.get('action')
         form_view_ref = self._context.get('form_view')
-        action = self.env.ref(action_ref).sudo().read()[0]
+        action = self.env["ir.actions.actions"]._for_xml_id(action_ref)
         form_view = self.env.ref(form_view_ref)
         res_id = self._context.get('res_id')
         action['views'] = [(form_view.id, 'form')]
