@@ -56,4 +56,4 @@ class StockPicking(models.Model):
             self._context.get('picking_batches').write({'state': 'done'})
             return True
         else:
-            return super(StockPicking)._action_generate_backorder_wizard(show_transfers=show_transfers)
+            return super(StockPicking, self)._action_generate_backorder_wizard(show_transfers=show_transfers)
