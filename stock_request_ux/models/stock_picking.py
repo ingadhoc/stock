@@ -11,7 +11,7 @@ class StockPicking(models.Model):
     stock_request_order_ids = fields.One2many(
         comodel_name='stock.request.order',
         string='Stock Request Orders',
-        compute='_compute_stock_request_order_ids',
+        # compute='_compute_stock_request_order_ids',
     )
     stock_request_order_count = fields.Integer(
         'Stock Request Order #',
