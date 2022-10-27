@@ -10,35 +10,6 @@ class StockPickingBatch(models.Model):
 
     _inherit = 'stock.picking.batch'
 
-    # operation_type = fields.Selection([
-    #     ('incoming', 'Suppliers'),
-    #     ('outgoing', 'Customers'),
-    #     ('internal', 'Internal')],
-    #     'Type of Operation',
-    #     required=True,
-    # )
-    # preferimos limitar por picking type para no confundir a los usuarios
-    # porque si no podrian imaginar que al seleccionar recepciones de distintos
-    # lugares van a estar recibiendo todo en una misma
-    picking_code = fields.Selection([
-        ('incoming', 'Suppliers'),
-        ('outgoing', 'Customers'),
-        ('internal', 'Internal'),
-    ],
-        'Type of Operation',
-        # related='picking_type_id.code',
-        # readonly=True,
-        required=True,
-        # el default sobre todo para que no necesitemos script de migracion
-        default='incoming',
-        states={'done': [('readonly', True)], 'cancel': [('readonly', True)]},
-    )
-    # picking_type_id = fields.Many2one(
-    #     'stock.picking.type',
-    #     'Picking Type',
-    #    states={'done': [('readonly', True)], 'cancel': [('readonly', True)]},
-    #     required=True,
-    # )
     partner_id = fields.Many2one(
         'res.partner',
         # por ahora lo hacemos requerido porque si no tenemos que hacer algun
@@ -88,7 +59,7 @@ class StockPickingBatch(models.Model):
             # este viene exigido desde la cia pero seguramente lo movamos a
             # exigir desde picking type
             # solo es requerido para outgoings
-            if rec.picking_code == 'outgoing':
+            if rec.picking_type_code == 'outgoing':
                 rec.restrict_number_package = any(
                     x.picking_type_id.restrict_number_package
                     for x in rec.picking_ids)
@@ -105,7 +76,7 @@ class StockPickingBatch(models.Model):
     # )
 
     # @api.onchange('picking_type_id', 'partner_id')
-    @api.onchange('picking_code', 'partner_id')
+    @api.onchange('picking_type_code', 'partner_id')
     def changes_set_pickings(self):
         # if we change type or partner reset pickings
         self.picking_ids = False
@@ -157,7 +128,7 @@ class StockPickingBatch(models.Model):
                 rec.picking_ids.write({
                     'number_of_packages': rec.number_of_packages})
 
-            if rec.picking_code == 'incoming' and rec.voucher_number:
+            if rec.picking_type_code == 'incoming' and rec.voucher_number:
                 for picking in rec.active_picking_ids:
                     # agregamos esto para que no se asigne a los pickings
                     # que no se van a recibir ya que todavia no se limpiaron
@@ -170,7 +141,7 @@ class StockPickingBatch(models.Model):
                         'picking_id': picking.id,
                         'name': rec.voucher_number,
                     })
-            elif rec.picking_code != 'incoming':
+            elif rec.picking_type_code != 'incoming':
                 # llamamos al chequeo de stock voucher ya que este metodo
                 # termina usando do_transfer pero el chequeo se llama solo
                 # con do_new_transfer
