@@ -20,13 +20,7 @@ class StockBackorderConfirmation(models.TransientModel):
             # TODO we should also fix odoo methods
             self._context.get('picking_ids')).filtered('book_required')
         if pickings:
-            return {
-                'actions': [
-                    {'type': 'ir.actions.act_window_close'},
-                    pickings.do_print_voucher(),
-                ],
-                'type': 'ir.actions.act_multi',
-            }
+            return pickings.do_print_voucher()
 
     def process_cancel_backorder(self):
         super().process_cancel_backorder()
@@ -37,10 +31,4 @@ class StockBackorderConfirmation(models.TransientModel):
             # TODO we should also fix odoo methods
             self._context.get('picking_ids')).filtered('book_required')
         if pickings:
-            return {
-                'actions': [
-                    {'type': 'ir.actions.act_window_close'},
-                    pickings.do_print_voucher(),
-                ],
-                'type': 'ir.actions.act_multi',
-            }
+            return pickings.do_print_voucher()

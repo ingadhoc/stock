@@ -20,14 +20,6 @@ class StockImmediateTransfer(models.TransientModel):
         # si hay backorder se termina imprimiendo desde el backorder
         # confirmation
         if pickings:
-            if isinstance(res, bool):
-                res = {'type': 'ir.actions.act_window_close'}
-            return {
-                'actions': [
-                    res,
-                    pickings.do_print_voucher(),
-                ],
-                'type': 'ir.actions.act_multi',
-            }
+            return pickings.do_print_voucher()
         else:
             return res
