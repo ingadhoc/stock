@@ -167,3 +167,11 @@ class StockMove(models.Model):
                 defaults['product_uom_qty'] = 0.0
                 defaults['additional'] = True
         return defaults
+
+    @api.constrains('state')
+    def check_cancel(self):
+        if self._context.get('cancel_from_order'):
+            return
+        if self.filtered(
+            lambda x: x.picking_id and x.state == 'cancel' and not self.user_has_groups('stock_ux.allow_picking_cancellation')):
+            raise ValidationError("Only User with 'Picking cancelation allow' rights can cancel pickings")
