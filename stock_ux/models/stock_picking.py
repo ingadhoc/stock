@@ -118,14 +118,6 @@ class StockPicking(models.Model):
                 for line in rec.move_line_ids:
                     line.qty_done = line.product_uom_qty
 
-    @api.constrains('state')
-    def check_cancel(self):
-        if self._context.get('cancel_from_order'):
-            return
-        if self.filtered(
-            lambda x: x.state == 'cancel' and not self.user_has_groups('stock_ux.allow_picking_cancellation')):
-            raise ValidationError("Only User with 'Picking cancelation allow' rights can cancel pickings")
-
     def _put_in_pack(self, move_line_ids):
         # we send to skip a process of check qty when is sending through the copy method.
         return super()._put_in_pack(move_line_ids.with_context(put_in_pack=True))
