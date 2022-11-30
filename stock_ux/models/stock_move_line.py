@@ -38,11 +38,11 @@ class StockMoveLine(models.Model):
             'Product Unit of Measure')
         for rec in self.filtered(
                 lambda x: x.state not in ['draft', 'done', 'cancel']):
-            rec.qty_done = rec.product_uom_qty \
+            rec.qty_done = rec.reserved_uom_qty \
                 if not float_is_zero(
-                    rec.product_uom_qty,
+                    rec.reserved_uom_qty,
                     precision_digits=precision) else \
-                rec.move_id.product_uom_qty
+                rec.move_id.reserved_uom_qty
             if self._context.get('from_popup', False):
                 return self[0].move_id.action_show_details()
 
@@ -90,7 +90,7 @@ class StockMoveLine(models.Model):
             raise ValidationError(
                 _('You can not transfer more than the initial demand!'))
 
-    @api.model
+    @api.model_create_multi
     def create(self, values):
         """ This is to solve a bug when create the sml (the value is not completed after creation)
          and should be reported to odoo to solve."""

@@ -66,13 +66,13 @@ class StockPicking(models.Model):
     def change_location(self):
         # we only change moves locations if picking in draft
         if self.state == 'draft':
-            self.move_lines.update({'location_id': self.location_id.id})
+            self.move_ids.update({'location_id': self.location_id.id})
 
     @api.onchange('location_dest_id')
     def change_location_dest(self):
         # we only change moves locations if picking in draft
         if self.state == 'draft':
-            self.move_lines.update(
+            self.move_ids.update(
                 {'location_dest_id': self.location_dest_id.id})
 
     def action_done(self):
@@ -108,7 +108,7 @@ class StockPicking(models.Model):
 
     def new_force_availability(self):
         self.action_assign()
-        for rec in self.mapped('move_lines').filtered(lambda m: m.state not in ['cancel', 'done']):
+        for rec in self.mapped('move_ids').filtered(lambda m: m.state not in ['cancel', 'done']):
             # this two could go together but we keep similar to odoo sm._quantity_done_set
             if not rec.move_line_ids:
                 rec.quantity_done = rec.product_uom_qty

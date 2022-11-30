@@ -63,8 +63,8 @@
             <tree position="attributes">
                 <attribute name="editable">bottom</attribute>
                 <attribute name="decoration-muted">result_package_id</attribute>
-                <attribute name="decoration-danger">qty_done&gt;product_qty</attribute>
-                <attribute name="decoration-success">qty_done==product_qty and state!='done' and not result_package_id</attribute>
+                <attribute name="decoration-danger">qty_done&gt;reserved_qty</attribute>
+                <attribute name="decoration-success">qty_done==reserved_qty and state!='done' and not result_package_id</attribute>
             </tree>
             <field name="location_dest_id" position="attributes">
                 <attribute name="readonly">1</attribute>
@@ -84,8 +84,9 @@
             <field name="product_id" position="after">
                 <field name="package_id" invisible="1"/>
                 <field name="result_package_id" invisible="1"/>
-                <field name="product_qty" invisible="1"/>
+                <field name="reserved_qty" invisible="1"/>
                 <field name="picking_id" invisible="1"/>
+                <field name="company_id" invisible="1"/>
                 <field name="product_uom_category_id" invisible="1"/>
                 <field name="product_uom_id" string="Unit of Measure" groups="uom.group_uom" readonly="1"/>
                 <field name="lots_visible" invisible="1"/>
@@ -98,7 +99,7 @@
                 <attribute name="context">{'default_product_id': product_id, 'active_picking_id': picking_id, 'default_company_id':company_id, 'display_complete':True}</attribute>
             </field>
             <field name="qty_done" position="before">
-                <field name="product_uom_qty" readonly="1"/>
+                <field name="reserved_uom_qty" readonly="1"/>
             </field>
             <field name="qty_done" position="after">
                 <button name="set_all_done" title="Set all Done" type="object" icon="fa-check" states="confirmed,assigned,waiting,partially_available"/>

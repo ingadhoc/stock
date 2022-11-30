@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Stock UX',
-    'version': "15.0.1.2.0",
+    'version': "16.0.1.0.0",
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
@@ -43,19 +43,22 @@
         'views/stock_move_line_views.xml',
         'views/stock_warehouse_orderpoint_views.xml',
         'views/procurement_group_views.xml',
-        'views/stock_move_views.xml',
         'views/stock_backorder_confirmation_views.xml',
         'views/stock_return_picking_views.xml',
         'views/stock_picking_type_views.xml',
         'views/report_deliveryslip.xml',
+        'views/res_config_settings_views.xml',
         'wizards/stock_operation_wizard_views.xml',
-        'wizards/res_config_settings_views.xml',
         'report/stock_ux_report.xml',
-        'report/report_stock_forecasted.xml',
     ],
+    'assets': {
+        'web.assets_backend': [
+            'stock/static/src/**/*.xml',
+        ],
+    },
     'demo': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }
