@@ -18,7 +18,7 @@
                     </div>
             </xpath>
             <!-- we hide the odoo confirmation picking, because we implent a different approach -->
-            <xpath expr="//field[@name='stock_mail_confirmation_template_id']/../../.." position="attributes">
+            <xpath expr="//div[@id='stock_move_email']" position="attributes">
                 <attribute name="invisible">True</attribute>
             </xpath>
 

@@ -10,10 +10,6 @@
         <field name="category_id" ref="base.module_category_hidden"/>
     </record>
 
-    <record model="res.groups" id="group_restrict_edit_picking">
-        <field name="name">Restrict Edit Blocked Pickings</field>
-    </record>
-
     <record model="res.groups" id="group_restrict_to_modify_reservations_from_planned">
         <field name="name">Restrict to modify reservations from planned</field>
     </record>
