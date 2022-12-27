@@ -18,10 +18,10 @@ class StockPicking(models.Model):
         compute='_compute_stock_request_order_ids',
     )
 
-    @api.depends('move_lines')
+    @api.depends('move_ids')
     def _compute_stock_request_order_ids(self):
         for rec in self:
-            rec.stock_request_order_ids = rec.move_lines.mapped(
+            rec.stock_request_order_ids = rec.move_ids.mapped(
                 'stock_request_ids.order_id')
             rec.stock_request_order_count = len(
                 rec.stock_request_order_ids)

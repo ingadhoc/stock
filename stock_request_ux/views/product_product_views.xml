@@ -12,4 +12,16 @@
             </button>
         </field>
     </record>
+    <record id="product_product_view_form_easy_inherit_stock" model="ir.ui.view">
+        <field name="name">product.product.view.form.easy.inherit.stock</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="stock.product_product_view_form_easy_inherit_stock"/>
+        <field name="arch" type="xml">
+            <button name="%(stock.action_product_replenish)d" position="attributes">
+                <attribute name="invisible">True</attribute>
+                <attribute name="groups"></attribute>
+                <attribute name="attrs">{}</attribute>
+            </button>
+        </field>
+    </record>
 </odoo>

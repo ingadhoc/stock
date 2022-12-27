@@ -9,9 +9,12 @@ from odoo import api, models, fields
 class StockMove(models.Model):
     _inherit = 'stock.move'
 
-    request_order_id = fields.Many2one(
-        related='stock_request_ids.order_id',
-    )
+    request_order_id = fields.Many2one("stock.request.order", compute="_compute_request_order_id")
+
+    @api.depends('stock_request_ids')
+    def _compute_request_order_id(self):
+        for rec in self:
+            rec.request_order_id = rec.stock_request_ids.mapped('order_id')
 
     def _split(self, qty, restrict_partner_id=False):
         """ When we are on a move created by a stock_request and we create a
@@ -30,21 +33,23 @@ class StockMove(models.Model):
             allocation.requested_product_uom_qty -= to_allocate
 
         return move_val_list
-    
-    @api.model
-    def create(self, vals):
+
+    @api.model_create_multi
+    def create(self, vals_list):
         """ When we are on a move created by a stock_request and we create a
         backorder, we create a new allocation linked to this new move and
         update quantities
         """
-        if vals.get('allocation'):
-            allocation,  qty = vals.pop('allocation')
-            res = super().create(vals)
-            allocation.copy({
-                    'stock_move_id': res.id,
-                    'requested_product_uom_qty': qty,
-                })
-            return res
-        else:
-            return super().create(vals)
-        
+        ids = []
+        for vals in vals_list:
+            if vals.get('allocation'):
+                allocation,  qty = vals.pop('allocation')
+                id = super().create(vals).id
+                ids += [id]
+                allocation.copy({
+                        'stock_move_id': id,
+                        'requested_product_uom_qty': qty,
+                    })
+            else:
+                ids += [super().create(vals).id]
+        return self.browse(ids)

@@ -14,7 +14,7 @@ class StockRequest(models.Model):
     picking_count = fields.Integer(
         compute='_compute_picking_ids',
     )
-    # clean this field because of because of _check_product_stock_request
+    # clean this field because of _check_product_stock_request
     # and the fact that we add copy=True to stock_request_ids
     procurement_group_id = fields.Many2one(
         copy=False,
@@ -46,7 +46,7 @@ class StockRequest(models.Model):
     def action_cancel(self):
         """ Con esto queremos cancelar todos lo moves/pickings vinculados (que
         se hayan generado por la rule). No es muy elegante buscar por producto
-        pero al no estar almacenandno el link al request fue la mas facil.
+        pero al no estar almacenado el link al request fue la mas facil.
         TODO: supongo que lo ideal seria:
         1) poder identificar bien las lineas, ya sea llevando el stock request
         a cada move y no solo el inicial, o obteniendo el move original y luego

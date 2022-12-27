@@ -14,10 +14,10 @@ class StockRequestOrder(models.Model):
         copy=True,
     )
     route_id = fields.Many2one(
-        'stock.location.route',
+        'stock.route',
     )
     route_ids = fields.Many2many(
-        'stock.location.route',
+        'stock.route',
         compute='_compute_route_ids',
         readonly=True,
         string="Routes"
@@ -56,30 +56,31 @@ class StockRequestOrder(models.Model):
             rec.picking_ids = all_moves.mapped('picking_id')
             rec.picking_count = len(rec.picking_ids)
 
-    @api.model
-    def create(self, vals):
-        rec = super().create(vals)
-        if not rec.procurement_group_id:
-            # setamos al group el partner del warehouse para que se propague
-            # a los pickings
-            group = self.env['procurement.group'].create(
-                {'partner_id': rec.warehouse_id.partner_id.id})
-            rec.procurement_group_id = group.id
-            for stock_rq in rec.stock_request_ids:
-                stock_rq.write(
-                    {'procurement_group_id': rec.procurement_group_id.id})
-        return rec
+    @api.model_create_multi
+    def create(self, vals_list):
+        recs = super().create(vals_list)
+        for rec in recs:
+            if not rec.procurement_group_id:
+                # setamos al group el partner del warehouse para que se propague
+                # a los pickings
+                group = self.env['procurement.group'].create(
+                    {'partner_id': rec.warehouse_id.partner_id.id})
+                rec.procurement_group_id = group.id
+                for stock_rq in rec.stock_request_ids:
+                    stock_rq.write(
+                        {'procurement_group_id': rec.procurement_group_id.id})
+        return recs
 
     @api.depends('warehouse_id', 'location_id')
     def _compute_route_ids(self):
         for rec in self:
-            routes = self.env['stock.location.route'].search(
+            routes = self.env['stock.route'].search(
                 ['|',
                  ('company_id', '=', rec.company_id.id),
                  ('company_id', '=', False)])
             parents = rec.get_parents().ids
             rec.route_ids = routes.filtered(lambda r: any(
-                p.action == 'pull' and p.location_id.id in parents for p in r.rule_ids))
+                p.action == 'pull' and p.location_dest_id.id in parents for p in r.rule_ids))
 
     def get_parents(self):
         location = self.location_id
