@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Stock Request UX',
-    'version': "15.0.1.0.0",
+    'version': "16.0.1.0.0",
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
@@ -42,7 +42,7 @@
     ],
     'demo': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }
