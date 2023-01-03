@@ -42,7 +42,7 @@ class StockMoveLine(models.Model):
                 if not float_is_zero(
                     rec.reserved_uom_qty,
                     precision_digits=precision) else \
-                rec.move_id.reserved_uom_qty
+                rec.move_id.product_uom_qty
             if self._context.get('from_popup', False):
                 return self[0].move_id.action_show_details()
 
