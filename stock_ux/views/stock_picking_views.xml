@@ -34,7 +34,9 @@
                 <label for="observations"/>
                 <field name="observations" placeholder="Add any observation that you would like to be included on the deliverslip"/>
             </field>
-            <page name="note" position="replace"/>
+            <page name="note" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </page>
         </field>
     </record>
 
