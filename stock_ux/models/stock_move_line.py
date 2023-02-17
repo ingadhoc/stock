@@ -91,14 +91,15 @@ class StockMoveLine(models.Model):
                 _('You can not transfer more than the initial demand!'))
 
     @api.model_create_multi
-    def create(self, values):
+    def create(self, vals_list):
         """ This is to solve a bug when create the sml (the value is not completed after creation)
          and should be reported to odoo to solve."""
-        res = super().create(values)
-        if res.picking_id and not res.description_picking:
-            product = res.product_id.with_context(lang=res.picking_id.partner_id.lang or res.env.user.lang)
-            res.description_picking = product._get_description(res.picking_id.picking_type_id)
-        return res
+        recs = super().create(vals_list)
+        for rec in recs:
+            if rec.picking_id and not rec.description_picking:
+                product = rec.product_id.with_context(lang=rec.picking_id.partner_id.lang or rec.env.user.lang)
+                rec.description_picking = product._get_description(rec.picking_id.picking_type_id)
+        return recs
 
     def _get_aggregated_product_quantities(self, **kwargs):
         aggregated_move_lines = super()._get_aggregated_product_quantities(**kwargs)
