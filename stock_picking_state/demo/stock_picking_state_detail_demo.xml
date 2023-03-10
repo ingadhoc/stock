@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="picking_state_detail_1" model="stock.picking.state_detail">
+            <field name="name">Waiting for authorization</field>
+            <field name="state">assigned</field>
+            <field name="picking_type">outgoing</field>
+        </record>
+        <record id="picking_state_detail_2" model="stock.picking.state_detail">
+            <field name="name">Authorized</field>
+            <field name="state">assigned</field>
+            <field name="picking_type">outgoing</field>
+        </record>
+    </data>
+</odoo>
