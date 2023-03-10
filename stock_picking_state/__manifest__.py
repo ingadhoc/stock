@@ -37,6 +37,7 @@
         'views/stock_picking_views.xml',
     ],
     'demo': [
+        'demo/stock_picking_state_detail_demo.xml',
     ],
     'installable': True,
     'auto_install': False,
