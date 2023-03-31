@@ -20,12 +20,12 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: stock_ean128
-#: model:ir.model.fields,field_description:stock_ean128.field_stock_production_lot__ean_128
+#: model:ir.model.fields,field_description:stock_ean128.field_stock_lot__ean_128
 msgid "EAN128"
 msgstr ""
 
 #. module: stock_ean128
-#: model:ir.model,name:stock_ean128.model_stock_production_lot
+#: model:ir.model,name:stock_ean128.model_stock_lot
 msgid "Lot/Serial"
 msgstr ""
 
