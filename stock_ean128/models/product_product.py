@@ -19,7 +19,7 @@ class ProductProduct(models.Model):
                 args = []
             if name and name[0].encode('utf8') == ' ':
                 name = name[1:]
-            products = self.env['stock.production.lot'].search([
+            products = self.env['stock.lot'].search([
                 ('ean_128', operator, name),
                 ('product_id', 'not in', actual_product_ids),
             ], limit=limit).mapped('product_id')

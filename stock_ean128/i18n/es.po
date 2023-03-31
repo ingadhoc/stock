@@ -22,17 +22,17 @@ msgstr ""
 #. module: stock_ean128
 #: model:ir.model.fields,field_description:stock_ean128.field_product_product__algolia_search
 #: model:ir.model.fields,field_description:stock_ean128.field_product_template__algolia_search
-#: model:ir.model.fields,field_description:stock_ean128.field_stock_production_lot__algolia_search
+#: model:ir.model.fields,field_description:stock_ean128.field_stock_lot__algolia_search
 msgid "Algolia Search"
 msgstr ""
 
 #. module: stock_ean128
-#: model:ir.model.fields,field_description:stock_ean128.field_stock_production_lot__ean_128
+#: model:ir.model.fields,field_description:stock_ean128.field_stock_lot__ean_128
 msgid "EAN128"
 msgstr ""
 
 #. module: stock_ean128
-#: model:ir.model,name:stock_ean128.model_stock_production_lot
+#: model:ir.model,name:stock_ean128.model_stock_lot
 msgid "Lot/Serial"
 msgstr "Lote/Número de serie"
 

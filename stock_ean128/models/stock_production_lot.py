@@ -5,8 +5,8 @@
 from odoo import models, fields, api
 
 
-class StockProductionLot(models.Model):
-    _inherit = 'stock.production.lot'
+class StockLot(models.Model):
+    _inherit = 'stock.lot'
 
     ean_128 = fields.Char(
         string="EAN128",
