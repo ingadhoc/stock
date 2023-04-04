@@ -14,7 +14,7 @@
 Stock Picking Responsible
 =========================
 
-Create a new field "Responsible" on pickings and also show it also in stock move views.
+Create a new field "Responsible" on stock move, related to the respective pickings field.
 
 Installation
 ============
