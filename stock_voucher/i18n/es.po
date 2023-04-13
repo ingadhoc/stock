@@ -418,3 +418,10 @@ msgstr "no es un valor válido para"
 #: model_terms:ir.ui.view,arch_db:stock_voucher.view_print_stock_voucher_form
 msgid "or"
 msgstr "o"
+
+#. module: stock_voucher
+#: model:ir.actions.report,print_report_name:stock.action_report_delivery
+msgid ""
+"object.voucher_ids and (len(object.voucher_ids) > 1 and 'Vouchers %s' or 'Voucher %s') % (','.join(object.voucher_ids.mapped('number'))) or 'Delivery Slip - %s - %s' % (object.partner_id.name or '', object.name)"
+msgstr ""
+"object.voucher_ids and (len(object.voucher_ids) > 1 and 'Remitos %s' or 'Remito %s') % (','.join(object.voucher_ids.mapped('number'))) or 'Albarán de entrega - %s - %s' % (object.partner_id.name or '', object.name)"
