@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Stock Voucher',
-    'version': "15.0.1.0.0",
+    'version': "15.0.1.1.0",
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
@@ -43,6 +43,7 @@
         'views/stock_move_views.xml',
         'data/ir_sequence_data.xml',
         'data/stock_book_data.xml',
+        'report/stock_report_views.xml',
     ],
     'demo': [
     ],
