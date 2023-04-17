@@ -3,28 +3,21 @@
 # 	* stock_ean128
 # 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2022
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2023
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 15.0+e\n"
+"Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-05 15:39+0000\n"
-"PO-Revision-Date: 2022-08-05 15:39+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2022\n"
-"Language-Team: Spanish (https://www.transifex.com/adhoc/teams/133229/es/)\n"
+"POT-Creation-Date: 2023-04-14 09:52+0000\n"
+"PO-Revision-Date: 2023-04-14 09:52+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2023\n"
+"Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: es\n"
 "Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
-
-#. module: stock_ean128
-#: model:ir.model.fields,field_description:stock_ean128.field_product_product__algolia_search
-#: model:ir.model.fields,field_description:stock_ean128.field_product_template__algolia_search
-#: model:ir.model.fields,field_description:stock_ean128.field_stock_lot__algolia_search
-msgid "Algolia Search"
-msgstr ""
 
 #. module: stock_ean128
 #: model:ir.model.fields,field_description:stock_ean128.field_stock_lot__ean_128
@@ -43,11 +36,11 @@ msgid "Lots"
 msgstr "Lotes"
 
 #. module: stock_ean128
-#: model:ir.model,name:stock_ean128.model_product_product
+#: model:ir.model,name:stock_ean128.model_product_template
 msgid "Product"
 msgstr "Producto"
 
 #. module: stock_ean128
-#: model:ir.model,name:stock_ean128.model_product_template
-msgid "Product Template"
-msgstr "Plantilla de producto"
+#: model:ir.model,name:stock_ean128.model_product_product
+msgid "Product Variant"
+msgstr "Variantes de producto"
