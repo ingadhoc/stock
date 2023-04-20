@@ -75,7 +75,7 @@ class StockMoveLine(models.Model):
                 lambda x:
                 not x.location_id.should_bypass_reservation() and
                 x.picking_id.picking_type_id.block_manual_lines and
-                x.product_qty < x.qty_done)):
+                x.reserved_qty < x.qty_done)):
             raise ValidationError(_(
                 "You can't transfer more quantity than reserved one!"))
 
