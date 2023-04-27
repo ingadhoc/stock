@@ -12,7 +12,9 @@
         </xpath>
         <xpath expr="//table[@name='stock_move_table']/tbody/tr/td[1]" position="after">
             <td t-if="o.env['ir.config_parameter'].sudo().get_param('stock_ux.delivery_slip_use_origin') == 'True'">
-                <span t-field="move.name"/>
+                <p t-if="move.sale_line_id.name != move.product_id.name">
+                    <span t-field="move.sale_line_id.name"/>
+                </p>
                 <p t-if="move.description_picking != move.product_id.name">
                     <span t-field="move.description_picking"/>
                 </p>
