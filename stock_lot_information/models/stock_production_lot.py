@@ -1,9 +1,9 @@
 from odoo import models, fields
 
 
-class StockProductionLot(models.Model):
+class StockLot(models.Model):
 
-    _inherit = 'stock.production.lot'
+    _inherit = 'stock.lot'
 
     ref_initial = fields.Integer(
         string='Initial reference'
