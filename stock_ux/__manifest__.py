@@ -19,7 +19,13 @@
 ##############################################################################
 {
     'name': 'Stock UX',
+<<<<<<< HEAD
     'version': "16.0.2.0.0",
+||||||| parent of ce5fa3f8 (temp)
+    'version': "15.0.1.3.0",
+=======
+    'version': "15.0.1.4.0",
+>>>>>>> ce5fa3f8 (temp)
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
