@@ -18,12 +18,18 @@
                 </p>
             </td>
         </xpath>
-       
+
         <!-- Filtramos los stock_move en estado cancelado porque nosotros habilitamos la cancelacion de los mismos,
         esto desde el lado de Odoo no se puede lograr -->
         <xpath expr="//t[@t-set='lines']" position="after">
             <t t-set="lines" t-value="o.move_lines.filtered(lambda x: x.product_uom_qty and x.state != 'cancel')"/>
         </xpath>
+
+        <xpath expr="//th[@name='th_sml_qty_ordered']" position="replace"/>
+    </template>
+
+    <template id="stock_report_delivery_aggregated_move_lines" inherit_id="stock.stock_report_delivery_aggregated_move_lines">
+        <xpath expr="//td[@name='move_line_aggregated_qty_ordered']" position="replace"/>
     </template>
 
     <template id="stock_report_delivery_has_serial_move_line" inherit_id="stock.stock_report_delivery_has_serial_move_line">
