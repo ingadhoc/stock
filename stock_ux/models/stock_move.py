@@ -179,7 +179,7 @@ class StockMove(models.Model):
 
     @api.constrains('state')
     def check_cancel(self):
-        if self._context.get('cancel_from_order'):
+        if self._context.get('cancel_from_order') or self.env.is_superuser():
             return
         if self.filtered(
             lambda x: x.picking_id and x.state == 'cancel' and not self.user_has_groups('stock_ux.allow_picking_cancellation')):
