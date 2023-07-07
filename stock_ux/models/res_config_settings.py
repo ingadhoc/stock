@@ -18,3 +18,8 @@ class ResConfigSettings(models.TransientModel):
         'En Comprobantes de Transferencia usar Descripción de Origen',
         config_parameter='stock_ux.delivery_slip_use_origin'
     )
+
+    delivery_slip_remaining_qty = fields.Boolean(
+        'En Comprobantes de Transferencia mostrar cantidades pendientes de entrega',
+        config_parameter='stock_ux.delivery_slip_remaining_qty'
+    )

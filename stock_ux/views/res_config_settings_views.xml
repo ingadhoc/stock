@@ -34,6 +34,17 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-xs-12 col-md-6 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="delivery_slip_remaining_qty"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="delivery_slip_remaining_qty"/>
+                            <div class="text-muted">
+                                Si marca esta opción, en los comprobantes de entrega se mostrarán las cantidades pendientes de entrega.
+                            </div>
+                        </div>
+                    </div>
             </xpath>
         </field>
     </record>
