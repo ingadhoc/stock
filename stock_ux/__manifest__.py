@@ -32,7 +32,6 @@
         'sale_stock',
         'report_aeroo',
         'stock_voucher',
-        'purchase_stock',
     ],
     'data': [
         'security/stock_ux_security.xml',
