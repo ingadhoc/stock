@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Stock UX',
-    'version': "16.0.2.4.0",
+    'version': "16.0.2.5.0",
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
@@ -50,6 +50,8 @@
         'views/res_config_settings_views.xml',
         'wizards/stock_operation_wizard_views.xml',
         'report/stock_ux_report.xml',
+        'report/ir.action.reports.xml',
+        'report/picking_templates.xml',
     ],
     'assets': {
         'web.assets_backend': [
