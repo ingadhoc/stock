@@ -12,7 +12,7 @@
                 <attribute name="attrs"></attribute>
             </field>
             <field name="description_picking" position="after">
-                <field name="name" string="Descripción de origen" optional="hide"/>
+                <field name="origin_description" string="Descripción de origen" optional="hide"/>
             </field>
             <div name="button_box">
                 <button name="add_picking_operation" class="oe_inline oe_right"  icon="fa-list" type="object" string="Process Products" attrs="{'invisible': [('state', 'not in', ['confirmed', 'assigned'])]}"/>

@@ -32,6 +32,9 @@ class StockMoveLine(models.Model):
         related="move_id.name",
         related_sudo=False,
     )
+    origin_description = fields.Char(
+        related="move_id.origin_description",
+    )
 
     def set_all_done(self):
         precision = self.env['decimal.precision'].precision_get(
