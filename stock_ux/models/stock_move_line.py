@@ -107,8 +107,10 @@ class StockMoveLine(models.Model):
         aggregated_move_lines = super()._get_aggregated_product_quantities(**kwargs)
         if bool(self.env['ir.config_parameter'].sudo().get_param('stock_ux.delivery_slip_use_origin', 'False')) == True:
             for line in aggregated_move_lines:
-                moves = self.filtered(lambda sml: sml.product_id == aggregated_move_lines[line]['product']).mapped('move_id')
-                if moves.mapped('origin_description'):
+                moves = self.filtered(
+                    lambda sml: sml.product_id == aggregated_move_lines[line]['product']
+                    ).mapped('move_id').filtered(lambda m: m.origin_description)
+                if moves:
                     aggregated_move_lines[line]['description'] = False
                     aggregated_move_lines[line]['name'] =', '.join(moves.mapped('origin_description'))
         return aggregated_move_lines
