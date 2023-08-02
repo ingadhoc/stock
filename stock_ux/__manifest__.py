@@ -19,7 +19,13 @@
 ##############################################################################
 {
     'name': 'Stock UX',
+<<<<<<< HEAD
     'version': "16.0.2.7.0",
+||||||| parent of d5bbacee (temp)
+    'version': "15.0.1.5.0",
+=======
+    'version': "15.0.1.6.0",
+>>>>>>> d5bbacee (temp)
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
@@ -50,8 +56,16 @@
         'views/res_config_settings_views.xml',
         'wizards/stock_operation_wizard_views.xml',
         'report/stock_ux_report.xml',
+<<<<<<< HEAD
         'report/ir.action.reports.xml',
         'report/picking_templates.xml',
+||||||| parent of d5bbacee (temp)
+        'report/report_stock_forecasted.xml',
+=======
+        'report/report_stock_forecasted.xml',
+        'report/ir.action.reports.xml',
+        'report/picking_templates.xml'
+>>>>>>> d5bbacee (temp)
     ],
     'assets': {
         'web.assets_backend': [
