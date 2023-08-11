@@ -13,7 +13,7 @@
         'stock',
     ],
     'data': [
-        'views/product_category_views.xml',
+        'data/stock_data.xml',
         'views/stock_location_views.xml',
     ],
     'demo': [
