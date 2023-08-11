@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="removal_by_location_priority" model="product.removal">
+            <field name="name">By Location Priority</field>
+            <field name="method">priority</field>
+        </record>
+    </data>
+</odoo>
