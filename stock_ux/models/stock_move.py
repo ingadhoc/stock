@@ -32,6 +32,8 @@ class StockMove(models.Model):
         related='picking_id.partner_id',
     )
 
+    origin_description = fields.Char(compute="_compute_origin_description")
+
     @api.depends(
         'move_line_ids.qty_done',
         'move_line_ids.lot_id',
@@ -41,6 +43,13 @@ class StockMove(models.Model):
             rec.used_lots = ", ".join(
                 rec.move_line_ids.filtered('lot_id').mapped(
                     lambda x: "%s (%s)" % (x.lot_id.name, x.qty_done)))
+
+    def _compute_origin_description(self):
+        for rec in self:
+            if rec.sale_line_id:
+                rec.origin_description = rec.sale_line_id.name
+            else:
+                rec.origin_description = False
 
     def set_all_done(self):
         self.mapped('move_line_ids').set_all_done()
