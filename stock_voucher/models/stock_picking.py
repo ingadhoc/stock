@@ -144,7 +144,7 @@ class StockPicking(models.Model):
         'automatic_declare_value',
         'move_ids.state',
         'move_ids.quantity_done',
-        )
+    )
     def _compute_declared_value(self):
         for rec in self.filtered(lambda p: p.automatic_declare_value and p.state not in ['done', 'cancel']):
             done_value = 0.0
@@ -198,16 +198,18 @@ class StockPicking(models.Model):
             if bom_enable:
                 for so_bom_line in stock_bom_lines.mapped('sale_line_id'):
                     bom = self.env['mrp.bom']._bom_find(
-                        product=so_bom_line.product_id,
+                        products=so_bom_line.product_id,
                         company_id=so_bom_line.company_id.id)
-                    if bom and bom.type == 'phantom':
+                    bom_dict_items = bom.items()
+                    mrp_bom = next(iter(bom_dict_items))[1]
+                    if bom and mrp_bom.type == 'phantom':
                         bom_moves = so_bom_line.move_ids & stock_bom_lines
                         done_avg = []
                         picking_avg = []
-                        boms, lines = bom.sudo().explode(
+                        boms, lines = mrp_bom.sudo().explode(
                             so_bom_line.product_id,
                             so_bom_line.product_uom_qty,
-                            picking_type=bom.picking_type_id)
+                            picking_type=mrp_bom.picking_type_id)
                         for move in bom_moves:
                             bom_quantity = 0.0
                             for bom_line, line_data in lines:
@@ -217,7 +219,8 @@ class StockPicking(models.Model):
                                 continue
                             picking_avg.append((
                                 move.product_uom_qty / bom_quantity))
-                            done_avg.append((move.quantity_done / bom_quantity))
+                            done_avg.append(
+                                (move.quantity_done / bom_quantity))
                         picking_value += so_bom_line.price_reduce_taxexcl * (
                             sum(picking_avg) / len(picking_avg))
                         done_value += so_bom_line.price_reduce_taxexcl * (
