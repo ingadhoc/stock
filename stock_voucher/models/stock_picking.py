@@ -197,19 +197,15 @@ class StockPicking(models.Model):
             bom_enable = 'bom_ids' in self.env['product.template']._fields
             if bom_enable:
                 for so_bom_line in stock_bom_lines.mapped('sale_line_id'):
-                    bom = self.env['mrp.bom']._bom_find(
-                        products=so_bom_line.product_id,
-                        company_id=so_bom_line.company_id.id)
-                    bom_dict_items = bom.items()
-                    mrp_bom = next(iter(bom_dict_items))[1]
-                    if bom and mrp_bom.type == 'phantom':
+                    bom = self.env["mrp.bom"]._bom_find(products = so_bom_line.product_id)[so_bom_line.product_id]
+                    if bom and bom.type == 'phantom':
                         bom_moves = so_bom_line.move_ids & stock_bom_lines
                         done_avg = []
                         picking_avg = []
-                        boms, lines = mrp_bom.sudo().explode(
+                        boms, lines = bom.sudo().explode(
                             so_bom_line.product_id,
                             so_bom_line.product_uom_qty,
-                            picking_type=mrp_bom.picking_type_id)
+                            picking_type=bom.picking_type_id)
                         for move in bom_moves:
                             bom_quantity = 0.0
                             for bom_line, line_data in lines:
