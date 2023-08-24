@@ -21,10 +21,14 @@
         <xpath expr="//t[@t-set='lines']" position="after">
             <t t-set="lines" t-value="o.move_ids.filtered(lambda x: x.product_uom_qty and x.state != 'cancel')"/>
         </xpath>
-
+        <xpath expr="//th[@name='th_sml_qty_ordered']" position="replace"/>
         <xpath expr="//t[@t-if='o.backorder_ids and backorders']" position="attributes">
             <attribute name="t-if">o.env['ir.config_parameter'].sudo().get_param('stock_ux.delivery_slip_remaining_qty', 'False') == 'True' and o.backorder_ids and backorders</attribute>
         </xpath>
+    </template>
+
+     <template id="stock_report_delivery_aggregated_move_lines" inherit_id="stock.stock_report_delivery_aggregated_move_lines">
+        <xpath expr="//td[@name='move_line_aggregated_qty_ordered']" position="replace"/>
     </template>
 
     <template id="stock_report_delivery_has_serial_move_line" inherit_id="stock.stock_report_delivery_has_serial_move_line">
