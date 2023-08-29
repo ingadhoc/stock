@@ -305,5 +305,53 @@ Transportista:
         </t>
     </template>
 
+<template id="stock_ux.custom_barcode_transfer_template_view_zpl">
+    <t t-set="numero" t-value="0"/>
+        <t t-as="l" t-foreach="docs">
+            <t t-as="o" t-foreach="l.move_line_ids.filtered(lambda v: v.product_id.uom_id.id == 1)">
+                <t t-as="i" t-foreach="range(0,int(o.qty_done))">
+                    <t t-set="numero" t-value="numero + 1"/>
+                        <t t-if="numero % 2 != 0 ">
+^XA
+^CI28
+^LH0,0
+^FO20,10,0
+^A0N,20,25^FDPCCENTRO^FS
+
+^FO260,10
+^A0N,20,25^FD<t t-esc="l.date_done" t-options="{'widget': 'date'}"/>^FS
+
+^FO20,40
+^A0N,40,30
+^TBN,360,40
+^FD<t t-esc="o.product_id.display_name"/>^FS
+
+^FO20,90
+^BY3
+^BCN,60,Y,N,N,A
+^FD<t t-esc="o.product_id.barcode"/>^FS
+                        </t>
+                        <t t-if="numero % 2 == 0 ">
+^FX Nueva etiqueta
+^LH445,0
+^FO20,10,0
+^A0N,20,25^FDPCCENTRO^FS
+^FO260,10
+^A0N,20,25^FD<t t-esc="l.date_done" t-options="{'widget': 'date'}"/>^FS
+^FO20,40
+^A0N,40,30
+^TBN,360,40
+^FD<t t-esc="o.product_id.display_name"/>^FS
+^FO20,90
+^BY3
+^BCN,60,Y,N,N,A
+^FD<t t-esc="o.product_id.barcode"/>^FS 
+^XZ
+                        </t>
+                    </t>
+                </t>
+            </t>
+<t t-if="numero % 2 != 0 "> ^PQ1,0,1,Y^XZ </t>
+</template>
 </data>
 </odoo>
