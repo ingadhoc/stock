@@ -39,7 +39,7 @@
     </record>
 
     <record id="action_custom_barcode_transfer_template_view_pdf" model="ir.actions.report">
-    <field name="name">Codigo de barras de paquete (zpl)</field>
+    <field name="name">Etiquetas de Productos del picking (ZPL)</field>
     <field name="model">stock.picking</field>
     <field name="binding_model_id" ref="stock.model_stock_picking"/>
     <field name="report_type">qweb-text</field>

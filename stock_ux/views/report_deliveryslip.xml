@@ -31,6 +31,12 @@
         <xpath expr="//td[@name='move_line_aggregated_qty_ordered']" position="replace"/>
     </template>
 
+    <template id="custom_stock_report_delivery_aggregated_move_lines" inherit_id="stock.stock_report_delivery_aggregated_move_lines">
+        <xpath expr="//tr" position="attributes">
+            <attribute name="t-if">aggregated_lines[line]['qty_done']</attribute>
+        </xpath>
+    </template>
+    
     <template id="stock_report_delivery_has_serial_move_line" inherit_id="stock.stock_report_delivery_has_serial_move_line">
         <xpath expr="//td[1]" position="attributes">
             <attribute name="t-if">o.env['ir.config_parameter'].sudo().get_param('stock_ux.delivery_slip_use_origin', 'False') == 'False' or not move_line.origin_description</attribute>
