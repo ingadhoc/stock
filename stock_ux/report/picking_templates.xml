@@ -316,7 +316,6 @@ Transportista:
 ^CI28
 ^LH0,0
 ^FO20,10,0
-^A0N,20,25^FDPCCENTRO^FS
 
 ^FO260,10
 ^A0N,20,25^FD<t t-esc="l.date_done" t-options="{'widget': 'date'}"/>^FS
@@ -335,7 +334,6 @@ Transportista:
 ^FX Nueva etiqueta
 ^LH445,0
 ^FO20,10,0
-^A0N,20,25^FDPCCENTRO^FS
 ^FO260,10
 ^A0N,20,25^FD<t t-esc="l.date_done" t-options="{'widget': 'date'}"/>^FS
 ^FO20,40
