@@ -23,7 +23,7 @@ class StockBackorderConfirmation(models.TransientModel):
             return {
                 'actions': [
                     {'type': 'ir.actions.act_window_close'},
-                    picking.do_print_voucher(),
+                    pickings.do_print_voucher(),
                 ],
                 'type': 'ir.actions.act_multi',
             }
@@ -40,7 +40,7 @@ class StockBackorderConfirmation(models.TransientModel):
             return {
                 'actions': [
                     {'type': 'ir.actions.act_window_close'},
-                    picking.do_print_voucher(),
+                    pickings.do_print_voucher(),
                 ],
                 'type': 'ir.actions.act_multi',
             }
