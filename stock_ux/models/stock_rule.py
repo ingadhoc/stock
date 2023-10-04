@@ -14,5 +14,5 @@ class StockRule(models.Model):
     def _compute_propagate_carrier(self):
         """ Make True by default if picking code is outgoing
         """
-        self.propagate_carrier = self.picking_type_id.code == 'outgoing'
-
+        for rec in self:
+            rec.propagate_carrier = rec.picking_type_id.code == 'outgoing'
