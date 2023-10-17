@@ -32,7 +32,7 @@ class StockPicking(models.Model):
 
             if force_qty:
                 for pack in pick.move_line_ids:
-                    pack.qty_done = pack.product_uom_qty
+                    pack.qty_done = pack.reserved_uom_qty
             else:
                 if all(
                         float_is_zero(

@@ -4,17 +4,15 @@
     <record model="ir.ui.view" id="stock_batch_picking_search">
         <field name="name">stock.picking.batch.form</field>
         <field name="model">stock.picking.batch</field>
-        <field name="inherit_id" ref="stock_picking_batch_extended.stock_batch_picking_search"/>
+        <field name="inherit_id" ref="stock_picking_batch.stock_picking_batch_filter"/>
         <field name="arch" type="xml">
             <field name="name" position="after">
-                <!-- al buscar por picking busca por nro de remto -->
+                <!-- Al buscar por picking busca por nro de remito -->
                 <field name="picking_ids"/>
-                <field name="picking_code"/>
-                <!-- <field name="picking_type_id"/> -->
+                <field name="picking_type_code"/>
             </field>
             <group>
-                <filter name="picking_code" string="Type of Operation" context="{'group_by':'picking_code'}"/>
-                <!-- <filter name="picking_type_id" string="Picking Type" context="{'group_by':'picking_type_id'}"/> -->
+                <filter name="picking_type_code" string="Type of Operation" context="{'group_by':'picking_type_code'}"/>
             </group>
         </field>
     </record>
@@ -23,13 +21,11 @@
     <record model="ir.ui.view" id="stock_batch_picking_tree">
         <field name="name">stock.picking.batch.form</field>
         <field name="model">stock.picking.batch</field>
-        <field name="inherit_id" ref="stock_picking_batch_extended.stock_batch_picking_tree"/>
+        <field name="inherit_id" ref="stock_picking_batch.stock_picking_batch_tree"/>
         <field name="arch" type="xml">
             <field name="name" position="after">
                 <field name="vouchers"/>
-                <!-- <field name="picking_type_id"/> -->
-                <field name="picking_code"/>
-                <!-- <field name="picking_ids"/> -->
+                <field name="picking_type_code"/>
             </field>
         </field>
     </record>
@@ -38,13 +34,13 @@
     <record model="ir.ui.view" id="stock_batch_picking_form">
         <field name="name">stock.picking.batch.form</field>
         <field name="model">stock.picking.batch</field>
-        <field name="inherit_id" ref="stock_picking_batch_extended.stock_batch_picking_form"/>
+        <field name="inherit_id" ref="stock_picking_batch.stock_picking_batch_form"/>
         <field name="arch" type="xml">
 
             <button name="action_assign" position="after">
                 <button name="do_unreserve_picking" string="Unreserve all"
                         type="object"
-                        attrs="{'invisible': ['|',('use_oca_batch_validation', '!=', True),('state', 'not in', ['assigned', 'in_progress'])]}"/>
+                        attrs="{'invisible': [('state', 'not in', ['assigned', 'in_progress'])]}"/>
             </button>
 
             <button name="action_cancel" position="attributes">
@@ -53,50 +49,38 @@
             </button>
 
             <field name="name" position="after">
-              <button name="add_picking_operation"  class="oe_inline oe_right" type="object" string="Process Operations" attrs="{'invisible': [('state', 'in', ['cancel', 'done'])]}"/>
+              <button name="add_picking_operation"  class="oe_highlight oe_inline oe_right" type="object" string="Procesar cantidades" attrs="{'invisible': [('state', 'in', ['draft', 'cancel', 'done'])]}"/>
             </field>
 
             <field name="user_id" position="before">
-                <field name="picking_code" invisible="1"/>
                 <field name="voucher_required" invisible="1"/>
-                <field name="picking_code"/>
                 <!-- <field name="picking_type_id"/> -->
                 <!-- al final lo sacamos porque ya lo estamos usando para otros tipos -->
                 <!-- como por ahora solo lo usamos para entrada lo restringimos -->
-                <field name="partner_id" context="{'res_partner_search_mode': picking_code == 'incoming' and 'supplier' or 'customer'}"/>
-                <field name="company_id" groups="base.group_multi_company" attrs="{'readonly': [('picking_ids', '!=', [])]}" force_save="1"/>
+                <field name="partner_id" context="{'res_partner_search_mode': picking_type_code == 'incoming' and 'supplier' or 'customer'}"/>
                 <!-- <field name="partner_id" context="{'search_default_supplier':1, 'default_supplier':1, 'default_customer':0}" domain="[('supplier','=',True)]"/> -->
-                <field name="voucher_number" attrs="{'invisible': [('picking_code','!=','incoming')], 'required': [('voucher_required','=',True)]}"/>
+                <field name="voucher_number" attrs="{'invisible': [('picking_type_code','!=','incoming')], 'required': [('voucher_required','=',True)]}"/>
                 <field name="number_of_packages"/>
                 <!-- <field name="voucher_ids" attrs="{'invisible': [('picking_type_code','!=','incoming')]}" widget="many2many_tags" context="{'default_batch_picking': id}" domain="[('id', '=', False)]"  options="{'create':True, 'create_edit':True}}"/> -->
             </field>
 
             <field name="picking_ids" position="attributes">
                 <attribute name="context">{'show_print_button': 1}</attribute>
-                <attribute name="domain">[('company_id', '=', company_id), ('partner_id', '=', partner_id), ('picking_type_id.code', '=', picking_code), ('state', 'in', ('confirmed', 'partially_available', 'assigned'))]</attribute>
+                <attribute name="domain">[('company_id', '=', company_id), ('partner_id', '=', partner_id), ('picking_type_id.code', '=', picking_type_code), ('state', 'in', ('confirmed', 'partially_available', 'assigned'))]</attribute>
                 <!-- <attribute name="domain">[('partner_id', '=', partner_id), ('picking_type_id', '=', picking_type_id), ('state', 'in', ('confirmed', 'partially_available', 'assigned'))]</attribute> -->
-            </field>
-
-            <!-- TODO this should go on a PR to oca module -->
-            <field name="product_id" position="before">
-                <field name="origin"/>
-            </field>
-
-            <field name="package_id" position="before">
-                <field name="picking_id" readonly="1"/>
             </field>
 
             <field name="move_line_ids" position="attributes">
                 <attribute name="context">{'from_batch': True}</attribute>
             </field>
 
-            <field name="move_lines" position="attributes">
+            <field name="move_ids" position="attributes">
                 <!-- usamos de vista tree la misma que se usan en los pickins y ademas mostramos el campo del picking -->
                 <attribute name="context">{'show_picking': True, 'tree_view_ref': 'stock.view_move_picking_tree'}</attribute>
             </field>
 
-            <field name="qty_done" position="after">
-                <button name="set_all_done" string="Set all Done" type="object" icon="fa-check" attrs="{'invisible': ['|', ('lots_visible', '=', True), ('state', 'not in', ['confirmed', 'assigned', 'waiting', 'partially_available'])]}"/>
+            <field name="picking_type_id" position="after">
+                <button name="action_done" string="Set all Done" type="object" icon="fa-check" attrs="{'invisible': [('state', 'not in', ['confirmed', 'assigned', 'waiting', 'partially_available'])]}"/>
             </field>
         </field>
     </record>
