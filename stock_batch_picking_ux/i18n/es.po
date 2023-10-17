@@ -93,7 +93,7 @@ msgstr "El número de comprobante de albarán debe ser único por partner"
 #. module: stock_batch_picking_ux
 #: model_terms:ir.ui.view,arch_db:stock_batch_picking_ux.stock_batch_picking_form
 msgid "Process Operations"
-msgstr "Operaciones del proceso"
+msgstr "Procesar cantidades"
 
 #. module: stock_batch_picking_ux
 #: model:ir.model,name:stock_batch_picking_ux.model_stock_move_line
