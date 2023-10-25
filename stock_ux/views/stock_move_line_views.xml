@@ -24,6 +24,7 @@
         <field name="inherit_id" ref="stock.stock_move_line_view_search"/>
         <field name="arch" type="xml">
             <field name="location_id" position="before">
+                <field name="product_id" string="Product" context="{'group_by':'product_id'}"/>
                 <field name="location_id" string="Net Quantity Location" filter_domain="['|',('location_id','ilike',self),('location_dest_id','ilike',self)]" context="{'location': self}"/>
             </field>
             <filter name="manufacturing" position="after">
@@ -32,6 +33,12 @@
             </filter>
             <filter name="by_state" position="after">
                 <filter string="Product" name="product_id" context="{'group_by':'product_id'}"/>
+                <filter string="Picking" name="picking"  context="{'group_by':'picking_id'}"/>
+                <!-- Si queremos agregar group by estos campos habria que hacerlos store o hacer una vista sql -->
+                <filter string="Picking Type" name="picking_type"  context="{'group_by':'picking_type_id'}"/>
+                <!-- <filter string="Picking Partner" name="picking_partner_id"  context="{'group_by':'picking_partner_id'}"/> -->
+            </filter>
+            <filter name="by_state" position="after">
                 <filter string="Picking" name="picking"  context="{'group_by':'picking_id'}"/>
                 <!-- Si queremos agregar group by estos campos habria que hacerlos store o hacer una vista sql -->
                 <filter string="Picking Type" name="picking_type"  context="{'group_by':'picking_type_id'}"/>
@@ -103,6 +110,12 @@
             </field>
             <field name="qty_done" position="after">
                 <button name="set_all_done" title="Set all Done" type="object" icon="fa-check" states="confirmed,assigned,waiting,partially_available"/>
+            </field>
+            <field name="lot_id" position="after">
+                <field name="expiration_date" readonly="0"/>
+            </field>
+            <field name="expiration_date" position="attributes">
+                <attribute name="attrs">{'invisible': [('lots_visible', '=', False)]}</attribute>
             </field>
         </field>
     </record>
