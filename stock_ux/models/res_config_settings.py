@@ -23,3 +23,4 @@ class ResConfigSettings(models.TransientModel):
         'En Comprobantes de Transferencia mostrar cantidades pendientes de entrega',
         config_parameter='stock_ux.delivery_slip_remaining_qty'
     )
+    secondary_currency_id = fields.Many2one(related='company_id.secondary_currency_id', readonly=False)

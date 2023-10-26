@@ -2,12 +2,50 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import models, fields
+from odoo import models, fields, api
 import statistics
 
 
 class ProductProduct(models.Model):
     _inherit = 'product.product'
+
+    # TODO implementar, para hacerlo tendriamos que almacenar los campos de stck valuation layer
+    # secondary_currency_id = fields.Many2one(related='company_id.secondary_currency_id')
+    # secondary_currency_value_svl = fields.Float(compute='_compute_seconday_currency_value_svl', compute_sudo=True)
+    # secondary_currency_quantity_svl = fields.Float(compute='_compute_seconday_currency_value_svl', compute_sudo=True)
+    # secondary_currency_avg_cost = fields.Monetary(string="Average Cost", compute='_compute_seconday_currency_value_svl', compute_sudo=True, currency_field='company_seconday_currency_')
+
+    # @api.depends('secondary_currency_id', 'secondary_currency_value_svl', 'secondary_currency_quantity_svl', 'secondary_currency_avg_cost')
+    # @api.depends_context('to_date', 'company')
+    # def _compute_value_svl(self):
+    #     """Compute totals of multiple svl related values"""
+    #     company_id = self.env.company
+    #     self.company_currency_id = company_id.currency_id
+    #     domain = [
+    #         ('product_id', 'in', self.ids),
+    #         ('company_id', '=', company_id.id),
+    #     ]
+    #     if self.env.context.get('to_date'):
+    #         to_date = fields.Datetime.to_datetime(self.env.context['to_date'])
+    #         domain.append(('create_date', '<=', to_date))
+    #     groups = self.env['stock.valuation.layer']._read_group(domain, ['value:sum', 'quantity:sum'], ['product_id'])
+    #     products = self.browse()
+    #     # Browse all products and compute products' quantities_dict in batch.
+    #     self.env['product.product'].browse([group['product_id'][0] for group in groups]).sudo(False).mapped('qty_available')
+    #     for group in groups:
+    #         product = self.browse(group['product_id'][0])
+    #         value_svl = company_id.currency_id.round(group['value'])
+    #         avg_cost = value_svl / group['quantity'] if group['quantity'] else 0
+    #         product.value_svl = value_svl
+    #         product.quantity_svl = group['quantity']
+    #         product.avg_cost = avg_cost
+    #         product.total_value = avg_cost * product.sudo(False).qty_available
+    #         products |= product
+    #     remaining = (self - products)
+    #     remaining.value_svl = 0
+    #     remaining.quantity_svl = 0
+    #     remaining.avg_cost = 0
+    #     remaining.total_value = 0
 
     def get_product_rotation(self, location=False, compute_stdev=False):
         self.ensure_one()
