@@ -23,7 +23,7 @@ class StockImmediateTransfer(models.TransientModel):
             return {
                 'actions': [
                     res,
-                    picking.do_print_voucher(),
+                    pickings.do_print_voucher(),
                 ],
                 'type': 'ir.actions.act_multi',
             }
