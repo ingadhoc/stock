@@ -1,0 +1,49 @@
+<odoo>
+    <record id="stock_valuation_layer_form" model="ir.ui.view">
+        <field name="name">stock.valuation.layer.form</field>
+        <field name="model">stock.valuation.layer</field>
+        <field name="inherit_id" ref="stock_account.stock_valuation_layer_form"/>
+        <field name="arch" type="xml">
+            <notebook>
+                <page string="Valuation" name="valuation">
+                    <group groups="base.group_multi_currency">
+                        <field name="secondary_currency_id" invisible="1"/>
+                        <field name="secondary_currency_unit_cost" />
+                        <field name="secondary_currency_value" />
+                        <field name="secondary_currency_remaining_value" />
+                        <field name="secondary_currency_price_diff_value" />
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+    <record id="stock_valuation_layer_tree" model="ir.ui.view">
+        <field name="name">stock.valuation.layer.tree</field>
+        <field name="model">stock.valuation.layer</field>
+        <field name="inherit_id" ref="stock_account.stock_valuation_layer_tree"/>
+        <field name="arch" type="xml">
+            <field name="unit_cost" position="after">
+                <field name="secondary_currency_id" invisible="1"/>
+                <field name="secondary_currency_unit_cost" optional="hide" groups="base.group_multi_currency"/>
+            </field>
+            <field name="value" position="after">
+                <field name="secondary_currency_id" invisible="1"/>
+                <field name="secondary_currency_value" optional="hide" groups="base.group_multi_currency"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- reporting view -->
+    <record id="stock_valuation_layer_report_tree" model="ir.ui.view">
+        <field name="name">stock.valuation.layer.report.tree</field>
+        <field name="model">stock.valuation.layer</field>
+        <field name="inherit_id" ref="stock_account.stock_valuation_layer_report_tree"/>
+        <field name="arch" type="xml">
+            <field name="remaining_value" position="after">
+                <field name="secondary_currency_remaining_value" optional="hide" groups="base.group_multi_currency"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>
