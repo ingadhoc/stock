@@ -32,7 +32,7 @@ class StockMove(models.Model):
         related='picking_id.partner_id',
     )
 
-    origin_description = fields.Char(compute="_compute_origin_description")
+    origin_description = fields.Char(compute="_compute_origin_description", compute_sudo=True)
 
     @api.depends(
         'move_line_ids.qty_done',
