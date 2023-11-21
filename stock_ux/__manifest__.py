@@ -49,6 +49,7 @@
         'views/stock_picking_type_views.xml',
         'views/report_deliveryslip.xml',
         'views/res_config_settings_views.xml',
+        'views/production_lot.xml',
         'wizards/stock_operation_wizard_views.xml',
         'report/stock_ux_report.xml',
         'report/ir.action.reports.xml',
