@@ -46,6 +46,23 @@ class StockPickingBatch(models.Model):
         related='picking_ids.vouchers',
     )
 
+    picking_count = fields.Integer(
+        string="# Transferencias", compute="_compute_picking_count",
+    )
+
+    notes = fields.Text(help="free form remarks")
+
+    def _compute_picking_count(self):
+        """Calculate number of pickings."""
+        groups = self.env["stock.picking"].read_group(
+            domain=[("batch_id", "in", self.ids)],
+            fields=["batch_id"],
+            groupby=["batch_id"],
+        )
+        counts = {g["batch_id"][0]: g["batch_id_count"] for g in groups}
+        for batch in self:
+            batch.picking_count = counts.get(batch.id, 0)
+
     @api.depends('picking_ids')
     def _compute_picking_type_data(self):
         for rec in self:
