@@ -38,19 +38,24 @@
         <field name="arch" type="xml">
 
             <button name="action_assign" position="after">
-                <button name="do_unreserve_picking" string="Unreserve all"
-                        type="object"
-                        attrs="{'invisible': [('state', 'not in', ['assigned', 'in_progress'])]}"/>
+                <button name="do_unreserve_picking" string="Unreserve all" type="object" attrs="{'invisible': [('state', 'not in', ['assigned', 'in_progress'])]}"/>
             </button>
 
             <button name="action_cancel" position="attributes">
                 <attribute name="groups">stock_ux.allow_picking_cancellation</attribute>
-                <attribute name="confirm">ATENCION! Al cancelar un picking batch todos los pickings relacionados también se van a cancelar. Seguro desea continuar?</attribute>
             </button>
 
             <field name="name" position="after">
-              <button name="add_picking_operation"  class="oe_highlight oe_inline oe_right" type="object" string="Procesar cantidades" attrs="{'invisible': [('state', 'in', ['draft', 'cancel', 'done'])]}"/>
+                <button name="add_picking_operation" class="oe_highlight oe_inline oe_right" type="object" string="Procesar cantidades" attrs="{'invisible': [('state', 'in', ['draft', 'cancel', 'done'])]}"/>
             </field>
+
+            <div name="button_box" position="after">
+                <div class="oe_button_box" name="button_box">
+                    <button name="action_view_stock_picking" class="oe_stat_button" icon="fa-truck" type="object">
+                        <field string="Pickings" name="picking_count" widget="statinfo" />
+                    </button>
+                </div>
+            </div>
 
             <field name="user_id" position="before">
                 <field name="voucher_required" invisible="1"/>
@@ -61,7 +66,7 @@
                 <!-- <field name="partner_id" context="{'search_default_supplier':1, 'default_supplier':1, 'default_customer':0}" domain="[('supplier','=',True)]"/> -->
                 <field name="voucher_number" attrs="{'invisible': [('picking_type_code','!=','incoming')], 'required': [('voucher_required','=',True)]}"/>
                 <field name="number_of_packages"/>
-                <!-- <field name="voucher_ids" attrs="{'invisible': [('picking_type_code','!=','incoming')]}" widget="many2many_tags" context="{'default_batch_picking': id}" domain="[('id', '=', False)]"  options="{'create':True, 'create_edit':True}}"/> -->
+                <!-- <field name="voucher_ids" attrs="{'invisible': [('picking_type_code','!=','incoming')]}" widget="many2many_tags" context="{'default_batch_picking': id}" domain="[('id', '=', False)]" options="{'create':True, 'create_edit':True}}"/> -->
             </field>
 
             <field name="picking_ids" position="attributes">
@@ -81,7 +86,14 @@
             <field name="picking_type_id" position="after">
                 <button name="action_done" string="Set all Done" type="object" icon="fa-check" attrs="{'invisible': [('state', 'not in', ['confirmed', 'assigned', 'waiting', 'partially_available'])]}"/>
             </field>
+
+            <xpath expr="//notebook" position="inside">
+                <page string="Notes">
+                    <field name="notes" colspan="4" nolabel="1"/>
+                </page>
+            </xpath>
         </field>
+
     </record>
 
 </odoo>
