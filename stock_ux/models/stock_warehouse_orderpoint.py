@@ -45,7 +45,7 @@ class StockWarehouseOrderpoint(models.Model):
     qty_multiple = fields.Float(tracking=True)
     location_id = fields.Many2one(tracking=True)
     product_id = fields.Many2one(tracking=True)
-    qty_forecast = fields.Float(store=True)
+    qty_forecast = fields.Float(string="Previsión", store=True)
 
     @api.depends('product_id', 'location_id')
     def _compute_rotation(self):
