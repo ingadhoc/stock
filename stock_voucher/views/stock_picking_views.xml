@@ -35,19 +35,19 @@
 
             <field name="partner_id" position="after">
                 <!-- no lo hacemos requerido por vista -->
-                <field name="book_id" attrs="{'invisible': [('picking_type_code','=','incoming')], 'readonly': [('voucher_ids','!=',[])]}" domain="[('company_id', '=', company_id)]"/>
-                <field name="next_number" attrs="{'invisible': ['|', ('book_id','=',False), ('voucher_ids','!=',[])]}"/>
-                <field name="voucher_ids" attrs="{'readonly': [('picking_type_code','!=','incoming')]}" widget="many2many_tags" context="{'default_picking_id': id}" domain="[('id', '=', False)]"  options="{'create':True, 'create_edit':True}"/>
+                <field name="book_id" invisible="picking_type_code == 'incoming'" readonly="voucher_ids"/>
+                <field name="next_number" invisible="not book_id or voucher_ids"/>
+                <field name="voucher_ids" readonly="picking_type_code != 'incoming'" widget="many2many_tags" context="{'default_picking_id': id}" domain="[('id', '=', False)]" />
             </field>
 
             <field name="origin" position="after">
-                <field name="number_of_packages" attrs="{'invisible': [('picking_type_code','=','incoming')]}"/>
-                <field name="declared_value" attrs="{'invisible': [('picking_type_code','=','incoming')]}"/>
+                <field name="number_of_packages" invisible="picking_type_code == 'incoming'"/>
+                <field name="declared_value" invisible="picking_type_code == 'incoming'"/>
             </field>
 
             <button name="do_print_picking" position="after">
-                <button name="%(action_stock_print_voucher)d" string="Vouchers" type="action" attrs="{'invisible': ['|',('book_id','=',False),'|', ('picking_type_code','=','incoming'), ('state','!=','done')]}" context="{'picking_id': id}"/>
-                <button name="%(action_stock_print_voucher)d" string="Vouchers" type="action" attrs="{'invisible': ['|',('book_id','!=',False),'|', ('picking_type_code','=','incoming'), ('state','!=','done')]}" class="oe_highlight" context="{'picking_id': id}"/>
+                <button name="%(action_stock_print_voucher)d" string="Vouchers" type="action" invisible="not book_id or picking_type_code == 'incoming' or state != 'done'" context="{'picking_id': id}"/>
+                <button name="%(action_stock_print_voucher)d" string="Vouchers" type="action" invisible="book_id or picking_type_code == 'incoming' or state != 'done'" class="oe_highlight" context="{'picking_id': id}"/>
             </button>
         </field>
     </record>
