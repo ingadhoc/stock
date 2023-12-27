@@ -8,13 +8,13 @@
             <xpath expr="//sheet//group" position="after">
                 <group id="stock_voucher">
                     <group>
-                        <field name="book_id" attrs="{'invisible':[('code','=','incoming')]}" domain="[('company_id', '=', company_id)]"/>
-                        <field name="voucher_number_unique" attrs="{'invisible':[('code','!=','incoming')]}"/>
+                        <field name="book_id" invisible="code == 'incoming'"/>
+                        <field name="voucher_number_unique" invisible="code != 'incoming'"/>
                         <field name="pricelist_id"/>
                     </group>
                     <group>
-                        <field name="book_required" attrs="{'invisible':[('code','=','incoming')]}"/>
-                        <field name="voucher_required" attrs="{'invisible':[('code','!=','incoming')]}"/>
+                        <field name="book_required" invisible="code == 'incoming'"/>
+                        <field name="voucher_required" invisible="code != 'incoming'"/>
                         <field name="automatic_declare_value"/>
                         <field name="restrict_number_package"/>
                      </group>

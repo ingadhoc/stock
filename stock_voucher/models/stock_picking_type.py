@@ -27,6 +27,7 @@ class StockPickingType(models.Model):
         'stock.book',
         'Book',
         help='Book suggested for pickings of this type',
+        check_company=True
     )
     pricelist_id = fields.Many2one(
         'product.pricelist',

@@ -18,6 +18,7 @@ class StockPicking(models.Model):
         'Voucher Book',
         copy=False,
         ondelete='restrict',
+        check_company=True
     )
     vouchers = fields.Char(
         compute='_compute_vouchers',
@@ -143,7 +144,7 @@ class StockPicking(models.Model):
     @api.depends(
         'automatic_declare_value',
         'move_ids.state',
-        'move_ids.quantity_done',
+        'move_ids.quantity',
     )
     def _compute_declared_value(self):
         for rec in self.filtered(lambda p: p.automatic_declare_value and p.state not in ['done', 'cancel']):
@@ -155,7 +156,7 @@ class StockPicking(models.Model):
             for move_line in rec.move_ids.filtered(
                     lambda x: x.state != 'cancel'):
                 order_line = move_line.sale_line_id
-                if move_line.quantity_done:
+                if move_line.quantity:
                     inmediate_transfer = False
                 if order_line:
                     pricelist = rec.sale_id.pricelist_id
@@ -164,7 +165,7 @@ class StockPicking(models.Model):
                         stock_bom_lines |= move_line
                         continue
                     so_product_qty = move_line.product_uom_qty
-                    so_qty_done = move_line.quantity_done
+                    so_qty_done = move_line.quantity
                     # convert quantities if move line uom and sale line uom
                     # are different
                     if move_line.product_uom != order_line.product_uom:
@@ -174,7 +175,7 @@ class StockPicking(models.Model):
                                 order_line.product_uom)
                         so_qty_done = \
                             move_line.product_uom._compute_quantity(
-                                move_line.quantity_done,
+                                move_line.quantity,
                                 order_line.product_uom)
                     picking_value += (order_line.price_reduce_taxexcl *
                                       so_product_qty)
@@ -185,11 +186,11 @@ class StockPicking(models.Model):
                     price = rec.picking_type_id.pricelist_id.with_context(
                         uom=move_line.product_uom.id)._price_get(
                         move_line.product_id,
-                        move_line.quantity_done or 1.0,
+                        move_line.quantity or 1.0,
                         partner=rec.partner_id.id)[
                         rec.picking_type_id.pricelist_id.id]
                     picking_value += (price * move_line.product_uom_qty)
-                    done_value += (price * move_line.quantity_done)
+                    done_value += (price * move_line.quantity)
 
             # This is for product in a kit (should only happen if sale_mrp ins
             # installed). If it is bom we only compute amount if all bom
@@ -216,7 +217,7 @@ class StockPicking(models.Model):
                             picking_avg.append((
                                 move.product_uom_qty / bom_quantity))
                             done_avg.append(
-                                (move.quantity_done / bom_quantity))
+                                (move.quantity / bom_quantity))
                         picking_value += so_bom_line.price_reduce_taxexcl * (
                             sum(picking_avg) / len(picking_avg))
                         done_value += so_bom_line.price_reduce_taxexcl * (
