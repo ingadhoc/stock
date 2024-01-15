@@ -34,6 +34,7 @@ Stock UX
 #. Add Rotation and Location Rotation to Reordering Rules (orderpoint): delivered quantities to customers on last 120 days divided per 4 (to make it monthly)
 #. Add optional constraints configurable by Picking Type
 #. Add partner field on procurement group form view.
+#. Allow to reorder the lines in Replenishment view according to the forecast qty, Add the filter "Negatives quantities".
 
 Installation
 ============
