@@ -35,7 +35,6 @@
                 eval="[(5, 0, 0),
                 (0, 0, {'view_mode': 'form', 'view_id': ref('stock_warehouse_orderpoint_wizard')})]" />
         <field name="target">new</field>
-        <field name='binding_model_id' ref="stock.model_stock_warehouse_orderpoint"/>
     </record>
 
     <record id="cron_create_orderpoints" model="ir.cron">

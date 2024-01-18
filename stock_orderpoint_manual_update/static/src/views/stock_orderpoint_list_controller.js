@@ -17,3 +17,9 @@ patch(StockOrderpointListController.prototype, "order patch", {
         });
     }
 });
+
+patch(StockOrderpointListController.prototype, "recompute patch", {
+    async onClickRecomputeOrderpoint() {
+        return this.actionService.doAction('stock_orderpoint_manual_update.action_stock_warehouse_orderpoint_wizard');
+    }
+});
