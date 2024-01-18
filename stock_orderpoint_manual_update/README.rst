@@ -15,6 +15,7 @@ Stock Orderpoint Manual Update
 ==============================
 
 #. Improves performace when opening Replenishment menu.
+#. Allow to reorder the lines in Replenishment view according to the forecast qty, Add the filter "Negatives quantities".
 
 Installation
 ============
