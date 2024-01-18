@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="stock_orderpoint_manual_update.StockOrderpoint.Buttons" t-inherit="stock.StockOrderpoint.Buttons" t-inherit-mode="extension">
+        <xpath expr="//t[@t-if='props.showButtons']" position="before">
+            <button type="button" t-on-click="onClickRecomputeOrderpoint"
+                    class="btn btn-secondary me-1">
+                Recompute Orderpoints
+            </button>
+        </xpath>
+    </t>
+
+</templates>
