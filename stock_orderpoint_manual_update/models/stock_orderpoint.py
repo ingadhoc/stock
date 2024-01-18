@@ -11,9 +11,7 @@ class StockWarehouseOrderpoint(models.Model):
 
     def _get_orderpoint_action(self):
         action = super()._get_orderpoint_action()
-        orderpoints = self.with_context(active_test=False).search([])
-        for rec in orderpoints:
-            rec.qty_forecast_stored = rec.qty_forecast
+        self.update_qty_forecast()
         return action
 
     def _get_orderpoint_products(self):
@@ -36,3 +34,8 @@ class StockWarehouseOrderpoint(models.Model):
             domain += [('id', 'in', product_ids)]
 
         return self.env['product.product'].search(domain)
+
+    def update_qty_forecast(self):
+        orderpoints = self.with_context(active_test=False).search([])
+        for rec in orderpoints:
+            rec.qty_forecast_stored = rec.qty_forecast
