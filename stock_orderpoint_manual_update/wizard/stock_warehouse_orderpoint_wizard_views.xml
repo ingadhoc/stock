@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="stock_warehouse_orderpoint_wizard">
+            <field name="name">stock.warehouse.orderpoint.wizard</field>
+            <field name="model">stock.warehouse.orderpoint.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Replenishment Filter Wizard">
+                    <div colspan="2" class="alert alert-info" role="status" attrs="{'invisible': [('partner_ids','=', []), ('category_ids','=', []), ('product_ids','=', [])]}">
+                        <p><i class="fa fa-info-circle"/>This action will create replenishment lines for products that matches this criteria.</p>
+                    </div>
+                    <group>
+                        <group col="2">
+                            <field name="company_id" invisible="1"/>
+                            <field name="partner_ids" widget="many2many_tags" context="{'res_partner_search_mode': 'supplier'}"></field>
+                            <field name="product_ids" widget="many2many_tags"/>
+                        </group>
+                        <group col="2">
+                            <field name="category_ids" widget="many2many_tags"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button string="Send" name="action_confirm" type="object" class="btn-primary" data-hotkey="q"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel" data-hotkey="z"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+
+    <record id="action_stock_warehouse_orderpoint_wizard" model="ir.actions.act_window">
+        <field name="name">Manual Create Replenishments</field>
+        <field name="res_model">stock.warehouse.orderpoint.wizard</field>
+        <field name="view_ids"
+                eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('stock_warehouse_orderpoint_wizard')})]" />
+        <field name="target">new</field>
+        <field name='binding_model_id' ref="stock.model_stock_warehouse_orderpoint"/>
+    </record>
+
+    <record id="cron_create_orderpoints" model="ir.cron">
+        <field name="name">Replenishment: create new lines</field>
+        <field name="model_id" ref="stock.model_stock_warehouse_orderpoint"/>
+        <field name="state">code</field>
+        <field name="code">model._get_orderpoint_action()</field>
+        <field name="active" eval="True"/>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+    </record>
+
+    <record id="stock.action_orderpoint_replenish" model="ir.actions.act_window">
+        <field name="context">{'search_default_filter_to_reorder': 1, 'search_default_filter_not_snoozed': 1}</field>
+    </record>
+
+    <menuitem
+        id="stock.menu_reordering_rules_replenish"
+        action="stock.action_orderpoint_replenish"
+        name="Replenishment" parent="stock.menu_stock_warehouse_mgmt" sequence="5"
+        groups="stock.group_stock_manager"/>
+
+</odoo>
