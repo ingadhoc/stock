@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="view_warehouse_orderpoint_tree_editable" model="ir.ui.view">
+        <field name="name">stock.warehouse.orderpoint.tree</field>
+        <field name="model">stock.warehouse.orderpoint</field>
+        <field name="inherit_id" ref="stock.view_warehouse_orderpoint_tree_editable"/>
+        <field name="arch" type="xml">
+            <field name="qty_forecast" position="replace">
+                <field name="qty_forecast_stored"/>
+            </field>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="warehouse_orderpoint_search">
+        <field name="name">stock.warehouse.orderpoint.search</field>
+        <field name="model">stock.warehouse.orderpoint</field>
+        <field name="inherit_id" ref="stock.stock_reorder_report_search"/>
+        <field name="arch" type="xml">
+            <filter name="filter_not_snoozed" position="after">
+                <separator/>
+                <filter string="Negative Forecast" name="qty_forecast_stored" domain="[('qty_forecast_stored', '&lt;', 0)]"/>
+            </filter>
+        </field>
+    </record>
+
+</odoo>
