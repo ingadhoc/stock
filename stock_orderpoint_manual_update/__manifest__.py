@@ -37,6 +37,11 @@
     ],
     'demo': [
     ],
+    'assets': {
+        'web.assets_backend': [
+            'stock_orderpoint_manual_update/static/src/views/**/*',
+        ],
+    },
     'installable': True,
     'auto_install': False,
     'application': False,
