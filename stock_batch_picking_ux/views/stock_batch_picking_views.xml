@@ -71,8 +71,7 @@
 
             <field name="picking_ids" position="attributes">
                 <attribute name="context">{'show_print_button': 1}</attribute>
-                <attribute name="domain">[('company_id', '=', company_id), ('partner_id', '=', partner_id), ('picking_type_id.code', '=', picking_type_code), ('state', 'in', ('confirmed', 'partially_available', 'assigned'))]</attribute>
-                <!-- <attribute name="domain">[('partner_id', '=', partner_id), ('picking_type_id', '=', picking_type_id), ('state', 'in', ('confirmed', 'partially_available', 'assigned'))]</attribute> -->
+                <attribute name="domain">[('company_id', '=', company_id), ('state', 'in', ('confirmed', 'partially_available', 'assigned')), ('picking_type_id', '=', picking_type_id)] if not partner_id else [('company_id', '=', company_id), ('state', 'in', ('confirmed', 'partially_available', 'assigned')), ('picking_type_id', '=', picking_type_id), ('partner_id', '=', partner_id)]</attribute>
             </field>
 
             <field name="move_line_ids" position="attributes">
