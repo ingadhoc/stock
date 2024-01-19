@@ -12,26 +12,6 @@ patch(StockOrderpointListController.prototype, "order patch", {
         if (action) {
             await this.actionService.doAction(action);
         }
-        return this.actionService.doAction('stock.action_orderpoint_replenish', {
-            stackPosition: 'replaceCurrentAction',
-        });
     }
 });
 
-patch(StockOrderpointListController.prototype, "recompute patch", {
-    async onClickRecomputeOrderpoint() {
-        return this.actionService.doAction('stock_orderpoint_manual_update.action_stock_warehouse_orderpoint_wizard');
-    }
-});
-
-patch(StockOrderpointListController.prototype, "forecast patch", {
-    async onClickUpdateForecast() {
-        const resIds = await this.getSelectedResIds();
-        await this.model.orm.call(this.props.resModel, "update_qty_forecast", [resIds], {
-            context: this.props.context,
-        });
-        return this.actionService.doAction('stock.action_orderpoint_replenish', {
-            stackPosition: 'replaceCurrentAction',
-        });
-    }
-});
