@@ -45,9 +45,6 @@ class StockWarehouseOrderpoint(models.Model):
     qty_multiple = fields.Float(tracking=True)
     location_id = fields.Many2one(tracking=True)
     product_id = fields.Many2one(tracking=True)
-    qty_forecast_stored = fields.Float(
-        string="Previsión",
-    )
 
     @api.depends('product_id', 'location_id')
     def _compute_rotation(self):
@@ -70,10 +67,3 @@ class StockWarehouseOrderpoint(models.Model):
                 'warehouse_rotation_stdev': warehouse_rotation_stdev,
                 'warehouse_rotation': warehouse_rotation,
             })
-
-    def _get_orderpoint_action(self):
-        action = super()._get_orderpoint_action()
-        orderpoints = self.env['stock.warehouse.orderpoint'].with_context(active_test=False).search([])
-        for rec in orderpoints:
-            rec.qty_forecast_stored = rec.qty_forecast
-        return action
