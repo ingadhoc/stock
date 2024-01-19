@@ -32,8 +32,6 @@
         'purchase_stock',
     ],
     'data': [
-        'wizard/stock_warehouse_orderpoint_wizard_views.xml',
-        'security/ir.model.access.csv',
         'views/stock_warehouse_orderpoint_views.xml',
     ],
     'demo': [
