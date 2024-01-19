@@ -34,6 +34,9 @@ class StockPickingBatch(models.Model):
     number_of_packages = fields.Integer(
         copy=False,
     )
+    
+    picking_type_id = fields.Many2one(required=True)
+    
     picking_type_ids = fields.Many2many(
         'stock.picking.type',
         # related='picking_type_id.voucher_required',

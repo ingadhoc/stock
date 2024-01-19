@@ -19,7 +19,13 @@
 ##############################################################################
 {
     'name': 'Stock Usability with Batch Picking and stock vouchers',
+<<<<<<< HEAD
     'version': "16.0.1.0.0",
+||||||| parent of e33709a2 (temp)
+    'version': "16.0.1.1.0",
+=======
+    'version': "16.0.1.2.0",
+>>>>>>> e33709a2 (temp)
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
