@@ -6,19 +6,35 @@ class StockWarehouseOrderpointWizard(models.TransientModel):
     _description = 'Stock Warehouse Orderpoint Wizard'
 
     company_id = fields.Many2one('res.company', 'Company', default=lambda self: self.env.company)
-    partner_ids = fields.Many2many('res.partner', string='Vendor', check_company=True)
-    category_ids = fields.Many2many('product.category', string='Product Category')
     product_ids = fields.Many2many('product.product', string='Product')
+    category_ids = fields.Many2many('product.category', string='Product Category')
+    supplier_ids = fields.Many2many('res.partner', string='Vendor', check_company=True)
+    location_ids = fields.Many2many('stock.location', string="Location")
 
     def action_confirm(self):
         ctx = self._context.copy()
-        suppliers = self.env['product.supplierinfo'].search([('partner_id', 'in', self.partner_ids.ids)])
         ctx.update({
-            'suppliers': suppliers.ids,
-            'categories': self.category_ids.ids,
-            'products': self.product_ids.ids,
+            'filter_products': self.product_ids.ids,
+            'filter_categories': self.category_ids.ids,
+            'filter_suppliers': self.supplier_ids.ids,
+            'filter_locations': self.location_ids.ids,
         })
-        self = self.with_context(ctx)
-        action = self.env['stock.warehouse.orderpoint']._get_orderpoint_action()
+        action = self.with_context(ctx).env['stock.warehouse.orderpoint']._get_orderpoint_action()
+        orderpoint_domain = self._get_orderpoint_domain()
+        orderpoints = self.env['stock.warehouse.orderpoint'].search(orderpoint_domain)
+        orderpoints._compute_qty_to_order()
+        orderpoints.update_qty_forecast()
+        action['domain'] = orderpoint_domain
         return action
 
+    def _get_orderpoint_domain(self):
+        orderpoint_domain = []
+        if self.product_ids:
+            orderpoint_domain.append(('product_id', 'in', self.product_ids.ids))
+        if self.category_ids:
+            orderpoint_domain.append(('product_category_id', 'in', self.category_ids.ids))
+        if self.supplier_ids:
+            orderpoint_domain.append(('product_id.seller_ids.partner_id', 'in', self.supplier_ids.ids))
+        if self.location_ids:
+            orderpoint_domain.append(('location_id', 'in', self.location_ids.ids))
+        return orderpoint_domain

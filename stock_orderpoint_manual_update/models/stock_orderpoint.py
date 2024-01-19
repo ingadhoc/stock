@@ -1,4 +1,4 @@
-from odoo import models, fields
+from odoo import models, fields, api
 
 
 class StockWarehouseOrderpoint(models.Model):
@@ -9,33 +9,40 @@ class StockWarehouseOrderpoint(models.Model):
         string="Previsión",
     )
 
-    def _get_orderpoint_action(self):
-        action = super()._get_orderpoint_action()
-        self.update_qty_forecast()
-        return action
+    def update_qty_forecast(self):
+        for rec in self:
+            rec.qty_forecast_stored = rec.qty_forecast
 
     def _get_orderpoint_products(self):
         domain = [('type', '=', 'product'), ('stock_move_ids', '!=', False)]
 
         # Filter by suppliers
-        suppliers_ids = self._context.get('suppliers')
-        suppliers = self.env['product.supplierinfo'].browse(suppliers_ids)
-        if suppliers:
-            domain += ['|', ('product_tmpl_id', 'in', suppliers.product_tmpl_id.ids), ('id', 'in', suppliers.product_id.ids)]
+        suppliers_ids = self._context.get('filter_suppliers')
+        if suppliers_ids:
+            domain.append(('seller_ids.partner_id', 'in', suppliers_ids))
 
         # Filter by product categories
-        category_ids = self._context.get('categories')
+        category_ids = self._context.get('filter_categories')
         if category_ids:
-            domain += [('categ_id', 'in', category_ids)]
+            domain.append(('categ_id', 'in', category_ids))
 
         # Filter by products
-        product_ids = self._context.get('products')
+        product_ids = self._context.get('filter_products')
         if product_ids:
-            domain += [('id', 'in', product_ids)]
+            domain.append(('id', 'in', product_ids))
 
         return self.env['product.product'].search(domain)
 
-    def update_qty_forecast(self):
-        orderpoints = self.with_context(active_test=False).search([])
-        for rec in orderpoints:
-            rec.qty_forecast_stored = rec.qty_forecast
+
+
+class StockLocation(models.Model):
+    _inherit = "stock.location"
+
+    # Heredamos método search para filtrar las ubicaciones que se usan en _get_orderpoint_action().
+    # TODO: mejorar si Odoo mezcla PR: https://github.com/odoo/odoo/pull/150256
+    @api.model
+    def search(self, domain, offset=0, limit=None, order=None, count=False):
+        location_ids = self._context.get('filter_locations')
+        if location_ids:
+            domain.append(('id', 'in', location_ids))
+        return super().search(domain, offset=offset, limit=limit, order=order, count=count)
