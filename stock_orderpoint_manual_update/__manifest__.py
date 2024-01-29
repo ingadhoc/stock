@@ -43,7 +43,7 @@
             'stock_orderpoint_manual_update/static/src/views/**/*',
         ],
     },
-    'installable': True,
+    'installable': False,
     'auto_install': False,
     'application': False,
 }
