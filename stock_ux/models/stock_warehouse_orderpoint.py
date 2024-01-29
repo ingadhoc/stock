@@ -15,14 +15,12 @@ class StockWarehouseOrderpoint(models.Model):
         help="Desvío estandar de las cantidades entregas a clientes en los "
         "últimos 120 días.",
         digits='Product Unit of Measure',
-        store=True,
     )
     warehouse_rotation_stdev = fields.Float(
         compute='_compute_rotation',
         help="Desvío estandar de las cantidades entregas desde este almacen"
         " a clientes en los últimos 120 días.",
         digits='Product Unit of Measure',
-        store=True,
     )
     rotation = fields.Float(
         help='Cantidades entregadas a clientes en los '
@@ -30,7 +28,6 @@ class StockWarehouseOrderpoint(models.Model):
         '(restadas devoluciones).',
         compute='_compute_rotation',
         digits='Product Unit of Measure',
-        store=True,
     )
     warehouse_rotation = fields.Float(
         help='Cantidades entregadas desde este almacen a clientes en los '
@@ -38,7 +35,6 @@ class StockWarehouseOrderpoint(models.Model):
         '(restadas devoluciones).',
         compute='_compute_rotation',
         digits='Product Unit of Measure',
-        store=True,
     )
     product_min_qty = fields.Float(tracking=True)
     product_max_qty = fields.Float(tracking=True)
