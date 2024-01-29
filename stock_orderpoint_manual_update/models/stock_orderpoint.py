@@ -5,6 +5,15 @@ class StockWarehouseOrderpoint(models.Model):
     """ Defines Minimum stock rules. """
     _inherit = "stock.warehouse.orderpoint"
 
+    """ add store = True for recompute fields from wizard. Only recompute by wizard """
+    rotation_stdev = fields.Float(store=True)
+
+    warehouse_rotation_stdev = fields.Float(store=True)
+
+    rotation = fields.Float(store=True)
+
+    warehouse_rotation = fields.Float(store=True)
+
     qty_forecast_stored = fields.Float(
         string="Previsión",
     )
