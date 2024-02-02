@@ -20,4 +20,9 @@
         </field>
     </record>
 
+  <!-- Hacemos que la vista que heredamos sea vista hereada no primary para este caso -->
+  <record id="stock.product_template_search_form_view_stock" model="ir.ui.view">
+    <field name="mode">extension</field>
+  </record>
+
 </odoo>
