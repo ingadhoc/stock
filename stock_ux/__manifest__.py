@@ -34,6 +34,7 @@
         'stock_voucher',
         'product_expiry',
         'stock_barcode',
+        'mail',
     ],
     'data': [
         'security/stock_ux_security.xml',
