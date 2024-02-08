@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Delivery UX',
-    'version': "16.0.1.1.0",
+    'version': "17.0.1.1.0",
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',

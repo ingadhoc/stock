@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Location Security',
-    'version': "16.0.1.0.0",
+    'version': "17.0.1.0.0",
     'category': '',
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
