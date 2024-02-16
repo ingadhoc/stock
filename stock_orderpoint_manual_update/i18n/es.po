@@ -1,0 +1,134 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_orderpoint_manual_update
+# 
+# Translators:
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-29 15:06+0000\n"
+"PO-Revision-Date: 2024-01-29 15:06+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024\n"
+"Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: es\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+
+#. module: stock_orderpoint_manual_update
+#: model_terms:ir.ui.view,arch_db:stock_orderpoint_manual_update.stock_warehouse_orderpoint_wizard
+msgid ""
+"<i class=\"fa fa-info-circle\"/>This action will create replenishment lines "
+"for products that matches this criteria."
+msgstr ""
+"Esta acción creará las reglas de abastecimiento para aquellos productos que "
+"coincidan con los criterios de búsqueda seleccionados."
+
+#. module: stock_orderpoint_manual_update
+#: model_terms:ir.ui.view,arch_db:stock_orderpoint_manual_update.stock_warehouse_orderpoint_wizard
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: stock_orderpoint_manual_update
+#: model:ir.model.fields,field_description:stock_orderpoint_manual_update.field_stock_warehouse_orderpoint_wizard__company_id
+msgid "Company"
+msgstr "Compañía"
+
+#. module: stock_orderpoint_manual_update
+#: model_terms:ir.ui.view,arch_db:stock_orderpoint_manual_update.stock_warehouse_orderpoint_wizard
+msgid "Confirm"
+msgstr "Confirmar"
+
+#. module: stock_orderpoint_manual_update
+#: model:ir.model.fields,field_description:stock_orderpoint_manual_update.field_stock_warehouse_orderpoint_wizard__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: stock_orderpoint_manual_update
+#: model:ir.model.fields,field_description:stock_orderpoint_manual_update.field_stock_warehouse_orderpoint_wizard__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: stock_orderpoint_manual_update
+#: model:ir.model.fields,field_description:stock_orderpoint_manual_update.field_stock_warehouse_orderpoint_wizard__display_name
+msgid "Display Name"
+msgstr "Nombre Mostrado"
+
+#. module: stock_orderpoint_manual_update
+#: model:ir.model.fields,field_description:stock_orderpoint_manual_update.field_stock_warehouse_orderpoint_wizard__id
+msgid "ID"
+msgstr "ID (identificación)"
+
+#. module: stock_orderpoint_manual_update
+#: model:ir.model,name:stock_orderpoint_manual_update.model_stock_location
+msgid "Inventory Locations"
+msgstr "Ubicaciones de inventario"
+
+#. module: stock_orderpoint_manual_update
+#: model:ir.model.fields,field_description:stock_orderpoint_manual_update.field_stock_warehouse_orderpoint_wizard____last_update
+msgid "Last Modified on"
+msgstr "Última Modificación el"
+
+#. module: stock_orderpoint_manual_update
+#: model:ir.model.fields,field_description:stock_orderpoint_manual_update.field_stock_warehouse_orderpoint_wizard__write_uid
+msgid "Last Updated by"
+msgstr "Última Actualización por"
+
+#. module: stock_orderpoint_manual_update
+#: model:ir.model.fields,field_description:stock_orderpoint_manual_update.field_stock_warehouse_orderpoint_wizard__write_date
+msgid "Last Updated on"
+msgstr "Ultima Actualización el"
+
+#. module: stock_orderpoint_manual_update
+#: model:ir.model.fields,field_description:stock_orderpoint_manual_update.field_stock_warehouse_orderpoint_wizard__location_ids
+msgid "Location"
+msgstr "Ubicación"
+
+#. module: stock_orderpoint_manual_update
+#: model:ir.actions.act_window,name:stock_orderpoint_manual_update.action_stock_warehouse_orderpoint_wizard
+msgid "Manual Create Replenishments"
+msgstr ""
+
+#. module: stock_orderpoint_manual_update
+#: model:ir.model,name:stock_orderpoint_manual_update.model_stock_warehouse_orderpoint
+msgid "Minimum Inventory Rule"
+msgstr "Regla de inventario mínimo"
+
+#. module: stock_orderpoint_manual_update
+#: model_terms:ir.ui.view,arch_db:stock_orderpoint_manual_update.warehouse_orderpoint_search
+msgid "Negative Forecast"
+msgstr "Pronóstico negativo"
+
+#. module: stock_orderpoint_manual_update
+#: model:ir.model.fields,field_description:stock_orderpoint_manual_update.field_stock_warehouse_orderpoint__qty_forecast_stored
+msgid "Previsión"
+msgstr ""
+
+#. module: stock_orderpoint_manual_update
+#: model:ir.model.fields,field_description:stock_orderpoint_manual_update.field_stock_warehouse_orderpoint_wizard__product_ids
+msgid "Product"
+msgstr "Producto"
+
+#. module: stock_orderpoint_manual_update
+#: model:ir.model.fields,field_description:stock_orderpoint_manual_update.field_stock_warehouse_orderpoint_wizard__category_ids
+msgid "Product Category"
+msgstr "Categoría de producto"
+
+#. module: stock_orderpoint_manual_update
+#: model_terms:ir.ui.view,arch_db:stock_orderpoint_manual_update.stock_warehouse_orderpoint_wizard
+msgid "Replenishment Filter Wizard"
+msgstr ""
+
+#. module: stock_orderpoint_manual_update
+#: model:ir.model,name:stock_orderpoint_manual_update.model_stock_warehouse_orderpoint_wizard
+msgid "Stock Warehouse Orderpoint Wizard"
+msgstr ""
+
+#. module: stock_orderpoint_manual_update
+#: model:ir.model.fields,field_description:stock_orderpoint_manual_update.field_stock_warehouse_orderpoint_wizard__supplier_ids
+msgid "Vendor"
+msgstr "Proveedor"
