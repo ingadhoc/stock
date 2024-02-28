@@ -19,7 +19,11 @@
 ##############################################################################
 {
     'name': 'Stock UX',
+<<<<<<< HEAD
     'version': "16.0.2.16.0",
+=======
+    'version': "17.0.1.0.0",
+>>>>>>> 5c49e419 ([MIG] stock_ux: Migration to 17.0)
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
@@ -30,9 +34,10 @@
     ],
     'depends': [
         'sale_stock',
-        'report_aeroo',
-        'stock_voucher',
+        # 'report_aeroo',
+        # 'stock_voucher',
         'product_expiry',
+        'stock_barcode',
     ],
     'data': [
         'security/stock_ux_security.xml',
@@ -50,7 +55,7 @@
         'views/report_deliveryslip.xml',
         'views/res_config_settings_views.xml',
         'wizards/stock_operation_wizard_views.xml',
-        'report/stock_ux_report.xml',
+        # 'report/stock_ux_report.xml',
         'report/ir.action.reports.xml',
         'report/picking_templates.xml',
     ],
@@ -61,7 +66,7 @@
     },
     'demo': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }
