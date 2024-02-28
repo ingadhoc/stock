@@ -31,7 +31,7 @@ class StockPicking(models.Model):
         :return dict: dictionary value for created view
         """
         action = self.env.ref(
-            'stock_request.stock_request_order_action').read()[0]
+            'stock_request.stock_request_order_action').sudo().read()[0]
 
         request_orders = self.mapped('stock_request_order_ids')
         if len(request_orders) > 1:
