@@ -42,16 +42,10 @@ class StockWarehouseOrderpoint(models.Model):
 
         return self.env['product.product'].search(domain)
 
-
-
-class StockLocation(models.Model):
-    _inherit = "stock.location"
-
-    # Heredamos método search para filtrar las ubicaciones que se usan en _get_orderpoint_action().
-    # TODO: mejorar si Odoo mezcla PR: https://github.com/odoo/odoo/pull/150256
-    @api.model
-    def search(self, domain, offset=0, limit=None, order=None, count=False):
+    def _get_orderpoint_locations(self):
+        domain = [('replenish_location', '=', True)]
+        # Filter by locations
         location_ids = self._context.get('filter_locations')
         if location_ids:
             domain.append(('id', 'in', location_ids))
-        return super().search(domain, offset=offset, limit=limit, order=order, count=count)
+        return self.env['stock.location'].search(domain)
