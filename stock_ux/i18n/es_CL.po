@@ -527,3 +527,19 @@ msgstr ""
 #, python-format
 msgid "You can't transfer more quantity than reserved one!"
 msgstr ""
+
+#. module: stock_ux
+#. odoo-javascript
+#: code:addons/stock_ux/static/src/stock_forecasted/forecasted_buttons.xml:0
+#: code:addons/stock_ux/static/src/stock_forecasted/forecasted_buttons.xml:0
+#, python-format
+msgid "Movements"
+msgstr "Movimientos"
+
+#. module: stock_ux
+#. odoo-javascript
+#: code:addons/stock_ux/static/src/stock_forecasted/forecasted_buttons.xml:0
+#: code:addons/stock_ux/static/src/stock_forecasted/forecasted_buttons.xml:0
+#, python-format
+msgid "Product Movements"
+msgstr "Movimientos del Producto"

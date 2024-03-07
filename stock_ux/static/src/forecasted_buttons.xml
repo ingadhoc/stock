@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates xml:space="preserve">
+    <t name="stock_ux.ForecastedButtons" owl="1" t-inherit="stock.ForecastedButtons" t-inherit-mode="extension">
+        <xpath expr="//button[@title='Replenish']" position="after">
+            <button t-name="Movements"
+                class="btn btn-primary"
+                type="button" title="Product Movements"
+                t-on-click="_onClickTrace">
+                Movements
+            </button>
+        </xpath>
+    </t>
+</templates>
