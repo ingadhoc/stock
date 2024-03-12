@@ -36,6 +36,8 @@ class StockMoveLine(models.Model):
     origin_description = fields.Char(
         related="move_id.origin_description",
     )
+    
+    quant_partner_id = fields.Many2one('res.partner', readonly=True, string="Creador del quant")
 
     def set_all_done(self):
         precision = self.env['decimal.precision'].precision_get(
