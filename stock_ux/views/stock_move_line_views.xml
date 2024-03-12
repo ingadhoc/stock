@@ -32,16 +32,16 @@
             </filter>
             <filter name="by_state" position="after">
                 <filter string="Product" name="product_id" context="{'group_by':'product_id'}"/>
-                <filter string="Picking" name="picking"  context="{'group_by':'picking_id'}"/>
+                <filter string="Picking" name="picking" context="{'group_by':'picking_id'}"/>
                 <!-- Si queremos agregar group by estos campos habria que hacerlos store o hacer una vista sql -->
-                <filter string="Picking Type" name="picking_type"  context="{'group_by':'picking_type_id'}"/>
-                <!-- <filter string="Picking Partner" name="picking_partner_id"  context="{'group_by':'picking_partner_id'}"/> -->
+                <filter string="Picking Type" name="picking_type" context="{'group_by':'picking_type_id'}"/>
+                <!-- <filter string="Picking Partner" name="picking_partner_id" context="{'group_by':'picking_partner_id'}"/> -->
             </filter>
             <filter name="by_state" position="after">
-                <filter string="Picking" name="picking"  context="{'group_by':'picking_id'}"/>
+                <filter string="Picking" name="picking" context="{'group_by':'picking_id'}"/>
                 <!-- Si queremos agregar group by estos campos habria que hacerlos store o hacer una vista sql -->
-                <filter string="Picking Type" name="picking_type"  context="{'group_by':'picking_type_id'}"/>
-                <!-- <filter string="Picking Partner" name="picking_partner_id"  context="{'group_by':'picking_partner_id'}"/> -->
+                <filter string="Picking Type" name="picking_type" context="{'group_by':'picking_type_id'}"/>
+                <!-- <filter string="Picking Partner" name="picking_partner_id" context="{'group_by':'picking_partner_id'}"/> -->
             </filter>
         </field>
     </record>
@@ -55,6 +55,9 @@
                 <field name="product_uom_qty_location" sum="Total"/>
                 <!-- on enterprise view is not refres -->
                 <!-- <field name="product_uom_qty_location" sum="Total" invisible="not context.get('location', False)"/> -->
+            </field>
+            <field name="state" position="after">
+                <field name="quant_partner_id" optional="hide" widget="many2one"/>
             </field>
         </field>
     </record>
@@ -109,6 +112,7 @@
     </record>
 
     <record id="view_stock_move_line_detailed_operation_tree" model="ir.ui.view">
+<<<<<<< HEAD
             <field name="name">stock.move.line.operations.tree</field>
             <field name="model">stock.move.line</field>
             <field name="inherit_id" ref="stock.view_stock_move_line_detailed_operation_tree"/>
@@ -127,6 +131,45 @@
                 </field>
             </field>
         </record>
+||||||| parent of 4329adbf (temp)
+            <field name="name">stock.move.line.operations.tree</field>
+            <field name="model">stock.move.line</field>
+            <field name="inherit_id" ref="stock.view_stock_move_line_detailed_operation_tree"/>
+            <field name="arch" type="xml">
+                <field name="product_id" position="after">
+                    <field name="description_picking" optional="hide"/>
+                    <field name="origin_description" string="Descripción de origen" optional="hide"/>
+                </field>
+                <field name="qty_done" position="after">
+                    <button name="set_all_done" title="Set all Done" type="object" icon="fa-check" states="confirmed,assigned,waiting,partially_available"/>
+                </field>
+                <!-- for compatibility with web_m2x_options we force allowing create lots -->
+                <field name="lot_id" position="attributes">
+                    <attribute name="options">{'create':True, 'create_edit':True}</attribute>
+                    <attribute name="context">{'default_product_id': product_id, 'default_company_id': company_id, 'active_picking_id': picking_id, 'display_complete':True}</attribute>
+                </field>
+            </field>
+        </record>
+=======
+        <field name="name">stock.move.line.operations.tree</field>
+        <field name="model">stock.move.line</field>
+        <field name="inherit_id" ref="stock.view_stock_move_line_detailed_operation_tree"/>
+        <field name="arch" type="xml">
+            <field name="product_id" position="after">
+                <field name="description_picking" optional="hide"/>
+                <field name="origin_description" string="Descripción de origen" optional="hide"/>
+            </field>
+            <field name="qty_done" position="after">
+                <button name="set_all_done" title="Set all Done" type="object" icon="fa-check" states="confirmed,assigned,waiting,partially_available"/>
+            </field>
+            <!-- for compatibility with web_m2x_options we force allowing create lots -->
+            <field name="lot_id" position="attributes">
+                <attribute name="options">{'create':True, 'create_edit':True}</attribute>
+                <attribute name="context">{'default_product_id': product_id, 'default_company_id': company_id, 'active_picking_id': picking_id, 'display_complete':True}</attribute>
+            </field>
+        </field>
+    </record>
+>>>>>>> 4329adbf (temp)
 
     <record id="view_stock_move_line_operation_tree" model="ir.ui.view">
         <field name="name">stock.move.line.tree</field>
