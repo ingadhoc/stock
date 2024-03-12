@@ -15,4 +15,18 @@
         </field>
     </record>
 
+    <record id="view_warehouse_orderpoint_chatter" model="ir.ui.view">
+        <field name="name">stock.warehouse.orderpoint.chatter</field>
+        <field name="model">stock.warehouse.orderpoint</field>
+        <field name="inherit_id" ref="stock.view_warehouse_orderpoint_form"/>
+        <field name="arch" type="xml">
+            <sheet position="after">
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </sheet>
+        </field>
+    </record>
+
 </odoo>
