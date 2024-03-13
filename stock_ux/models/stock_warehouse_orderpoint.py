@@ -89,3 +89,10 @@ class StockWarehouseOrderpoint(models.Model):
         ])
         return action
 
+    @api.model
+    def action_open_orderpoints(self):
+        return self._get_orderpoint_action()
+
+    @api.depends('qty_multiple', 'qty_forecast', 'product_min_qty', 'product_max_qty', 'visibility_days')
+    def _compute_qty_to_order(self):
+        return super()._compute_qty_to_order()
