@@ -4,7 +4,7 @@
         <field name="model">res.config.settings</field>
         <field name="inherit_id" ref="stock.res_config_settings_view_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//div[@data-key='stock']/div[3]" position="inside">
+            <xpath expr="//setting[@id='process_transfers']" position="inside">
                     <div class="col-xs-12 col-md-6 o_setting_box">
                         <div class="o_setting_left_pane">
                             <field name="group_operation_used_lots"/>
@@ -18,11 +18,11 @@
                     </div>
             </xpath>
             <!-- we hide the odoo confirmation picking, because we implent a different approach -->
-            <xpath expr="//div[@id='stock_move_email']" position="attributes">
+            <xpath expr="//setting[@id='stock_move_email']" position="attributes">
                 <attribute name="invisible">True</attribute>
             </xpath>
 
-            <xpath expr="//div[@data-key='stock']/div[1]" position="inside">
+            <xpath expr="//setting[@id='process_transfers']" position="inside">
                     <div class="col-xs-12 col-md-6 o_setting_box">
                         <div class="o_setting_left_pane">
                             <field name="delivery_slip_use_origin"/>

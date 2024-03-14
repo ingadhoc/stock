@@ -12,7 +12,7 @@
                 <field name="picking_partner_id"/>
                 <field name="picking_code"/>
             </field>
-            <field name="qty_done" position="after">
+            <field name="quantity" position="after">
                 <button name="set_all_done" string="Set all Done" type="object" icon="fa-check" invisible="not context.get('show_reserved') or context.get('state_done')"/>
             </field>
         </field>
@@ -29,7 +29,7 @@
             </field>
             <filter name="manufacturing" position="after">
                 <separator/>
-                <filter string="With Quantity Done" name="with_quantity_done" domain="[('qty_done', '&gt;', 0.0)]"/>
+                <filter string="With Quantity Done" name="with_quantity_done" domain="[('quantity', '&gt;', 0.0)]"/>
             </filter>
             <filter name="by_state" position="after">
                 <filter string="Product" name="product_id" context="{'group_by':'product_id'}"/>
@@ -70,8 +70,6 @@
             <tree position="attributes">
                 <attribute name="editable">bottom</attribute>
                 <attribute name="decoration-muted">result_package_id</attribute>
-                <attribute name="decoration-danger">qty_done&gt;reserved_qty</attribute>
-                <attribute name="decoration-success">qty_done==reserved_qty and state!='done' and not result_package_id</attribute>
             </tree>
             <field name="location_dest_id" position="attributes">
                 <attribute name="readonly">1</attribute>
@@ -89,33 +87,30 @@
                 <attribute name="invisible">1</attribute>
             </field>
             <field name="product_id" position="after">
-                <field name="package_id" invisible="1"/>
-                <field name="result_package_id" invisible="1"/>
-                <field name="reserved_qty" invisible="1"/>
-                <field name="picking_id" invisible="1"/>
-                <field name="company_id" invisible="1"/>
-                <field name="product_uom_category_id" invisible="1"/>
+                <field name="package_id" column_invisible="True"/>
+                <field name="result_package_id" column_invisible="True"/>
+                <field name="quantity" invisible="1"/>
+                <field name="picking_id" column_invisible="True"/>
+                <field name="company_id" column_invisible="True"/>
+                <field name="product_uom_category_id" column_invisible="True"/>
                 <field name="product_uom_id" string="Unit of Measure" groups="uom.group_uom" readonly="1"/>
-                <field name="lots_visible" invisible="1"/>
+                <field name="lots_visible" column_invisible="True"/>
                 <field name="owner_id" readonly="1"/>
             </field>
             <field name="lot_id" position="attributes">
-                <attribute name="attrs">{'invisible': [('lots_visible', '=', False)]}</attribute>
+                <attribute name="invisible">not lots_visible</attribute>
                 <attribute name="domain">[('product_id', '=', product_id), ('company_id', '=', company_id)]</attribute>
                 <attribute name="options">{'create':True, 'create_edit':True}</attribute>
                 <attribute name="context">{'default_product_id': product_id, 'active_picking_id': picking_id, 'default_company_id':company_id, 'display_complete':True}</attribute>
             </field>
-            <field name="qty_done" position="before">
-                <field name="reserved_uom_qty" readonly="1"/>
-            </field>
-            <field name="qty_done" position="after">
-                <button name="set_all_done" title="Set all Done" type="object" icon="fa-check" states="confirmed,assigned,waiting,partially_available"/>
+            <field name="quantity" position="after">
+                <button name="set_all_done" title="Set all Done" type="object" icon="fa-check" invisible="state not in ('confirmed', 'assigned', 'waiting', 'partially_available')"/>
             </field>
             <field name="lot_id" position="after">
                 <field name="expiration_date" readonly="0"/>
             </field>
             <field name="expiration_date" position="attributes">
-                <attribute name="attrs">{'invisible': [('lots_visible', '=', False)]}</attribute>
+                <attribute name="invisible">not lots_visible</attribute>
             </field>
         </field>
     </record>
@@ -129,8 +124,8 @@
                     <field name="description_picking" optional="hide"/>
                     <field name="origin_description" string="Descripción de origen" optional="hide"/>
                 </field>
-                <field name="qty_done" position="after">
-                    <button name="set_all_done" title="Set all Done" type="object" icon="fa-check" states="confirmed,assigned,waiting,partially_available"/>
+                <field name="quantity" position="after">
+                    <button name="set_all_done" title="Set all Done" type="object" icon="fa-check" invisible="state not in ('confirmed', 'assigned', 'waiting', 'partially_available')"/>
                 </field>
                 <!-- for compatibility with web_m2x_options we force allowing create lots -->
                 <field name="lot_id" position="attributes">
@@ -145,8 +140,8 @@
         <field name="model">stock.move.line</field>
         <field name="inherit_id" ref="stock.view_stock_move_line_operation_tree"/>
         <field name="arch" type="xml">
-            <field name="qty_done" position="after">
-                <button name="set_all_done" title="Set all Done" type="object" icon="fa-check" states="confirmed,assigned,waiting,partially_available" context="{'from_popup':True}"/>
+            <field name="quantity" position="after">
+                <button name="set_all_done" title="Set all Done" type="object" icon="fa-check" invisible="state not in ('confirmed', 'assigned', 'waiting', 'partially_available')" context="{'from_popup':True}"/>
             </field>
             <!-- for compatibility with web_m2x_options we force allowing create lots -->
             <field name="lot_id" position="attributes">
@@ -179,7 +174,7 @@ records.set_all_done()
         <field name="binding_model_id" ref="stock.model_stock_move_line"/>
         <field name="state">code</field>
         <field name="code">
-records.filtered(lambda x: x.state not in ['draft', 'done', 'cancel']).write({'qty_done': False})
+records.filtered(lambda x: x.state not in ['draft', 'done', 'cancel']).write({'quantity': False})
         </field>
     </record>
 
