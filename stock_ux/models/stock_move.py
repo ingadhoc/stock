@@ -54,16 +54,16 @@ class StockMove(models.Model):
     def set_all_done(self):
         self.mapped('move_line_ids').set_all_done()
         for rec in self.filtered(lambda x: not x.move_line_ids):
-            rec.quantity_done = rec.product_uom_qty
+            rec.quantity = rec.product_uom_qty
 
-    @api.constrains('quantity_done')
+    @api.constrains('quantity')
     def _check_quantity(self):
         precision = self.env['decimal.precision'].precision_get(
             'Product Unit of Measure')
         if any(self.filtered(
             lambda x: x.picking_id.picking_type_id.
             block_additional_quantity and float_compare(
-                x.product_uom_qty, x.quantity_done,
+                x.product_uom_qty, x.quantity,
                 precision_digits=precision) == -1)):
             raise ValidationError(_(
                 'You can not transfer more than the initial demand!'))

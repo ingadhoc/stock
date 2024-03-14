@@ -111,9 +111,9 @@ class StockPicking(models.Model):
         for rec in self.mapped('move_ids').filtered(lambda m: m.state not in ['cancel', 'done']):
             # this two could go together but we keep similar to odoo sm._quantity_done_set
             if not rec.move_line_ids:
-                rec.quantity_done = rec.product_uom_qty
+                rec.quantity = rec.product_uom_qty
             elif len(rec.move_line_ids) == 1:
-                rec.quantity_done = rec.product_uom_qty
+                rec.quantity = rec.product_uom_qty
             else:
                 for line in rec.move_line_ids:
                     line.qty_done = line.reserved_uom_qty

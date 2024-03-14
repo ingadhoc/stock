@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Stock UX',
-    'version': "16.0.2.16.0",
+    'version': "17.0.1.0.0",
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
@@ -33,6 +33,7 @@
         'report_aeroo',
         'stock_voucher',
         'product_expiry',
+        'stock_barcode',
     ],
     'data': [
         'security/stock_ux_security.xml',
@@ -61,7 +62,7 @@
     },
     'demo': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }
