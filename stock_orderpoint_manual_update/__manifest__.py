@@ -30,6 +30,7 @@
     ],
     'depends': [
         'purchase_stock',
+        'stock_ux',
     ],
     'data': [
         'wizard/stock_warehouse_orderpoint_wizard_views.xml',
