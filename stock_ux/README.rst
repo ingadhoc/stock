@@ -35,6 +35,7 @@ Stock UX
 #. Add optional constraints configurable by Picking Type
 #. Add partner field on procurement group form view.
 #. Show location and warehouse filters on all products and product templates views (not only the one on inventory)
+#. Allow to reorder the lines in Replenishment view according to the forecast qty, Add the filter "Negatives quantities".
 
 Installation
 ============
