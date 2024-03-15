@@ -9,6 +9,7 @@ class StockWarehouseOrderpointWizard(models.TransientModel):
     product_ids = fields.Many2many('product.product', string='Product')
     category_ids = fields.Many2many('product.category', string='Product Category')
     supplier_ids = fields.Many2many('res.partner', string='Vendor', check_company=True)
+    filter_by_main_supplier = fields.Boolean(string="Filter by Main Vendor")
     location_ids = fields.Many2many('stock.location', string="Location")
 
     def action_confirm(self):
@@ -34,7 +35,9 @@ class StockWarehouseOrderpointWizard(models.TransientModel):
             orderpoint_domain.append(('product_id', 'in', self.product_ids.ids))
         if self.category_ids:
             orderpoint_domain.append(('product_category_id', 'in', self.category_ids.ids))
-        if self.supplier_ids:
+        if self.filter_by_main_supplier:
+            orderpoint_domain.append(('supplier_id.partner_id', 'in', self.supplier_ids.ids))
+        elif self.supplier_ids:
             orderpoint_domain.append(('product_id.seller_ids.partner_id', 'in', self.supplier_ids.ids))
         if self.location_ids:
             orderpoint_domain.append(('location_id', 'in', self.location_ids.ids))
