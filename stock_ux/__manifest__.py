@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Stock UX',
-    'version': "16.0.2.19.0",
+    'version': "16.0.2.20.0",
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
@@ -31,7 +31,6 @@
         'sale_stock',
         'report_aeroo',
         'stock_voucher',
-        'product_expiry',
         'mail',
     ],
     'data': [

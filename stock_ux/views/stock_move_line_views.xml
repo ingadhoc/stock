@@ -100,7 +100,7 @@
                 <field name="product_uom_category_id" invisible="1"/>
                 <field name="product_uom_id" position="move"/>
                 <field name="lots_visible" invisible="1"/>
-                <field name="owner_id" readonly="1"/>
+                <field name="owner_id" readonly="1" optional="hide"/>
             </field>
             <field name="lot_id" position="attributes">
                 <attribute name="attrs">{'invisible': [('lots_visible', '=', False)]}</attribute>
@@ -113,12 +113,6 @@
             </field>
             <field name="qty_done" position="after">
                 <button name="set_all_done" title="Set all Done" type="object" icon="fa-check" states="confirmed,assigned,waiting,partially_available"/>
-            </field>
-            <field name="lot_id" position="after">
-                <field name="expiration_date" readonly="0"/>
-            </field>
-            <field name="expiration_date" position="attributes">
-                <attribute name="attrs">{'invisible': [('lots_visible', '=', False)]}</attribute>
             </field>
         </field>
     </record>
