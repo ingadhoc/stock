@@ -31,7 +31,6 @@
         'sale_stock',
         'report_aeroo',
         'stock_voucher',
-        'product_expiry',
         'stock_barcode',
         'mail',
     ],
