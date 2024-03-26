@@ -1,4 +1,5 @@
 from odoo import fields, models, _
+from odoo.osv import expression
 
 
 class StockWarehouseOrderpointWizard(models.TransientModel):
@@ -26,7 +27,10 @@ class StockWarehouseOrderpointWizard(models.TransientModel):
         orderpoints._compute_qty_to_order()
         orderpoints.update_qty_forecast()
         orderpoints._compute_rotation()
-        action['domain'] = orderpoint_domain
+        action['domain'] = expression.AND([
+            action.get('domain', '[]'),
+            orderpoint_domain,
+        ])
         return action
 
     def _get_orderpoint_domain(self):
