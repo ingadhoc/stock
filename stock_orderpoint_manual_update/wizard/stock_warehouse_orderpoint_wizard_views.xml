@@ -17,6 +17,7 @@
                         </group>
                         <group col="2">
                             <field name="supplier_ids" widget="many2many_tags" context="{'res_partner_search_mode': 'supplier'}"></field>
+                            <field name="filter_by_main_supplier" attrs="{'invisible': [('supplier_ids','=', [])]}"></field>
                             <field name="location_ids" widget="many2many_tags"/>
                         </group>
                     </group>
