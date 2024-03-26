@@ -4,12 +4,14 @@
 ##############################################################################
 
 from odoo import models, fields, api
+from odoo.osv import expression
 
 
 class StockWarehouseOrderpoint(models.Model):
     _name = 'stock.warehouse.orderpoint'
     _inherit = ['stock.warehouse.orderpoint', 'mail.thread']
 
+    active_product = fields.Boolean(string="Product Active", related='product_id.active')
     rotation_stdev = fields.Float(
         compute='_compute_rotation',
         help="Desvío estandar de las cantidades entregas a clientes en los "
@@ -74,3 +76,16 @@ class StockWarehouseOrderpoint(models.Model):
                 'qty_multiple': 0.0,
             })
         return super().write(vals)
+
+    def _get_orderpoint_action(self):
+        action = super()._get_orderpoint_action()
+        action['context'] = {
+            **action['context'],
+            'active_test': False,
+        }
+        action['domain'] = expression.AND([
+            action.get('domain', '[]'),
+            [('active_product', '=', True)],
+        ])
+        return action
+
