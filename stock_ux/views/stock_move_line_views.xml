@@ -93,7 +93,7 @@
                 <field name="picking_id" column_invisible="True"/>
                 <field name="company_id" column_invisible="True"/>
                 <field name="product_uom_category_id" column_invisible="True"/>
-                <field name="product_uom_id" string="Unit of Measure" groups="uom.group_uom" readonly="1"/>
+                <field name="product_uom_id" position="move"/>
                 <field name="lots_visible" column_invisible="True"/>
                 <field name="owner_id" readonly="1"/>
             </field>
