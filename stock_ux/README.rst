@@ -34,6 +34,7 @@ Stock UX
 #. Add Rotation and Location Rotation to Reordering Rules (orderpoint): delivered quantities to customers on last 120 days divided per 4 (to make it monthly)
 #. Add optional constraints configurable by Picking Type
 #. Add partner field on procurement group form view.
+#. Show location and warehouse filters on all products and product templates views (not only the one on inventory)
 
 Installation
 ============

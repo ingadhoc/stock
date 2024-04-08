@@ -96,7 +96,7 @@ class StockPickingBatch(models.Model):
             "context": {"create": False, "from_batch": True},
         }
 
-    def action_transfer(self):
+    def action_done(self):
         # agregamos los numeros de remito
         for rec in self:
             # al agregar la restriccion de que al menos una tenga que tener
@@ -114,7 +114,7 @@ class StockPickingBatch(models.Model):
                     'number_of_packages': rec.number_of_packages})
 
             if rec.picking_type_code == 'incoming' and rec.voucher_number:
-                for picking in rec.active_picking_ids:
+                for picking in rec.picking_ids:
                     # agregamos esto para que no se asigne a los pickings
                     # que no se van a recibir ya que todavia no se limpiaron
                     # y ademas, por lo de arriba, no se fuerza la cantidad
@@ -126,20 +126,8 @@ class StockPickingBatch(models.Model):
                         'picking_id': picking.id,
                         'name': rec.voucher_number,
                     })
-            elif rec.picking_type_code != 'incoming':
-                # llamamos al chequeo de stock voucher ya que este metodo
-                # termina usando do_transfer pero el chequeo se llama solo
-                # con do_new_transfer
-                rec.active_picking_ids.do_stock_voucher_transfer_check()
 
-        res = super(StockPickingBatch, self.with_context(
-            do_not_assign_numbers=True)).action_transfer()
-        # nosotros preferimos que no se haga en muchos pasos y una vez
-        # confirmado se borre lo no hecho y se marque como realizado
-        # lo hago para distinto de incomring porque venia andando bien para
-        # Incoming, pero no debería hacer falta este chequeo
-        # self.remove_undone_pickings()
-        return res
+        return super(StockPickingBatch, self.with_context(do_not_assign_numbers=True)).action_done()
 
     def do_unreserve_picking(self):
         batches = self.get_not_empties()
@@ -148,3 +136,13 @@ class StockPickingBatch(models.Model):
             pickings_todo = self.mapped('picking_ids')
             self.write({'state': 'draft'})
             pickings_todo.do_unreserve()
+
+    def action_view_stock_picking(self):
+        """This function returns an action that display existing pickings of
+        given batch picking.
+        """
+        self.ensure_one()
+        pickings = self.mapped("picking_ids")
+        action = self.env.ref("stock.action_picking_tree_all").read([])[0]
+        action["domain"] = [("id", "in", pickings.ids)]
+        return action

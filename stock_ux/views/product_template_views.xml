@@ -14,10 +14,15 @@
                 <attribute name="help">They are only stock movements made or reserved, includes information of batches and storage locations.</attribute>
             </button>
             <button name="action_view_stock_move_lines" position="before">
-                <button string="Products Moves" type="object" name= "action_view_stock_move" attrs="{'invisible':[('type', 'not in', ['product', 'consu'])]}" class="oe_stat_button" icon="fa-arrows-v" groups="stock.group_stock_user" help="Are all stock movements without lot detail or save locations." context="{'search_default_future': 1,'search_default_picking_type': 1}"/>
+                <button string="Products Moves" type="object" name= "action_view_stock_move" invisible="type not in ['product', 'consu']" class="oe_stat_button" icon="fa-arrows-v" groups="stock.group_stock_user" help="Are all stock movements without lot detail or save locations." context="{'search_default_future': 1,'search_default_picking_type': 1}"/>
             </button>
 
         </field>
     </record>
+
+  <!-- Hacemos que la vista que heredamos sea vista hereada no primary para este caso -->
+  <record id="stock.product_template_search_form_view_stock" model="ir.ui.view">
+    <field name="mode">extension</field>
+  </record>
 
 </odoo>
