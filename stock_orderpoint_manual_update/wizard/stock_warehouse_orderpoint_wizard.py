@@ -24,6 +24,7 @@ class StockWarehouseOrderpointWizard(models.TransientModel):
         orderpoints = self.env['stock.warehouse.orderpoint'].search(orderpoint_domain)
         orderpoints._compute_qty_to_order()
         orderpoints.update_qty_forecast()
+        orderpoints._compute_rotation()
         action['domain'] = orderpoint_domain
         return action
 

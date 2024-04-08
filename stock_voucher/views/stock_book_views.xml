@@ -36,7 +36,7 @@
     <record id="stock_book_actions" model="ir.actions.act_window">
         <field name="name">Books</field>
         <field name="res_model">stock.book</field>
-        <field name="view_mode">tree</field>
+        <field name="view_mode">tree,form</field>
         <field name="context">{}</field>
     </record>
 
