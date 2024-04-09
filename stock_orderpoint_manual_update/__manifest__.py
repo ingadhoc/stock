@@ -44,6 +44,7 @@
             'stock_orderpoint_manual_update/static/src/views/**/*',
         ],
     },
+    'uninstall_hook': "uninstall_hook",
     'installable': True,
     'auto_install': False,
     'application': False,
