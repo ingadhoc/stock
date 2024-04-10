@@ -6,6 +6,13 @@
         <field name="model">stock.warehouse.orderpoint</field>
         <field name="inherit_id" ref="stock.view_warehouse_orderpoint_tree_editable"/>
         <field name="arch" type="xml">
+            <tree position="attributes">
+                <attribute name="decoration-muted">not active and not active_product</attribute>
+                <attribute name="decoration-danger">not active and active_product</attribute>
+            </tree>
+            <field name="active" position="after">
+                <field name="active_product" invisible="1"/>
+            </field>
             <field name="group_id" position="after">
                 <field name="rotation" optional="show"/>
                 <field name="rotation_stdev" optional="show"/>
