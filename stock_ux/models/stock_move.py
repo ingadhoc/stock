@@ -184,3 +184,7 @@ class StockMove(models.Model):
         if self.filtered(
             lambda x: x.picking_id and x.state == 'cancel' and not self.user_has_groups('stock_ux.allow_picking_cancellation')):
             raise ValidationError("Only User with 'Picking cancelation allow' rights can cancel pickings")
+        
+    def _merge_moves(self, merge_into=False):
+        # 22/04/2024: Agregamos esto porque sino al intentar confirmar compras con usuarios sin permisos, podia pasar que salga la constrain de arriba (check_cancel)
+        return super(StockMove,self.with_context(cancel_from_order=True))._merge_moves(merge_into = merge_into)
