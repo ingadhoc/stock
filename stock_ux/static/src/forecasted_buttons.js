@@ -1,13 +1,13 @@
 /** @odoo-module **/
 import { ForecastedButtons } from "@stock/stock_forecasted/forecasted_buttons";
 import { patch } from '@web/core/utils/patch';
+import { onWillStart } from "@odoo/owl";
 
-const { onWillStart } = owl;
 
-patch(ForecastedButtons.prototype, 'stock_ux.ForecastedButtons',{
-    setup() {
-        this._super.apply();
-        onWillStart(async () =>{
+patch(ForecastedButtons.prototype, {
+    after() {
+        this._super.apply(this, arguments); // Llama al método original
+        onWillStart(async () => {
             this.context = this.props.action.context;
             this.productId = this.context.active_id;
             this.resModel = this.props.resModel || 'product.template';
