@@ -102,7 +102,7 @@ class StockPicking(models.Model):
                     _("Please check the email template associated with"
                       " the picking type."),
                     "<code>" + str(error) + "</code>"
-                ]),
+                ]), body_is_html=True
                 )
         return res
 
