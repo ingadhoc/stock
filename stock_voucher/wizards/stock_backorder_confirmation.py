@@ -12,7 +12,7 @@ class StockBackorderConfirmation(models.TransientModel):
     _inherit = 'stock.backorder.confirmation'
 
     def process(self):
-        super().process()
+        res = super().process()
         pickings = self.env['stock.picking'].browse(
             # if we came, for eg, from a sale order, active_id would be the
             # sale order id
@@ -27,6 +27,8 @@ class StockBackorderConfirmation(models.TransientModel):
                 ],
                 'type': 'ir.actions.act_multi',
             }
+        else:
+            return res
 
     def process_cancel_backorder(self):
         super().process_cancel_backorder()
