@@ -44,6 +44,25 @@ class StockWarehouseOrderpoint(models.Model):
     location_id = fields.Many2one(tracking=True)
     product_id = fields.Many2one(tracking=True)
 
+    def action_replenish(self, force_to_max=False):
+        result = super(StockWarehouseOrderpoint, self).action_replenish()
+        if len(self) == 1:
+            act_window_action = {
+            'type': 'ir.actions.act_window',
+            'view_mode': 'list',
+            'res_model': 'stock.warehouse.orderpoint',
+            'target': 'current',
+            'context': self.env.context
+            }
+            combined_action = {
+            'act_window_action': act_window_action,
+            'notification_action': result,
+        }
+
+            return combined_action
+        else:
+            return result
+
     @api.depends('product_id', 'location_id')
     def _compute_rotation(self):
         warehouse_with_products = self.filtered('product_id')
@@ -88,4 +107,3 @@ class StockWarehouseOrderpoint(models.Model):
             [('active_product', '=', True)],
         ])
         return action
-
