@@ -62,7 +62,7 @@ class StockRequest(models.Model):
         # deberiamos ver de hacer monkey patch mejor para que sea
         # heredable por otros modulos
         for move in self.sudo().mapped('move_ids'):
-            move._cancel_quantity()
+            move._action_cancel()
         self.write({'state': 'cancel'})
         return True
 
@@ -79,7 +79,7 @@ class StockRequest(models.Model):
             # move que queda vinculado a los allocation, por eso mandamos a
             # cancelar solo la cantidad en progreso (para que no cancele
             # cosas que ya se entregaron parcialmente)
-            to_cancel_moves._cancel_quantity(rec.qty_in_progress)
+            to_cancel_moves._action_cancel(rec.qty_in_progress)
             rec.order_id.message_post(
                 body=_(
                     'Cancel remaining call for line "%s" (id %s), line '
