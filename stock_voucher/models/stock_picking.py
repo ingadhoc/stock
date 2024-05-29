@@ -198,8 +198,8 @@ class StockPicking(models.Model):
             if bom_enable:
                 for so_bom_line in stock_bom_lines.mapped('sale_line_id'):
                     bom = self.env['mrp.bom']._bom_find(
-                        product=so_bom_line.product_id,
-                        company_id=so_bom_line.company_id.id)
+                        products=so_bom_line.product_id,
+                        company_id=so_bom_line.company_id.id)[so_bom_line.product_id]
                     if bom and bom.type == 'phantom':
                         bom_moves = so_bom_line.move_ids & stock_bom_lines
                         done_avg = []
@@ -218,10 +218,16 @@ class StockPicking(models.Model):
                             picking_avg.append((
                                 move.product_uom_qty / bom_quantity))
                             done_avg.append((move.quantity_done / bom_quantity))
-                        picking_value += so_bom_line.price_reduce_taxexcl * (
-                            sum(picking_avg) / len(picking_avg))
-                        done_value += so_bom_line.price_reduce_taxexcl * (
-                            sum(done_avg) / len(done_avg))
+                        if len(picking_avg) == 0:
+                            picking_value += so_bom_line.price_reduce_taxexcl
+                        else:
+                            picking_value += so_bom_line.price_reduce_taxexcl * (
+                                sum(picking_avg) / len(picking_avg))
+                        if len(done_avg) == 0:
+                            done_value += so_bom_line.price_reduce_taxexcl
+                        else:
+                            done_value += so_bom_line.price_reduce_taxexcl * (
+                                sum(done_avg) / len(done_avg))
 
             declared_value = picking_value if inmediate_transfer\
                 else done_value
