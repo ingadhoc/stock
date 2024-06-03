@@ -54,8 +54,7 @@ class StockRequestOrder(models.Model):
             if not rec.procurement_group_id:
                 # setamos al group el partner del warehouse para que se propague
                 # a los pickings
-                group = self.env['procurement.group'].create(
-                    {'partner_id': rec.warehouse_id.partner_id.id})
+                group = self.env['procurement.group'].create({})
                 rec.procurement_group_id = group.id
                 for stock_rq in rec.stock_request_ids:
                     stock_rq.write(
