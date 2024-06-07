@@ -129,7 +129,7 @@ class StockMoveLine(models.Model):
             if description == name or description == move.product_id.name:
                 description = False
             product = move.product_id
-            line_key = f'{product.id}_{product.display_name}_{description or ""}_{uom.id}'
+            line_key = f'{product.id}_{product.display_name}_{description or ""}_{uom.id}_{move_line.id}'
             return (line_key, name, description, uom, secondary_uom_qty, secondary_uom_id)
 
         # Loops to get backorders, backorders' backorders, and so and so...
@@ -197,3 +197,4 @@ class StockMoveLine(models.Model):
             else:
                 aggregated_move_lines[line_key]['qty_ordered'] += empty_move.product_uom_qty
         return aggregated_move_lines
+
