@@ -15,6 +15,9 @@ class StockRequestOrder(models.Model):
     )
     route_id = fields.Many2one(
         'stock.route',
+        compute=False,
+        inverse=False,
+        store=False,
     )
     route_ids = fields.Many2many(
         'stock.route',
