@@ -13,15 +13,6 @@ class StockRequestOrder(models.Model):
     stock_request_ids = fields.One2many(
         copy=True,
     )
-    route_id = fields.Many2one(
-        'stock.route',
-    )
-    route_ids = fields.Many2many(
-        'stock.route',
-        compute='_compute_route_ids',
-        readonly=True,
-        string="Routes"
-    )
     # este pickings es analogo al pickings de venta pero implementado mas facil
     # odoo en ventas agrega un campo en el procurement group y related en
     # picking pero a la larga esta trayendo todos los pickings que tengan
@@ -70,25 +61,6 @@ class StockRequestOrder(models.Model):
                     stock_rq.write(
                         {'procurement_group_id': rec.procurement_group_id.id})
         return recs
-
-    @api.depends('warehouse_id', 'location_id')
-    def _compute_route_ids(self):
-        for rec in self:
-            routes = self.env['stock.route'].search(
-                ['|',
-                 ('company_id', '=', rec.company_id.id),
-                 ('company_id', '=', False)])
-            parents = rec.get_parents().ids
-            rec.route_ids = routes.filtered(lambda r: any(
-                p.action == 'pull' and p.location_dest_id.id in parents for p in r.rule_ids))
-
-    def get_parents(self):
-        location = self.location_id
-        result = location
-        while location.location_id:
-            location = location.location_id
-            result |= location
-        return result
 
     @api.onchange('route_id')
     def onchange_procurement_group_id(self):
