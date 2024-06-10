@@ -140,7 +140,7 @@ class StockMove(models.Model):
                 # cancelar parcialmente un movimiento, lo dividimos y
                 # cancelamos el nuevo
                 propagate(move, quantity=to_cancel, stream=stream)
-                self.browse(move._split(to_cancel))._action_cancel()
+                self._action_cancel()
                 move._do_unreserve()
                 move._action_assign()
                 break
