@@ -2,24 +2,22 @@
     <record id="stock_picking_state_detail_action" model="ir.actions.act_window">
         <field name="name">Picking State Detail</field>
         <field name="res_model">stock.picking.state_detail</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">tree</field>
         <field name="view_id" ref=""/>
         <field name="search_view_id" ref=""/>
         <field name="domain">[]</field>
     </record>
 
-    <record id="view_picking_detail_form" model="ir.ui.view">
+    <record id="view_picking_detail_tree" model="ir.ui.view">
         <field name="name">stock.picking_detail</field>
         <field name="model">stock.picking.state_detail</field>
         <field name="arch" type="xml">
-            <form>
-                <group>
-                    <field name="name"/>
-                    <field name="sequence"/>
-                    <field name="state"/>
-                    <field name="picking_type"/>
-                </group>
-            </form>
+            <tree editable="bottom" sample="1" multi_edit="1" export_xlsx="0">
+                <field name="name"/>
+                <field name="sequence"/>
+                <field name="state"/>
+                <field name="picking_type"/>
+            </tree>
         </field>
     </record>
 
