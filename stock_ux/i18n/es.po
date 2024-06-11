@@ -1005,4 +1005,14 @@ msgid ""
 "\n"
 "^FO260,10\n"
 "^A0N,20,25^FD"
+
+#. module: stock_ux
+#. odoo-python
+#: code:addons/stock_ux/models/stock_picking.py:0
+#, python-format
+msgid ""
+"Be careful about the number of packages you are trying to insert. "
+"It may cause an error when trying to render the 'Eitqueta de despacho' template"
 msgstr ""
+"Tenga cuidado con la cantidad de paquetes que intenta insertar. "
+"Puede causar un error al intentar renderizar la plantilla 'Eitqueta de despacho'"

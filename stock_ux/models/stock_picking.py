@@ -108,3 +108,14 @@ class StockPicking(models.Model):
     def _put_in_pack(self, move_line_ids):
         # we send to skip a process of check qty when is sending through the copy method.
         return super()._put_in_pack(move_line_ids.with_context(put_in_pack=True))
+
+    @api.onchange('number_of_packages')
+    def _check_number_of_packages(self):
+        """
+        To avoid errors when trying to render a template with a large number of packages
+        """
+        if self.number_of_packages > 100:
+            raise UserError(
+                _("Be careful about the number of packages you are trying to insert. "
+                  "It may cause an error when trying to render the 'Eitqueta de despacho' template")
+            )
