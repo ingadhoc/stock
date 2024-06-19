@@ -49,19 +49,6 @@ class StockPicking(models.Model):
                 self.picking_type_id.name))
         return super().copy(default=default)
 
-    def add_picking_operation(self):
-        self.ensure_one()
-        view_id = self.env.ref('stock_ux.view_move_line_tree').id
-        search_view_id = self.env.ref('stock_ux.stock_move_line_view_search').id
-        return {
-            "type": "ir.actions.act_window",
-            "res_model": "stock.move.line",
-            "search_view_id": search_view_id,
-            "views": [[view_id, "tree"], [False, "form"]],
-            "domain": [["id", "in", self.move_line_ids.ids]],
-            "context": {"create": False},
-        }
-
     @api.onchange('location_id')
     def change_location(self):
         # we only change moves locations if picking in draft

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="product_label_layout_form_picking_zpl" model="ir.ui.view">
+        <field name="name">Asistente para impresion de reporte ZPL</field>
+        <field name="model">stock.picking.zpl</field>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <field name="picking_id" string="Transferencia" readonly="1"/>
+                    <field name="line_ids">
+                        <tree editable="top" create="false" delete="false">
+                            <field name="name" string="Producto"/>
+                            <field name="move_id" invisible="1"/>
+                            <field name="move_quantity" string="Cantidad a imprimir" readonly="0"/>
+                        </tree>
+                    </field>
+                </sheet>
+                <footer>
+                    <button name="action_print" type="object" string="Imprimir etiquetas"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="zpl" model="ir.actions.act_window">
+        <field name="name">Asistente para impresion de reporte ZPL</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">stock.picking.zpl</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

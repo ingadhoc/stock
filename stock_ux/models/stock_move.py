@@ -51,10 +51,10 @@ class StockMove(models.Model):
             else:
                 rec.origin_description = False
 
-    def set_all_done(self):
-        self.mapped('move_line_ids').set_all_done()
-        for rec in self.filtered(lambda x: not x.move_line_ids):
-            rec.quantity = rec.product_uom_qty
+    # def set_all_done(self):
+    #     self.mapped('move_line_ids').set_all_done()
+    #     for rec in self.filtered(lambda x: not x.move_line_ids):
+    #         rec.quantity = rec.product_uom_qty
 
     @api.constrains('quantity')
     def _check_quantity(self):

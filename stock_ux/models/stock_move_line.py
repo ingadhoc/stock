@@ -36,18 +36,18 @@ class StockMoveLine(models.Model):
         related="move_id.origin_description",
     )
 
-    def set_all_done(self):
-        precision = self.env['decimal.precision'].precision_get(
-            'Product Unit of Measure')
-        for rec in self.filtered(
-                lambda x: x.state not in ['draft', 'done', 'cancel']):
-            rec.qty_done = rec.reserved_uom_qty \
-                if not float_is_zero(
-                    rec.reserved_uom_qty,
-                    precision_digits=precision) else \
-                rec.move_id.product_uom_qty
-            if self._context.get('from_popup', False):
-                return self[0].move_id.action_show_details()
+    # def set_all_done(self):
+    #     precision = self.env['decimal.precision'].precision_get(
+    #         'Product Unit of Measure')
+    #     for rec in self.filtered(
+    #             lambda x: x.state not in ['draft', 'done', 'cancel']):
+    #         rec.qty_done = rec.reserved_uom_qty \
+    #             if not float_is_zero(
+    #                 rec.reserved_uom_qty,
+    #                 precision_digits=precision) else \
+    #             rec.move_id.product_uom_qty
+    #         if self._context.get('from_popup', False):
+    #             return self[0].move_id.action_show_details()
 
     @api.depends_context('location')
     def _compute_product_uom_qty_location(self):
@@ -106,12 +106,12 @@ class StockMoveLine(models.Model):
 
     def _get_aggregated_product_quantities(self, **kwargs):
         aggregated_move_lines = super()._get_aggregated_product_quantities(**kwargs)
-        if bool(self.env['ir.config_parameter'].sudo().get_param('stock_ux.delivery_slip_use_origin', 'False')) == True:
-            for line in aggregated_move_lines:
-                moves = self.filtered(
-                    lambda sml: sml.product_id == aggregated_move_lines[line]['product']
-                    ).mapped('move_id').filtered(lambda m: m.origin_description)
-                if moves:
-                    aggregated_move_lines[line]['description'] = False
-                    aggregated_move_lines[line]['name'] =', '.join(moves.mapped('origin_description'))
+        # if bool(self.env['ir.config_parameter'].sudo().get_param('stock_ux.delivery_slip_use_origin', 'False')) == True:
+        for line in aggregated_move_lines:
+            moves = self.filtered(
+                lambda sml: sml.product_id == aggregated_move_lines[line]['product']
+                ).mapped('move_id').filtered(lambda m: m.origin_description)
+            if moves:
+                aggregated_move_lines[line]['description'] = False
+                aggregated_move_lines[line]['name'] =', '.join(moves.mapped('origin_description'))
         return aggregated_move_lines

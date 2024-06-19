@@ -7,14 +7,14 @@
                 <span t-field="o.observations"/>
             </p>
         </table>
-        <xpath expr="//table[@name='stock_move_table']/tbody/tr/td[1]" position="attributes">
+        <!-- <xpath expr="//table[@name='stock_move_table']/tbody/tr/td[1]" position="attributes">
             <attribute name="t-if">o.env['ir.config_parameter'].sudo().get_param('stock_ux.delivery_slip_use_origin', 'False') == 'False' or not move.origin_description</attribute>
-        </xpath>
-        <xpath expr="//table[@name='stock_move_table']/tbody/tr/td[1]" position="after">
+        </xpath> -->
+        <!-- <xpath expr="//table[@name='stock_move_table']/tbody/tr/td[1]" position="after">
             <td t-if="o.env['ir.config_parameter'].sudo().get_param('stock_ux.delivery_slip_use_origin') == 'True' and move.origin_description">
                 <span t-field="move.origin_description"/>
             </td>
-        </xpath>
+        </xpath> -->
 
         <!-- Filtramos los stock_move en estado cancelado porque nosotros habilitamos la cancelacion de los mismos,
         esto desde el lado de Odoo no se puede lograr -->
@@ -41,7 +41,7 @@
         </xpath>
     </template>
 
-    <template id="stock_report_delivery_has_serial_move_line" inherit_id="stock.stock_report_delivery_has_serial_move_line">
+    <!-- <template id="stock_report_delivery_has_serial_move_line" inherit_id="stock.stock_report_delivery_has_serial_move_line">
         <xpath expr="//td[1]" position="attributes">
             <attribute name="t-if">o.env['ir.config_parameter'].sudo().get_param('stock_ux.delivery_slip_use_origin', 'False') == 'False' or not move_line.origin_description</attribute>
         </xpath>
@@ -50,6 +50,6 @@
                 <span t-field="move_line.origin_description"/>
             </td>
         </xpath>
-    </template>
+    </template> -->
 
 </odoo>

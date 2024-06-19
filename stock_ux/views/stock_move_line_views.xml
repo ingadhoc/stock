@@ -12,9 +12,9 @@
                 <field name="picking_partner_id"/>
                 <field name="picking_code"/>
             </field>
-            <field name="quantity" position="after">
+            <!-- <field name="quantity" position="after">
                 <button name="set_all_done" string="Set all Done" type="object" icon="fa-check" invisible="not context.get('show_reserved') or context.get('state_done')"/>
-            </field>
+            </field> -->
         </field>
     </record>
 
@@ -103,9 +103,9 @@
                 <attribute name="options">{'create':True, 'create_edit':True}</attribute>
                 <attribute name="context">{'default_product_id': product_id, 'active_picking_id': picking_id, 'default_company_id':company_id, 'display_complete':True}</attribute>
             </field>
-            <field name="quantity" position="after">
+            <!-- <field name="quantity" position="after">
                 <button name="set_all_done" title="Set all Done" type="object" icon="fa-check" invisible="state not in ('confirmed', 'assigned', 'waiting', 'partially_available')"/>
-            </field>
+            </field> -->
         </field>
     </record>
 
@@ -118,9 +118,9 @@
                     <field name="description_picking" optional="hide"/>
                     <field name="origin_description" string="Descripción de origen" optional="hide"/>
                 </field>
-                <field name="quantity" position="after">
+                <!-- <field name="quantity" position="after">
                     <button name="set_all_done" title="Set all Done" type="object" icon="fa-check" invisible="state not in ('confirmed', 'assigned', 'waiting', 'partially_available')"/>
-                </field>
+                </field> -->
                 <!-- for compatibility with web_m2x_options we force allowing create lots -->
                 <field name="lot_id" position="attributes">
                     <attribute name="options">{'create':True, 'create_edit':True}</attribute>
@@ -134,9 +134,9 @@
         <field name="model">stock.move.line</field>
         <field name="inherit_id" ref="stock.view_stock_move_line_operation_tree"/>
         <field name="arch" type="xml">
-            <field name="quantity" position="after">
+            <!-- <field name="quantity" position="after">
                 <button name="set_all_done" title="Set all Done" type="object" icon="fa-check" invisible="state not in ('confirmed', 'assigned', 'waiting', 'partially_available')" context="{'from_popup':True}"/>
-            </field>
+            </field> -->
             <!-- for compatibility with web_m2x_options we force allowing create lots -->
             <field name="lot_id" position="attributes">
                 <attribute name="options">{'create':True, 'create_edit':True}</attribute>
@@ -151,7 +151,7 @@
     </record>
 
     <!-- adds action to add all move lines -->
-    <record model="ir.actions.server" id="action_operation_set_all_done">
+    <!-- <record model="ir.actions.server" id="action_operation_set_all_done">
         <field name="name">Set all done</field>
         <field name="model_id" ref="stock.model_stock_move_line"/>
         <field name="binding_model_id" ref="stock.model_stock_move_line"/>
@@ -159,7 +159,7 @@
         <field name="code">
 records.set_all_done()
         </field>
-    </record>
+    </record> -->
 
     <!-- adds action to add all move lines -->
     <record model="ir.actions.server" id="action_operation_set_all_undone">
@@ -172,13 +172,13 @@ records.filtered(lambda x: x.state not in ['draft', 'done', 'cancel']).write({'q
         </field>
     </record>
 
-    <record id="stock.stock_move_line_action" model="ir.actions.act_window">
+    <!-- <record id="stock.stock_move_line_action" model="ir.actions.act_window">
         <field name="name">Products Moves Detailed</field>
         <field name="context">{'search_default_todo': 1,'search_default_done': 1}</field>
     </record>
 
     <record id="stock.stock_move_line_menu" model="ir.ui.menu">
         <field name="name">Products Moves Detailed</field>
-    </record>
+    </record> -->
 
 </odoo>
