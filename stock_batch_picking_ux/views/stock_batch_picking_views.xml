@@ -37,25 +37,29 @@
         <field name="inherit_id" ref="stock_picking_batch.stock_picking_batch_form"/>
         <field name="arch" type="xml">
 
-            <button name="action_assign" position="after">
-                <button name="do_unreserve_picking" string="Unreserve all" type="object" attrs="{'invisible': [('state', 'not in', ['assigned', 'in_progress'])]}"/>
-            </button>
-
             <button name="action_cancel" position="attributes">
                 <attribute name="groups">stock_ux.allow_picking_cancellation</attribute>
             </button>
 
-            <field name="name" position="after">
-                <button name="add_picking_operation" class="oe_highlight oe_inline oe_right" type="object" string="Procesar cantidades" attrs="{'invisible': [('state', 'in', ['draft', 'cancel', 'done'])]}"/>
-            </field>
-
-            <div name="button_box" position="after">
-                <div class="oe_button_box" name="button_box">
-                    <button name="action_view_stock_picking" class="oe_stat_button" icon="fa-truck" type="object">
+            <xpath expr="//div" position="inside">
+                <button name="add_picking_operation"
+                    class="oe_stat_button"
+                    icon="fa-bars"
+                    type="object"
+                    invisible="state in ('draft', 'cancel', 'done')">
+                    <div class="o_form_field o_stat_info">
+                        <span class="o_stat_text">Operaciones Detalladas</span>
+                    </div>
+                </button>
+                <button name="action_view_stock_picking"
+                    class="oe_stat_button"
+                    icon="fa-truck"
+                    type="object">
+                    <div class="o_form_field o_stat_info">
                         <field string="Pickings" name="picking_count" widget="statinfo" />
-                    </button>
-                </div>
-            </div>
+                    </div>
+                </button>
+            </xpath>
 
             <field name="user_id" position="before">
                 <field name="voucher_required" invisible="1"/>
@@ -64,7 +68,7 @@
                 <!-- como por ahora solo lo usamos para entrada lo restringimos -->
                 <field name="partner_id" context="{'res_partner_search_mode': picking_type_code == 'incoming' and 'supplier' or 'customer'}"/>
                 <!-- <field name="partner_id" context="{'search_default_supplier':1, 'default_supplier':1, 'default_customer':0}" domain="[('supplier','=',True)]"/> -->
-                <field name="voucher_number" attrs="{'invisible': [('picking_type_code','!=','incoming')], 'required': [('voucher_required','=',True)]}"/>
+                <field name="voucher_number" invisible="picking_type_code != 'incoming'" required="voucher_required == True"/>
                 <field name="number_of_packages"/>
                 <!-- <field name="voucher_ids" attrs="{'invisible': [('picking_type_code','!=','incoming')]}" widget="many2many_tags" context="{'default_batch_picking': id}" domain="[('id', '=', False)]" options="{'create':True, 'create_edit':True}}"/> -->
             </field>
@@ -84,7 +88,7 @@
             </field>
 
             <field name="picking_type_id" position="after">
-                <button name="action_done" string="Set all Done" type="object" icon="fa-check" attrs="{'invisible': [('state', 'not in', ['confirmed', 'assigned', 'waiting', 'partially_available'])]}"/>
+                <button name="action_done" string="Set all Done" type="object" icon="fa-check" invisible="state not in ('confirmed', 'assigned', 'waiting', 'partially_available')"/>
             </field>
 
             <xpath expr="//notebook" position="inside">

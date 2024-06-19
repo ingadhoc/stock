@@ -19,10 +19,8 @@ class StockPickingBatch(models.Model):
         # required=True,
         help='If you choose a partner then only pickings of this partner will'
         'be sellectable',
-        states={'done': [('readonly', True)], 'cancel': [('readonly', True)]}
     )
     voucher_number = fields.Char(
-        states={'done': [('readonly', True)], 'cancel': [('readonly', True)]},
     )
     voucher_required = fields.Boolean(
         # related='picking_type_id.voucher_required',
@@ -34,9 +32,9 @@ class StockPickingBatch(models.Model):
     number_of_packages = fields.Integer(
         copy=False,
     )
-    
+
     picking_type_id = fields.Many2one(required=True)
-    
+
     picking_type_ids = fields.Many2many(
         'stock.picking.type',
         # related='picking_type_id.voucher_required',
@@ -54,12 +52,12 @@ class StockPickingBatch(models.Model):
 
     def _compute_picking_count(self):
         """Calculate number of pickings."""
-        groups = self.env["stock.picking"].read_group(
+        groups = self.env["stock.picking"]._read_group(
             domain=[("batch_id", "in", self.ids)],
-            fields=["batch_id"],
-            groupby=["batch_id"],
+            groupby=['batch_id'],
+            aggregates=['__count'],
         )
-        counts = {g["batch_id"][0]: g["batch_id_count"] for g in groups}
+        counts = {g[0].id: g[1] for g in groups}
         for batch in self:
             batch.picking_count = counts.get(batch.id, 0)
 
@@ -145,14 +143,6 @@ class StockPickingBatch(models.Model):
                     })
 
         return super(StockPickingBatch, self.with_context(do_not_assign_numbers=True)).action_done()
-
-    def do_unreserve_picking(self):
-        batches = self.get_not_empties()
-        if not batches.verify_state("in_progress"):
-            self._check_company()
-            pickings_todo = self.mapped('picking_ids')
-            self.write({'state': 'draft'})
-            pickings_todo.do_unreserve()
 
     def action_view_stock_picking(self):
         """This function returns an action that display existing pickings of

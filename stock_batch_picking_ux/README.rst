@@ -14,13 +14,19 @@
 Stock Ux with Batch Picking and stock vouchers
 ==============================================
 
-#. For now, make batch proccessing only available for incoming
-#. Add integration with stock voucher so you can introduce voucher number on the batch
-#. Add picking origin field on moves lines
-#. Restrict picking validation only if at least one operation has done quantity (default behaviour of validating everything is confusing)
-#. Alert user when cancelling a batch that all pickings are going to be cancelled
-#. We deactivate create batch picking from pickings (TODO: por ahora es manual)
-#. Add print button from picking tree view on batchs
+This module add the following features:
+#. Add notes tab.
+#. While creating a batch picking:
+-  Add the partner in the batch transfer, and then filter the transfers able to be selected according to it.
+-  Add the number of packages in the batch transfer
+-  For receipts, it add the supplier's shipping number.
+-  When pickings are selected while creating a new batch, we allow them to check availability.
+#. While proccesing the batch picking:
+-  Add the possibility of processing stock.move.line from a list view.
+-  In the transfer lines it add information of the vouchers, from & to and source document, among others.
+-  Allow to unreserve everything from the batch
+-  A smart button is added to go to the list view of associated transfers.
+-  When you click on a transfer (from the transfer tab) you see all the possible actions that would be seen by entering it directly, such as the possibility of printing the voucher.
 
 Installation
 ============
@@ -36,21 +42,6 @@ To configure this module, you need to:
 
 #. Nothing to configure
 
-Usage
-=====
-
-While creating a batch picking:
-- Add the partner in the batch transfer, and then filter the transfers able to be selected according to it.
-- Add the number of packages in the batch transfer
-- For receipts, it add the supplier's shipping number.
-- When pickings are selected while creating a new batch, we allow them to be unreserved and check availability.
-
-While proccesing the batch picking:
-- Add the possibility of processing stock.move.line from a list view.
-- In the transfer lines it add information of the vouchers, from & to and source document, among others.
-- Allow to unreserve everything from the batch.
-- A smart button is added to go to the list view of associated transfers.
-- When you click on a transfer (from the transfer tab) you see all the possible actions that would be seen by entering it directly, such as the possibility of printing the remittance.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
