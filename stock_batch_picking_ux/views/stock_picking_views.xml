@@ -7,7 +7,7 @@
             <tree>
                 <field name="book_id" invisible="1"/>
                 <field name="picking_type_code" invisible="1"/>
-                <button name="%(stock_voucher.action_stock_print_voucher)d" string="Vouchers" type="action" attrs="{'invisible': ['|', ('picking_type_code','=','incoming'), ('state','!=','done')]}" icon="fa-print" context="{'picking_id': id}" invisible="not context.get('show_print_button', False)"/>
+                <button name="%(stock_voucher.action_stock_print_voucher)d" string="Vouchers" type="action" invisible="picking_type_code == 'incoming' or state != 'done' or not context.get('show_print_button', False)" icon="fa-print" context="{'picking_id': id}"/>
             </tree>
         </field>
     </record>

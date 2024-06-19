@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Stock Usability with Batch Picking and stock vouchers',
-    'version': "16.0.1.2.0",
+    'version': "17.0.1.0.0",
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
@@ -41,7 +41,7 @@
     ],
     'demo': [
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': True,
     'application': False,
 }
