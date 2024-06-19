@@ -63,13 +63,13 @@
         </field>
     </record>
 
-    <record id="stock.stock_move_action" model="ir.actions.act_window">
+    <!-- <record id="stock.stock_move_action" model="ir.actions.act_window">
         <field name="name">Products Moves</field>
     </record>
 
     <record id="stock.stock_move_menu" model="ir.ui.menu">
         <field name="name">Products Moves</field>
         <field name="groups_id" eval="[(3, ref('base.group_no_one'))]"/>
-    </record>
+    </record> -->
 
 </odoo>

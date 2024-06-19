@@ -25,8 +25,3 @@ msgstr ""
 msgid "Stock Moves"
 msgstr "Movimientos de productos"
 
-#. module: stock
-#: model:ir.actions.act_window,name:stock.stock_move_line_action
-#: model:ir.ui.menu,name:stock.stock_move_line_menu
-msgid "Product Moves"
-msgstr "Movimientos de productos detallados"
