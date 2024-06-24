@@ -122,7 +122,8 @@ Transportista:
 ^FX Referencias Odoo ^CFJ,25 ^FO50,680^FDOrden:^FS ^FO50,720^FDRemito:^FS ^CF0,28 ^FO160,680^FD
 <t t-esc="picking.origin"/>
 ^FS ^FO160,720^FD
-<t t-esc="picking.voucher_ids.name"/>
+<t t-set="voucher_names" t-value="','.join(picking.voucher_ids.mapped('name'))"/>
+<t t-esc="voucher_names"/>
 ^FS ^BY3,2,160 ^FO100,765^BC^FD
 <t t-esc="picking.name"/>
 ^FS ^FX Fecha y nro de bultos ^FO50,980^GB700,170,3^FS ^FO400,980^GB3,170,3^FS ^CFJ,30 ^FO180,1020^FDBultos^FS
@@ -259,8 +260,9 @@ Transportista:
                             <div style="font-weight: normal;">Orden:
                                 <t t-esc="picking.origin"/>
                             </div>
-                            <div style="font-weight: normal;">Remito:
-                                <t t-esc="picking.voucher_ids.name"/>
+                            <div style="font-weight: normal;">Remito/s:
+                                <t t-set="voucher_names" t-value="','.join(picking.voucher_ids.mapped('name'))"/>
+                                <t t-esc="voucher_names"/>
                             </div>
                             <br/>
                             <div name="footer_left_column" position="inside">
