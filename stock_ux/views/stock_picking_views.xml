@@ -9,16 +9,16 @@
                 <button name="new_force_availability" string="Force Availability" invisible="block_manual_lines or state not in ('confirmed', 'waiting', 'assigned') or not is_locked" type="object"/>
             </button>
             <xpath expr="//button[@name='button_validate']" position="attributes">
-                <attribute name="invisible">state in ('draft', 'confirmed', 'done', 'cancel') or picking_type_id.block_additional_quantity == True and state in ('draft', 'waiting', 'confirmed')</attribute>
+                <attribute name="invisible">state in ('draft', 'confirmed', 'done', 'cancel') or picking_type_id.block_additional_quantity and state in ('draft', 'waiting', 'confirmed')</attribute>
             </xpath>
             <xpath expr="//button[@name='button_validate'][1]" position="attributes">
-                <attribute name="invisible">state in ('draft', 'confirmed', 'done', 'cancel') or picking_type_id.block_additional_quantity == True and state in ('draft', 'waiting', 'confirmed')</attribute>
+                <attribute name="invisible">state in ('draft', 'confirmed', 'done', 'cancel') or picking_type_id.block_additional_quantity and state in ('draft', 'waiting', 'confirmed')</attribute>
             </xpath>
             <field name="partner_id" position="attributes">
                 <attribute name="readonly"/>
-                </field>
+            </field>
             <field name="description_picking" position="after">
-                <field name="name" string="Descripción de origen" optional="hide"/>
+                <field name="name" string="Descripción 2" optional="hide"/>
             </field>
             <field name="product_uom" position="before">
                 <field name="lots_visible" column_invisible="True"/>
@@ -39,6 +39,86 @@
             <page name="note" position="attributes">
                 <attribute name="invisible">1</attribute>
             </page>
+        </field>
+    </record>
+
+    <record id="view_picking_internal_search" model="ir.ui.view">
+        <field name="name">stock.picking.internal.search</field>
+        <field name="model">stock.picking</field>
+        <field name="arch" type="xml">
+            <search string="Picking Lists">
+                <field name="name" string="Transfer" filter_domain="['|', ('name', 'ilike', self), ('origin', 'ilike', self)]"/>
+                <field name="partner_id" filter_domain="[('partner_id', 'child_of', self)]"/>
+                <field name="origin"/>
+                <field name="product_id"/>
+                <field name="picking_type_id"/>
+                <field name="move_line_ids" string="Package" filter_domain="['|', ('move_line_ids.package_id.name', 'ilike', self), ('move_line_ids.result_package_id.name', 'ilike', self)]" groups="stock.group_tracking_lot"/>
+                <filter name="to_do_transfers" string="To Do" domain="['&amp;',('user_id', 'in', [uid, False]),('state','not in',['done','cancel'])]"/>
+                <filter name="my_transfers" string="My Transfers" domain="[('user_id', '=', uid)]"/>
+                <filter string="Starred" name="starred" domain="[('priority', '=', '1')]"/>
+                <separator/>
+                <filter name="draft" string="Draft" domain="[('state', '=', 'draft')]" help="Draft Moves"/>
+                <filter name="waiting" string="Waiting" domain="[('state', 'in', ('confirmed', 'waiting'))]" help="Waiting Moves"/>
+                <filter name="available" string="Ready" domain="[('state', '=', 'assigned')]" help="Assigned Moves"/>
+                <filter name="done" string="Done" domain="[('state', '=', 'done')]" help="Pickings already processed"/>
+                <filter name="cancel" string="Cancelled" domain="[('state', '=', 'cancel')]" help="Cancelled Moves"/>
+                <separator/>
+                <filter name="late" string="Late" help="Deadline exceed or/and by the scheduled" domain="[('state', 'in', ('assigned', 'waiting', 'confirmed')), '|', '|', ('has_deadline_issue', '=', True), ('date_deadline', '&lt;', current_date), ('scheduled_date', '&lt;', current_date)]"/>
+                <filter string="Planning Issues" name="planning_issues" help="Transfers that are late on scheduled time or one of pickings will be late" domain="['|', ('delay_alert_date', '!=', False), '&amp;', ('scheduled_date','&lt;', time.strftime('%Y-%m-%d %H:%M:%S')), ('state', 'in', ('assigned', 'waiting', 'confirmed'))]"/>
+                <separator/>
+                <filter name="backorder" string="Backorders" domain="[('backorder_id', '!=', False), ('state', 'in', ('assigned', 'waiting', 'confirmed'))]" help="Remaining parts of picking partially processed"/>
+                <separator/>
+                <filter invisible="1" string="Late Activities" name="activities_overdue" domain="[('my_activity_date_deadline', '&lt;', context_today().strftime('%Y-%m-%d'))]" help="Show all records which has next action date is before today"/>
+                <filter invisible="1" string="Today Activities" name="activities_today" domain="[('my_activity_date_deadline', '=', context_today().strftime('%Y-%m-%d'))]"/>
+                <filter invisible="1" string="Future Activities" name="activities_upcoming_all" domain="[('my_activity_date_deadline', '&gt;', context_today().strftime('%Y-%m-%d'))]"/>
+                <separator/>
+                <filter string="Warnings" name="activities_exception" domain="[('activity_exception_decoration', '!=', False)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Status" name="status" domain="[]" context="{'group_by': 'state'}"/>
+                    <filter string="Scheduled Date" name="expected_date" domain="[]" context="{'group_by': 'scheduled_date'}"/>
+                    <filter string="Source Document" name="origin" domain="[]" context="{'group_by': 'origin'}"/>
+                    <filter string="Operation Type" name="picking_type" domain="[]" context="{'group_by': 'picking_type_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_picking_tree_all" model="ir.actions.act_window">
+        <field name="name">Transfers</field>
+        <field name="res_model">stock.picking</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">tree,kanban,form,calendar</field>
+        <field name="domain"></field>
+        <field name="context">{'contact_display': 'partner_address', 'default_company_id': allowed_company_ids[0]}</field>
+        <field name="search_view_id" ref="view_picking_internal_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No transfer found. Let's create one!
+            </p>
+            <p>
+                Transfers allow you to move products from one location to another.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="all_picking" name="Transferencias" parent="stock.menu_stock_transfers" sequence="20" action="action_picking_tree_all" groups="stock.group_stock_manager,stock.group_stock_user"/>
+
+    <record id="stock.action_stock_move_tree_all" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+    </record>
+
+    <record id="stock.action_stock_move_pivot_all" model="ir.actions.act_window.view">
+        <field name="sequence" eval="10"/>
+    </record>
+
+    <record id="view_picking_form_inherited" model="ir.ui.view">
+        <field name="name">stock.picking.form</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <field name="description_picking" position="after">
+                <field name="origin_description" string="Descripción de origen" optional="hide"/>
+            </field>
         </field>
     </record>
 
