@@ -8,9 +8,14 @@ class StockQuant(models.Model):
         related='location_id.removal_priority',
         store=True,
     )
-
+    
     @api.model
-    def _get_removal_strategy_order(self, removal_strategy=None):
+    def _get_removal_strategy_domain_order(self, domain, removal_strategy, qty):
         if removal_strategy == 'priority':
-            return 'removal_priority ASC, id'
-        return super()._get_removal_strategy_order(removal_strategy)
+            return domain, 'removal_priority ASC, id'
+        return super()._get_removal_strategy_domain_order(domain, removal_strategy, qty)
+
+    def _get_removal_strategy_sort_key(self, removal_strategy):
+        if removal_strategy == 'priority':
+            return lambda q: (q.removal_priority, q.id), False
+        return super()._get_removal_strategy_sort_key(removal_strategy)
