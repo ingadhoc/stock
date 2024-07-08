@@ -14,7 +14,7 @@
 Location Security
 =================
 
-Users can be assigned many Stock Journals and then they can be restricted to see only this Journals.
+Restrict users from accessing certain stock locations in the Inventory app. This ensures that users can only see and access the stock locations assigned to them, enhancing control and security in your inventory management. Users attempting to perform actions involving restricted locations will receive an error message and be unable to proceed.
 
 Installation
 ============
@@ -28,8 +28,10 @@ Configuration
 
 To configure this module, you need to:
 
-#. Go to Settings/Users/User select an user then in Preference set "Restrict Location".
-#. In page "Allowed Stock Locations" set the locations do you allow.
+#. Go to Settings>Users & Companies>Users.
+#. Select the user you want to configure. 
+#. Under the Preference tab, enable the Restrict Location option.
+#. In the Allowed Stock Locations tab, assign the stock locations the user is allowed to access.
 
 Usage
 =====
