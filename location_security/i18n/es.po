@@ -36,7 +36,7 @@ msgid ""
 "Invalid Location. You cannot process this move since you do not control the "
 "location \"%s\"."
 msgstr ""
-"Locación invalida. No se puede procesar este movimiento ya no se controla la"
+"Ubicación inválida. No se puede procesar este movimiento ya que no se controla la"
 " ubicación \"%s\"."
 
 #. module: location_security
