@@ -9,7 +9,7 @@
                 <attribute name="groups">!stock_request.group_stock_request_order</attribute>
             </button>
             <button name="action_view_stock_request" position="after">
-                <button type="object" name="action_view_stock_order_request" class="oe_stat_button" icon="fa-chain" attrs="{'invisible':[('stock_request_order_ids', '=', [])]}" groups="stock_request.group_stock_request_order">
+                <button type="object" name="action_view_stock_order_request" class="oe_stat_button" icon="fa-chain" invisible="stock_request_order_ids == []" groups="stock_request.group_stock_request_order">
                     <field name="stock_request_order_count" widget="statinfo" string="Stock Request Orders"/>
                     <field name="stock_request_order_ids" invisible="1"/>
                 </button>
