@@ -3,7 +3,7 @@
 import { patch } from "@web/core/utils/patch";
 import { StockOrderpointListController } from '@stock/views/stock_orderpoint_list_controller';
 
-patch(StockOrderpointListController.prototype, "order patch", {
+patch(StockOrderpointListController.prototype, {
     async onClickOrder() {
         const resIds = await this.getSelectedResIds();
         const action = await this.model.orm.call(this.props.resModel, 'action_replenish', [resIds], {
@@ -17,4 +17,3 @@ patch(StockOrderpointListController.prototype, "order patch", {
         });
     }
 });
-

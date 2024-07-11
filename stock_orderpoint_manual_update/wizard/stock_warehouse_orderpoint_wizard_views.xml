@@ -6,7 +6,7 @@
             <field name="model">stock.warehouse.orderpoint.wizard</field>
             <field name="arch" type="xml">
                 <form string="Replenishment Filter Wizard">
-                    <div colspan="2" class="alert alert-info" role="status" attrs="{'invisible': [('category_ids','=', []), ('product_ids','=', []), ('supplier_ids','=', []), ('location_ids','=', [])]}">
+                    <div colspan="2" class="alert alert-info" role="status" invisible="category_ids == [] or product_ids == [] or supplier_ids == [] or location_ids == []">
                         <p><i class="fa fa-info-circle"/>This action will create replenishment lines for products that matches this criteria.</p>
                     </div>
                     <group>
@@ -17,7 +17,7 @@
                         </group>
                         <group col="2">
                             <field name="supplier_ids" widget="many2many_tags" context="{'res_partner_search_mode': 'supplier'}"></field>
-                            <field name="filter_by_main_supplier" attrs="{'invisible': [('supplier_ids','=', [])]}"></field>
+                            <field name="filter_by_main_supplier" invisible="supplier_ids == []"></field>
                             <field name="location_ids" widget="many2many_tags"/>
                         </group>
                     </group>

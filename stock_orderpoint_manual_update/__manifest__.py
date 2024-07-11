@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Stock Orderpoint Manual Update',
-    'version': "16.0.1.3.0",
+    'version': "17.0.1.0.0",
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
@@ -45,7 +45,7 @@
         ],
     },
     'uninstall_hook': "uninstall_hook",
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }
