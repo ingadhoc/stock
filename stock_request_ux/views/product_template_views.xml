@@ -8,7 +8,6 @@
             <button name="%(stock.action_product_replenish)d" position="attributes">
                 <attribute name="invisible">True</attribute>
                 <attribute name="groups"></attribute>
-                <attribute name="attrs">{}</attribute>
             </button>
         </field>
     </record>

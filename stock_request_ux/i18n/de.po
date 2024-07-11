@@ -73,16 +73,6 @@ msgid "Request Orders"
 msgstr ""
 
 #. module: stock_request_ux
-#: model:ir.model.fields,field_description:stock_request_ux.field_stock_request_order__route_id
-msgid "Route"
-msgstr "Route"
-
-#. module: stock_request_ux
-#: model:ir.model.fields,field_description:stock_request_ux.field_stock_request_order__route_ids
-msgid "Routes"
-msgstr ""
-
-#. module: stock_request_ux
 #: model_terms:ir.ui.view,arch_db:stock_request_ux.stock_request_order_form
 msgid ""
 "Se van a cancelar todos los movimientos asociados que no esten realizados. "

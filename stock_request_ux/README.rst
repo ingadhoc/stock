@@ -16,17 +16,13 @@ Stock Request UX
 
 Several improvements to Stock Request:
 
-#. Al cancelar un request cancelamos tambien los moves encadenados.
-#. Gracias a lo anterior, si cancelamos un request order se cancelan todos los pickings vinculados
-#. Agregamos ruta en request order que se lleva por defecto a los request, al cambiar la ruta tambien te las cambia en los request.
-#. Al crear los procurements order creamos el procurement group, propagamos que al crearse los requests tambien se lleve ese mismo group.
+#. If we cancel a request order, it will cancel the chained moves and all linked pickings will  be cancelled as well.
+#. When creating the procurements order we create the procurement group, we propagate that so when the requests are created it also takes that same group.
 #. Upon duplication of request order, duplicate lines
-#. Order requests from last to first created
-#. Automatically reserve the picking from stock when a request is confirmed
-#. Add to stock request field "order_id" ondelete=cascade to delete stock request when stock request order related are deleted.
+#. When a Stock Request Order in 'draft' state is deleted, it also deletes the Stock Request related.
 #. Add new button in pickings to access to the stock request order if has the group "Stock Request Order"
 #. Add new button in Stock moves to access to the stock request order related.
-#. Hide the "Replanishment" button in products(template/variants) when stock request was installed.
+#. Hide the "Replenishment" button in products(template/variants) when stock request was installed.
 
 Installation
 ============
