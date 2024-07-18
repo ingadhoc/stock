@@ -17,4 +17,17 @@
         </field>
     </record>
 
+    <record id="product_view_tree_catalog" model="ir.ui.view">
+        <field name="name">product.product.tree.catalog</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product_ux.product_view_tree_catalog"/>
+        <field name="priority">20</field>
+        <field name="arch" type="xml">
+            <field name="standard_price" position="after">
+                <field name="qty_available" optional="show" readonly="1"/>
+                <field name="virtual_available" optional="show" readonly="1"/>
+            </field>
+        </field>
+    </record>
+
 </odoo>
