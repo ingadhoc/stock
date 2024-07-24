@@ -18,6 +18,8 @@ Stock Orderpoint Manual Update
 #. Allow to filter by main supplier when opening replenishment menu in case there is a main supplier.
 #. Allow to sort the lines in replenishment view according to the forecast qty and the rotation columns.
 #. Add the filter "Negatives quantities".
+#. Improves performace when opening Replenishment menu.
+#. Adds a review toggle per line that allows the user to indicate when the replenishment order is ready to be confirmed.
 
 Installation
 ============
