@@ -175,3 +175,8 @@ msgstr "Rotación del Almacén"
 #: model:ir.model.fields,field_description:stock_orderpoint_manual_update.field_stock_warehouse_orderpoint__warehouse_rotation_stdev
 msgid "Warehouse Rotation Stdev"
 msgstr "Rotación del Almacén DevStd"
+
+#. module: stock_orderpoint_manual_update
+#: model:ir.model.fields,field_description:stock_orderpoint_manual_update.field_stock_warehouse_orderpoint__reviewed
+msgid "Reviewed"
+msgstr "Revisado"
