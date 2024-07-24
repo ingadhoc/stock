@@ -18,6 +18,8 @@ class StockWarehouseOrderpoint(models.Model):
         string="Previsión",
     )
 
+    reviewed = fields.Boolean()
+
     def update_qty_forecast(self):
         for rec in self:
             rec.qty_forecast_stored = rec.qty_forecast
@@ -49,3 +51,16 @@ class StockWarehouseOrderpoint(models.Model):
         if location_ids:
             domain.append(('id', 'in', location_ids))
         return self.env['stock.location'].search(domain)
+
+    @api.onchange('qty_on_hand', 'qty_forecast_stored')
+    def _change_review_toggle_negative(self):
+            self.reviewed = False
+
+    @api.onchange('qty_to_order')
+    def _change_review_toggle_positive(self):
+            self.reviewed = True
+
+    def action_replenish(self):
+        res = super(StockWarehouseOrderpoint, self).action_replenish()
+        self._change_review_toggle_negative()
+        return res

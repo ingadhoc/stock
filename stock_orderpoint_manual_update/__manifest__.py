@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Stock Orderpoint Manual Update',
-    'version': "16.0.1.3.0",
+    'version': "16.0.1.4.0",
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',

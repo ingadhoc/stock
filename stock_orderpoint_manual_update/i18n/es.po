@@ -132,3 +132,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_orderpoint_manual_update.field_stock_warehouse_orderpoint_wizard__supplier_ids
 msgid "Vendor"
 msgstr "Proveedor"
+
+#. module: stock_orderpoint_manual_update
+#: model:ir.model.fields,field_description:stock_orderpoint_manual_update.field_stock_warehouse_orderpoint__reviewed
+msgid "Reviewed"
+msgstr "Revisado"
