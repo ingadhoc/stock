@@ -3,27 +3,26 @@
 # 	* stock_voucher
 # 
 # Translators:
-# Nicolas Mac Rouillon <nmr@ingadhoc.com>, 2022
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2022
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 15.0+e\n"
+"Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-25 12:39+0000\n"
-"PO-Revision-Date: 2022-04-12 16:49+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2022\n"
-"Language-Team: Spanish (https://www.transifex.com/adhoc/teams/133229/es/)\n"
+"POT-Creation-Date: 2024-07-24 14:03+0000\n"
+"PO-Revision-Date: 2024-01-29 13:54+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024\n"
+"Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: es\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
 #. module: stock_voucher
 #: model_terms:ir.ui.view,arch_db:stock_voucher.view_print_stock_voucher_form
 msgid "<strong>THE VOUCHER IT'S PRINTED AND ASSIGNED.</strong>"
-msgstr "EL COMPROBANTE ESTÁ IMPRESO Y ASIGNADO.</strong>"
+msgstr "EL COMPROBANTE ESTÁ IMPRESO Y ASIGNADO."
 
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_book__next_number
@@ -122,7 +121,7 @@ msgstr "Mostrar Nombre"
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_voucher__id
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_print_stock_voucher__id
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #. module: stock_voucher
 #: model:ir.model.fields,help:stock_voucher.field_stock_picking__book_required
@@ -170,18 +169,6 @@ msgstr ""
 "Si elige una lista de precios, \"Valor Declarado Automático\" se habilita en"
 " la empresa y no se encuentra la orden de venta vinculada a la orden de "
 "movimiento, sugeriremos valor declarado utilizando esta lista de precios"
-
-#. module: stock_voucher
-#: model:ir.model,name:stock_voucher.model_stock_immediate_transfer
-msgid "Immediate Transfer"
-msgstr "Transferencia inmediata"
-
-#. module: stock_voucher
-#: model:ir.model.fields,field_description:stock_voucher.field_stock_book____last_update
-#: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_voucher____last_update
-#: model:ir.model.fields,field_description:stock_voucher.field_stock_print_stock_voucher____last_update
-msgid "Last Modified on"
-msgstr "Última modificación el"
 
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_book__write_uid
@@ -245,6 +232,7 @@ msgid "Number of Pages"
 msgstr "Número de páginas"
 
 #. module: stock_voucher
+#. odoo-python
 #: code:addons/stock_voucher/models/stock_picking.py:0
 #, python-format
 msgid "Números de remitos asignados: %s"
@@ -268,6 +256,7 @@ msgid "Picking Voucher"
 msgstr "Remito"
 
 #. module: stock_voucher
+#. odoo-python
 #: code:addons/stock_voucher/models/stock_picking_voucher.py:0
 #, python-format
 msgid "Picking voucher number must be unique per partner"
@@ -312,7 +301,7 @@ msgstr "Restriccion de Numero de Paquetes"
 #. module: stock_voucher
 #: model:ir.model,name:stock_voucher.model_stock_move
 msgid "Stock Move"
-msgstr "Movimiento de existencias"
+msgstr "Movimiento de stock"
 
 #. module: stock_voucher
 #: model:ir.model,name:stock_voucher.model_stock_book
@@ -326,6 +315,7 @@ msgid "Stock Voucher Sequence"
 msgstr "Secuencia de Talonario"
 
 #. module: stock_voucher
+#. odoo-python
 #: code:addons/stock_voucher/models/stock_picking.py:0
 #, python-format
 msgid "The assigned voucher were deleted"
@@ -338,6 +328,7 @@ msgid "The declared value will be on the currency of the company"
 msgstr ""
 
 #. module: stock_voucher
+#. odoo-python
 #: code:addons/stock_voucher/models/stock_picking_voucher.py:0
 #, python-format
 msgid ""
@@ -350,6 +341,7 @@ msgstr ""
 "* 0001-00000001\n"
 
 #. module: stock_voucher
+#. odoo-python
 #: code:addons/stock_voucher/models/stock_picking_voucher.py:0
 #: model:ir.model.constraint,message:stock_voucher.constraint_stock_picking_voucher_voucher_number_uniq
 #, python-format
@@ -357,6 +349,7 @@ msgid "The field \"Number\" must be unique per book."
 msgstr ""
 
 #. module: stock_voucher
+#. odoo-python
 #: code:addons/stock_voucher/models/stock_picking.py:0
 #, python-format
 msgid "The number of packages can not be 0"
@@ -365,7 +358,7 @@ msgstr "El numero de paquetes no puede ser 0"
 #. module: stock_voucher
 #: model:ir.model,name:stock_voucher.model_stock_picking
 msgid "Transfer"
-msgstr "Albarán"
+msgstr "Traslado"
 
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking__book_id
@@ -397,18 +390,21 @@ msgid "With Vouchers"
 msgstr "Con Remitos"
 
 #. module: stock_voucher
+#. odoo-python
 #: code:addons/stock_voucher/models/stock_picking.py:0
 #, python-format
 msgid "You must select a Voucher Book"
 msgstr "Debe seleccionar  un Libro de Comprobante"
 
 #. module: stock_voucher
+#. odoo-python
 #: code:addons/stock_voucher/models/stock_picking.py:0
 #, python-format
 msgid "You must set stock voucher numbers"
 msgstr "Debe ingresar los números de remito"
 
 #. module: stock_voucher
+#. odoo-python
 #: code:addons/stock_voucher/models/stock_picking_voucher.py:0
 #, python-format
 msgid "is not a valid value for"
@@ -418,10 +414,3 @@ msgstr "no es un valor válido para"
 #: model_terms:ir.ui.view,arch_db:stock_voucher.view_print_stock_voucher_form
 msgid "or"
 msgstr "o"
-
-#. module: stock_voucher
-#: model:ir.actions.report,print_report_name:stock.action_report_delivery
-msgid ""
-"object.voucher_ids and (len(object.voucher_ids) > 1 and 'Vouchers %s' or 'Voucher %s') % (','.join(object.voucher_ids.mapped('number'))) or 'Delivery Slip - %s - %s' % (object.partner_id.name or '', object.name)"
-msgstr ""
-"object.voucher_ids and (len(object.voucher_ids) > 1 and 'Remitos %s' or 'Remito %s') % (','.join(object.voucher_ids.mapped('number'))) or 'Albarán de entrega - %s - %s' % (object.partner_id.name or '', object.name)"

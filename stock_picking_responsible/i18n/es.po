@@ -3,15 +3,16 @@
 # 	* stock_picking_responsible
 # 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2023
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024
+# María Florencia Frigieri Parma, 2024
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 16.0+e\n"
+"Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-10 19:08+0000\n"
-"PO-Revision-Date: 2023-04-10 19:08+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2023\n"
+"POT-Creation-Date: 2024-07-18 22:18+0000\n"
+"PO-Revision-Date: 2024-07-18 22:18+0000\n"
+"Last-Translator: María Florencia Frigieri Parma, 2024\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -22,7 +23,7 @@ msgstr ""
 #. module: stock_picking_responsible
 #: model:ir.model.fields,field_description:stock_picking_responsible.field_stock_move__picking_user_id
 msgid "Picking Responsible"
-msgstr "Responsable de Albarán"
+msgstr "Responsable de la transferencia"
 
 #. module: stock_picking_responsible
 #: model_terms:ir.ui.view,arch_db:stock_picking_responsible.view_picking_internal_search
@@ -32,4 +33,4 @@ msgstr "Responsable"
 #. module: stock_picking_responsible
 #: model:ir.model,name:stock_picking_responsible.model_stock_move
 msgid "Stock Move"
-msgstr "Movimiento de existencias"
+msgstr "Movimiento de stock"
