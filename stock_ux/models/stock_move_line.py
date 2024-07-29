@@ -106,6 +106,7 @@ class StockMoveLine(models.Model):
 
     def _get_aggregated_product_quantities(self, **kwargs):
         aggregated_move_lines = super()._get_aggregated_product_quantities(**kwargs)
+<<<<<<< HEAD
         # if bool(self.env['ir.config_parameter'].sudo().get_param('stock_ux.delivery_slip_use_origin', 'False')) == True:
         for line in aggregated_move_lines:
             moves = self.filtered(
@@ -114,4 +115,23 @@ class StockMoveLine(models.Model):
             if moves:
                 aggregated_move_lines[line]['description'] = False
                 aggregated_move_lines[line]['name'] =', '.join(moves.mapped('origin_description'))
+||||||| parent of 65f72056 (temp)
+        if bool(self.env['ir.config_parameter'].sudo().get_param('stock_ux.delivery_slip_use_origin', 'False')) == True:
+            for line in aggregated_move_lines:
+                moves = self.filtered(
+                    lambda sml: sml.product_id == aggregated_move_lines[line]['product']
+                    ).mapped('move_id').filtered(lambda m: m.origin_description)
+                if moves:
+                    aggregated_move_lines[line]['description'] = False
+                    aggregated_move_lines[line]['name'] =', '.join(moves.mapped('origin_description'))
+=======
+        if self.env['ir.config_parameter'].sudo().get_param('delivery_slip_use_origin') :
+            for line in aggregated_move_lines:
+                moves = self.filtered(
+                    lambda sml: sml.product_id == aggregated_move_lines[line]['product']
+                    ).mapped('move_id').filtered(lambda m: m.origin_description)
+                if moves:
+                    aggregated_move_lines[line]['description'] = False
+                    aggregated_move_lines[line]['name'] =', '.join(moves.mapped('origin_description'))
+>>>>>>> 65f72056 (temp)
         return aggregated_move_lines
