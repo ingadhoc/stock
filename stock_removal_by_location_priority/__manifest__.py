@@ -1,6 +1,12 @@
 {
     'name': 'Stock Removal by Location priority',
+<<<<<<< HEAD
     'version': "17.0.1.0.0",
+||||||| parent of 57756726 (temp)
+    'version': "16.0.1.0.0",
+=======
+    'version': "16.0.1.1.0",
+>>>>>>> 57756726 (temp)
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
