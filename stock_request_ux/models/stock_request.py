@@ -79,7 +79,13 @@ class StockRequest(models.Model):
             # move que queda vinculado a los allocation, por eso mandamos a
             # cancelar solo la cantidad en progreso (para que no cancele
             # cosas que ya se entregaron parcialmente)
+<<<<<<< HEAD
             to_cancel_moves._action_cancel(rec.qty_in_progress)
+||||||| parent of aa9f5ce7 (temp)
+            to_cancel_moves._cancel_quantity(rec.qty_in_progress)
+=======
+            to_cancel_moves._action_cancel()
+>>>>>>> aa9f5ce7 (temp)
             rec.order_id.message_post(
                 body=_(
                     'Cancel remaining call for line "%s" (id %s), line '
