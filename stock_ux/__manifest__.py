@@ -35,6 +35,7 @@
         'security/ir.model.access.csv',
         'views/product_template_views.xml',
         'views/product_product_views.xml',
+        'wizards/stock_picking_wizard_views.xml',
         'views/stock_picking_views.xml',
         'views/stock_move_views.xml',
         'views/stock_move_line_views.xml',

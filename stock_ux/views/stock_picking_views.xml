@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <odoo>
     <record id="view_picking_form" model="ir.ui.view">
         <field name="name">stock.picking.form.inherit</field>
@@ -117,4 +118,16 @@
     <record id="stock.action_stock_move_pivot_all" model="ir.actions.act_window.view">
         <field name="sequence" eval="10"/>
     </record>
+
+    <record id="view_picking_form_inherited" model="ir.ui.view">
+        <field name="name">stock.picking.form</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <field name="description_picking" position="after">
+                <field name="origin_description" string="Descripción de origen" optional="hide"/>
+            </field>
+        </field>
+    </record>
+
 </odoo>
