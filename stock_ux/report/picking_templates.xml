@@ -142,7 +142,7 @@ Fecha
     </template>
     <template id="stock_ux.custom_label_transfer_template_view_pdf">
         <t t-call="web.basic_layout">
-            <t t-foreach="docs" t-as="picking">
+            <t t-foreach="docs.line_ids.move_id.picking_id" t-as="picking">
                 <t t-set="numero" t-value="0"/>
                 <t t-set="qty" t-value="picking.number_of_packages"/>
                 <t t-if="qty == 0">
@@ -260,10 +260,13 @@ Transportista:
                             <div style="font-weight: normal;">Orden:
                                 <t t-esc="picking.origin"/>
                             </div>
+                            <!-- TODO: comentamos ya que ahora no depende de aeroo, revisamos dependencia? Sacamos estas lineas? Movemos informe? -->
+                            <!-- <t t-if="picking.voucher_ids">
                             <div style="font-weight: normal;">Remito/s:
                                 <t t-set="voucher_names" t-value="','.join(picking.voucher_ids.mapped('name'))"/>
                                 <t t-esc="voucher_names"/>
                             </div>
+                            </t> -->
                             <br/>
                             <div name="footer_left_column" position="inside">
                                 <img t-if="picking.name" t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', picking.name, 400, 40)" alt="barcode" style="height:40"/>
@@ -310,8 +313,8 @@ Transportista:
 <template id="stock_ux.custom_barcode_transfer_template_view_zpl">
     <t t-set="numero" t-value="0"/>
         <t t-as="l" t-foreach="docs">
-            <t t-as="o" t-foreach="l.move_line_ids.filtered(lambda v: v.product_id.uom_id.id == 1)">
-                <t t-as="i" t-foreach="range(0,int(o.qty_done))">
+            <t t-as="o" t-foreach="l.line_ids.filtered(lambda v: v.move_id.product_id.uom_id.id == 1)">
+                <t t-as="i" t-foreach="range(0,int(o.move_quantity))">
                     <t t-set="numero" t-value="numero + 1"/>
                         <t t-if="numero % 2 != 0 ">
 ^XA
@@ -320,32 +323,32 @@ Transportista:
 ^FO20,10,0
 
 ^FO260,10
-^A0N,20,25^FD<t t-esc="l.date_done" t-options="{'widget': 'date'}"/>^FS
+^A0N,20,25^FD<t t-esc="o.move_id.picking_id.date_done" t-options="{'widget': 'date'}"/>^FS
 
 ^FO20,40
 ^A0N,40,30
 ^TBN,360,40
-^FD<t t-esc="o.product_id.display_name"/>^FS
+^FD<t t-esc="o.move_id.product_id.display_name"/>^FS
 
 ^FO20,90
 ^BY3
 ^BCN,60,Y,N,N,A
-^FD<t t-esc="o.product_id.barcode"/>^FS
+^FD<t t-esc="o.move_id.product_id.barcode"/>^FS
                         </t>
                         <t t-if="numero % 2 == 0 ">
 ^FX Nueva etiqueta
 ^LH445,0
 ^FO20,10,0
 ^FO260,10
-^A0N,20,25^FD<t t-esc="l.date_done" t-options="{'widget': 'date'}"/>^FS
+^A0N,20,25^FD<t t-esc="o.move_id.picking_id.date_done" t-options="{'widget': 'date'}"/>^FS
 ^FO20,40
 ^A0N,40,30
 ^TBN,360,40
-^FD<t t-esc="o.product_id.display_name"/>^FS
+^FD<t t-esc="o.move_id.product_id.display_name"/>^FS
 ^FO20,90
 ^BY3
 ^BCN,60,Y,N,N,A
-^FD<t t-esc="o.product_id.barcode"/>^FS 
+^FD<t t-esc="o.move_id.product_id.barcode"/>^FS 
 ^XZ
                         </t>
                     </t>
