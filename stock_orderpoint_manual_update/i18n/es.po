@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-25 17:27+0000\n"
+"POT-Creation-Date: 2024-07-25 17:42+0000\n"
 "PO-Revision-Date: 2024-07-23 19:11+0000\n"
 "Last-Translator: Matias Velazquez, 2024\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
@@ -84,7 +84,7 @@ msgstr ""
 #. module: stock_orderpoint_manual_update
 #: model:ir.model.fields,field_description:stock_orderpoint_manual_update.field_stock_warehouse_orderpoint_wizard__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Mostrar Nombre"
 
 #. module: stock_orderpoint_manual_update
 #: model:ir.model.fields,field_description:stock_orderpoint_manual_update.field_stock_warehouse_orderpoint_wizard__filter_by_main_supplier
@@ -94,7 +94,7 @@ msgstr "Filtrar por proveedor principal"
 #. module: stock_orderpoint_manual_update
 #: model:ir.model.fields,field_description:stock_orderpoint_manual_update.field_stock_warehouse_orderpoint_wizard__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: stock_orderpoint_manual_update
 #: model:ir.model.fields,field_description:stock_orderpoint_manual_update.field_stock_warehouse_orderpoint_wizard__write_uid
@@ -104,7 +104,7 @@ msgstr "Ultima Actualización Hecha Por "
 #. module: stock_orderpoint_manual_update
 #: model:ir.model.fields,field_description:stock_orderpoint_manual_update.field_stock_warehouse_orderpoint_wizard__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Ultima Actualización el"
 
 #. module: stock_orderpoint_manual_update
 #: model:ir.model.fields,field_description:stock_orderpoint_manual_update.field_stock_warehouse_orderpoint_wizard__location_ids
