@@ -3,27 +3,21 @@
 # 	* stock_picking_state
 # 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2022
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 15.0+e\n"
+"Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-05 15:40+0000\n"
-"PO-Revision-Date: 2022-08-02 15:16+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2022\n"
-"Language-Team: Spanish (https://www.transifex.com/adhoc/teams/133229/es/)\n"
+"POT-Creation-Date: 2024-07-29 18:34+0000\n"
+"PO-Revision-Date: 2024-07-29 18:34+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024\n"
+"Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: es\n"
 "Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
-
-#. module: stock_picking_state
-#: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking__algolia_search
-#: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail__algolia_search
-msgid "Algolia Search"
-msgstr ""
 
 #. module: stock_picking_state
 #: model:ir.model.fields.selection,name:stock_picking_state.selection__stock_picking_state_detail__state__cancel
@@ -69,11 +63,6 @@ msgstr "Proveedores"
 #: model:ir.model.fields.selection,name:stock_picking_state.selection__stock_picking_state_detail__picking_type__internal
 msgid "Internal"
 msgstr "Interno"
-
-#. module: stock_picking_state
-#: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail____last_update
-msgid "Last Modified on"
-msgstr "Última modificación el"
 
 #. module: stock_picking_state
 #: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail__write_uid
@@ -134,7 +123,7 @@ msgstr "Estado"
 #. module: stock_picking_state
 #: model:ir.model,name:stock_picking_state.model_stock_picking
 msgid "Transfer"
-msgstr "Albarán"
+msgstr "Traslado"
 
 #. module: stock_picking_state
 #: model:ir.model.fields.selection,name:stock_picking_state.selection__stock_picking_state_detail__state__confirmed

@@ -3,40 +3,25 @@
 # 	* delivery_ux
 # 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2022
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 15.0+e\n"
+"Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-04-25 12:38+0000\n"
-"PO-Revision-Date: 2022-04-12 16:47+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2022\n"
-"Language-Team: Spanish (https://www.transifex.com/adhoc/teams/133229/es/)\n"
+"POT-Creation-Date: 2024-05-14 18:41+0000\n"
+"PO-Revision-Date: 2024-05-08 18:48+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024\n"
+"Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: es\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-#. module: delivery_ux
-#: model:ir.model.fields,help:delivery_ux.field_delivery_carrier__zip_codes
-msgid ""
-"A list of zip codes availables for this shipping method.\n"
-"If the zip code of the client is not in this list it will not be able to select it."
-msgstr ""
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
 #. module: delivery_ux
 #: model:ir.model.fields,field_description:delivery_ux.field_delivery_carrier__partner_id
 msgid "Carrier Address"
-msgstr ""
-
-#. module: delivery_ux
-#: code:addons/delivery_ux/models/delivery_carrier.py:0
-#, python-format
-msgid ""
-"Invalid expression, the zip codes must be a list of numbers, something like:"
-" ['code1', 'code2']"
 msgstr ""
 
 #. module: delivery_ux
@@ -47,9 +32,4 @@ msgstr "Métodos de envío"
 #. module: delivery_ux
 #: model:ir.model.fields,help:delivery_ux.field_delivery_carrier__partner_id
 msgid "Utilizado para el remito."
-msgstr ""
-
-#. module: delivery_ux
-#: model:ir.model.fields,field_description:delivery_ux.field_delivery_carrier__zip_codes
-msgid "Zip codes"
 msgstr ""
