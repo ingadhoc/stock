@@ -3,7 +3,7 @@
 # directory
 ##############################################################################
 from odoo import models, fields, api, _
-from odoo.exceptions import ValidationError
+from odoo.exceptions import ValidationError, UserError
 from odoo.tools import float_compare
 
 
@@ -35,26 +35,21 @@ class StockMove(models.Model):
     origin_description = fields.Char(compute="_compute_origin_description", compute_sudo=True)
 
     @api.depends(
-        'move_line_ids.qty_done',
+        'move_line_ids.quantity',
         'move_line_ids.lot_id',
     )
     def _compute_used_lots(self):
         for rec in self:
             rec.used_lots = ", ".join(
                 rec.move_line_ids.filtered('lot_id').mapped(
-                    lambda x: "%s (%s)" % (x.lot_id.name, x.qty_done)))
+                    lambda x: "%s (%s)" % (x.lot_id.name, x.quantity)))
 
     def _compute_origin_description(self):
         for rec in self:
             if rec.sale_line_id:
                 rec.origin_description = rec.sale_line_id.name
             else:
-                rec.origin_description = False
-
-    # def set_all_done(self):
-    #     self.mapped('move_line_ids').set_all_done()
-    #     for rec in self.filtered(lambda x: not x.move_line_ids):
-    #         rec.quantity = rec.product_uom_qty
+                rec.origin_description = rec.product_id.name
 
     @api.constrains('quantity')
     def _check_quantity(self):
@@ -107,3 +102,24 @@ class StockMove(models.Model):
     def _merge_moves(self, merge_into=False):
         # 22/04/2024: Agregamos esto porque sino al intentar confirmar compras con usuarios sin permisos, podia pasar que salga la constrain de arriba (check_cancel)
         return super(StockMove,self.with_context(cancel_from_order=True))._merge_moves(merge_into = merge_into)
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if not vals.get('picking_id', False):
+                continue
+            sp = self.env['stock.picking'].browse(vals['picking_id'])
+            if sp.picking_type_id.block_additional_quantity and sp.sale_id and (sp.sale_id.state == 'sale' or sp.sale_id.state == 'done'):
+                if vals.get('additional', False):
+                    raise UserError("No se puede agregar productos adicionales ni modificar las cantidades demandadas:\n"
+                                    "- El pedido de venta se encuentra bloqueado.\n"
+                                    "- Está activado el bloqueo de cantidades adicionales.")
+
+        return super(StockMove, self).create(vals_list)
+
+    @api.depends('state', 'picking_id')
+    def _compute_is_initial_demand_editable(self):
+        super(StockMove, self)._compute_is_initial_demand_editable()
+        for move in self:
+            if move.picking_id.picking_type_id.block_additional_quantity and move.state != 'draft':
+                move.is_initial_demand_editable = False

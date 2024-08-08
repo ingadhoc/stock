@@ -23,7 +23,7 @@
             </xpath>
 
             <xpath expr="//setting[@id='process_transfers']" position="after">
-                    <!-- <div class="col-xs-12 col-md-6 o_setting_box">
+                    <div class="col-xs-12 col-md-6 o_setting_box">
                         <div class="o_setting_left_pane">
                             <field name="delivery_slip_use_origin"/>
                         </div>
@@ -33,7 +33,7 @@
                                 Por defecto odoo imprime en los Comprobantes de Transferencia el nombre del producto, si marca esta opción en su lugar se utilizará la descripción de origen (la descripción de origen suele ser la descripción de venta o la descripción de la compra)
                             </div>
                         </div>
-                    </div> -->
+                    </div>
                     <div class="col-xs-12 col-md-6 o_setting_box">
                         <div class="o_setting_left_pane">
                             <field name="delivery_slip_remaining_qty"/>

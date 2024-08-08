@@ -20,8 +20,13 @@ msgstr ""
 "Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 #. module: stock
+#: model:ir.actions.act_window,name:stock.stock_move_line_action
+#: model:ir.ui.menu,name:stock.stock_move_line_menu
+msgid "Stock Moves"
+msgstr "Movimientos de producto detallados"
+#. module: stock
 #: model:ir.actions.act_window,name:stock.stock_move_action
 #: model:ir.ui.menu,name:stock.stock_move_menu
-msgid "Stock Moves"
+msgid "Products Moves Detailed"
 msgstr "Movimientos de productos"
 

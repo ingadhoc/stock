@@ -617,7 +617,7 @@ msgstr "Movimientos de productos"
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.product_form_view_procurement_button
 msgid "Products Moves Detailed"
-msgstr "Movimientos de productos detallados"
+msgstr "Movimientos de productos"
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_rule__propagate_carrier
@@ -800,7 +800,7 @@ msgstr ""
 #. module: stock_ux
 #: model:ir.actions.act_window,name:stock_ux.action_picking_tree_all
 msgid "Transfers"
-msgstr "Transferencias"
+msgstr "Todas las transferencias"
 
 #. module: stock_ux
 #: model_terms:ir.actions.act_window,help:stock_ux.action_picking_tree_all

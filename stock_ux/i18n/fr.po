@@ -323,7 +323,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:stock_ux.product_form_view_procurement_button
 #: model_terms:ir.ui.view,arch_db:stock_ux.product_template_form_view_procurement_button
 msgid "Products Moves Detailed"
-msgstr ""
+msgstr "Movimientos de productos"
 
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_move_tree

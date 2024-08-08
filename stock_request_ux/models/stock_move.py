@@ -34,22 +34,3 @@ class StockMove(models.Model):
 
         return move_val_list
 
-    @api.model_create_multi
-    def create(self, vals_list):
-        """ When we are on a move created by a stock_request and we create a
-        backorder, we create a new allocation linked to this new move and
-        update quantities
-        """
-        ids = []
-        for vals in vals_list:
-            if vals.get('allocation'):
-                allocation,  qty = vals.pop('allocation')
-                id = super().create(vals).id
-                ids += [id]
-                allocation.copy({
-                        'stock_move_id': id,
-                        'requested_product_uom_qty': qty,
-                    })
-            else:
-                ids += [super().create(vals).id]
-        return self.browse(ids)

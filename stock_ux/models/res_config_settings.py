@@ -14,10 +14,10 @@ class ResConfigSettings(models.TransientModel):
         implied_group='stock_ux.group_operation_used_lots',
     )
 
-    # delivery_slip_use_origin = fields.Boolean(
-    #     'En Comprobantes de Transferencia usar Descripción de Origen',
-    #     config_parameter='stock_ux.delivery_slip_use_origin'
-    # )
+    delivery_slip_use_origin = fields.Boolean(
+        'En Comprobantes de Transferencia usar Descripción de Origen',
+        config_parameter='stock_ux.delivery_slip_use_origin'
+    )
 
     delivery_slip_remaining_qty = fields.Boolean(
         'En Comprobantes de Transferencia mostrar cantidades pendientes de entrega',
