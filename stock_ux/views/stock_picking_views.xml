@@ -2,18 +2,20 @@
     <record id="view_picking_form" model="ir.ui.view">
         <field name="name">stock.picking.form.inherit</field>
         <field name="model">stock.picking</field>
+        <field name="priority">99</field>
         <field name="inherit_id" ref="stock.view_picking_form"/>
         <field name="arch" type="xml">
+            <field name="description_picking" position="after">
+                <field name="origin_description" string="Descripción de origen" optional="hide"/>
+            </field>
             <button name="button_validate" position="after">
                 <field name="block_manual_lines" invisible="1"/>
+                <field name="operation_type_additional_quantities" invisible="1"/>
                 <button name="new_force_availability" string="Force Availability" invisible="block_manual_lines or state not in ('confirmed', 'waiting', 'assigned') or not is_locked" type="object"/>
             </button>
-            <xpath expr="//button[@name='button_validate']" position="attributes">
-                <attribute name="invisible">state in ('draft', 'confirmed', 'done', 'cancel') or picking_type_id.block_additional_quantity and state in ('draft', 'waiting', 'confirmed')</attribute>
-            </xpath>
-            <xpath expr="//button[@name='button_validate'][1]" position="attributes">
-                <attribute name="invisible">state in ('draft', 'confirmed', 'done', 'cancel') or picking_type_id.block_additional_quantity and state in ('draft', 'waiting', 'confirmed')</attribute>
-            </xpath>
+            <xpath expr="//button[@name='button_validate'][hasclass('o_btn_validate')]" position="attributes">
+                <attribute name="invisible">(state in ('waiting', 'assigned', 'done', 'cancel')) or (state in ('draft') and operation_type_additional_quantities)</attribute>
+            </xpath> 
             <field name="partner_id" position="attributes">
                 <attribute name="readonly"/>
             </field>
@@ -23,7 +25,6 @@
             <field name="product_uom" position="before">
                 <field name="lots_visible" column_invisible="True"/>
                 <field name="used_lots" groups="stock_ux.group_operation_used_lots" invisible="not lots_visible or state not in ['confirmed', 'assigned', 'waiting', 'partially_available', 'done']"/>
-                <!-- <button name="set_all_done" title="Set all Done" type="object" icon="fa-check" invisible="state not in ('confirmed', 'assigned', 'waiting', 'partially_available')"/> -->
             </field>
             <button name="action_cancel" position="attributes">
                 <attribute name="groups">stock_ux.allow_picking_cancellation</attribute>
@@ -101,7 +102,8 @@
         </field>
     </record>
 
-    <menuitem id="all_picking" name="Transferencias" parent="stock.menu_stock_transfers" sequence="20" action="action_picking_tree_all" groups="stock.group_stock_manager,stock.group_stock_user"/>
+    <menuitem id="all_picking" name="Todas las transferencias" parent="stock.menu_stock_transfers" sequence="1" action="action_picking_tree_all" groups="stock.group_stock_manager,stock.group_stock_user"/>
+
 
     <record id="stock.action_stock_move_tree_all" model="ir.actions.act_window.view">
         <field name="sequence" eval="1"/>
@@ -110,16 +112,4 @@
     <record id="stock.action_stock_move_pivot_all" model="ir.actions.act_window.view">
         <field name="sequence" eval="10"/>
     </record>
-
-    <record id="view_picking_form_inherited" model="ir.ui.view">
-        <field name="name">stock.picking.form</field>
-        <field name="model">stock.picking</field>
-        <field name="inherit_id" ref="stock.view_picking_form"/>
-        <field name="arch" type="xml">
-            <field name="description_picking" position="after">
-                <field name="origin_description" string="Descripción de origen" optional="hide"/>
-            </field>
-        </field>
-    </record>
-
 </odoo>

@@ -17,6 +17,11 @@ class StockPicking(models.Model):
     observations = fields.Html(
     )
 
+    # Agregamos para poder modificar dominio del boton button_validate
+    operation_type_additional_quantities = fields.Boolean(
+        related='picking_type_id.block_additional_quantity'
+    )
+
     def unlink(self):
         """
         To avoid errors we block deletion of pickings in other state than
@@ -61,37 +66,25 @@ class StockPicking(models.Model):
         if self.state == 'draft':
             self.move_ids.update(
                 {'location_dest_id': self.location_dest_id.id})
-
-    def action_done(self):
-        for picking in self:
-            # con esto arreglamos que odoo dejaria entregar varias veces el
-            # mismo picking si por alguna razon el boton esta presente
-            # en nuestro caso pasaba cuando la impresion da algun error
-            # lo que provoca que el picking se entregue pero la pantalla no
-            # se actualice
-            # antes lo haciamo en do_new_transfer, pero como algunas
-            # veces se llama este metodo sin pasar por do_new_transfer
-            if picking.state in ['done', 'cancel']:
-                raise UserError(_(
-                    'No se puede validar un picking que no esté en estado '
-                    'Parcialmente Disponible o Reservado, probablemente el '
-                    'picking ya fue validado, pruebe refrezcar la ventana!'))
-        res = super().action_done()
-        for rec in self.with_context(mail_notify_force_send=False).filtered('picking_type_id.mail_template_id'):
-            try:
-                rec.message_post_with_source(rec.picking_type_id.mail_template_id)
-            except Exception as error:
-                title = _(
-                    "ERROR: Picking was not sent via email"
-                )
-                rec.message_post(body="<br/><br/>".join([
-                    "<b>" + title + "</b>",
-                    _("Please check the email template associated with"
-                      " the picking type."),
-                    "<code>" + str(error) + "</code>"
-                ]), body_is_html=True
-                )
-        return res
+        
+    def _send_confirmation_email(self):
+        for rec in self:
+            if rec.picking_type_id.mail_template_id:
+                try:
+                    rec.message_post_with_source(rec.picking_type_id.mail_template_id)
+                except Exception as error:
+                    title = _(
+                        "ERROR: Picking was not sent via email"
+                    )
+                    rec.message_post(body="<br/><br/>".join([
+                        "<b>" + title + "</b>",
+                        _("Please check the email template associated with"
+                            " the picking type."),
+                        "<code>" + str(error) + "</code>"
+                    ]), body_is_html=True
+                    )
+            else:
+                super(StockPicking, self)._send_confirmation_email()
 
     def new_force_availability(self):
         self.action_assign()
@@ -103,7 +96,7 @@ class StockPicking(models.Model):
                 rec.quantity = rec.product_uom_qty
             else:
                 for line in rec.move_line_ids:
-                    line.qty_done = line.reserved_uom_qty
+                    line.quantity = line.reserved_uom_qty
 
     def _put_in_pack(self, move_line_ids):
         # we send to skip a process of check qty when is sending through the copy method.

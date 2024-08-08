@@ -37,6 +37,7 @@ Stock UX
 #. Show location and warehouse filters on all products and product templates views (not only the one on inventory)
 #. When archive a replenishment rule set min, max and multiple quantities in 0.
 #. Show inactive replenishment rules if the product is active (with warning decorator).
+#. Send template established in operation type when confirm picking.
 
 Installation
 ============

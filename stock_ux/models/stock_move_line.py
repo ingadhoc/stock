@@ -36,19 +36,6 @@ class StockMoveLine(models.Model):
         related="move_id.origin_description",
     )
 
-    # def set_all_done(self):
-    #     precision = self.env['decimal.precision'].precision_get(
-    #         'Product Unit of Measure')
-    #     for rec in self.filtered(
-    #             lambda x: x.state not in ['draft', 'done', 'cancel']):
-    #         rec.qty_done = rec.reserved_uom_qty \
-    #             if not float_is_zero(
-    #                 rec.reserved_uom_qty,
-    #                 precision_digits=precision) else \
-    #             rec.move_id.product_uom_qty
-    #         if self._context.get('from_popup', False):
-    #             return self[0].move_id.action_show_details()
-
     @api.depends_context('location')
     def _compute_product_uom_qty_location(self):
         location = self._context.get('location')
@@ -63,14 +50,14 @@ class StockMoveLine(models.Model):
             location_name = self.env['stock.location'].browse(location[0]).name
         locations = self.env['stock.location'].search([('complete_name', 'ilike', location_name)])
         for rec in self:
-            product_uom_qty_location = rec.qty_done
+            product_uom_qty_location = rec.quantity
             if rec.location_id in locations:
                 # if location is source and destiny, then 0
                 product_uom_qty_location = 0.0 if \
-                    rec.location_dest_id in locations else -rec.qty_done
+                    rec.location_dest_id in locations else -rec.quantity
             rec.product_uom_qty_location = product_uom_qty_location
 
-    @api.constrains('qty_done')
+    @api.constrains('quantity')
     def _check_manual_lines(self):
         if self._context.get('put_in_pack', False):
             return
@@ -78,11 +65,11 @@ class StockMoveLine(models.Model):
                 lambda x:
                 not x.location_id.should_bypass_reservation() and
                 x.picking_id.picking_type_id.block_manual_lines and
-                x.reserved_qty < x.qty_done)):
+                x.reserved_qty < x.quantity)):
             raise ValidationError(_(
                 "You can't transfer more quantity than reserved one!"))
 
-    @api.constrains('qty_done')
+    @api.constrains('quantity')
     def _check_quantity(self):
         """If we work on move lines we want to ensure quantities are ok"""
         if self._context.get('put_in_pack', False):
@@ -106,12 +93,15 @@ class StockMoveLine(models.Model):
 
     def _get_aggregated_product_quantities(self, **kwargs):
         aggregated_move_lines = super()._get_aggregated_product_quantities(**kwargs)
-        # if bool(self.env['ir.config_parameter'].sudo().get_param('stock_ux.delivery_slip_use_origin', 'False')) == True:
-        for line in aggregated_move_lines:
-            moves = self.filtered(
-                lambda sml: sml.product_id == aggregated_move_lines[line]['product']
+        use_origin = self.env['ir.config_parameter'].sudo().get_param('stock_ux.delivery_slip_use_origin', 'False') == 'True'
+        if use_origin:
+            for line in aggregated_move_lines:
+                moves = self.filtered(
+                    lambda sml: sml.product_id == aggregated_move_lines[line]['product']
                 ).mapped('move_id').filtered(lambda m: m.origin_description)
-            if moves:
-                aggregated_move_lines[line]['description'] = False
-                aggregated_move_lines[line]['name'] =', '.join(moves.mapped('origin_description'))
+                if moves:
+                    aggregated_move_lines[line]['description'] = False
+                    aggregated_move_lines[line]['name'] = ', '.join(moves.mapped('origin_description'))
+        
         return aggregated_move_lines
+

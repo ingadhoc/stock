@@ -175,8 +175,8 @@ records.filtered(lambda x: x.state not in ['draft', 'done', 'cancel']).write({'q
         <field name="name">Products Moves Detailed</field>
         <field name="context">{'search_default_todo': 1,'search_default_done': 1}</field>
     </record>
-
-    <record id="stock.stock_move_line_menu" model="ir.ui.menu">
+ -->
+    <!-- <record id="stock.stock_move_line_menu" model="ir.ui.menu">
         <field name="name">Products Moves Detailed</field>
     </record> -->
 
