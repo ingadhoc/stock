@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<odoo>
+    <!-- Heredar la vista original y modificar los elementos -->
+    <record id="view_print_stock_voucher_form_ux" model="ir.ui.view">
+        <field name="name">print_stock_picking.form.ux</field>
+        <field name="model">stock.print_stock_voucher</field>
+        <field name="inherit_id" ref="stock_voucher.view_print_stock_voucher_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='estimated_number_of_pages']" position="replace">
+                <field name="estimated_number_of_pages" string="Number estimated of pages" attrs="{'invisible':[('lines_per_voucher', '=', 0)],'required':[('lines_per_voucher', '!=', 0)]}" help="Estimate calculated to have an idea of the approximate number of pages. The real value will be known after printing" />
+            </xpath>
+        </field>
+    </record>
+</odoo>
