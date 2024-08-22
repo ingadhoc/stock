@@ -35,4 +35,13 @@ class StockPickingType(models.Model):
         help="If set an email will be sent to the customer after the picking"
         " related to this picking type has been validated.",
     )
+<<<<<<< HEAD
  
+||||||| parent of 6d3ab5ae (temp)
+    
+    @api.model
+    def _get_fields_stock_barcode(self):
+        return super()._get_fields_stock_barcode() + ['block_additional_quantity']
+ 
+=======
+>>>>>>> 6d3ab5ae (temp)
