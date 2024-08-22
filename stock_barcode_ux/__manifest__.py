@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Stock UX',
-    'version': "17.0.1.4.0",
+    'version': "17.0.1.0.0",
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
@@ -33,7 +33,7 @@
     'data': [
     ],
     'installable': True,
-    'auto_install': False,
+    'auto_install': True,
     'application': False,
     'assets': {
         'web.assets_backend': [
