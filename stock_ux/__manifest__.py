@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Stock UX',
-    'version': "16.0.2.22.0",
+    'version': "16.0.2.23.0",
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
@@ -52,6 +52,7 @@
         'report/stock_ux_report.xml',
         'report/ir.action.reports.xml',
         'report/picking_templates.xml',
+        'views/res_company_views.xml'
     ],
     'installable': True,
     'auto_install': False,
