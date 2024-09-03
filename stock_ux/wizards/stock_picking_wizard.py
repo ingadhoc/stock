@@ -21,7 +21,6 @@ class StockPickingZpl(models.TransientModel):
     def action_print(self):
         self.ensure_one()
         report_id = self.env.ref("stock_ux.custom_label_transfer_template_view_zpl")
-        import pdb;pdb.set_trace()
         report_action = report_id.report_action(self.ids)
         report_action['close_on_report_download']=True
         return report_action
