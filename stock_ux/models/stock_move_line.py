@@ -93,8 +93,14 @@ class StockMoveLine(models.Model):
 
     def _get_aggregated_product_quantities(self, **kwargs):
         aggregated_move_lines = super()._get_aggregated_product_quantities(**kwargs)
+<<<<<<< HEAD
         use_origin = self.env['ir.config_parameter'].sudo().get_param('stock_ux.delivery_slip_use_origin', 'False') == 'True'
         if use_origin:
+||||||| parent of 07c1a1fb (temp)
+        if self.env['ir.config_parameter'].sudo().get_param('delivery_slip_use_origin') :
+=======
+        if self.env['ir.config_parameter'].sudo().get_param('stock_ux.delivery_slip_use_origin') :
+>>>>>>> 07c1a1fb (temp)
             for line in aggregated_move_lines:
                 moves = self.filtered(
                     lambda sml: sml.product_id == aggregated_move_lines[line]['product']
