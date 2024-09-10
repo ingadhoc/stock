@@ -29,7 +29,6 @@
     ],
     'depends': [
         'sale_stock',
-        'report_aeroo',
         'stock_voucher',
         'mail',
     ],
@@ -49,7 +48,6 @@
         'views/report_deliveryslip.xml',
         'views/res_config_settings_views.xml',
         'wizards/stock_operation_wizard_views.xml',
-        'report/stock_ux_report.xml',
         'report/ir.action.reports.xml',
         'report/picking_templates.xml',
     ],
