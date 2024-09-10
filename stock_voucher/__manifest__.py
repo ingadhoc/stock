@@ -30,7 +30,8 @@
     ],
     'depends': [
         'sale_stock',
-        'web_ir_actions_act_multi'
+        'web_ir_actions_act_multi',
+        'stock_ux'
     ],
     'data': [
         'security/stock_voucher_security.xml',
