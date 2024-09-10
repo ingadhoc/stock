@@ -29,8 +29,6 @@
     ],
     'depends': [
         'sale_stock',
-        'stock_voucher',
-        'mail',
     ],
     'data': [
         'security/stock_ux_security.xml',
