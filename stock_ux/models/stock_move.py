@@ -121,5 +121,5 @@ class StockMove(models.Model):
     def _compute_is_initial_demand_editable(self):
         super(StockMove, self)._compute_is_initial_demand_editable()
         for move in self:
-            if move.picking_id.picking_type_id.block_additional_quantity and move.state != 'draft':
+            if move.picking_id.picking_type_id.block_additional_quantity and move.picking_id.state != 'draft':
                 move.is_initial_demand_editable = False
