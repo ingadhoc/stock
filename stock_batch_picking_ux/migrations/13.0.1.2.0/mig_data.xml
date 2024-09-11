@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-<odoo noupdate="1">
-    <record id="batch_picking_list" model="ir.actions.report">
-        <field name="model">stock.picking.batch</field>
-        <field name="binding_model_id" ref="stock_picking_batch.model_stock_picking_batch"/>
-        <field name="report_file">stock_batch_picking_ux/report/batch_picking_list.ods</field>
-    </record>
-</odoo>
