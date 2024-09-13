@@ -1,0 +1,45 @@
+<odoo>
+    <!-- stock.picking.batch form view -->
+    <record model="ir.ui.view" id="stock_batch_picking_form">
+        <field name="name">stock.picking.batch.form</field>
+        <field name="model">stock.picking.batch</field>
+        <field name="inherit_id" ref="stock_picking_batch.stock_picking_batch_form"/>
+        <field name="priority">99</field>
+        <field name="arch" type="xml">
+            <button name="action_print" position="after">
+                <button name="%(action_stock_print_batch_voucher)d" string="Vouchers" type="action" invisible="state not in ('done')"/>
+            </button>
+            <field name="user_id" position="after">
+                <field name="book_id"/>
+                <field name="voucher_ids" widget="many2many_tags"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_tree_inherited" model="ir.ui.view">
+        <field name="name">stock.picking.tree.inherited</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock_batch_picking_ux.vpicktree"/>
+         <field name="priority">99</field>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='%(stock_voucher.action_stock_print_voucher)d']" position="attributes">
+                <attribute name="invisible" separator=" or " add="batch_id"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_tree_inherited2" model="ir.ui.view">
+        <field name="name">stock.picking.tree.inherited2</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock_voucher.view_picking_form"/>
+        <field name="priority">99</field>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='%(stock_voucher.action_stock_print_voucher)d'][1]" position="attributes">
+                <attribute name="invisible" separator=" or " add="batch_id"/>
+            </xpath>
+            <xpath expr="//button[@name='%(stock_voucher.action_stock_print_voucher)d'][2]" position="attributes">
+                <attribute name="invisible" separator=" or " add="batch_id"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
