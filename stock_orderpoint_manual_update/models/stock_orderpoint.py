@@ -61,6 +61,5 @@ class StockWarehouseOrderpoint(models.Model):
             self.reviewed = True
 
     def action_replenish(self):
-        res = super(StockWarehouseOrderpoint, self).action_replenish()
         self._change_review_toggle_negative()
-        return res
+        return super(StockWarehouseOrderpoint, self).action_replenish()
