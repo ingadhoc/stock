@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="view_picking_form" model="ir.ui.view">
+        <field name="name">stock.picking.form.inherit</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <field name="backorder_id" position="after">
+                    <!-- ningun out deberia mostrar el inverse_currency_rate-->
+                    <label for="valuation_currency_id" attrs="{'invisible': [('valuation_currency_id', '=', False)]}"/>
+                    <div attrs="{'invisible': [('valuation_currency_id', '=', False)]}">
+                        <field name="inverse_currency_rate" nolabel="1" class="oe_inline" attrs="{'readonly': [('state', '=', 'done')], 'required': [('valuation_currency_id', '!=', False)]}"/>
+                        = 1 <field name="valuation_currency_id"  nolabel="1" options='{"no_open": True}' class="oe_inline"/>
+                        <field name="currency_rate" nolabel="1" class="oe_inline" digits="[12,12]" invisible="1"/>
+                    </div>
+            </field>
+        </field>
+    </record>
+</odoo>
