@@ -20,7 +20,7 @@
 ^FS ^CF0,30 ^FO50,115^FD
 <t t-esc="picking.book_id.report_partner_id.street"/>
 ^FS ^FO50,155^FD
-(<t t-esc="picking.partner_id.zip"/>
+(<t t-esc="picking.company_id.zip"/>
 )<t t-esc="picking.book_id.report_partner_id.city"/>
 ^FS ^FO50,195^FD
 <t class="oe_inline" t-esc="picking.book_id.report_partner_id.state_id.name"/>
@@ -164,7 +164,7 @@ Fecha
                                             <span t-field="picking.book_id.report_partner_id.street"/>
                                             <br/>
 
-(                                            <span t-field="picking.partner_id.zip"/>
+(                                            <span t-field="picking.company_id.zip"/>
 )                                            <span t-field="picking.book_id.report_partner_id.city"/>
                                             <br/>
                                             <span class="oe_inline" t-field="picking.book_id.report_partner_id.state_id.name"/>
