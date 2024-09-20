@@ -110,5 +110,5 @@ class StockPicking(models.Model):
         if self.number_of_packages > 100:
             raise UserError(
                 _("Be careful about the number of packages you are trying to insert. "
-                  "It may cause an error when trying to render the 'Eitqueta de despacho' template")
+                  "It may cause an error when trying to render the 'Shipping Label' template")
             )
