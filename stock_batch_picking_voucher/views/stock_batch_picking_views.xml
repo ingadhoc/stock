@@ -11,7 +11,15 @@
             </button>
             <field name="user_id" position="after">
                 <field name="book_id"/>
-                <field name="voucher_ids" widget="many2many_tags"/>
+                <field name="next_number" invisible="not book_id or voucher_ids"/>
+                <field name="voucher_ids" widget="many2many_tags" readonly="picking_type_code != 'incoming'"/>
+            </field>
+            <!-- Hacemos esto para ajustar visual, sino queda todo en la primer columna -->
+            <field name="number_of_packages" position="replace"/>
+            <field name="user_id" position="replace"/>
+            <field name="scheduled_date" position="after">
+                <field name="user_id" readonly="state not in ['draft', 'in_progress']"/>
+                <field name="number_of_packages"/>
             </field>
         </field>
     </record>
@@ -20,7 +28,7 @@
         <field name="name">stock.picking.tree.inherited</field>
         <field name="model">stock.picking</field>
         <field name="inherit_id" ref="stock_batch_picking_ux.vpicktree"/>
-         <field name="priority">99</field>
+        <field name="priority">99</field>
         <field name="arch" type="xml">
             <xpath expr="//button[@name='%(stock_voucher.action_stock_print_voucher)d']" position="attributes">
                 <attribute name="invisible" separator=" or " add="batch_id"/>

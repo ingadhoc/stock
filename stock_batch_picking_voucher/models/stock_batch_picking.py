@@ -22,6 +22,10 @@ class StockPickingBatch(models.Model):
         check_company=True
     )
 
+    next_number = fields.Integer(
+        related='book_id.next_number',
+    )
+
     def assign_numbers(self, estimated_number_of_pages, book):
         self.ensure_one()
         list_of_vouchers = []
@@ -31,14 +35,7 @@ class StockPickingBatch(models.Model):
                 'book_id': book.id,
                 'batch_id' : self.id,
             })
-        self.env['stock.picking.voucher'].create(list_of_vouchers)
+        self.env['stock.picking.voucher'].sudo().create(list_of_vouchers)
         self.message_post(body=_(
-            'Números de remitos asignados: %s') % (self.vouchers))
+            'Números de remitos asignados: %s') % (self.voucher_ids.mapped("display_name")))
         self.write({'book_id': book.id})
-        return {
-                'type': 'ir.actions.act_window',
-                'res_model': 'stock.picking.batch',
-                'view_mode': 'form',
-                'res_id': self.id,
-                'target': 'current',
-            }
