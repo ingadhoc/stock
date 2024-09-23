@@ -64,8 +64,7 @@ class StockMoveLine(models.Model):
         if any(self.filtered(
                 lambda x:
                 not x.location_id.should_bypass_reservation() and
-                x.picking_id.picking_type_id.block_manual_lines and
-                x.reserved_qty < x.quantity)):
+                x.picking_id.picking_type_id.block_manual_lines)):
             raise ValidationError(_(
                 "You can't transfer more quantity than reserved one!"))
 
@@ -104,4 +103,3 @@ class StockMoveLine(models.Model):
                     aggregated_move_lines[line]['name'] = ', '.join(moves.mapped('origin_description'))
         
         return aggregated_move_lines
-
