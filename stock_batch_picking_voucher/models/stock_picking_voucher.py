@@ -29,14 +29,3 @@ class StockPickingVoucher(models.Model):
         for record in self:
             if not record.batch_id and not record.picking_id:
                 raise ValidationError("Al crear un voucher debe estar ligado a una trasnferencia o lote de transferencias")
-    
-    @api.model
-    def create(self, vals):
-        if 'batch_id' in vals and vals['batch_id']:
-            vals['picking_id'] = False
-        return super(StockPickingVoucher, self).create(vals)
-
-    def write(self, vals):
-        if 'batch_id' in vals and vals['batch_id']:
-            vals['picking_id'] = False
-        return super(StockPickingVoucher, self).write(vals)

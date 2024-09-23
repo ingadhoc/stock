@@ -1,5 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-stock_batch_picking_voucher.access_stock_print_batch_stock_voucher,access_stock_print_batch_stock_voucher,stock_batch_picking_voucher.model_stock_print_batch_stock_voucher,base.group_user,1,1,1,0
-stock_batch_picking_voucher.access_stock_voucher,access_stock_voucher,model_stock_picking_voucher,base.group_user,1,1,1,0
-
-
