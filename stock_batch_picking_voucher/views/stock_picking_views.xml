@@ -12,11 +12,24 @@
                 </div>
             </sheet>
             <field name="book_id" position="attributes">
-                <attribute name="readonly">batch_id</attribute>
+                <attribute name="readonly" separator=" or " add="batch_id"/>
             </field>
             <field name="voucher_ids" position="attributes">
-                <attribute name="readonly">batch_id</attribute>
+                <attribute name="readonly" separator=" or " add="batch_id"/>
             </field>
         </field>
     </record>
+
+    <odoo>
+    <record model="ir.ui.view" id="vpicktree_inherit">
+        <field name="name">stock.picking.tree.inherit</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.vpicktree"/>
+        <field name="arch" type="xml">
+                <button name="%(stock_voucher.action_stock_print_voucher)d" position="attributes">
+                <attribute name="invisible" separator=" or " add="batch_id.voucher_ids"/>
+                </button>
+        </field>
+    </record>
+</odoo>
 </odoo>

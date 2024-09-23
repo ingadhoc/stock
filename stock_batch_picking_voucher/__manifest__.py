@@ -35,8 +35,6 @@
         'delivery_ux'
     ],
     'data': [
-        'security/ir.model.access.csv',
-        'wizards/stock_print_batch_stock_voucher_views.xml',
         'report/batch_picking_preprinted_data.xml',
         'views/stock_batch_picking_views.xml',
         'views/stock_picking_views.xml',
@@ -45,6 +43,6 @@
     'demo': [
     ],
     'installable': True,
-    'auto_install': True,
+    'auto_install': False,
     'application': False,
 }
