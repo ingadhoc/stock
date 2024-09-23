@@ -30,7 +30,7 @@ class ReportController(report.ReportController):
         batch_id  = context_dict.get('active_id')
         batch  = context_dict.get('batch')
         book_id = request.env['stock.picking.batch'].browse(batch_id).book_id
-        if batch:
+        if batch and 'batch_picking_preprinted' in data:
             if batch_id:
                 pdf_response = response.response[0]
                 reader = PdfFileReader(io.BytesIO(pdf_response))
