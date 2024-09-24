@@ -1,0 +1,88 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_voucher
+# 
+# Translators:
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2023
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-08-01 16:21+0000\n"
+"PO-Revision-Date: 2023-01-13 13:59+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2023\n"
+"Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: es\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+
+#. module: stock_voucher_ux
+#: model_terms:ir.ui.view,arch_db:stock_voucher_ux.view_print_stock_voucher_form_ux
+msgid "<strong>THE VOUCHER IT'S PRINTED.</strong>"
+msgstr "EL COMPROBANTE ESTÁ IMPRESO."
+
+#. module: stock_voucher_ux
+#: model_terms:ir.ui.view,arch_db:stock_voucher_ux.view_print_stock_voucher_form_ux
+msgid "Print"
+msgstr "Imprimir"
+
+#. module: stock_voucher_ux
+#: model_terms:ir.ui.view,arch_db:stock_voucher_ux.view_print_stock_voucher_form_ux
+msgid "Number estimated of pages"
+msgstr "Número estimado de paginas"
+
+#. module: stock_voucher_ux
+#: model_terms:ir.ui.view,arch_db:stock_voucher_ux.view_print_stock_voucher_form_ux
+msgid "Estimate calculated to have an idea of the approximate number of pages. The real value will be known after printing"
+msgstr "Estimación calculada para tener una idea del número aproximado de páginas. El valor real se conocerá después de la impresión"
+
+#. module: stock_voucher_ux
+#: model:ir.model.fields,help:stock_voucher_ux.field_stock_book__autoprinted
+msgid ""
+"If voucher is not an autoprinted, it will assign as many vouchers as pages the report has. "
+"Otherwise, it will assign only one voucher"
+msgstr ""
+"Si el remito no es un autoimpreso, se asignará cantidad de remitos como número de paginas haya. "
+"De otra manera, asignará un único remito"
+
+#. module: stock_voucher_ux
+#: model:ir.model.fields,field_description:stock_voucher_ux.field_stock_book__autoprinted
+msgid "autoprinted"
+msgstr "Autoimpreso"
+
+#. module: stock_voucher_ux
+#: model_terms:ir.ui.view,arch_db:stock_voucher_ux.view_print_stock_voucher_form_ux
+msgid "Print"
+msgstr "Imprimir"
+
+#. module: stock_voucher_ux
+#: model_terms:ir.ui.view,arch_db:stock_voucher_ux.view_picking_form
+msgid "Print"
+msgstr "Imprimir"
+
+#. module: stock_voucher_ux
+#: model:ir.model.fields,field_description:stock_voucher_ux.field_stock_picking__book_id
+msgid "Book"
+msgstr "Talonario"
+
+#. module: stock_voucher_ux
+#: model_terms:ir.ui.view,arch_db:stock_voucher_ux.view_picking_form
+msgid "Print Vouchers"
+msgstr "Imprimir Remitos"
+
+#. module: stock_voucher_ux
+#: model_terms:ir.ui.view,arch_db:stock_voucher_ux.view_picking_form
+msgid "Clean Voucher Data"
+msgstr "Limpiar Remitos"
+
+#. module: stock_voucher_ux
+#. odoo-python
+#: code:addons/stock_voucher_ux/models/stock_picking.py:0
+#, python-format
+msgid ""
+"First you have to set a book"
+msgstr ""
+"Primero debe seleccionar un talonario"
