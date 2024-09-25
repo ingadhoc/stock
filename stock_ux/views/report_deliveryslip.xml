@@ -27,7 +27,7 @@
             </th>
         </xpath>
         <xpath expr="//div[@t-if='not (o.backorder_ids and backorders)']" position="attributes">
-            <attribute name="t-if">o.env['ir.config_parameter'].sudo().get_param('stock_ux.delivery_slip_remaining_qty', 'False') == 'True' and o.backorder_ids and backorders</attribute>
+            <attribute name="t-if">not o.env['ir.config_parameter'].sudo().get_param('stock_ux.delivery_slip_remaining_qty', 'False') == 'True' or not (o.backorder_ids and backorders)</attribute>
         </xpath>
     </template>
 
