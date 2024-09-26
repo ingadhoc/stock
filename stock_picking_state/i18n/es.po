@@ -4,6 +4,7 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024
+# manucep, 2024
 # 
 msgid ""
 msgstr ""
@@ -11,7 +12,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-07-29 18:34+0000\n"
 "PO-Revision-Date: 2024-07-29 18:34+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024\n"
+"Last-Translator: manucep, 2024\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -42,7 +43,7 @@ msgstr "Mostrar Nombre"
 #. module: stock_picking_state
 #: model:ir.model.fields.selection,name:stock_picking_state.selection__stock_picking_state_detail__state__done
 msgid "Done"
-msgstr ""
+msgstr "Hecho"
 
 #. module: stock_picking_state
 #: model:ir.model.fields.selection,name:stock_picking_state.selection__stock_picking_state_detail__state__draft
@@ -103,7 +104,7 @@ msgstr "Remitos"
 #. module: stock_picking_state
 #: model:ir.model.fields.selection,name:stock_picking_state.selection__stock_picking_state_detail__state__assigned
 msgid "Ready"
-msgstr ""
+msgstr "Listo"
 
 #. module: stock_picking_state
 #: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail__sequence
@@ -128,7 +129,7 @@ msgstr "Traslado"
 #. module: stock_picking_state
 #: model:ir.model.fields.selection,name:stock_picking_state.selection__stock_picking_state_detail__state__confirmed
 msgid "Waiting"
-msgstr ""
+msgstr "Esperando"
 
 #. module: stock_picking_state
 #: model:ir.model.fields.selection,name:stock_picking_state.selection__stock_picking_state_detail__state__waiting

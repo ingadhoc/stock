@@ -5,13 +5,14 @@
 # Translators:
 # María Florencia Frigieri Parma, 2024
 # Matias Velazquez, 2024
+# Juan Carreras <jc@adhoc.com.ar>, 2024
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-29 17:49+0000\n"
+"POT-Creation-Date: 2024-09-26 12:12+0000\n"
 "PO-Revision-Date: 2024-03-14 14:45+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
@@ -24,7 +25,7 @@ msgstr ""
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.report_delivery_document
 msgid "<strong>Ordered</strong>"
-msgstr ""
+msgstr "Ordenado"
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__message_needaction
@@ -76,11 +77,23 @@ msgid "Backorders"
 msgstr "Pedidos Pendientes"
 
 #. module: stock_ux
+#. odoo-python
+#: code:addons/stock_ux/models/stock_picking.py:0
+#, python-format
+msgid ""
+"Be careful about the number of packages you are trying to insert. It may "
+"cause an error when trying to render the 'Shipping Label' template"
+msgstr ""
+"Tenga cuidado con la cantidad de paquetes que intenta insertar. Puede causar"
+" un error al intentar renderizar la plantilla 'Etiqueta de despacho'"
+
+#. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_picking_type__block_picking_deletion
 msgid "Block Picking Deletion"
 msgstr "Bloquear borrado de Transferencias"
 
 #. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_picking__operation_type_additional_quantities
 #: model:ir.model.fields,field_description:stock_ux.field_stock_picking_type__block_additional_quantity
 msgid "Block additional quantity"
 msgstr "Bloquear cantidades adicionales"
@@ -165,7 +178,7 @@ msgid "Descripción 2"
 msgstr "Descripción 2"
 
 #. module: stock_ux
-#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_form_inherited
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_form
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_stock_move_line_detailed_operation_tree
 msgid "Descripción de origen"
 msgstr "Descripción de origen"
@@ -209,6 +222,7 @@ msgid "Display Name"
 msgstr "Mostrar Nombre"
 
 #. module: stock_ux
+#: model:ir.model.fields,help:stock_ux.field_stock_picking__operation_type_additional_quantities
 #: model:ir.model.fields,help:stock_ux.field_stock_picking_type__block_additional_quantity
 msgid ""
 "Do not allow to confirm pickings with more quantity than the initial demand "
@@ -267,6 +281,11 @@ msgid ""
 "En Comprobantes de Transferencia mostrar cantidades pendientes de entrega"
 msgstr ""
 "En Comprobantes de Transferencia mostrar cantidades pendientes de entrega"
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_res_config_settings__delivery_slip_use_origin
+msgid "En Comprobantes de Transferencia usar Descripción de Origen"
+msgstr ""
 
 #. module: stock_ux
 #: model:ir.actions.report,name:stock_ux.action_custom_label_transfer_template_view_pdf
@@ -453,19 +472,6 @@ msgid "Net Quantity Location"
 msgstr "Cantidad neta en ubicación"
 
 #. module: stock_ux
-#. odoo-python
-#: code:addons/stock_ux/models/stock_picking.py:0
-#, python-format
-msgid ""
-"No se puede validar un picking que no esté en estado Parcialmente Disponible"
-" o Reservado, probablemente el picking ya fue validado, pruebe refrezcar la "
-"ventana!"
-msgstr ""
-"No se puede validar un picking que no esté en estado Parcialmente Disponible"
-" o Reservado, probablemente el picking ya fue validado, pruebe refrescar la "
-"ventana!"
-
-#. module: stock_ux
 #: model_terms:ir.actions.act_window,help:stock_ux.action_picking_tree_all
 msgid "No transfer found. Let's create one!"
 msgstr "No se encontró ningúna transferencia. Creemos una!"
@@ -556,11 +562,6 @@ msgid "Picking Type"
 msgstr "Tipo de albarán"
 
 #. module: stock_ux
-#: model:ir.actions.report,name:stock_ux.picking_waybill
-msgid "Picking Waybill"
-msgstr "Hoja de ruta"
-
-#. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
 msgid "Pickings already processed"
 msgstr "Recogidas ya procesadas"
@@ -578,6 +579,15 @@ msgid "Please check the email template associated with the picking type."
 msgstr ""
 "Consulte la plantilla de correo electrónico asociada con el tipo de "
 "recogida."
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.res_config_settings_view_form
+msgid ""
+"Por defecto odoo imprime en los Comprobantes de Transferencia el nombre del "
+"producto, si marca esta opción en su lugar se utilizará la descripción de "
+"origen (la descripción de origen suele ser la descripción de venta o la "
+"descripción de la compra)"
+msgstr ""
 
 #. module: stock_ux
 #: model:ir.model,name:stock_ux.model_product_template
@@ -720,7 +730,7 @@ msgstr "Ubicación de origen"
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
 msgid "Starred"
-msgstr ""
+msgstr "Destacado"
 
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
@@ -772,6 +782,11 @@ msgid "To Do"
 msgstr "Por Hacer"
 
 #. module: stock_ux
+#: model:ir.ui.menu,name:stock_ux.all_picking
+msgid "Todas las transferencias"
+msgstr ""
+
+#. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
 msgid "Today Activities"
 msgstr "Actividades de Hoy"
@@ -793,11 +808,6 @@ msgid "Transfer Destination Address"
 msgstr "Dirección de destino de la transferencia"
 
 #. module: stock_ux
-#: model:ir.ui.menu,name:stock_ux.all_picking
-msgid "Transferencias"
-msgstr ""
-
-#. module: stock_ux
 #: model:ir.actions.act_window,name:stock_ux.action_picking_tree_all
 msgid "Transfers"
 msgstr "Todas las transferencias"
@@ -813,6 +823,8 @@ msgstr ""
 msgid ""
 "Transfers that are late on scheduled time or one of pickings will be late"
 msgstr ""
+"Traslados retrasados en el horario programado o uno de los traslados se "
+"retrasará"
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_move_line__picking_code
@@ -827,12 +839,12 @@ msgstr "Lotes Usados"
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
 msgid "Waiting"
-msgstr ""
+msgstr "Esperando"
 
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
 msgid "Waiting Moves"
-msgstr ""
+msgstr "Esperando movimientos"
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__warehouse_rotation
@@ -899,6 +911,8 @@ msgid ""
 "You can not delete this pickings because \"Block picking deletion\" is enable on the picking type/s \"%s\" or the state of the picking is not draft or cancel.\n"
 "Picking Ids: %s"
 msgstr ""
+"No puedes eliminar los traslados porque \"Bloquear eliminación de traslados\" Está establecido en el tipo de operación \"%s\" o el estado de los traslados no es borrador o cancelado.\n"
+"id de los traslados: %s"
 
 #. module: stock_ux
 #. odoo-python
@@ -1005,14 +1019,4 @@ msgid ""
 "\n"
 "^FO260,10\n"
 "^A0N,20,25^FD"
-
-#. module: stock_ux
-#. odoo-python
-#: code:addons/stock_ux/models/stock_picking.py:0
-#, python-format
-msgid ""
-"Be careful about the number of packages you are trying to insert. "
-"It may cause an error when trying to render the 'Shipping Label' template"
 msgstr ""
-"Tenga cuidado con la cantidad de paquetes que intenta insertar. "
-"Puede causar un error al intentar renderizar la plantilla 'Etiqueta de despacho'"

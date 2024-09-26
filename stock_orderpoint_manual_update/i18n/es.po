@@ -3,17 +3,17 @@
 # 	* stock_orderpoint_manual_update
 # 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024
 # María Florencia Frigieri Parma, 2024
 # Matias Velazquez, 2024
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-25 17:42+0000\n"
+"POT-Creation-Date: 2024-09-16 18:45+0000\n"
 "PO-Revision-Date: 2024-07-23 19:11+0000\n"
-"Last-Translator: Matias Velazquez, 2024\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -147,6 +147,11 @@ msgid "Replenishment Filter Wizard"
 msgstr ""
 
 #. module: stock_orderpoint_manual_update
+#: model:ir.model.fields,field_description:stock_orderpoint_manual_update.field_stock_warehouse_orderpoint__reviewed
+msgid "Reviewed"
+msgstr "Revisado"
+
+#. module: stock_orderpoint_manual_update
 #: model:ir.model.fields,field_description:stock_orderpoint_manual_update.field_stock_warehouse_orderpoint__rotation
 msgid "Rotation"
 msgstr "Rotación"
@@ -175,8 +180,3 @@ msgstr "Rotación del Almacén"
 #: model:ir.model.fields,field_description:stock_orderpoint_manual_update.field_stock_warehouse_orderpoint__warehouse_rotation_stdev
 msgid "Warehouse Rotation Stdev"
 msgstr "Rotación del Almacén DevStd"
-
-#. module: stock_orderpoint_manual_update
-#: model:ir.model.fields,field_description:stock_orderpoint_manual_update.field_stock_warehouse_orderpoint__reviewed
-msgid "Reviewed"
-msgstr "Revisado"

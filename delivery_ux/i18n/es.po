@@ -4,14 +4,15 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024
+# augusto-weiss, 2024
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-14 18:41+0000\n"
+"POT-Creation-Date: 2024-08-05 16:44+0000\n"
 "PO-Revision-Date: 2024-05-08 18:48+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024\n"
+"Last-Translator: augusto-weiss, 2024\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -22,7 +23,7 @@ msgstr ""
 #. module: delivery_ux
 #: model:ir.model.fields,field_description:delivery_ux.field_delivery_carrier__partner_id
 msgid "Carrier Address"
-msgstr ""
+msgstr "Dirección Transportista"
 
 #. module: delivery_ux
 #: model:ir.model,name:delivery_ux.model_delivery_carrier
