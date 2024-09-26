@@ -89,9 +89,12 @@ class StockMoveLine(models.Model):
             return
         self.mapped('move_id')._check_quantity()
         # We verify the case that does not have 'move_id' to restrict how does_check_quantity() in moves
-        if any(self.filtered(lambda x: not x.move_id and x.picking_id.picking_type_id.block_additional_quantity)):
-            raise ValidationError(
-                _('You can not transfer more than the initial demand!'))
+        # Tuve que comentar este código porque tenía un efecto no deseado en la lectura de codigos de barra
+        # No permitía editar las cantidades de productos que se marcaban como hechos. Eso hacia que si leías más cantidad
+        # de lo que indicaba la orden de recepción NO lo puedas modificar
+        # if any(self.filtered(lambda x: not x.move_id and x.picking_id.picking_type_id.block_additional_quantity)):
+        #     raise ValidationError(
+        #         _('You can not transfer more than the initial demand!'))
 
     @api.model
     def create(self, values):
