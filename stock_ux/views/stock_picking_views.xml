@@ -15,10 +15,15 @@
             </button>
             <xpath expr="//button[@name='button_validate'][hasclass('o_btn_validate')]" position="attributes">
                 <attribute name="invisible">(state in ('waiting', 'assigned', 'done', 'cancel')) or (state in ('draft') and operation_type_additional_quantities)</attribute>
-            </xpath> 
+            </xpath>
             <field name="partner_id" position="attributes">
                 <attribute name="readonly"/>
             </field>
+
+            <field name="origin" position="after">
+                <field name="number_of_packages" invisible="picking_type_code == 'incoming'"/>
+            </field>
+
             <field name="description_picking" position="after">
                 <field name="name" string="Descripción 2" optional="hide"/>
             </field>

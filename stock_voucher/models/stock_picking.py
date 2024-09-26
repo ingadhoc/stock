@@ -9,10 +9,6 @@ from odoo.exceptions import UserError
 class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
-    number_of_packages = fields.Integer(
-        string='Number of Packages',
-        copy=False,
-    )
     book_id = fields.Many2one(
         'stock.book',
         'Voucher Book',

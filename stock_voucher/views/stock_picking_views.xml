@@ -41,7 +41,6 @@
             </field>
 
             <field name="origin" position="after">
-                <field name="number_of_packages" invisible="picking_type_code == 'incoming'"/>
                 <field name="declared_value" invisible="picking_type_code == 'incoming'"/>
             </field>
 
