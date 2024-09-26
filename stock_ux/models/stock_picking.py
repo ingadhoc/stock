@@ -22,6 +22,11 @@ class StockPicking(models.Model):
         related='picking_type_id.block_additional_quantity'
     )
 
+    number_of_packages = fields.Integer(
+        string='Number of Packages',
+        copy=False,
+    )
+
     def unlink(self):
         """
         To avoid errors we block deletion of pickings in other state than
@@ -66,7 +71,7 @@ class StockPicking(models.Model):
         if self.state == 'draft':
             self.move_ids.update(
                 {'location_dest_id': self.location_dest_id.id})
-        
+
     def _send_confirmation_email(self):
         for rec in self:
             if rec.picking_type_id.mail_template_id:
