@@ -50,7 +50,7 @@
         'report/picking_templates.xml',
         'views/res_company_views.xml'
     ],
-    'installable': True,
+    'installable': False,
     'auto_install': False,
     'application': False,
     'assets': {
