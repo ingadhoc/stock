@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Stock UX',
-    'version': "17.0.1.8.0",
+    'version': "17.0.1.9.0",
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
@@ -48,7 +48,8 @@
         'wizards/stock_operation_wizard_views.xml',
         'report/ir.action.reports.xml',
         'report/picking_templates.xml',
-        'views/res_company_views.xml'
+        'views/res_company_views.xml',
+        'views/stock_quant_views.xml'
     ],
     'installable': True,
     'auto_install': False,
