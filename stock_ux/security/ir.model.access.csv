@@ -1,2 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_stock_operation_wizard,access_stock_operation_wizard,model_stock_operation_wizard,base.group_user,1,1,1,1
+stock_ux.access_stock_picking_zpl,access_stock_picking_zpl,stock_ux.model_stock_picking_zpl,base.group_user,1,1,1,1
+stock_ux.access_stock_picking_zpl_lines,access_stock_picking_zpl_lines,stock_ux.model_stock_picking_zpl_lines,base.group_user,1,1,1,1
