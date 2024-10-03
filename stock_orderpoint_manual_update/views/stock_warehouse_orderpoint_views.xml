@@ -9,9 +9,6 @@
             <field name="qty_forecast" position="replace">
                 <field name="qty_forecast_stored"/>
             </field>
-            <field name="product_uom_name" position="replace">
-                <field name="reviewed" widget="boolean_toggle" />
-            </field>
         </field>
     </record>
 
