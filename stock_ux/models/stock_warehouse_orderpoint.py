@@ -11,7 +11,8 @@ class StockWarehouseOrderpoint(models.Model):
     _name = 'stock.warehouse.orderpoint'
     _inherit = ['stock.warehouse.orderpoint', 'mail.thread']
 
-    active_product = fields.Boolean(string="Product Active", related='product_id.active')
+    active_product = fields.Boolean(
+        string="Product Active", related='product_id.active')
     rotation_stdev = fields.Float(
         compute='_compute_rotation',
         help="Desvío estandar de las cantidades entregas a clientes en los "
@@ -43,6 +44,7 @@ class StockWarehouseOrderpoint(models.Model):
     qty_multiple = fields.Float(tracking=True)
     location_id = fields.Many2one(tracking=True)
     product_id = fields.Many2one(tracking=True)
+    reviewed = fields.Boolean()
 
     @api.depends('product_id', 'location_id')
     def _compute_rotation(self):
@@ -67,7 +69,8 @@ class StockWarehouseOrderpoint(models.Model):
             })
 
     def write(self, vals):
-        """ When archive a replenishment rule set min, max and multiple quantities in 0.
+        """ When archive a replenishment rule
+        set min, max and multiple quantities in 0.
         """
         if 'active' in vals and not vals['active']:
             self.write({
@@ -89,3 +92,15 @@ class StockWarehouseOrderpoint(models.Model):
         ])
         return action
 
+    def _change_review_toggle_negative(self):
+        self.reviewed = False
+
+    @api.onchange('qty_to_order')
+    def _change_review_toggle_positive(self):
+        self.reviewed = True
+
+    def action_replenish(self, force_to_max=False):
+        # deactivate toggle after ordering
+        self._change_review_toggle_negative()
+        return super(
+            StockWarehouseOrderpoint, self).action_replenish(force_to_max)

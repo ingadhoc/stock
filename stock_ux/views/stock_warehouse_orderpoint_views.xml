@@ -11,13 +11,16 @@
                 <attribute name="decoration-danger">not active and active_product</attribute>
             </tree>
             <field name="active" position="after">
-                <field name="active_product" invisible="1"/>
+                <field name="active_product" column_invisible="1" />
             </field>
             <field name="group_id" position="after">
                 <field name="rotation" optional="show"/>
                 <field name="rotation_stdev" optional="show"/>
                 <field name="warehouse_rotation" optional="show"/>
                 <field name="warehouse_rotation_stdev" optional="show"/>
+            </field>
+            <field name="product_uom_name" position="replace">
+                <field name="reviewed" widget="boolean_toggle" />
             </field>
         </field>
     </record>
