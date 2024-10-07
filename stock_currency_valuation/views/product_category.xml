@@ -1,0 +1,13 @@
+<odoo>
+    <record id="product_category_form_view" model="ir.ui.view">
+        <field name="name">product.category.form</field>
+        <field name="model">product.category</field>
+        <field name="inherit_id" ref="product.product_category_form_view"/>
+        <field name="arch" type="xml">
+            <form><field name="property_valuation" invisible="1"/></form>
+            <field name="property_valuation" position="after">
+                <field name="valuation_currency_id"  attrs="{'invisible':[('property_cost_method', 'not in', ['average', 'fifo']), ('property_valuation', '!=', 'real_time')]}"/>
+            </field>
+        </field>
+    </record>
+</odoo>
