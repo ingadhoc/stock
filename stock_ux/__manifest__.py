@@ -48,7 +48,8 @@
         'wizards/stock_operation_wizard_views.xml',
         'report/ir.action.reports.xml',
         'report/picking_templates.xml',
-        'views/res_company_views.xml'
+        'views/res_company_views.xml',
+        'views/stock_quant_views.xml'
     ],
     'installable': False,
     'auto_install': False,
