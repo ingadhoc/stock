@@ -42,25 +42,17 @@
             </button>
 
             <xpath expr="//div" position="inside">
-                <button name="add_picking_operation"
-                    class="oe_stat_button"
-                    icon="fa-bars"
-                    type="object"
-                    invisible="state in ('draft', 'cancel', 'done')">
+                <button name="add_picking_operation" class="oe_stat_button" icon="fa-bars" type="object" invisible="state in ('draft', 'cancel', 'done')">
                     <div class="o_form_field o_stat_info">
                         <span class="o_stat_text">Operaciones Detalladas</span>
                     </div>
                 </button>
-                <button name="action_view_stock_picking"
-                    class="oe_stat_button"
-                    icon="fa-truck"
-                    type="object">
+                <button name="action_view_stock_picking" class="oe_stat_button" icon="fa-truck" type="object">
                     <div class="o_form_field o_stat_info">
                         <field string="Pickings" name="picking_count" widget="statinfo" />
                     </div>
                 </button>
             </xpath>
-
             <field name="user_id" position="before">
                 <field name="voucher_required" invisible="1"/>
                 <!-- <field name="picking_type_id"/> -->
