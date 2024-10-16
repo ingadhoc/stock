@@ -10,9 +10,8 @@ class StockReturnPicking(models.TransientModel):
 
     reason = fields.Text('Reason for the return')
 
-    def _create_returns(self):
+    def _create_return(self):
         # add to new picking for return the reason for the return
-        new_picking, pick_type_id = super()._create_returns()
-        picking = self.env['stock.picking'].browse(new_picking)
+        picking = super()._create_return()
         picking.write({'note': self.reason})
-        return new_picking, pick_type_id
+        return picking
