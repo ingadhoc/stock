@@ -20,7 +20,15 @@ class StockBackorderConfirmation(models.TransientModel):
             # TODO we should also fix odoo methods
             self._context.get('picking_ids')).filtered('book_required')
         if pickings:
-            return {
+            if isinstance(res, dict):
+                return {
+                'actions': [
+                    res, pickings.do_print_voucher()
+                ],
+                'type': 'ir.actions.act_multi',
+            }
+            else:
+                return {
                 'actions': [
                     {'type': 'ir.actions.act_window_close'},
                     pickings.do_print_voucher(),
