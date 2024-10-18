@@ -96,7 +96,7 @@ class StockMove(models.Model):
         if self._context.get('cancel_from_order') or self.env.is_superuser():
             return
         if self.filtered(
-            lambda x: x.picking_id and x.state == 'cancel' and not self.user_has_groups('stock_ux.allow_picking_cancellation')):
+            lambda x: x.picking_id and x.state == 'cancel' and not self.env.user.has_group('stock_ux.allow_picking_cancellation')):
             raise ValidationError("Only User with 'Picking cancelation allow' rights can cancel pickings")
         
     def _merge_moves(self, merge_into=False):

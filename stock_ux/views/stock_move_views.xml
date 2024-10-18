@@ -31,16 +31,16 @@
     </record>
 
     <record id="view_move_tree" model="ir.ui.view">
-        <field name="name">stock.move.tree.inherit</field>
+        <field name="name">stock.move.list.inherit</field>
         <field name="model">stock.move</field>
         <field name="inherit_id" ref="stock.view_move_tree"/>
         <field name="arch" type="xml">
             <field name="product_id" position="before">
                 <field name="picking_partner_id" string="Picking Partner"/>
             </field>
-            <tree>
+            <list>
                 <field name="picking_create_user_id"/>
-            </tree>
+            </list>
             <field name="reference" position="after">
                 <field name="origin"/>
             </field>
@@ -52,7 +52,7 @@
 
 
     <record model="ir.ui.view" id="view_move_picking_tree">
-        <field name="name">stock.move.tree</field>
+        <field name="name">stock.move.list</field>
         <field name="model">stock.move</field>
         <field name="inherit_id" ref="stock.view_picking_move_tree"/>
         <field name="arch" type="xml">

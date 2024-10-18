@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Stock UX',
-    'version': "17.0.1.9.0",
+    'version': "18.0.1.0.0",
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
@@ -51,7 +51,7 @@
         'views/res_company_views.xml',
         'views/stock_quant_views.xml'
     ],
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
     'assets': {
