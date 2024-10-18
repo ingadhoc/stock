@@ -1,0 +1,15 @@
+<odoo>
+    <record id="view_stock_book_form_ux" model="ir.ui.view">
+        <field name="name">stock.book.form.ux</field>
+        <field name="model">stock.book</field>
+        <field name="inherit_id" ref="stock_voucher.view_stock_book_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='lines_per_voucher']" position="after">
+                <field name="autoprinted" widget="boolean_toggle"/>
+            </xpath>
+            <xpath expr="//field[@name='lines_per_voucher']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>
