@@ -117,4 +117,27 @@
     <record id="stock.action_stock_move_pivot_all" model="ir.actions.act_window.view">
         <field name="sequence" eval="10"/>
     </record>
+
+    <record id="view_picking_form_inherited" model="ir.ui.view">
+        <field name="name">stock.picking.form</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <field name="description_picking" position="after">
+                <field name="origin_description" string="Descripción de origen" optional="hide"/>
+            </field>
+        </field>
+    </record>
+    
+    <record id="view_picking_zpl" model="ir.ui.view">
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form" />
+        <field name="name">stock.picking.zpl</field>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='button_validate']" position="after">
+                <button name="%(zpl)d" string="Etiquetas" type="action" groups="base.group_user" invisible="(picking_type_code != 'outgoing') or (state not in ['done'])"/>]
+            </xpath>
+        </field>
+    </record>
+
 </odoo>

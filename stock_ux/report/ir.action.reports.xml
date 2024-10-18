@@ -29,7 +29,7 @@
 
     <record id="action_custom_label_transfer_template_view_pdf" model="ir.actions.report">
     <field name="name">Etiqueta de despacho (PDF)</field>
-    <field name="model">stock.picking</field>
+    <field name="model">stock.picking.zpl</field>
     <field name="binding_model_id" ref="stock.model_stock_picking"/>
     <field name="report_type">qweb-pdf</field>
     <field name="report_name">stock_ux.custom_label_transfer_template_view_pdf</field>
@@ -38,14 +38,26 @@
     <field name="paperformat_id" ref="stock_ux.label_10x15"/>
     </record>
 
-    <record id="action_custom_barcode_transfer_template_view_pdf" model="ir.actions.report">
+    <record id="action_custom_barcode_transfer_template_view_zpl" model="ir.actions.report">
     <field name="name">Etiquetas de Productos del picking (ZPL)</field>
-    <field name="model">stock.picking</field>
+    <field name="model">stock.picking.zpl</field>
     <field name="binding_model_id" ref="stock.model_stock_picking"/>
     <field name="report_type">qweb-text</field>
     <field name="report_name">stock_ux.custom_barcode_transfer_template_view_zpl</field>
     <field name="report_file">stock_ux.custom_barcode_transfer_template_view_zpl</field>
     <field name="binding_type">report</field>
     </record>
+
+    <record id="action_custom_zpl" model="ir.actions.report">
+    <field name="name">Etiquetas zpl global</field>
+    <field name="model">stock.picking.zpl</field>
+    <field name="binding_model_id" ref="stock.model_stock_picking"/>
+    <field name="report_type">qweb-text</field>
+    <field name="report_name">stock_ux.custom_label_transfer_template_view_zpl</field>
+    <field name="report_file">stock_ux.custom_label_transfer_template_view_zpl</field>
+    <field name="binding_type">report</field>
+
+    </record>
+
 </odoo>
 
