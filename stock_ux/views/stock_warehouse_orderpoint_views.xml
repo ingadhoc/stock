@@ -11,7 +11,7 @@
                 <attribute name="decoration-danger">not active and active_product</attribute>
             </list>
             <field name="active" position="after">
-                <field name="active_product" column_invisible="1"/>
+                <field name="active_product" column_invisible="1" />
             </field>
             <field name="group_id" position="after">
                 <field name="rotation" optional="show"/>

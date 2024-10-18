@@ -70,7 +70,8 @@ class StockWarehouseOrderpoint(models.Model):
             })
 
     def write(self, vals):
-        """ When archive a replenishment rule set min, max and multiple quantities in 0.
+        """ When archive a replenishment rule
+        set min, max and multiple quantities in 0.
         """
         if 'active' in vals and not vals['active']:
             self.write({
