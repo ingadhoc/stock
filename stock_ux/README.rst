@@ -14,9 +14,8 @@
 Stock UX
 ========
 
-#. Add button "Set all Done" on moves lines in the picking
 #. Add observations on pickings (and deliveryslip)
-#. Add a wizard action in the stock move lines of a picking to change locations for several lines at the same time.
+#. Add a wizard action in the stock move lines of a picking to change locations for several lines at the same time with the 'Manage Multiple Stock Locations' permission
 #. Show always visible (for an existing lots configuration in the type operation) the notebook pages in lot form view when create and edit a lot from a stock move line.
 #. Add  reason return field in the picking return wizard and then bring that field to internal notes in the created picking.
 #. Add a stock picking list report to stock pickings.
@@ -24,7 +23,6 @@ Stock UX
 #. We create a new group "Allow picking cancellation", only users with that right can cancel pickings or validate without back orders
 #. Only allow to delete pickings on draft/cancel state.
 #. Change the name of the menus "Moves History" to "Products Moves Detailed" and "Product Move lines".
-#. Remove technical features to Stock Moves menu in Inventory>Reports.
 #. Add new field ""Net Quantity"" on stock moves lines. When you filter by locations, the field will be computed this way:
       1. If filtered location is found on source location: use negative quantity.
       2. If filtered location is found on destiny location: use positive quantity.
@@ -40,6 +38,8 @@ Stock UX
 #. Send template established in operation type when confirm picking.
 #. Add an optional setting to print remaining quantities not yet delivered on Delivery Slips: "Show remaining quantities not yet delivered on Delivery Slips."
 #. Adds a review toggle per line that allows the user to indicate when the replenishment order is ready to be confirmed.
+#. Add a "All transfers" view form in Menu: Operations
+#. Add a "Reordering Rules" view form in Menu: Configuration (Products)
 
 Installation
 ============

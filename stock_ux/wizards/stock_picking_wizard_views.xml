@@ -9,11 +9,11 @@
                 <sheet>
                     <field name="picking_id" string="Transferencia" readonly="1"/>
                     <field name="line_ids">
-                        <tree editable="top" create="false" delete="false">
+                        <list editable="top" create="false" delete="false">
                             <field name="name" string="Producto"/>
                             <field name="move_id" invisible="1"/>
                             <field name="move_quantity" string="Cantidad a imprimir" readonly="0"/>
-                        </tree>
+                        </list>
                     </field>
                 </sheet>
                 <footer>
