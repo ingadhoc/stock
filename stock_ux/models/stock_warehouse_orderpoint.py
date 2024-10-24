@@ -12,7 +12,8 @@ class StockWarehouseOrderpoint(models.Model):
     _inherit = ['stock.warehouse.orderpoint', 'mail.thread']
 
     active_product = fields.Boolean(
-        string="Product Active", related='product_id.active')
+        string="Product Active", related='product_id.active'
+    )
     rotation_stdev = fields.Float(
         compute='_compute_rotation',
         help="Desvío estandar de las cantidades entregas a clientes en los "
