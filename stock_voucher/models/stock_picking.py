@@ -188,14 +188,14 @@ class StockPicking(models.Model):
                     picking_value += (price * move_line.product_uom_qty)
                     done_value += (price * move_line.quantity)
 
-            # This is for product in a kit (should only happen if sale_mrp ins
+            # This is for product in a kit (should only happen if sale_mrp is
             # installed). If it is bom we only compute amount if all bom
             # components are deliverd (same as in bom _get_delivered_qty)
             bom_enable = 'bom_ids' in self.env['product.template']._fields
             if bom_enable:
                 for so_bom_line in stock_bom_lines.mapped('sale_line_id'):
-                    bom = self.env["mrp.bom"]._bom_find(products = so_bom_line.product_id)[so_bom_line.product_id]
-                    if bom and bom.type == 'phantom':
+                    bom = self.env["mrp.bom"]._bom_find(products=so_bom_line.product_id)[so_bom_line.product_id]
+                    if bom and bom.type == 'phantom'and bom.bom_line_ids:
                         bom_moves = so_bom_line.move_ids & stock_bom_lines
                         done_avg = []
                         picking_avg = []
