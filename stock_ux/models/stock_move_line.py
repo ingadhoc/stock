@@ -64,9 +64,24 @@ class StockMoveLine(models.Model):
         if any(self.filtered(
                 lambda x:
                 not x.location_id.should_bypass_reservation() and
-                x.picking_id.picking_type_id.block_manual_lines)):
+                x.picking_id.picking_type_id.block_manual_lines and
+                x._check_quantity_available() < 0)):
             raise ValidationError(_(
-                "You can't transfer more quantity than reserved one!"))
+                "You can't transfer more quantity than the quantity on stock!"))
+
+    def _check_quantity_available(self):
+        location = self.env['stock.location'].search([
+            ('company_id', '=', self.picking_id.company_id.id),
+            ('id', '=', self.picking_id.location_id.id)
+        ], limit=1)
+        quant = self.env['stock.quant'].search([
+            ('product_id', '=', self.product_id.id),
+            ('location_id', '=', location.id)
+        ], limit=1)
+        if quant:
+            return quant.available_quantity - self.quantity
+        else:
+            return 0.0
 
     @api.constrains('quantity')
     def _check_quantity(self):
