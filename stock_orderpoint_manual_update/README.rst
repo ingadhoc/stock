@@ -17,15 +17,14 @@ Stock Orderpoint Manual Update
 #. Improves performance when opening Replenishment menu allowing to filter replenishment rules showed and calculate the qty_to_order only for that filtered lines.
 #. Allow to filter by main supplier when opening replenishment menu in case there is a main supplier.
 #. Allow to sort the lines in replenishment view according to the forecast qty and the rotation columns.
-#. Add the filter "Negatives quantities".
-#. Improves performace when opening Replenishment menu.
+#. Add the filter "Negative Forecast".
 
 Installation
 ============
 
 To install this module, you need to:
 
-#. Only need to install the module
+#. Just install module.
 
 Configuration
 =============
