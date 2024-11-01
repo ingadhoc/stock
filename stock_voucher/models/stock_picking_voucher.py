@@ -39,10 +39,9 @@ class StockPickingVoucher(models.Model):
         related='picking_id.company_id',
     )
     # constraint de que el book y el picking deben ser de la misma company
-
     _sql_constraints = [
         ('voucher_number_uniq', 'unique(name, book_id)',
-            _('The field "Number" must be unique per book.'))]
+            'The field "Number" must be unique per book.')]
 
     @api.model
     def _format_document_number(self, document_number):

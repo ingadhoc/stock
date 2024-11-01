@@ -87,13 +87,7 @@ class StockPrintStockVoucher(models.TransientModel):
 
     def do_print_and_assign(self):
         self.assign_numbers()
-        return {
-            'actions': [
-                {'type': 'ir.actions.act_window_close'},
-                self.do_print_voucher(),
-            ],
-            'type': 'ir.actions.act_multi',
-        }
+        return self.do_print_voucher()
 
     def do_clean(self):
         self.picking_id.clean_voucher_data()

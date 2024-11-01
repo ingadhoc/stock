@@ -348,7 +348,7 @@ msgstr ""
 #: model:ir.model.constraint,message:stock_voucher.constraint_stock_picking_voucher_voucher_number_uniq
 #, python-format
 msgid "The field \"Number\" must be unique per book."
-msgstr "El campo \"Número\" debe ser único por libro."
+msgstr "El campo \"Número\" debe ser único por talonario."
 
 #. module: stock_voucher
 #. odoo-python

@@ -4,11 +4,11 @@
         <field name="name">stock.picking.voucher.form</field>
         <field name="model">stock.picking.voucher</field>
         <field name="arch" type="xml">
-            <tree string="Picking Voucher">
+            <list string="Picking Voucher">
                 <field name="name"/>
                 <field name="book_id"/>
                 <field name="company_id" groups="base.group_multi_company"/>
-            </tree>
+            </list>
         </field>
     </record>
 
