@@ -2,7 +2,7 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import api, fields, models, _
+from odoo import api, fields, models
 
 
 class StockRequest(models.Model):
@@ -43,28 +43,7 @@ class StockRequest(models.Model):
             rec.picking_ids = all_moves.mapped('picking_id')
             rec.picking_count = len(rec.picking_ids)
 
-    def action_cancel(self):
-        """ Con esto queremos cancelar todos lo moves/pickings vinculados (que
-        se hayan generado por la rule). No es muy elegante buscar por producto
-        pero al no estar almacenado el link al request fue la mas facil.
-        TODO: supongo que lo ideal seria:
-        1) poder identificar bien las lineas, ya sea llevando el stock request
-        a cada move y no solo el inicial, o obteniendo el move original y luego
-        llegar a los otros por los links entre moves (movimiento de destino).
-        Esto seria mas que nada para que sea mas elegante
-        2) por ahora agregamos constraint para que no pueda haber dos productos
-        iguales en pero en realidad habria que en vez de cancelar, hacer un
-        cancel remaining solo por lo que este request representaba. No lo
-        podemos hacer analogo a como se hace en ventas ya que las ventas
-        mantienen distintos moves y por eso funciona bien.
-        """
-        # ahora sobre escribimos y llamamos a nuestro cancel que propaga
-        # deberiamos ver de hacer monkey patch mejor para que sea
-        # heredable por otros modulos
-        for move in self.sudo().mapped('move_ids'):
-            move._action_cancel()
-        self.write({'state': 'cancel'})
-        return True
+    # DEPRECATED def action_cancel(self):
 
     def button_cancel_remaining(self):
         for rec in self:
@@ -79,9 +58,9 @@ class StockRequest(models.Model):
             # move que queda vinculado a los allocation, por eso mandamos a
             # cancelar solo la cantidad en progreso (para que no cancele
             # cosas que ya se entregaron parcialmente)
-            to_cancel_moves._action_cancel(rec.qty_in_progress)
+            to_cancel_moves._action_cancel()
             rec.order_id.message_post(
-                body=_(
+                body=self.env._(
                     'Cancel remaining call for line "%s" (id %s), line '
                     'qty updated from %s to %s') % (
                         rec.name, rec.id,

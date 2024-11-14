@@ -10,9 +10,6 @@ class StockRequestOrder(models.Model):
     _inherit = 'stock.request.order'
     _order = 'id desc'
 
-    stock_request_ids = fields.One2many(
-        copy=True,
-    )
     # este pickings es analogo al pickings de venta pero implementado mas facil
     # odoo en ventas agrega un campo en el procurement group y related en
     # picking pero a la larga esta trayendo todos los pickings que tengan
@@ -52,8 +49,8 @@ class StockRequestOrder(models.Model):
         recs = super().create(vals_list)
         for rec in recs:
             if not rec.procurement_group_id:
-                # setamos al group el partner del warehouse para que se propague
-                # a los pickings
+                # setamos al group el partner del warehouse
+                # para que se propague a los pickings
                 group = self.env['procurement.group'].create({})
                 rec.procurement_group_id = group.id
                 for stock_rq in rec.stock_request_ids:

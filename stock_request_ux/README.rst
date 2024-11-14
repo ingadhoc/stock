@@ -16,10 +16,7 @@ Stock Request UX
 
 Several improvements to Stock Request:
 
-#. If we cancel a request order, it will cancel the chained moves and all linked pickings will  be cancelled as well.
 #. When creating the procurements order we create the procurement group, we propagate that so when the requests are created it also takes that same group.
-#. Upon duplication of request order, duplicate lines
-#. When a Stock Request Order in 'draft' state is deleted, it also deletes the Stock Request related.
 #. Add new button in pickings to access to the stock request order if has the group "Stock Request Order"
 #. Add new button in Stock moves to access to the stock request order related.
 #. Hide the "Replenishment" button in products(template/variants) when stock request was installed.

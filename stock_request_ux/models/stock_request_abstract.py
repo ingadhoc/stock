@@ -2,7 +2,7 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import api, models, _
+from odoo import api, models
 from odoo.exceptions import ValidationError
 
 
@@ -25,14 +25,14 @@ class StockRequestAbstract(models.AbstractModel):
             if rec.location_id.company_id and \
                     rec.location_id.company_id != rec.company_id:
                 raise ValidationError(
-                    _('You have entered a location that is '
+                    self.env._('You have entered a location that is '
                       'assigned to another company.'))
             if rec.warehouse_id.company_id != rec.company_id:
                 raise ValidationError(
-                    _('You have entered a warehouse that is '
+                    self.env._('You have entered a warehouse that is '
                       'assigned to another company.'))
             if rec.route_id and rec.route_id.company_id and \
                     rec.route_id.company_id != rec.company_id:
                 raise ValidationError(
-                    _('You have entered a route that is '
+                    self.env._('You have entered a route that is '
                       'assigned to another company.'))
