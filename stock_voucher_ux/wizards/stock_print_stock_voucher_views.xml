@@ -9,6 +9,16 @@
             <xpath expr="//field[@name='estimated_number_of_pages']" position="replace">
                 <field name="estimated_number_of_pages" string="Number estimated of pages" attrs="{'invisible':[('lines_per_voucher', '=', 0)],'required':[('lines_per_voucher', '!=', 0)]}" help="Estimate calculated to have an idea of the approximate number of pages. The real value will be known after printing" />
             </xpath>
+            <xpath expr="//button[@name='assign_numbers'][1]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+             <xpath expr="//button[@name='assign_numbers'][2]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//button[@name='do_print_and_assign'][2]" position="attributes">
+                <attribute name="string">Asignar</attribute>
+                <attribute name="class">oe_highlight</attribute>
+            </xpath>
         </field>
     </record>
 </odoo>

@@ -37,7 +37,7 @@ class ReportController(report.ReportController):
             if store_pags_picking_id:
                 pdf_response = response.response[0]
                 reader = PdfFileReader(io.BytesIO(pdf_response))
-                number_pages = reader.getNumPages()
+                number_pages = len(reader.pages)
 
             if not request.env['stock.picking'].browse(store_pags_picking_id).voucher_ids:
                 request.env['stock.picking'].browse(store_pags_picking_id).assign_numbers(number_pages, book_id)
