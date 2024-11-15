@@ -19,7 +19,13 @@
 ##############################################################################
 {
     'name': 'Stock Voucher UX',
+<<<<<<< HEAD
     'version': "17.0.1.1.0",
+||||||| parent of 2aace14a (temp)
+    'version': "16.0.1.1.0",
+=======
+    'version': "16.0.1.2.0",
+>>>>>>> 2aace14a (temp)
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
