@@ -1,0 +1,21 @@
+<odoo>
+    <record id="view_stock_book_form_ux" model="ir.ui.view">
+        <field name="name">stock.book.form.ux</field>
+        <field name="model">stock.book</field>
+        <field name="inherit_id" ref="l10n_ar_stock.view_stock_book_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='lines_per_voucher']" position="after">
+                <field name="autoprinted" widget="boolean_toggle"/>
+            </xpath>
+            <xpath expr="//field[@name='lines_per_voucher']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='l10n_ar_cai']" position="attributes">
+                <attribute name="invisible">autoprinted == False</attribute>
+            </xpath>
+            <xpath expr="//field[@name='l10n_ar_cai_due']" position="attributes">
+                <attribute name="invisible">autoprinted == False</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>
