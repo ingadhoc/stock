@@ -1,0 +1,23 @@
+<odoo>
+    <record id="view_picking_form" model="ir.ui.view">
+        <field name="name">stock.picking.delivery_extension.form</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock_voucher.view_picking_form"/>
+        <field name="priority">999</field>
+        <field name="arch" type="xml">
+            <field name="voucher_ids" position="after">
+                <field name="with_vouchers" invisible="1"/>
+            </field>
+            <xpath expr="//button[@name='%(stock_voucher.action_stock_print_voucher)d'][2]" position="replace">
+               <button name="do_print_and_assign" type="object" class="oe_highlight" string="Print Vouchers" invisible="with_vouchers == True or state != 'done'"/>
+            </xpath>
+            <xpath expr="//button[@name='%(stock_voucher.action_stock_print_voucher)d'][1]" position="replace">
+               <button name="clean_voucher_data" type="object" string="Clean Voucher Data" invisible="with_vouchers == False"/>
+            </xpath>
+            <xpath expr="//button[@name='%(stock.action_report_delivery)d']" position="replace">
+                <button name="do_print_voucher" type="object" string="Print" invisible="state != 'done'" />
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

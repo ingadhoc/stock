@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_delivery_document" inherit_id="l10n_ar_stock.report_delivery_document">
+        <xpath expr="//t[@t-set='pre_printed_report']" position="replace">
+            <t t-set="pre_printed_report" t-value="not o.autoprinted"/>
+        </xpath>
+        <xpath expr="//div[@name='footer_right_column']" position="replace">
+            <div name="footer_right_column" class="col-4 text-right">
+                <div t-if="o.book_id.autoprinted and o.book_id.l10n_ar_cai">
+                    CAI: <span t-field="o.book_id.l10n_ar_cai"/>
+                </div>
+                <div t-if="o.book_id.autoprinted and o.book_id.l10n_ar_cai_due">
+                    CAI Due Date: <span t-field="o.book_id.l10n_ar_cai_due"/>
+                </div>
+                <div name="pager" t-if="report_type == 'pdf'">
+                    Page: <span class="page"/>
+/                   <span class="topage"/>
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>
