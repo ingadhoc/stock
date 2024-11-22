@@ -1,0 +1,35 @@
+<odoo>
+    <record model="ir.ui.view" id="stock_picking_form_exception">
+        <field name="name">stock.picking.form.exception</field>
+        <field name="model">stock.picking</field>
+        <field name="priority">99</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <sheet position="before">
+                <!-- <field name="batch_vouchers" invisible="1"/> -->
+                <div class="alert alert-warning mb-2" invisible="not batch_id" role="alert">
+                    <strong>Advertencia:</strong> La asignación de remitos se hace desde el lote de traslados, si quiere hacerlos desde este traslado cancele el lote o separe el traslado del mismo
+                </div>
+            </sheet>
+            <field name="book_id" position="attributes">
+                <attribute name="readonly" separator=" or " add="batch_id"/>
+            </field>
+            <field name="voucher_ids" position="attributes">
+                <attribute name="readonly" separator=" or " add="batch_id"/>
+            </field>
+        </field>
+    </record>
+
+    <odoo>
+    <record model="ir.ui.view" id="vpicktree_inherit">
+        <field name="name">stock.picking.tree.inherit</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.vpicktree"/>
+        <field name="arch" type="xml">
+                <button name="%(stock_voucher.action_stock_print_voucher)d" position="attributes">
+                <attribute name="invisible" separator=" or " add="batch_id.voucher_ids"/>
+                </button>
+        </field>
+    </record>
+</odoo>
+</odoo>
