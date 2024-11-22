@@ -64,12 +64,7 @@ class StockPickingBatch(models.Model):
     estimated_number_of_pages = fields.Integer(
         'Number of Pages',
     )
-
-    lines_per_voucher = fields.Integer(
-        'Lines Per Voucher',
-        related='book_id.lines_per_voucher',
-    )
-        
+   
     @api.model
     def _get_book(self):
         return self.book_id or self.env['stock.book'].search([('company_id', '=', self.picking_ids[:1].company_id.id)], limit=1)
@@ -78,18 +73,12 @@ class StockPickingBatch(models.Model):
     def _compute_with_vouchers(self):
         for rec in self:
             rec.with_vouchers = bool(self.voucher_ids)
-    
-    # def do_print_voucher(self):
-    #     self.printed = True
-    #     # if self.book_id:
-    #     #     self.book_id = self.book_id.id
-    #     return self.do_print_batch_vouchers()
-    
+
     def do_print_and_assign(self):
         # We override the method to avoid assignation
         if not self.book_id:
             raise UserError("Primero debe setear un talonario")
-        if self.book_id.lines_per_voucher != 0:
+        if not self.book_id.autoprinted:
             self.printed = True
             return self.with_context(batch=True).do_print_batch_vouchers()
         self.assign_numbers(1,self.book_id)

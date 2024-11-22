@@ -7,8 +7,8 @@
         <field name="priority">99</field>
         <field name="arch" type="xml">
             <button name="action_print" position="before">
-                <button name="do_print_and_assign" invisible="voucher_ids or state not in ('done')" string="Imprimir Remitos" type="object" class="oe_highlight" help="Imprime remite preimpreso y asigna remitos dependiendo de la cantidad de hojas a imprimir (cálculo automático)"/>
-                <button name="do_print_batch_vouchers" invisible="state not in ('done')" string="Imprimir" type="object" help="Imprime remito preimpreso"/>
+                <button name="do_print_and_assign" invisible="voucher_ids or state not in ('done')" string="Imprimir Remitos" type="object" class="oe_highlight" help="Prints pre-printed report and assigns vouchers depending on the number of sheets to be printed (automatic calculation)"/>
+                <button name="do_print_batch_vouchers" invisible="state not in ('done')" string="Imprimir" type="object" help="Print pre-printed report"/>
                 <button name="do_clean" invisible="not voucher_ids" string="Limpiar remitos" type="object"/>
             </button>
             <field name="user_id" position="after">

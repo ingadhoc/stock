@@ -7,12 +7,16 @@
             <field name="voucher_ids" position="after">
                 <field name="with_vouchers" invisible="1"/>
             </field>
-            <xpath expr="//button[@name='%(stock_voucher.action_stock_print_voucher)d'][2]" position="replace">
-               <button name="do_print_and_assign" type="object" class="oe_highlight" string="Print Vouchers" invisible="with_vouchers == True or state != 'done'"/>
+            <xpath expr="//button[@name='%(stock_voucher.action_stock_print_voucher)d'][1]" position="after">
+                <button name="do_print_and_assign" type="object" class="oe_highlight" string="Print Vouchers" invisible="with_vouchers == True or state != 'done'"/>
             </xpath>
-            <xpath expr="//button[@name='%(stock_voucher.action_stock_print_voucher)d'][1]" position="replace">
-               <button name="clean_voucher_data" type="object" string="Clean Voucher Data" invisible="with_vouchers == False"/>
+            <xpath expr="//button[@name='%(stock_voucher.action_stock_print_voucher)d'][1]" position='attributes'>
+                <attribute name="invisible">1</attribute>
             </xpath>
+
+            <!-- <xpath expr="//button[@name='%(stock_voucher.action_stock_print_voucher)d'][2]" position="replace">
+                <button name="clean_voucher_data" type="object" string="Clean Voucher Data" invisible="with_vouchers == False"/>
+            </xpath> -->
             <xpath expr="//button[@name='%(stock.action_report_delivery)d']" position="replace">
                 <button name="do_print_voucher" type="object" string="Print" invisible="state != 'done'" />
             </xpath>
