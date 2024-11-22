@@ -141,7 +141,6 @@ class StockPickingBatch(models.Model):
                         'picking_id': picking.id,
                         'name': rec.voucher_number,
                     })
-
         return super(StockPickingBatch, self.with_context(do_not_assign_numbers=True)).action_done()
 
     def action_view_stock_picking(self):

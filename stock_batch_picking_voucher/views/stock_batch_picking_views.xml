@@ -1,0 +1,55 @@
+<odoo>
+    <!-- stock.picking.batch form view -->
+    <record model="ir.ui.view" id="stock_batch_picking_form">
+        <field name="name">stock.picking.batch.form</field>
+        <field name="model">stock.picking.batch</field>
+        <field name="inherit_id" ref="stock_picking_batch.stock_picking_batch_form"/>
+        <field name="priority">99</field>
+        <field name="arch" type="xml">
+            <button name="action_print" position="before">
+                <button name="do_print_and_assign" invisible="voucher_ids or state not in ('done')" string="Imprimir Remitos" type="object" class="oe_highlight" help="Prints pre-printed report and assigns vouchers depending on the number of sheets to be printed (automatic calculation)"/>
+                <button name="do_print_batch_vouchers" invisible="state not in ('done')" string="Imprimir" type="object" help="Print pre-printed report"/>
+                <button name="do_clean" invisible="not voucher_ids" string="Limpiar remitos" type="object"/>
+            </button>
+            <field name="user_id" position="after">
+                <field name="book_id" readonly="voucher_ids" string="Talonario"/>
+                <field name="next_number" invisible="not book_id or voucher_ids"/>
+                <field name="voucher_ids" widget="many2many_tags" readonly="picking_type_code != 'incoming'"/>
+            </field>
+            <!-- Hacemos esto para ajustar visual, sino queda todo en la primer columna -->
+            <field name="number_of_packages" position="replace"/>
+            <field name="user_id" position="replace"/>
+            <field name="scheduled_date" position="after">
+                <field name="user_id" readonly="state not in ['draft', 'in_progress']"/>
+                <field name="number_of_packages"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_tree_inherited" model="ir.ui.view">
+        <field name="name">stock.picking.tree.inherited</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock_batch_picking_ux.vpicktree"/>
+        <field name="priority">99</field>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='%(stock_voucher.action_stock_print_voucher)d']" position="attributes">
+                <attribute name="invisible" separator=" or " add="batch_id"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_tree_inherited2" model="ir.ui.view">
+        <field name="name">stock.picking.tree.inherited2</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock_voucher.view_picking_form"/>
+        <field name="priority">99</field>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='%(stock_voucher.action_stock_print_voucher)d'][1]" position="attributes">
+                <attribute name="invisible" separator=" or " add="batch_id"/>
+            </xpath>
+            <xpath expr="//button[@name='%(stock_voucher.action_stock_print_voucher)d'][2]" position="attributes">
+                <attribute name="invisible" separator=" or " add="batch_id"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
