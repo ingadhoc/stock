@@ -55,7 +55,9 @@ class StockMove(models.Model):
     def _check_quantity(self):
         precision = self.env['decimal.precision'].precision_get(
             'Product Unit of Measure')
-        if any(self.filtered(
+        if any(self.filtered(lambda x: x.scrapped)):
+            return
+        elif any(self.filtered(
             lambda x: x.picking_id.picking_type_id.
             block_additional_quantity and float_compare(
                 x.product_uom_qty, x.quantity,
