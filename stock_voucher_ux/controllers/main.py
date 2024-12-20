@@ -33,18 +33,15 @@ class ReportController(report.ReportController):
             context_dict = json.loads(urllib.parse.unquote(context_part))
             model = context_dict.get('params', {}).get('model')
             if model == 'stock.picking':
-                context_part = json.loads(data)[0].split('context=')[1]
-                context_dict = json.loads(urllib.parse.unquote(context_part))
                 picking_id  = context_dict.get('active_ids')
                 # Get assign on the context. If true, then is not an autoprinted
                 assign  = context_dict.get('assign')
                 book_id = request.env['stock.picking'].browse(picking_id).book_id
-                if assign and book_id:
-                    if picking_id:
-                        pdf_response = response.response[0]
-                        reader = PdfFileReader(io.BytesIO(pdf_response))
-                        # The number of pages will assign the number of vouchers
-                        number_pages = reader.getNumPages()
+                if assign and book_id and picking_id:
+                    pdf_response = response.response[0]
+                    reader = PdfFileReader(io.BytesIO(pdf_response))
+                    # The number of pages will assign the number of vouchers
+                    number_pages = len(reader.pages)
 
                     # See if there are vouchers already assigned. If not, then it assigns the vouchers
                     if not request.env['stock.picking'].browse(picking_id).voucher_ids and book_id:
@@ -58,7 +55,16 @@ class ReportController(report.ReportController):
                 if match:
                     picking_id = int(match.group(1))
                     book_id = request.env['stock.picking'].browse(picking_id).book_id
-                    if not request.env['stock.picking'].browse(picking_id).voucher_ids and book_id:
+                    if 'report_deliveryslip' in url and book_id and book_id.autoprinted == False and picking_id:
+                        pdf_response = response.response[0]
+                        reader = PdfFileReader(io.BytesIO(pdf_response))
+                        # The number of pages will assign the number of vouchers
+                        number_pages = len(reader.pages)
+
+                        if not request.env['stock.picking'].browse(picking_id).voucher_ids and book_id:
+                            request.env['stock.picking'].browse(picking_id).assign_numbers(number_pages, book_id)
+
+                    elif not request.env['stock.picking'].browse(picking_id).voucher_ids and book_id:
                         request.env['stock.picking'].browse(picking_id).assign_numbers(1, book_id)
 
         return response
