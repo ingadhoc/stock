@@ -14,10 +14,10 @@ class StockPicking(models.Model):
         """ Do the picking transfer (by calling do_transfer)
 
         If *force_qty* is True, force the transfer for all product_qty
-        when qty_done is 0.
+        when quantity is 0.
 
-        Otherwise, process only pack operation with qty_done.
-        If a picking has no qty_done filled, we released it from his batch
+        Otherwise, process only pack operation with quantity.
+        If a picking has no quantity filled, we released it from his batch
         """
         for pick in self:
             if pick.state != 'assigned':
@@ -32,11 +32,11 @@ class StockPicking(models.Model):
 
             if force_qty:
                 for pack in pick.move_line_ids:
-                    pack.qty_done = pack.quantity
+                    pack.quantity = pack.quantity
             else:
                 if all(
                         float_is_zero(
-                            pack.qty_done,
+                            pack.quantity,
                             precision_rounding=pack.product_uom_id.rounding)
                         for pack in pick.move_line_ids):
                     # No qties to process, release out of the batch
@@ -44,7 +44,7 @@ class StockPicking(models.Model):
                     continue
                 else:
                     for pack in pick.move_line_ids:
-                        if not pack.qty_done:
+                        if not pack.quantity:
                             pack.unlink()
 
             pick._action_done()
