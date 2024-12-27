@@ -106,7 +106,7 @@ class StockPickingBatch(models.Model):
             "type": "ir.actions.act_window",
             "res_model": "stock.move.line",
             "search_view_id": search_view_id,
-            "views": [[view_id, "tree"], [False, "form"]],
+            "views": [[view_id, "list"], [False, "form"]],
             "domain": [["id", "in", self.move_line_ids.ids]],
             "context": {"create": False, "from_batch": True},
         }
@@ -116,7 +116,7 @@ class StockPickingBatch(models.Model):
         for rec in self:
             # al agregar la restriccion de que al menos una tenga que tener
             # cantidad entonces nunca se manda el force_qty al picking
-            if all(operation.qty_done == 0
+            if all(operation.quantity == 0
                     for operation in rec.move_line_ids):
                 raise UserError(_(
                     'Debe definir Cantidad Realizada en al menos una '
@@ -134,7 +134,7 @@ class StockPickingBatch(models.Model):
                     # que no se van a recibir ya que todavia no se limpiaron
                     # y ademas, por lo de arriba, no se fuerza la cantidad
                     # si son todos cero, se terminan sacando
-                    if all(operation.qty_done == 0
+                    if all(operation.quantity == 0
                             for operation in picking.move_line_ids):
                         continue
                     rec.env['stock.picking.voucher'].create({

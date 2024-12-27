@@ -1,6 +1,6 @@
 <odoo>
 
-    <!-- stock.picking.batch tree view -->
+    <!-- stock.picking.batch list view -->
     <record model="ir.ui.view" id="stock_batch_picking_search">
         <field name="name">stock.picking.batch.form</field>
         <field name="model">stock.picking.batch</field>
@@ -17,7 +17,7 @@
         </field>
     </record>
 
-    <!-- stock.picking.batch tree view -->
+    <!-- stock.picking.batch list view -->
     <record model="ir.ui.view" id="stock_batch_picking_tree">
         <field name="name">stock.picking.batch.form</field>
         <field name="model">stock.picking.batch</field>
@@ -84,7 +84,7 @@
 
             <field name="move_ids" position="attributes">
                 <!-- usamos de vista tree la misma que se usan en los pickins y ademas mostramos el campo del picking -->
-                <attribute name="context">{'show_picking': True, 'tree_view_ref': 'stock.view_move_picking_tree'}</attribute>
+                <attribute name="context">{'show_picking': True, 'list_view_ref': 'stock.view_move_picking_tree'}</attribute>
             </field>
 
             <field name="picking_type_id" position="after">
