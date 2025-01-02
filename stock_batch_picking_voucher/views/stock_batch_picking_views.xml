@@ -27,7 +27,7 @@
     </record>
 
     <record id="view_tree_inherited" model="ir.ui.view">
-        <field name="name">stock.picking.tree.inherited</field>
+        <field name="name">stock.picking.list.inherited</field>
         <field name="model">stock.picking</field>
         <field name="inherit_id" ref="stock_batch_picking_ux.vpicktree"/>
         <field name="priority">99</field>
@@ -39,7 +39,7 @@
     </record>
 
     <record id="view_tree_inherited2" model="ir.ui.view">
-        <field name="name">stock.picking.tree.inherited2</field>
+        <field name="name">stock.picking.list.inherited2</field>
         <field name="model">stock.picking</field>
         <field name="inherit_id" ref="stock_voucher.view_picking_form"/>
         <field name="priority">99</field>
