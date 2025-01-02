@@ -2,8 +2,7 @@ from odoo import fields, api, models, Command, exceptions
 
 
 class StockPickingZpl(models.TransientModel):
-    _name = 'product.label.layout'
-    _description = "Print Stock Voucher"
+    _inherit = 'product.label.layout'
 
     picking_id = fields.Many2one('stock.picking',string='picking')
     line_ids = fields.One2many('stock.picking.zpl.lines','picking_zpl_id', string='Moves')
@@ -36,7 +35,7 @@ class StockPickingZplLines(models.TransientModel):
     _name = 'stock.picking.zpl.lines'
     _description = "Print Stock Voucher lines"
 
-    picking_zpl_id = fields.Many2one('stock.picking.zpl')
+    picking_zpl_id = fields.Many2one('product.label.layout')
 
     move_id = fields.Many2one('stock.move')
 
@@ -51,5 +50,3 @@ class StockPickingZplLines(models.TransientModel):
         for line in self:
             if line.move_quantity > line.move_id.quantity:
                 raise exceptions.ValidationError("La cantidad a imprimir no puede ser mayor que la cantidad original.")
-
-
