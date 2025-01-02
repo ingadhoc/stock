@@ -8,7 +8,7 @@
             <xpath expr="//group" position="before">
                 <!-- Estructura con dos columnas -->
                 <div class="oe_structure"/>
-                <group>
+                <group invisible="context.get('active_model') != 'stock.picking'">
                     <field name="picking_id" string="Transferencia" readonly="1" invisible="1"/>
                     <field name="line_ids" widget="one2many_list" nolabel="1" colspan="2">
                         <tree editable="top" create="false" delete="false">
@@ -19,7 +19,7 @@
                         </tree>
                     </field>
                 </group>
-                <div>
+                <div invisible="context.get('active_model') != 'stock.picking'">
                     <button name="action_print" type="object" string="Etiqueta de producto(ZPL)" class="btn btn-primary" style="font-size: 10px; margin-right: 10px;" help="Puede establecerse la cantidad de impresiones desde el asistente"/>
                     -
                     <button name="action_print_pdf" type="object" string="Etiqueta de despacho(PDF)" class="btn btn-primary" style="font-size: 10px;" help="Imprimirá tantas como se indique en el número de paquetes"/>
@@ -27,7 +27,7 @@
 
 
 
-                <br></br>
+                <br invisible="context.get('active_model') != 'stock.picking'"/>
             </xpath>
         </field>
     </record>
