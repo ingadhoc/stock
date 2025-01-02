@@ -22,7 +22,7 @@
 
     <odoo>
     <record model="ir.ui.view" id="vpicktree_inherit">
-        <field name="name">stock.picking.tree.inherit</field>
+        <field name="name">stock.picking.list.inherit</field>
         <field name="model">stock.picking</field>
         <field name="inherit_id" ref="stock.vpicktree"/>
         <field name="arch" type="xml">
