@@ -1,0 +1,135 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_batch_picking_voucher
+# 
+# Translators:
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-01-03 14:01+0000\n"
+"PO-Revision-Date: 2025-01-03 14:01+0000\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025\n"
+"Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: es\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+
+#. module: stock_batch_picking_voucher
+#: model_terms:ir.ui.view,arch_db:stock_batch_picking_voucher.stock_picking_form_exception
+msgid ""
+"<strong>Advertencia:</strong> La asignación de remitos se hace desde el lote"
+" de traslados, si quiere hacerlos desde este traslado cancele el lote o "
+"separe el traslado del mismo"
+msgstr ""
+
+#. module: stock_batch_picking_voucher
+#: model:ir.model.fields,field_description:stock_batch_picking_voucher.field_stock_picking_batch__next_number
+msgid "Actual Next Number"
+msgstr ""
+
+#. module: stock_batch_picking_voucher
+#: model:ir.model.fields,field_description:stock_batch_picking_voucher.field_stock_picking_voucher__batch_id
+msgid "Batch"
+msgstr ""
+
+#. module: stock_batch_picking_voucher
+#: model:ir.model,name:stock_batch_picking_voucher.model_stock_picking_batch
+msgid "Batch Transfer"
+msgstr "Traslado por lote"
+
+#. module: stock_batch_picking_voucher
+#: model:ir.model.fields,field_description:stock_batch_picking_voucher.field_stock_picking_batch__book_id
+msgid "Book"
+msgstr ""
+
+#. module: stock_batch_picking_voucher
+#: model_terms:ir.ui.view,arch_db:stock_batch_picking_voucher.stock_batch_picking_form
+msgid "Imprimir"
+msgstr ""
+
+#. module: stock_batch_picking_voucher
+#: model_terms:ir.ui.view,arch_db:stock_batch_picking_voucher.stock_batch_picking_form
+msgid "Imprimir Remitos"
+msgstr ""
+
+#. module: stock_batch_picking_voucher
+#: model_terms:ir.ui.view,arch_db:stock_batch_picking_voucher.stock_batch_picking_form
+msgid "Limpiar remitos"
+msgstr ""
+
+#. module: stock_batch_picking_voucher
+#: model:ir.model.fields,field_description:stock_batch_picking_voucher.field_stock_picking_batch__next_voucher_number
+msgid "Next Voucher Number"
+msgstr ""
+
+#. module: stock_batch_picking_voucher
+#: model:ir.model.fields,help:stock_batch_picking_voucher.field_stock_picking_batch__next_number
+#: model:ir.model.fields,help:stock_batch_picking_voucher.field_stock_picking_batch__next_voucher_number
+msgid ""
+"Next number that will be used. This number can be incremented frequently so "
+"the displayed value might already be obsolete"
+msgstr ""
+
+#. module: stock_batch_picking_voucher
+#: model:ir.model.fields,field_description:stock_batch_picking_voucher.field_stock_picking_batch__estimated_number_of_pages
+msgid "Number of Pages"
+msgstr ""
+
+#. module: stock_batch_picking_voucher
+#. odoo-python
+#: code:addons/stock_batch_picking_voucher/models/stock_picking_batch.py:0
+msgid "Números de remitos asignados: %s"
+msgstr ""
+
+#. module: stock_batch_picking_voucher
+#: model:ir.model.fields,field_description:stock_batch_picking_voucher.field_stock_picking_voucher__picking_id
+msgid "Picking"
+msgstr "Recolección"
+
+#. module: stock_batch_picking_voucher
+#: model_terms:ir.ui.view,arch_db:stock_batch_picking_voucher.stock_batch_picking_form
+msgid "Print pre-printed report"
+msgstr ""
+
+#. module: stock_batch_picking_voucher
+#: model:ir.model.fields,field_description:stock_batch_picking_voucher.field_stock_picking_batch__printed
+msgid "Printed"
+msgstr ""
+
+#. module: stock_batch_picking_voucher
+#: model_terms:ir.ui.view,arch_db:stock_batch_picking_voucher.stock_batch_picking_form
+msgid ""
+"Prints pre-printed report and assigns vouchers depending on the number of "
+"sheets to be printed (automatic calculation)"
+msgstr ""
+
+#. module: stock_batch_picking_voucher
+#: model:ir.model.fields,field_description:stock_batch_picking_voucher.field_stock_picking_batch__voucher_ids
+msgid "Remitos"
+msgstr ""
+
+#. module: stock_batch_picking_voucher
+#: model:ir.model,name:stock_batch_picking_voucher.model_stock_picking_voucher
+msgid "Stock Voucher Book"
+msgstr "Talonario de Remitos"
+
+#. module: stock_batch_picking_voucher
+#: model_terms:ir.ui.view,arch_db:stock_batch_picking_voucher.stock_batch_picking_form
+msgid "Talonario"
+msgstr ""
+
+#. module: stock_batch_picking_voucher
+#. odoo-python
+#: code:addons/stock_batch_picking_voucher/models/stock_picking_batch.py:0
+msgid "The assigned voucher were deleted"
+msgstr ""
+
+#. module: stock_batch_picking_voucher
+#: model:ir.model.fields,field_description:stock_batch_picking_voucher.field_stock_picking_batch__with_vouchers
+msgid "With Vouchers"
+msgstr ""
