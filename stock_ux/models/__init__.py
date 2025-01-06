@@ -13,3 +13,4 @@ from . import stock_picking_type
 from . import res_config_settings
 from . import stock_rule
 from . import stock_scrap
+from . import stock_location
