@@ -14,14 +14,13 @@ class StockWarehouseOrderpointWizard(models.TransientModel):
     location_ids = fields.Many2many('stock.location', string="Location")
 
     def action_confirm(self):
-        ctx = self._context.copy()
-        ctx.update({
+        ctx = {
             'filter_products': self.product_ids.ids,
             'filter_categories': self.category_ids.ids,
             'filter_suppliers': self.supplier_ids.ids,
             'filter_locations': self.location_ids.ids,
-        })
-        action = self.with_context(ctx).env['stock.warehouse.orderpoint']._get_orderpoint_action()
+        }
+        action = self.with_context(**ctx).env['stock.warehouse.orderpoint']._get_orderpoint_action()
         orderpoint_domain = self._get_orderpoint_domain()
         orderpoints = self.env['stock.warehouse.orderpoint'].with_context(active_test=False).search(orderpoint_domain)
         orderpoints.update_qty_forecast()
