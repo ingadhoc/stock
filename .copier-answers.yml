@@ -1,0 +1,10 @@
+# Do NOT update manually; changes here will be overwritten by Copier
+_commit: 3839cf0
+_src_path: https://github.com/ingadhoc/addons-repo-template.git
+description: ADHOC Odoo Stock & Warehouse Management Addons
+is_private: false
+name: ADHOC stock
+odoo_version: 18.0
+pre_commit_ignore: []
+slug: ''
+
