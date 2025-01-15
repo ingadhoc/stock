@@ -3,15 +3,15 @@
 # 	* stock_voucher
 # 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024
+# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-05 15:21+0000\n"
+"POT-Creation-Date: 2025-01-14 16:38+0000\n"
 "PO-Revision-Date: 2024-11-20 17:04+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024\n"
+"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -47,10 +47,11 @@ msgid "Backorder Confirmation"
 msgstr "Confirmación de entrega parcial"
 
 #. module: stock_voucher
+#: model:ir.model.fields,field_description:stock_voucher.field_stock_picking__book_id
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_type__book_id
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_print_stock_voucher__book_id
 msgid "Book"
-msgstr "Talonario"
+msgstr "Talonario de Remitos"
 
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking__book_required
@@ -349,7 +350,6 @@ msgid "Transfer"
 msgstr "Traslado"
 
 #. module: stock_voucher
-#: model:ir.model.fields,field_description:stock_voucher.field_stock_picking__book_id
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_voucher__book_id
 msgid "Voucher Book"
 msgstr "Talonario de Remitos"
