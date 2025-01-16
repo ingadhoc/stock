@@ -48,7 +48,7 @@ class StockPicking(models.Model):
         return super(StockPicking, self).do_print_voucher()
 
     def do_print_and_assign(self):
-        if not self.book_id:
+        if not self.book_id and self.picking_type_code != 'incoming':
             raise UserError("Primero debe seleccionar un talonario")
         if self.autoprinted == False:
             self.printed = True
