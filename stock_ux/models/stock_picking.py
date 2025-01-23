@@ -101,7 +101,7 @@ class StockPicking(models.Model):
                 rec.quantity = rec.product_uom_qty
             else:
                 for line in rec.move_line_ids:
-                    line.quantity = line.reserved_uom_qty
+                    line.quantity = line.quantity_product_uom
 
     def _put_in_pack(self, move_line_ids):
         # we send to skip a process of check qty when is sending through the copy method.
