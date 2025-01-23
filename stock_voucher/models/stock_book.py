@@ -40,3 +40,12 @@ class StockBook(models.Model):
         related='sequence_id.number_next_actual',
         readonly=False
     )
+    report_partner_id = fields.Many2one(
+        'res.partner',
+        string='Contacto para Encabezado',
+        help='Para el encabezado de los remitos/comprobantes de entrega, la información a utilizar se obtendrá del '
+        'primer datos definido de estos lugares:\n'
+        '* Este campo\n'
+        '* Dirección del Almacen de la transferencia\n'
+        '* Información de la compañía de la transferencia'
+    )
