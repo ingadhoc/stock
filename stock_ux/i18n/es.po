@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-10 18:49+0000\n"
+"POT-Creation-Date: 2025-02-03 19:18+0000\n"
 "PO-Revision-Date: 2024-11-13 15:07+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
@@ -109,11 +109,6 @@ msgstr "Cancelado"
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
 msgid "Cancelled Moves"
 msgstr "Movimientos Cancelados"
-
-#. module: stock_ux
-#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_zpl_nuevo
-msgid "Cantidad a imprimir"
-msgstr ""
 
 #. module: stock_ux
 #: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint__rotation
@@ -294,26 +289,6 @@ msgid "En Comprobantes de Transferencia usar Descripción de Origen"
 msgstr ""
 
 #. module: stock_ux
-#: model:ir.actions.report,name:stock_ux.action_custom_label_transfer_template_view_pdf
-msgid "Etiqueta de despacho (PDF)"
-msgstr ""
-
-#. module: stock_ux
-#: model:ir.actions.report,name:stock_ux.action_custom_label_transfer_template_zpl
-msgid "Etiqueta de despacho (ZPL)"
-msgstr ""
-
-#. module: stock_ux
-#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_zpl_nuevo
-msgid "Etiqueta de despacho(PDF)"
-msgstr ""
-
-#. module: stock_ux
-#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_zpl_nuevo
-msgid "Etiqueta de producto(ZPL)"
-msgstr ""
-
-#. module: stock_ux
 #: model:ir.actions.report,name:stock_ux.action_custom_barcode_transfer_template_view_zpl
 msgid "Etiquetas de Productos del picking (ZPL)"
 msgstr ""
@@ -382,11 +357,6 @@ msgid ""
 msgstr "Si no está marcado, le permitirá ocultar el producto sin removerlo."
 
 #. module: stock_ux
-#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_zpl_nuevo
-msgid "Imprimirá tantas como se indique en el número de paquetes"
-msgstr ""
-
-#. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_move_search
 msgid "Internal"
 msgstr "Interno"
@@ -395,6 +365,11 @@ msgstr "Interno"
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_form
 msgid "Internal Notes"
 msgstr "Notas Internas"
+
+#. module: stock_ux
+#: model:ir.model,name:stock_ux.model_stock_location
+msgid "Inventory Locations"
+msgstr "Ubicaciones de inventario"
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__message_is_follower
@@ -683,11 +658,6 @@ msgid "Product Variant"
 msgstr "Variante de producto"
 
 #. module: stock_ux
-#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_zpl_nuevo
-msgid "Producto"
-msgstr ""
-
-#. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.product_form_view_procurement_button
 #: model_terms:ir.ui.view,arch_db:stock_ux.product_template_form_view_procurement_button
 msgid "Products Moves"
@@ -702,11 +672,6 @@ msgstr "Movimientos de productos"
 #: model:ir.model.fields,field_description:stock_ux.field_stock_rule__propagate_carrier
 msgid "Propagation of carrier"
 msgstr "Propagación del transportista"
-
-#. module: stock_ux
-#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_zpl_nuevo
-msgid "Puede establecerse la cantidad de impresiones desde el asistente"
-msgstr ""
 
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_move_tree
@@ -892,11 +857,6 @@ msgid "Transfer Destination Address"
 msgstr "Dirección de destino de la transferencia"
 
 #. module: stock_ux
-#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_zpl_nuevo
-msgid "Transferencia"
-msgstr ""
-
-#. module: stock_ux
 #: model:ir.actions.act_window,name:stock_ux.action_picking_tree_all
 msgid "Transfers"
 msgstr "Todas las transferencias"
@@ -919,11 +879,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_ux.field_stock_move_line__picking_code
 msgid "Type of Operation"
 msgstr "Tipo de operación"
-
-#. module: stock_ux
-#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_zpl_nuevo
-msgid "Unidad"
-msgstr ""
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_move__used_lots
