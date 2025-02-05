@@ -18,26 +18,24 @@
 #
 ##############################################################################
 {
-    'name': 'Stock Picking Labels',
-    'version': "16.0.1.0.0",
-    'category': 'Warehouse Management',
-    'sequence': 14,
-    'summary': '',
-    'author': 'ADHOC SA',
-    'website': 'www.adhoc.com.ar',
-    'license': 'AGPL-3',
-    'images': [
+    "name": "Stock Picking Labels",
+    "version": "16.0.1.0.0",
+    "category": "Warehouse Management",
+    "sequence": 14,
+    "summary": "",
+    "author": "ADHOC SA",
+    "website": "www.adhoc.com.ar",
+    "license": "AGPL-3",
+    "images": [],
+    "depends": [
+        "stock",
+        "report_aeroo",
     ],
-    'depends': [
-        'stock',
-        'report_aeroo',
+    "data": [
+        "report/stock_report_data.xml",
     ],
-    'data': [
-        'report/stock_report_data.xml',
-    ],
-    'demo': [
-    ],
-    'installable': False,
-    'auto_install': False,
-    'application': False,
+    "demo": [],
+    "installable": False,
+    "auto_install": False,
+    "application": False,
 }

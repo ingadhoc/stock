@@ -18,29 +18,27 @@
 #
 ##############################################################################
 {
-    'name': 'Stock Usability with Batch Picking and stock vouchers',
-    'version': "18.0.1.0.0",
-    'category': 'Warehouse Management',
-    'sequence': 14,
-    'summary': '',
-    'author': 'ADHOC SA',
-    'website': 'www.adhoc.com.ar',
-    'license': 'AGPL-3',
-    'images': [
+    "name": "Stock Usability with Batch Picking and stock vouchers",
+    "version": "18.0.1.0.0",
+    "category": "Warehouse Management",
+    "sequence": 14,
+    "summary": "",
+    "author": "ADHOC SA",
+    "website": "www.adhoc.com.ar",
+    "license": "AGPL-3",
+    "images": [],
+    "depends": [
+        "stock_ux",
+        "stock_voucher",
+        "stock_picking_batch",
     ],
-    'depends': [
-        'stock_ux',
-        'stock_voucher',
-        'stock_picking_batch',
+    "data": [
+        "views/stock_batch_picking_views.xml",
+        "views/stock_move_line_views.xml",
+        "views/stock_picking_views.xml",
     ],
-    'data': [
-        'views/stock_batch_picking_views.xml',
-        'views/stock_move_line_views.xml',
-        'views/stock_picking_views.xml',
-    ],
-    'demo': [
-    ],
-    'installable': True,
-    'auto_install': True,
-    'application': False,
+    "demo": [],
+    "installable": True,
+    "auto_install": True,
+    "application": False,
 }

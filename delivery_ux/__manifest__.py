@@ -18,25 +18,23 @@
 #
 ##############################################################################
 {
-    'name': 'Delivery UX',
-    'version': "18.0.1.0.0",
-    'category': 'Warehouse Management',
-    'sequence': 14,
-    'summary': '',
-    'author': 'ADHOC SA',
-    'website': 'www.adhoc.com.ar',
-    'license': 'AGPL-3',
-    'images': [
+    "name": "Delivery UX",
+    "version": "18.0.1.0.0",
+    "category": "Warehouse Management",
+    "sequence": 14,
+    "summary": "",
+    "author": "ADHOC SA",
+    "website": "www.adhoc.com.ar",
+    "license": "AGPL-3",
+    "images": [],
+    "depends": [
+        "delivery",
     ],
-    'depends': [
-        'delivery',
+    "data": [
+        "views/delivery_carrier_views.xml",
     ],
-    'data': [
-        'views/delivery_carrier_views.xml',
-    ],
-    'demo': [
-    ],
-    'installable': True,
-    'auto_install': False,
-    'application': False,
+    "demo": [],
+    "installable": True,
+    "auto_install": False,
+    "application": False,
 }

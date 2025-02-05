@@ -18,31 +18,28 @@
 #
 ##############################################################################
 {
-    'name': 'Preprinted report in batch pickings',
-    'version': "18.0.1.0.0",
-    'category': 'Warehouse Management',
-    'sequence': 14,
-    'summary': '',
-    'author': 'ADHOC SA',
-    'website': 'www.adhoc.com.ar',
-    'license': 'AGPL-3',
-    'images': [
+    "name": "Preprinted report in batch pickings",
+    "version": "18.0.1.0.0",
+    "category": "Warehouse Management",
+    "sequence": 14,
+    "summary": "",
+    "author": "ADHOC SA",
+    "website": "www.adhoc.com.ar",
+    "license": "AGPL-3",
+    "images": [],
+    "depends": [
+        "stock_batch_picking_ux",
+        "report_aeroo",
+        "l10n_latam_base",
+        "delivery_ux",
+        "stock_voucher",
     ],
-    'depends': [
-        'stock_batch_picking_ux',
-        'report_aeroo',
-        'l10n_latam_base',
-        'delivery_ux',
-        'stock_voucher',
+    "data": [
+        "views/stock_batch_picking_views.xml",
+        "views/stock_picking_views.xml",
     ],
-    'data': [
-        'views/stock_batch_picking_views.xml',
-        'views/stock_picking_views.xml',
-        
-    ],
-    'demo': [
-    ],
-    'installable': True,
-    'auto_install': False,
-    'application': False,
+    "demo": [],
+    "installable": True,
+    "auto_install": False,
+    "application": False,
 }

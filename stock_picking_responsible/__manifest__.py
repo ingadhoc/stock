@@ -18,26 +18,24 @@
 #
 ##############################################################################
 {
-    'name': 'Stock Picking Responsible',
-    'version': "18.0.1.0.0",
-    'category': 'Warehouse Management',
-    'sequence': 14,
-    'summary': '',
-    'author': 'ADHOC SA',
-    'website': 'www.adhoc.com.ar',
-    'license': 'AGPL-3',
-    'images': [
+    "name": "Stock Picking Responsible",
+    "version": "18.0.1.0.0",
+    "category": "Warehouse Management",
+    "sequence": 14,
+    "summary": "",
+    "author": "ADHOC SA",
+    "website": "www.adhoc.com.ar",
+    "license": "AGPL-3",
+    "images": [],
+    "depends": [
+        "sale_stock",
     ],
-    'depends': [
-        'sale_stock',
+    "data": [
+        "views/stock_move_views.xml",
+        "views/stock_picking_views.xml",
     ],
-    'data': [
-        'views/stock_move_views.xml',
-        'views/stock_picking_views.xml',
-    ],
-    'demo': [
-    ],
-    'installable': True,
-    'auto_install': False,
-    'application': False,
+    "demo": [],
+    "installable": True,
+    "auto_install": False,
+    "application": False,
 }

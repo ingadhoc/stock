@@ -18,32 +18,30 @@
 #
 ##############################################################################
 {
-    'name': 'Stock Request UX',
-    'version': "18.0.1.0.0",
-    'category': 'Warehouse Management',
-    'sequence': 14,
-    'summary': '',
-    'author': 'ADHOC SA',
-    'website': 'www.adhoc.com.ar',
-    'license': 'AGPL-3',
-    'images': [
+    "name": "Stock Request UX",
+    "version": "18.0.1.0.0",
+    "category": "Warehouse Management",
+    "sequence": 14,
+    "summary": "",
+    "author": "ADHOC SA",
+    "website": "www.adhoc.com.ar",
+    "license": "AGPL-3",
+    "images": [],
+    "depends": [
+        "stock_request",
+        "stock_ux",
     ],
-    'depends': [
-        'stock_request',
-        'stock_ux',
+    "data": [
+        "views/product_product_views.xml",
+        "views/product_template_views.xml",
+        "views/stock_request_order_views.xml",
+        "views/stock_request_views.xml",
+        "views/stock_move_views.xml",
+        "views/stock_picking_views.xml",
     ],
-    'data': [
-        'views/product_product_views.xml',
-        'views/product_template_views.xml',
-        'views/stock_request_order_views.xml',
-        'views/stock_request_views.xml',
-        'views/stock_move_views.xml',
-        'views/stock_picking_views.xml',
-    ],
-    'demo': [
-    ],
-    'installable': True,
-    'auto_install': True,
-    'application': False,
-    'post_init_hook': 'init_settings',
+    "demo": [],
+    "installable": True,
+    "auto_install": True,
+    "application": False,
+    "post_init_hook": "init_settings",
 }

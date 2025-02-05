@@ -18,23 +18,21 @@
 #
 ##############################################################################
 {
-    'name': 'Stock Landed Costs UX',
-    'version': "18.0.1.0.0",
-    'category': 'Warehouse Management',
-    'sequence': 14,
-    'summary': '',
-    'author': 'ADHOC SA',
-    'website': 'www.adhoc.com.ar',
-    'images': [
+    "name": "Stock Landed Costs UX",
+    "version": "18.0.1.0.0",
+    "category": "Warehouse Management",
+    "sequence": 14,
+    "summary": "",
+    "author": "ADHOC SA",
+    "website": "www.adhoc.com.ar",
+    "images": [],
+    "depends": [
+        "stock_landed_costs",
+        "l10n_ar_ux",
     ],
-    'depends': [
-        'stock_landed_costs',
-        'l10n_ar_ux',
-    ],
-    'data': [
-    ],
-    'installable': True,
-    'auto_install': True,
-    'application': False,
-    'license': 'AGPL-3',
+    "data": [],
+    "installable": True,
+    "auto_install": True,
+    "application": False,
+    "license": "AGPL-3",
 }

@@ -38,7 +38,7 @@
 ^FO20,90
 ^BY3
 ^BCN,60,Y,N,N,A
-^FD<t t-esc="o.move_id.product_id.barcode"/>^FS 
+^FD<t t-esc="o.move_id.product_id.barcode"/>^FS
 ^XZ
                         </t>
                     </t>

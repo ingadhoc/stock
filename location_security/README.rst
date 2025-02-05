@@ -29,7 +29,7 @@ Configuration
 To configure this module, you need to:
 
 #. Go to Settings>Users & Companies>Users.
-#. Select the user you want to configure. 
+#. Select the user you want to configure.
 #. Under the Preference tab, enable the Restrict Location option.
 #. In the Allowed Stock Locations tab, assign the stock locations the user is allowed to access.
 

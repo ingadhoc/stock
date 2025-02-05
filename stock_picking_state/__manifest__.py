@@ -18,28 +18,27 @@
 #
 ##############################################################################
 {
-    'name': 'Stock Picking State',
-    'version': "18.0.1.0.0",
-    'category': 'Warehouse Management',
-    'sequence': 14,
-    'summary': '',
-    'author': 'ADHOC SA',
-    'website': 'www.adhoc.com.ar',
-    'license': 'AGPL-3',
-    'images': [
+    "name": "Stock Picking State",
+    "version": "18.0.1.0.0",
+    "category": "Warehouse Management",
+    "sequence": 14,
+    "summary": "",
+    "author": "ADHOC SA",
+    "website": "www.adhoc.com.ar",
+    "license": "AGPL-3",
+    "images": [],
+    "depends": [
+        "stock",
     ],
-    'depends': [
-        'stock',
+    "data": [
+        "security/ir.model.access.csv",
+        "views/stock_picking_state_detail.xml",
+        "views/stock_picking_views.xml",
     ],
-    'data': [
-        'security/ir.model.access.csv',
-        'views/stock_picking_state_detail.xml',
-        'views/stock_picking_views.xml',
+    "demo": [
+        "demo/stock_picking_state_detail_demo.xml",
     ],
-    'demo': [
-        'demo/stock_picking_state_detail_demo.xml',
-    ],
-    'installable': True,
-    'auto_install': False,
-    'application': False,
+    "installable": True,
+    "auto_install": False,
+    "application": False,
 }

@@ -2,14 +2,13 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import models, fields
+from odoo import fields, models
 
 
 class StockPickingStateDetail(models.Model):
-
-    _name = 'stock.picking.state_detail'
-    _description = 'stock.picking.state_detail'
-    _order = 'sequence'
+    _name = "stock.picking.state_detail"
+    _description = "stock.picking.state_detail"
+    _order = "sequence"
 
     name = fields.Char(
         copy=False,
@@ -19,25 +18,25 @@ class StockPickingStateDetail(models.Model):
     picking_type = fields.Selection(
         required=True,
         selection=[
-            ('internal', 'Internal'),
-            ('outgoing', 'Outgoing'),
-            ('incoming', 'Incoming'),
+            ("internal", "Internal"),
+            ("outgoing", "Outgoing"),
+            ("incoming", "Incoming"),
         ],
     )
     state = fields.Selection(
-        string='Status',
+        string="Status",
         required=True,
         selection=[
-            ('draft', 'Draft'),
-            ('cancel', 'Cancelled'),
-            ('waiting', 'Waiting Another Operation'),
-            ('confirmed', 'Waiting'),
-            ('assigned', 'Ready'),
-            ('done', 'Done'),
+            ("draft", "Draft"),
+            ("cancel", "Cancelled"),
+            ("waiting", "Waiting Another Operation"),
+            ("confirmed", "Waiting"),
+            ("assigned", "Ready"),
+            ("done", "Done"),
         ],
     )
     picking_ids = fields.One2many(
-        'stock.picking',
-        'state_detail_id',
-        'Pickings',
+        "stock.picking",
+        "state_detail_id",
+        "Pickings",
     )
