@@ -2,12 +2,11 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import fields, models, api
+from odoo import fields, models
 
 
 class StockPickingType(models.Model):
-
-    _inherit = 'stock.picking.type'
+    _inherit = "stock.picking.type"
 
     block_additional_quantity = fields.Boolean(
         string="Block additional quantity",
@@ -29,10 +28,9 @@ class StockPickingType(models.Model):
     )
 
     mail_template_id = fields.Many2one(
-        'mail.template',
-        'Email Template',
-        domain=[('model', '=', 'stock.picking')],
+        "mail.template",
+        "Email Template",
+        domain=[("model", "=", "stock.picking")],
         help="If set an email will be sent to the customer after the picking"
         " related to this picking type has been validated.",
     )
- 

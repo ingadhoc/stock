@@ -9,5 +9,5 @@ class StockMove(models.Model):
     _inherit = "stock.move"
 
     vouchers = fields.Char(
-        related='picking_id.vouchers',
+        related="picking_id.vouchers",
     )

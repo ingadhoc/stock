@@ -18,34 +18,32 @@
 #
 ##############################################################################
 {
-    'name': 'Stock Orderpoint Manual Update',
-    'version': "18.0.1.0.0",
-    'category': 'Warehouse Management',
-    'sequence': 14,
-    'summary': '',
-    'author': 'ADHOC SA',
-    'website': 'www.adhoc.com.ar',
-    'license': 'AGPL-3',
-    'images': [
+    "name": "Stock Orderpoint Manual Update",
+    "version": "18.0.1.0.0",
+    "category": "Warehouse Management",
+    "sequence": 14,
+    "summary": "",
+    "author": "ADHOC SA",
+    "website": "www.adhoc.com.ar",
+    "license": "AGPL-3",
+    "images": [],
+    "depends": [
+        "purchase_stock",
+        "stock_ux",
     ],
-    'depends': [
-        'purchase_stock',
-        'stock_ux',
+    "data": [
+        "wizard/stock_warehouse_orderpoint_wizard_views.xml",
+        "security/ir.model.access.csv",
+        "views/stock_warehouse_orderpoint_views.xml",
     ],
-    'data': [
-        'wizard/stock_warehouse_orderpoint_wizard_views.xml',
-        'security/ir.model.access.csv',
-        'views/stock_warehouse_orderpoint_views.xml',
-    ],
-    'demo': [
-    ],
-    'assets': {
-        'web.assets_backend': [
-            'stock_orderpoint_manual_update/static/src/views/**/*',
+    "demo": [],
+    "assets": {
+        "web.assets_backend": [
+            "stock_orderpoint_manual_update/static/src/views/**/*",
         ],
     },
-    'uninstall_hook': "uninstall_hook",
-    'installable': True,
-    'auto_install': False,
-    'application': False,
+    "uninstall_hook": "uninstall_hook",
+    "installable": True,
+    "auto_install": False,
+    "application": False,
 }

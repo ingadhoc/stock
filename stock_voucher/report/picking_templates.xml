@@ -23,7 +23,7 @@
 )<t t-esc="picking.book_id.report_partner_id.city"/>
 ^FS ^FO50,195^FD
 <t class="oe_inline" t-esc="picking.book_id.report_partner_id.state_id.name"/>
-, 
+,
 <t class="oe_inline" t-esc="picking.book_id.report_partner_id.country_id.name"/>
 ^FS ^FO50,250^GB700,3,3^FS
 </t>
@@ -52,7 +52,7 @@
 )<t t-esc="picking.company_id.city"/>
 ^FS ^FO50,195^FD
 <t class="oe_inline" t-esc="picking.company_id.state_id.name"/>
-, 
+,
 <t class="oe_inline" t-esc="picking.company_id.country_id.name"/>
 
 ^FS ^FO50,250^GB700,3,3^FS
@@ -75,11 +75,11 @@
 <t t-esc="picking.partner_id.street"/>
 ^FS ^FO50,465^FD
 <t class="oe_inline" t-esc="picking.partner_id.zip"/>
-, 
+,
 <t class="oe_inline" t-esc="picking.partner_id.city"/>
 ^FS ^FO50,505^FD
 <t class="oe_inline" t-esc="picking.partner_id.state_id.name"/>
-, 
+,
 <t class="oe_inline" t-esc="picking.partner_id.country_id.name"/>
 ^FS ^FO50,545^FDTel: ^FS
 <t t-if="picking.partner_id and (picking.partner_id.phone != False or picking.partner_id.mobile != False)">
@@ -182,7 +182,7 @@ Fecha
 )                                            <span t-field="picking.book_id.company_id.city"/>
                                             <br/>
                                             <span class="oe_inline" t-field="picking.book_id.company_id.state_id.name"/>
-, 
+,
                                             <span class="oe_inline" t-field="picking.book_id.company_id.country_id.name"/>
                                         </t>
                                     </t>
@@ -224,7 +224,7 @@ Fecha
                             <t class="oe_inline" t-esc="picking.partner_id.city"/>
                     ,
                             <t class="oe_inline" t-esc="picking.partner_id.state_id.name"/>
-, 
+,
                             <t class="oe_inline" t-esc="picking.partner_id.country_id.name"/>
                             <div style="font-weight: normal;">Tel:
                                 <t t-if="picking.partner_id and (picking.partner_id.phone != False or picking.partner_id.mobile != False)">

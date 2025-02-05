@@ -18,25 +18,21 @@
 #
 ##############################################################################
 {
-    'name': 'Stock Lot Information',
-    'version': "18.0.1.0.0",
-    'category': 'Warehouse Management',
-    'sequence': 14,
-    'summary': '',
-    'author': 'ADHOC SA',
-    'website': 'www.adhoc.com.ar',
-    'license': 'AGPL-3',
-    'images': [
+    "name": "Stock Lot Information",
+    "version": "18.0.1.0.0",
+    "category": "Warehouse Management",
+    "sequence": 14,
+    "summary": "",
+    "author": "ADHOC SA",
+    "website": "www.adhoc.com.ar",
+    "license": "AGPL-3",
+    "images": [],
+    "depends": [
+        "stock",
     ],
-    'depends': [
-        'stock',
-    ],
-    'data': [
-        'views/stock_lot_views.xml'
-    ],
-    'demo': [
-    ],
-    'installable': True,
-    'auto_install': False,
-    'application': False,
+    "data": ["views/stock_lot_views.xml"],
+    "demo": [],
+    "installable": True,
+    "auto_install": False,
+    "application": False,
 }

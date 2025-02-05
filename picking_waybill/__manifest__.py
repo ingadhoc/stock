@@ -18,27 +18,25 @@
 #
 ##############################################################################
 {
-    'name': 'Picking Waybill',
-    'version': "18.0.1.0.0",
-    'category': 'Warehouse Management',
-    'sequence': 14,
-    'summary': '',
-    'author': 'ADHOC SA',
-    'website': 'www.adhoc.com.ar',
-    'license': 'AGPL-3',
-    'images': [
+    "name": "Picking Waybill",
+    "version": "18.0.1.0.0",
+    "category": "Warehouse Management",
+    "sequence": 14,
+    "summary": "",
+    "author": "ADHOC SA",
+    "website": "www.adhoc.com.ar",
+    "license": "AGPL-3",
+    "images": [],
+    "depends": [
+        "stock",
+        "report_aeroo",
+        "stock_voucher",
     ],
-    'depends': [
-        'stock',
-        'report_aeroo',
-        'stock_voucher',
+    "data": [
+        "report/stock_report_data.xml",
     ],
-    'data': [
-        'report/stock_report_data.xml',
-    ],
-    'demo': [
-    ],
-    'installable': True,
-    'auto_install': False,
-    'application': False,
+    "demo": [],
+    "installable": True,
+    "auto_install": False,
+    "application": False,
 }

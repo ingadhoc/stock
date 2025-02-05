@@ -18,29 +18,27 @@
 #
 ##############################################################################
 {
-    'name': 'Stock Voucher UX',
-    'version': "18.0.1.0.0",
-    'category': 'Warehouse Management',
-    'sequence': 14,
-    'summary': '',
-    'author': 'ADHOC SA',
-    'website': 'www.adhoc.com.ar',
-    'license': 'AGPL-3',
-    'images': [
+    "name": "Stock Voucher UX",
+    "version": "18.0.1.0.0",
+    "category": "Warehouse Management",
+    "sequence": 14,
+    "summary": "",
+    "author": "ADHOC SA",
+    "website": "www.adhoc.com.ar",
+    "license": "AGPL-3",
+    "images": [],
+    "depends": [
+        "stock_voucher",
+        "report_aeroo",
+        "l10n_ar_stock",
     ],
-    'depends': [
-        'stock_voucher',
-        'report_aeroo',
-        'l10n_ar_stock',
+    "data": [
+        "views/stock_book_views.xml",
+        "views/stock_picking_views.xml",
+        "views/report_deliveryslip.xml",
     ],
-    'data': [
-        'views/stock_book_views.xml',
-        'views/stock_picking_views.xml',
-        'views/report_deliveryslip.xml',
-    ],
-    'demo': [
-    ],
-    'installable': True,
-    'auto_install': False,
-    'application': False,
+    "demo": [],
+    "installable": True,
+    "auto_install": False,
+    "application": False,
 }

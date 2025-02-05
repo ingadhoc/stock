@@ -11,7 +11,7 @@ class StockPicking(models.Model):
     # sobreescribimos esta funcion por el FIX, deberia ir a la oca una vez
     # depurado
     def force_transfer(self, force_qty=True):
-        """ Do the picking transfer (by calling do_transfer)
+        """Do the picking transfer (by calling do_transfer)
 
         If *force_qty* is True, force the transfer for all product_qty
         when quantity is 0.
@@ -20,13 +20,13 @@ class StockPicking(models.Model):
         If a picking has no quantity filled, we released it from his batch
         """
         for pick in self:
-            if pick.state != 'assigned':
+            if pick.state != "assigned":
                 pick.action_assign()
                 # FIX
                 # fix porque si el picking esta parcialmente disponible
                 # no lo termina procesando
                 # if pick.state != 'assigned':
-                if pick.state not in ['assigned', 'partially_available']:
+                if pick.state not in ["assigned", "partially_available"]:
                     continue
                 # END FIX
 
@@ -35,10 +35,9 @@ class StockPicking(models.Model):
                     pack.quantity = pack.quantity
             else:
                 if all(
-                        float_is_zero(
-                            pack.quantity,
-                            precision_rounding=pack.product_uom_id.rounding)
-                        for pack in pick.move_line_ids):
+                    float_is_zero(pack.quantity, precision_rounding=pack.product_uom_id.rounding)
+                    for pack in pick.move_line_ids
+                ):
                     # No qties to process, release out of the batch
                     pick.batch_id = False
                     continue
@@ -50,10 +49,10 @@ class StockPicking(models.Model):
             pick._action_done()
 
     def _action_generate_backorder_wizard(self, show_transfers=False):
-        if self._context.get('picking_batches', False):
-            wiz = self.env['stock.backorder.confirmation'].create({'pick_ids': [(4, p.id) for p in self]})
+        if self._context.get("picking_batches", False):
+            wiz = self.env["stock.backorder.confirmation"].create({"pick_ids": [(4, p.id) for p in self]})
             wiz.process()
-            self._context.get('picking_batches').write({'state': 'done'})
+            self._context.get("picking_batches").write({"state": "done"})
             return True
         else:
             return super(StockPicking, self)._action_generate_backorder_wizard(show_transfers=show_transfers)

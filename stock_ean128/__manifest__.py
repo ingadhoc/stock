@@ -18,26 +18,24 @@
 #
 ##############################################################################
 {
-    'name': 'Stock EAN128',
-    'version': "16.0.1.0.0",
-    'category': 'Warehouse Management',
-    'sequence': 14,
-    'summary': '',
-    'author': 'ADHOC SA',
-    'website': 'www.adhoc.com.ar',
-    'license': 'AGPL-3',
-    'images': [
+    "name": "Stock EAN128",
+    "version": "16.0.1.0.0",
+    "category": "Warehouse Management",
+    "sequence": 14,
+    "summary": "",
+    "author": "ADHOC SA",
+    "website": "www.adhoc.com.ar",
+    "license": "AGPL-3",
+    "images": [],
+    "depends": [
+        "stock",
     ],
-    'depends': [
-        'stock',
+    "data": [
+        "views/stock_production_lot.xml",
+        "views/product_template.xml",
     ],
-    'data': [
-        'views/stock_production_lot.xml',
-        'views/product_template.xml',
-    ],
-    'demo': [
-    ],
-    'installable': False,
-    'auto_install': False,
-    'application': False,
+    "demo": [],
+    "installable": False,
+    "auto_install": False,
+    "application": False,
 }

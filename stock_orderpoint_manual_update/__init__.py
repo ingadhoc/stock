@@ -8,6 +8,6 @@ from odoo import api, SUPERUSER_ID
 
 
 def uninstall_hook(env):
-    menu = env.ref('stock.menu_reordering_rules_replenish', raise_if_not_found=False)
+    menu = env.ref("stock.menu_reordering_rules_replenish", raise_if_not_found=False)
     if menu:
-        menu.action = env.ref('stock.action_replenishment')
+        menu.action = env.ref("stock.action_replenishment")

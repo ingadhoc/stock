@@ -24,13 +24,14 @@ def set_stock_location_removal_priority_default(env):
     WHERE table_name='stock_location' AND
     column_name='removal_priority'""")
     if not env.cr.fetchone():
-        logger.info('Creating field removal_priority on stock_location')
+        logger.info("Creating field removal_priority on stock_location")
         env.cr.execute(
             """
             ALTER TABLE stock_location
             ADD COLUMN removal_priority integer
             DEFAULT 10;
-            """)
+            """
+        )
 
 
 def set_stock_quant_removal_priority_default(env):
@@ -39,10 +40,11 @@ def set_stock_quant_removal_priority_default(env):
     WHERE table_name='stock_quant' AND
     column_name='removal_priority'""")
     if not env.cr.fetchone():
-        logger.info('Creating field removal_priority on stock_quant')
+        logger.info("Creating field removal_priority on stock_quant")
         env.cr.execute(
             """
             ALTER TABLE stock_quant
             ADD COLUMN removal_priority integer
             DEFAULT 10;
-            """)
+            """
+        )

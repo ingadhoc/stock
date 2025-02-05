@@ -7,8 +7,8 @@ from odoo import api, fields, models
 
 
 class StockRequestOrder(models.Model):
-    _inherit = 'stock.request.order'
-    _order = 'id desc'
+    _inherit = "stock.request.order"
+    _order = "id desc"
 
     # este pickings es analogo al pickings de venta pero implementado mas facil
     # odoo en ventas agrega un campo en el procurement group y related en
@@ -18,10 +18,10 @@ class StockRequestOrder(models.Model):
     # como al final tmb se puede cancelar una linea (stock request), lo
     # implementamos en las lineas directamente el cancelar
     picking_ids = fields.One2many(
-        compute='_compute_picking_ids',
+        compute="_compute_picking_ids",
     )
     picking_count = fields.Integer(
-        compute='_compute_picking_ids',
+        compute="_compute_picking_ids",
     )
     procurement_group_id = fields.Many2one(
         copy=False,
@@ -30,18 +30,13 @@ class StockRequestOrder(models.Model):
         change_default=True,
     )
 
-    @api.depends('procurement_group_id')
+    @api.depends("procurement_group_id")
     def _compute_picking_ids(self):
-        sro_with_procurement = self.filtered('procurement_group_id')
-        (self - sro_with_procurement).update({
-            'picking_ids': self.env['stock.picking'],
-            'picking_count': 0
-            })
+        sro_with_procurement = self.filtered("procurement_group_id")
+        (self - sro_with_procurement).update({"picking_ids": self.env["stock.picking"], "picking_count": 0})
         for rec in sro_with_procurement:
-            all_moves = self.env['stock.move'].search(
-                [('group_id', '=', rec.procurement_group_id.id)]
-            )
-            rec.picking_ids = all_moves.mapped('picking_id')
+            all_moves = self.env["stock.move"].search([("group_id", "=", rec.procurement_group_id.id)])
+            rec.picking_ids = all_moves.mapped("picking_id")
             rec.picking_count = len(rec.picking_ids)
 
     @api.model_create_multi
@@ -51,14 +46,13 @@ class StockRequestOrder(models.Model):
             if not rec.procurement_group_id:
                 # setamos al group el partner del warehouse
                 # para que se propague a los pickings
-                group = self.env['procurement.group'].create({})
+                group = self.env["procurement.group"].create({})
                 rec.procurement_group_id = group.id
                 for stock_rq in rec.stock_request_ids:
-                    stock_rq.write(
-                        {'procurement_group_id': rec.procurement_group_id.id})
+                    stock_rq.write({"procurement_group_id": rec.procurement_group_id.id})
         return recs
 
-    @api.onchange('route_id')
+    @api.onchange("route_id")
     def onchange_procurement_group_id(self):
         for line in self.stock_request_ids:
             if self.route_id.id in line.route_ids.ids:

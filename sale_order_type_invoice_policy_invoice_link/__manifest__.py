@@ -18,24 +18,19 @@
 #
 ##############################################################################
 {
-    'name': 'sale order type invoice policy invoice link',
-    'version': "16.0.1.0.0",
-    'category': 'Warehouse Management',
-    'sequence': 14,
-    'summary': '',
-    'author': 'ADHOC SA',
-    'website': 'www.adhoc.com.ar',
-    'license': 'AGPL-3',
-    'images': [
-    ],
-    'depends': [
-        'sale_order_type_invoice_policy','stock_picking_invoice_link'
-    ],
-    'data': [
- ],
-    'demo': [
-    ],
-    'installable': False,
-    'auto_install': True,
-    'application': False,
+    "name": "sale order type invoice policy invoice link",
+    "version": "16.0.1.0.0",
+    "category": "Warehouse Management",
+    "sequence": 14,
+    "summary": "",
+    "author": "ADHOC SA",
+    "website": "www.adhoc.com.ar",
+    "license": "AGPL-3",
+    "images": [],
+    "depends": ["sale_order_type_invoice_policy", "stock_picking_invoice_link"],
+    "data": [],
+    "demo": [],
+    "installable": False,
+    "auto_install": True,
+    "application": False,
 }
