@@ -29,12 +29,11 @@ class ReportController(report.ReportController):
         context_dict = json.loads(decoded_context)
         batch_id  = context_dict.get('active_id')
         batch  = context_dict.get('batch')
-        book_id = request.env['stock.picking.batch'].browse(batch_id).book_id
-        if batch and 'batch_picking_preprinted' in data:
-            if batch_id:
-                pdf_response = response.response[0]
-                reader = PdfFileReader(io.BytesIO(pdf_response))
-                number_pages = reader.getNumPages()
+        if batch and batch_id and 'batch_picking_preprinted' in data:
+            book_id = request.env['stock.picking.batch'].browse(batch_id).book_id
+            pdf_response = response.response[0]
+            reader = PdfFileReader(io.BytesIO(pdf_response))
+            number_pages = reader.getNumPages()
             if not request.env['stock.picking.batch'].browse(batch_id).voucher_ids:
                 request.env['stock.picking.batch'].browse(batch_id).assign_numbers(number_pages, book_id)
 
