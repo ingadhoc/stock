@@ -1,6 +1,7 @@
 
 from odoo.addons.stock_picking_invoice_link.models.stock_move import StockMove
 from odoo.exceptions import UserError
+from odoo import _
 
 
 def new_write(self, vals):
