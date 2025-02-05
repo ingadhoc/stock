@@ -26,6 +26,7 @@ class ReportController(report.ReportController):
         context_part = json_string.split("context=")[1]
         decoded_context = urllib.parse.unquote(context_part)
         context_dict = json.loads(decoded_context)
+<<<<<<< HEAD
         batch_id = context_dict.get("active_id")
         batch = context_dict.get("batch")
         if batch and batch_id and "batch_picking_preprinted" in data:
@@ -35,5 +36,27 @@ class ReportController(report.ReportController):
             number_pages = reader.getNumPages()
             if not request.env["stock.picking.batch"].browse(batch_id).voucher_ids:
                 request.env["stock.picking.batch"].browse(batch_id).assign_numbers(number_pages, book_id)
+||||||| parent of a5c80fd9 (temp)
+        batch_id  = context_dict.get('active_id')
+        batch  = context_dict.get('batch')
+        book_id = request.env['stock.picking.batch'].browse(batch_id).book_id
+        if batch and 'batch_picking_preprinted' in data:
+            if batch_id:
+                pdf_response = response.response[0]
+                reader = PdfFileReader(io.BytesIO(pdf_response))
+                number_pages = reader.getNumPages()
+            if not request.env['stock.picking.batch'].browse(batch_id).voucher_ids:
+                request.env['stock.picking.batch'].browse(batch_id).assign_numbers(number_pages, book_id)
+=======
+        batch_id  = context_dict.get('active_id')
+        batch  = context_dict.get('batch')
+        if batch and batch_id and 'batch_picking_preprinted' in data:
+            book_id = request.env['stock.picking.batch'].browse(batch_id).book_id
+            pdf_response = response.response[0]
+            reader = PdfFileReader(io.BytesIO(pdf_response))
+            number_pages = reader.getNumPages()
+            if not request.env['stock.picking.batch'].browse(batch_id).voucher_ids:
+                request.env['stock.picking.batch'].browse(batch_id).assign_numbers(number_pages, book_id)
+>>>>>>> a5c80fd9 (temp)
 
         return response
