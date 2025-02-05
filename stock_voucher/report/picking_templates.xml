@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-    <data>
         <template id="stock_voucher.custom_label_transfer_template_view_zpl">
                 <t t-foreach="docs" t-as="picking">
                         <t t-set="numero" t-value="0"/>
@@ -307,5 +306,4 @@ Transportista:
         </t>
     </template>
 
-</data>
 </odoo>
