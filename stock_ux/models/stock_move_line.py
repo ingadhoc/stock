@@ -36,6 +36,8 @@ class StockMoveLine(models.Model):
         related="move_id.origin_description",
     )
 
+    return_lot_ids = fields.Many2many(related="picking_id.return_lot_ids")
+
     @api.depends_context('location')
     def _compute_product_uom_qty_location(self):
         location = self._context.get('location')

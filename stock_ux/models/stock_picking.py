@@ -27,6 +27,11 @@ class StockPicking(models.Model):
         copy=False,
     )
 
+    return_picking_id = fields.Many2one(
+        comodel_name="stock.picking", store=True
+    )
+    return_lot_ids = fields.Many2many("stock.lot", string="lotes de la entrega devuelta", copy=False, store = True)
+
     def unlink(self):
         """
         To avoid errors we block deletion of pickings in other state than
@@ -117,3 +122,22 @@ class StockPicking(models.Model):
                 _("Be careful about the number of packages you are trying to insert. "
                   "It may cause an error when trying to render the 'Shipping Label' template")
             )
+
+    def button_validate(self):
+        res = super().button_validate()
+        if not self.return_picking_id and self.picking_type_id.code == 'outgoing':
+            self.write({'return_lot_ids': self.move_line_ids.filtered(lambda l: l.quantity > 0).mapped("lot_id")})
+        if self.return_picking_id:
+            for rec in self.move_line_ids:
+                if self.return_lot_ids:
+                    if rec.lot_id and rec.product_id.tracking == 'serial':
+                        self.return_picking_id.write({
+                            'return_lot_ids': [(3, rec.lot_id.id)]
+                        })
+                    if rec.lot_id and rec.product_id.tracking == 'lot':
+                        if rec.quantity_product_uom == sum(self.return_picking_id.sale_id.order_line.filtered(lambda l: l.product_id == rec.product_id).mapped('qty_delivered')):
+                            self.return_picking_id.write({
+                                'return_lot_ids': [(3, rec.lot_id.id)]
+                            })
+
+        return res
