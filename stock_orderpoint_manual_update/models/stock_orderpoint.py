@@ -55,6 +55,7 @@ class StockWarehouseOrderpoint(models.Model):
     @api.onchange('qty_on_hand', 'qty_forecast_stored')
     def _change_review_toggle_negative(self):
             self.reviewed = False
+            self.update_qty_to_order_orderpoint()
 
     @api.onchange('qty_to_order')
     def _change_review_toggle_positive(self):
@@ -63,3 +64,7 @@ class StockWarehouseOrderpoint(models.Model):
     def action_replenish(self):
         self._change_review_toggle_negative()
         return super(StockWarehouseOrderpoint, self).action_replenish()
+    
+    def update_qty_to_order_orderpoint(self):
+        # Esto lo hacemos ya que el metodo es privado y no podemos llamarlo luego en el .js
+        self._compute_qty_to_order()

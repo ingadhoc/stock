@@ -19,7 +19,7 @@
 ##############################################################################
 {
     'name': 'Stock UX',
-    'version': "16.0.2.23.0",
+    'version': "16.0.2.24.0",
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
@@ -61,6 +61,7 @@
         'web.assets_backend': [
             'stock_ux/static/src/**/*.xml',
             'stock_ux/static/src/**/*.js',
+            'stock_ux/static/src/views/**/*',
         ],
     },
     'license': 'AGPL-3',

@@ -5,7 +5,7 @@
 
 from odoo import models, fields, api
 from odoo.osv import expression
-
+from odoo.tools import float_compare
 
 class StockWarehouseOrderpoint(models.Model):
     _name = 'stock.warehouse.orderpoint'
@@ -89,3 +89,6 @@ class StockWarehouseOrderpoint(models.Model):
         ])
         return action
 
+    def update_qty_to_order(self):
+        # Redefinimos ya que el metodo _compute_qty_to_order es privado
+        self._compute_qty_to_order()

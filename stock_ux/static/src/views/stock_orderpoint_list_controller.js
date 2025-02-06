@@ -1,9 +1,8 @@
-/** @odoo-module */
-
+/** @odoo-module **/
 import { patch } from "@web/core/utils/patch";
 import { StockOrderpointListController } from '@stock/views/stock_orderpoint_list_controller';
 
-patch(StockOrderpointListController.prototype, "order patch", {
+patch(StockOrderpointListController.prototype, "stock_orderpoint_patch", {
     async onClickOrder() {
         const resIds = await this.getSelectedResIds();
         const action = await this.model.orm.call(this.props.resModel, 'action_replenish', [resIds], {
@@ -14,7 +13,7 @@ patch(StockOrderpointListController.prototype, "order patch", {
         }
         await this.model.orm.call(
             'stock.warehouse.orderpoint',
-            'update_qty_to_order_orderpoint',
+            'update_qty_to_order',
             [resIds]
         );
         return await this.actionService.doAction('stock.action_orderpoint_replenish', {
@@ -22,4 +21,3 @@ patch(StockOrderpointListController.prototype, "order patch", {
         });
     }
 });
-
