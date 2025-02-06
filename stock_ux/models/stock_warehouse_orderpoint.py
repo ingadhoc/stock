@@ -104,3 +104,7 @@ class StockWarehouseOrderpoint(models.Model):
         self._change_review_toggle_negative()
         return super(
             StockWarehouseOrderpoint, self).action_replenish(force_to_max)
+
+    def _update_orderpoints(self):
+            self._compute_rotation()
+            super()._update_orderpoints()
