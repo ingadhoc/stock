@@ -19,7 +19,7 @@
 ##############################################################################
 {
     "name": "Preprinted report in batch pickings",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.1.0",
     "category": "Warehouse Management",
     "sequence": 14,
     "summary": "",
@@ -35,6 +35,7 @@
         "stock_voucher",
     ],
     "data": [
+        "report/batch_picking_preprinted_data.xml",
         "views/stock_batch_picking_views.xml",
         "views/stock_picking_views.xml",
     ],
