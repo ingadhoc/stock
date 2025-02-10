@@ -83,7 +83,6 @@ class StockPickingBatch(models.Model):
 
     def do_print_batch_vouchers(self):
         """This function prints the voucher"""
-        # self.env.ref('stock_batch_picking_voucher.batch_picking_preprinted').report_action(self)
         return self.env.ref("stock_batch_picking_voucher.batch_picking_preprinted").report_action(self)
 
     def do_clean(self):
