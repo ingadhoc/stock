@@ -4,14 +4,15 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025
+# Matias Velazquez, 2025
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-03 14:01+0000\n"
+"POT-Creation-Date: 2025-02-12 00:57+0000\n"
 "PO-Revision-Date: 2025-01-03 14:01+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025\n"
+"Last-Translator: Matias Velazquez, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -30,12 +31,12 @@ msgstr ""
 #. module: stock_batch_picking_voucher
 #: model:ir.model.fields,field_description:stock_batch_picking_voucher.field_stock_picking_batch__next_number
 msgid "Actual Next Number"
-msgstr ""
+msgstr "Número siguiente real"
 
 #. module: stock_batch_picking_voucher
 #: model:ir.model.fields,field_description:stock_batch_picking_voucher.field_stock_picking_voucher__batch_id
 msgid "Batch"
-msgstr ""
+msgstr "Lote"
 
 #. module: stock_batch_picking_voucher
 #: model:ir.model,name:stock_batch_picking_voucher.model_stock_picking_batch
@@ -45,7 +46,7 @@ msgstr "Traslado por lote"
 #. module: stock_batch_picking_voucher
 #: model:ir.model.fields,field_description:stock_batch_picking_voucher.field_stock_picking_batch__book_id
 msgid "Book"
-msgstr ""
+msgstr "Talonario"
 
 #. module: stock_batch_picking_voucher
 #: model_terms:ir.ui.view,arch_db:stock_batch_picking_voucher.stock_batch_picking_form
@@ -65,7 +66,7 @@ msgstr ""
 #. module: stock_batch_picking_voucher
 #: model:ir.model.fields,field_description:stock_batch_picking_voucher.field_stock_picking_batch__next_voucher_number
 msgid "Next Voucher Number"
-msgstr ""
+msgstr "Número del siguiente remito"
 
 #. module: stock_batch_picking_voucher
 #: model:ir.model.fields,help:stock_batch_picking_voucher.field_stock_picking_batch__next_number
@@ -74,11 +75,13 @@ msgid ""
 "Next number that will be used. This number can be incremented frequently so "
 "the displayed value might already be obsolete"
 msgstr ""
+"Próximo número que será utilizado. Este número puede incrementarse "
+"frecuentemente, por lo que el valor mostrado podría ya ser obsoleto."
 
 #. module: stock_batch_picking_voucher
 #: model:ir.model.fields,field_description:stock_batch_picking_voucher.field_stock_picking_batch__estimated_number_of_pages
 msgid "Number of Pages"
-msgstr ""
+msgstr "Número de páginas"
 
 #. module: stock_batch_picking_voucher
 #. odoo-python
@@ -94,12 +97,12 @@ msgstr "Recolección"
 #. module: stock_batch_picking_voucher
 #: model_terms:ir.ui.view,arch_db:stock_batch_picking_voucher.stock_batch_picking_form
 msgid "Print pre-printed report"
-msgstr ""
+msgstr "Imprimir reporte preimpreso"
 
 #. module: stock_batch_picking_voucher
 #: model:ir.model.fields,field_description:stock_batch_picking_voucher.field_stock_picking_batch__printed
 msgid "Printed"
-msgstr ""
+msgstr "Impreso"
 
 #. module: stock_batch_picking_voucher
 #: model_terms:ir.ui.view,arch_db:stock_batch_picking_voucher.stock_batch_picking_form
@@ -107,6 +110,8 @@ msgid ""
 "Prints pre-printed report and assigns vouchers depending on the number of "
 "sheets to be printed (automatic calculation)"
 msgstr ""
+"Imprime el reporte preimpreso y asigna los remitos dependiendo el número de "
+"páginas a imprimir (cáculo automático)."
 
 #. module: stock_batch_picking_voucher
 #: model:ir.model.fields,field_description:stock_batch_picking_voucher.field_stock_picking_batch__voucher_ids
@@ -127,9 +132,9 @@ msgstr ""
 #. odoo-python
 #: code:addons/stock_batch_picking_voucher/models/stock_picking_batch.py:0
 msgid "The assigned voucher were deleted"
-msgstr ""
+msgstr "Los remitos asignados fueron eliminados"
 
 #. module: stock_batch_picking_voucher
 #: model:ir.model.fields,field_description:stock_batch_picking_voucher.field_stock_picking_batch__with_vouchers
 msgid "With Vouchers"
-msgstr ""
+msgstr "Con Remitos"

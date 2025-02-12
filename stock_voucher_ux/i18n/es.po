@@ -3,13 +3,15 @@
 # 	* stock_voucher_ux
 # 
 # Translators:
+# Matias Velazquez, 2025
+# ced_adhoc, 2025
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-14 16:39+0000\n"
+"POT-Creation-Date: 2025-02-12 01:01+0000\n"
 "PO-Revision-Date: 2025-01-14 16:39+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
@@ -33,12 +35,12 @@ msgstr "Talonario de Remitos"
 #. module: stock_voucher_ux
 #: model_terms:ir.ui.view,arch_db:stock_voucher_ux.report_delivery_document
 msgid "CAI Due Date:"
-msgstr ""
+msgstr "Fecha Vto CAI:"
 
 #. module: stock_voucher_ux
 #: model_terms:ir.ui.view,arch_db:stock_voucher_ux.report_delivery_document
 msgid "CAI:"
-msgstr ""
+msgstr "CAI:"
 
 #. module: stock_voucher_ux
 #: model_terms:ir.ui.view,arch_db:stock_voucher_ux.view_picking_form
@@ -58,7 +60,7 @@ msgstr ""
 #. module: stock_voucher_ux
 #: model:ir.model.fields,field_description:stock_voucher_ux.field_stock_picking__next_voucher_number
 msgid "Next Voucher Number"
-msgstr ""
+msgstr "Numero del siguiente remito"
 
 #. module: stock_voucher_ux
 #: model:ir.model.fields,help:stock_voucher_ux.field_stock_picking__next_voucher_number
@@ -66,6 +68,8 @@ msgid ""
 "Next number that will be used. This number can be incremented frequently so "
 "the displayed value might already be obsolete"
 msgstr ""
+"Próximo número que será utilizado. Este número puede incrementarse "
+"frecuentemente, por lo que el valor mostrado podría ya ser obsoleto."
 
 #. module: stock_voucher_ux
 #: model_terms:ir.ui.view,arch_db:stock_voucher_ux.report_delivery_document
@@ -73,6 +77,8 @@ msgid ""
 "Page: <span class=\"page\"/>\n"
 "/                   <span class=\"topage\"/>"
 msgstr ""
+"Página: <span class=\"page\"/>\n"
+"/                   <span class=\"topage\"/>"
 
 #. module: stock_voucher_ux
 #: model_terms:ir.ui.view,arch_db:stock_voucher_ux.view_picking_form
@@ -102,4 +108,4 @@ msgstr "Traslado"
 #. module: stock_voucher_ux
 #: model:ir.model.fields,field_description:stock_voucher_ux.field_stock_picking__with_vouchers
 msgid "With Vouchers"
-msgstr ""
+msgstr "Con Remitos"

@@ -3,13 +3,14 @@
 # 	* stock_voucher
 # 
 # Translators:
+# Matias Velazquez, 2025
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-03 18:09+0000\n"
+"POT-Creation-Date: 2025-02-12 01:00+0000\n"
 "PO-Revision-Date: 2024-11-20 17:04+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
@@ -47,6 +48,7 @@ msgid "Backorder Confirmation"
 msgstr "Confirmación de entrega parcial"
 
 #. module: stock_voucher
+#: model:ir.model.fields,field_description:stock_voucher.field_stock_picking__book_id
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_type__book_id
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_print_stock_voucher__book_id
 msgid "Book"
@@ -239,22 +241,22 @@ msgstr "Líneas de Remito"
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_zpl_lines__move_id
 msgid "Move"
-msgstr ""
+msgstr "Movimiento"
 
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_zpl_lines__move_quantity
 msgid "Move Quantity"
-msgstr ""
+msgstr "Cantidad en el Movimiento"
 
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_zpl_lines__move_uom_id
 msgid "Move Uom"
-msgstr ""
+msgstr "Unidad de Medida del Movimiento"
 
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_product_label_layout__line_ids
 msgid "Moves"
-msgstr ""
+msgstr "Movimientos"
 
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_book__name
@@ -351,7 +353,7 @@ msgstr "Imprimir Remito"
 #. module: stock_voucher
 #: model:ir.model,name:stock_voucher.model_stock_picking_zpl_lines
 msgid "Print Stock Voucher lines"
-msgstr ""
+msgstr "Imprimir Líneas de Remito"
 
 #. module: stock_voucher
 #: model_terms:ir.ui.view,arch_db:stock_voucher.view_print_stock_voucher_form
@@ -445,7 +447,6 @@ msgid "Unidad"
 msgstr ""
 
 #. module: stock_voucher
-#: model:ir.model.fields,field_description:stock_voucher.field_stock_picking__book_id
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_voucher__book_id
 msgid "Voucher Book"
 msgstr "Talonario de Remitos"
@@ -499,4 +500,4 @@ msgstr "o"
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_product_label_layout__picking_id
 msgid "picking"
-msgstr ""
+msgstr "Traslado"

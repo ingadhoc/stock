@@ -4,14 +4,15 @@
 # 
 # Translators:
 # Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024
+# María Florencia Frigieri Parma, 2025
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-19 18:51+0000\n"
+"POT-Creation-Date: 2025-02-12 00:58+0000\n"
 "PO-Revision-Date: 2024-11-14 20:35+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024\n"
+"Last-Translator: María Florencia Frigieri Parma, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -25,6 +26,9 @@ msgid ""
 "<i class=\"fa fa-info-circle\"/>This action will create replenishment lines "
 "for products that matches this criteria."
 msgstr ""
+"Esta acción creará todas las líneas de reabastecimiento necesarias para "
+"todos los productos que cumplan con los criterios seleccionados en los "
+"filtros."
 
 #. module: stock_orderpoint_manual_update
 #: model_terms:ir.ui.view,arch_db:stock_orderpoint_manual_update.stock_warehouse_orderpoint_wizard
@@ -148,7 +152,7 @@ msgstr "Categoría de Producto"
 #. module: stock_orderpoint_manual_update
 #: model_terms:ir.ui.view,arch_db:stock_orderpoint_manual_update.stock_warehouse_orderpoint_wizard
 msgid "Replenishment Filter Wizard"
-msgstr ""
+msgstr "Asistente para filtro de reabastecimientos"
 
 #. module: stock_orderpoint_manual_update
 #: model:ir.model.fields,field_description:stock_orderpoint_manual_update.field_stock_warehouse_orderpoint__rotation
@@ -163,7 +167,7 @@ msgstr "Rotación DesvStd"
 #. module: stock_orderpoint_manual_update
 #: model:ir.model,name:stock_orderpoint_manual_update.model_stock_warehouse_orderpoint_wizard
 msgid "Stock Warehouse Orderpoint Wizard"
-msgstr ""
+msgstr "Asistente para reglas de abastecimiento"
 
 #. module: stock_orderpoint_manual_update
 #: model:ir.model.fields,field_description:stock_orderpoint_manual_update.field_stock_warehouse_orderpoint_wizard__supplier_ids
