@@ -32,7 +32,7 @@
         "report_aeroo",
         "l10n_latam_base",
         "delivery_ux",
-        "stock_voucher",
+        "stock_voucher_ux",
     ],
     "data": [
         "report/batch_picking_preprinted_data.xml",
