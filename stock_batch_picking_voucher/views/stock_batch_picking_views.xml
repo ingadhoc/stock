@@ -11,6 +11,9 @@
                 <button name="do_print_batch_vouchers" invisible="state not in ('done')" string="Imprimir" type="object" help="Print pre-printed report"/>
                 <button name="do_clean" invisible="not voucher_ids" string="Limpiar remitos" type="object"/>
             </button>
+            <button name="action_print" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </button>
             <field name="user_id" position="after">
                 <field name="book_id" readonly="voucher_ids" string="Talonario"/>
                 <field name="next_number" invisible="not book_id or voucher_ids"/>
