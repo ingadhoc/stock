@@ -19,7 +19,7 @@
 ##############################################################################
 {
     "name": "Preprinted report in batch pickings",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.1.0",
     "category": "Warehouse Management",
     "sequence": 14,
     "summary": "",
@@ -32,7 +32,7 @@
         "report_aeroo",
         "l10n_latam_base",
         "delivery_ux",
-        "stock_voucher",
+        "stock_voucher_ux",
     ],
     "data": [
         "views/stock_batch_picking_views.xml",
