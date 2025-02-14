@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-12 01:00+0000\n"
+"POT-Creation-Date: 2025-02-13 14:16+0000\n"
 "PO-Revision-Date: 2024-11-20 17:04+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
@@ -246,7 +246,7 @@ msgstr "Movimiento"
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_zpl_lines__move_quantity
 msgid "Move Quantity"
-msgstr "Cantidad en el Movimiento"
+msgstr "Cantidad del Movimiento"
 
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_zpl_lines__move_uom_id
@@ -320,7 +320,7 @@ msgstr "Remito"
 #. module: stock_voucher
 #: model:ir.model.fields,field_description:stock_voucher.field_stock_picking_zpl_lines__picking_zpl_id
 msgid "Picking Zpl"
-msgstr ""
+msgstr "ZPL de Traslado"
 
 #. module: stock_voucher
 #. odoo-python
@@ -353,7 +353,7 @@ msgstr "Imprimir Remito"
 #. module: stock_voucher
 #: model:ir.model,name:stock_voucher.model_stock_picking_zpl_lines
 msgid "Print Stock Voucher lines"
-msgstr "Imprimir Líneas de Remito"
+msgstr "Imprimir las Líneas de Remito"
 
 #. module: stock_voucher
 #: model_terms:ir.ui.view,arch_db:stock_voucher.view_print_stock_voucher_form
