@@ -14,6 +14,7 @@
 Stock UX
 ========
 
+
 #. Add observations on pickings (and deliveryslip)
 #. Add a wizard action in the stock move lines of a picking to change locations for several lines at the same time with the 'Manage Multiple Stock Locations' permission.
 #. Show always visible (for an existing lots configuration in the type operation) the notebook pages in lot form view when create and edit a lot from a stock move line.
