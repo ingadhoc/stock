@@ -13,6 +13,8 @@ class StockMove(models.Model):
         self.ensure_one()
         price_unit = super()._get_price_unit()
         precision = self.env['decimal.precision'].precision_get('Product Price')
+        if float_is_zero(price_unit, precision):
+            return price_unit
         if self.picking_id.currency_rate and self.purchase_line_id.order_id.currency_id == self.picking_id.valuation_currency_id:
             price_unit = self.purchase_line_id.price_unit / self.picking_id.currency_rate
         return price_unit if not float_is_zero(price_unit, precision) or self._should_force_price_unit() else self.product_id.standard_price
@@ -48,10 +50,10 @@ class StockMove(models.Model):
 
             qty = forced_qty or qty_done
             if float_is_zero(product_tot_qty_available, precision_rounding=rounding):
-                new_std_price_in_currency = move._get_currency_price_unit()
+                new_std_price_in_currency = move._get_currency_price_unit(default=move.product_id.standard_price_in_currency)
             elif float_is_zero(product_tot_qty_available + move.product_qty, precision_rounding=rounding) or \
                     float_is_zero(product_tot_qty_available + qty, precision_rounding=rounding):
-                new_std_price_in_currency = move._get_currency_price_unit()
+                new_std_price_in_currency = move._get_currency_price_unit(default=move.product_id.standard_price_in_currency)
             else:
                 # Get the standard price
                 amount_unit = std_price_update.get((move.company_id.id, move.product_id.id)) or move.product_id.with_company(move.company_id).standard_price_in_currency
@@ -68,7 +70,7 @@ class StockMove(models.Model):
                                   and float_is_zero(move.product_id.sudo().quantity_svl, precision_rounding=move.product_id.uom_id.rounding)):
             move.product_id.with_company(move.company_id.id).sudo().write({'standard_price_in_currency': move._get_currency_price_unit()})
 
-    def _get_currency_price_unit(self):
+    def _get_currency_price_unit(self, default = 0.0):
         """ Returns the unit price from this stock move """
         self.ensure_one()
         currency_id = self.company_id.currency_id
@@ -94,7 +96,7 @@ class StockMove(models.Model):
             layers |= layers.stock_valuation_layer_ids
             quantity = sum(layers.mapped("quantity"))
             return sum(layers.mapped("value_in_currency")) / quantity if not float_is_zero(quantity, precision_rounding=layers.uom_id.rounding) else 0
-        return price_unit if not float_is_zero(price_unit, precision) or self._should_force_price_unit() else self.product_id.standard_price_in_currency
+        return price_unit if not float_is_zero(price_unit, precision) or self._should_force_price_unit() else default
 
     def _get_accounting_data_for_valuation(self):
         journal_id, acc_src, acc_dest, acc_valuation = super()._get_accounting_data_for_valuation()
