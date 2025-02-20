@@ -75,21 +75,7 @@ class StockPicking(models.Model):
             self.move_ids.update(
                 {'location_dest_id': self.location_dest_id.id})
 
-    def action_done(self):
-        for picking in self:
-            # con esto arreglamos que odoo dejaria entregar varias veces el
-            # mismo picking si por alguna razon el boton esta presente
-            # en nuestro caso pasaba cuando la impresion da algun error
-            # lo que provoca que el picking se entregue pero la pantalla no
-            # se actualice
-            # antes lo haciamo en do_new_transfer, pero como algunas
-            # veces se llama este metodo sin pasar por do_new_transfer
-            if picking.state in ['done', 'cancel']:
-                raise UserError(_(
-                    'No se puede validar un picking que no esté en estado '
-                    'Parcialmente Disponible o Reservado, probablemente el '
-                    'picking ya fue validado, pruebe refrezcar la ventana!'))
-        res = super().action_done()
+    def _action_done(self):
         for rec in self.with_context(mail_notify_force_send=False).filtered('picking_type_id.mail_template_id'):
             try:
                 rec.message_post_with_template(rec.picking_type_id.mail_template_id.id)
@@ -104,7 +90,7 @@ class StockPicking(models.Model):
                     "<code>" + str(error) + "</code>"
                 ]),
                 )
-        return res
+        return super()._action_done()
 
     def new_force_availability(self):
         self.action_assign()
