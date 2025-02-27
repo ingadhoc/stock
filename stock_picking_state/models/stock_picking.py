@@ -3,6 +3,7 @@
 # directory
 ##############################################################################
 from odoo import api, fields, models
+from odoo.exceptions import ValidationError
 
 
 class StockPicking(models.Model):
@@ -24,3 +25,15 @@ class StockPicking(models.Model):
             if rec.state_detail_id and rec.state_detail_id in state_detail:
                 continue
             rec.state_detail_id = state_detail and state_detail[0]
+
+    @api.constrains("state_detail_id")
+    def change_state_detail_id(self):
+        for rec in self:
+            if rec.state_detail_id:
+                if (
+                    rec.picking_type_id.code != rec.state_detail_id.picking_type
+                    or rec.state != rec.state_detail_id.state
+                ):
+                    raise ValidationError(
+                        f"You're selecting a state detail that doesn’t belong to this state: {rec.state} or picking type: {rec.picking_type_id.code}"
+                    )
