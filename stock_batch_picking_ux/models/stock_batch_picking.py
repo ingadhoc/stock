@@ -7,7 +7,7 @@ from odoo.exceptions import UserError
 
 
 class StockPickingBatch(models.Model):
-    _inherit = "stock.picking.batch"
+    _inherit = 'stock.picking.batch'
 
     picking_type_code = fields.Selection(store=True)
     partner_id = fields.Many2one(
