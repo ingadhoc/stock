@@ -18,6 +18,7 @@
 #
 ##############################################################################
 {
+<<<<<<< HEAD
     "name": "Stock Voucher",
     "version": "18.0.1.1.0",
     "category": "Warehouse Management",
@@ -43,6 +44,27 @@
         "report/stock_report_views.xml",
         "report/ir.action.reports.xml",
         "report/picking_templates.xml",
+||||||| parent of f3dd861a (temp)
+    'name': 'Stock Voucher',
+    'version': "17.0.1.2.0",
+    'category': 'Warehouse Management',
+    'sequence': 14,
+    'summary': '',
+    'author': 'ADHOC SA',
+    'website': 'www.adhoc.com.ar',
+    'license': 'AGPL-3',
+    'images': [
+=======
+    'name': 'Stock Voucher',
+    'version': "17.0.1.3.0",
+    'category': 'Warehouse Management',
+    'sequence': 14,
+    'summary': '',
+    'author': 'ADHOC SA',
+    'website': 'www.adhoc.com.ar',
+    'license': 'AGPL-3',
+    'images': [
+>>>>>>> f3dd861a (temp)
     ],
     "demo": [],
     "installable": True,

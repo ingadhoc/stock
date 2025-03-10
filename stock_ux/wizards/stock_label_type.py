@@ -20,6 +20,7 @@ class ProductLabelLayout(models.TransientModel):
                 for x in move_ids
             ]
         return rec
+<<<<<<< HEAD
 
     def action_print(self):
         self.ensure_one()
@@ -28,9 +29,21 @@ class ProductLabelLayout(models.TransientModel):
         report_action["close_on_report_download"] = True
         return report_action
 
+||||||| parent of f3dd861a (temp)
+
+    def action_print(self):
+        self.ensure_one()
+        report_id = self.env.ref("stock_ux.action_custom_barcode_transfer_template_view_zpl")
+        report_action = report_id.report_action(self.ids)
+        report_action['close_on_report_download']=True
+        return report_action
+
+=======
+
+>>>>>>> f3dd861a (temp)
     def action_print_pdf(self):
         self.ensure_one()
-        report_id = self.env.ref("stock_ux.action_custom_label_transfer_template_view_pdf")
+        report_id = self.env.ref("stock_voucher.action_custom_label_transfer_template_view_pdf")
         report_action = report_id.report_action(self.ids)
         report_action["close_on_report_download"] = True
         return report_action

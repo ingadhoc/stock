@@ -1,4 +1,11 @@
+<<<<<<< HEAD
 from odoo import Command, api, exceptions, fields, models
+||||||| parent of f3dd861a (temp)
+from odoo import fields, api, models, Command, exceptions
+=======
+from odoo import fields, api, models, Command, exceptions
+from odoo.exceptions import UserError
+>>>>>>> f3dd861a (temp)
 
 
 class StockPickingZpl(models.TransientModel):
@@ -10,6 +17,7 @@ class StockPickingZpl(models.TransientModel):
     @api.model
     def default_get(self, default_fields):
         rec = super().default_get(default_fields)
+<<<<<<< HEAD
         active_ids = self._context.get("active_ids") or self._context.get("active_id")
         active_model = self._context.get("active_model")
         if active_model == "stock.picking":
@@ -18,20 +26,48 @@ class StockPickingZpl(models.TransientModel):
                 Command.create({"move_id": x.id, "move_quantity": x.quantity, "move_uom_id": x.product_uom})
                 for x in move_ids
             ]
+||||||| parent of f3dd861a (temp)
+        active_ids = self._context.get('active_ids') or self._context.get('active_id')
+        active_model = self._context.get('active_model')
+        if active_model == 'stock.picking':
+            move_ids = self.env[active_model].browse(active_ids).mapped('move_ids').filtered(lambda x: x.quantity > 0 )
+            rec['line_ids'] = [Command.create({'move_id': x.id, 'move_quantity':x.quantity,'move_uom_id': x.product_uom}) for x in move_ids]
+=======
+        active_ids = self._context.get('active_ids') or self._context.get('active_id')
+        active_model = self._context.get('active_model')
+        if active_model == 'stock.picking' and active_ids:
+            picking = self.env[active_model].browse(active_ids)
+            rec['picking_id'] = picking.id
+            move_ids = self.env[active_model].browse(active_ids).mapped('move_ids').filtered(lambda x: x.quantity > 0 )
+            rec['line_ids'] = [Command.create({'move_id': x.id, 'move_quantity':x.quantity,'move_uom_id': x.product_uom}) for x in move_ids]
+>>>>>>> f3dd861a (temp)
         return rec
 
     def action_print(self):
         self.ensure_one()
-        report_id = self.env.ref("stock_ux.action_custom_barcode_transfer_template_view_zpl")
+        report_id = self.env.ref("stock_voucher.action_custom_barcode_transfer_template_view_zpl")
         report_action = report_id.report_action(self.ids)
         report_action["close_on_report_download"] = True
         return report_action
 
     def action_print_pdf(self):
         self.ensure_one()
+<<<<<<< HEAD
         report_id = self.env.ref("stock_ux.action_custom_label_transfer_template_view_pdf")
         report_action = report_id.report_action(self.ids)
         report_action["close_on_report_download"] = True
+||||||| parent of f3dd861a (temp)
+        report_id = self.env.ref("stock_ux.action_custom_label_transfer_template_view_pdf")
+        report_action = report_id.report_action(self.ids)
+        report_action['close_on_report_download']=True
+=======
+        picking_id = self.picking_id.id if self.picking_id else False
+        if not picking_id:
+            raise UserError("No se encontró un picking asociado al registro.")
+        report_id = self.env.ref("stock_voucher.action_custom_label_transfer_template_view_pdf")
+        report_action = report_id.report_action([picking_id])
+        report_action['close_on_report_download'] = True
+>>>>>>> f3dd861a (temp)
         return report_action
 
 
