@@ -70,6 +70,8 @@ class StockMoveLine(models.Model):
                 "You can't transfer more quantity than the quantity on stock!"))
 
     def _check_quantity_available(self):
+        if self.env.context.get('params', {}).get('model') == 'mrp.production':
+            return 0.0
         location = self.env['stock.location'].search([
             ('company_id', '=', self.picking_id.company_id.id),
             ('id', '=', self.picking_id.location_id.id)
