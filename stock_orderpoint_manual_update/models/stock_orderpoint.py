@@ -1,4 +1,5 @@
 from odoo import models, fields, api
+from odoo.osv import expression
 
 
 class StockWarehouseOrderpoint(models.Model):
@@ -62,4 +63,14 @@ class StockWarehouseOrderpoint(models.Model):
 
     def action_replenish(self):
         self._change_review_toggle_negative()
-        return super(StockWarehouseOrderpoint, self).action_replenish()
+        super().action_replenish()
+        action = self.with_context()._get_orderpoint_action()
+        orderpoint_domain = self.with_context().env['stock.warehouse.orderpoint.wizard'].get_orderpoint_domain()
+        orderpoints = self.with_context(active_test=False).search(orderpoint_domain)
+        orderpoints.update_qty_forecast()
+        orderpoints._compute_rotation()
+        action['domain'] = expression.AND([
+            action.get('domain', '[]'),
+            orderpoint_domain,
+        ])
+        return action
