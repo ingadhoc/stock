@@ -10,11 +10,10 @@ patch(StockOrderpointListController.prototype, "order patch", {
             context: this.props.context,
         });
         if (action) {
-            await this.actionService.doAction(action);
+            return await this.actionService.doAction(action);
         }
         return this.actionService.doAction('stock.action_orderpoint_replenish', {
             stackPosition: 'replaceCurrentAction',
         });
     }
 });
-
