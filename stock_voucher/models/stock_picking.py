@@ -115,7 +115,7 @@ class StockPicking(models.Model):
                         picking.picking_type_id.restrict_number_package and
                         not picking.number_of_packages > 0):
                     raise UserError(_('The number of packages can not be 0'))
-            if picking.book_required and not picking.book_id:
+            if picking.book_required and not picking.book_id and not picking.batch_id:
                 raise UserError(_('You must select a Voucher Book'))
             elif not picking.location_id.usage == 'customer' and \
                     picking.voucher_required and not picking.voucher_ids:
