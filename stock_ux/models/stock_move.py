@@ -125,3 +125,11 @@ class StockMove(models.Model):
         for move in self:
             if move.picking_id.picking_type_id.block_additional_quantity and move.picking_id.state != 'draft':
                 move.is_initial_demand_editable = False
+
+    def _trigger_assign(self):
+        """ To avoid to check_quantity_available when an assing in move is trigger we
+            send a context that checks if the assign comes from this method
+        """
+        if not self.env.context.get('trigger_assign'):
+            return super().with_context(trigger_assign=True)._trigger_assign()
+        return super()._trigger_assign()
