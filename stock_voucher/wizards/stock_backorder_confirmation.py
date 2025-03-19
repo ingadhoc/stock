@@ -19,7 +19,7 @@ class StockBackorderConfirmation(models.TransientModel):
             # self._context.get('active_id'))
             # TODO we should also fix odoo methods
             self._context.get('picking_ids')).filtered('book_required')
-        if pickings:
+        if pickings and not self.env.context.get('active_model') == 'stock.picking.batch':
             return {
                 'actions': [
                     {'type': 'ir.actions.act_window_close'},
