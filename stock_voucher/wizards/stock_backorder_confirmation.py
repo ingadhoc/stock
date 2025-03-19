@@ -25,7 +25,7 @@ class StockBackorderConfirmation(models.TransientModel):
             )
             .filtered("book_required")
         )
-        if pickings:
+        if pickings and not self.env.context.get("active_model") == "stock.picking.batch":
             if isinstance(res, dict):
                 return res, pickings.do_print_voucher()
             else:
