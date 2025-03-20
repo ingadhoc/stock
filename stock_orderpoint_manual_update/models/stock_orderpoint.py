@@ -1,8 +1,17 @@
+<<<<<<< HEAD
 from odoo import models, fields, api
+||||||| parent of 90ef42a6 (temp)
+from odoo import models, fields, api
+from odoo.osv import expression
+=======
+from odoo import api, fields, models
+from odoo.osv import expression
+>>>>>>> 90ef42a6 (temp)
 
 
 class StockWarehouseOrderpoint(models.Model):
-    """ Defines Minimum stock rules. """
+    """Defines Minimum stock rules."""
+
     _inherit = "stock.warehouse.orderpoint"
 
     """ add store = True for recompute fields from wizard. Only recompute by wizard """
@@ -24,29 +33,87 @@ class StockWarehouseOrderpoint(models.Model):
             rec.qty_forecast_stored = rec.qty_forecast
 
     def _get_orderpoint_products(self):
-        domain = [('type', '=', 'product'), ('stock_move_ids', '!=', False)]
+        domain = [("type", "=", "product"), ("stock_move_ids", "!=", False)]
 
         # Filter by suppliers
-        suppliers_ids = self._context.get('filter_suppliers')
+        suppliers_ids = self._context.get("filter_suppliers")
         if suppliers_ids:
-            domain.append(('seller_ids.partner_id', 'in', suppliers_ids))
+            domain.append(("seller_ids.partner_id", "in", suppliers_ids))
 
         # Filter by product categories
-        category_ids = self._context.get('filter_categories')
+        category_ids = self._context.get("filter_categories")
         if category_ids:
-            domain.append(('categ_id', 'in', category_ids))
+            domain.append(("categ_id", "in", category_ids))
 
         # Filter by products
-        product_ids = self._context.get('filter_products')
+        product_ids = self._context.get("filter_products")
         if product_ids:
-            domain.append(('id', 'in', product_ids))
+            domain.append(("id", "in", product_ids))
 
-        return self.env['product.product'].search(domain)
+        return self.env["product.product"].search(domain)
 
     def _get_orderpoint_locations(self):
-        domain = [('replenish_location', '=', True)]
+        domain = [("replenish_location", "=", True)]
         # Filter by locations
-        location_ids = self._context.get('filter_locations')
+        location_ids = self._context.get("filter_locations")
         if location_ids:
+<<<<<<< HEAD
             domain.append(('id', 'in', location_ids))
         return self.env['stock.location'].search(domain)
+||||||| parent of 90ef42a6 (temp)
+            domain.append(('id', 'in', location_ids))
+        return self.env['stock.location'].search(domain)
+
+    @api.onchange('qty_on_hand', 'qty_forecast_stored')
+    def _change_review_toggle_negative(self):
+            self.reviewed = False
+
+    @api.onchange('qty_to_order')
+    def _change_review_toggle_positive(self):
+            self.reviewed = True
+
+    def action_replenish(self):
+        self._change_review_toggle_negative()
+        super().action_replenish()
+        action = self.with_context()._get_orderpoint_action()
+        orderpoint_domain = self.with_context().env['stock.warehouse.orderpoint.wizard'].get_orderpoint_domain()
+        orderpoints = self.with_context(active_test=False).search(orderpoint_domain)
+        orderpoints.update_qty_forecast()
+        orderpoints._compute_rotation()
+        action['domain'] = expression.AND([
+            action.get('domain', '[]'),
+            orderpoint_domain,
+        ])
+        return action
+=======
+            domain.append(("id", "in", location_ids))
+        return self.env["stock.location"].search(domain)
+
+    @api.onchange("qty_on_hand", "qty_forecast_stored")
+    def _change_review_toggle_negative(self):
+        self.reviewed = False
+
+    @api.onchange("qty_to_order")
+    def _change_review_toggle_positive(self):
+        self.reviewed = True
+
+    def action_replenish(self):
+        self._change_review_toggle_negative()
+        super().action_replenish()
+        action = self.with_context()._get_orderpoint_action()
+        orderpoint_domain = self.with_context().env["stock.warehouse.orderpoint.wizard"].get_orderpoint_domain()
+        orderpoints = self.with_context(active_test=False).search(orderpoint_domain)
+        orderpoints.update_qty_forecast()
+        orderpoints._compute_rotation()
+        action["domain"] = expression.AND(
+            [
+                action.get("domain", "[]"),
+                orderpoint_domain,
+            ]
+        )
+        return action
+
+    def update_qty_to_order_orderpoint(self):
+        # Esto lo hacemos ya que el metodo es privado y no podemos llamarlo luego en el .js
+        self._compute_qty_to_order()
+>>>>>>> 90ef42a6 (temp)
