@@ -1,6 +1,6 @@
 {
     'name': 'Stock currency valuation',
-    'version': "16.0.1.0.0",
+    'version': "16.0.1.1.0",
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',
@@ -19,6 +19,7 @@
         'views/stock_landed_cost_views.xml',
         'views/product.xml',
         'views/stock_valuation_layer.xml',
+        'wizard/stock_valuation_layer_revaluation_views.xml',
     ],
     'installable': True,
     'auto_install': False,

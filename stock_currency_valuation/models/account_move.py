@@ -34,4 +34,3 @@ class AccountMove(models.Model):
                     'amount_currency': abs(value_in_currency) * -1
         }))
         return vals_list
-

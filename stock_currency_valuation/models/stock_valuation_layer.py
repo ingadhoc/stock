@@ -34,9 +34,13 @@ class StockValuationLayer(models.Model):
     @api.depends('categ_id', 'value', 'bypass_currency_valuation', 'stock_valuation_layer_id', 'manual_currency_rate')
     def _compute_other_currency_values(self):
         for rec in self:
+            # Agrego este hack para evitar recomputar este campo luego de la
+            # creacion del registro cuando lo llamo desde action_validate_revaluation (╥﹏╥)
+            # Otra posibilidad es remplazar el metodo del wizard cuando el producto tiene moneda secundaria.
+            if rec.value_in_currency:
+                continue
             # rec.stock_valuation_layer_id
             if not rec.bypass_currency_valuation and rec.valuation_currency_id:
-
                 if rec.stock_move_id and (rec.stock_move_id._is_out() or rec.stock_move_id.is_inventory):
                     # Si el movimento es de salida o de inventario, valor es el registrado en el producto
                     rec.value_in_currency = rec.product_id.with_company(rec.company_id.id).standard_price_in_currency * rec.quantity
@@ -67,6 +71,9 @@ class StockValuationLayer(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
+        if self.env.context.get('revaluation_value_in_currency'):
+            for vals in vals_list:
+                vals['value_in_currency'] = self.env.context.get('revaluation_value_in_currency')
         res = super().create(vals_list)
         res._update_currency_standard_price()
         return res
