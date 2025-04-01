@@ -54,7 +54,6 @@ class StockWarehouseOrderpoint(models.Model):
             domain.append(("id", "in", location_ids))
         return self.env["stock.location"].search(domain)
 
-    @api.onchange("qty_on_hand", "qty_forecast_stored")
     def _change_review_toggle_negative(self):
         self.reviewed = False
 
@@ -63,7 +62,6 @@ class StockWarehouseOrderpoint(models.Model):
         self.reviewed = True
 
     def action_replenish(self):
-        self._change_review_toggle_negative()
         super().action_replenish()
         action = self.with_context()._get_orderpoint_action()
         orderpoint_domain = self.with_context().env["stock.warehouse.orderpoint.wizard"].get_orderpoint_domain()
@@ -81,3 +79,16 @@ class StockWarehouseOrderpoint(models.Model):
     def update_qty_to_order_orderpoint(self):
         # Esto lo hacemos ya que el metodo es privado y no podemos llamarlo luego en el .js
         self._compute_qty_to_order()
+
+    def _compute_qty_to_order(self):
+        orderpoints_to_recompute = self.filtered(lambda op: not op.reviewed)
+        # 🔹 Filtramos solo los que tienen reviewed=False
+        return super(StockWarehouseOrderpoint, orderpoints_to_recompute)._compute_qty_to_order()
+
+    def write(self, vals):
+        # Hacemos esto para recomputar cantidad a pedir cuando desactivar el revisado
+        res = super().write(vals)
+        if "reviewed" in vals and not vals["reviewed"]:
+            for record in self:
+                record.update_qty_to_order_orderpoint()
+        return res

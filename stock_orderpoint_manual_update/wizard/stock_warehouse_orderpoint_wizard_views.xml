@@ -24,6 +24,10 @@
                     <footer>
                         <button string="Confirm" name="action_confirm" type="object" class="btn-primary" data-hotkey="q"/>
                         <button string="Cancel" class="btn-secondary" special="cancel" data-hotkey="z"/>
+                        <div class="o_form_label">
+                            <label for="to_recalculate">¿Quiere recalcular las categorías seleccionadas?</label>
+                            <field name="to_recalculate" widget="boolean_toggle"/>
+                        </div>
                     </footer>
                 </form>
             </field>
