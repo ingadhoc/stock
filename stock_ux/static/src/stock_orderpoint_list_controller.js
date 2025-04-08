@@ -16,7 +16,7 @@ patch(StockOrderpointListController.prototype, "stock_orderpoint_patch", {
             'update_qty_to_order',
             [resIds]
         );
-        return await this.actionService.doAction('stock.action_orderpoint_replenish', {
+        return await this.actionService.doAction('stock.action_replenishment', {
             stackPosition: 'replaceCurrentAction',
         });
     }
