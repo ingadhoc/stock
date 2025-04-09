@@ -64,14 +64,13 @@ class StockWarehouseOrderpoint(models.Model):
         self._change_review_toggle_negative()
         super().action_replenish()
         action = self.with_context()._get_orderpoint_action()
-        orderpoint_domain = self.with_context().env['stock.warehouse.orderpoint.wizard'].get_orderpoint_domain()
-        orderpoints = self.with_context(active_test=False).search(orderpoint_domain)
-        orderpoints.update_qty_forecast()
-        orderpoints._compute_rotation()
-        action['domain'] = expression.AND([
-            action.get('domain', '[]'),
-            orderpoint_domain,
-        ])
+        orderpoint_domain = self.with_context().env["stock.warehouse.orderpoint.wizard"].get_orderpoint_domain()
+        action["domain"] = expression.AND(
+            [
+                action.get("domain", "[]"),
+                orderpoint_domain,
+            ]
+        )
         return action
 
     def update_qty_to_order_orderpoint(self):
