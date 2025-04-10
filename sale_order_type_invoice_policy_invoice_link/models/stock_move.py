@@ -3,6 +3,7 @@ from odoo.addons.stock_picking_invoice_link.models.stock_move import StockMove
 from odoo.exceptions import UserError
 
 
+
 def new_write(self, vals):
     # monkey patch to take in consideration both module stock_picking_invoice_link and sale_order_type_invoice_policy
     if "product_uom_qty" in vals and not self.env.context.get("bypass_stock_move_update_restriction"):
