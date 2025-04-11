@@ -10,7 +10,7 @@
                             <field name="standard_price_in_currency" class="oe_inline" widget="monetary" options="{'currency_field': 'valuation_currency_id', 'field_digits': True}"/>
                                         <span groups="uom.group_uom">per
                                             <field name="uom_name" class="oe_inline"/>
-                                        </span> 
+                                        </span>
                         </div>
                  </group>
         </field>

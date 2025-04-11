@@ -114,10 +114,18 @@ class StockWarehouseOrderpoint(models.Model):
     def _change_review_toggle_positive(self):
         self.reviewed = True
 
-    def action_replenish(self, force_to_max=False):
-        # deactivate toggle after ordering
+    def action_replenish(self):
         self._change_review_toggle_negative()
-        return super(StockWarehouseOrderpoint, self).action_replenish(force_to_max)
+        super().action_replenish()
+        action = self.with_context()._get_orderpoint_action()
+        orderpoint_domain = self.with_context().env["stock.warehouse.orderpoint.wizard"].get_orderpoint_domain()
+        action["domain"] = expression.AND(
+            [
+                action.get("domain", "[]"),
+                orderpoint_domain,
+            ]
+        )
+        return action
 
     def update_qty_to_order(self):
         # Redefinimos ya que el metodo _compute_qty_to_order es privado
