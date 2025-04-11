@@ -1,12 +1,11 @@
-from odoo import models, fields
+from odoo import fields, models
 
 
 class productCategory(models.Model):
-
-    _inherit = 'product.category'
+    _inherit = "product.category"
 
     valuation_currency_id = fields.Many2one(
-        'res.currency',
-        string='Secondary Currency Valuation',
+        "res.currency",
+        string="Secondary Currency Valuation",
         company_dependent=True,
     )

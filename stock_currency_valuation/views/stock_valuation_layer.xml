@@ -1,11 +1,11 @@
 <odoo>
     <record id="stock_valuation_layer_tree" model="ir.ui.view">
-        <field name="name">stock.valuation.layer.tree</field>
+        <field name="name">stock.valuation.layer.list</field>
         <field name="model">stock.valuation.layer</field>
         <field name="inherit_id" ref="stock_account.stock_valuation_layer_tree"/>
         <field name="arch" type="xml">
             <field name="value" position="after">
-                <field name="valuation_currency_id" invisible="1"/>
+                <field name="valuation_currency_id" column_invisible="1"/>
                 <field name="unit_cost_in_currency"  optional="hide"/>
                 <field name="value_in_currency" sum="Total in currency" optional="show"/>
                 <field name="manual_currency_rate" digits="[12,12]"  optional="hide"/>

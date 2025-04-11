@@ -6,9 +6,9 @@
             <field name="inherit_id" ref="stock_landed_costs.view_stock_landed_cost_form"></field>
             <field name="arch" type="xml">
                 <field name="account_journal_id" position="after">
-                    <label for="valuation_currency_id" attrs="{'invisible': [('valuation_currency_id', '=', False)]}"/>
-                    <div attrs="{'invisible': [('valuation_currency_id', '=', False)]}">
-                        <field name="inverse_currency_rate" nolabel="1" class="oe_inline" attrs="{'readonly': [('state', '=', 'done')]}"/>
+                    <label for="valuation_currency_id" invisible="not valuation_currency_id"/>
+                    <div invisible="not valuation_currency_id">
+                        <field name="inverse_currency_rate" nolabel="1" class="oe_inline" readonly="state == 'done'"/>
                         = 1 <field name="valuation_currency_id"  nolabel="1" options='{"no_open": True}' class="oe_inline"/>
                         <field name="currency_rate" nolabel="1" class="oe_inline" digits="[12,12]" invisible="1"/>
                     </div>
