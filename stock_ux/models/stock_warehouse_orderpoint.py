@@ -104,3 +104,9 @@ class StockWarehouseOrderpoint(models.Model):
         self._change_review_toggle_negative()
         return super(
             StockWarehouseOrderpoint, self).action_replenish(force_to_max)
+    
+    def update_qty_to_order(self):
+        # Redefinimos ya que el metodo _compute_qty_to_order es privado
+        valid_orderpoints = self.exists()
+        if valid_orderpoints:
+            valid_orderpoints._compute_qty_to_order()

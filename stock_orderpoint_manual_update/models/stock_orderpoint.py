@@ -73,3 +73,9 @@ class StockWarehouseOrderpoint(models.Model):
             orderpoint_domain,
         ])
         return action
+
+    def update_qty_to_order_orderpoint(self):
+        # Esto lo hacemos ya que el metodo es privado y no podemos llamarlo luego en el .js
+        valid_orderpoints = self.exists()
+        if valid_orderpoints:
+            valid_orderpoints._compute_qty_to_order()
