@@ -95,4 +95,6 @@ class StockWarehouseOrderpoint(models.Model):
 
     def update_qty_to_order(self):
         # Redefinimos ya que el metodo _compute_qty_to_order es privado
-        self._compute_qty_to_order()
+        valid_orderpoints = self.exists()
+        if valid_orderpoints:
+            valid_orderpoints._compute_qty_to_order()
