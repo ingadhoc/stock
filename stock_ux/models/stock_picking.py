@@ -44,19 +44,15 @@ class StockPicking(models.Model):
         return super().unlink()
 
     def copy(self, default=None):
-        self.ensure_one()
-        # si no viene default entonces es por interfaz y
-        # si tiene bloqueado agregar cantidades entonces
-        # tiene bloqueado duplicar
-        if not default and self.picking_type_id.block_additional_quantity:
-            raise UserError(
-                _(
-                    'You can not duplicate a Picking because "Block'
-                    ' Additional Quantity"'
-                    ' is enable on the picking type "%s"'
+        for picking in self:
+            if not default and picking.picking_type_id.block_additional_quantity:
+                raise UserError(
+                    _(
+                        'You can not duplicate a Picking because "Block'
+                        ' Additional Quantity" is enabled on the picking type "%s"'
+                    )
+                    % (picking.picking_type_id.name)
                 )
-                % (self.picking_type_id.name)
-            )
         return super().copy(default=default)
 
     @api.onchange("location_id")
