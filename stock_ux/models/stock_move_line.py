@@ -68,6 +68,7 @@ class StockMoveLine(models.Model):
             raise ValidationError(_("You can't transfer more quantity than the quantity on stock!"))
 
     def _check_quantity_available(self):
+<<<<<<< HEAD
         if not self.env.context.get("trigger_assign"):
             location = self.env["stock.location"].search(
                 [("company_id", "=", self.picking_id.company_id.id), ("id", "=", self.picking_id.location_id.id)],
@@ -79,6 +80,37 @@ class StockMoveLine(models.Model):
             if quant:
                 return quant.available_quantity - self.quantity
         return 0.0
+||||||| parent of 9855f09c (temp)
+        self.ensure_one()
+        total_available = 0.0
+        if not self.env.context.get('trigger_assign'):
+            locations = self.env['stock.location'].search([
+                ('id', 'child_of', self.picking_id.location_id.id),
+                ('company_id', '=', self.picking_id.company_id.id)
+            ])
+            quants = self.env['stock.quant'].search([
+                ('product_id', '=', self.product_id.id),
+                ('location_id', 'in', locations.ids)
+            ])
+            total_available = sum(quants.mapped('available_quantity')) - self.quantity
+        return total_available
+
+=======
+        self.ensure_one()
+        total_available = 0.0
+        if not self.env.context.get('trigger_assign') and not self.env.context.get('from_inverse_qty_done'):
+            locations = self.env['stock.location'].search([
+                ('id', 'child_of', self.picking_id.location_id.id),
+                ('company_id', '=', self.picking_id.company_id.id)
+            ])
+            quants = self.env['stock.quant'].search([
+                ('product_id', '=', self.product_id.id),
+                ('location_id', 'in', locations.ids)
+            ])
+            total_available = sum(quants.mapped('available_quantity')) - self.quantity
+        return total_available
+
+>>>>>>> 9855f09c (temp)
 
     @api.constrains("quantity")
     def _check_quantity(self):
@@ -114,7 +146,22 @@ class StockMoveLine(models.Model):
                     .filtered(lambda m: m.origin_description)
                 )
                 if moves:
+<<<<<<< HEAD
                     aggregated_move_lines[line]["description"] = False
                     aggregated_move_lines[line]["name"] = ", ".join(moves.mapped("origin_description"))
 
+||||||| parent of 9855f09c (temp)
+                    aggregated_move_lines[line]['description'] = False
+                    aggregated_move_lines[line]['name'] = ', '.join(moves.mapped('origin_description'))
+        
+=======
+                    aggregated_move_lines[line]['description'] = False
+                    aggregated_move_lines[line]['name'] = ', '.join(moves.mapped('origin_description'))
+
+>>>>>>> 9855f09c (temp)
         return aggregated_move_lines
+
+    def _inverse_qty_done(self):
+        for line in self:
+            line.with_context(from_inverse_qty_done=True).quantity = line.qty_done
+            line.picked = line.quantity > 0
