@@ -72,7 +72,7 @@ class StockMoveLine(models.Model):
     def _check_quantity_available(self):
         self.ensure_one()
         total_available = 0.0
-        if not self.env.context.get('trigger_assign'):
+        if not self.env.context.get('trigger_assign') and not self.env.context.get('from_inverse_qty_done'):
             locations = self.env['stock.location'].search([
                 ('id', 'child_of', self.picking_id.location_id.id),
                 ('company_id', '=', self.picking_id.company_id.id)
@@ -118,5 +118,10 @@ class StockMoveLine(models.Model):
                 if moves:
                     aggregated_move_lines[line]['description'] = False
                     aggregated_move_lines[line]['name'] = ', '.join(moves.mapped('origin_description'))
-        
+
         return aggregated_move_lines
+
+    def _inverse_qty_done(self):
+        for line in self:
+            line.with_context(from_inverse_qty_done=True).quantity = line.qty_done
+            line.picked = line.quantity > 0
