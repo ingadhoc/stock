@@ -13,7 +13,7 @@ class AccountMove(models.Model):
         """
         self.ensure_one()
         landed_costs_lines = self.line_ids.filtered(lambda line: line.is_landed_costs_line)
-        rate_to_use = self.l10n_ar_currency_rate if self.l10n_ar_currency_rate else None
+        rate_to_use = self.invoice_currency_rate if self.invoice_currency_rate else None
         landed_costs = (
             self.env["stock.landed.cost"]
             .with_company(self.company_id)
