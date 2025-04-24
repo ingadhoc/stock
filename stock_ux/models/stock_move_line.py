@@ -68,6 +68,7 @@ class StockMoveLine(models.Model):
             raise ValidationError(_("You can't transfer more quantity than the quantity on stock!"))
 
     def _check_quantity_available(self):
+<<<<<<< HEAD
         if not self.env.context.get("trigger_assign"):
             location = self.env["stock.location"].search(
                 [("company_id", "=", self.picking_id.company_id.id), ("id", "=", self.picking_id.location_id.id)],
@@ -79,6 +80,37 @@ class StockMoveLine(models.Model):
             if quant:
                 return quant.available_quantity - self.quantity
         return 0.0
+||||||| parent of 9219ef4d (temp)
+        self.ensure_one()
+        total_available = 0.0
+        if not self.env.context.get('trigger_assign') and not self.env.context.get('from_inverse_qty_done'):
+            locations = self.env['stock.location'].search([
+                ('id', 'child_of', self.picking_id.location_id.id),
+                ('company_id', '=', self.picking_id.company_id.id)
+            ])
+            quants = self.env['stock.quant'].search([
+                ('product_id', '=', self.product_id.id),
+                ('location_id', 'in', locations.ids)
+            ])
+            total_available = sum(quants.mapped('available_quantity')) - self.quantity
+        return total_available
+
+=======
+        self.ensure_one()
+        total_available = 0.0
+        if not self.env.context.get('trigger_assign') and not self.env.context.get('from_inverse_qty_done') and not self.env.context.get('sale_automation'):
+            locations = self.env['stock.location'].search([
+                ('id', 'child_of', self.picking_id.location_id.id),
+                ('company_id', '=', self.picking_id.company_id.id)
+            ])
+            quants = self.env['stock.quant'].search([
+                ('product_id', '=', self.product_id.id),
+                ('location_id', 'in', locations.ids)
+            ])
+            total_available = sum(quants.mapped('available_quantity')) - self.quantity
+        return total_available
+
+>>>>>>> 9219ef4d (temp)
 
     @api.constrains("quantity")
     def _check_quantity(self):
