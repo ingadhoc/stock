@@ -29,6 +29,17 @@
         </field>
     </record>
 
+    <record model="ir.ui.view" id="stock_batch_picking_tree_voucher">
+        <field name="name">stock.picking.batch.form</field>
+        <field name="model">stock.picking.batch</field>
+        <field name="inherit_id" ref="stock_picking_batch.stock_picking_batch_tree"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="voucher_ids" widget="many2many_tags"/>
+            </field>
+        </field>
+    </record>
+
     <record id="view_tree_inherited" model="ir.ui.view">
         <field name="name">stock.picking.list.inherited</field>
         <field name="model">stock.picking</field>
