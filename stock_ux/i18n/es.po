@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-12 01:00+0000\n"
+"POT-Creation-Date: 2025-04-23 18:55+0000\n"
 "PO-Revision-Date: 2024-11-13 15:07+0000\n"
 "Last-Translator: Matias Velazquez, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
@@ -680,11 +680,6 @@ msgid "Q. UdM Producto"
 msgstr ""
 
 #. module: stock_ux
-#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__rating_ids
-msgid "Ratings"
-msgstr ""
-
-#. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
 msgid "Ready"
 msgstr "Listo"
@@ -974,10 +969,8 @@ msgstr ""
 #: code:addons/stock_ux/models/stock_picking.py:0
 msgid ""
 "You can not duplicate a Picking because \"Block Additional Quantity\" is "
-"enable on the picking type \"%s\""
+"enabled on the picking type \"%s\""
 msgstr ""
-"No puede duplicar la transferencia porque \"Bloquear cantidades "
-"adicionales\" está marcado en el tipo de operación \"%s\""
 
 #. module: stock_ux
 #. odoo-python
