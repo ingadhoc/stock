@@ -80,16 +80,6 @@ class StockMoveLine(models.Model):
                 return quant.available_quantity - self.quantity
         return 0.0
 
-    @api.constrains("quantity")
-    def _check_quantity(self):
-        """If we work on move lines we want to ensure quantities are ok"""
-        if self._context.get("put_in_pack", False):
-            return
-        self.mapped("move_id")._check_quantity()
-        # We verify the case that does not have 'move_id' to restrict how does_check_quantity() in moves
-        if any(self.filtered(lambda x: not x.move_id and x.picking_id.picking_type_id.block_additional_quantity)):
-            raise ValidationError(_("You can not transfer more than the initial demand!"))
-
     @api.model_create_multi
     def create(self, vals_list):
         """This is to solve a bug when create the sml (the value is not completed after creation)
