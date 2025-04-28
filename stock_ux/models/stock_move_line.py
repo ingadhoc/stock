@@ -68,17 +68,22 @@ class StockMoveLine(models.Model):
             raise ValidationError(_("You can't transfer more quantity than the quantity on stock!"))
 
     def _check_quantity_available(self):
-        if not self.env.context.get("trigger_assign"):
-            location = self.env["stock.location"].search(
-                [("company_id", "=", self.picking_id.company_id.id), ("id", "=", self.picking_id.location_id.id)],
-                limit=1,
+        self.ensure_one()
+        total_available = 0.0
+        if (
+            self.product_id.detailed_type == "product"
+            and not self.env.context.get("trigger_assign")
+            and not self.env.context.get("from_inverse_qty_done")
+            and not self.env.context.get("sale_automation")
+        ):
+            locations = self.env["stock.location"].search(
+                [("id", "child_of", self.picking_id.location_id.id), ("company_id", "=", self.picking_id.company_id.id)]
             )
-            quant = self.env["stock.quant"].search(
-                [("product_id", "=", self.product_id.id), ("location_id", "=", location.id)], limit=1
+            quants = self.env["stock.quant"].search(
+                [("product_id", "=", self.product_id.id), ("location_id", "in", locations.ids)]
             )
-            if quant:
-                return quant.available_quantity - self.quantity
-        return 0.0
+            total_available = sum(quants.mapped("available_quantity")) - self.quantity
+        return total_available
 
     @api.model_create_multi
     def create(self, vals_list):
