@@ -149,52 +149,43 @@ class StockPicking(models.Model):
             inmediate_transfer = True
             pricelist = False
             stock_bom_lines = self.env['stock.move']
-            for move_line in rec.move_ids.filtered(
-                    lambda x: x.state != 'cancel'):
+            for move_line in rec.move_ids.filtered(lambda x: x.state != 'cancel'):
                 order_line = move_line.sale_line_id
                 if move_line.quantity:
                     inmediate_transfer = False
                 if order_line:
                     pricelist = rec.sale_id.pricelist_id
-                    # this should happends only if on SO it's a bom kit
+                    # this should happen only if on SO it's a bom kit
                     if not order_line.product_id == move_line.product_id:
                         stock_bom_lines |= move_line
                         continue
                     so_product_qty = move_line.product_uom_qty
                     so_qty_done = move_line.quantity
-                    # convert quantities if move line uom and sale line uom
-                    # are different
+                    # convert quantities if move line uom and sale line uom are different
                     if move_line.product_uom != order_line.product_uom:
-                        so_product_qty = \
-                            move_line.product_uom._compute_quantity(
-                                move_line.product_uom_qty,
-                                order_line.product_uom)
-                        so_qty_done = \
-                            move_line.product_uom._compute_quantity(
-                                move_line.quantity,
-                                order_line.product_uom)
-                    picking_value += (order_line.price_reduce_taxexcl *
-                                      so_product_qty)
-                    done_value += (order_line.price_reduce_taxexcl *
-                                   so_qty_done)
+                        so_product_qty = move_line.product_uom._compute_quantity(
+                            move_line.product_uom_qty,
+                            order_line.product_uom)
+                        so_qty_done = move_line.product_uom._compute_quantity(
+                            move_line.quantity,
+                            order_line.product_uom)
+                    picking_value += (order_line.price_reduce_taxexcl * so_product_qty)
+                    done_value += (order_line.price_reduce_taxexcl * so_qty_done)
                 elif rec.picking_type_id.pricelist_id:
                     pricelist = rec.picking_type_id.pricelist_id
                     price = rec.picking_type_id.pricelist_id.with_context(
                         uom=move_line.product_uom.id)._price_get(
                         move_line.product_id,
                         move_line.quantity or 1.0,
-                        partner=rec.partner_id.id)[
-                        rec.picking_type_id.pricelist_id.id]
+                        partner=rec.partner_id.id)[rec.picking_type_id.pricelist_id.id]
                     picking_value += (price * move_line.product_uom_qty)
                     done_value += (price * move_line.quantity)
 
-            # This is for product in a kit (should only happen if sale_mrp ins
-            # installed). If it is bom we only compute amount if all bom
-            # components are deliverd (same as in bom _get_delivered_qty)
+            # This is for products in a kit (should only happen if sale_mrp is installed)
             bom_enable = 'bom_ids' in self.env['product.template']._fields
             if bom_enable:
                 for so_bom_line in stock_bom_lines.mapped('sale_line_id'):
-                    bom = self.env["mrp.bom"]._bom_find(products = so_bom_line.product_id)[so_bom_line.product_id]
+                    bom = self.env["mrp.bom"]._bom_find(products=so_bom_line.product_id)[so_bom_line.product_id]
                     if bom and bom.type == 'phantom':
                         bom_moves = so_bom_line.move_ids & stock_bom_lines
                         done_avg = []
@@ -210,17 +201,14 @@ class StockPicking(models.Model):
                                     bom_quantity += line_data['qty']
                             if not bom_quantity:
                                 continue
-                            picking_avg.append((
-                                move.product_uom_qty / bom_quantity))
-                            done_avg.append(
-                                (move.quantity / bom_quantity))
-                        picking_value += so_bom_line.price_reduce_taxexcl * (
-                            sum(picking_avg) / len(picking_avg))
-                        done_value += so_bom_line.price_reduce_taxexcl * (
-                            sum(done_avg) / len(done_avg))
+                            picking_avg.append(move.product_uom_qty / bom_quantity)
+                            done_avg.append(move.quantity / bom_quantity)
+                        if picking_avg:
+                            picking_value += so_bom_line.price_reduce_taxexcl * (sum(picking_avg) / len(picking_avg))
+                        if done_avg:
+                            done_value += so_bom_line.price_reduce_taxexcl * (sum(done_avg) / len(done_avg))
 
-            declared_value = picking_value if inmediate_transfer\
-                else done_value
+            declared_value = picking_value if inmediate_transfer else done_value
             if pricelist:
                 # we convert the declared_value to the currency of the company
                 rec.declared_value = pricelist.currency_id._convert(
