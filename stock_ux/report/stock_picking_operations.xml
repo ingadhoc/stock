@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_picking_ux" inherit_id="stock.report_picking">
+        <xpath expr="//table//tbody//tr//td[1]" position="replace">
+            <td>
+                <span t-if="env['ir.config_parameter'].sudo().get_param('stock_ux.delivery_slip_use_origin', 'False') == 'True'" t-field="ml.origin_description"></span>
+                <span t-else="" t-field="ml.product_id.display_name"></span><br/>
+                <span t-if="ml.product_id.description_picking" t-field="ml.product_id.description_picking"></span>
+            </td>
+        </xpath>
+    </template>
+</odoo>
