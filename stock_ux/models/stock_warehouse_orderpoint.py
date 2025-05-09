@@ -90,7 +90,7 @@ class StockWarehouseOrderpoint(models.Model):
         }
         action["domain"] = expression.AND(
             [
-                action.get("domain", "[]"),
+                action.get("domain", []),
                 [("active_product", "=", True)],
             ]
         )
