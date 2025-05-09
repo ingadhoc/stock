@@ -3,8 +3,13 @@
 # directory
 ##############################################################################
 
+import logging
+from ast import literal_eval
+
 from odoo import api, fields, models
 from odoo.osv import expression
+
+_logger = logging.getLogger(__name__)
 
 
 class StockWarehouseOrderpoint(models.Model):
@@ -88,9 +93,15 @@ class StockWarehouseOrderpoint(models.Model):
             **action["context"],
             "active_test": False,
         }
+        existing_domain = action.get("domain") or []
+        if isinstance(existing_domain, str):
+            try:
+                existing_domain = literal_eval(existing_domain)
+            except (ValueError, SyntaxError) as e:
+                _logger.warning("Failed to parse existing_domain with literal_eval: %s. Error: %s", existing_domain, e)
         action["domain"] = expression.AND(
             [
-                action.get("domain", "[]"),
+                existing_domain,
                 [("active_product", "=", True)],
             ]
         )
