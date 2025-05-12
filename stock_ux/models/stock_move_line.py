@@ -113,3 +113,12 @@ class StockMoveLine(models.Model):
                     aggregated_move_lines[line]["name"] = ", ".join(moves.mapped("origin_description"))
 
         return aggregated_move_lines
+
+    def _inverse_qty_done(self):
+        """
+        It uses the `from_inverse_qty_done` context key to indicate that the update originates from
+        this method.
+        """
+        for line in self:
+            line.with_context(from_inverse_qty_done=True).quantity = line.qty_done
+            line.picked = line.quantity > 0
