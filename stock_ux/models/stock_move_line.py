@@ -71,7 +71,7 @@ class StockMoveLine(models.Model):
         self.ensure_one()
         total_available = 0.0
         if (
-            self.product_id.detailed_type == "product"
+            self.product_id.type == "consu"
             and not self.env.context.get("trigger_assign")
             and not self.env.context.get("from_inverse_qty_done")
             and not self.env.context.get("sale_automation")
