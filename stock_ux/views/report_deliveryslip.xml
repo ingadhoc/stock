@@ -41,4 +41,12 @@
         </xpath>
     </template>
 
+    <template id="stock_report_delivery_has_serial_move_line_ux" inherit_id="stock.stock_report_delivery_has_serial_move_line">
+        <xpath expr="//td[1]//span[1]" position="replace">
+            <span t-if="env['ir.config_parameter'].sudo().get_param('stock_ux.delivery_slip_use_origin', 'False') == 'True'"
+            t-field="move_line.origin_description">Description on transfer</span>
+            <span t-else="" t-field="move_line.product_id"/>
+        </xpath>
+    </template>
+
 </odoo>
