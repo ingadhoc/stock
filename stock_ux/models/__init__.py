@@ -14,3 +14,4 @@ from . import res_config_settings
 from . import stock_rule
 from . import stock_scrap
 from . import stock_location
+from . import stock_forecasted
