@@ -18,6 +18,7 @@
 #
 ##############################################################################
 {
+<<<<<<< HEAD
     'name': 'Stock UX',
     'version': "17.0.1.10.0",
     'category': 'Warehouse Management',
@@ -26,10 +27,64 @@
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'images': [
+||||||| parent of ba6b2d18 (temp)
+    'name': 'Stock UX',
+    'version': "16.0.2.23.0",
+    'category': 'Warehouse Management',
+    'sequence': 14,
+    'summary': '',
+    'author': 'ADHOC SA',
+    'website': 'www.adhoc.com.ar',
+    'images': [
+=======
+    "name": "Stock UX",
+    "version": "16.0.2.24.0",
+    "category": "Warehouse Management",
+    "sequence": 14,
+    "summary": "",
+    "author": "ADHOC SA",
+    "website": "www.adhoc.com.ar",
+    "images": [],
+    "depends": [
+        "sale_stock",
+        "report_aeroo",
+        "stock_voucher",
+        "mail",
+>>>>>>> ba6b2d18 (temp)
     ],
+<<<<<<< HEAD
     'depends': [
         'sale_stock',
+||||||| parent of ba6b2d18 (temp)
+    'depends': [
+        'sale_stock',
+        'report_aeroo',
+        'stock_voucher',
+        'mail',
+=======
+    "data": [
+        "security/stock_ux_security.xml",
+        "security/ir.model.access.csv",
+        "views/product_template_views.xml",
+        "views/product_product_views.xml",
+        "views/stock_picking_views.xml",
+        "views/stock_move_views.xml",
+        "views/stock_move_line_views.xml",
+        "views/stock_warehouse_orderpoint_views.xml",
+        "views/procurement_group_views.xml",
+        "views/stock_backorder_confirmation_views.xml",
+        "views/stock_return_picking_views.xml",
+        "views/stock_picking_type_views.xml",
+        "views/report_deliveryslip.xml",
+        "views/res_config_settings_views.xml",
+        "wizards/stock_operation_wizard_views.xml",
+        "report/stock_ux_report.xml",
+        "report/ir.action.reports.xml",
+        "report/picking_templates.xml",
+        "views/res_company_views.xml",
+>>>>>>> ba6b2d18 (temp)
     ],
+<<<<<<< HEAD
     'data': [
         'security/stock_ux_security.xml',
         'security/ir.model.access.csv',
@@ -59,7 +114,45 @@
         'web.assets_backend': [
             'stock_ux/static/src/**/*.xml',
             'stock_ux/static/src/**/*.js',
+||||||| parent of ba6b2d18 (temp)
+    'data': [
+        'security/stock_ux_security.xml',
+        'security/ir.model.access.csv',
+        'views/product_template_views.xml',
+        'views/product_product_views.xml',
+        'views/stock_picking_views.xml',
+        'views/stock_move_views.xml',
+        'views/stock_move_line_views.xml',
+        'views/stock_warehouse_orderpoint_views.xml',
+        'views/procurement_group_views.xml',
+        'views/stock_backorder_confirmation_views.xml',
+        'views/stock_return_picking_views.xml',
+        'views/stock_picking_type_views.xml',
+        'views/report_deliveryslip.xml',
+        'views/res_config_settings_views.xml',
+        'wizards/stock_operation_wizard_views.xml',
+        'report/stock_ux_report.xml',
+        'report/ir.action.reports.xml',
+        'report/picking_templates.xml',
+        'views/res_company_views.xml'
+    ],
+    'installable': True,
+    'auto_install': False,
+    'application': False,
+    'assets': {
+        'web.assets_backend': [
+            'stock_ux/static/src/**/*.xml',
+            'stock_ux/static/src/**/*.js',
+=======
+    "installable": True,
+    "auto_install": False,
+    "application": False,
+    "assets": {
+        "web.assets_backend": [
+            "stock_ux/static/src/**/*.xml",
+            "stock_ux/static/src/**/*.js",
+>>>>>>> ba6b2d18 (temp)
         ],
     },
-    'license': 'AGPL-3',
+    "license": "AGPL-3",
 }
