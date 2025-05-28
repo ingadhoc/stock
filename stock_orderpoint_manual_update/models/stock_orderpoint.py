@@ -1,4 +1,5 @@
 from odoo import fields, models
+from odoo.osv import expression
 
 
 class StockWarehouseOrderpoint(models.Model):
@@ -50,6 +51,18 @@ class StockWarehouseOrderpoint(models.Model):
         if location_ids:
             domain.append(("id", "in", location_ids))
         return self.env["stock.location"].search(domain)
+
+    def action_replenish(self):
+        super().action_replenish()
+        action = self.with_context()._get_orderpoint_action()
+        orderpoint_domain = self.with_context().env["stock.warehouse.orderpoint.wizard"].get_orderpoint_domain()
+        action["domain"] = expression.AND(
+            [
+                action.get("domain", "[]"),
+                orderpoint_domain,
+            ]
+        )
+        return action
 
     def update_qty_to_order_orderpoint(self):
         # Esto lo hacemos ya que el metodo es privado y no podemos llamarlo luego en el .js
