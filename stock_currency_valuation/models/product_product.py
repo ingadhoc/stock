@@ -11,4 +11,5 @@ class productProduct(models.Model):
         "Cost in currency",
         company_dependent=True,
         groups="base.group_user",
+        help="Cost of the product expressed in the secondary currency defined on the product category. Used for inventory valuation and cost calculations in that currency.",
     )
