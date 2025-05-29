@@ -4,15 +4,32 @@
         <field name="model">product.template</field>
         <field name="inherit_id" ref="product_replenishment_cost.product_template_form_view"/>
         <field name="arch" type="xml">
-                 <group name="accounting_cost">
-                    <label for="standard_price_in_currency"/>
-                        <div name="standard_price_uom">
-                            <field name="standard_price_in_currency" class="oe_inline" widget="monetary" options="{'currency_field': 'valuation_currency_id', 'field_digits': True}"/>
-                                        <span groups="uom.group_uom">per
-                                            <field name="uom_name" class="oe_inline"/>
-                                        </span>
-                        </div>
-                 </group>
+            <xpath expr="//field[@name='supplier_taxes_id']" position="before">
+                <label for="standard_price_in_currency" string="Cost in currency" invisible="(id and product_variant_count != 1 and not is_product_variant) or type == 'combo'"/>
+                <div name="standard_price_uom" invisible="(id and product_variant_count != 1 and not is_product_variant) or type == 'combo'">
+                    <field name="standard_price_in_currency" class="oe_inline" widget="monetary" options="{'currency_field': 'valuation_currency_id', 'field_digits': True}"/>
+                    <span groups="uom.group_uom">per
+                        <field name="uom_name" class="oe_inline"/>
+                    </span>
+                </div>
+             </xpath>
+        </field>
+    </record>
+
+    <record id="product_product_form_view" model="ir.ui.view">
+        <field name="name">product.product.form</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_variant_easy_edit_view"/>
+        <field name="arch" type="xml">
+            <group name="pricing">
+                <label for="standard_price_in_currency" string="Cost in currency"/>
+                <div name="standard_price_uom">
+                    <field name="standard_price_in_currency" class="oe_inline" widget="monetary" options="{'currency_field': 'valuation_currency_id', 'field_digits': True}"/>
+                    <span groups="uom.group_uom">per
+                        <field name="uom_name" class="oe_inline"/>
+                    </span>
+                </div>
+             </group>
         </field>
     </record>
 </odoo>
