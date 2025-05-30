@@ -1,13 +1,15 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import _, fields, models,api, Command
+from odoo import _, fields, models, api, Command
+from odoo.exceptions import ValidationError
 
 
 class ProductLabelLayout(models.TransientModel):
     _inherit = 'product.label.layout'
+
     picking_id = fields.Many2one('stock.picking',string='picking')
-    line_ids = fields.One2many('stock.picking.zpl.lines','picking_zpl_id', string='Moves')
-    
+    line_ids = fields.One2many("product.label.layout.lines", "label_layout_id", string="Moves")
+
     @api.model
     def default_get(self, default_fields):
         rec = super().default_get(default_fields)
@@ -25,22 +27,19 @@ class ProductLabelLayout(models.TransientModel):
         report_action['close_on_report_download']=True
         return report_action
 
-class StockPickingZplLines(models.TransientModel):
-    _name = 'stock.picking.zpl.lines'
-    _description = "Print Stock Voucher lines"
+class ProductLabelLayoutLines(models.TransientModel):
 
-    picking_zpl_id = fields.Many2one('product.label.layout')
+    _name = "product.label.layout.lines"
+    _description = "Label layout lines"
 
-    move_id = fields.Many2one('stock.move')
-
+    label_layout_id = fields.Many2one("product.label.layout")
+    move_id = fields.Many2one("stock.move")
     move_quantity = fields.Float()
+    move_uom_id = fields.Many2one("uom.uom")
+    name = fields.Char(related="move_id.name")
 
-    move_uom_id = fields.Many2one('uom.uom')
-
-    name = fields.Char(related='move_id.name')
-
-    @api.constrains('move_quantity')
+    @api.constrains("move_quantity")
     def _check_move_quantity(self):
         for line in self:
             if line.move_quantity > line.move_id.quantity:
-                raise exceptions.ValidationError("La cantidad a imprimir no puede ser mayor que la cantidad original.")
+                raise ValidationError(_("La cantidad a imprimir no puede ser mayor que la cantidad original."))
