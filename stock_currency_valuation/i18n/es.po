@@ -7,10 +7,10 @@
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 16.0+e\n"
+"Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-13 13:27+0000\n"
-"PO-Revision-Date: 2025-02-13 13:27+0000\n"
+"POT-Creation-Date: 2025-05-29 19:12+0000\n"
+"PO-Revision-Date: 2025-05-28 15:17+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
@@ -18,6 +18,51 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Language: es\n"
 "Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+
+#. module: stock_currency_valuation
+#. odoo-python
+#: code:addons/stock_currency_valuation/wizard/stock_valuation_layer_revaluation.py:0
+msgid ""
+"\n"
+"Affected valuation layers: %s"
+msgstr ""
+
+#. module: stock_currency_valuation
+#. odoo-python
+#: code:addons/stock_currency_valuation/wizard/stock_valuation_layer_revaluation.py:0
+msgid " Product cost updated from %(previous)s to %(new_cost)s."
+msgstr ""
+
+#. module: stock_currency_valuation
+#. odoo-python
+#: code:addons/stock_currency_valuation/wizard/stock_valuation_layer_revaluation.py:0
+msgid " lot/serial number cost updated from %(previous)s to %(new_cost)s."
+msgstr ""
+
+#. module: stock_currency_valuation
+#. odoo-python
+#: code:addons/stock_currency_valuation/wizard/stock_valuation_layer_revaluation.py:0
+msgid ""
+"%(user)s changed stock valuation from  %(previous)s to %(new_value)s - %(product)s\n"
+"%(reason)s"
+msgstr ""
+
+#. module: stock_currency_valuation
+#: model_terms:ir.ui.view,arch_db:stock_currency_valuation.stock_valuation_layer_revaluation_form_view
+msgid ""
+")\n"
+"                    <small class=\"mx-2 fst-italic\">Use a negative added value to record a decrease in the product value</small>"
+msgstr ""
+
+#. module: stock_currency_valuation
+#: model_terms:ir.ui.view,arch_db:stock_currency_valuation.stock_valuation_layer_revaluation_form_view
+msgid "Added Value"
+msgstr ""
+
+#. module: stock_currency_valuation
+#: model:ir.model.fields,field_description:stock_currency_valuation.field_stock_valuation_layer_revaluation__added_value_in_currency
+msgid "Added value in currency"
+msgstr ""
 
 #. module: stock_currency_valuation
 #: model:ir.model.fields.selection,name:stock_currency_valuation.selection__product_template__replenishment_cost_type__average_in_currency
@@ -59,13 +104,30 @@ msgid "If no rate is defined, the rate of the confirmation date is used."
 msgstr ""
 
 #. module: stock_currency_valuation
-#: model:ir.model,name:stock_currency_valuation.model_account_move
-msgid "Journal Entry"
-msgstr "Asiento contable"
-
-#. module: stock_currency_valuation
 #: model:ir.model.fields,field_description:stock_currency_valuation.field_stock_valuation_layer__manual_currency_rate
 msgid "Manual Currency Rate"
+msgstr ""
+
+#. module: stock_currency_valuation
+#. odoo-python
+#: code:addons/stock_currency_valuation/wizard/stock_valuation_layer_revaluation.py:0
+msgid "Manual Stock Valuation: %s."
+msgstr ""
+
+#. module: stock_currency_valuation
+#: model:ir.model.fields,field_description:stock_currency_valuation.field_stock_valuation_layer_revaluation__new_value_in_currency
+msgid "New value in currency"
+msgstr ""
+
+#. module: stock_currency_valuation
+#: model:ir.model.fields,field_description:stock_currency_valuation.field_stock_valuation_layer_revaluation__new_value_in_currency_by_qty
+msgid "New value in currency by quantity"
+msgstr ""
+
+#. module: stock_currency_valuation
+#. odoo-python
+#: code:addons/stock_currency_valuation/wizard/stock_valuation_layer_revaluation.py:0
+msgid "No Reason Given"
 msgstr ""
 
 #. module: stock_currency_valuation
@@ -77,11 +139,6 @@ msgstr "Producto"
 #: model:ir.model,name:stock_currency_valuation.model_product_category
 msgid "Product Category"
 msgstr "Categoría de producto"
-
-#. module: stock_currency_valuation
-#: model:ir.model,name:stock_currency_valuation.model_stock_move_line
-msgid "Product Moves (Stock Move Line)"
-msgstr "Movimientos de producto (línea de movimiento de stock)"
 
 #. module: stock_currency_valuation
 #: model:ir.model.fields,field_description:stock_currency_valuation.field_stock_valuation_layer__product_tmpl_id
@@ -100,13 +157,25 @@ msgid "Replenishment Cost Type"
 msgstr "Tipo de costo de reposición"
 
 #. module: stock_currency_valuation
+#. odoo-python
+#: code:addons/stock_currency_valuation/wizard/stock_valuation_layer_revaluation.py:0
+msgid "Revaluation of %s"
+msgstr ""
+
+#. module: stock_currency_valuation
 #: model:ir.model.fields,field_description:stock_currency_valuation.field_product_category__valuation_currency_id
 #: model:ir.model.fields,field_description:stock_currency_valuation.field_product_product__valuation_currency_id
 #: model:ir.model.fields,field_description:stock_currency_valuation.field_product_template__valuation_currency_id
 #: model:ir.model.fields,field_description:stock_currency_valuation.field_stock_landed_cost__valuation_currency_id
 #: model:ir.model.fields,field_description:stock_currency_valuation.field_stock_picking__valuation_currency_id
 #: model:ir.model.fields,field_description:stock_currency_valuation.field_stock_valuation_layer__valuation_currency_id
+#: model:ir.model.fields,field_description:stock_currency_valuation.field_stock_valuation_layer_revaluation__valuation_currency_id
 msgid "Secondary Currency Valuation"
+msgstr ""
+
+#. module: stock_currency_valuation
+#: model:ir.model.fields,field_description:stock_currency_valuation.field_stock_valuation_layer_revaluation__show_added_value_in_currency
+msgid "Show Added Value In Currency"
 msgstr ""
 
 #. module: stock_currency_valuation
@@ -123,6 +192,20 @@ msgstr "Movimiento de stock"
 #: model:ir.model,name:stock_currency_valuation.model_stock_valuation_layer
 msgid "Stock Valuation Layer"
 msgstr "Capa de valoración de stock"
+
+#. module: stock_currency_valuation
+#. odoo-python
+#: code:addons/stock_currency_valuation/wizard/stock_valuation_layer_revaluation.py:0
+msgid "The added value doesn't have any impact on the stock valuation"
+msgstr ""
+
+#. module: stock_currency_valuation
+#. odoo-python
+#: code:addons/stock_currency_valuation/wizard/stock_valuation_layer_revaluation.py:0
+msgid ""
+"The value of a stock valuation layer cannot be negative. Landed cost could "
+"be use to correct a specific transfer."
+msgstr ""
 
 #. module: stock_currency_valuation
 #: model:ir.model.fields,field_description:stock_currency_valuation.field_stock_valuation_layer__value_in_currency
@@ -155,6 +238,11 @@ msgid "Wizard model to reavaluate a stock inventory for a product"
 msgstr ""
 "Modelo de asistente para revalorizar un inventario del stock para un "
 "producto"
+
+#. module: stock_currency_valuation
+#: model_terms:ir.ui.view,arch_db:stock_currency_valuation.stock_valuation_layer_revaluation_form_view
+msgid "by"
+msgstr ""
 
 #. module: stock_currency_valuation
 #: model_terms:ir.ui.view,arch_db:stock_currency_valuation.product_template_form_view
