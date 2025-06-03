@@ -46,22 +46,22 @@ class AdjustmentLines(models.Model):
     def _create_accounting_entries(self, move, qty_out):
         AccountMoveLine = super()._create_accounting_entries(move, qty_out)
         amount = AccountMoveLine[0][2].get('debit', 0) or AccountMoveLine[0][2].get('credit',0) * -1
-        if self.product_id.categ_id.valuation_currency_id and amount:
+        if self.product_id.categ_id.with_company(self.move_id.company_id.id).valuation_currency_id and amount:
             if self.cost_id.currency_rate:
                 value_in_currency = amount * self.cost_id.currency_rate
             else:
                 value_in_currency = self.cost_id.currency_id._convert(
                         from_amount=amount,
-                        to_currency=self.product_id.categ_id.valuation_currency_id,
+                        to_currency=self.product_id.categ_id.with_company(self.move_id.company_id.id).valuation_currency_id,
                         company=self.cost_id.company_id,
                         date=self.create_date,
                     )
             AccountMoveLine[0][2].update(({
-                        'currency_id': self.product_id.categ_id.valuation_currency_id.id,
+                        'currency_id': self.product_id.categ_id.with_company(self.move_id.company_id.id).valuation_currency_id.id,
                         'amount_currency': value_in_currency
             }))
             AccountMoveLine[1][2].update(({
-                        'currency_id': self.product_id.categ_id.valuation_currency_id.id,
+                        'currency_id': self.product_id.categ_id.with_company(self.move_id.company_id.id).valuation_currency_id.id,
                         'amount_currency': value_in_currency * -1
             }))
         return AccountMoveLine

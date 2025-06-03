@@ -75,13 +75,21 @@ class StockMove(models.Model):
         self.ensure_one()
         currency_id = self.company_id.currency_id
         if hasattr(self, 'purchase_order_Line') and self.purchase_order_Line:
-            currency_id = self.purchase_order_Line.currency_id
+            currency_id = self.purchase_line_id.currency_id
+            # Si la moneda de la categoria del producto es la misma que la del pedido de compra, no hay que convertir el precio
+            if currency_id == self.product_id.with_company(self.company_id.id).categ_id.valuation_currency_id:
+                return self.purchase_line_id.price_unit
+            # Si no es la misma y hay un rate de conversión, se divide el precio unitario por el rate
+            if self.picking_id.currency_rate:
+                return self.purchase_line_id.price_unit / self.picking_id.currency_rate
+
         if hasattr(self, 'sale_line_id') and self.sale_line_id:
             currency_id = self.sale_line_id.currency_id
+            return self.product_id.with_company(self.company_id.id).standard_price_in_currency
 
         price_unit = currency_id._convert(
                     from_amount=self.price_unit,
-                    to_currency=self.product_id.categ_id.valuation_currency_id,
+                    to_currency=self.product_id.with_company(self.company_id.id).categ_id.valuation_currency_id,
                     company=self.company_id,
                     date=fields.date.today(),
                 )
