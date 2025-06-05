@@ -40,23 +40,23 @@ class StockMove(models.Model):
         std_price_update = {}
         for move in self.filtered(lambda move: move._is_in() and move.with_company(move.company_id).product_id.categ_id.valuation_currency_id
                                   and move.with_company(move.company_id).product_id.cost_method == 'average'):
-            product_tot_qty_available = move.product_id.sudo().with_company(move.company_id).quantity_svl + tmpl_dict[move.product_id.id]
-            rounding = move.product_id.uom_id.rounding
-
+            product_id = move.product_id.with_company(move.company_id.id)
+            product_tot_qty_available = product_id.sudo().quantity_svl + tmpl_dict[move.product_id.id]
+            rounding = product_id.uom_id.rounding
             valued_move_lines = move._get_in_move_lines()
             qty_done = 0
             for valued_move_line in valued_move_lines:
-                qty_done += valued_move_line.product_uom_id._compute_quantity(valued_move_line.qty_done, move.product_id.uom_id)
+                qty_done += valued_move_line.product_uom_id._compute_quantity(valued_move_line.qty_done, product_id.uom_id)
 
             qty = forced_qty or qty_done
             if float_is_zero(product_tot_qty_available, precision_rounding=rounding):
-                new_std_price_in_currency = move._get_currency_price_unit(default=move.product_id.standard_price_in_currency)
+                new_std_price_in_currency = move._get_currency_price_unit(default=product_id.standard_price_in_currency)
             elif float_is_zero(product_tot_qty_available + move.product_qty, precision_rounding=rounding) or \
                     float_is_zero(product_tot_qty_available + qty, precision_rounding=rounding):
-                new_std_price_in_currency = move._get_currency_price_unit(default=move.product_id.standard_price_in_currency)
+                new_std_price_in_currency = move._get_currency_price_unit(default=product_id.standard_price_in_currency)
             else:
                 # Get the standard price
-                amount_unit = std_price_update.get((move.company_id.id, move.product_id.id)) or move.product_id.with_company(move.company_id).standard_price_in_currency
+                amount_unit = std_price_update.get((move.company_id.id, move.product_id.id)) or product_id.standard_price_in_currency
                 new_std_price_in_currency = ((amount_unit * product_tot_qty_available) + (move._get_currency_price_unit() * qty)) / (product_tot_qty_available + qty)
 
             tmpl_dict[move.product_id.id] += qty_done
@@ -74,10 +74,11 @@ class StockMove(models.Model):
         """ Returns the unit price from this stock move """
         self.ensure_one()
         currency_id = self.company_id.currency_id
-        if hasattr(self, 'purchase_order_Line') and self.purchase_order_Line:
+        product_id = self.product_id.with_company(self.company_id.id)
+        if hasattr(self, 'purchase_line_id') and self.purchase_line_id:
             currency_id = self.purchase_line_id.currency_id
             # Si la moneda de la categoria del producto es la misma que la del pedido de compra, no hay que convertir el precio
-            if currency_id == self.product_id.with_company(self.company_id.id).categ_id.valuation_currency_id:
+            if currency_id == product_id.categ_id.valuation_currency_id:
                 return self.purchase_line_id.price_unit
             # Si no es la misma y hay un rate de conversión, se divide el precio unitario por el rate
             if self.picking_id.currency_rate:
@@ -85,11 +86,11 @@ class StockMove(models.Model):
 
         if hasattr(self, 'sale_line_id') and self.sale_line_id:
             currency_id = self.sale_line_id.currency_id
-            return self.product_id.with_company(self.company_id.id).standard_price_in_currency
+            return product_id.standard_price_in_currency
 
         price_unit = currency_id._convert(
                     from_amount=self.price_unit,
-                    to_currency=self.product_id.with_company(self.company_id.id).categ_id.valuation_currency_id,
+                    to_currency=product_id.categ_id.valuation_currency_id,
                     company=self.company_id,
                     date=fields.date.today(),
                 )
