@@ -79,8 +79,10 @@ class StockValuationLayer(models.Model):
         return res
 
     def _update_currency_standard_price(self):
-        for layer_id in self.filtered(lambda x: x.stock_landed_cost_id and x.product_id.cost_method == 'average' and x.value_in_currency):
+        for layer_id in self.filtered(lambda x: x.stock_landed_cost_id and x.value_in_currency):
+            product_id = layer_id.product_id.with_company(layer_id.company_id)
+            if product_id.categ_id.property_cost_method != 'average':
+                continue
             # batch standard price computation avoid recompute quantity_svl at each iteration
-            product = layer_id.product_id.with_company(layer_id.company_id)
-            if not float_is_zero(product.quantity_svl, precision_rounding=product.uom_id.rounding):
-                product.sudo().with_context(disable_auto_svl=True).standard_price_in_currency += layer_id.value_in_currency / product.quantity_svl
+            if not float_is_zero(product_id.quantity_svl, precision_rounding=product_id.uom_id.rounding):
+                product_id.sudo().with_context(disable_auto_svl=True).standard_price_in_currency += layer_id.value_in_currency / product_id.quantity_svl
