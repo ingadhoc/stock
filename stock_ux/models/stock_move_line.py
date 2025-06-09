@@ -8,6 +8,8 @@ from odoo.exceptions import ValidationError
 
 class StockMoveLine(models.Model):
     _inherit = "stock.move.line"
+    _order = "id"
+    # La unica funcionalidad de este modulo es cambiar el ordenamiento del las vistas embebidas de stock.move
 
     picking_create_user_id = fields.Many2one(
         "res.users",
@@ -26,6 +28,14 @@ class StockMoveLine(models.Model):
         compute="_compute_product_uom_qty_location",
         string="Net Quantity",
     )
+
+    product_uom_qty_location_stored = fields.Float(
+    compute="_compute_product_uom_qty_location_stored",
+    string="Cantidad neta",
+    store=True,
+    help="Net quantity for grouping/filtering, computed without context.",
+    )
+
     name = fields.Char(
         related="move_id.name",
         related_sudo=False,
@@ -33,6 +43,18 @@ class StockMoveLine(models.Model):
     origin_description = fields.Char(
         related="move_id.origin_description",
     )
+
+    @api.depends("location_id", "location_dest_id", "quantity")
+    def _compute_product_uom_qty_location_stored(self):
+        for rec in self:
+            # Ajusta la lógica según tu necesidad de agrupación
+            if rec.location_id and rec.location_dest_id:
+                if rec.location_id == rec.location_dest_id:
+                    rec.product_uom_qty_location_stored = 0.0
+                else:
+                    rec.product_uom_qty_location_stored = -rec.quantity
+            else:
+                rec.product_uom_qty_location_stored = 0.0
 
     @api.depends_context("location")
     def _compute_product_uom_qty_location(self):
