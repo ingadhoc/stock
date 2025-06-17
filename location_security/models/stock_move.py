@@ -19,9 +19,16 @@ class StockMove(models.Model):
         for user_location in user_locations:
             location = user_locations.search([("id", "child_of", user_location.id)])
             user_locations |= location
-        message = _("Invalid Location. You cannot process this move since you do " 'not control the location "%s".')
+        message = _(
+            'Invalid Location. You cannot process this picking "%s" since you do not control the location "%s".'
+        )
+
         for rec in moves:
-            if rec.location_id not in user_locations:
-                raise ValidationError(message % rec.location_id.name)
+            if self.env.context.get("button_validate_picking_ids") and rec.picking_id.id not in self.env.context.get(
+                "button_validate_picking_ids"
+            ):
+                return True
+            elif rec.location_id not in user_locations:
+                raise ValidationError(message % (rec.picking_id.name, rec.location_id.name))
             elif rec.location_dest_id not in user_locations:
-                raise ValidationError(message % rec.location_dest_id.name)
+                raise ValidationError(message % (rec.picking_id.name, rec.location_dest_id.name))
