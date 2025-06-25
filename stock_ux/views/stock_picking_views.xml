@@ -6,9 +6,6 @@
         <field name="priority">99</field>
         <field name="inherit_id" ref="stock.view_picking_form"/>
         <field name="arch" type="xml">
-            <field name="description_picking" position="after">
-                <field name="origin_description" string="Descripción de origen" optional="hide"/>
-            </field>
             <button name="button_validate" position="after">
                 <field name="block_manual_lines" invisible="1"/>
                 <field name="operation_type_additional_quantities" invisible="1"/>

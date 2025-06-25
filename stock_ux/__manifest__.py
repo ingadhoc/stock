@@ -18,6 +18,7 @@
 #
 ##############################################################################
 {
+<<<<<<< HEAD
     "name": "Stock UX",
     "version": "18.0.1.1.0",
     "category": "Warehouse Management",
@@ -28,6 +29,25 @@
     "images": [],
     "depends": [
         "sale_stock",
+||||||| parent of 003f0c16 (temp)
+    'name': 'Stock UX',
+    'version': "17.0.1.10.0",
+    'category': 'Warehouse Management',
+    'sequence': 14,
+    'summary': '',
+    'author': 'ADHOC SA',
+    'website': 'www.adhoc.com.ar',
+    'images': [
+=======
+    'name': 'Stock UX',
+    'version': "17.0.1.11.0",
+    'category': 'Warehouse Management',
+    'sequence': 14,
+    'summary': '',
+    'author': 'ADHOC SA',
+    'website': 'www.adhoc.com.ar',
+    'images': [
+>>>>>>> 003f0c16 (temp)
     ],
     "data": [
         "security/stock_ux_security.xml",

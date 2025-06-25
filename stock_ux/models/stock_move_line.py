@@ -102,6 +102,7 @@ class StockMoveLine(models.Model):
             self.env["ir.config_parameter"].sudo().get_param("stock_ux.delivery_slip_use_origin", "False") == "True"
         )
         if use_origin:
+<<<<<<< HEAD
             for line in aggregated_move_lines:
                 moves = (
                     self.filtered(lambda sml: sml.product_id == aggregated_move_lines[line]["product"])
@@ -111,6 +112,32 @@ class StockMoveLine(models.Model):
                 if moves:
                     aggregated_move_lines[line]["description"] = False
                     aggregated_move_lines[line]["name"] = ", ".join(moves.mapped("origin_description"))
+||||||| parent of 003f0c16 (temp)
+            for line in aggregated_move_lines:
+                moves = self.filtered(
+                    lambda sml: sml.product_id == aggregated_move_lines[line]['product']
+                ).mapped('move_id').filtered(lambda m: m.origin_description)
+                if moves:
+                    aggregated_move_lines[line]['description'] = False
+                    aggregated_move_lines[line]['name'] = ', '.join(moves.mapped('origin_description'))
+=======
+            move_line_by_move = {}
+            for sml in self:
+                move = sml.move_id
+                if move and move.origin_description:
+                    move_line_by_move.setdefault(move.id, {
+                        'description': move.origin_description,
+                        'product_id': sml.product_id.id
+                    })
+            used_moves = set()
+            for line_data in aggregated_move_lines.values():
+                for move_id, move_info in move_line_by_move.items():
+                    if move_info['product_id'] == line_data['product'].id and move_id not in used_moves:
+                        line_data['description'] = False
+                        line_data['name'] = move_info['description']
+                        used_moves.add(move_id)
+                        break
+>>>>>>> 003f0c16 (temp)
 
         return aggregated_move_lines
 
@@ -122,3 +149,34 @@ class StockMoveLine(models.Model):
         for line in self:
             line.with_context(from_inverse_qty_done=True).quantity = line.qty_done
             line.picked = line.quantity > 0
+
+    def _get_aggregated_properties(self, move_line=False, move=False):
+        use_origin = self.env['ir.config_parameter'].sudo().get_param('stock_ux.delivery_slip_use_origin', 'False') == 'True'
+        if use_origin:
+            move = move or move_line.move_id
+            uom = move.product_uom or move_line.product_uom_id
+            name = move.product_id.display_name
+            description = move.origin_description or ""
+            product = move.product_id
+            if description.startswith(name):
+                description = description.removeprefix(name).strip()
+            elif description.startswith(product.name):
+                description = description.removeprefix(product.name).strip()
+            line_key = f'{product.id}_{product.display_name}_{description or ""}_{uom.id}_{move.product_packaging_id or ""}'
+            bom_line = getattr(move, 'bom_line_id', False)
+            if bom_line and bom_line.bom_id:
+                bom = bom_line.bom_id
+                line_key += f'_{bom.id if bom else ""}'
+            else:
+                bom = False
+            return {
+                'line_key': line_key,
+                'name': name,
+                'description': description,
+                'product_uom': uom,
+                'move': move,
+                'packaging': move.product_packaging_id,
+                'bom': bom
+            }
+        else:
+            return super()._get_aggregated_properties(move_line=move_line, move=move)
