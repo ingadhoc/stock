@@ -177,7 +177,7 @@ class StockPicking(models.Model):
                 for so_bom_line in stock_bom_lines.mapped("sale_line_id"):
                     bom = self.env["mrp.bom"]._bom_find(products=so_bom_line.product_id)[so_bom_line.product_id]
                     if bom and bom.type == "phantom":
-                        bom_moves = so_bom_line.move_ids & stock_bom_lines
+                        bom_moves = so_bom_line.move_ids & stock_bom_lines._origin
                         done_avg = []
                         picking_avg = []
                         boms, lines = bom.sudo().explode(
