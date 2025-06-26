@@ -2,7 +2,7 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import fields, models, api, _
+from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
 
@@ -196,7 +196,7 @@ class StockPicking(models.Model):
                 for so_bom_line in stock_bom_lines.mapped('sale_line_id'):
                     bom = self.env["mrp.bom"]._bom_find(products = so_bom_line.product_id)[so_bom_line.product_id]
                     if bom and bom.type == 'phantom':
-                        bom_moves = so_bom_line.move_ids & stock_bom_lines
+                        bom_moves = so_bom_line.move_ids & stock_bom_lines._origin
                         done_avg = []
                         picking_avg = []
                         boms, lines = bom.sudo().explode(
@@ -210,10 +210,10 @@ class StockPicking(models.Model):
                                     bom_quantity += line_data['qty']
                             if not bom_quantity:
                                 continue
-                            picking_avg.append((
-                                move.product_uom_qty / bom_quantity))
+                            picking_avg.append(
+                                move.product_uom_qty / bom_quantity)
                             done_avg.append(
-                                (move.quantity / bom_quantity))
+                                move.quantity / bom_quantity)
                         picking_value += so_bom_line.price_reduce_taxexcl * (
                             sum(picking_avg) / len(picking_avg))
                         done_value += so_bom_line.price_reduce_taxexcl * (
