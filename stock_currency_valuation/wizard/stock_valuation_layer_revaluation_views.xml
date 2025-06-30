@@ -11,7 +11,7 @@
                 <div class="o_row" attrs="{'invisible':[('show_added_value_in_currency', '!=', True)]}">
                     <span><field name="added_value_in_currency" class="oe_inline"/> = <field name="new_value_in_currency" class="oe_inline"/> (<field name="new_value_in_currency_by_qty" class="oe_inline ms-1"/> by <field name="product_uom_name" class="oe_inline me-1"/>)
                     <small class="mx-2 fst-italic">Use a negative added value to record a decrease in the product value</small></span>
-                </div>            
+                </div>
                 <field name="show_added_value_in_currency" invisible="1"/>
                 <field name="valuation_currency_id" invisible="1"/>
             </field>
