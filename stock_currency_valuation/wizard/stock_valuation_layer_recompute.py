@@ -5,7 +5,16 @@ from odoo.exceptions import UserError
 
 def patch_check_reconciliation(self):
     return
-class StockValuationLayerRecompute(models.TransientModel):
+# Todo - agregar estado
+# -1 draft solo modifico producto
+# 2 in_process  cuando apreto action_compute_lines se computan las lineas y se pone es ente estado (puedoapretar mas de una vz )
+# el boton action_compute_lines se ve en draft u en process
+# 3  done no dear moficar
+# 4 cancel
+# action_manual_slv_revaluation pasa a done
+# metodo que pase cancel
+# vista de lista al menu
+class StockValuationLayerRecompute(models.model):
 
     _name = 'stock.valuation.layer.recompute'
     _description = "layer recompute"
@@ -41,14 +50,11 @@ class StockValuationLayerRecompute(models.TransientModel):
     def action_compute_lines(self):
 
         last_manual_svl_id = self.env['stock.valuation.layer'].search(
-            [('company_id', '=', self.company_id.id), ('product_id', '=', self.product_id.id), ('description', 'like', 'Manual%')]
+            [('company_id', '=', self.company_id.id), ('product_id', '=', self.product_id.id), ('description', 'ilike', 'manual%')]
             , order="create_date desc", limit=1)
         self.last_manual_svl_id = last_manual_svl_id
 
         leaf = [('company_id', '=', self.company_id.id), ('product_id', '=', self.product_id.id)]
-        if last_manual_svl_id:
-            leaf += [('id', '>', last_manual_svl_id.id)]
-
         svl_ids = self.env['stock.valuation.layer'].search(leaf, order="create_date asc")
         lines = [Command.clear()]
         quantity_at_time = 0
@@ -67,7 +73,8 @@ class StockValuationLayerRecompute(models.TransientModel):
                 svl_type = 'inventory' if svl_id.stock_move_id.is_inventory else 'out'
 
             # es un ajuste?
-            elif svl_id.description.startswith('Valor del producto modificado') or svl_id.description.startswith('Manual'):
+            #elif svl_id.description.startswith('Valor del producto modificado') or svl_id.description.startswith('Manual'):
+            elif not svl_id.stock_move_id:
                 new_value_in_currency = svl_id.value_in_currency
                 new_unit_cost_in_currency = svl_id.unit_cost_in_currency
                 standard_price_in_currency = (new_value_in_currency + standard_price_in_currency * (quantity_at_time - svl_id.quantity)) / quantity_at_time if quantity_at_time else standard_price_in_currency
@@ -116,8 +123,8 @@ class StockValuationLayerRecompute(models.TransientModel):
 
             need_change_1 = self.valuation_currency_id.compare_amounts(svl_id.value_in_currency, new_value_in_currency) != 0.0
             need_change_2 = self.valuation_currency_id.compare_amounts(svl_id.unit_cost_in_currency, new_unit_cost_in_currency) != 0.0
-
-            vals['need_changes'] = True if need_change_1 or need_change_2 else False
+            need_change_3 = svl_id.id > last_manual_svl_id.id or not last_manual_svl_id
+            vals['need_changes'] = True if (need_change_1 or need_change_2) and need_change_3 else False
             lines.append(Command.create(vals),)
         self.line_ids = lines
         self.final_amount_in_currency = standard_price_in_currency
@@ -146,7 +153,7 @@ class StockValuationLayerRecompute(models.TransientModel):
         AccountMoveLine._check_reconciliation = orig_check_reconciliation
 
 
-class StockValuationLayerRecomputeLine(models.TransientModel):
+class StockValuationLayerRecomputeLine(models.model):
 
     _name = 'stock.valuation.layer.recompute.line'
     _description = "lines layer recompute"
