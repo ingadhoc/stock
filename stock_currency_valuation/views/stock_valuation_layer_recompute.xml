@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="stock_valuation_layer_recompute_form_view" model="ir.ui.view">
+        <field name="name">stock.valuation.layer.recompute.form</field>
+        <field name="model">stock.valuation.layer.recompute</field>
+        <field name="type">form</field> <!-- Corrected type field -->
+        <field name="arch" type="xml">
+            <header>
+                <button name="action_compute_lines" type="object" string="compute lines" attrs="{'invisible': [('state', 'in', ['done', 'cancel'])]}"/>
+                <button name="delete_adjust_compute_lines" type="object" string="delete adjust and compute lines" attrs="{'invisible': [('state', 'in', ['done', 'cancel'])]}"/>
+                <button name="action_manual_slv_revaluation" type="object" string="Revaluate" attrs="{'invisible': [('state', 'in', ['draft', 'cancel','done'])]}"/>
+                <button name="action_cancel" type="object" string="Cancel" attrs="{'invisible': [('state', 'in', ['done', 'cancel'])]}"/>
+                <button name="back_to_draft" type="object" string="Back to Draft" attrs="{'invisible': [('state', '!=', 'cancel')]}"/>
+                <field name="state" widget="statusbar" statusbar_visible="draft,in_process,done,cancel"/>
+            </header>
+            <form>
+                <sheet>
+                    <group >
+                        <group colspan="2">
+                            <field name="company_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="product_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="valuation_currency_id" attrs="{'readonly': [('state', 'in', ['done', 'cancel'])]}"/>
+                        </group>
+                        <group>
+                            <field name="initial_amount" attrs="{'readonly': [('state', 'in', ['done', 'cancel'])]}"/>
+                            <field name="final_amount" attrs="{'readonly': [('state', 'in', ['done', 'cancel'])]}"/>
+                        </group>
+                        <group>
+                            <field name="initial_amount_in_currency" attrs="{'readonly': [('state', 'in', ['done', 'cancel'])]}"/>
+                            <field name="final_amount_in_currency" attrs="{'readonly': [('state', 'in', ['done', 'cancel'])]}"/>
+                        </group>
+                        <field name="last_manual_svl_id" attrs="{'readonly': [('state', 'in', ['done', 'cancel'])]}"/>
+                    </group>
+                    <field name="line_ids" attrs="{'readonly': [('state', 'in', ['done', 'cancel'])]}">
+                        <tree>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="company_currency_id" invisible="1"/>
+                            <field name="layer_date" readonly="True" optional="hide"/>
+                            <field name="svl_type" readonly="True" optional="hide"/>
+                            <field name="layer_id" readonly="True" optional="show"/>
+                            <field name="quantity" readonly="True" optional="hide"/>
+                            <field name="quantity_at_time" readonly="True" optional="hide"/>
+                            <field name="layer_unit_cost" optional="hide"/>
+                            <field name="layer_value"  currency_field="company_currency_id"/>
+                            <field name="new_unit_cost" currency_field="company_currency_id" optional="hide"/>
+                            <field name="new_value"  currency_field="company_currency_id"/>
+                            <field name="layer_unit_cost_in_currency" optional="hide"/>
+                            <field name="layer_value_in_currency"/>
+                            <field name="new_unit_cost_in_currency" optional="hide"/>
+                            <field name="new_value_in_currency"/>
+                            <field name="standard_price" currency_field="company_currency_id"/>
+                            <field name="standard_price_in_currency"/>
+                            <field name="need_changes" readonly="True"/>
+                        </tree>
+                    </field>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="stock_valuation_layer_recompute_list_view" model="ir.ui.view">
+        <field name="name">stock.valuation.layer.recompute.list</field>
+        <field name="model">stock.valuation.layer.recompute</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="product_id"/>
+                <field name="valuation_currency_id"/>
+                <field name="amount_changed"/>
+                <field name="slv_changed"/>
+                <field name="initial_amount_in_currency"/>
+                <field name="final_amount_in_currency"/>
+                <field name="state"/>
+                <field name="last_manual_svl_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_stock_valuation_layer_recompute" model="ir.actions.act_window">
+        <field name="name">Recompute layer</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">stock.valuation.layer.recompute</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem action="action_stock_valuation_layer_recompute" id="layer_recompute_menu" parent="stock.menu_warehouse_report" name="Layer recompute"  sequence="2"/>
+
+</odoo>
