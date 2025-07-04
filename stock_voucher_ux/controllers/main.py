@@ -50,7 +50,17 @@ class ReportController(report.ReportController):
                     pdf_response = response.response[0]
                     reader = PdfFileReader(io.BytesIO(pdf_response))
                     # The number of pages will assign the number of vouchers
-                    number_pages = len(reader.pages)
+                    copies = (
+                        request.env["ir.actions.report"]
+                        .search([("report_name", "=", "stock.report_deliveryslip")])
+                        .l10n_ar_copies
+                    )
+                    if copies == "triplicado":
+                        number_pages = int(len(reader.pages) / 3)
+                    elif copies == "duplicado":
+                        number_pages = int(len(reader.pages) / 2)
+                    else:
+                        number_pages = len(reader.pages)
 
                     if not request.env["stock.picking"].browse(picking_id).voucher_ids and book_id:
                         request.env["stock.picking"].browse(picking_id).assign_numbers(number_pages, book_id)
