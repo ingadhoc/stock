@@ -12,6 +12,10 @@ class StockWarehouseOrderpointWizard(models.TransientModel):
     supplier_ids = fields.Many2many("res.partner", string="Vendor", check_company=True)
     filter_by_main_supplier = fields.Boolean(string="Filter by Main Vendor")
     location_ids = fields.Many2many("stock.location", string="Location")
+    compute_rotation = fields.Boolean(
+        help="If checked, the wizard will compute the rotation of the orderpoints. This may take some time.",
+        default=False,
+    )
 
     def action_confirm(self):
         ctx = {
@@ -24,7 +28,8 @@ class StockWarehouseOrderpointWizard(models.TransientModel):
         orderpoint_domain = self._get_orderpoint_domain()
         orderpoints = self.env["stock.warehouse.orderpoint"].with_context(active_test=False).search(orderpoint_domain)
         orderpoints.update_qty_forecast()
-        orderpoints._compute_rotation()
+        if self.compute_rotation:
+            orderpoints._compute_rotation()
         orderpoints._change_review_toggle_negative()
         action["domain"] = expression.AND(
             [

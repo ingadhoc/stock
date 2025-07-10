@@ -124,3 +124,9 @@ class StockWarehouseOrderpoint(models.Model):
         valid_orderpoints = self.exists()
         if valid_orderpoints:
             valid_orderpoints._compute_qty_to_order()
+
+    def _cron_compute_rotation(self):
+        """Cron method to compute the rotation of orderpoints."""
+        orderpoints = self.with_context(active_test=False).search([])
+        orderpoints._compute_rotation()
+        return True
