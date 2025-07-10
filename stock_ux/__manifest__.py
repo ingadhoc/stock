@@ -19,7 +19,7 @@
 ##############################################################################
 {
     "name": "Stock UX",
-    "version": "18.0.1.2.0",
+    "version": "18.0.1.3.0",
     "category": "Warehouse Management",
     "sequence": 14,
     "summary": "",
@@ -50,6 +50,7 @@
         "views/res_company_views.xml",
         "views/stock_quant_views.xml",
         "report/stock_picking_operations.xml",
+        "data/ir_cron.xml",
     ],
     "installable": True,
     "auto_install": False,
