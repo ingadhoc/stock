@@ -70,6 +70,8 @@
                 <field name="slv_changed"/>
                 <field name="initial_amount_in_currency"/>
                 <field name="final_amount_in_currency"/>
+                <field name="initial_amount"/>
+                <field name="final_amount"/>
                 <field name="state"/>
                 <field name="last_manual_svl_id"/>
             </tree>

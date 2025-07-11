@@ -233,6 +233,10 @@ class StockValuationLayerRecompute(models.Model):
                     standard_price_in_currency = (new_value_in_currency + standard_price_in_currency * (quantity_at_time - svl_id.quantity)) / quantity_at_time if quantity_at_time else standard_price_in_currency
                     svl_type = 'slv'
 
+            if quantity_at_time == 0:
+                standard_price_in_currency = 0
+                standard_price = 0
+
             vals['new_value'] = new_value
             vals['new_unit_cost'] = new_unit_cost
             vals['standard_price'] = standard_price
