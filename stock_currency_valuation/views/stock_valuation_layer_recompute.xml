@@ -29,7 +29,7 @@
                             <field name="initial_amount_in_currency" attrs="{'readonly': [('state', 'in', ['done', 'cancel'])]}"/>
                             <field name="final_amount_in_currency" attrs="{'readonly': [('state', 'in', ['done', 'cancel'])]}"/>
                         </group>
-                        <field name="last_manual_svl_id" attrs="{'readonly': [('state', 'in', ['done', 'cancel'])]}"/>
+                        <field name="last_manual_svl_id" readonly="1"/>
                     </group>
                     <field name="line_ids" attrs="{'readonly': [('state', 'in', ['done', 'cancel'])]}">
                         <tree>
@@ -68,10 +68,10 @@
                 <field name="valuation_currency_id"/>
                 <field name="amount_changed"/>
                 <field name="slv_changed"/>
-                <field name="initial_amount_in_currency"/>
-                <field name="final_amount_in_currency"/>
                 <field name="initial_amount"/>
                 <field name="final_amount"/>
+                <field name="initial_amount_in_currency"/>
+                <field name="final_amount_in_currency"/>
                 <field name="state"/>
                 <field name="last_manual_svl_id"/>
             </tree>

@@ -1,5 +1,4 @@
 from odoo import Command, api, fields, models
-from odoo.addons.account.models.account_move_line import AccountMoveLine
 from odoo.exceptions import UserError
 
 
@@ -63,19 +62,22 @@ class StockValuationLayerRecompute(models.Model):
             rec.state = 'draft'
 
     def delete_adjust_compute_lines(self):
-        self.env['stock.valuation.layer'].search(
-            [('company_id', '=', self.company_id.id), ('product_id', '=', self.product_id.id), ('description', 'ilike', 'manual%')]
-            , order="create_date desc").sudo().unlink()
+        manual_slv = self.env['stock.valuation.layer'].search(
+            [('company_id', '=', self.company_id.id), ('product_id', '=', self.product_id.id), ('create_uid', '=', 1), ('stock_move_id', '=', False)]
+            , order="create_date desc")
+        manual_slv.mapped('account_move_id').button_draft()
+        manual_slv.mapped('account_move_id').unlink()
+        manual_slv.unlink()
+
         self.action_compute_lines()
 
     def action_compute_lines(self):
 
-        # last_manual_svl_id = self.env['stock.valuation.layer'].search(
-        #     [('company_id', '=', self.company_id.id), ('product_id', '=', self.product_id.id), ('description', 'ilike', 'manual%')]
-        #     , order="create_date desc", limit=1)
-        # self.last_manual_svl_id = last_manual_svl_id
+        last_manual_svl_id = self.env['stock.valuation.layer'].search(
+            [('company_id', '=', self.company_id.id), ('product_id', '=', self.product_id.id), ('create_uid', '=', 1), ('stock_move_id', '=', False)]
+            , order="create_date desc", limit=1)
+        self.last_manual_svl_id = last_manual_svl_id
 
-        self.last_manual_svl_id = False
         leaf = [('company_id', '=', self.company_id.id), ('product_id', '=', self.product_id.id)]
         svl_ids = self.env['stock.valuation.layer'].search(leaf, order="create_date asc")
         lines = [Command.clear()]
@@ -172,8 +174,8 @@ class StockValuationLayerRecompute(models.Model):
                     new_value = price_unit * svl_id.quantity
                     new_unit_cost = price_unit
                     standard_price = (new_value + standard_price * (quantity_at_time - svl_id.quantity)) / quantity_at_time if quantity_at_time else standard_price
-                # Otros casos ?
                     svl_type = 'purchase manual rate %s' % svl_id.manual_currency_rate
+                # Otros casos ?
                 else:
                     new_value = svl_id.value
                     new_unit_cost = svl_id.unit_cost
@@ -198,7 +200,7 @@ class StockValuationLayerRecompute(models.Model):
 
                     new_unit_cost_in_currency = new_value_in_currency / svl_id.quantity if svl_id.quantity else 0
                     standard_price_in_currency = (new_value_in_currency + standard_price_in_currency * (quantity_at_time - svl_id.quantity)) / quantity_at_time if quantity_at_time else standard_price_in_currency
-                    svl_type = 'slv'
+                    svl_type = 'landed cost'
 
                 elif svl_id.stock_move_id.picking_id.valuation_currency_id and svl_id.stock_move_id.purchase_line_id.order_id.currency_id == svl_id.stock_move_id.picking_id.valuation_currency_id:
 
@@ -217,7 +219,7 @@ class StockValuationLayerRecompute(models.Model):
                     new_value = new_value
                     new_unit_cost = new_value / svl_id.quantity if svl_id.quantity else 0
                     standard_price = (new_value + standard_price * (quantity_at_time - svl_id.quantity)) / quantity_at_time if quantity_at_time else standard_price
-                    svl_type = 'slv'
+                    svl_type = 'purchase'
                 else:
                     new_value_in_currency = svl_id.currency_id._convert(
                         from_amount=svl_id.value,
@@ -233,6 +235,7 @@ class StockValuationLayerRecompute(models.Model):
                     standard_price_in_currency = (new_value_in_currency + standard_price_in_currency * (quantity_at_time - svl_id.quantity)) / quantity_at_time if quantity_at_time else standard_price_in_currency
                     svl_type = 'slv'
 
+            # Si no queda producto el precio es 0
             if quantity_at_time == 0:
                 standard_price_in_currency = 0
                 standard_price = 0
@@ -252,8 +255,7 @@ class StockValuationLayerRecompute(models.Model):
             need_change_3 = self.currency_id.compare_amounts(svl_id.value, new_value) != 0.0
             need_change_4 = self.currency_id.compare_amounts(svl_id.unit_cost, new_unit_cost) != 0.0
 
-            #need_change_5 = svl_id.id > last_manual_svl_id.id or not last_manual_svl_id
-            need_change_5 = True
+            need_change_5 = svl_id.id > last_manual_svl_id.id or not last_manual_svl_id
             vals['need_changes'] = True if (need_change_1 or need_change_2 or need_change_3 or need_change_4) and need_change_5 else False
             lines.append(Command.create(vals),)
         self.line_ids = lines
@@ -264,15 +266,16 @@ class StockValuationLayerRecompute(models.Model):
 
     def action_check_need_changes(self):
         if not self.line_ids.filtered('need_changes') and \
-            self.final_amount_in_currency == self.initial_amount_in_currency or \
+            self.final_amount_in_currency == self.initial_amount_in_currency and \
             self.final_amount == self.initial_amount:
             self.state = 'no_change'
 
     def action_manual_slv_revaluation(self):
-        orig_check_reconciliation = AccountMoveLine._check_reconciliation
-        AccountMoveLine._check_reconciliation = patch_check_reconciliation
+        #orig_check_reconciliation = AccountMoveLine._check_reconciliation
+        #AccountMoveLine._check_reconciliation = patch_check_reconciliation
         slv_changed = False
-
+        # to_reconciled_line_ids guarda todas las conciliaciones
+        to_reconciled_line_ids = []
         for line_id in self.line_ids.filtered('need_changes'):
             slv_changed = True
             if line_id.layer_id.stock_landed_cost_id:
@@ -284,7 +287,12 @@ class StockValuationLayerRecompute(models.Model):
                 'value':line_id.new_value_in_currency
             })
             lines = []
-            for move_line in  line_id.layer_id.account_move_id.line_ids.filtered(lambda x: x.product_id == self.product_id):
+            product_move_line_ids = line_id.layer_id.account_move_id.line_ids.filtered(lambda x: x.product_id == self.product_id)
+            #agrego las full reconiliaciones
+            to_reconciled_line_ids.append(product_move_line_ids.full_reconcile_id.reconciled_line_ids)
+            move_ids = product_move_line_ids.mapped('move_id')
+            move_ids.button_draft()
+            for move_line in product_move_line_ids:
                 multiplier = 1 if move_line.amount_currency >= 0 else -1
                 field = 'debit' if move_line.credit == 0 else 'credit'
                 lines.append(Command.update(move_line.id,{
@@ -293,6 +301,7 @@ class StockValuationLayerRecompute(models.Model):
                 }))
             if lines:
                 line_id.layer_id.account_move_id.line_ids = lines
+            move_ids.action_post()
 
         if self.product_id.with_company(self.company_id.id).standard_price_in_currency != self.final_amount_in_currency:
             self.product_id.with_company(self.company_id.id).with_context(
@@ -306,7 +315,12 @@ class StockValuationLayerRecompute(models.Model):
             self.amount_changed = True
 
         self.slv_changed = slv_changed
-        AccountMoveLine._check_reconciliation = orig_check_reconciliation
+        for to_reconciled_lines in to_reconciled_line_ids:
+            # si no tiene reconciliaciones, lo reconcilio sino supongo
+            # que ya lo reconcilie en antes
+            if not any(to_reconciled_lines.mapped('reconciled')):
+                to_reconciled_lines.reconcile()
+        #AccountMoveLine._check_reconciliation = orig_check_reconciliation
         self.state = 'done'
 
 
