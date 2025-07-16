@@ -75,6 +75,10 @@ class StockMoveLine(models.Model):
             and not self.env.context.get("trigger_assign")
             and not self.env.context.get("from_inverse_qty_done")
             and not self.env.context.get("sale_automation")
+            and (
+                self.picking_id in self.env.context.get("picking_ids", [])
+                or not self.env.context.get("picking_ids", [])
+            )
         ):
             locations = self.env["stock.location"].search(
                 [("id", "child_of", self.picking_id.location_id.id), ("company_id", "=", self.picking_id.company_id.id)]
