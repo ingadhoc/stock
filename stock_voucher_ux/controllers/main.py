@@ -31,10 +31,17 @@ class ReportController(report.ReportController):
             assign = context_dict.get("assign")
             book_id = request.env["stock.picking"].browse(picking_id).book_id
             if assign and book_id and picking_id:
+                copies_result = request.env["ir.actions.report"].search_read(
+                    [("report_name", "ilike", "remito")], ["copies"], limit=1
+                )
+                copies = copies_result[0]["copies"] if copies_result else None
                 pdf_response = response.response[0]
                 reader = PdfFileReader(io.BytesIO(pdf_response))
                 # The number of pages will assign the number of vouchers
-                number_pages = len(reader.pages)
+                if copies:
+                    number_pages = int(len(reader.pages) / copies)
+                else:
+                    number_pages = len(reader.pages)
 
                 # See if there are vouchers already assigned. If not, then it assigns the vouchers
                 if not request.env["stock.picking"].browse(picking_id).voucher_ids and book_id:
@@ -50,11 +57,10 @@ class ReportController(report.ReportController):
                     pdf_response = response.response[0]
                     reader = PdfFileReader(io.BytesIO(pdf_response))
                     # The number of pages will assign the number of vouchers
-                    copies = (
-                        request.env["ir.actions.report"]
-                        .search([("report_name", "=", "stock.report_deliveryslip")])
-                        .l10n_ar_copies
+                    copies_result = request.env["ir.actions.report"].search_read(
+                        [("report_name", "=", "stock.report_deliveryslip")], ["l10n_ar_copies"], limit=1
                     )
+                    copies = copies_result[0]["l10n_ar_copies"] if copies_result else None
                     if copies == "triplicado":
                         number_pages = int(len(reader.pages) / 3)
                     elif copies == "duplicado":
