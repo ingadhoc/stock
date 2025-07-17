@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-05 10:32+0000\n"
+"POT-Creation-Date: 2025-07-17 14:59+0000\n"
 "PO-Revision-Date: 2024-11-13 15:07+0000\n"
 "Last-Translator: Matias Velazquez, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
@@ -81,16 +81,6 @@ msgid "Backorders"
 msgstr "Pedidos Pendientes"
 
 #. module: stock_ux
-#. odoo-python
-#: code:addons/stock_ux/models/stock_picking.py:0
-msgid ""
-"Be careful about the number of packages you are trying to insert. It may "
-"cause an error when trying to render the 'Shipping Label' template"
-msgstr ""
-"Tenga cuidado con la cantidad de paquetes que intenta insertar. Puede causar"
-" un error al intentar renderizar la plantilla 'Etiqueta de despacho'"
-
-#. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_picking_type__block_picking_deletion
 msgid "Block Picking Deletion"
 msgstr "Bloquear borrado de Transferencias"
@@ -151,6 +141,11 @@ msgstr ""
 #: model:ir.model,name:stock_ux.model_product_label_layout
 msgid "Choose the sheet layout to print the labels"
 msgstr "Elija el diseño de la hoja para imprimir etiquetas"
+
+#. module: stock_ux
+#: model:ir.actions.server,name:stock_ux.ir_cron_compute_rotation_ir_actions_server
+msgid "Compute Rotation"
+msgstr ""
 
 #. module: stock_ux
 #: model:ir.model,name:stock_ux.model_res_config_settings
