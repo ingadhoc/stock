@@ -65,11 +65,32 @@ class StockValuationLayerRecompute(models.Model):
         manual_slv = self.env['stock.valuation.layer'].search(
             [('company_id', '=', self.company_id.id), ('product_id', '=', self.product_id.id), ('create_uid', '=', 1), ('stock_move_id', '=', False)]
             , order="create_date desc")
-        manual_slv.mapped('account_move_id').button_draft()
-        manual_slv.mapped('account_move_id').unlink()
-        manual_slv.unlink()
+        manual_slv.sudo().mapped('account_move_id').button_draft()
+        manual_slv.sudo().mapped('account_move_id').unlink()
+        manual_slv.sudo().unlink()
 
         self.action_compute_lines()
+
+    def _prepare_new_values(self, from_currency_id, to_currency_id, qty, unit_cost, layer_date, manual_currency_rate=0):
+        is_company_currency = from_currency_id == self.company_id.currency_id
+        if manual_currency_rate and is_company_currency:
+            new_unit_cost_in_to_currency = unit_cost * manual_currency_rate
+        elif manual_currency_rate and not is_company_currency:
+            new_unit_cost_in_to_currency = unit_cost / manual_currency_rate
+        else:
+            new_unit_cost_in_to_currency = from_currency_id._convert(
+                from_amount=unit_cost,
+                to_currency=to_currency_id,
+                company=self.company_id,
+                date=layer_date,
+            )
+
+        if is_company_currency:
+            return [unit_cost, unit_cost * qty,new_unit_cost_in_to_currency, new_unit_cost_in_to_currency * qty,'manual rate' if manual_currency_rate else 'slv']
+        return [new_unit_cost_in_to_currency,new_unit_cost_in_to_currency * qty,unit_cost,unit_cost * qty,'manual rate' if manual_currency_rate else 'slv']
+
+    def _get_standard_price(self, new_value, standard_price, quantity_at_time, quantity):
+        return (new_value + standard_price * (quantity_at_time - quantity)) / quantity_at_time if quantity_at_time else standard_price
 
     def action_compute_lines(self):
 
@@ -84,6 +105,7 @@ class StockValuationLayerRecompute(models.Model):
         quantity_at_time = 0
         standard_price_in_currency = 0
         standard_price = 0
+        description = ''
 
         self.initial_amount_in_currency = self.product_id.with_company(self.company_id.id).standard_price_in_currency
         self.initial_amount = self.product_id.with_company(self.company_id.id).standard_price
@@ -98,21 +120,19 @@ class StockValuationLayerRecompute(models.Model):
             }
             quantity_at_time = quantity_at_time + svl_id.quantity
 
+            # Si el movimento es de salida o de inventario, valor es el registrado en el producto
             if svl_id.stock_move_id and (svl_id.stock_move_id._is_out() or svl_id.stock_move_id.is_inventory):
-                # Si el movimento es de salida o de inventario, valor es el registrado en el producto
                 standard_price_in_currency = standard_price_in_currency if standard_price_in_currency else  svl_id.unit_cost_in_currency
                 standard_price = standard_price if standard_price else  svl_id.unit_cost
 
                 new_unit_cost = standard_price
                 new_value = standard_price * svl_id.quantity
-
                 new_unit_cost_in_currency = standard_price_in_currency
                 new_value_in_currency = standard_price_in_currency * svl_id.quantity
 
                 svl_type = 'inventory' if svl_id.stock_move_id.is_inventory else 'out'
 
-            # es un ajuste?
-            #elif svl_id.description.startswith('Valor del producto modificado') or svl_id.description.startswith('Manual'):
+            # es un ajuste? si no tiene movimiento de stock
             elif not svl_id.stock_move_id:
                 new_value_in_currency = svl_id.value_in_currency
                 new_unit_cost_in_currency = svl_id.unit_cost_in_currency
@@ -124,9 +144,10 @@ class StockValuationLayerRecompute(models.Model):
 
                 svl_type = 'ajustement'
 
+            # Es una devolucion
             elif svl_id.stock_move_id and svl_id.stock_move_id._is_returned(valued_type='in'):
-                # Si es una devolucion y existe el movimiento de origen
-                # el valor de avco sale del mov de origen sino sale de producto
+                # Si existe el movimiento de origen
+                # el valor de avco sale del mov de origen
 
                 if svl_id.stock_move_id.origin_returned_move_id:
                     for temp_vals in lines:
@@ -141,6 +162,7 @@ class StockValuationLayerRecompute(models.Model):
                             svl_type = 'return  of  %s ' % temp_vals[2]['layer_id']
 
                             break
+                # sino sale de producto
                 else:
                     new_value_in_currency = standard_price_in_currency * svl_id.quantity
                     new_unit_cost_in_currency = standard_price_in_currency
@@ -149,91 +171,60 @@ class StockValuationLayerRecompute(models.Model):
 
                     svl_type = 'ret_without_move'
 
-            elif svl_id.manual_currency_rate:
-                # caso viene de un landed cost con manual currency rate
-                if svl_id.stock_landed_cost_id.inverse_currency_rate:
 
-                    new_value = svl_id.value
-                    new_unit_cost = svl_id.unit_cost
-                    standard_price = (new_value + standard_price * (quantity_at_time - svl_id.quantity)) / quantity_at_time if quantity_at_time else standard_price
+            # landed cost
+            elif svl_id.stock_landed_cost_id:
+                new_value, new_unit_cost, new_value_in_currency, new_unit_cost_in_currency, description = self._prepare_new_values(
+                    from_currency_id=self.company_id.currency_id,
+                    to_currency_id=svl_id.stock_landed_cost_id.valuation_currency_id,
+                    qty=svl_id.quantity,
+                    unit_cost=svl_id.value,
+                    layer_date=svl_id.create_date,
+                    manual_currency_rate=svl_id.manual_currency_rate
+                    )
 
-                    new_value_in_currency = svl_id.value * svl_id.manual_currency_rate
-                    new_unit_cost_in_currency = new_value_in_currency / svl_id.quantity if svl_id.quantity else 0
-                    standard_price_in_currency = (new_value_in_currency + standard_price_in_currency * (quantity_at_time - svl_id.quantity)) / quantity_at_time if quantity_at_time else standard_price_in_currency
-
-                    svl_type = 'landed manual rate %s' % svl_id.manual_currency_rate
-                # caso viene de una compra con manual currency rate
-                elif svl_id.stock_move_id.picking_id.currency_rate and svl_id.stock_move_id.purchase_line_id.order_id.currency_id == svl_id.stock_move_id.picking_id.valuation_currency_id:
-                    price_unit = svl_id.stock_move_id.purchase_line_id.price_unit / svl_id.stock_move_id.picking_id.currency_rate
-
-                    new_value_in_currency = svl_id.stock_move_id.purchase_line_id.price_unit * svl_id.quantity
-                    new_unit_cost_in_currency = svl_id.stock_move_id.purchase_line_id.price_unit
-                    standard_price_in_currency = (new_value_in_currency + standard_price_in_currency * (quantity_at_time - svl_id.quantity)) / quantity_at_time if quantity_at_time else standard_price_in_currency
-
-
-                    new_value = price_unit * svl_id.quantity
-                    new_unit_cost = price_unit
-                    standard_price = (new_value + standard_price * (quantity_at_time - svl_id.quantity)) / quantity_at_time if quantity_at_time else standard_price
-                    svl_type = 'purchase manual rate %s' % svl_id.manual_currency_rate
-                # Otros casos ?
+                standard_price = self._get_standard_price(new_value, standard_price, quantity_at_time, svl_id.quantity)
+                standard_price_in_currency = self._get_standard_price(new_value_in_currency, standard_price_in_currency, quantity_at_time, svl_id.quantity)
+                svl_type = 'landed cost %s' % description
+            # purchase
+            elif svl_id.stock_move_id and svl_id.stock_move_id.purchase_line_id:
+                # purchase in company currency
+                if svl_id.stock_move_id.purchase_line_id.order_id.currency_id == self.company_id.currency_id:
+                    new_unit_cost, new_value, new_unit_cost_in_currency, new_value_in_currency, description = self._prepare_new_values(
+                        from_currency_id=self.company_id.currency_id,
+                        to_currency_id= self.valuation_currency_id,
+                        qty=svl_id.quantity,
+                        unit_cost=svl_id.stock_move_id.purchase_line_id.price_unit,
+                        layer_date=svl_id.create_date,
+                        manual_currency_rate=svl_id.manual_currency_rate
+                        )
+                    standard_price = self._get_standard_price(new_value, standard_price, quantity_at_time, svl_id.quantity)
+                    standard_price_in_currency = self._get_standard_price(new_value_in_currency, standard_price_in_currency, quantity_at_time, svl_id.quantity)
+                    svl_type = 'Purchase %s' % description
                 else:
-                    new_value = svl_id.value
-                    new_unit_cost = svl_id.unit_cost
-                    standard_price = (new_value + standard_price * (quantity_at_time - svl_id.quantity)) / quantity_at_time if quantity_at_time else standard_price
-
-                    new_value_in_currency = svl_id.value * svl_id.manual_currency_rate
-                    new_unit_cost_in_currency = new_value_in_currency / svl_id.quantity if svl_id.quantity else 0
-                    standard_price_in_currency = (new_value_in_currency + standard_price_in_currency * (quantity_at_time - svl_id.quantity)) / quantity_at_time if quantity_at_time else standard_price_in_currency
-
-                    svl_type = 'manual currency rate %s' % svl_id.manual_currency_rate
+                    new_unit_cost, new_value, new_unit_cost_in_currency, new_value_in_currency, description = self._prepare_new_values(
+                        from_currency_id=self.valuation_currency_id,
+                        to_currency_id=self.company_id.currency_id,
+                        qty=svl_id.quantity,
+                        unit_cost=svl_id.stock_move_id.purchase_line_id.price_unit,
+                        layer_date=svl_id.create_date,
+                        manual_currency_rate=svl_id.manual_currency_rate
+                        )
+                    standard_price = self._get_standard_price(new_value, standard_price, quantity_at_time, svl_id.quantity)
+                    standard_price_in_currency = self._get_standard_price(new_value_in_currency, standard_price_in_currency, quantity_at_time, svl_id.quantity)
+                    svl_type = 'Purchase %s' % description
             else:
-                if svl_id.stock_landed_cost_id.valuation_currency_id:
-                    new_value_in_currency = svl_id.currency_id._convert(
-                        from_amount=svl_id.value,
-                        to_currency=svl_id.valuation_currency_id,
-                        company=svl_id.company_id,
-                        date=svl_id.create_date,
+                new_unit_cost, new_value, new_unit_cost_in_currency, new_value_in_currency, description = self._prepare_new_values(
+                    from_currency_id=self.company_id.currency_id,
+                    to_currency_id=self.valuation_currency_id,
+                    qty=svl_id.quantity,
+                    unit_cost=svl_id.price_unit,
+                    layer_date=svl_id.create_date,
+                    manual_currency_rate=svl_id.manual_currency_rate
                     )
-                    new_value = svl_id.value
-                    new_unit_cost = svl_id.unit_cost
-                    standard_price = (new_value + standard_price * (quantity_at_time - svl_id.quantity)) / quantity_at_time if quantity_at_time else standard_price
-
-                    new_unit_cost_in_currency = new_value_in_currency / svl_id.quantity if svl_id.quantity else 0
-                    standard_price_in_currency = (new_value_in_currency + standard_price_in_currency * (quantity_at_time - svl_id.quantity)) / quantity_at_time if quantity_at_time else standard_price_in_currency
-                    svl_type = 'landed cost'
-
-                elif svl_id.stock_move_id.picking_id.valuation_currency_id and svl_id.stock_move_id.purchase_line_id.order_id.currency_id == svl_id.stock_move_id.picking_id.valuation_currency_id:
-
-                    new_value = svl_id.valuation_currency_id._convert(
-                        from_amount=svl_id.value_in_currency,
-                        to_currency=svl_id.currency_id,
-                        company=svl_id.company_id,
-                        date=svl_id.create_date,
-                    )
-
-                    new_value_in_currency = svl_id.stock_move_id.purchase_line_id.price_unit * svl_id.quantity
-                    new_unit_cost_in_currency = svl_id.stock_move_id.purchase_line_id.price_unit
-                    standard_price_in_currency = (new_value_in_currency + standard_price_in_currency * (quantity_at_time - svl_id.quantity)) / quantity_at_time if quantity_at_time else standard_price_in_currency
-
-
-                    new_value = new_value
-                    new_unit_cost = new_value / svl_id.quantity if svl_id.quantity else 0
-                    standard_price = (new_value + standard_price * (quantity_at_time - svl_id.quantity)) / quantity_at_time if quantity_at_time else standard_price
-                    svl_type = 'purchase'
-                else:
-                    new_value_in_currency = svl_id.currency_id._convert(
-                        from_amount=svl_id.value,
-                        to_currency=svl_id.valuation_currency_id,
-                        company=svl_id.company_id,
-                        date=svl_id.create_date,
-                    )
-                    new_value = svl_id.value
-                    new_unit_cost = svl_id.unit_cost
-                    standard_price = (new_value + standard_price * (quantity_at_time - svl_id.quantity)) / quantity_at_time if quantity_at_time else standard_price
-
-                    new_unit_cost_in_currency = new_value_in_currency / svl_id.quantity if svl_id.quantity else 0
-                    standard_price_in_currency = (new_value_in_currency + standard_price_in_currency * (quantity_at_time - svl_id.quantity)) / quantity_at_time if quantity_at_time else standard_price_in_currency
-                    svl_type = 'slv'
+                standard_price = self._get_standard_price(new_value, standard_price, quantity_at_time, svl_id.quantity)
+                standard_price_in_currency = self._get_standard_price(new_value_in_currency, standard_price_in_currency, quantity_at_time, svl_id.quantity)
+                svl_type = 'slv %s' % description
 
             # Si no queda producto el precio es 0
             if quantity_at_time == 0:
