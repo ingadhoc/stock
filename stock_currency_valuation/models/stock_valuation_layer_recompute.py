@@ -121,7 +121,7 @@ class StockValuationLayerRecompute(models.Model):
             quantity_at_time = quantity_at_time + svl_id.quantity
 
             # Si el movimento es de salida o de inventario, valor es el registrado en el producto
-            if svl_id.stock_move_id and (svl_id.stock_move_id._is_out() or svl_id.stock_move_id.is_inventory):
+            if svl_id.stock_move_id and ((svl_id.stock_move_id._is_out() and not svl_id.stock_move_id.purchase_line_id ) or svl_id.stock_move_id.is_inventory):
                 standard_price_in_currency = standard_price_in_currency if standard_price_in_currency else  svl_id.unit_cost_in_currency
                 standard_price = standard_price if standard_price else  svl_id.unit_cost
 
@@ -186,6 +186,21 @@ class StockValuationLayerRecompute(models.Model):
                 standard_price = self._get_standard_price(new_value, standard_price, quantity_at_time, svl_id.quantity)
                 standard_price_in_currency = self._get_standard_price(new_value_in_currency, standard_price_in_currency, quantity_at_time, svl_id.quantity)
                 svl_type = 'landed cost %s' % description
+            # purchase refund
+            elif svl_id.stock_move_id and svl_id.stock_move_id.purchase_line_id and svl_id.stock_move_id.origin_returned_move_id:
+                for temp_vals in lines:
+                    if temp_vals[2] and  temp_vals[2]['layer_id'] in svl_id.stock_move_id.origin_returned_move_id.stock_valuation_layer_ids.ids:
+                        new_value_in_currency = temp_vals[2]['new_unit_cost_in_currency'] * svl_id.quantity
+                        new_unit_cost_in_currency = temp_vals[2]['new_unit_cost_in_currency']
+                        standard_price_in_currency = (new_value_in_currency + standard_price_in_currency * (quantity_at_time - svl_id.quantity)) / quantity_at_time if quantity_at_time else standard_price_in_currency
+                        new_value = temp_vals[2]['new_unit_cost'] * svl_id.quantity
+                        new_unit_cost = temp_vals[2]['new_unit_cost']
+                        standard_price = (new_value + standard_price * (quantity_at_time - svl_id.quantity)) / quantity_at_time if quantity_at_time else standard_price
+
+                        svl_type = 'purchase refund  of  %s ' % temp_vals[2]['layer_id']
+
+                        break
+
             # purchase
             elif svl_id.stock_move_id and svl_id.stock_move_id.purchase_line_id:
                 # purchase in company currency
@@ -218,7 +233,7 @@ class StockValuationLayerRecompute(models.Model):
                     from_currency_id=self.company_id.currency_id,
                     to_currency_id=self.valuation_currency_id,
                     qty=svl_id.quantity,
-                    unit_cost=svl_id.price_unit,
+                    unit_cost=svl_id.unit_cost,
                     layer_date=svl_id.create_date,
                     manual_currency_rate=svl_id.manual_currency_rate
                     )
@@ -274,8 +289,8 @@ class StockValuationLayerRecompute(models.Model):
             line_id.layer_id.write({
                 'unit_cost_in_currency': line_id.new_unit_cost_in_currency,
                 'value_in_currency':line_id.new_value_in_currency,
-                'unit_cost': line_id.new_unit_cost_in_currency,
-                'value':line_id.new_value_in_currency
+                'unit_cost': line_id.new_unit_cost,
+                'value':line_id.new_value
             })
             lines = []
             product_move_line_ids = line_id.layer_id.account_move_id.line_ids.filtered(lambda x: x.product_id == self.product_id)
