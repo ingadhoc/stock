@@ -33,6 +33,10 @@ class StockValuationLayerRecompute(models.Model):
     last_manual_svl_id = fields.Many2one('stock.valuation.layer')
     amount_changed = fields.Boolean()
     slv_changed = fields.Boolean()
+    final_rate = fields.Float(
+        string='Final Rate',
+        compute="_compute_final_rate",
+    )
 
     state = fields.Selection([
         ('draft', 'Draft'),
@@ -41,6 +45,14 @@ class StockValuationLayerRecompute(models.Model):
         ('no_change', 'Not changes Required'),
         ('cancel', 'Cancelled')
     ], default='draft', string='Status', required=True, readonly=True, copy=False)
+
+    @api.depends('final_amount', 'final_amount_in_currency')
+    def _compute_final_rate(self):
+        for rec in self:
+            if rec.final_amount_in_currency:
+                rec.final_rate = rec.final_amount / rec.final_amount_in_currency
+            else:
+                rec.final_rate = 0.0
 
     @api.onchange('product_id', 'company_id')
     def _onchange_product_id(self):
