@@ -12,23 +12,27 @@
                             <t t-set="numero" t-value="numero + 1"/>
                             <t t-translation="off">
 ^XA
-                                                        <!-- Inicio encabezado -->
+                                                    <!-- Inicio encabezado -->
 <t t-if="picking.book_id">
-<t t-if="picking.book_id.report_partner_id">
-^CF0,60^CI28^FO50,50^FD
-<t t-esc="picking.book_id.report_partner_id.name"/>
-^FS ^CF0,30 ^FO50,115^FD
-<t t-esc="picking.book_id.report_partner_id.street"/>
-^FS ^FO50,155^FD
-(<t t-esc="picking.company_id.zip"/>
-)<t t-esc="picking.book_id.report_partner_id.city"/>
-^FS ^FO50,195^FD
-<t class="oe_inline" t-esc="picking.book_id.report_partner_id.state_id.name"/>
-, 
-<t class="oe_inline" t-esc="picking.book_id.report_partner_id.country_id.name"/>
-^FS ^FO50,250^GB700,3,3^FS
-</t>
-<t t-else="">
+    <t t-if="picking.book_id.report_partner_id">
+        ^CF0,60^CI28^FO50,50^FD
+        <t t-esc="picking.book_id.report_partner_id.name"/>
+        ^FS ^CF0,30 ^FO50,115^FD
+        <t t-esc="picking.book_id.report_partner_id.street"/>
+        ^FS ^FO50,155^FD
+        <t t-if="picking.book_id.report_partner_id.zip">
+            (<t t-esc="picking.book_id.report_partner_id.zip"/>)
+        </t>
+        <t t-else="">
+            (<t t-esc="picking.company_id.zip"/>)
+        </t>
+        <t t-esc="picking.book_id.report_partner_id.city"/>
+        ^FS ^FO50,195^FD
+        <t class="oe_inline" t-esc="picking.book_id.report_partner_id.state_id.name"/>, 
+        <t class="oe_inline" t-esc="picking.book_id.report_partner_id.country_id.name"/>
+        ^FS ^FO50,250^GB700,3,3^FS
+    </t>
+    <t t-else="">
 ^CF0,60^CI28^FO50,50^FD
 <t t-esc="picking.book_id.company_id.name"/>
 ^FS ^CF0,30 ^FO50,115^FD
@@ -163,12 +167,16 @@ Fecha
                                             <br/>
                                             <span t-field="picking.book_id.report_partner_id.street"/>
                                             <br/>
-
-(                                            <span t-field="picking.company_id.zip"/>
-)                                            <span t-field="picking.book_id.report_partner_id.city"/>
+                                            <span t-if="picking.book_id.report_partner_id.zip">
+                                                (<span t-field="picking.book_id.report_partner_id.zip"/>)
+                                            </span>
+                                            <span t-else="">
+                                                (<span t-field="picking.company_id.zip"/>)
+                                            </span>
+                                            <span t-field="picking.book_id.report_partner_id.city"/>
                                             <br/>
                                             <span class="oe_inline" t-field="picking.book_id.report_partner_id.state_id.name"/>
-,
+                                            ,
                                             <span class="oe_inline" t-field="picking.book_id.report_partner_id.country_id.name"/>
 
                                         </t>
@@ -179,8 +187,8 @@ Fecha
 
                                             <span t-field="picking.book_id.company_id.street"/>
                                             <br/>
-(                                            <span t-field="picking.company_id.zip"/>
-)                                            <span t-field="picking.book_id.company_id.city"/>
+                                            (<span t-field="picking.company_id.zip"/>)
+                                            <span t-field="picking.book_id.company_id.city"/>
                                             <br/>
                                             <span class="oe_inline" t-field="picking.book_id.company_id.state_id.name"/>
 , 
