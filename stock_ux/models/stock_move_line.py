@@ -54,14 +54,29 @@ class StockMoveLine(models.Model):
     def _check_manual_lines(self):
         if self.env.context.get("put_in_pack", False):
             return
-        if any(
-            self.filtered(
-                lambda x: not x.location_id.should_bypass_reservation()
-                and x.picking_id.picking_type_id.block_manual_lines
-                and x._check_quantity_available() < 0
-            )
-        ):
-            raise ValidationError(_("You can't transfer more quantity than the quantity on stock!"))
+        invalid_lines = self.filtered(
+            lambda x: not x.location_id.should_bypass_reservation()
+            and x.picking_id.picking_type_id.block_manual_lines
+            and x._check_quantity_available() < 0
+        )
+        if not invalid_lines:
+            return
+
+        # Si lo ejecuta el superusuario (odoobot), revertir el cambio y loguear
+        if self.env.is_superuser():
+            for line in invalid_lines:
+                # Revertir el cambio de quantity
+                line.quantity = max(0, line._check_quantity_available() + line.quantity)
+                if line.picking_id:
+                    line.picking_id.message_post(
+                        body=_(
+                            "Se intentó transferir una cantidad mayor al stock disponible en la línea %s durante la ejecución automática (odoobot/scheduler). El sistema ignoró el cambio y mantuvo la cantidad original."
+                        )
+                        % line.display_name
+                    )
+            return
+
+        raise ValidationError(_("You can't transfer more quantity than the quantity on stock!"))
 
     def _check_quantity_available(self):
         self.ensure_one()

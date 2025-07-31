@@ -56,13 +56,28 @@ class StockMove(models.Model):
         precision = self.env["decimal.precision"].precision_get("Product Unit of Measure")
         if any(self.filtered(lambda x: x.location_dest_usage == "inventory")):
             return
-        elif any(
-            self.filtered(
-                lambda x: x.picking_id.picking_type_id.block_additional_quantity
-                and float_compare(x.product_uom_qty, x.quantity, precision_digits=precision) == -1
-            )
-        ):
-            raise ValidationError(_("You can not transfer more than the initial demand!"))
+        moves = self.filtered(
+            lambda x: x.picking_id.picking_type_id.block_additional_quantity
+            and float_compare(x.product_uom_qty, x.quantity, precision_digits=precision) == -1
+        )
+        if not moves:
+            return
+
+        # Si lo ejecuta el superusuario (scheduler), revertir el cambio y loguear
+        if self.env.is_superuser():
+            for move in moves:
+                # Revertir el cambio de quantity
+                move.quantity = move.product_uom_qty
+                move.picking_id.message_post(
+                    body=_(
+                        "Se intentó transferir una cantidad mayor a la demanda inicial en el movimiento %s durante la ejecución automática (scheduler). El sistema ignoró el cambio y mantuvo la cantidad original."
+                    )
+                    % move.display_name
+                )
+            return
+
+        # Comportamiento normal: raise si corresponde
+        raise ValidationError(_("You can not transfer more than the initial demand!"))
 
     def action_view_linked_record(self):
         """This function returns an action that display existing sales order
