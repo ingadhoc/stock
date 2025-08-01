@@ -76,7 +76,7 @@ class StockMoveLine(models.Model):
             and not self.env.context.get("from_inverse_qty_done")
             and not self.env.context.get("sale_automation")
             and (
-                self.picking_id in self.env.context.get("picking_ids", [])
+                self.picking_id.id in self.env.context.get("picking_ids", [])
                 or not self.env.context.get("picking_ids", [])
             )
         ):
