@@ -148,24 +148,23 @@ class StockValuationLayerRecompute(models.Model):
             elif not svl_id.stock_move_id:
                 new_value = svl_id.value
                 new_unit_cost = svl_id.unit_cost
-                # before https://github.com/ingadhoc/stock/pull/675
-                if svl_id.create_date < fields.Datetime.from_string('2025-03-31 16:00:00'):
-                    new_unit_cost_in_currency = self.company_id.currency_id._convert(
-                        from_amount=new_unit_cost,
-                        to_currency=self.valuation_currency_id,
-                        company=self.company_id,
-                        date=svl_id.create_date,
-                    )
-                    new_value_in_currency = self.company_id.currency_id._convert(
-                        from_amount=new_value,
-                        to_currency=self.valuation_currency_id,
-                        company=self.company_id,
-                        date=svl_id.create_date,
-                    )
-                else:
-                    new_value_in_currency = svl_id.value_in_currency
-                    new_unit_cost_in_currency = svl_id.unit_cost_in_currency
-
+                # # before https://github.com/ingadhoc/stock/pull/675
+                # if svl_id.create_date < fields.Datetime.from_string('2025-03-31 16:00:00'):
+                #     new_unit_cost_in_currency = self.company_id.currency_id._convert(
+                #         from_amount=new_unit_cost,
+                #         to_currency=self.valuation_currency_id,
+                #         company=self.company_id,
+                #         date=svl_id.create_date,
+                #     )
+                #     new_value_in_currency = self.company_id.currency_id._convert(
+                #         from_amount=new_value,
+                #         to_currency=self.valuation_currency_id,
+                #         company=self.company_id,
+                #         date=svl_id.create_date,
+                #     )
+                # else:
+                new_value_in_currency = svl_id.value_in_currency
+                new_unit_cost_in_currency = svl_id.unit_cost_in_currency
                 standard_price_in_currency = (new_value_in_currency + standard_price_in_currency * (quantity_at_time - svl_id.quantity)) / quantity_at_time if quantity_at_time else standard_price_in_currency
                 standard_price = (new_value + standard_price * (quantity_at_time - svl_id.quantity)) / quantity_at_time if quantity_at_time else standard_price
                 svl_type = 'ajustement'
@@ -268,9 +267,9 @@ class StockValuationLayerRecompute(models.Model):
                 svl_type = 'slv %s' % description
 
             # Si no queda producto el precio es 0
-            if quantity_at_time == 0:
-                standard_price_in_currency = 0
-                standard_price = 0
+            # if quantity_at_time == 0:
+            #     standard_price_in_currency = 0
+            #     standard_price = 0
 
             vals['new_value'] = new_value
             vals['new_unit_cost'] = new_unit_cost
