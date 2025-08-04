@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-23 19:33+0000\n"
+"POT-Creation-Date: 2025-07-24 02:50+0000\n"
 "PO-Revision-Date: 2024-03-14 14:45+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
@@ -21,6 +21,12 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Language: es\n"
 "Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+
+#. module: stock_ux
+#: model:ir.actions.report,print_report_name:stock_ux.action_report_picking_ux
+msgid ""
+"'Picking Operations - %s - %s' % (object.partner_id.name or '', object.name)"
+msgstr ""
 
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.report_delivery_document
@@ -75,17 +81,6 @@ msgstr "Nº de archivos adjuntos"
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
 msgid "Backorders"
 msgstr "Pedidos Pendientes"
-
-#. module: stock_ux
-#. odoo-python
-#: code:addons/stock_ux/models/stock_picking.py:0
-#, python-format
-msgid ""
-"Be careful about the number of packages you are trying to insert. It may "
-"cause an error when trying to render the 'Shipping Label' template"
-msgstr ""
-"Tenga cuidado con la cantidad de paquetes que intenta insertar. Puede causar"
-" un error al intentar renderizar la plantilla 'Etiqueta de despacho'"
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_picking_type__block_picking_deletion
@@ -175,6 +170,11 @@ msgid "Created on"
 msgstr "Creado el"
 
 #. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.report_picking_ux
+msgid "Customizable Desk"
+msgstr ""
+
+#. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
 msgid "Deadline exceed or/and by the scheduled"
 msgstr "Plazo excedido y/o por lo programado"
@@ -185,7 +185,6 @@ msgid "Descripción 2"
 msgstr "Descripción 2"
 
 #. module: stock_ux
-#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_form
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_form_inherited
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_stock_move_line_detailed_operation_tree
 msgid "Descripción de origen"
@@ -196,6 +195,12 @@ msgstr "Descripción de origen"
 #: model:ir.model.fields,field_description:stock_ux.field_stock_picking_zpl_lines__name
 msgid "Description"
 msgstr "Descripción"
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.report_picking_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.stock_report_delivery_has_serial_move_line_ux
+msgid "Description on transfer"
+msgstr ""
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_operation_wizard__location_dest_id
@@ -592,6 +597,11 @@ msgid "Picking Lists"
 msgstr "Listas de Recogida"
 
 #. module: stock_ux
+#: model:ir.actions.report,name:stock_ux.action_report_picking_ux
+msgid "Picking Operations"
+msgstr ""
+
+#. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_move_tree
 msgid "Picking Partner"
 msgstr "Contacto de Transferencia"
@@ -689,11 +699,6 @@ msgstr "Propagación del transportista"
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_move_tree
 msgid "Q. UdM Producto"
-msgstr ""
-
-#. module: stock_ux
-#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__rating_ids
-msgid "Ratings"
 msgstr ""
 
 #. module: stock_ux
@@ -995,7 +1000,6 @@ msgstr ""
 #. module: stock_ux
 #. odoo-python
 #: code:addons/stock_ux/models/stock_move.py:0
-#: code:addons/stock_ux/models/stock_move_line.py:0
 #, python-format
 msgid "You can not transfer more than the initial demand!"
 msgstr "No puede transferir más de la demanda inicial!"
@@ -1004,7 +1008,8 @@ msgstr "No puede transferir más de la demanda inicial!"
 #. odoo-python
 #: code:addons/stock_ux/models/stock_move_line.py:0
 #, python-format
-msgid "You can't transfer more quantity than the quantity on stock!"
+msgid ""
+"You can't transfer more quantity than the quantity on stock for product: %s."
 msgstr ""
 
 #. module: stock_ux
