@@ -68,6 +68,7 @@ class StockWarehouseOrderpoint(models.Model):
                 'warehouse_rotation': warehouse_rotation,
             })
 
+<<<<<<< 0667292709745221f6161e130cc3202467bedc6f
     def write(self, vals):
         """ When archive a replenishment rule
         set min, max and multiple quantities in 0.
@@ -80,6 +81,21 @@ class StockWarehouseOrderpoint(models.Model):
             })
         return super().write(vals)
 
+||||||| 602defc167025da288f1abd6818a22cf27875c23
+    def write(self, vals):
+        """When archive a replenishment rule set min, max and multiple quantities in 0."""
+        if "active" in vals and not vals["active"]:
+            self.write(
+                {
+                    "product_min_qty": 0.0,
+                    "product_max_qty": 0.0,
+                    "qty_multiple": 0.0,
+                }
+            )
+        return super().write(vals)
+
+=======
+>>>>>>> ff690fb510e7d418ddd5ebd662a7fe3c3ef33d1d
     def _get_orderpoint_action(self):
         action = super()._get_orderpoint_action()
         action['context'] = {

@@ -78,3 +78,10 @@ class StockWarehouseOrderpoint(models.Model):
         valid_orderpoints = self.exists()
         if valid_orderpoints:
             valid_orderpoints._compute_qty_to_order()
+
+
+    def write(self, vals):
+        res = super().write(vals)
+        if 'active' in vals and vals['active']:
+            self._compute_qty_to_order()
+        return res
