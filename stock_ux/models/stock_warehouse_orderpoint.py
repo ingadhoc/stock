@@ -67,18 +67,6 @@ class StockWarehouseOrderpoint(models.Model):
                 }
             )
 
-    def write(self, vals):
-        """When archive a replenishment rule set min, max and multiple quantities in 0."""
-        if "active" in vals and not vals["active"]:
-            self.write(
-                {
-                    "product_min_qty": 0.0,
-                    "product_max_qty": 0.0,
-                    "qty_multiple": 0.0,
-                }
-            )
-        return super().write(vals)
-
     def _get_orderpoint_action(self):
         action = super()._get_orderpoint_action()
         action["context"] = {
