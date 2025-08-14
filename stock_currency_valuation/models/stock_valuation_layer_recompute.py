@@ -133,8 +133,18 @@ class StockValuationLayerRecompute(models.Model):
             }
             quantity_at_time = quantity_at_time + svl_id.quantity
 
+            if svl_id.stock_move_id and  svl_id.stock_move_id.is_inventory:
+                standard_price_in_currency = standard_price_in_currency if standard_price_in_currency else  svl_id.unit_cost_in_currency
+                standard_price = standard_price if standard_price else  svl_id.unit_cost
+
+                new_unit_cost = svl_id.unit_cost
+                new_value = svl_id.value
+                new_unit_cost_in_currency = svl_id.unit_cost_in_currency
+                new_value_in_currency = svl_id.value_in_currency
+                svl_type = 'inventory'
+
             # Si el movimento es de salida o de inventario, valor es el registrado en el producto
-            if svl_id.stock_move_id and ((svl_id.stock_move_id._is_out() and not svl_id.stock_move_id.purchase_line_id ) or svl_id.stock_move_id.is_inventory):
+            elif svl_id.stock_move_id and (svl_id.stock_move_id._is_out() and not svl_id.stock_move_id.purchase_line_id ):
                 standard_price_in_currency = standard_price_in_currency if standard_price_in_currency else  svl_id.unit_cost_in_currency
                 standard_price = standard_price if standard_price else  svl_id.unit_cost
 
@@ -142,7 +152,7 @@ class StockValuationLayerRecompute(models.Model):
                 new_value = standard_price * svl_id.quantity
                 new_unit_cost_in_currency = standard_price_in_currency
                 new_value_in_currency = standard_price_in_currency * svl_id.quantity
-                svl_type = 'inventory' if svl_id.stock_move_id.is_inventory else 'out'
+                svl_type = 'out'
 
             # es un ajuste? si no tiene movimiento de stock
             elif not svl_id.stock_move_id:
