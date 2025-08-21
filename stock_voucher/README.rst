@@ -16,6 +16,7 @@ Stock Voucher
 
 #. This module adds stock voucher report on stock picking to generate a voucher for each Customers pickings.
 #. Also adds parameters in stock picking type to set declared value and number_package in the pickings.
+#. Allows you to search for stock vouchers directly from sales orders.
 
 Installation
 ============
