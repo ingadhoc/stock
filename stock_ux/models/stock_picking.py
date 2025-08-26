@@ -78,7 +78,7 @@ class StockPicking(models.Model):
                         body="<br/><br/>".join(
                             [
                                 "<b>" + title + "</b>",
-                                _("Please check the email template associated with the picking type."),
+                                _("Please check the email template associated with" " the picking type."),
                                 "<code>" + str(error) + "</code>",
                             ]
                         ),
@@ -97,7 +97,7 @@ class StockPicking(models.Model):
                     body="<br/><br/>".join(
                         [
                             "<b>" + title + "</b>",
-                            _("Please check the email template associated with" " the picking type."),
+                            _("Please check the email template associated with the picking type."),
                             "<code>" + str(error) + "</code>",
                         ]
                     ),
@@ -133,3 +133,21 @@ class StockPicking(models.Model):
                     "It may cause an error when trying to render the 'Shipping Label' template",
                 }
             }
+
+    def write(self, vals):
+        """
+        Prevents non-stock managers from changing the picking type (Operation Type) once it has been set.
+        This enforces the business rule that only users with 'Inventory Manager' rights can modify the picking type,
+        ensuring data integrity.
+        """
+        if "picking_type_id" in vals and not self.env.user.has_group("stock.group_stock_manager"):
+            for picking in self:
+                # Only stock manager can change the picking type. Users in stock.user group cannot change it if already exists.
+                if picking.picking_type_id:
+                    raise UserError(
+                        _(
+                            "You cannot change the Operation Type once it has been set. "
+                            "Only users with the 'Inventory Manager' access rights (stock.group_stock_manager) can perform this action."
+                        )
+                    )
+        return super().write(vals)
