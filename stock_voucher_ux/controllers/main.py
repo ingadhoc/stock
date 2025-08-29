@@ -1,6 +1,3 @@
-# Copyright 2017 ACSONE SA/NV
-# Copyright 2018 - Brain-tec AG - Carlos Jesus Cebrian
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 import io
 import json
 import re
@@ -12,6 +9,42 @@ from PyPDF2 import PdfFileReader
 
 
 class ReportController(report.ReportController):
+    def _count_pages_with_products(self, pdf_reader, picking_id):
+        """
+        Cuenta las páginas que realmente contienen productos
+        analizando el contenido de texto de cada página
+        """
+        picking = request.env["stock.picking"].browse(picking_id)
+        move_lines = picking.move_line_ids
+
+        # Si no hay move_lines, usar move_ids como fallback
+        if not move_lines:
+            move_lines = picking.move_ids
+
+        product_codes = [line.product_id.default_code or line.product_id.name for line in move_lines if line.product_id]
+
+        pages_with_products = 0
+
+        for page_num in range(len(pdf_reader.pages)):
+            try:
+                page = pdf_reader.pages[page_num]
+                text = page.extract_text()
+
+                # Verificar si algún código/nombre de producto aparece en esta página
+                has_products = any(
+                    product_code and product_code in text for product_code in product_codes if product_code
+                )
+
+                if has_products:
+                    pages_with_products += 1
+
+            except Exception:
+                # Si hay error extrayendo texto, asumimos que tiene productos
+                pages_with_products += 1
+
+        # Asegurar que al menos hay 1 página con productos
+        return max(1, pages_with_products)
+
     @route()
     def report_download(self, data, context=None):
         """This function is used by 'qwebactionmanager.js' in order to trigger
@@ -37,11 +70,15 @@ class ReportController(report.ReportController):
                 copies = copies_result[0]["copies"] if copies_result else None
                 pdf_response = response.response[0]
                 reader = PdfFileReader(io.BytesIO(pdf_response))
-                # The number of pages will assign the number of vouchers
+
+                # Usar el nuevo método para contar páginas con productos
                 if copies:
-                    number_pages = int(len(reader.pages) / copies)
+                    total_pages = int(len(reader.pages) / copies)
+                    number_pages = self._count_pages_with_products(reader, picking_id)
+                    # Ajustar por número de copias
+                    number_pages = min(number_pages, total_pages)
                 else:
-                    number_pages = len(reader.pages)
+                    number_pages = self._count_pages_with_products(reader, picking_id)
 
                 # See if there are vouchers already assigned. If not, then it assigns the vouchers
                 if not request.env["stock.picking"].browse(picking_id).voucher_ids and book_id:
@@ -56,17 +93,22 @@ class ReportController(report.ReportController):
                 if book_id and book_id.autoprinted == False and picking_id:
                     pdf_response = response.response[0]
                     reader = PdfFileReader(io.BytesIO(pdf_response))
-                    # The number of pages will assign the number of vouchers
+
+                    # Usar el nuevo método para contar páginas con productos
                     copies_result = request.env["ir.actions.report"].search_read(
                         [("report_name", "=", "stock.report_deliveryslip")], ["l10n_ar_copies"], limit=1
                     )
                     copies = copies_result[0]["l10n_ar_copies"] if copies_result else None
+
                     if copies == "triplicado":
-                        number_pages = int(len(reader.pages) / 3)
+                        total_pages = int(len(reader.pages) / 3)
                     elif copies == "duplicado":
-                        number_pages = int(len(reader.pages) / 2)
+                        total_pages = int(len(reader.pages) / 2)
                     else:
-                        number_pages = len(reader.pages)
+                        total_pages = len(reader.pages)
+
+                    number_pages = self._count_pages_with_products(reader, picking_id)
+                    number_pages = min(number_pages, total_pages)
 
                     if not request.env["stock.picking"].browse(picking_id).voucher_ids and book_id:
                         request.env["stock.picking"].browse(picking_id).assign_numbers(number_pages, book_id)
