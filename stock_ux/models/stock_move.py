@@ -140,3 +140,8 @@ class StockMove(models.Model):
         if not self.env.context.get("trigger_assign"):
             return super().with_context(trigger_assign=True)._trigger_assign()
         return super()._trigger_assign()
+
+    @api.ondelete(at_uninstall=False)
+    def _unlink_if_draft_or_cancel(self):
+        if any(move.state not in ("draft", "cancel") for move in self):
+            raise UserError(_("You can only delete draft or cancelled moves."))
