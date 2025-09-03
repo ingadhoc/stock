@@ -77,6 +77,7 @@ class StockPicking(models.Model):
             self.move_ids.update({"location_dest_id": self.location_dest_id.id})
 
     def _action_done(self):
+        result = super()._action_done()
         for rec in self.with_context(mail_notify_force_send=False).filtered("picking_type_id.mail_template_id"):
             try:
                 rec.message_post_with_template(rec.picking_type_id.mail_template_id.id)
@@ -91,7 +92,7 @@ class StockPicking(models.Model):
                         ]
                     ),
                 )
-        return super()._action_done()
+        return result
 
     def new_force_availability(self):
         self.action_assign()
