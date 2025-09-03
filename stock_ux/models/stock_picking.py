@@ -73,7 +73,14 @@ class StockPicking(models.Model):
                 {'location_dest_id': self.location_dest_id.id})
 
     def _action_done(self):
+<<<<<<< 0d3e5e7eea336d4475e33ea9cedecc90499ec194
         for rec in self.with_context(mail_notify_force_send=False).filtered('picking_type_id.mail_template_id'):
+||||||| b919ac6b3eaed0ced8847f52bb9b6e3d4f7e770b
+        for rec in self.with_context(mail_notify_force_send=False).filtered("picking_type_id.mail_template_id"):
+=======
+        result = super()._action_done()
+        for rec in self.with_context(mail_notify_force_send=False).filtered("picking_type_id.mail_template_id"):
+>>>>>>> 4f17e1266acc6186ff55d19ca6d6c5bbc1b3ffe5
             try:
                 rec.message_post_with_template(rec.picking_type_id.mail_template_id.id)
             except Exception as error:
@@ -87,7 +94,7 @@ class StockPicking(models.Model):
                     "<code>" + str(error) + "</code>"
                 ]),
                 )
-        return super()._action_done()
+        return result
 
     def new_force_availability(self):
         self.action_assign()
