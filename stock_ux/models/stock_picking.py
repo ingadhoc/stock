@@ -133,3 +133,30 @@ class StockPicking(models.Model):
                     "It may cause an error when trying to render the 'Shipping Label' template",
                 }
             }
+
+    def write(self, vals):
+        """
+        Overrides the default write method to restrict changing the 'picking_type_id' field
+        for users belonging to the 'group_restrict_edit_picking_type' group. If a user in this
+        group attempts to modify the 'picking_type_id' of a picking that already has a value set,
+        a UserError is raised to prevent the operation. Otherwise, proceeds with the standard
+        write operation.
+
+        :param vals: Dictionary of field values to update.
+        :raises UserError: If a restricted user tries to change the 'picking_type_id' after it has been set.
+        :return: Result of the superclass write method.
+        """
+
+        if "picking_type_id" in vals:
+            user = self.env.user
+            if user.has_group("stock_ux.group_restrict_edit_picking_type"):
+                for picking in self:
+                    if picking.picking_type_id:
+                        raise UserError(
+                            _(
+                                "You cannot change the Operation Type once it has been set. "
+                                "This action is restricted for your user. "
+                                "Please contact your Inventory Manager if you need to perform this operation."
+                            )
+                        )
+        return super().write(vals)

@@ -38,6 +38,7 @@ Stock UX
 #. Add an optional setting to print remaining quantities not yet delivered on Delivery Slips: "Show remaining quantities not yet delivered on Delivery Slips."print remaining quantities not yet delivered
 #. Adds a review toggle per line that allows the user to indicate when the replenishment order is ready to be confirmed.
 #. Add a "All transfers" view form in Menu: Operations
+#. Add a restriction to edit operation type for users with the "Restrict editing Operation Type in Pickings" check.
 
 Installation
 ============

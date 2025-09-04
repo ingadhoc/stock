@@ -14,4 +14,10 @@
         <field name="name">Restrict to modify reservations from planned</field>
     </record>
 
+    <!-- restriction to edit operation type for users with this check -->
+    <record model="res.groups" id="group_restrict_edit_picking_type">
+        <field name="name">Restrict editing Operation Type in Pickings</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+    </record>
+
 </odoo>
