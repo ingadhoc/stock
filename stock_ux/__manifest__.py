@@ -29,6 +29,7 @@
     "depends": [
         "sale_stock",
     ],
+    
     "data": [
         "security/stock_ux_security.xml",
         "security/ir.model.access.csv",
