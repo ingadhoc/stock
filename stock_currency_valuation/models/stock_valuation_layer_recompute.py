@@ -150,7 +150,7 @@ class StockValuationLayerRecompute(models.Model):
                     standard_price = svl_id.unit_cost
                 else:
                     standard_price_in_currency = standard_price_in_currency
-                    standard_price = standard_price 
+                    standard_price = standard_price
 
                 new_unit_cost = standard_price
                 new_value = standard_price * svl_id.quantity
@@ -326,10 +326,12 @@ class StockValuationLayerRecompute(models.Model):
             if line_id.layer_id.stock_landed_cost_id:
                 raise UserError('No puedo ajustar un landed cost')
             line_id.layer_id.write({
-                'unit_cost_in_currency': line_id.new_unit_cost_in_currency,
-                'value_in_currency':line_id.new_value_in_currency,
                 'unit_cost': line_id.new_unit_cost,
                 'value':line_id.new_value
+            })
+            line_id.layer_id.write({
+                'unit_cost_in_currency': line_id.new_unit_cost_in_currency,
+                'value_in_currency':line_id.new_value_in_currency,
             })
             lines = []
             product_move_line_ids = line_id.layer_id.account_move_id.line_ids.filtered(lambda x: x.product_id == self.product_id)
