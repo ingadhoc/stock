@@ -137,10 +137,10 @@ class StockValuationLayerRecompute(models.Model):
                 standard_price_in_currency = standard_price_in_currency if standard_price_in_currency else  svl_id.unit_cost_in_currency
                 standard_price = standard_price if standard_price else  svl_id.unit_cost
 
-                new_unit_cost = svl_id.unit_cost
-                new_value = svl_id.value
-                new_unit_cost_in_currency = svl_id.unit_cost_in_currency
-                new_value_in_currency = svl_id.value_in_currency
+                new_unit_cost = standard_price
+                new_value = standard_price * svl_id.quantity
+                new_unit_cost_in_currency = standard_price_in_currency
+                new_value_in_currency = standard_price_in_currency * svl_id.quantity
                 svl_type = 'inventory'
 
             # Si el movimento es de salida o de inventario, valor es el registrado en el producto
