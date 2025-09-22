@@ -106,6 +106,6 @@ class StockPicking(models.Model):
                 for line in rec.move_line_ids:
                     line.qty_done = line.reserved_uom_qty
 
-    def _put_in_pack(self, move_line_ids):
+    def _put_in_pack(self, move_line_ids, create_package_level=True):
         # we send to skip a process of check qty when is sending through the copy method.
-        return super()._put_in_pack(move_line_ids.with_context(put_in_pack=True))
+        return super()._put_in_pack(move_line_ids.with_context(put_in_pack=True), create_package_level)
