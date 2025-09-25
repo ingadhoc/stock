@@ -30,7 +30,7 @@
     "depends": ["sale_order_type_invoice_policy", "stock_picking_invoice_link"],
     "data": [],
     "demo": [],
-    "installable": True,
+    'installable': False,
     "auto_install": True,
     "application": False,
 }

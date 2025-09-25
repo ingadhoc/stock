@@ -40,7 +40,7 @@
         "views/stock_picking_views.xml",
     ],
     "demo": [],
-    "installable": True,
+    'installable': False,
     "auto_install": True,
     "application": False,
     "post_init_hook": "init_settings",

@@ -36,7 +36,7 @@
         "report/stock_report_data.xml",
     ],
     "demo": [],
-    "installable": True,
+    'installable': False,
     "auto_install": False,
     "application": False,
 }

@@ -52,7 +52,7 @@
         "report/stock_picking_operations.xml",
         "data/ir_cron.xml",
     ],
-    "installable": True,
+    'installable': False,
     "auto_install": False,
     "application": False,
     "assets": {

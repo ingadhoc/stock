@@ -31,7 +31,7 @@
         "l10n_ar_ux",
     ],
     "data": [],
-    "installable": True,
+    'installable': False,
     "auto_install": True,
     "application": False,
     "license": "AGPL-3",

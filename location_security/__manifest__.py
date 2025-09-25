@@ -31,7 +31,7 @@
         "views/res_users_view.xml",
     ],
     "demo": [],
-    "installable": True,
+    'installable': False,
     "auto_install": False,
     "application": False,
 }

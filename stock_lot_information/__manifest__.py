@@ -32,7 +32,7 @@
     ],
     "data": ["views/stock_lot_views.xml"],
     "demo": [],
-    "installable": True,
+    'installable': False,
     "auto_install": False,
     "application": False,
 }
