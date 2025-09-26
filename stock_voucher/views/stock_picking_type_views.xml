@@ -20,6 +20,9 @@
                      </group>
                 </group>
             </xpath>
+            <field name="show_entire_packs" position="after">
+                <field name="number_of_packages"/>
+            </field>
         </field>
     </record>
 </odoo>
