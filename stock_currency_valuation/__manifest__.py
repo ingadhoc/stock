@@ -20,7 +20,7 @@
         "views/stock_valuation_layer.xml",
         "wizard/stock_valuation_layer_revaluation_views.xml",
     ],
-    'installable': False,
+    "installable": False,
     "auto_install": False,
     "application": False,
     "assets": {},

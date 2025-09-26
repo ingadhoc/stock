@@ -38,7 +38,7 @@
     "demo": [
         "demo/stock_picking_state_detail_demo.xml",
     ],
-    'installable': False,
+    "installable": False,
     "auto_install": False,
     "application": False,
 }
