@@ -119,6 +119,9 @@ class StockPicking(models.Model):
         # active_id could not be the picking
         self = self.with_context(picking_ids=self.ids)
         self.do_stock_voucher_transfer_check()
+        # We compute number of packages according to package_level_ids
+        if self.picking_type_id.number_of_packages:
+            self.number_of_packages = len(self.package_level_ids)
 
         res = super().button_validate()
         # res none when no wizard opended

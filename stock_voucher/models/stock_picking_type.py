@@ -34,3 +34,9 @@ class StockPickingType(models.Model):
         help="The declared value will be on the currency of the company",
     )
     restrict_number_package = fields.Boolean()
+
+    number_of_packages = fields.Boolean(
+        string="Calculate package number",
+        help="When a picking of this type is validated, the number of packages will be computed"
+        " according to the packages contained in the moves.",
+    )
