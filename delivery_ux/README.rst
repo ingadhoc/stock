@@ -14,7 +14,7 @@
 Delivery Ux
 ===========
 
-#. Restore partner_id field on delivery that was deprecated on v11.
+#. Add partner_id field on delivery method.
 
 Installation
 ============
