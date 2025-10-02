@@ -19,7 +19,7 @@
 ##############################################################################
 {
     "name": "Delivery UX",
-    "version": "18.0.1.0.0",
+    "version": "19.0.1.0.0",
     "category": "Warehouse Management",
     "sequence": 14,
     "summary": "",
@@ -34,7 +34,7 @@
         "views/delivery_carrier_views.xml",
     ],
     "demo": [],
-    "installable": False,
+    "installable": True,
     "auto_install": False,
     "application": False,
 }
