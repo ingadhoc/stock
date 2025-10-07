@@ -7,7 +7,7 @@ import logging
 from ast import literal_eval
 
 from odoo import api, fields, models
-from odoo.osv import expression
+from odoo.fields import Domain
 
 _logger = logging.getLogger(__name__)
 
@@ -99,7 +99,7 @@ class StockWarehouseOrderpoint(models.Model):
                 existing_domain = literal_eval(existing_domain)
             except (ValueError, SyntaxError) as e:
                 _logger.warning("Failed to parse existing_domain with literal_eval: %s. Error: %s", existing_domain, e)
-        action["domain"] = expression.AND(
+        action["domain"] = Domain.AND(
             [
                 existing_domain,
                 [("active_product", "=", True)],

@@ -54,7 +54,7 @@ class StockMove(models.Model):
     @api.constrains("quantity")
     def _check_quantity(self):
         precision = self.env["decimal.precision"].precision_get("Product Unit of Measure")
-        if any(self.filtered(lambda x: x.scrapped)):
+        if any(self.filtered(lambda x: x.location_dest_usage == "inventory")):
             return
         elif any(
             self.filtered(
@@ -69,11 +69,11 @@ class StockMove(models.Model):
         of given picking.
         """
         self.ensure_one()
-        action_ref = self._context.get("action")
-        form_view_ref = self._context.get("form_view")
+        action_ref = self.env.context.get("action")
+        form_view_ref = self.env.context.get("form_view")
         action = self.env["ir.actions.actions"]._for_xml_id(action_ref)
         form_view = self.env.ref(form_view_ref)
-        res_id = self._context.get("res_id")
+        res_id = self.env.context.get("res_id")
         action["views"] = [(form_view.id, "form")]
         action["res_id"] = res_id
         return action
@@ -93,7 +93,7 @@ class StockMove(models.Model):
 
     @api.constrains("state")
     def check_cancel(self):
-        if self._context.get("cancel_from_order") or self.env.is_superuser():
+        if self.env.context.get("cancel_from_order") or self.env.is_superuser():
             return
         if self.filtered(
             lambda x: x.picking_id

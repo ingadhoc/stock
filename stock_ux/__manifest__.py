@@ -19,7 +19,7 @@
 ##############################################################################
 {
     "name": "Stock UX",
-    "version": "18.0.1.3.0",
+    "version": "19.0.1.0.0",
     "category": "Warehouse Management",
     "sequence": 14,
     "summary": "",
@@ -38,7 +38,6 @@
         "views/stock_move_views.xml",
         "views/stock_move_line_views.xml",
         "views/stock_warehouse_orderpoint_views.xml",
-        "views/procurement_group_views.xml",
         "views/stock_backorder_confirmation_views.xml",
         "views/stock_return_picking_views.xml",
         "views/stock_picking_type_views.xml",
@@ -52,7 +51,7 @@
         "report/stock_picking_operations.xml",
         "data/ir_cron.xml",
     ],
-    "installable": False,
+    "installable": True,
     "auto_install": False,
     "application": False,
     "assets": {
