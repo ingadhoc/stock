@@ -13,7 +13,7 @@
             <field name="active" position="after">
                 <field name="active_product" column_invisible="1" />
             </field>
-            <field name="group_id" position="after">
+            <field name="product_min_qty" position="before">
                 <field name="rotation" optional="show"/>
                 <field name="rotation_stdev" optional="show"/>
                 <field name="warehouse_rotation" optional="show"/>

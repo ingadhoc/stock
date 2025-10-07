@@ -29,7 +29,7 @@
         <field name="res_model">stock.operation.wizard</field>
         <field name="binding_model_id" ref="stock.model_stock_move_line"/>
         <field name="binding_view_types">list</field>
-        <field name="groups_id" eval="[(4, ref('stock.group_stock_multi_locations'))]"/>
+        <field name="group_ids" eval="[(4, ref('stock.group_stock_multi_locations'))]"/>
     </record>
 
 </odoo>

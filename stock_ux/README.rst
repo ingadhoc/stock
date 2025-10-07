@@ -22,8 +22,8 @@ Stock UX
 #. Add an optional setting to print in Delivery Slip reports the origin description instead of the product name
 #. We create a new group "Allow picking cancellation", only users with that right can cancel pickings or validate without back orders
 #. Only allow to delete pickings on draft/cancel state and "Block Picking Deletion?" is not checked in Pick operation type.
-#. If filtered location is found on source location: use negative quantity.
 #. Add new field ""Net Quantity"" in stock moves lines. When you filter by locations, the field will be computed this way:
+#. If filtered location is found on source location: use negative quantity.
 #. If filtered location is found on destiny location: use positive quantity.
 #. If filtered location is found on source and destiny location: use "0".
 #. Add in products (template and variants) a button to access to stock moves related.

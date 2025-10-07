@@ -11,8 +11,8 @@ class ProductLabelLayout(models.TransientModel):
     @api.model
     def default_get(self, default_fields):
         rec = super().default_get(default_fields)
-        active_ids = self._context.get("active_ids") or self._context.get("active_id")
-        active_model = self._context.get("active_model")
+        active_ids = self.env.context.get("active_ids") or self.env.context.get("active_id")
+        active_model = self.env.context.get("active_model")
         if active_model == "stock.picking":
             move_ids = self.env[active_model].browse(active_ids).mapped("move_ids").filtered(lambda x: x.quantity > 0)
             rec["line_ids"] = [
@@ -48,7 +48,7 @@ class StockPickingZplLines(models.TransientModel):
 
     move_uom_id = fields.Many2one("uom.uom")
 
-    name = fields.Char(related="move_id.name")
+    name = fields.Char(related="move_id.reference")
 
     @api.constrains("move_quantity")
     def _check_move_quantity(self):

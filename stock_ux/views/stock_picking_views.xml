@@ -23,7 +23,7 @@
             </field>
 
             <field name="description_picking" position="after">
-                <field name="name" string="Descripción 2" optional="hide"/>
+                <field name="reference" string="Descripción 2" optional="hide"/>
             </field>
             <field name="product_uom" position="before">
                 <field name="lots_visible" column_invisible="True"/>
@@ -34,7 +34,7 @@
             </button>
 
             <!-- move notes and add observations as we have on SO and invoices -->
-            <field name="move_ids_without_package" position="after">
+            <field name="move_ids" position="after">
                 <label for="note" string="Internal Notes"/>
                 <field name="note" placeholder="Add an internal note that will be printed on the Picking Operations sheet"/>
                 <label for="observations"/>
@@ -77,7 +77,7 @@
                 <filter invisible="1" string="Future Activities" name="activities_upcoming_all" domain="[('my_activity_date_deadline', '&gt;', context_today().strftime('%Y-%m-%d'))]"/>
                 <separator/>
                 <filter string="Warnings" name="activities_exception" domain="[('activity_exception_decoration', '!=', False)]"/>
-                <group expand="0" string="Group By">
+                <group>
                     <filter string="Status" name="status" domain="[]" context="{'group_by': 'state'}"/>
                     <filter string="Scheduled Date" name="expected_date" domain="[]" context="{'group_by': 'scheduled_date'}"/>
                     <filter string="Source Document" name="origin" domain="[]" context="{'group_by': 'origin'}"/>

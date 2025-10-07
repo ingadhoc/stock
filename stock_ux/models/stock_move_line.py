@@ -26,17 +26,13 @@ class StockMoveLine(models.Model):
         compute="_compute_product_uom_qty_location",
         string="Net Quantity",
     )
-    name = fields.Char(
-        related="move_id.name",
-        related_sudo=False,
-    )
     origin_description = fields.Char(
         related="move_id.origin_description",
     )
 
     @api.depends_context("location")
     def _compute_product_uom_qty_location(self):
-        location = self._context.get("location")
+        location = self.env.context.get("location")
         if not location:
             self.update({"product_uom_qty_location": 0.0})
             return False
@@ -45,7 +41,7 @@ class StockMoveLine(models.Model):
         # _get_domain_locations on stock/product.py
         location_name = location[0]
         if isinstance(location[0], int):
-            location_name = self.env["stock.location"].browse(location[0]).name
+            location_name = self.env["stock.location"].browse(location[0]).reference
         locations = self.env["stock.location"].search([("complete_name", "ilike", location_name)])
         for rec in self:
             product_uom_qty_location = rec.quantity
@@ -56,7 +52,7 @@ class StockMoveLine(models.Model):
 
     @api.constrains("quantity")
     def _check_manual_lines(self):
-        if self._context.get("put_in_pack", False):
+        if self.env.context.get("put_in_pack", False):
             return
         if any(
             self.filtered(
@@ -118,7 +114,7 @@ class StockMoveLine(models.Model):
                 for move_id, move_info in move_line_by_move.items():
                     if move_info["product_id"] == line_data["product"].id and move_id not in used_moves:
                         line_data["description"] = False
-                        line_data["name"] = move_info["description"]
+                        line_data["reference"] = move_info["description"]
                         used_moves.add(move_id)
                         break
 
@@ -140,16 +136,14 @@ class StockMoveLine(models.Model):
         if use_origin:
             move = move or move_line.move_id
             uom = move.product_uom or move_line.product_uom_id
-            name = move.product_id.display_name
+            reference = move.product_id.display_name
             description = move.origin_description or ""
             product = move.product_id
-            if description.startswith(name):
-                description = description.removeprefix(name).strip()
+            if description.startswith(reference):
+                description = description.removeprefix(reference).strip()
             elif description.startswith(product.name):
                 description = description.removeprefix(product.name).strip()
-            line_key = (
-                f"{product.id}_{product.display_name}_{description or ''}_{uom.id}_{move.product_packaging_id or ''}"
-            )
+            line_key = f"{product.id}_{product.display_name}_{description or ''}_{uom.id}_{move.packaging_uom_id or ''}"
             bom_line = getattr(move, "bom_line_id", False)
             if bom_line and bom_line.bom_id:
                 bom = bom_line.bom_id
@@ -158,11 +152,11 @@ class StockMoveLine(models.Model):
                 bom = False
             return {
                 "line_key": line_key,
-                "name": name,
+                "name": reference,
                 "description": description,
                 "product_uom": uom,
                 "move": move,
-                "packaging": move.product_packaging_id,
+                "packaging_uom_id": move.packaging_uom_id,
                 "bom": bom,
             }
         else:
