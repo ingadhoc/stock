@@ -29,7 +29,9 @@
     </template>
 
     <template id="stock_report_delivery_aggregated_move_lines" inherit_id="stock.stock_report_delivery_aggregated_move_lines">
-        <xpath expr="//td[@name='move_line_aggregated_qty_ordered']" position="replace"/>
+        <xpath expr="//td[@name='move_line_aggregated_qty_ordered']" position="attributes">
+            <attribute name="style">display: none;</attribute>
+        </xpath>
     </template>
 
     <template id="custom_stock_report_delivery_aggregated_move_lines" inherit_id="stock.stock_report_delivery_aggregated_move_lines">
