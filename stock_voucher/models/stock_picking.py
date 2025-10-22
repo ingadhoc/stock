@@ -111,6 +111,15 @@ class StockPicking(models.Model):
                 raise UserError(_("You must set stock voucher numbers"))
         return True
 
+    def action_put_in_pack(self, move_lines_to_pack=False):
+        """
+        We override to compute number of packages
+        """
+        res = super().action_put_in_pack(move_lines_to_pack=move_lines_to_pack)
+        if self.picking_type_id.number_of_packages:
+            self.number_of_packages = len(self.package_level_ids)
+        return res
+
     def button_validate(self):
         """
         We make checks before calling transfer
@@ -119,9 +128,6 @@ class StockPicking(models.Model):
         # active_id could not be the picking
         self = self.with_context(picking_ids=self.ids)
         self.do_stock_voucher_transfer_check()
-        # We compute number of packages according to package_level_ids
-        if self.picking_type_id.number_of_packages:
-            self.number_of_packages = len(self.package_level_ids)
 
         res = super().button_validate()
         # res none when no wizard opended
