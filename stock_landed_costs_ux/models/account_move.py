@@ -48,6 +48,6 @@ class AccountMove(models.Model):
             return landed_cost_line.currency_id._convert(
                 landed_cost_line.price_subtotal,
                 landed_cost_line.company_currency_id,
-                landed_cost_line.company_id,
+                landed_cost_line.account_id.company_id,
                 self.invoice_date or fields.Date.context_today(self),
             )
