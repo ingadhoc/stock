@@ -20,9 +20,16 @@ class StockWarehouseOrderpoint(models.Model):
         string="Previsión",
     )
 
+    def _search_qty_to_order(self, operator, value):
+        return [("qty_to_order_manual", operator, value)]
+
     def update_qty_forecast(self):
         for rec in self:
             rec.qty_forecast_stored = rec.qty_forecast
+
+    def update_qty_to_order_manual(self):
+        for rec in self:
+            rec.qty_to_order_manual = rec.qty_to_order_computed
 
     def _get_orderpoint_products(self):
         domain = [("type", "=", "product"), ("stock_move_ids", "!=", False)]
