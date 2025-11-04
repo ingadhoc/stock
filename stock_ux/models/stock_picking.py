@@ -71,7 +71,10 @@ class StockPicking(models.Model):
         for rec in self:
             if rec.picking_type_id.mail_template_id:
                 try:
-                    rec.message_post_with_source(rec.picking_type_id.mail_template_id)
+                    rec.with_context(
+                        email_notification_force_header=True,
+                        email_notification_force_footer=True,
+                    ).message_post_with_source(rec.picking_type_id.mail_template_id)
                 except Exception as error:
                     title = _("ERROR: Picking was not sent via email")
                     rec.message_post(
@@ -88,7 +91,11 @@ class StockPicking(models.Model):
                 super(StockPicking, self)._send_confirmation_email()
 
     def _action_done(self):
-        for rec in self.with_context(mail_notify_force_send=False).filtered("picking_type_id.mail_template_id"):
+        for rec in self.with_context(
+            mail_notify_force_send=False,
+            email_notification_force_header=True,
+            email_notification_force_footer=True,
+        ).filtered("picking_type_id.mail_template_id"):
             try:
                 rec.message_post_with_template(rec.picking_type_id.mail_template_id.id)
             except Exception as error:
@@ -97,7 +104,7 @@ class StockPicking(models.Model):
                     body="<br/><br/>".join(
                         [
                             "<b>" + title + "</b>",
-                            _("Please check the email template associated with" " the picking type."),
+                            _("Please check the email template associated with the picking type."),
                             "<code>" + str(error) + "</code>",
                         ]
                     ),
