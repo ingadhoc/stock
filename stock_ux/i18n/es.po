@@ -3,16 +3,15 @@
 # 	* stock_ux
 # 
 # Translators:
-# Matias Velazquez, 2025
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025
+# ADHOC - Bot <transbot@adhoc.com.ar>, 2025
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0+e\n"
+"Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 21:59+0000\n"
-"PO-Revision-Date: 2024-11-13 15:07+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025\n"
+"POT-Creation-Date: 2025-11-04 14:45+0000\n"
+"PO-Revision-Date: 2025-11-04 14:45+0000\n"
+"Last-Translator: ADHOC - Bot <transbot@adhoc.com.ar>, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -186,12 +185,6 @@ msgid "Descripción de origen"
 msgstr "Origin Description"
 
 #. module: stock_ux
-#: model:ir.model.fields,field_description:stock_ux.field_stock_move_line__name
-#: model:ir.model.fields,field_description:stock_ux.field_stock_picking_zpl_lines__name
-msgid "Description"
-msgstr "Descripción"
-
-#. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_operation_wizard__location_dest_id
 msgid "Destination Location"
 msgstr "Ubicación destino"
@@ -220,10 +213,24 @@ msgstr ""
 "los últimos 120 días."
 
 #. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_product_label_layout__display_name
+#: model:ir.model.fields,field_description:stock_ux.field_product_product__display_name
+#: model:ir.model.fields,field_description:stock_ux.field_product_template__display_name
+#: model:ir.model.fields,field_description:stock_ux.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:stock_ux.field_stock_forecasted_product_product__display_name
+#: model:ir.model.fields,field_description:stock_ux.field_stock_location__display_name
+#: model:ir.model.fields,field_description:stock_ux.field_stock_move__display_name
+#: model:ir.model.fields,field_description:stock_ux.field_stock_move_line__display_name
 #: model:ir.model.fields,field_description:stock_ux.field_stock_operation_wizard__display_name
+#: model:ir.model.fields,field_description:stock_ux.field_stock_picking__display_name
+#: model:ir.model.fields,field_description:stock_ux.field_stock_picking_type__display_name
 #: model:ir.model.fields,field_description:stock_ux.field_stock_picking_zpl_lines__display_name
+#: model:ir.model.fields,field_description:stock_ux.field_stock_return_picking__display_name
+#: model:ir.model.fields,field_description:stock_ux.field_stock_rule__display_name
+#: model:ir.model.fields,field_description:stock_ux.field_stock_scrap__display_name
+#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__display_name
 msgid "Display Name"
-msgstr "Mostrar Nombre"
+msgstr "Nombre para mostrar"
 
 #. module: stock_ux
 #: model:ir.model.fields,help:stock_ux.field_stock_picking__operation_type_additional_quantities
@@ -315,18 +322,27 @@ msgid "Future Activities"
 msgstr "Actividades Futuras"
 
 #. module: stock_ux
-#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
-msgid "Group By"
-msgstr "Agrupado Por"
-
-#. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__has_message
 msgid "Has Message"
 msgstr "Tiene Mensaje"
 
 #. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_product_label_layout__id
+#: model:ir.model.fields,field_description:stock_ux.field_product_product__id
+#: model:ir.model.fields,field_description:stock_ux.field_product_template__id
+#: model:ir.model.fields,field_description:stock_ux.field_res_config_settings__id
+#: model:ir.model.fields,field_description:stock_ux.field_stock_forecasted_product_product__id
+#: model:ir.model.fields,field_description:stock_ux.field_stock_location__id
+#: model:ir.model.fields,field_description:stock_ux.field_stock_move__id
+#: model:ir.model.fields,field_description:stock_ux.field_stock_move_line__id
 #: model:ir.model.fields,field_description:stock_ux.field_stock_operation_wizard__id
+#: model:ir.model.fields,field_description:stock_ux.field_stock_picking__id
+#: model:ir.model.fields,field_description:stock_ux.field_stock_picking_type__id
 #: model:ir.model.fields,field_description:stock_ux.field_stock_picking_zpl_lines__id
+#: model:ir.model.fields,field_description:stock_ux.field_stock_return_picking__id
+#: model:ir.model.fields,field_description:stock_ux.field_stock_rule__id
+#: model:ir.model.fields,field_description:stock_ux.field_stock_scrap__id
+#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__id
 msgid "ID"
 msgstr ""
 
@@ -469,11 +485,6 @@ msgstr "Movimientos"
 #: model:ir.model.fields,field_description:stock_ux.field_product_label_layout__line_ids
 msgid "Moves"
 msgstr "Movimientos"
-
-#. module: stock_ux
-#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__qty_multiple
-msgid "Multiple Quantity"
-msgstr "Cantidad múltiple"
 
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
@@ -685,6 +696,11 @@ msgid "Q. UdM Producto"
 msgstr ""
 
 #. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__qty_multiple
+msgid "Qty Multiple"
+msgstr "Cantidad múltiple"
+
+#. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
 msgid "Ready"
 msgstr "Listo"
@@ -693,6 +709,11 @@ msgstr "Listo"
 #: model:ir.model.fields,field_description:stock_ux.field_stock_return_picking__reason
 msgid "Reason for the return"
 msgstr "Razón de devolución"
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_picking_zpl_lines__name
+msgid "Reference"
+msgstr "Descripción"
 
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
@@ -800,7 +821,7 @@ msgstr "Estado"
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_type_form
 msgid "Stock"
-msgstr "Stock"
+msgstr ""
 
 #. module: stock_ux
 #: model:ir.model,name:stock_ux.model_stock_move
@@ -823,13 +844,21 @@ msgid "Stock Rule"
 msgstr "Regla de inventario"
 
 #. module: stock_ux
-#: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint__qty_multiple
-msgid ""
-"The procurement quantity will be rounded up to a multiple of this field "
-"quantity. If it is 0, it is not rounded."
+#: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint__product_max_qty
+msgid "Stock level to reach when replenishing."
 msgstr ""
-"La cantidad del abastecimiento se redondeará hacia arriba a un múltiplo de "
-"la cantidad en este campo. Si es 0, no se redondeará."
+"Cuando el stock virtual desciende por debajo de la cantidad mínima, Odoo "
+"genera un aprovisionamiento para llevar la cantidad prognosticada hasta (o "
+"cerca de) la cantidad máxima especificada para este campo (o hasta la "
+"cantidad mínima, la que sea mayor)."
+
+#. module: stock_ux
+#: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint__product_min_qty
+msgid "The minimum Stock level that will trigger a replenishment."
+msgstr ""
+"Cuando el stock virtual desciende por debajo de la cantidad mínima "
+"especificada para este campo, Odoo genera un aprovisionamiento para que la "
+"cantidad prognosticada supere esta cantidad mínima."
 
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.product_form_view_procurement_button
@@ -859,7 +888,7 @@ msgstr "Actividades de Hoy"
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_move_line_tree2
 msgid "Total"
-msgstr "Total"
+msgstr ""
 
 #. module: stock_ux
 #: model:ir.model,name:stock_ux.model_stock_picking
@@ -935,29 +964,6 @@ msgstr "Mensajes del sitio web"
 #: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint__website_message_ids
 msgid "Website communication history"
 msgstr "Historial de comunicación del sitio web"
-
-#. module: stock_ux
-#: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint__product_min_qty
-msgid ""
-"When the virtual stock goes below the Min Quantity specified for this field,"
-" Odoo generates a procurement to bring the forecasted quantity above of this"
-" Min Quantity."
-msgstr ""
-"Cuando el stock virtual desciende por debajo de la cantidad mínima "
-"especificada para este campo, Odoo genera un aprovisionamiento para que la "
-"cantidad prognosticada supere esta cantidad mínima."
-
-#. module: stock_ux
-#: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint__product_max_qty
-msgid ""
-"When the virtual stock goes below the Min Quantity, Odoo generates a "
-"procurement to bring the forecasted quantity up to (or near to) the Max "
-"Quantity specified for this field (or to Min Quantity, whichever is bigger)."
-msgstr ""
-"Cuando el stock virtual desciende por debajo de la cantidad mínima, Odoo "
-"genera un aprovisionamiento para llevar la cantidad prognosticada hasta (o "
-"cerca de) la cantidad máxima especificada para este campo (o hasta la "
-"cantidad mínima, la que sea mayor)."
 
 #. module: stock_ux
 #: model:ir.model.fields,help:stock_ux.field_stock_rule__propagate_carrier
