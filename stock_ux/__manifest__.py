@@ -18,6 +18,7 @@
 #
 ##############################################################################
 {
+<<<<<<< 0d3e5e7eea336d4475e33ea9cedecc90499ec194
     'name': 'Stock UX',
     'version': "17.0.1.11.0",
     'category': 'Warehouse Management',
@@ -26,6 +27,35 @@
     'author': 'ADHOC SA',
     'website': 'www.adhoc.com.ar',
     'images': [
+||||||| 574037bdb374440eff7f5d5bd657067f07b612c6
+    "name": "Stock UX",
+    "version": "16.0.2.25.0",
+    "category": "Warehouse Management",
+    "sequence": 14,
+    "summary": "",
+    "author": "ADHOC SA",
+    "website": "www.adhoc.com.ar",
+    "images": [],
+    "depends": [
+        "sale_stock",
+        "report_aeroo",
+        "stock_voucher",
+        "mail",
+=======
+    "name": "Stock UX",
+    "version": "16.0.2.26.0",
+    "category": "Warehouse Management",
+    "sequence": 14,
+    "summary": "",
+    "author": "ADHOC SA",
+    "website": "www.adhoc.com.ar",
+    "images": [],
+    "depends": [
+        "sale_stock",
+        "report_aeroo",
+        "stock_voucher",
+        "mail",
+>>>>>>> 434d5a68c661e8fcdd5e2ceb3ca7d273949f3709
     ],
     'depends': [
         'sale_stock',

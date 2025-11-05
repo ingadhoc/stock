@@ -40,12 +40,34 @@
             <attribute name="t-if">aggregated_lines[line]['quantity']</attribute>
         </xpath>
     </template>
+<<<<<<< 0d3e5e7eea336d4475e33ea9cedecc90499ec194
 
     <template id="stock_report_delivery_has_serial_move_line_ux" inherit_id="stock.stock_report_delivery_has_serial_move_line">
         <xpath expr="//td[1]//span[1]" position="replace">
             <span t-if="env['ir.config_parameter'].sudo().get_param('stock_ux.delivery_slip_use_origin', 'False') == 'True'"
             t-field="move_line.origin_description">Description on transfer</span>
             <span t-else="" t-field="move_line.product_id"/>
+||||||| 574037bdb374440eff7f5d5bd657067f07b612c6
+    
+    <template id="stock_report_delivery_has_serial_move_line" inherit_id="stock.stock_report_delivery_has_serial_move_line">
+        <xpath expr="//td[1]" position="attributes">
+            <attribute name="t-if">o.env['ir.config_parameter'].sudo().get_param('stock_ux.delivery_slip_use_origin', 'False') == 'False' or not move_line.origin_description</attribute>
+        </xpath>
+        <xpath expr="//td[1]" position="after">
+            <td t-if="o.env['ir.config_parameter'].sudo().get_param('stock_ux.delivery_slip_use_origin') == 'True' and move_line.origin_description">
+                <span t-field="move_line.origin_description"/>
+            </td>
+=======
+    
+    <template id="stock_report_delivery_has_serial_move_line" inherit_id="stock.stock_report_delivery_has_serial_move_line">
+        <xpath expr="//td[1]" position="attributes">
+            <attribute name="t-if">o.env['ir.config_parameter'].sudo().get_param('stock_ux.delivery_slip_use_origin', 'False') == 'False' or not move_line.origin_description</attribute>
+        </xpath>
+        <xpath expr="//td[1]" position="before">
+            <td t-if="o.env['ir.config_parameter'].sudo().get_param('stock_ux.delivery_slip_use_origin') == 'True' and move_line.origin_description">
+                <span t-field="move_line.origin_description"/>
+            </td>
+>>>>>>> 434d5a68c661e8fcdd5e2ceb3ca7d273949f3709
         </xpath>
     </template>
 
