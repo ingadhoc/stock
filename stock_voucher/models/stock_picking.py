@@ -190,8 +190,9 @@ class StockPicking(models.Model):
                                     bom_quantity += line_data["qty"]
                             if not bom_quantity:
                                 continue
+                            rec_move = rec.move_ids.filtered(lambda m: m._origin.id == move.id)
                             picking_avg.append(move.product_uom_qty / bom_quantity)
-                            done_avg.append(move.quantity / bom_quantity)
+                            done_avg.append(rec_move.quantity / bom_quantity)
                         picking_value += so_bom_line.price_reduce_taxexcl * (sum(picking_avg) / len(picking_avg))
                         done_value += so_bom_line.price_reduce_taxexcl * (sum(done_avg) / len(done_avg))
 
