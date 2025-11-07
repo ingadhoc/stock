@@ -27,7 +27,7 @@ class AccountMove(models.Model):
                             {
                                 "product_id": l.product_id.id,
                                 "name": l.product_id.name,
-                                "account_id": l.product_id.product_tmpl_id.get_product_accounts()["stock_input"].id,
+                                "account_id": l.product_id.product_tmpl_id.get_product_accounts()["stock_valuation"].id,
                                 "price_unit": self._compute_price_unit(l, rate_to_use),
                                 "split_method": l.product_id.split_method_landed_cost or "equal",
                             },
