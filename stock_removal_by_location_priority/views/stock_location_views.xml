@@ -7,7 +7,6 @@
         <field name="arch" type="xml">
             <xpath expr="//group[@name='additional_info']" position="after">
                 <group string="Logistica" name="logistics">
-                    <field name="removal_strategy_method" invisible="1"/>
                     <field name="removal_priority"/>
                 </group>
             </xpath>

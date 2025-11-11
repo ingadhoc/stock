@@ -1,6 +1,6 @@
 {
     "name": "Stock Removal by Location priority",
-    "version": "18.0.1.0.0",
+    "version": "19.0.1.0.0",
     "category": "Warehouse Management",
     "sequence": 14,
     "summary": "",
@@ -16,7 +16,7 @@
         "views/stock_location_views.xml",
     ],
     "demo": [],
-    "installable": False,
+    "installable": True,
     "auto_install": False,
     "application": False,
     "pre_init_hook": "pre_init_hook",
