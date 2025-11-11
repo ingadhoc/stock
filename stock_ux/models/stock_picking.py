@@ -97,7 +97,7 @@ class StockPicking(models.Model):
             email_notification_force_footer=True,
         ).filtered("picking_type_id.mail_template_id"):
             try:
-                rec.message_post_with_template(rec.picking_type_id.mail_template_id.id)
+                rec.message_post_with_source(rec.picking_type_id.mail_template_id)
             except Exception as error:
                 title = _("ERROR: Picking was not sent via email")
                 rec.message_post(
