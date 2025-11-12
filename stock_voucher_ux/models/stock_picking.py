@@ -15,12 +15,6 @@ class StockPicking(models.Model):
         compute="_compute_with_vouchers",
     )
 
-    book_id = fields.Many2one(
-        "stock.book",
-        "Book",
-        default=lambda self: self._get_book(),
-    )
-
     next_voucher_number = fields.Integer(
         "Next Voucher Number",
         related="book_id.sequence_id.number_next_actual",
@@ -29,10 +23,6 @@ class StockPicking(models.Model):
     autoprinted = fields.Boolean(
         related="book_id.autoprinted",
     )
-
-    @api.model
-    def _get_book(self):
-        return self.book_id or self.env["stock.book"].search([("company_id", "=", self.company_id.id)], limit=1)
 
     @api.depends("voucher_ids")
     def _compute_with_vouchers(self):
