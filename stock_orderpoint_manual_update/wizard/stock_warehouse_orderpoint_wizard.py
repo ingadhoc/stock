@@ -1,5 +1,5 @@
 from odoo import fields, models
-from odoo.osv import expression
+from odoo.fields import Domain
 
 
 class StockWarehouseOrderpointWizard(models.TransientModel):
@@ -31,7 +31,7 @@ class StockWarehouseOrderpointWizard(models.TransientModel):
         if self.compute_rotation:
             orderpoints._compute_rotation()
         orderpoints._change_review_toggle_negative()
-        action["domain"] = expression.AND(
+        action["domain"] = Domain.AND(
             [
                 action.get("domain", "[]"),
                 orderpoint_domain,
