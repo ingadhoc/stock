@@ -19,7 +19,7 @@
 ##############################################################################
 {
     "name": "sale order type invoice policy invoice link",
-    "version": "18.0.1.0.0",
+    "version": "19.0.1.0.0",
     "category": "Warehouse Management",
     "sequence": 14,
     "summary": "",
@@ -30,7 +30,7 @@
     "depends": ["sale_order_type_invoice_policy", "stock_picking_invoice_link"],
     "data": [],
     "demo": [],
-    "installable": False,
+    "installable": True,
     "auto_install": True,
     "application": False,
 }
