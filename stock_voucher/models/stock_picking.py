@@ -200,11 +200,31 @@ class StockPicking(models.Model):
                                     bom_quantity += line_data["qty"]
                             if not bom_quantity:
                                 continue
+<<<<<<< 9a113e5d633cccf10b3acb482e4d045786905423
                             rec_move = rec.move_ids.filtered(lambda m: m._origin.id == move.id)
                             picking_avg.append(move.product_uom_qty / bom_quantity)
                             done_avg.append(rec_move.quantity / bom_quantity)
                         picking_value += so_bom_line.price_reduce_taxexcl * (sum(picking_avg) / len(picking_avg))
                         done_value += so_bom_line.price_reduce_taxexcl * (sum(done_avg) / len(done_avg))
+||||||| 0d3e5e7eea336d4475e33ea9cedecc90499ec194
+                            picking_avg.append(
+                                move.product_uom_qty / bom_quantity)
+                            done_avg.append(
+                                move.quantity / bom_quantity)
+                        picking_value += so_bom_line.price_reduce_taxexcl * (
+                            sum(picking_avg) / len(picking_avg))
+                        done_value += so_bom_line.price_reduce_taxexcl * (
+                            sum(done_avg) / len(done_avg))
+=======
+                            picking_avg.append(
+                                move.product_uom_qty / bom_quantity)
+                            done_avg.append(
+                                move.quantity / bom_quantity)
+                        if picking_avg:
+                            picking_value += so_bom_line.price_reduce_taxexcl * (sum(picking_avg) / len(picking_avg))
+                        if done_avg:
+                            done_value += so_bom_line.price_reduce_taxexcl * (sum(done_avg) / len(done_avg))
+>>>>>>> a2987dd9428358e4f09b63ef3e11b368b335cde0
 
             declared_value = picking_value if inmediate_transfer else done_value
             if pricelist:
