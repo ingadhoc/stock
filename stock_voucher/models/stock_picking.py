@@ -214,10 +214,10 @@ class StockPicking(models.Model):
                                 move.product_uom_qty / bom_quantity)
                             done_avg.append(
                                 move.quantity / bom_quantity)
-                        picking_value += so_bom_line.price_reduce_taxexcl * (
-                            sum(picking_avg) / len(picking_avg))
-                        done_value += so_bom_line.price_reduce_taxexcl * (
-                            sum(done_avg) / len(done_avg))
+                        if picking_avg:
+                            picking_value += so_bom_line.price_reduce_taxexcl * (sum(picking_avg) / len(picking_avg))
+                        if done_avg:
+                            done_value += so_bom_line.price_reduce_taxexcl * (sum(done_avg) / len(done_avg))
 
             declared_value = picking_value if inmediate_transfer\
                 else done_value
