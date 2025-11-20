@@ -28,15 +28,17 @@ class productTemplate(models.Model):
         for rec in use_average_in_currency:
             product_currency = rec.currency_id
             replenishment_cost_rule = rec.replenishment_cost_rule_id
-            replenishment_cost = rec.standard_price_in_currency
-            if replenishment_cost_rule:
-                replenishment_cost = replenishment_cost_rule.compute_rule(replenishment_cost, rec)
+            # First convert the base cost from valuation currency to product currency
             replenishment_base_cost_on_currency = rec.valuation_currency_id._convert(
-                from_amount=replenishment_cost,
+                from_amount=rec.standard_price_in_currency,
                 to_currency=product_currency,
                 company=company_id,
                 date=fields.date.today(),
             )
+            # Then apply the rule on the converted amount
+            replenishment_cost = replenishment_base_cost_on_currency
+            if replenishment_cost_rule:
+                replenishment_cost = replenishment_cost_rule.compute_rule(replenishment_base_cost_on_currency, rec)
             rec.update(
                 {
                     "replenishment_base_cost_on_currency": replenishment_base_cost_on_currency,
