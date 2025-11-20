@@ -3,21 +3,31 @@
 # 	* stock_picking_responsible
 # 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024
+# ADHOC - Bot <transbot@adhoc.com.ar>, 2025
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0+e\n"
+"Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-20 17:58+0000\n"
-"PO-Revision-Date: 2024-11-20 17:58+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024\n"
+"POT-Creation-Date: 2025-11-17 18:52+0000\n"
+"PO-Revision-Date: 2025-11-17 18:52+0000\n"
+"Last-Translator: ADHOC - Bot <transbot@adhoc.com.ar>, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: es\n"
 "Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+
+#. module: stock_picking_responsible
+#: model:ir.model.fields,field_description:stock_picking_responsible.field_stock_move__display_name
+msgid "Display Name"
+msgstr "Nombre para mostrar"
+
+#. module: stock_picking_responsible
+#: model:ir.model.fields,field_description:stock_picking_responsible.field_stock_move__id
+msgid "ID"
+msgstr ""
 
 #. module: stock_picking_responsible
 #: model:ir.model.fields,field_description:stock_picking_responsible.field_stock_move__picking_user_id
