@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<odoo noupdate="1">
-    <record model="stock.book" id="stock_book_1" forcecreate="False">
-        <field name="name">Comprobante de Entrega</field>
-        <field name="sequence_id" ref="stock_book_sequence_1"/>
-        <field name="lines_per_voucher" eval="0"/>
-    </record>
-</odoo>
