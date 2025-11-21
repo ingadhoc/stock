@@ -17,14 +17,15 @@ class StockWarehouseOrderpoint(models.Model):
     _inherit = ["stock.warehouse.orderpoint", "mail.thread"]
 
     active_product = fields.Boolean(string="Product Active", related="product_id.active")
+
     rotation_stdev = fields.Float(
         compute="_compute_rotation",
-        help="Desvío estandar de las cantidades entregas a clientes en los " "últimos 120 días.",
+        help="Desvío estandar de las cantidades entregas a clientes en los últimos 120 días.",
         digits="Product Unit of Measure",
     )
     warehouse_rotation_stdev = fields.Float(
         compute="_compute_rotation",
-        help="Desvío estandar de las cantidades entregas desde este almacen" " a clientes en los últimos 120 días.",
+        help="Desvío estandar de las cantidades entregas desde este almacen a clientes en los últimos 120 días.",
         digits="Product Unit of Measure",
     )
     rotation = fields.Float(
@@ -47,6 +48,22 @@ class StockWarehouseOrderpoint(models.Model):
     location_id = fields.Many2one(tracking=True)
     product_id = fields.Many2one(tracking=True)
     reviewed = fields.Boolean()
+
+    def _search_qty_to_order(self, operator, value):
+        """Optimized search method for qty_to_order.
+
+        This improves on the v19 core implementation which uses filtered_domain.
+        Instead of loading records into memory, this builds a pure domain that:
+        1. For manual orderpoints: checks qty_to_order_manual directly
+        2. For auto orderpoints: uses the stored qty_to_order_computed field
+        3. Combines both with OR logic for efficient database-level filtering
+        """
+        # For manual orderpoints (with qty_to_order_manual != 0), check qty_to_order_manual
+        manual_domain = ["&", ("qty_to_order_manual", "!=", 0), ("qty_to_order_manual", operator, value)]
+        # For auto orderpoints (qty_to_order_manual = 0), check computed value
+        auto_domain = ["&", ("qty_to_order_manual", "=", 0), ("qty_to_order_computed", operator, value)]
+        # Return domain that combines both cases
+        return ["|"] + manual_domain + auto_domain
 
     @api.depends("product_id", "location_id")
     def _compute_rotation(self):
