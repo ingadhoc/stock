@@ -16,15 +16,24 @@ class StockWarehouseOrderpoint(models.Model):
     _name = "stock.warehouse.orderpoint"
     _inherit = ["stock.warehouse.orderpoint", "mail.thread"]
 
+    # Backport from v19: add index for better performance
+    warehouse_id = fields.Many2one(index=True)
+
     active_product = fields.Boolean(string="Product Active", related="product_id.active")
+
+    # Backport from v19: store qty_to_order_computed for better performance
+    qty_to_order_computed = fields.Float(
+        store=True,
+    )
+
     rotation_stdev = fields.Float(
         compute="_compute_rotation",
-        help="Desvío estandar de las cantidades entregas a clientes en los " "últimos 120 días.",
+        help="Desvío estandar de las cantidades entregas a clientes en los últimos 120 días.",
         digits="Product Unit of Measure",
     )
     warehouse_rotation_stdev = fields.Float(
         compute="_compute_rotation",
-        help="Desvío estandar de las cantidades entregas desde este almacen" " a clientes en los últimos 120 días.",
+        help="Desvío estandar de las cantidades entregas desde este almacen a clientes en los últimos 120 días.",
         digits="Product Unit of Measure",
     )
     rotation = fields.Float(
@@ -47,6 +56,51 @@ class StockWarehouseOrderpoint(models.Model):
     location_id = fields.Many2one(tracking=True)
     product_id = fields.Many2one(tracking=True)
     reviewed = fields.Boolean()
+
+    # Backport from v19: updated depends for qty_to_order_computed
+    # Note: qty_forecast depends on stock_move_ids which changes frequently.
+    # We intentionally don't include it to avoid constant recomputation.
+    # Instead, we rely on the explicit recomputation in _run_pull when moves are created.
+    @api.depends(
+        "qty_multiple",
+        "product_min_qty",
+        "product_max_qty",
+        "visibility_days",
+        "product_id",
+        "location_id",
+        "product_id.seller_ids.delay",
+    )
+    def _compute_qty_to_order_computed(self):
+        """Extend to add more depends values.
+        Backport from v19 to improve performance by storing computed qty_to_order.
+        """
+        return super()._compute_qty_to_order_computed()
+
+    # Improved search method without filtered_domain
+    def _search_qty_to_order(self, operator, value):
+        """Search method for qty_to_order that avoids filtered_domain performance issues.
+
+        This creates a more efficient domain that:
+        1. For manual orderpoints: checks qty_to_order_manual directly
+        2. For auto orderpoints: uses the stored qty_to_order_computed field
+        3. Combines both with OR logic to avoid loading all records
+        """
+        # For manual orderpoints (with qty_to_order_manual != 0), check qty_to_order_manual
+        manual_domain = [
+            "&",
+            ("qty_to_order_manual", "!=", 0),
+            ("qty_to_order_manual", operator, value),
+        ]
+
+        # For auto orderpoints (qty_to_order_manual = 0), check computed value
+        auto_domain = [
+            "&",
+            ("qty_to_order_manual", "=", 0),
+            ("qty_to_order_computed", operator, value),
+        ]
+
+        # Return domain that combines both cases
+        return ["|"] + manual_domain + auto_domain
 
     @api.depends("product_id", "location_id")
     def _compute_rotation(self):
