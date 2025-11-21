@@ -12,15 +12,15 @@
 ^LH0,0
 ^FO20,10,0
 
-^FO260,10
+^FO250,10
 ^A0N,20,25^FD<t t-esc="o.move_id.picking_id.date_done" t-options="{'widget': 'date'}"/>^FS
 
-^FO20,40
+^FO10,40
 ^A0N,40,30
 ^TBN,360,40
 ^FD<t t-esc="o.move_id.product_id.display_name"/>^FS
 
-^FO20,90
+^FO10,90
 ^BY3
 ^BCN,60,Y,N,N,A
 ^FD<t t-esc="o.move_id.product_id.barcode"/>^FS
@@ -29,13 +29,13 @@
 ^FX Nueva etiqueta
 ^LH445,0
 ^FO20,10,0
-^FO260,10
+^FO250,10
 ^A0N,20,25^FD<t t-esc="o.move_id.picking_id.date_done" t-options="{'widget': 'date'}"/>^FS
-^FO20,40
+^FO10,40
 ^A0N,40,30
 ^TBN,360,40
 ^FD<t t-esc="o.move_id.product_id.display_name"/>^FS
-^FO20,90
+^FO10,90
 ^BY3
 ^BCN,60,Y,N,N,A
 ^FD<t t-esc="o.move_id.product_id.barcode"/>^FS
