@@ -1,0 +1,1063 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_ux
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-11-25 17:14+0000\n"
+"PO-Revision-Date: 2025-11-25 17:14+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_ux
+#: model:ir.actions.report,print_report_name:stock_ux.action_report_picking_ux
+msgid ""
+"'Picking Operations - %s - %s' % (object.partner_id.name or '', object.name)"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.report_delivery_document
+msgid "<strong>Ordered</strong>"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__message_needaction
+msgid "Action Needed"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_form
+msgid ""
+"Add an internal note that will be printed on the Picking Operations sheet"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_form
+msgid ""
+"Add any observation that you would like to be included on the deliverslip"
+msgstr ""
+
+#. module: stock_ux
+#: model:res.groups,name:stock_ux.allow_picking_cancellation
+msgid "Allow picking cancellation"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.product_form_view_procurement_button
+#: model_terms:ir.ui.view,arch_db:stock_ux.product_template_form_view_procurement_button
+msgid "Are all stock movements without lot detail or save locations."
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
+msgid "Assigned Moves"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__message_attachment_count
+msgid "Attachment Count"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
+msgid "Backorders"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_picking_type__block_picking_deletion
+msgid "Block Picking Deletion"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_picking__operation_type_additional_quantities
+#: model:ir.model.fields,field_description:stock_ux.field_stock_picking_type__block_additional_quantity
+msgid "Block additional quantity"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_picking__block_manual_lines
+#: model:ir.model.fields,field_description:stock_ux.field_stock_picking_type__block_manual_lines
+msgid "Block force availability"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
+msgid "Cancelled"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
+msgid "Cancelled Moves"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint__rotation
+msgid ""
+"Cantidades entregadas a clientes en los últimos 120 días dividido por 4 para"
+" mensualizar (restadas devoluciones)."
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint__warehouse_rotation
+msgid ""
+"Cantidades entregadas desde este almacen a clientes en los últimos 120 días "
+"dividido por 4 para mensualizar(restadas devoluciones)."
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.actions.act_window,name:stock_ux.action_stock_operation_wizard
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_stock_operation_wizard_form
+msgid "Change Locations"
+msgstr ""
+
+#. module: stock_ux
+#. odoo-python
+#: code:addons/stock_ux/wizards/stock_operation_wizard.py:0
+msgid "Change location must be called from operations of same picking!"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model,name:stock_ux.model_product_label_layout
+msgid "Choose the sheet layout to print the labels"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.actions.server,name:stock_ux.ir_cron_compute_rotation_ir_actions_server
+msgid "Compute Rotation"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model,name:stock_ux.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_stock_operation_wizard_form
+msgid "Confirm"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_operation_wizard__create_uid
+#: model:ir.model.fields,field_description:stock_ux.field_stock_picking_zpl_lines__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_operation_wizard__create_date
+#: model:ir.model.fields,field_description:stock_ux.field_stock_picking_zpl_lines__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
+msgid "Deadline exceed or/and by the scheduled"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_form
+msgid "Descripción 2"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_form_inherited
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_stock_move_line_detailed_operation_tree
+msgid "Descripción de origen"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_operation_wizard__location_dest_id
+msgid "Destination Location"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_move__picking_dest_id
+msgid "Destination Transfer"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint__rotation_stdev
+msgid ""
+"Desvío estandar de las cantidades entregas a clientes en los últimos 120 "
+"días."
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint__warehouse_rotation_stdev
+msgid ""
+"Desvío estandar de las cantidades entregas desde este almacen a clientes en "
+"los últimos 120 días."
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_product_label_layout__display_name
+#: model:ir.model.fields,field_description:stock_ux.field_product_product__display_name
+#: model:ir.model.fields,field_description:stock_ux.field_product_template__display_name
+#: model:ir.model.fields,field_description:stock_ux.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:stock_ux.field_stock_forecasted_product_product__display_name
+#: model:ir.model.fields,field_description:stock_ux.field_stock_location__display_name
+#: model:ir.model.fields,field_description:stock_ux.field_stock_move__display_name
+#: model:ir.model.fields,field_description:stock_ux.field_stock_move_line__display_name
+#: model:ir.model.fields,field_description:stock_ux.field_stock_operation_wizard__display_name
+#: model:ir.model.fields,field_description:stock_ux.field_stock_picking__display_name
+#: model:ir.model.fields,field_description:stock_ux.field_stock_picking_type__display_name
+#: model:ir.model.fields,field_description:stock_ux.field_stock_picking_zpl_lines__display_name
+#: model:ir.model.fields,field_description:stock_ux.field_stock_return_picking__display_name
+#: model:ir.model.fields,field_description:stock_ux.field_stock_rule__display_name
+#: model:ir.model.fields,field_description:stock_ux.field_stock_scrap__display_name
+#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,help:stock_ux.field_stock_picking__operation_type_additional_quantities
+#: model:ir.model.fields,help:stock_ux.field_stock_picking_type__block_additional_quantity
+msgid ""
+"Do not allow to confirm pickings with more quantity than the initial demand "
+"and also block pickings duplication"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,help:stock_ux.field_stock_picking__block_manual_lines
+#: model:ir.model.fields,help:stock_ux.field_stock_picking_type__block_manual_lines
+msgid ""
+"Do not allow to confirm pickings with more quantity than the reserved one. "
+"This will only apply for moves where origin location is not of type "
+"'supplier', 'customer', 'inventory', 'production'"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,help:stock_ux.field_stock_picking_type__block_picking_deletion
+msgid "Do not allow to remove pickings"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
+msgid "Done"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
+msgid "Draft"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
+msgid "Draft Moves"
+msgstr ""
+
+#. module: stock_ux
+#. odoo-python
+#: code:addons/stock_ux/models/stock_picking.py:0
+msgid "ERROR: Picking was not sent via email"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_picking_type__mail_template_id
+msgid "Email Template"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_res_config_settings__delivery_slip_remaining_qty
+msgid ""
+"En Comprobantes de Transferencia mostrar cantidades pendientes de entrega"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_res_config_settings__delivery_slip_use_origin
+msgid "En Comprobantes de Transferencia usar Descripción de Origen"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.actions.report,name:stock_ux.action_custom_barcode_transfer_template_view_zpl
+msgid "Etiquetas de Productos del picking (ZPL)"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__message_follower_ids
+msgid "Followers"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__message_partner_ids
+msgid "Followers (Partners)"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_form
+msgid "Force Availability"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
+msgid "Future Activities"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__has_message
+msgid "Has Message"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_product_label_layout__id
+#: model:ir.model.fields,field_description:stock_ux.field_product_product__id
+#: model:ir.model.fields,field_description:stock_ux.field_product_template__id
+#: model:ir.model.fields,field_description:stock_ux.field_res_config_settings__id
+#: model:ir.model.fields,field_description:stock_ux.field_stock_forecasted_product_product__id
+#: model:ir.model.fields,field_description:stock_ux.field_stock_location__id
+#: model:ir.model.fields,field_description:stock_ux.field_stock_move__id
+#: model:ir.model.fields,field_description:stock_ux.field_stock_move_line__id
+#: model:ir.model.fields,field_description:stock_ux.field_stock_operation_wizard__id
+#: model:ir.model.fields,field_description:stock_ux.field_stock_picking__id
+#: model:ir.model.fields,field_description:stock_ux.field_stock_picking_type__id
+#: model:ir.model.fields,field_description:stock_ux.field_stock_picking_zpl_lines__id
+#: model:ir.model.fields,field_description:stock_ux.field_stock_return_picking__id
+#: model:ir.model.fields,field_description:stock_ux.field_stock_rule__id
+#: model:ir.model.fields,field_description:stock_ux.field_stock_scrap__id
+#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint__message_has_error
+#: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,help:stock_ux.field_stock_picking_type__mail_template_id
+msgid ""
+"If set an email will be sent to the customer after the picking related to "
+"this picking type has been validated."
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint__active_product
+msgid ""
+"If unchecked, it will allow you to hide the product without removing it."
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_move_search
+msgid "Internal"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_form
+msgid "Internal Notes"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model,name:stock_ux.model_stock_location
+msgid "Inventory Locations"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__message_is_follower
+msgid "Is Follower"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_operation_wizard__write_uid
+#: model:ir.model.fields,field_description:stock_ux.field_stock_picking_zpl_lines__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_operation_wizard__write_date
+#: model:ir.model.fields,field_description:stock_ux.field_stock_picking_zpl_lines__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
+msgid "Late"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
+msgid "Late Activities"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__location_id
+msgid "Location"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_stock_operation_wizard_form
+msgid "Locations"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_move__lots_visible
+msgid "Lots Visible"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_move_search
+msgid "Manufacturing"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__product_max_qty
+msgid "Max Quantity"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__message_ids
+msgid "Messages"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__product_min_qty
+msgid "Min Quantity"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model,name:stock_ux.model_stock_warehouse_orderpoint
+msgid "Minimum Inventory Rule"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_picking_zpl_lines__move_id
+msgid "Move"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_picking_zpl_lines__move_quantity
+msgid "Move Quantity"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_picking_zpl_lines__move_uom_id
+msgid "Move Uom"
+msgstr ""
+
+#. module: stock_ux
+#. odoo-javascript
+#: code:addons/stock_ux/static/src/forecasted_buttons.xml:0
+msgid "Movements"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_product_label_layout__line_ids
+msgid "Moves"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
+msgid "My Transfers"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_move_line__product_uom_qty_location
+msgid "Net Quantity"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.stock_move_line_view_search
+msgid "Net Quantity Location"
+msgstr ""
+
+#. module: stock_ux
+#. odoo-python
+#: code:addons/stock_ux/models/stock_scrap.py:0
+msgid ""
+"No se puede desechar una cantidad mayor a la cantidad dentro de la "
+"transferencia del producto: %s."
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.actions.act_window,help:stock_ux.action_picking_tree_all
+msgid "No transfer found. Let's create one!"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__message_needaction_counter
+msgid "Number of Actions"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_picking__number_of_packages
+msgid "Number of Packages"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__message_has_error_counter
+msgid "Number of errors"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_picking__observations
+msgid "Observations"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
+msgid "Operation Type"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_move_line__picking_type_id
+msgid "Operation type"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_move__origin_description
+#: model:ir.model.fields,field_description:stock_ux.field_stock_move_line__origin_description
+msgid "Origin Description"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_operation_wizard__picking_destination_location_id
+msgid "Original Destination Location"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_operation_wizard__picking_source_location_id
+msgid "Original Source Location"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
+msgid "Package"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_operation_wizard__picking_id
+#: model_terms:ir.ui.view,arch_db:stock_ux.stock_move_line_view_search
+msgid "Picking"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_move__picking_create_user_id
+#: model:ir.model.fields,field_description:stock_ux.field_stock_move_line__picking_create_user_id
+msgid "Picking Creator"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
+msgid "Picking Lists"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.actions.report,name:stock_ux.action_report_picking_ux
+msgid "Picking Operations"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_move_tree
+msgid "Picking Partner"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model,name:stock_ux.model_stock_picking_type
+#: model_terms:ir.ui.view,arch_db:stock_ux.stock_move_line_view_search
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_move_search
+msgid "Picking Type"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_picking_zpl_lines__picking_zpl_id
+msgid "Picking Zpl"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
+msgid "Pickings already processed"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
+msgid "Planning Issues"
+msgstr ""
+
+#. module: stock_ux
+#. odoo-python
+#: code:addons/stock_ux/models/stock_picking.py:0
+msgid "Please check the email template associated with the picking type."
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.res_config_settings_view_form
+msgid ""
+"Por defecto odoo imprime en los Comprobantes de Transferencia el nombre del "
+"producto, si marca esta opción en su lugar se utilizará la descripción de "
+"origen (la descripción de origen suele ser la descripción de venta o la "
+"descripción de la compra)"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model,name:stock_ux.model_stock_picking_zpl_lines
+msgid "Print Stock Voucher lines"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model,name:stock_ux.model_product_template
+#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__product_id
+#: model_terms:ir.ui.view,arch_db:stock_ux.stock_move_line_view_search
+msgid "Product"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__active_product
+msgid "Product Active"
+msgstr ""
+
+#. module: stock_ux
+#. odoo-javascript
+#: code:addons/stock_ux/static/src/forecasted_buttons.xml:0
+msgid "Product Movements"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model,name:stock_ux.model_stock_move_line
+msgid "Product Moves (Stock Move Line)"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model,name:stock_ux.model_product_product
+msgid "Product Variant"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.product_form_view_procurement_button
+#: model_terms:ir.ui.view,arch_db:stock_ux.product_template_form_view_procurement_button
+msgid "Products Moves"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.product_form_view_procurement_button
+msgid "Products Moves Detailed"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_rule__propagate_carrier
+msgid "Propagation of carrier"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_move_tree
+msgid "Q. UdM Producto"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__qty_multiple
+msgid "Qty Multiple"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__rating_ids
+msgid "Ratings"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
+msgid "Ready"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_return_picking__reason
+msgid "Reason for the return"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_picking_zpl_lines__name
+msgid "Reference"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
+msgid "Remaining parts of picking partially processed"
+msgstr ""
+
+#. module: stock_ux
+#: model:res.groups,name:stock_ux.group_restrict_edit_picking_type
+msgid "Restrict editing Operation Type in Pickings"
+msgstr ""
+
+#. module: stock_ux
+#: model:res.groups,name:stock_ux.group_restrict_to_modify_reservations_from_planned
+msgid "Restrict to modify reservations from planned"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model,name:stock_ux.model_stock_return_picking
+msgid "Return Picking"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__reviewed
+msgid "Reviewed"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__rotation
+msgid "Rotation"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__rotation_stdev
+msgid "Rotation Stdev"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
+msgid "Scheduled Date"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model,name:stock_ux.model_stock_scrap
+msgid "Scrap"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.actions.server,name:stock_ux.action_operation_set_all_undone
+msgid "Set all undone"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_res_config_settings__group_operation_used_lots
+msgid "Show Used Lots on Picking Operations"
+msgstr ""
+
+#. module: stock_ux
+#: model:res.groups,name:stock_ux.group_operation_used_lots
+msgid "Show Used Lots on Stock Moves"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
+msgid "Show all records which has next action date is before today"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.res_config_settings_view_form
+msgid "Show selected lots on stock moves"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.res_config_settings_view_form
+msgid ""
+"Si marca esta opción, en los comprobantes de entrega se mostrarán las "
+"cantidades pendientes de entrega."
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
+msgid "Source Document"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_operation_wizard__location_id
+msgid "Source Location"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
+msgid "Starred"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
+msgid "Status"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_type_form
+msgid "Stock"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model,name:stock_ux.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model,name:stock_ux.model_stock_operation_wizard
+msgid "Stock Operation Wizard"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model,name:stock_ux.model_stock_forecasted_product_product
+msgid "Stock Replenishment Report"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model,name:stock_ux.model_stock_rule
+msgid "Stock Rule"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint__product_max_qty
+msgid "Stock level to reach when replenishing."
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint__product_min_qty
+msgid "The minimum Stock level that will trigger a replenishment."
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.product_form_view_procurement_button
+#: model_terms:ir.ui.view,arch_db:stock_ux.product_template_form_view_procurement_button
+msgid ""
+"They are only stock movements made or reserved, includes information of "
+"batches and storage locations."
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
+msgid "To Do"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.ui.menu,name:stock_ux.all_picking
+msgid "Todas las transferencias"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
+msgid "Today Activities"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_move_line_tree2
+msgid "Total"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model,name:stock_ux.model_stock_picking
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
+msgid "Transfer"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_move__picking_partner_id
+msgid "Transfer Destination Address"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.actions.act_window,name:stock_ux.action_picking_tree_all
+msgid "Transfers"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.actions.act_window,help:stock_ux.action_picking_tree_all
+msgid "Transfers allow you to move products from one location to another."
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
+msgid ""
+"Transfers that are late on scheduled time or one of pickings will be late"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_move_line__picking_code
+msgid "Type of Operation"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_move__used_lots
+msgid "Used Lots"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
+msgid "Waiting"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
+msgid "Waiting Moves"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__warehouse_rotation
+msgid "Warehouse Rotation"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__warehouse_rotation_stdev
+msgid "Warehouse Rotation Stdev"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
+msgid "Warnings"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__website_message_ids
+msgid "Website Messages"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint__website_message_ids
+msgid "Website communication history"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,help:stock_ux.field_stock_rule__propagate_carrier
+msgid "When ticked, carrier of shipment will be propagated."
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.stock_move_line_view_search
+msgid "With Quantity Done"
+msgstr ""
+
+#. module: stock_ux
+#. odoo-python
+#: code:addons/stock_ux/models/stock_picking.py:0
+msgid ""
+"You can not delete this pickings because \"Block picking deletion\" is enable on the picking type/s \"%s\" or the state of the picking is not draft or cancel.\n"
+"Picking Ids: %s"
+msgstr ""
+
+#. module: stock_ux
+#. odoo-python
+#: code:addons/stock_ux/models/stock_picking.py:0
+msgid ""
+"You can not duplicate a Picking because \"Block Additional Quantity\" is "
+"enabled on the picking type \"%s\""
+msgstr ""
+
+#. module: stock_ux
+#. odoo-python
+#: code:addons/stock_ux/models/stock_move.py:0
+msgid "You can not transfer more than the initial demand!"
+msgstr ""
+
+#. module: stock_ux
+#. odoo-python
+#: code:addons/stock_ux/models/stock_move_line.py:0
+msgid "You can't transfer more quantity than the quantity on stock!"
+msgstr ""
+
+#. module: stock_ux
+#. odoo-python
+#: code:addons/stock_ux/models/stock_picking.py:0
+msgid ""
+"You cannot change the Operation Type once it has been set. This action is "
+"restricted for your user. Please contact your Inventory Manager if you need "
+"to perform this operation."
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.custom_barcode_transfer_template_view_zpl
+msgid "^FS"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.custom_barcode_transfer_template_view_zpl
+msgid ""
+"^FS\n"
+"\n"
+"^FO20,40\n"
+"^A0N,40,30\n"
+"^TBN,360,40\n"
+"^FD"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.custom_barcode_transfer_template_view_zpl
+msgid ""
+"^FS\n"
+"\n"
+"^FO20,90\n"
+"^BY3\n"
+"^BCN,60,Y,N,N,A\n"
+"^FD"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.custom_barcode_transfer_template_view_zpl
+msgid ""
+"^FS\n"
+"^FO20,40\n"
+"^A0N,40,30\n"
+"^TBN,360,40\n"
+"^FD"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.custom_barcode_transfer_template_view_zpl
+msgid ""
+"^FS\n"
+"^FO20,90\n"
+"^BY3\n"
+"^BCN,60,Y,N,N,A\n"
+"^FD"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.custom_barcode_transfer_template_view_zpl
+msgid ""
+"^FS\n"
+"^XZ"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.custom_barcode_transfer_template_view_zpl
+msgid ""
+"^FX Nueva etiqueta\n"
+"^LH445,0\n"
+"^FO20,10,0\n"
+"^FO260,10\n"
+"^A0N,20,25^FD"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.custom_barcode_transfer_template_view_zpl
+msgid "^PQ1,0,1,Y^XZ"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.custom_barcode_transfer_template_view_zpl
+msgid ""
+"^XA\n"
+"^CI28\n"
+"^LH0,0\n"
+"^FO20,10,0\n"
+"\n"
+"^FO260,10\n"
+"^A0N,20,25^FD"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_product_label_layout__picking_id
+msgid "picking"
+msgstr ""
