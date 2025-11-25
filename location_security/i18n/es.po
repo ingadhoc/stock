@@ -3,15 +3,15 @@
 # 	* location_security
 # 
 # Translators:
-# Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024
+# ADHOC - Bot <transbot@adhoc.com.ar>, 2025
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0+e\n"
+"Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-09 00:01+0000\n"
-"PO-Revision-Date: 2024-11-14 20:22+0000\n"
-"Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024\n"
+"POT-Creation-Date: 2025-11-25 11:42+0000\n"
+"PO-Revision-Date: 2025-11-25 11:39+0000\n"
+"Last-Translator: ADHOC - Bot <transbot@adhoc.com.ar>, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -23,6 +23,18 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:location_security.view_location_security_users_form
 msgid "Allowed Stock Locations"
 msgstr "Ubicaciones de stock permitidas"
+
+#. module: location_security
+#: model:ir.model.fields,field_description:location_security.field_res_users__display_name
+#: model:ir.model.fields,field_description:location_security.field_stock_move__display_name
+msgid "Display Name"
+msgstr "Nombre para mostrar"
+
+#. module: location_security
+#: model:ir.model.fields,field_description:location_security.field_res_users__id
+#: model:ir.model.fields,field_description:location_security.field_stock_move__id
+msgid "ID"
+msgstr ""
 
 #. module: location_security
 #: model:ir.model.fields,help:location_security.field_res_users__restrict_locations
