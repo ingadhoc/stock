@@ -1,0 +1,41 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* delivery_ux
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-11-25 17:14+0000\n"
+"PO-Revision-Date: 2025-11-25 17:14+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: delivery_ux
+#: model:ir.model.fields,field_description:delivery_ux.field_delivery_carrier__partner_id
+msgid "Carrier Address"
+msgstr ""
+
+#. module: delivery_ux
+#: model:ir.model.fields,field_description:delivery_ux.field_delivery_carrier__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: delivery_ux
+#: model:ir.model.fields,field_description:delivery_ux.field_delivery_carrier__id
+msgid "ID"
+msgstr ""
+
+#. module: delivery_ux
+#: model:ir.model,name:delivery_ux.model_delivery_carrier
+msgid "Shipping Methods"
+msgstr ""
+
+#. module: delivery_ux
+#: model:ir.model.fields,help:delivery_ux.field_delivery_carrier__partner_id
+msgid "Utilizado para el remito."
+msgstr ""
