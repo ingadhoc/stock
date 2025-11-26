@@ -56,6 +56,7 @@ class StockMove(models.Model):
         precision = self.env["decimal.precision"].precision_get("Product Unit of Measure")
         if any(self.filtered(lambda x: x.scrapped)):
             return
+<<<<<<< 3dfb0722fa602c115c267aedce7ff6bff3079952
         elif any(
             self.filtered(
                 lambda x: x.picking_id.picking_type_id.block_additional_quantity
@@ -63,6 +64,26 @@ class StockMove(models.Model):
             )
         ):
             raise ValidationError(_("You can not transfer more than the initial demand!"))
+||||||| cecb187e2c06939f5102605b89a13d24e84905ab
+        elif any(self.filtered(
+            lambda x: x.picking_id.picking_type_id.
+            block_additional_quantity and float_compare(
+                x.product_uom_qty, x.quantity,
+                precision_digits=precision) == -1)):
+            raise ValidationError(_(
+                'You can not transfer more than the initial demand!'))
+
+=======
+        elif any(self.filtered(
+            lambda x: x.picking_id.picking_type_id.
+            block_additional_quantity and float_compare(
+                x.product_uom_qty, x.quantity,
+                precision_digits=precision) == -1)):
+            raise ValidationError(_(
+                'You can not transfer more than the initial demand!'))
+        return super()._check_quantity()
+
+>>>>>>> a118592ce748f513917c43ea93f33a2331ba7910
 
     def action_view_linked_record(self):
         """This function returns an action that display existing sales order
