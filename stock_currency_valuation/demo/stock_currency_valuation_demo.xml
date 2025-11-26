@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+        <record id="base.EUR" model="res.currency">
+            <field name="active" eval="True"></field>
+        </record>
+        <record id="product_category_furniture_currency_demo" model="product.category">
+            <field name="name">AVCO Currency Valuation</field>
+            <field name="parent_id" ref="product.product_category_furniture"/>
+            <field name="property_cost_method">average</field>
+            <field name="property_valuation">real_time</field>
+            <field name="valuation_currency_id" ref="base.EUR"/>
+        </record>
+
+        <record id="product_template_furniture_currency_demo" model="product.template">
+            <field name="name">Currency Demo Product</field>
+            <field name="default_code">FURN-CURR-DEMO</field>
+            <field name="type">consu</field>
+            <field name="is_storable" eval="True"></field>
+            <field name="categ_id" ref="stock_currency_valuation.product_category_furniture_currency_demo"/>
+        </record>
+        <record id="product_template_furniture_currency_demo_2" model="product.template">
+            <field name="name">Currency Demo 2</field>
+            <field name="default_code">FURN-CURR-DEMO-2</field>
+            <field name="type">consu</field>
+            <field name="is_storable" eval="True"></field>
+            <field name="categ_id" ref="stock_currency_valuation.product_category_furniture_currency_demo"/>
+        </record>
+        <record id="product_template_furniture_currency_demo_3" model="product.template">
+            <field name="name">Currency Demo 3</field>
+            <field name="default_code">FURN-CURR-DEMO-3</field>
+            <field name="type">consu</field>
+            <field name="is_storable" eval="True"></field>
+            <field name="categ_id" ref="stock_currency_valuation.product_category_furniture_currency_demo"/>
+        </record>
+</odoo>

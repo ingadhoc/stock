@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Extend product.value form view to add value_in_currency field -->
+    <record id="product_value_form_view_inherit" model="ir.ui.view">
+        <field name="name">product.value.form.view.inherit.currency.valuation</field>
+        <field name="model">product.value</field>
+        <field name="inherit_id" ref="stock_account.product_value_form_view"/>
+        <field name="arch" type="xml">
+            <field name="currency_id" position="after">
+                <field name="valuation_currency_id" invisible="1"/>
+            </field>
+            <field name="value" position="after">
+                <field name="value_in_currency"
+                    string="New Value in Currency"
+                    widget="monetary"
+                    options="{'currency_field': 'valuation_currency_id', 'field_digits': True}"
+                    invisible="not valuation_currency_id"/>
+            </field>
+        </field>
+    </record>
+</odoo>

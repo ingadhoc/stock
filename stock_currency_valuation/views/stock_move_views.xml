@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Extend the stock.move tree view to add value_in_currency field -->
+    <record id="stock_move_view_list_inherit" model="ir.ui.view">
+        <field name="name">stock.move.view.list.inherit.currency.valuation</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock_account.stock_move_view_list"/>
+        <field name="arch" type="xml">
+            <field name="value" position="after">
+                <field name="valuation_currency_id" column_invisible="True"/>
+                <field name="value_in_currency"
+                    widget="monetary"
+                    options="{'currency_field': 'valuation_currency_id'}"
+                    optional="hide"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- Extend the stock.move valuation list view to add value_in_currency field -->
+    <record id="stock_move_view_list_valuation_inherit" model="ir.ui.view">
+        <field name="name">stock.move.view.list.valuation.inherit.currency</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock_account.stock_move_view_list_valuation"/>
+        <field name="arch" type="xml">
+            <field name="value" position="after">
+                <field name="valuation_currency_id" column_invisible="True"/>
+                <field name="value_in_currency"
+                    widget="monetary"
+                    options="{'currency_field': 'valuation_currency_id'}"
+                    column_invisible="not context.get('show_currency_valuation')"
+                    optional="hide"/>
+            </field>
+        </field>
+    </record>
+</odoo>

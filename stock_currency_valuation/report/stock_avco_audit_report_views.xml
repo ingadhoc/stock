@@ -1,0 +1,24 @@
+<odoo>
+    <record id="stock_avco_report_view_list_inherit_currency" model="ir.ui.view">
+        <field name="name">stock.avco.report.view.list.inherit.currency</field>
+        <field name="model">stock.avco.report</field>
+        <field name="inherit_id" ref="stock_account.stock_avco_report_view_list"/>
+        <field name="arch" type="xml">
+            <xpath expr="//list/field[@name='currency_id']" position="after">
+                <field name="valuation_currency_id" column_invisible="1"/>
+            </xpath>
+            <xpath expr="//list/field[@name='added_value']" position="after">
+                <field name="added_value_in_currency" widget="monetary" options="{'currency_field': 'valuation_currency_id'}" column_invisible="context.get('cost_method') == 'standard'" optional="hide"/>
+            </xpath>
+            <xpath expr="//list/field[@name='value']" position="after">
+                <field name="value_in_currency" string="Unit Cost in Currency" widget="monetary" options="{'currency_field': 'valuation_currency_id'}" optional="hide"/>
+            </xpath>
+            <xpath expr="//list/field[@name='total_value']" position="after">
+                <field name="total_value_in_currency" widget="monetary" options="{'currency_field': 'valuation_currency_id'}" column_invisible="context.get('cost_method') == 'standard'" optional="hide"/>
+            </xpath>
+            <xpath expr="//list/field[@name='avco_value']" position="after">
+                <field name="avco_value_in_currency" string="Unit Cost in Currency" widget="monetary" options="{'currency_field': 'valuation_currency_id'}" column_invisible="context.get('cost_method') == 'standard'" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

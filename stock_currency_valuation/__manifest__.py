@@ -1,6 +1,6 @@
 {
     "name": "Stock currency valuation",
-    "version": "18.0.1.1.0",
+    "version": "19.0.1.0.0",
     "category": "Warehouse Management",
     "sequence": 14,
     "summary": "",
@@ -15,12 +15,17 @@
     "data": [
         "views/product_category.xml",
         "views/stock_picking.xml",
+        "views/stock_quant_views.xml",
+        "report/stock_avco_audit_report_views.xml",
         "views/stock_landed_cost_views.xml",
         "views/product.xml",
-        "views/stock_valuation_layer.xml",
-        "wizard/stock_valuation_layer_revaluation_views.xml",
+        "views/stock_move_views.xml",
+        "views/product_value_views.xml",
     ],
-    "installable": False,
+    "demo": [
+        "demo/stock_currency_valuation_demo.xml",
+    ],
+    "installable": True,
     "auto_install": False,
     "application": False,
     "assets": {},
