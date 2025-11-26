@@ -64,6 +64,7 @@ class StockMove(models.Model):
                 precision_digits=precision) == -1)):
             raise ValidationError(_(
                 'You can not transfer more than the initial demand!'))
+        return super()._check_quantity()
 
 
     def action_view_linked_record(self):
