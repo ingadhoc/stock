@@ -32,4 +32,19 @@
              </group>
         </field>
     </record>
+
+    <!-- Hereda la vista product_product_stock_tree del módulo stock y agrega campos en moneda -->
+    <record id="product_product_stock_tree_inherit" model="ir.ui.view">
+        <field name="name">product.product.stock.tree.inherit</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="stock.product_product_stock_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='avg_cost']" position="after">
+                <field name="avg_cost_in_currency" string="unit cost (cur)" optional="hide"/>
+            </xpath>
+            <xpath expr="//field[@name='total_value']" position="after">
+                <field name="total_value_in_currency" string="total value (cur)" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
 </odoo>

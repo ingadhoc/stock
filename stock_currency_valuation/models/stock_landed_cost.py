@@ -1,4 +1,5 @@
 from odoo import api, fields, models
+from odoo.tools import float_round
 
 
 class StockLandedCost(models.Model):
@@ -39,29 +40,75 @@ class StockLandedCost(models.Model):
                 rec.valuation_currency_id = False
 
 
-class AdjustmentLines(models.Model):
+class StockValuationAdjustmentLines(models.Model):
     _inherit = "stock.valuation.adjustment.lines"
 
-    def _create_accounting_entries(self, move, qty_out):
-        AccountMoveLine = super()._create_accounting_entries(move, qty_out)
-        amount = AccountMoveLine[0][2].get("debit", 0) or AccountMoveLine[0][2].get("credit", 0) * -1
-        if self.product_id.categ_id.valuation_currency_id and amount:
-            if self.cost_id.currency_rate:
-                value_in_currency = amount * self.cost_id.currency_rate
-            else:
-                value_in_currency = self.cost_id.currency_id._convert(
-                    from_amount=amount,
-                    to_currency=self.product_id.categ_id.valuation_currency_id,
-                    company=self.cost_id.company_id,
-                    date=self.create_date,
-                )
-            AccountMoveLine[0][2].update(
-                {"currency_id": self.product_id.categ_id.valuation_currency_id.id, "amount_currency": value_in_currency}
+    valuation_currency_id = fields.Many2one(
+        "res.currency",
+        related="cost_id.valuation_currency_id",
+        store=True,
+    )
+    former_cost_in_currency = fields.Monetary(
+        string="Original Value in Currency",
+        currency_field="valuation_currency_id",
+        compute="_compute_amounts_in_currency",
+        store=True,
+    )
+    additional_landed_cost_in_currency = fields.Monetary(
+        string="Additional Landed Cost in Currency",
+        currency_field="valuation_currency_id",
+        compute="_compute_amounts_in_currency",
+        store=True,
+    )
+    final_cost_in_currency = fields.Monetary(
+        string="New Value in Currency",
+        currency_field="valuation_currency_id",
+        compute="_compute_amounts_in_currency",
+        store=True,
+    )
+
+    def _get_currency_rate(self):
+        """Return the effective rate to convert from company currency to valuation currency.
+
+        If a manual rate is set on the landed cost, use it.
+        Otherwise convert using today's rate.
+        """
+        self.ensure_one()
+        if self.cost_id.currency_rate:
+            return self.cost_id.currency_rate
+        if not self.valuation_currency_id or self.valuation_currency_id == self.currency_id:
+            return 1.0
+        # Sin cotización manual: usar la tasa de la fecha del landed cost (fecha de
+        # confirmación), no la de "hoy". De lo contrario, al recomputar más tarde se
+        # tomaría la última tasa vigente en lugar de la del momento del ajuste.
+        date = self.cost_id.date or fields.Date.context_today(self)
+        rate = self.currency_id._get_conversion_rate(
+            from_currency=self.currency_id,
+            to_currency=self.valuation_currency_id,
+            company=self.cost_id.company_id,
+            date=date,
+        )
+        return rate
+
+    @api.depends(
+        "former_cost",
+        "additional_landed_cost",
+        "final_cost",
+        "valuation_currency_id",
+        "cost_id.currency_rate",
+        "cost_id.date",
+    )
+    def _compute_amounts_in_currency(self):
+        for line in self:
+            if not line.valuation_currency_id or line.valuation_currency_id == line.currency_id:
+                line.former_cost_in_currency = line.former_cost
+                line.additional_landed_cost_in_currency = line.additional_landed_cost
+                line.final_cost_in_currency = line.final_cost
+                continue
+            rate = line._get_currency_rate()
+            rounding = line.valuation_currency_id.rounding
+            line.former_cost_in_currency = float_round(line.former_cost * rate, precision_rounding=rounding)
+            line.additional_landed_cost_in_currency = float_round(
+                line.additional_landed_cost * rate, precision_rounding=rounding
             )
-            AccountMoveLine[1][2].update(
-                {
-                    "currency_id": self.product_id.categ_id.valuation_currency_id.id,
-                    "amount_currency": value_in_currency * -1,
-                }
-            )
-        return AccountMoveLine
+            line.final_cost_in_currency = float_round(line.final_cost * rate, precision_rounding=rounding)

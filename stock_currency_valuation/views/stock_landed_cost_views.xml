@@ -13,6 +13,16 @@
                         <field name="currency_rate" nolabel="1" class="oe_inline" digits="[12,12]" invisible="1"/>
                     </div>
                 </field>
+                <!-- Valuation Adjustments: add currency columns -->
+                <xpath expr="//page[@name='valuation_adjustments']//list" position="inside">
+                    <field name="valuation_currency_id" column_invisible="True"/>
+                    <field name="former_cost_in_currency" readonly="1" optional="show"
+                        invisible="not valuation_currency_id"/>
+                    <field name="additional_landed_cost_in_currency" readonly="1" optional="show"
+                        invisible="not valuation_currency_id"/>
+                    <field name="final_cost_in_currency" readonly="1" optional="show"
+                        invisible="not valuation_currency_id"/>
+                </xpath>
             </field>
         </record>
 </odoo>
