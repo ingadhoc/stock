@@ -19,7 +19,7 @@
 ##############################################################################
 {
     "name": "Stock Usability with Batch Picking and stock vouchers",
-    "version": "18.0.1.1.0",
+    "version": "19.0.1.0.0",
     "category": "Warehouse Management",
     "sequence": 14,
     "summary": "",
@@ -40,7 +40,7 @@
         "reports/picking_templates.xml",
     ],
     "demo": [],
-    "installable": False,
+    "installable": True,
     "auto_install": True,
     "application": False,
 }
