@@ -8,6 +8,7 @@ class productTemplate(models.Model):
     valuation_currency_id = fields.Many2one(related="categ_id.valuation_currency_id",)
     standard_price_in_currency = fields.Float(
         'Cost', compute='_compute_standard_price_in_currency',
+        inverse='_set_standard_price_in_currency',
         search='_search_standard_price_in_currency',
         digits='Product Price', groups="base.group_user",
         readonly=True,
@@ -49,6 +50,11 @@ class productTemplate(models.Model):
             template.standard_price_in_currency = template.product_variant_ids.standard_price_in_currency
         for template in (self - unique_variants):
             template.standard_price_in_currency = template.product_variant_ids[:1].standard_price_in_currency
+
+    def _set_standard_price_in_currency(self):
+        for template in self:
+            if len(template.product_variant_ids) == 1:
+                template.product_variant_ids.standard_price_in_currency = template.standard_price_in_currency
 
     def _search_standard_price_in_currency(self, operator, value):
         products = self.env['product.product'].search([('standard_price_in_currency', operator, value)], limit=None)
