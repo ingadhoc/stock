@@ -1,5 +1,6 @@
-from odoo import Command, api, fields, models
 from odoo.exceptions import UserError
+
+from odoo import Command, api, fields, models
 
 
 def patch_check_reconciliation(self):
@@ -340,11 +341,14 @@ class StockValuationLayerRecompute(models.Model):
             move_ids = product_move_line_ids.mapped('move_id')
             move_ids.button_draft()
             for move_line in product_move_line_ids:
-                multiplier = 1 if move_line.amount_currency >= 0 else -1
+                multiplier = 1 if move_line.credit == 0 else -1
                 field = 'debit' if move_line.credit == 0 else 'credit'
+                # OJO el valor de currency puede ser positivo o negativo
+                # pero  enel asiento siempre es positivo para debit y negativo para credit
+                # por eso  multiplico el valor absoluto por el signo
                 lines.append(Command.update(move_line.id,{
-                    'amount_currency': line_id.new_value_in_currency * multiplier,
-                    field: line_id.new_value,
+                    'amount_currency': abs(line_id.new_value_in_currency) * multiplier,
+                    field: abs(line_id.new_value),
                 }))
             if lines:
                 line_id.layer_id.account_move_id.line_ids = lines
