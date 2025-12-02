@@ -1,6 +1,6 @@
 {
     'name': 'Stock currency valuation',
-    'version': "16.0.2.2.0",
+    'version': "16.0.2.3.0",
     'category': 'Warehouse Management',
     'sequence': 14,
     'summary': '',

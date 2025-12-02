@@ -11,7 +11,7 @@ class productTemplate(models.Model):
         inverse='_set_standard_price_in_currency',
         search='_search_standard_price_in_currency',
         digits='Product Price', groups="base.group_user",
-        readonly=True,
+        readonly=False,
     )
     replenishment_cost_type = fields.Selection(
         selection_add=[('average_in_currency', 'Average Cost in Currency')],
