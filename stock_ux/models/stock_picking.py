@@ -39,7 +39,10 @@ class StockPicking(models.Model):
                     "or the state of the picking is not draft or cancel.\n"
                     "Picking Ids: %s"
                 )
-                % (",".join(not_del_pickings.mapped("picking_type_id.name")), not_del_pickings.ids)
+                % (
+                    ",".join(not_del_pickings.mapped("picking_type_id.name")),
+                    not_del_pickings.ids,
+                )
             )
         return super().unlink()
 
@@ -68,6 +71,10 @@ class StockPicking(models.Model):
 
     def _send_confirmation_email(self):
         for rec in self:
+            # If stock_voucher is installed, skip email sending when validating the picking
+            if "book_required" in rec._fields and not rec._context.get("from_assign_numbers"):
+                continue
+
             if rec.picking_type_id.mail_template_id:
                 try:
                     rec.with_context(

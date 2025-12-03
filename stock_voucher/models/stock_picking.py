@@ -9,7 +9,13 @@ from odoo.exceptions import UserError
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
-    book_id = fields.Many2one("stock.book", "Voucher Book", copy=False, ondelete="restrict", check_company=True)
+    book_id = fields.Many2one(
+        "stock.book",
+        "Voucher Book",
+        copy=False,
+        ondelete="restrict",
+        check_company=True,
+    )
     vouchers = fields.Char(
         compute="_compute_vouchers",
         string="Vouchers (string)",
@@ -80,6 +86,9 @@ class StockPicking(models.Model):
         self.env["stock.picking.voucher"].create(list_of_vouchers)
         self.message_post(body=_("Números de remitos asignados: %s") % (self.vouchers))
         self.write({"book_id": book.id})
+
+        # Send confirmation email with voucher numbers already assigned
+        self.with_context(from_assign_numbers=True)._send_confirmation_email()
 
     def clean_voucher_data(self):
         self.voucher_ids.unlink()
@@ -174,7 +183,9 @@ class StockPicking(models.Model):
                 elif rec.picking_type_id.pricelist_id:
                     pricelist = rec.picking_type_id.pricelist_id
                     price = rec.picking_type_id.pricelist_id.with_context(uom=move_line.product_uom.id)._price_get(
-                        move_line.product_id, move_line.quantity or 1.0, partner=rec.partner_id.id
+                        move_line.product_id,
+                        move_line.quantity or 1.0,
+                        partner=rec.partner_id.id,
                     )[rec.picking_type_id.pricelist_id.id]
                     picking_value += price * move_line.product_uom_qty
                     done_value += price * move_line.quantity
@@ -191,7 +202,9 @@ class StockPicking(models.Model):
                         done_avg = []
                         picking_avg = []
                         boms, lines = bom.sudo().explode(
-                            so_bom_line.product_id, so_bom_line.product_uom_qty, picking_type=bom.picking_type_id
+                            so_bom_line.product_id,
+                            so_bom_line.product_uom_qty,
+                            picking_type=bom.picking_type_id,
                         )
                         for move in bom_moves:
                             bom_quantity = 0.0
