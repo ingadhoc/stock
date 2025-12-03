@@ -19,10 +19,7 @@ This module add the following features:
 #. While creating a batch picking:
 -  Add the partner in the batch transfer, and then filter the transfers able to be selected according to it.
 -  Add the number of packages in the batch transfer
--  For receipts, it add the supplier's shipping number.
--  When pickings are selected while creating a new batch, we allow them to check availability.
 #. While proccesing the batch picking:
--  Add the possibility of processing stock.move.line from a list view.
 -  In the transfer lines it add information of the vouchers, from & to and source document, among others.
 -  Allow to unreserve everything from the batch
 -  A smart button is added to go to the list view of associated transfers.
