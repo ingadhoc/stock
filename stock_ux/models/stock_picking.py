@@ -43,7 +43,8 @@ class StockPicking(models.Model):
 
         return super().button_validate()
 
-    def unlink(self):
+    @api.ondelete(at_uninstall=False)
+    def _check_block_picking_deletion(self):
         """
         To avoid errors we block deletion of pickings in other state than
         draft or cancel
@@ -64,7 +65,6 @@ class StockPicking(models.Model):
                     not_del_pickings.ids,
                 )
             )
-        return super().unlink()
 
     def copy(self, default=None):
         for picking in self:
