@@ -59,6 +59,20 @@ class StockPickingBatch(models.Model):
         for batch in self:
             batch.picking_count = counts.get(batch.id, 0)
 
+
+    def write(self, vals):
+        # Interceptamos las operaciones de picking_ids para evitar que se borren físicamente
+        # En lugar de comando 2 (delete), usamos comando 3 (unlink) que solo desvincula
+        if 'picking_ids' in vals:
+            new_picking_ops = []
+            for operation in vals['picking_ids']:
+                if operation[0] == 2:  # Si es un delete (2), lo convertimos a unlink (3)
+                    new_picking_ops.append((3, operation[1]))  # Unlink en lugar de delete
+                else:
+                    new_picking_ops.append(operation)
+            vals['picking_ids'] = new_picking_ops
+        return super().write(vals)
+
     @api.depends("picking_ids")
     def _compute_picking_type_data(self):
         for rec in self:
