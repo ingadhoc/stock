@@ -18,7 +18,7 @@
 #
 ##############################################################################
 {
-    "name": "Stock Usability with Batch Picking and stock vouchers",
+    "name": "Stock Usability with Batch Picking",
     "version": "19.0.1.0.0",
     "category": "Warehouse Management",
     "sequence": 14,
@@ -29,13 +29,11 @@
     "images": [],
     "depends": [
         "stock_ux",
-        "stock_voucher",
         "stock_picking_batch",
     ],
     "data": [
         "views/stock_batch_picking_views.xml",
         "views/stock_move_line_views.xml",
-        "views/stock_picking_views.xml",
         "reports/ir.actions.report.xml",
         "reports/picking_templates.xml",
     ],

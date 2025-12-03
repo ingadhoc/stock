@@ -41,46 +41,18 @@
             </button>
 
             <xpath expr="//div" position="inside">
-                <button name="add_picking_operation" class="oe_stat_button" icon="fa-bars" type="object" invisible="state in ('draft', 'cancel', 'done')">
-                    <div class="o_form_field o_stat_info">
-                        <span class="o_stat_text">Operaciones Detalladas</span>
-                    </div>
-                </button>
                 <button name="action_view_stock_picking" class="oe_stat_button" icon="fa-truck" type="object">
                     <div class="o_form_field o_stat_info">
                         <field string="Pickings" name="picking_count" widget="statinfo" />
                     </div>
                 </button>
             </xpath>
-            <field name="user_id" position="before">
-                <field name="voucher_required" invisible="1"/>
-                <!-- <field name="picking_type_id"/> -->
-                <!-- al final lo sacamos porque ya lo estamos usando para otros tipos -->
-                <!-- como por ahora solo lo usamos para entrada lo restringimos -->
-                <field name="partner_id" context="{'res_partner_search_mode': picking_type_code == 'incoming' and 'supplier' or 'customer'}"/>
-                <!-- <field name="partner_id" context="{'search_default_supplier':1, 'default_supplier':1, 'default_customer':0}" domain="[('supplier','=',True)]"/> -->
-                <field name="voucher_number" invisible="picking_type_code != 'incoming'" required="voucher_required == True"/>
-                <field name="number_of_packages"/>
-                <!-- <field name="voucher_ids" attrs="{'invisible': [('picking_type_code','!=','incoming')]}" widget="many2many_tags" context="{'default_batch_picking': id}" domain="[('id', '=', False)]" options="{'create':True, 'create_edit':True}}"/> -->
-            </field>
-
-            <field name="picking_ids" position="attributes">
-                <attribute name="context">{'show_print_button': 1}</attribute>
-                <attribute name="domain">[('company_id', '=', company_id), ('state', 'in', ('confirmed', 'partially_available', 'assigned')), ('picking_type_id', '=', picking_type_id)] if not partner_id else [('company_id', '=', company_id), ('state', 'in', ('confirmed', 'partially_available', 'assigned')), ('picking_type_id', '=', picking_type_id), ('partner_id', '=', partner_id)]</attribute>
-            </field>
-
-            <field name="move_line_ids" position="attributes">
-                <attribute name="context">{'from_batch': True}</attribute>
-            </field>
-
-            <field name="move_ids" position="attributes">
-                <!-- usamos de vista tree la misma que se usan en los pickins y ademas mostramos el campo del picking -->
-                <attribute name="context">{'show_picking': True, 'list_view_ref': 'stock.view_move_picking_tree'}</attribute>
-            </field>
-
-            <field name="picking_type_id" position="after">
-                <button name="action_done" string="Set all Done" type="object" icon="fa-check" invisible="state not in ('confirmed', 'assigned', 'waiting', 'partially_available')"/>
-            </field>
+            <group id="batch_delivery_data" position="after">
+                <group id="column2">
+                    <field name="partner_id" context="{'res_partner_search_mode': picking_type_code == 'incoming' and 'supplier' or 'customer'}"/>
+                    <field name="number_of_packages"/>
+                </group>
+            </group>
 
             <xpath expr="//notebook" position="inside">
                 <page string="Notes">
