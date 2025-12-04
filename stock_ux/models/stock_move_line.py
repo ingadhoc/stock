@@ -77,10 +77,16 @@ class StockMoveLine(models.Model):
             )
         ):
             locations = self.env["stock.location"].search(
-                [("id", "child_of", self.picking_id.location_id.id), ("company_id", "=", self.picking_id.company_id.id)]
+                [
+                    ("id", "child_of", self.picking_id.location_id.id),
+                    ("company_id", "=", self.picking_id.company_id.id),
+                ]
             )
             quants = self.env["stock.quant"].search(
-                [("product_id", "=", self.product_id.id), ("location_id", "in", locations.ids)]
+                [
+                    ("product_id", "=", self.product_id.id),
+                    ("location_id", "in", locations.ids),
+                ]
             )
             total_available = sum(quants.mapped("available_quantity")) - self.quantity
         return total_available
@@ -107,7 +113,11 @@ class StockMoveLine(models.Model):
                 move = sml.move_id
                 if move and move.origin_description:
                     move_line_by_move.setdefault(
-                        move.id, {"description": move.origin_description, "product_id": sml.product_id.id}
+                        move.id,
+                        {
+                            "description": move.origin_description,
+                            "product_id": sml.product_id.id,
+                        },
                     )
             used_moves = set()
             for line_data in aggregated_move_lines.values():
@@ -137,13 +147,19 @@ class StockMoveLine(models.Model):
             move = move or move_line.move_id
             uom = move.product_uom or move_line.product_uom_id
             reference = move.product_id.display_name
-            description = move.origin_description or ""
+            origin_description = move.origin_description or reference
             product = move.product_id
-            if description.startswith(reference):
-                description = description.removeprefix(reference).strip()
-            elif description.startswith(product.name):
-                description = description.removeprefix(product.name).strip()
-            line_key = f"{product.id}_{product.display_name}_{description or ''}_{uom.id}_{move.packaging_uom_id or ''}"
+
+            # Clean the origin_description by removing product name prefix
+            clean_description = origin_description
+            if origin_description != reference:
+                if origin_description.startswith(reference):
+                    clean_description = origin_description.removeprefix(reference).strip()
+                elif origin_description.startswith(product.name):
+                    clean_description = origin_description.removeprefix(product.name).strip()
+
+            name = clean_description if clean_description else origin_description
+            line_key = f"{product.id}_{name}_{uom.id}_{move.packaging_uom_id or ''}"
             bom_line = getattr(move, "bom_line_id", False)
             if bom_line and bom_line.bom_id:
                 bom = bom_line.bom_id
@@ -152,8 +168,7 @@ class StockMoveLine(models.Model):
                 bom = False
             return {
                 "line_key": line_key,
-                "name": reference,
-                "description": description,
+                "name": name,
                 "product_uom": uom,
                 "move": move,
                 "packaging_uom_id": move.packaging_uom_id,
