@@ -39,7 +39,10 @@ class StockPicking(models.Model):
                     "or the state of the picking is not draft or cancel.\n"
                     "Picking Ids: %s"
                 )
-                % (",".join(not_del_pickings.mapped("picking_type_id.name")), not_del_pickings.ids)
+                % (
+                    ",".join(not_del_pickings.mapped("picking_type_id.name")),
+                    not_del_pickings.ids,
+                )
             )
         return super().unlink()
 
@@ -89,27 +92,6 @@ class StockPicking(models.Model):
                     )
             else:
                 super(StockPicking, self)._send_confirmation_email()
-
-    def _action_done(self):
-        for rec in self.with_context(
-            mail_notify_force_send=False,
-            email_notification_force_header=True,
-            email_notification_force_footer=True,
-        ).filtered("picking_type_id.mail_template_id"):
-            try:
-                rec.message_post_with_template(rec.picking_type_id.mail_template_id.id)
-            except Exception as error:
-                title = _("ERROR: Picking was not sent via email")
-                rec.message_post(
-                    body="<br/><br/>".join(
-                        [
-                            "<b>" + title + "</b>",
-                            _("Please check the email template associated with the picking type."),
-                            "<code>" + str(error) + "</code>",
-                        ]
-                    ),
-                )
-        return super()._action_done()
 
     def new_force_availability(self):
         self.action_assign()
