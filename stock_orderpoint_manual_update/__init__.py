@@ -2,9 +2,7 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from . import models
-from . import wizard
-from odoo import api, SUPERUSER_ID
+from . import models, wizard
 
 
 def uninstall_hook(env):

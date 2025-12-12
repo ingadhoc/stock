@@ -18,49 +18,90 @@ class StockWarehouseOrderpointWizard(models.TransientModel):
     )
 
     def action_confirm(self):
+        """Generate orderpoints and apply filters to the view.
+
+        Temporary orderpoints are created for all products that need them (standard Odoo behavior).
+        Then filters are applied at the view level to show only relevant orderpoints.
+        """
         ctx = {
             "filter_products": self.product_ids.ids,
             "filter_categories": self.category_ids.ids,
             "filter_suppliers": self.supplier_ids.ids,
             "filter_locations": self.location_ids.ids,
         }
+        # _get_orderpoint_action() will create temporary orderpoints based on ctx filters
         action = self.with_context(**ctx).env["stock.warehouse.orderpoint"]._get_orderpoint_action()
+
+        # Get all orderpoints that were created/found (includes temporary ones just created)
         orderpoint_domain = self._get_orderpoint_domain()
         orderpoints = self.env["stock.warehouse.orderpoint"].with_context(active_test=False).search(orderpoint_domain)
+
+        # Update calculations for the filtered orderpoints only
         orderpoints.update_qty_forecast()
         if self.compute_rotation:
             orderpoints._compute_rotation()
         orderpoints._change_review_toggle_negative()
-        action["domain"] = expression.AND(
-            [
-                action.get("domain", "[]"),
-                orderpoint_domain,
-            ]
-        )
+
+        # Apply the same domain to the action view
+        if orderpoint_domain:
+            action["domain"] = expression.AND([action.get("domain", []), orderpoint_domain])
+
         return action
 
     def _get_orderpoint_domain(self):
-        orderpoint_domain = []
+        """Build domain for filtering orderpoints.
+
+        Temporary orderpoints are already filtered by product/category/location through
+        _get_orderpoint_products()/_get_orderpoint_locations(), so we just need to handle
+        the supplier filter specially (using OR to include temporaries without supplier).
+        """
+        if not any([self.product_ids, self.category_ids, self.supplier_ids, self.location_ids]):
+            return []
+
+        domain = []
         if self.product_ids:
-            orderpoint_domain.append(("product_id", "in", self.product_ids.ids))
+            domain.append(("product_id", "in", self.product_ids.ids))
         if self.category_ids:
-            orderpoint_domain.append(("product_category_id", "in", self.category_ids.ids))
-        if self.filter_by_main_supplier:
-            orderpoint_domain.append(("supplier_id.partner_id", "in", self.supplier_ids.ids))
-        elif self.supplier_ids:
-            orderpoint_domain.append(("product_id.seller_ids.partner_id", "in", self.supplier_ids.ids))
+            domain.append(("product_category_id", "in", self.category_ids.ids))
         if self.location_ids:
-            orderpoint_domain.append(("location_id", "in", self.location_ids.ids))
-        return orderpoint_domain
+            domain.append(("location_id", "in", self.location_ids.ids))
+
+        # Supplier filter: use OR to include temporary orderpoints (which don't have supplier_id)
+        if self.supplier_ids:
+            supplier_filter = (
+                ("supplier_id.partner_id", "in", self.supplier_ids.ids)
+                if self.filter_by_main_supplier
+                else ("product_id.seller_ids.partner_id", "in", self.supplier_ids.ids)
+            )
+            # (base_filters AND supplier) OR (base_filters AND trigger=auto)
+            return expression.OR([domain + [supplier_filter], domain + [("trigger", "=", "auto")]])
+
+        return domain
 
     def get_orderpoint_domain(self):
-        orderpoint_domain = []
-        if self.env.context.get("filter_products", []):
-            orderpoint_domain.append(("product_id", "in", self.env.context.get("filter_products", [])))
-        if self.env.context.get("filter_categories", []):
-            orderpoint_domain.append(("product_category_id", "in", self.env.context.get("filter_categories", [])))
-        if self.env.context.get("filter_suppliers", []):
-            orderpoint_domain.append(("supplier_id.partner_id", "in", self.env.context.get("filter_suppliers", [])))
-        if self.env.context.get("filter_locations", []):
-            orderpoint_domain.append(("location_id", "in", self.env.context.get("filter_locations", [])))
-        return orderpoint_domain
+        """Build domain from context. Used by action_replenish to apply wizard filters."""
+        ctx = self.env.context
+        if not any(
+            [
+                ctx.get("filter_products"),
+                ctx.get("filter_categories"),
+                ctx.get("filter_suppliers"),
+                ctx.get("filter_locations"),
+            ]
+        ):
+            return []
+
+        domain = []
+        if ctx.get("filter_products"):
+            domain.append(("product_id", "in", ctx.get("filter_products")))
+        if ctx.get("filter_categories"):
+            domain.append(("product_category_id", "in", ctx.get("filter_categories")))
+        if ctx.get("filter_locations"):
+            domain.append(("location_id", "in", ctx.get("filter_locations")))
+
+        # Supplier filter only for permanent orderpoints
+        if ctx.get("filter_suppliers"):
+            supplier_domain = domain + [("supplier_id.partner_id", "in", ctx.get("filter_suppliers"))]
+            return expression.OR([supplier_domain, domain + [("trigger", "=", "auto")]])
+
+        return domain
