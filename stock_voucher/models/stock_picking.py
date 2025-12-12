@@ -214,10 +214,13 @@ class StockPicking(models.Model):
                             if not bom_quantity:
                                 continue
                             rec_move = rec.move_ids.filtered(lambda m: m._origin.id == move.id)
+                            if not rec_move:
+                                continue
                             picking_avg.append(move.product_uom_qty / bom_quantity)
                             done_avg.append(rec_move.quantity / bom_quantity)
-                        picking_value += so_bom_line.price_reduce_taxexcl * (sum(picking_avg) / len(picking_avg))
-                        done_value += so_bom_line.price_reduce_taxexcl * (sum(done_avg) / len(done_avg))
+                        if picking_avg and done_avg:
+                            picking_value += so_bom_line.price_reduce_taxexcl * (sum(picking_avg) / len(picking_avg))
+                            done_value += so_bom_line.price_reduce_taxexcl * (sum(done_avg) / len(done_avg))
 
             declared_value = picking_value if inmediate_transfer else done_value
             if pricelist:
