@@ -10,11 +10,12 @@ class StockPickingType(models.Model):
 
     pricelist_id = fields.Many2one(
         "product.pricelist",
-        "Pricelist",
-        help='If you choose a pricelist, "Automatic Declare Value" is'
-        " enabled on company and no sale order is found linked to the"
-        " picking, we will suggest declared value using this pricelist",
+        help="When 'Automatic Declare Value' is enabled and no sale order "
+        "is linked to the picking, this pricelist will be used to suggest "
+        "the declared value",
     )
     automatic_declare_value = fields.Boolean(
-        help="The declared value will be in the currency of the company",
+        help="When enabled, automatically suggest declared value based on "
+        "product prices. The value will be calculated in the company's "
+        "currency. Define a pricelist for pickings not linked to a sale order.",
     )

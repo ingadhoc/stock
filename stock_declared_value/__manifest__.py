@@ -18,11 +18,10 @@
 #
 ##############################################################################
 {
-    "name": "Stock Delivery Advance",
-    "version": "19.0.1.1.0",
+    "name": "Stock Declared Value",
+    "version": "19.0.1.0.0",
     "category": "Warehouse Management",
     "sequence": 14,
-    "summary": "Advanced Stock Delivery features: declared value and package restrictions",
     "author": "ADHOC SA",
     "website": "www.adhoc.com.ar",
     "license": "AGPL-3",
@@ -36,7 +35,7 @@
         "views/stock_picking_views.xml",
     ],
     "demo": [],
-    "installable": False,
+    "installable": True,
     "auto_install": False,
     "application": False,
 }
