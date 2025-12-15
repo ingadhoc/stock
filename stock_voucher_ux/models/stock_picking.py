@@ -42,6 +42,13 @@ class StockPicking(models.Model):
             self.printed = True
             return self.with_context(assign=True).do_print_voucher()
         else:
+            if self.book_id.sequence_to and int(self.next_voucher_number) > int(self.book_id.sequence_to):
+                raise UserError(
+                    self.env._(
+                        "The voucher number %s exceeds the range specified in the CAI. Please update the range or use a different CAI with a different range.",
+                        self.next_voucher_number,
+                    )
+                )
             self.assign_numbers(1, self.book_id)
             return self.do_print_voucher()
 
