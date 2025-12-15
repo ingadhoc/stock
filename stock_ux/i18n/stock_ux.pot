@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-25 17:44+0000\n"
-"PO-Revision-Date: 2025-11-25 17:44+0000\n"
+"POT-Creation-Date: 2025-12-15 11:23+0000\n"
+"PO-Revision-Date: 2025-12-15 11:23+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -41,6 +41,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_form
 msgid ""
 "Add any observation that you would like to be included on the deliverslip"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_type_form
+msgid "Advance Configuration"
 msgstr ""
 
 #. module: stock_ux
@@ -84,6 +89,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_ux.field_stock_picking__block_manual_lines
 #: model:ir.model.fields,field_description:stock_ux.field_stock_picking_type__block_manual_lines
 msgid "Block force availability"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_picking_type__number_of_packages
+msgid "Calculate package number"
 msgstr ""
 
 #. module: stock_ux
@@ -339,6 +349,11 @@ msgstr ""
 msgid ""
 "If set an email will be sent to the customer after the picking related to "
 "this picking type has been validated."
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,help:stock_ux.field_stock_picking_type__restrict_number_package
+msgid "If true, the number of packages will be required before validation"
 msgstr ""
 
 #. module: stock_ux
@@ -693,6 +708,11 @@ msgid "Remaining parts of picking partially processed"
 msgstr ""
 
 #. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_picking_type__restrict_number_package
+msgid "Restrict Number Package"
+msgstr ""
+
+#. module: stock_ux
 #: model:res.groups,name:stock_ux.group_restrict_edit_picking_type
 msgid "Restrict editing Operation Type in Pickings"
 msgstr ""
@@ -790,11 +810,6 @@ msgid "Status"
 msgstr ""
 
 #. module: stock_ux
-#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_type_form
-msgid "Stock"
-msgstr ""
-
-#. module: stock_ux
 #: model:ir.model,name:stock_ux.model_stock_move
 msgid "Stock Move"
 msgstr ""
@@ -822,6 +837,12 @@ msgstr ""
 #. module: stock_ux
 #: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint__product_min_qty
 msgid "The minimum Stock level that will trigger a replenishment."
+msgstr ""
+
+#. module: stock_ux
+#. odoo-python
+#: code:addons/stock_ux/models/stock_picking.py:0
+msgid "The number of packages cannot be 0"
 msgstr ""
 
 #. module: stock_ux
@@ -922,6 +943,13 @@ msgstr ""
 #. module: stock_ux
 #: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint__website_message_ids
 msgid "Website communication history"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,help:stock_ux.field_stock_picking_type__number_of_packages
+msgid ""
+"When a picking of this type is validated, the number of packages will be "
+"computed according to the packages contained in the moves."
 msgstr ""
 
 #. module: stock_ux
