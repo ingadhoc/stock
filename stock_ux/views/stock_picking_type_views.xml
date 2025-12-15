@@ -6,13 +6,19 @@
         <field name="model">stock.picking.type</field>
         <field name="inherit_id" ref="stock.view_picking_type_form"/>
         <field name="arch" type="xml">
-            <group position="inside">
-                <group string="Stock">
-                    <field name="block_additional_quantity"/>
-                    <field name="block_manual_lines"/>
-                    <field name="block_picking_deletion"/>
+            <xpath expr="//group[@name='second']" position="after">
+                <group string="Advance Configuration" name="advance_configuration">
+                    <group name="left_advance_configuration">
+                        <field name="block_additional_quantity"/>
+                        <field name="block_manual_lines"/>
+                        <field name="block_picking_deletion"/>
+                    </group>
+                    <group name="right_advance_configuration">
+                        <field name="restrict_number_package"/>
+                        <field name="number_of_packages"/>
+                    </group>
                 </group>
-            </group>
+            </xpath>
             <field name="sequence_id" position="after">
                 <field name="mail_template_id"  context="{'default_model': 'stock.picking'}"/>
             </field>
