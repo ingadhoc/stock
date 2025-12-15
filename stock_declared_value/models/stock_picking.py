@@ -2,8 +2,7 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import _, api, fields, models
-from odoo.exceptions import UserError
+from odoo import api, fields, models
 
 
 class StockPicking(models.Model):
@@ -99,21 +98,3 @@ class StockPicking(models.Model):
                 )
             else:
                 rec.declared_value = declared_value
-
-    def button_validate(self):
-        """
-        We make checks before calling transfer
-        """
-        # Check number of packages restriction
-        for picking in self:
-            if picking.picking_type_id.code == "outgoing":
-                if picking.picking_type_id.restrict_number_package and not picking.number_of_packages > 0:
-                    raise UserError(_("The number of packages cannot be 0"))
-
-        # We compute number of packages according to package_level_ids
-        for picking in self:
-            if picking.picking_type_id.number_of_packages:
-                picking.number_of_packages = len(picking.package_level_ids)
-
-        res = super().button_validate()
-        return res

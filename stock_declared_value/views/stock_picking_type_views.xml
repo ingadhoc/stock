@@ -1,19 +1,15 @@
 <odoo>
     <!-- stock.picking.type -->
     <record id="view_picking_type_form" model="ir.ui.view">
-        <field name="name">stock.picking.type.form (stock_delivery_advance)</field>
+        <field name="name">stock.picking.type.form (stock_declared_value)</field>
         <field name="model">stock.picking.type</field>
         <field name="inherit_id" ref="stock.view_picking_type_form"/>
         <field name="arch" type="xml">
             <xpath expr="//sheet//group" position="after">
-                <group id="stock_delivery_advance">
+                <group id="stock_declared_value">
                     <group string="Declared Value">
                         <field name="pricelist_id"/>
                         <field name="automatic_declare_value"/>
-                    </group>
-                    <group string="Packages">
-                        <field name="restrict_number_package"/>
-                        <field name="number_of_packages"/>
                     </group>
                 </group>
             </xpath>
