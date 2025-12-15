@@ -16,6 +16,9 @@
             <xpath expr="//field[@name='l10n_ar_cai_due']" position="attributes">
                 <attribute name="invisible">autoprinted == False</attribute>
             </xpath>
+            <xpath expr="//field[@name='next_number']" position="after">
+                <field name="sequence_to" invisible="autoprinted == False"/>
+            </xpath>
         </field>
     </record>
 </odoo>
