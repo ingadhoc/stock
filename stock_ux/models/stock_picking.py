@@ -23,6 +23,26 @@ class StockPicking(models.Model):
         copy=False,
     )
 
+    def button_validate(self):
+        """
+        We make checks before calling transfer
+        """
+
+        # We compute number of packages according to packages_count
+        for picking in self.filtered("picking_type_id.number_of_packages"):
+            picking.number_of_packages = picking.packages_count
+
+        # Check number of packages restriction
+        restricted_pickings = self.filtered(
+            lambda x: x.picking_type_id.code == "outgoing"
+            and x.picking_type_id.restrict_number_package
+            and not x.number_of_packages
+        )
+        if restricted_pickings:
+            raise UserError(_("The number of packages cannot be 0"))
+
+        return super().button_validate()
+
     def unlink(self):
         """
         To avoid errors we block deletion of pickings in other state than
