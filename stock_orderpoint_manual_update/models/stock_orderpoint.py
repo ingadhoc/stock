@@ -25,7 +25,7 @@ class StockWarehouseOrderpoint(models.Model):
             rec.qty_forecast_stored = rec.qty_forecast
 
     def _get_orderpoint_products(self):
-        domain = [("type", "=", "product"), ("stock_move_ids", "!=", False)]
+        domain = [("is_storable", "=", True), ("stock_move_ids", "!=", False)]
 
         # Filter by suppliers
         suppliers_ids = self._context.get("filter_suppliers")
