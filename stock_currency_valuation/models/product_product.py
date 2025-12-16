@@ -9,7 +9,7 @@ class productProduct(models.Model):
     standard_price_in_currency = fields.Float(
         'Cost in currency', company_dependent=True,
         groups="base.group_user",
-        readonly=True
+        readonly=False
     )
 
     def write(self, vals):
