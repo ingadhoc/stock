@@ -19,7 +19,7 @@
 ##############################################################################
 {
     "name": "Picking Waybill",
-    "version": "18.0.1.0.0",
+    "version": "19.0.1.0.0",
     "category": "Warehouse Management",
     "sequence": 14,
     "summary": "",
@@ -30,13 +30,12 @@
     "depends": [
         "stock",
         "report_aeroo",
-        "stock_voucher",
     ],
     "data": [
         "report/stock_report_data.xml",
     ],
     "demo": [],
-    "installable": False,
+    "installable": True,
     "auto_install": False,
     "application": False,
 }
