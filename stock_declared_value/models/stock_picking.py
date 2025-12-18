@@ -19,7 +19,6 @@ class StockPicking(models.Model):
     )
 
     @api.depends(
-        "automatic_declare_value",
         "move_ids.state",
         "move_ids.quantity",
     )
