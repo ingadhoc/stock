@@ -1,0 +1,71 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_declared_value
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-12-18 17:25+0000\n"
+"PO-Revision-Date: 2025-12-18 17:25+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_declared_value
+#: model:ir.model.fields,field_description:stock_declared_value.field_stock_picking__automatic_declare_value
+#: model:ir.model.fields,field_description:stock_declared_value.field_stock_picking_type__automatic_declare_value
+msgid "Automatic Declare Value"
+msgstr ""
+
+#. module: stock_declared_value
+#: model:ir.model.fields,field_description:stock_declared_value.field_stock_picking__declared_value
+msgid "Declared Value"
+msgstr ""
+
+#. module: stock_declared_value
+#: model:ir.model.fields,field_description:stock_declared_value.field_stock_picking__display_name
+#: model:ir.model.fields,field_description:stock_declared_value.field_stock_picking_type__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: stock_declared_value
+#: model:ir.model.fields,field_description:stock_declared_value.field_stock_picking__id
+#: model:ir.model.fields,field_description:stock_declared_value.field_stock_picking_type__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_declared_value
+#: model:ir.model,name:stock_declared_value.model_stock_picking_type
+msgid "Picking Type"
+msgstr ""
+
+#. module: stock_declared_value
+#: model:ir.model.fields,field_description:stock_declared_value.field_stock_picking_type__pricelist_id
+#: model_terms:ir.ui.view,arch_db:stock_declared_value.view_picking_type_form
+msgid "Pricelist"
+msgstr ""
+
+#. module: stock_declared_value
+#: model:ir.model,name:stock_declared_value.model_stock_picking
+msgid "Transfer"
+msgstr ""
+
+#. module: stock_declared_value
+#: model:ir.model.fields,help:stock_declared_value.field_stock_picking_type__pricelist_id
+msgid ""
+"When 'Automatic Declare Value' is enabled and no sale order is linked to the"
+" picking, this pricelist will be used to suggest the declared value"
+msgstr ""
+
+#. module: stock_declared_value
+#: model:ir.model.fields,help:stock_declared_value.field_stock_picking__automatic_declare_value
+#: model:ir.model.fields,help:stock_declared_value.field_stock_picking_type__automatic_declare_value
+msgid ""
+"When enabled, automatically suggest declared value based on product prices. "
+"The value will be calculated in the company's currency. Define a pricelist "
+"for pickings not linked to a sale order."
+msgstr ""
