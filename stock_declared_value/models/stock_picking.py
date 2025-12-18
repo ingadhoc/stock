@@ -44,12 +44,12 @@ class StockPicking(models.Model):
                     so_qty_done = move_line.quantity
                     # convert quantities if move line uom and sale line uom
                     # are different
-                    if move_line.product_uom != order_line.product_uom:
+                    if move_line.product_uom != order_line.product_uom_id:
                         so_product_qty = move_line.product_uom._compute_quantity(
-                            move_line.product_uom_qty, order_line.product_uom
+                            move_line.product_uom_qty, order_line.product_uom_id
                         )
                         so_qty_done = move_line.product_uom._compute_quantity(
-                            move_line.quantity, order_line.product_uom
+                            move_line.quantity, order_line.product_uom_id
                         )
                     picking_value += order_line.price_reduce_taxexcl * so_product_qty
                     done_value += order_line.price_reduce_taxexcl * so_qty_done
