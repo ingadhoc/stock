@@ -55,13 +55,13 @@ class StockMove(models.Model):
     def _check_quantity(self):
         precision = self.env["decimal.precision"].precision_get("Product Unit of Measure")
         if any(self.filtered(lambda x: x.scrapped)):
-            return
+            return super()._check_quantity()
         moves = self.filtered(
             lambda x: x.picking_id.picking_type_id.block_additional_quantity
             and float_compare(x.product_uom_qty, x.quantity, precision_digits=precision) == -1
         )
         if not moves:
-            return
+            return super()._check_quantity()
 
         # Si lo ejecuta el superusuario (scheduler), revertir el cambio y loguear
         if self.env.is_superuser():
@@ -74,7 +74,7 @@ class StockMove(models.Model):
                     )
                     % move.display_name
                 )
-            return
+            return super()._check_quantity()
 
         # Comportamiento normal: raise si corresponde
         raise ValidationError(_("You can not transfer more than the initial demand!"))
