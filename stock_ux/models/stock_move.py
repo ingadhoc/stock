@@ -55,7 +55,7 @@ class StockMove(models.Model):
     def _check_quantity(self):
         precision = self.env["decimal.precision"].precision_get("Product Unit of Measure")
         if any(self.filtered(lambda x: x.location_dest_usage == "inventory")):
-            return
+            return super()._check_quantity()
         elif any(
             self.filtered(
                 lambda x: x.picking_id.picking_type_id.block_additional_quantity
