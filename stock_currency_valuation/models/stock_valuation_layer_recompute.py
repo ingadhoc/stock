@@ -113,6 +113,8 @@ class StockValuationLayerRecompute(models.Model):
             , order="create_date desc", limit=1)
         self.last_manual_svl_id = last_manual_svl_id
 
+        lines_to_zero = self.env.context.get('lines_to_zero', {})
+
         leaf = [('company_id', '=', self.company_id.id), ('product_id', '=', self.product_id.id)]
         svl_ids = self.env['stock.valuation.layer'].search(leaf, order="create_date asc")
         lines = [Command.clear()]
@@ -133,8 +135,15 @@ class StockValuationLayerRecompute(models.Model):
                 'layer_value_in_currency': svl_id.value_in_currency,
             }
             quantity_at_time = quantity_at_time + svl_id.quantity
+            if svl_id.id in lines_to_zero:
+                new_unit_cost = 0
+                new_value = 0
+                new_unit_cost_in_currency = 0
+                new_value_in_currency = 0
+                quantity_at_time = quantity_at_time - svl_id.quantity
+                svl_type = 'zero'
 
-            if svl_id.stock_move_id and  svl_id.stock_move_id.is_inventory:
+            elif svl_id.stock_move_id and  svl_id.stock_move_id.is_inventory:
                 standard_price_in_currency = standard_price_in_currency if standard_price_in_currency else  svl_id.unit_cost_in_currency
                 standard_price = standard_price if standard_price else  svl_id.unit_cost
 
@@ -302,7 +311,8 @@ class StockValuationLayerRecompute(models.Model):
             need_change_4 = self.currency_id.compare_amounts(svl_id.unit_cost, new_unit_cost) != 0.0
 
             need_change_5 = svl_id.id > last_manual_svl_id.id or not last_manual_svl_id
-            vals['need_changes'] = True if (need_change_1 or need_change_2 or need_change_3 or need_change_4) and need_change_5 else False
+            need_change_6 = svl_id.id in lines_to_zero
+            vals['need_changes'] = True if (need_change_1 or need_change_2 or need_change_3 or need_change_4 or need_change_6) and need_change_5 else False
             lines.append(Command.create(vals),)
         self.line_ids = lines
         self.final_amount_in_currency = standard_price_in_currency
