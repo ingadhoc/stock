@@ -17,4 +17,24 @@
         <field name="name">Restrict editing Operation Type in Pickings</field>
     </record>
 
+    <!-- Usuario Básico de Inventario: igual que stock.group_stock_user pero sin ajustes de inventario -->
+    <record model="res.groups" id="group_stock_user_basic">
+        <field name="name">Usuario Básico de Inventario</field>
+        <field name="privilege_id" ref="stock.res_groups_privilege_inventory"/>
+        <field name="comment">Este grupo tiene los mismos permisos que Usuario de Inventario pero sin poder realizar ajustes de inventario (stock.quant).</field>
+        <field name="implied_ids" eval="[(4, ref('stock.group_stock_user'))]"/>
+    </record>
+
+    <!-- Regla de registro para quitar acceso a ajustes de inventario -->
+    <record id="stock_quant_rule_basic_user" model="ir.rule">
+        <field name="name">Stock Quant: Usuario Básico de Inventario - Sin Acceso</field>
+        <field name="model_id" ref="stock.model_stock_quant"/>
+        <field name="groups" eval="[(4, ref('group_stock_user_basic'))]"/>
+        <field name="domain_force">[(0, '=', 1)]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
 </odoo>
