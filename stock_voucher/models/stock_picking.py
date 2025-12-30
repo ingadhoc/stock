@@ -110,6 +110,9 @@ class StockPicking(models.Model):
         """
         We separe to use it in other modules
         """
+        if self.picking_type_id.number_of_packages:
+            packages = self.move_line_ids.mapped("result_package_id").filtered(lambda p: p)
+            self.number_of_packages = len(packages)
         for picking in self:
             if picking.picking_type_id.code == "outgoing":
                 if picking.picking_type_id.restrict_number_package and not picking.number_of_packages > 0:
@@ -120,15 +123,6 @@ class StockPicking(models.Model):
             elif not picking.location_id.usage == "customer" and picking.voucher_required and not picking.voucher_ids:
                 raise UserError(_("You must set stock voucher numbers"))
         return True
-
-    def action_put_in_pack(self, move_lines_to_pack=False):
-        """
-        We override to compute number of packages
-        """
-        res = super().action_put_in_pack(move_lines_to_pack=move_lines_to_pack)
-        if self.picking_type_id.number_of_packages:
-            self.number_of_packages = len(self.package_level_ids)
-        return res
 
     def button_validate(self):
         """
