@@ -19,7 +19,7 @@
 ##############################################################################
 {
     "name": "Stock UX",
-    "version": "19.0.1.1.0",
+    "version": "19.0.2.0.0",
     "category": "Warehouse Management",
     "sequence": 14,
     "summary": "",
@@ -45,6 +45,7 @@
         "views/report_deliveryslip.xml",
         "views/res_config_settings_views.xml",
         "wizards/stock_operation_wizard_views.xml",
+        "wizards/stock_return_picking_views.xml",
         "report/ir.action.reports.xml",
         "report/picking_templates.xml",
         "views/res_company_views.xml",
