@@ -195,9 +195,10 @@ class StockPicking(models.Model):
                         bom_moves = so_bom_line.move_ids & stock_bom_lines._origin
                         done_avg = []
                         picking_avg = []
+                        # Explode for 1 kit to get base quantities per component
                         boms, lines = bom.sudo().explode(
                             so_bom_line.product_id,
-                            so_bom_line.product_uom_qty,
+                            1.0,
                             picking_type=bom.picking_type_id,
                         )
                         for move in bom_moves:
@@ -213,6 +214,7 @@ class StockPicking(models.Model):
                             picking_avg.append(move.product_uom_qty / bom_quantity)
                             done_avg.append(rec_move.quantity / bom_quantity)
                         if picking_avg and done_avg:
+                            # Average represents how many kits, multiply by unit price
                             picking_value += so_bom_line.price_reduce_taxexcl * (sum(picking_avg) / len(picking_avg))
                             done_value += so_bom_line.price_reduce_taxexcl * (sum(done_avg) / len(done_avg))
 
