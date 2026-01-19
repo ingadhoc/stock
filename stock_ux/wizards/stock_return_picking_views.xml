@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_stock_return_picking_form" model="ir.ui.view">
+        <field name="name">Improve refunds wizard</field>
+        <field name="inherit_id" ref="stock.view_stock_return_picking_form"/>
+        <field name="model">stock.return.picking</field>
+        <field name="arch" type="xml">
+            <field name="product_return_moves" position="before">
+                <div class="alert alert-info" role="alert" style="margin-bottom:0px;">
+                    <b>Importante</b>: si está haciendo un movimiento inverso relacionado a un Pedido de Venta o de Compra, entonces debe prestar atención al campo <b>"Para Abonar (actualizar OC/OV)"</b>, donde, si:
+                    <ul>
+                        <li>
+                            <b>Está marcado</b>: entonces <b>se va</b> a actualizar la OC/OV considerando que los productos devueltos no se van a volver a entregar, y por ende, permitiendo hacer una nota de crédito si los items ya fueron facturados, o tener en cuenta esta devolución al hacer la factura.
+                        </li>
+                        <li>
+                            <b>No está marcado</b>: entonces <b>no se va</b> a actualizar la OC/OV. Esto es común, por ejemplo, si se devuelve mercadería defectuosa y se pretende hacer una nueva entrega de la misma.
+                        </li>
+                    </ul>
+                    Si la devolución no está ligada a una OC/OV entonces este campo no repercute en nada.
+                </div>
+            </field>
+            <field name="to_refund" position="attributes">
+                <!-- porque lo queremos usar tmb en oc y esto lo hace no marcable -->
+                <attribute name="attrs"></attribute>
+                <!-- always show the button -->
+                <attribute name="groups"></attribute>
+                <!-- porque la traducción no se actualiza -->
+                <attribute name="string">Para Abonar (actualizar OC/OV)</attribute>
+            </field>
+        </field>
+    </record>
+
+</odoo>

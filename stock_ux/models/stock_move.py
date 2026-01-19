@@ -25,14 +25,19 @@ class StockMove(models.Model):
     lots_visible = fields.Boolean(
         related="move_line_ids.lots_visible",
     )
-
     picking_partner_id = fields.Many2one(
         "res.partner",
         "Transfer Destination Address",
         related="picking_id.partner_id",
     )
-
     origin_description = fields.Char(compute="_compute_origin_description", compute_sudo=True)
+    is_exchange_move = fields.Boolean()
+
+    @api.model
+    def _prepare_merge_moves_distinct_fields(self):
+        fields = super()._prepare_merge_moves_distinct_fields()
+        fields.append("is_exchange_move")
+        return fields
 
     @api.depends(
         "move_line_ids.quantity",
