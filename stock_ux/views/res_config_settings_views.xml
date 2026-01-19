@@ -32,6 +32,12 @@
                             <div class="text-muted">
                                 Por defecto odoo imprime en los Comprobantes de Transferencia el nombre del producto, si marca esta opción en su lugar se utilizará la descripción de origen (la descripción de origen suele ser la descripción de venta o la descripción de la compra)
                             </div>
+                            <div class="content-group mt-3" invisible="not delivery_slip_use_origin">
+                                <div class="row mt-2">
+                                    <label for="delivery_slip_add_product_name" class="o_light_label col-form-label fw-bold"/>
+                                    <field name="delivery_slip_add_product_name" class="ms-2"/>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-xs-12 col-md-6 o_setting_box">

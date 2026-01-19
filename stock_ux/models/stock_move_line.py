@@ -151,6 +151,11 @@ class StockMoveLine(models.Model):
             origin_description = move.origin_description or reference
             product = move.product_id
 
+            add_product_name = (
+                self.env["ir.config_parameter"].sudo().get_param("stock_ux.delivery_slip_add_product_name", "False")
+                == "True"
+            )
+
             # Clean the origin_description by removing product name prefix
             clean_description = origin_description
             if origin_description != reference:
@@ -159,7 +164,10 @@ class StockMoveLine(models.Model):
                 elif origin_description.startswith(product.name):
                     clean_description = origin_description.removeprefix(product.name).strip()
 
-            name = clean_description if clean_description else origin_description
+            if add_product_name and clean_description and clean_description != origin_description:
+                name = f"{product.name} {'-'} {clean_description}"
+            else:
+                name = clean_description if clean_description else origin_description
             line_key = f"{product.id}_{name}_{uom.id}_{move.packaging_uom_id or ''}"
             bom_line = getattr(move, "bom_line_id", False)
             if bom_line and bom_line.bom_id:
