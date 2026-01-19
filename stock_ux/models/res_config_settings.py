@@ -19,6 +19,11 @@ class ResConfigSettings(models.TransientModel):
         config_parameter="stock_ux.delivery_slip_use_origin",
     )
 
+    delivery_slip_add_product_name = fields.Boolean(
+        "Agregar el nombre del producto a la descripción de origen",
+        config_parameter="stock_ux.delivery_slip_add_product_name",
+    )
+
     delivery_slip_remaining_qty = fields.Boolean(
         "En Comprobantes de Transferencia mostrar cantidades pendientes de entrega",
         config_parameter="stock_ux.delivery_slip_remaining_qty",
