@@ -7,6 +7,10 @@
         <field name="arch" type="xml">
             <field name="website" position="after">
                 <field name="stock_mail_confirmation_template_id"/>
+                <field name="stock_ux_protect_moves"/>
+                <div class="alert alert-warning" role="alert" invisible="stock_ux_protect_moves">
+                    <strong>⚠ Atención:</strong> Con esta opción desactivada, los usuarios podrán eliminar movimientos de stock que provienen de órdenes de venta o compra, lo que puede causar inconsistencias.
+                </div>
             </field>
         </field>
     </record>
