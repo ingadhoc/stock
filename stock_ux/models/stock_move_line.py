@@ -124,7 +124,7 @@ class StockMoveLine(models.Model):
             move_line_by_move = {}
             for sml in self:
                 move = sml.move_id
-                if move and move.origin_description:
+                if move and move.origin_description and sml.picking_id.origin:
                     move_line_by_move.setdefault(
                         move.id, {"description": move.origin_description, "product_id": sml.product_id.id}
                     )
@@ -152,7 +152,8 @@ class StockMoveLine(models.Model):
         use_origin = (
             self.env["ir.config_parameter"].sudo().get_param("stock_ux.delivery_slip_use_origin", "False") == "True"
         )
-        if use_origin:
+        picking = move_line.picking_id if move_line else (move.picking_id if move else False)
+        if use_origin and picking and picking.origin:
             move = move or move_line.move_id
             uom = move.product_uom or move_line.product_uom_id
             name = move.product_id.display_name
