@@ -19,6 +19,9 @@
         <field name="model">stock.move.line</field>
         <field name="inherit_id" ref="stock.stock_move_line_view_search"/>
         <field name="arch" type="xml">
+            <field name="product_id" position="after">
+                <field name="origin"/>
+            </field>
             <field name="location_id" position="before">
                 <field name="product_id" string="Product" context="{'group_by':'product_id'}"/>
                 <field name="location_id" string="Net Quantity Location" filter_domain="['|',('location_id','ilike',self),('location_dest_id','ilike',self)]" context="{'location': self}"/>
@@ -28,17 +31,8 @@
                 <filter string="With Quantity Done" name="with_quantity_done" domain="[('quantity', '&gt;', 0.0)]"/>
             </filter>
             <filter name="by_state" position="after">
-                <filter string="Product" name="product_id" context="{'group_by':'product_id'}"/>
-                <filter string="Picking" name="picking"  context="{'group_by':'picking_id'}"/>
-                <!-- Si queremos agregar group by estos campos habria que hacerlos store o hacer una vista sql -->
-                <filter string="Picking Type" name="picking_type"  context="{'group_by':'picking_type_id'}"/>
-                <!-- <filter string="Picking Partner" name="picking_partner_id"  context="{'group_by':'picking_partner_id'}"/> -->
-            </filter>
-            <filter name="by_state" position="after">
-                <filter string="Picking" name="picking"  context="{'group_by':'picking_id'}"/>
-                <!-- Si queremos agregar group by estos campos habria que hacerlos store o hacer una vista sql -->
-                <filter string="Picking Type" name="picking_type"  context="{'group_by':'picking_type_id'}"/>
-                <!-- <filter string="Picking Partner" name="picking_partner_id"  context="{'group_by':'picking_partner_id'}"/> -->
+                <filter string="Picking Partner" name="picking_partner_id"  context="{'group_by':'picking_partner_id'}"/>
+                <filter name="origin" context="{'group_by':'origin'}" string="Source"/>
             </filter>
         </field>
     </record>

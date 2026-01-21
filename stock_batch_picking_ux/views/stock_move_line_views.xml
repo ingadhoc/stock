@@ -1,28 +1,25 @@
 <odoo>
 
-    <record id="stock_move_line_view_search" model="ir.ui.view">
-        <field name="name">stock.move.line.filter</field>
-        <field name="model">stock.move.line</field>
-        <field name="inherit_id" ref="stock_ux.stock_move_line_view_search"/>
+    <record id="view_move_tree" model="ir.ui.view">
+        <field name="name">stock.move.list</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock_picking_batch.view_picking_move_tree_inherited"/>
         <field name="arch" type="xml">
             <!-- we only show origin if we came from a batch, on a picking you already have it on the picking -->
             <field name="product_id" position="before">
-                <field name="origin" invisible="not context.get('from_batch')"/>
+                <field name="origin" optional="hide"/>
             </field>
-            <filter name="product_id" position="before">
-                <filter name="origin" context="{'group_by':'origin'}" invisible="not context.get('from_batch')"/>
-            </filter>
         </field>
     </record>
 
     <record id="view_move_line_tree" model="ir.ui.view">
         <field name="name">stock.move.line.list</field>
         <field name="model">stock.move.line</field>
-        <field name="inherit_id" ref="stock_picking_batch.view_picking_move_tree_inherited"/>
+        <field name="inherit_id" ref="stock_picking_batch.view_move_line_tree"/>
         <field name="arch" type="xml">
             <!-- we only show origin if we came from a batch, on a picking you already have it on the picking -->
             <field name="product_id" position="before">
-                <field name="origin" invisible="not context.get('from_batch')"/>
+                <field name="origin" optional="hide"/>
             </field>
         </field>
     </record>

@@ -42,7 +42,7 @@
                 <field name="picking_create_user_id"/>
             </list>
             <field name="reference" position="after">
-                <field name="origin"/>
+                <field name="origin" optional="hide"/>
             </field>
             <field name="product_uom" position="after">
                 <field name="product_qty" string="Q. UdM Producto" groups="uom.group_uom"/>
