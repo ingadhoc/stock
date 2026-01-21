@@ -19,7 +19,7 @@ Stock UX
 #. Add a wizard action in the stock move lines of a picking to change locations for several lines at the same time with the 'Manage Multiple Stock Locations' permission.
 #. Show always visible (for an existing lots configuration in the type operation) the notebook pages in lot form view when create and edit a lot from a stock move line.
 #. Add reason return field in the picking return wizard and then bring that field to internal notes in the created picking.
-#. Add an optional setting to print in Delivery Slip reports the origin description instead of the product name
+#. Add an optional setting to print in Delivery Slip reports the origin description instead of the product name when the picking has origin.
 #. We create a new group "Allow picking cancellation", only users with that right can cancel pickings or validate without back orders
 #. Only allow to delete pickings on draft/cancel state and "Block Picking Deletion?" is not checked in Pick operation type.
 #. If filtered location is found on source location: use negative quantity.
