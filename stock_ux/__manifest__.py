@@ -44,6 +44,7 @@
         "views/stock_picking_type_views.xml",
         "views/report_deliveryslip.xml",
         "views/res_config_settings_views.xml",
+        "views/stock_location_views.xml",
         "wizards/stock_operation_wizard_views.xml",
         "report/ir.action.reports.xml",
         "report/picking_templates.xml",
