@@ -27,6 +27,7 @@ class StockWarehouseOrderpointWizard(models.TransientModel):
         orderpoints.update_qty_forecast()
         orderpoints._compute_rotation()
         orderpoints._change_review_toggle_negative()
+        orderpoints._compute_qty_to_order()
         action['domain'] = expression.AND([
             action.get('domain', '[]'),
             orderpoint_domain,
