@@ -31,12 +31,25 @@ class StockWarehouseOrderpointWizard(models.TransientModel):
         if self.compute_rotation:
             orderpoints._compute_rotation()
         orderpoints._change_review_toggle_negative()
+<<<<<<< b6de1fa0c867db376c722ef6a3ce386a085f11bf
         action["domain"] = expression.AND(
             [
                 action.get("domain", "[]"),
                 orderpoint_domain,
             ]
         )
+||||||| 355cedeb7e37d0ab0592120ef2b34bc0d485bb15
+        action['domain'] = expression.AND([
+            action.get('domain', '[]'),
+            orderpoint_domain,
+        ])
+=======
+        orderpoints._compute_qty_to_order()
+        action['domain'] = expression.AND([
+            action.get('domain', '[]'),
+            orderpoint_domain,
+        ])
+>>>>>>> 760c8ee390d1db9153e1dc3e1f0573bffe949def
         return action
 
     def _get_orderpoint_domain(self):
