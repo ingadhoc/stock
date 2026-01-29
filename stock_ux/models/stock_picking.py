@@ -5,6 +5,7 @@
 ##############################################################################
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError, UserError
+from odoo.tools.float_utils import float_compare
 
 
 class StockPicking(models.Model):
@@ -152,3 +153,24 @@ class StockPicking(models.Model):
                             )
                         )
         return super().write(vals)
+
+    def button_validate(self):
+        """Valida que no se transfiera más de la demanda inicial."""
+        for picking in self:
+            if picking.picking_type_id.block_additional_quantity:
+                precision = self.env["decimal.precision"].precision_get("Product Unit of Measure")
+                for move in picking.move_ids.filtered(lambda m: m.state not in ("draft", "cancel")):
+                    if float_compare(move.quantity, move.product_uom_qty, precision_digits=precision) == 1:
+                        raise UserError(
+                            _(
+                                "Cannot transfer more than initial demand!\n\n"
+                                "Product: %(product)s\n"
+                                "Initial Demand: %(demand)s\n"
+                                "Attempted Transfer: %(quantity)s\n\n"
+                                "Please update the source document (Purchase/Sales Order) to increase quantities.",
+                                product=move.product_id.display_name,
+                                demand=move.product_uom_qty,
+                                quantity=move.quantity,
+                            )
+                        )
+        return super().button_validate()
