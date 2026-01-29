@@ -2,9 +2,8 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError, ValidationError
-from odoo.tools import float_compare
 
 
 class StockMove(models.Model):
@@ -51,6 +50,7 @@ class StockMove(models.Model):
             else:
                 rec.origin_description = rec.product_id.name
 
+<<<<<<< d8a27bb78f4128a3e44533dc87dadbf54ab28558
     @api.constrains("quantity")
     def _check_quantity(self):
         precision = self.env["decimal.precision"].precision_get("Product Unit of Measure")
@@ -64,6 +64,41 @@ class StockMove(models.Model):
         ):
             raise ValidationError(_("You can not transfer more than the initial demand!"))
 
+||||||| f81fbcd059cb8a81f7c35fed67f9800a5af5f296
+    @api.constrains("quantity")
+    def _check_quantity(self):
+        precision = self.env["decimal.precision"].precision_get("Product Unit of Measure")
+        # Si tenemos este contexto es porque si o si viene de una compra
+        if "previous_product_qty" in self.env.context:
+            return super()._check_quantity()
+        if any(self.filtered(lambda x: x.scrapped)):
+            return super()._check_quantity()
+        moves = self.filtered(
+            lambda x: (
+                x.picking_id.picking_type_id.block_additional_quantity
+                and float_compare(x.product_uom_qty, x.quantity, precision_digits=precision) == -1
+            )
+        )
+        if not moves:
+            return super()._check_quantity()
+        # Si lo ejecuta el superusuario (scheduler), revertir el cambio y loguear
+        if self.env.is_superuser():
+            for move in moves:
+                # Revertir el cambio de quantity
+                move.quantity = move.product_uom_qty
+                move.picking_id.message_post(
+                    body=_(
+                        "Se intentó transferir una cantidad mayor a la demanda inicial en el movimiento %s durante la ejecución automática (scheduler). El sistema ignoró el cambio y mantuvo la cantidad original."
+                    )
+                    % move.display_name
+                )
+            return super()._check_quantity()
+
+        # Comportamiento normal: raise si corresponde
+        raise ValidationError(_("You can not transfer more than the initial demand!"))
+
+=======
+>>>>>>> 5af5a21f01a3bfdb42df09dad85f8b72e931d275
     def action_view_linked_record(self):
         """This function returns an action that display existing sales order
         of given picking.
