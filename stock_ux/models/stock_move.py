@@ -54,8 +54,18 @@ class StockMove(models.Model):
     @api.constrains("quantity")
     def _check_quantity(self):
         precision = self.env["decimal.precision"].precision_get("Product Unit of Measure")
+<<<<<<< 67b44350daac99c28fa749a54fc16b18e236efe3
         if any(self.filtered(lambda x: x.location_dest_usage == "inventory")):
+||||||| b6de1fa0c867db376c722ef6a3ce386a085f11bf
+        if any(self.filtered(lambda x: x.scrapped)):
+=======
+        # Si tenemos este contexto es porque si o si viene de una compra
+        if "previous_product_qty" in self.env.context:
             return super()._check_quantity()
+        if any(self.filtered(lambda x: x.scrapped)):
+>>>>>>> fc43927caa9971659b705ac483caeebe574ba5af
+            return super()._check_quantity()
+<<<<<<< 67b44350daac99c28fa749a54fc16b18e236efe3
         elif any(
             self.filtered(
                 lambda x: x.picking_id.picking_type_id.block_additional_quantity
@@ -63,6 +73,54 @@ class StockMove(models.Model):
             )
         ):
             raise ValidationError(_("You can not transfer more than the initial demand!"))
+||||||| b6de1fa0c867db376c722ef6a3ce386a085f11bf
+        moves = self.filtered(
+            lambda x: x.picking_id.picking_type_id.block_additional_quantity
+            and float_compare(x.product_uom_qty, x.quantity, precision_digits=precision) == -1
+        )
+        if not moves:
+            return super()._check_quantity()
+
+        # Si lo ejecuta el superusuario (scheduler), revertir el cambio y loguear
+        if self.env.is_superuser():
+            for move in moves:
+                # Revertir el cambio de quantity
+                move.quantity = move.product_uom_qty
+                move.picking_id.message_post(
+                    body=_(
+                        "Se intentó transferir una cantidad mayor a la demanda inicial en el movimiento %s durante la ejecución automática (scheduler). El sistema ignoró el cambio y mantuvo la cantidad original."
+                    )
+                    % move.display_name
+                )
+            return super()._check_quantity()
+
+        # Comportamiento normal: raise si corresponde
+        raise ValidationError(_("You can not transfer more than the initial demand!"))
+=======
+        moves = self.filtered(
+            lambda x: (
+                x.picking_id.picking_type_id.block_additional_quantity
+                and float_compare(x.product_uom_qty, x.quantity, precision_digits=precision) == -1
+            )
+        )
+        if not moves:
+            return super()._check_quantity()
+        # Si lo ejecuta el superusuario (scheduler), revertir el cambio y loguear
+        if self.env.is_superuser():
+            for move in moves:
+                # Revertir el cambio de quantity
+                move.quantity = move.product_uom_qty
+                move.picking_id.message_post(
+                    body=_(
+                        "Se intentó transferir una cantidad mayor a la demanda inicial en el movimiento %s durante la ejecución automática (scheduler). El sistema ignoró el cambio y mantuvo la cantidad original."
+                    )
+                    % move.display_name
+                )
+            return super()._check_quantity()
+
+        # Comportamiento normal: raise si corresponde
+        raise ValidationError(_("You can not transfer more than the initial demand!"))
+>>>>>>> fc43927caa9971659b705ac483caeebe574ba5af
 
     def action_view_linked_record(self):
         """This function returns an action that display existing sales order
@@ -96,9 +154,11 @@ class StockMove(models.Model):
         if self.env.context.get("cancel_from_order") or self.env.is_superuser():
             return
         if self.filtered(
-            lambda x: x.picking_id
-            and x.state == "cancel"
-            and not self.env.user.has_group("stock_ux.allow_picking_cancellation")
+            lambda x: (
+                x.picking_id
+                and x.state == "cancel"
+                and not self.env.user.has_group("stock_ux.allow_picking_cancellation")
+            )
         ):
             raise ValidationError("Only User with 'Picking cancelation allow' rights can cancel pickings")
 
