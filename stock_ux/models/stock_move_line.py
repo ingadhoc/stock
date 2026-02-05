@@ -56,12 +56,17 @@ class StockMoveLine(models.Model):
 
     @api.constrains("quantity")
     def _check_manual_lines(self):
+        # Si tenemos este contexto es porque si o si viene de una compra
+        if "previous_product_qty" in self.env.context:
+            return
         if self._context.get("put_in_pack", False):
             return
         invalid_lines = self.filtered(
-            lambda x: not x.location_id.should_bypass_reservation()
-            and x.picking_id.picking_type_id.block_manual_lines
-            and x._check_quantity_available() < 0
+            lambda x: (
+                not x.location_id.should_bypass_reservation()
+                and x.picking_id.picking_type_id.block_manual_lines
+                and x._check_quantity_available() < 0
+            )
         )
         if not invalid_lines:
             return
