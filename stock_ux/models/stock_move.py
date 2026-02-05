@@ -54,15 +54,19 @@ class StockMove(models.Model):
     @api.constrains("quantity")
     def _check_quantity(self):
         precision = self.env["decimal.precision"].precision_get("Product Unit of Measure")
+        # Si tenemos este contexto es porque si o si viene de una compra
+        if "previous_product_qty" in self.env.context:
+            return super()._check_quantity()
         if any(self.filtered(lambda x: x.scrapped)):
             return super()._check_quantity()
         moves = self.filtered(
-            lambda x: x.picking_id.picking_type_id.block_additional_quantity
-            and float_compare(x.product_uom_qty, x.quantity, precision_digits=precision) == -1
+            lambda x: (
+                x.picking_id.picking_type_id.block_additional_quantity
+                and float_compare(x.product_uom_qty, x.quantity, precision_digits=precision) == -1
+            )
         )
         if not moves:
             return super()._check_quantity()
-
         # Si lo ejecuta el superusuario (scheduler), revertir el cambio y loguear
         if self.env.is_superuser():
             for move in moves:
@@ -111,9 +115,11 @@ class StockMove(models.Model):
         if self._context.get("cancel_from_order") or self.env.is_superuser():
             return
         if self.filtered(
-            lambda x: x.picking_id
-            and x.state == "cancel"
-            and not self.env.user.has_group("stock_ux.allow_picking_cancellation")
+            lambda x: (
+                x.picking_id
+                and x.state == "cancel"
+                and not self.env.user.has_group("stock_ux.allow_picking_cancellation")
+            )
         ):
             raise ValidationError("Only User with 'Picking cancelation allow' rights can cancel pickings")
 
