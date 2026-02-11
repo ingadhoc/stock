@@ -161,3 +161,20 @@ class StockMove(models.Model):
         if not self.env.context.get("trigger_assign"):
             return super().with_context(trigger_assign=True)._trigger_assign()
         return super()._trigger_assign()
+
+    @api.ondelete(at_uninstall=False)
+    def _unlink_if_draft_or_cancel(self):
+        super()._unlink_if_draft_or_cancel()
+        if any((move.sale_line_id or move.purchase_line_id) for move in self) and not self._context.get(
+            "bypass_stock_ux_protect_moves"
+        ):
+            raise UserError(
+                _("You can not delete moves linked to sales or purchase orders, please change quantity there")
+            )
+
+    def _merge_moves(self, merge_into=False):
+        # 22/04/2024: Agregamos esto porque sino al intentar confirmar compras con usuarios sin permisos, podia pasar que salga la constrain de arriba (check_cancel)
+        # Agregamos bypass_stock_ux_protect_moves para permitir el unlink de moves duplicados durante el merge
+        return super(
+            StockMove, self.with_context(cancel_from_order=True, bypass_stock_ux_protect_moves=True)
+        )._merge_moves(merge_into=merge_into)
