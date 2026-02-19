@@ -2,7 +2,7 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import api, fields, models
+from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
 
 
@@ -92,7 +92,10 @@ class StockMove(models.Model):
 
     def _merge_moves(self, merge_into=False):
         # 22/04/2024: Agregamos esto porque sino al intentar confirmar compras con usuarios sin permisos, podia pasar que salga la constrain de arriba (check_cancel)
-        return super(StockMove, self.with_context(cancel_from_order=True))._merge_moves(merge_into=merge_into)
+        # Agregamos can_delete=True para permitir el unlink de moves duplicados durante el merge
+        return super(StockMove, self.with_context(cancel_from_order=True, can_delete=True))._merge_moves(
+            merge_into=merge_into
+        )
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -128,3 +131,34 @@ class StockMove(models.Model):
         if not self.env.context.get("trigger_assign"):
             return super().with_context(trigger_assign=True)._trigger_assign()
         return super()._trigger_assign()
+
+    @api.ondelete(at_uninstall=False)
+    def _unlink_if_not_from_order(self):
+        """
+        Prevent deletion of moves linked to sale or purchase orders.
+        Only manual moves (not from orders) can be deleted.
+        Allow deletion when coming from internal Odoo processes (like merge_moves).
+        """
+        # Allow deletion when coming from internal processes
+        if self.env.context.get("can_delete"):
+            return
+
+        protected_moves = self.env["stock.move"]
+
+        # Check moves from sales (if sale_stock is installed)
+        if "sale_line_id" in self._fields:
+            protected_moves |= self.filtered(lambda m: m.sale_line_id)
+
+        # Check moves from purchases (if purchase_stock is installed)
+        if "purchase_line_id" in self._fields:
+            protected_moves |= self.filtered(lambda m: m.purchase_line_id)
+
+        if protected_moves:
+            raise UserError(
+                _(
+                    "Cannot delete stock moves linked to sale or purchase orders.\n"
+                    "Please modify quantities from the source order instead.\n\n"
+                    "Affected moves: %s"
+                )
+                % ", ".join(protected_moves.mapped("display_name"))
+            )
