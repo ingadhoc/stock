@@ -26,13 +26,17 @@ class ReportController(report.ReportController):
         context_part = json_string.split("context=")[1]
         decoded_context = urllib.parse.unquote(context_part)
         context_dict = json.loads(decoded_context)
-        batch_id = context_dict.get("active_id")
+        batch_id = context_dict.get("active_ids")
         batch = context_dict.get("batch")
         if batch and batch_id and "batch_picking_preprinted" in data:
             book_id = request.env["stock.picking.batch"].browse(batch_id).book_id
-            pdf_response = response.response[0]
-            reader = PdfFileReader(io.BytesIO(pdf_response))
-            number_pages = reader.getNumPages()
+            try:
+                pdf_response = response.response[0]
+                reader = PdfFileReader(io.BytesIO(pdf_response))
+                number_pages = reader.getNumPages()
+            except Exception:
+                # If not PDF or can't process (like .doc), assign only 1 voucher
+                number_pages = 1
             if not request.env["stock.picking.batch"].browse(batch_id).voucher_ids:
                 request.env["stock.picking.batch"].browse(batch_id).assign_numbers(number_pages, book_id)
 

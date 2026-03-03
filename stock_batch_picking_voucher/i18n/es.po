@@ -143,3 +143,9 @@ msgstr "Los remitos asignados fueron eliminados"
 #: model:ir.model.fields,field_description:stock_batch_picking_voucher.field_stock_picking_batch__with_vouchers
 msgid "With Vouchers"
 msgstr "Con Remitos"
+
+#. module: stock_batch_picking_voucher
+#. odoo-python
+#: code:addons/stock_batch_picking_voucher/models/stock_picking_batch.py:0
+msgid "You must select a Voucher Book"
+msgstr "Debe seleccionar un Talonario de Remitos"

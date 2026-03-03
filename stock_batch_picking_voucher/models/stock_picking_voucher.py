@@ -24,6 +24,23 @@ class StockPickingVoucher(models.Model):
         index=True,
     )
 
+    company_id = fields.Many2one(
+        "res.company",
+        "Company",
+        related=False,
+        compute="_compute_company_id",
+    )
+
+    @api.depends("picking_id.company_id", "batch_id.company_id")
+    def _compute_company_id(self):
+        for rec in self:
+            if rec.picking_id:
+                rec.company_id = rec.picking_id.company_id
+            elif rec.batch_id:
+                rec.company_id = rec.batch_id.company_id
+            else:
+                rec.company_id = False
+
     @api.constrains("picking_id", "batch_id")
     def _check_picking_id_required(self):
         for record in self:

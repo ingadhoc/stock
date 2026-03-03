@@ -85,6 +85,14 @@ class StockPickingBatch(models.Model):
         """This function prints the voucher"""
         return self.env.ref("stock_batch_picking_voucher.batch_picking_preprinted").report_action(self)
 
+    def action_done(self):
+        for batch in self:
+            if batch.picking_type_id.book_required and not batch.book_id:
+                raise UserError(_("You must select a Voucher Book"))
+            if batch.book_id:
+                batch.picking_ids.book_id = batch.book_id
+        return super().action_done()
+
     def do_clean(self):
         self.voucher_ids.unlink()
         # self.book_id = False
