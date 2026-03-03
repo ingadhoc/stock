@@ -21,6 +21,7 @@ class StockPickingStateDetail(models.Model):
             ("internal", "Internal"),
             ("outgoing", "Outgoing"),
             ("incoming", "Incoming"),
+            ("dropship", "Dropship"),
         ],
     )
     state = fields.Selection(
