@@ -47,34 +47,33 @@ class StockMove(models.Model):
             and move.with_company(move.company_id).product_id.categ_id.valuation_currency_id
             and move.with_company(move.company_id).product_id.cost_method == "average"
         ):
-            product_tot_qty_available = (
-                move.product_id.sudo().with_company(move.company_id).quantity_svl + tmpl_dict[move.product_id.id]
-            )
-            rounding = move.product_id.uom_id.rounding
+            product_with_company = move.product_id.with_company(move.company_id)
+            product_tot_qty_available = product_with_company.sudo().quantity_svl + tmpl_dict[move.product_id.id]
+            rounding = product_with_company.uom_id.rounding
 
             valued_move_lines = move._get_in_move_lines()
             qty_done = 0
             for valued_move_line in valued_move_lines:
                 qty_done += valued_move_line.product_uom_id._compute_quantity(
-                    valued_move_line.qty_done, move.product_id.uom_id
+                    valued_move_line.qty_done, product_with_company.uom_id
                 )
 
             qty = forced_qty or qty_done
             if float_is_zero(product_tot_qty_available, precision_rounding=rounding):
                 new_std_price_in_currency = move._get_currency_price_unit(
-                    default=move.product_id.standard_price_in_currency
+                    default=product_with_company.standard_price_in_currency
                 )
             elif float_is_zero(
                 product_tot_qty_available + move.product_qty, precision_rounding=rounding
             ) or float_is_zero(product_tot_qty_available + qty, precision_rounding=rounding):
                 new_std_price_in_currency = move._get_currency_price_unit(
-                    default=move.product_id.standard_price_in_currency
+                    default=product_with_company.standard_price_in_currency
                 )
             else:
                 # Get the standard price
                 amount_unit = (
                     std_price_update.get((move.company_id.id, move.product_id.id))
-                    or move.product_id.with_company(move.company_id).standard_price_in_currency
+                    or product_with_company.standard_price_in_currency
                 )
                 new_std_price_in_currency = (
                     (amount_unit * product_tot_qty_available) + (move._get_currency_price_unit() * qty)
@@ -82,7 +81,7 @@ class StockMove(models.Model):
 
             tmpl_dict[move.product_id.id] += qty_done
             # Write the standard price, as SUPERUSER_ID because a warehouse manager may not have the right to write on products
-            move.product_id.with_company(move.company_id.id).with_context(disable_auto_svl=True).sudo().write(
+            product_with_company.with_context(disable_auto_svl=True).sudo().write(
                 {"standard_price_in_currency": new_std_price_in_currency}
             )
 
@@ -107,7 +106,7 @@ class StockMove(models.Model):
 
         price_unit = currency_id._convert(
             from_amount=self.price_unit,
-            to_currency=self.product_id.categ_id.valuation_currency_id,
+            to_currency=self.product_id.with_company(self.company_id.id).categ_id.valuation_currency_id,
             company=self.company_id,
             date=fields.date.today(),
         )
