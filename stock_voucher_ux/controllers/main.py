@@ -12,7 +12,9 @@ class ReportController(report.ReportController):
     def _count_pages_with_products(self, pdf_reader, picking_id):
         """
         Cuenta las páginas que realmente contienen productos
-        analizando el contenido de texto de cada página
+        analizando el contenido de texto de cada página.
+        Usa identificadores de producto (código interno, código de barras)
+        para la detección, de forma independiente del idioma.
         """
         picking = request.env["stock.picking"].browse(picking_id)
         move_lines = picking.move_line_ids
@@ -21,7 +23,15 @@ class ReportController(report.ReportController):
         if not move_lines:
             move_lines = picking.move_ids
 
-        product_codes = [line.product_id.default_code or line.product_id.name for line in move_lines if line.product_id]
+        # Recopilar identificadores de producto
+        product_identifiers = set()
+        for line in move_lines:
+            product = getattr(line, "product_id", None)
+            if product:
+                if product.default_code:
+                    product_identifiers.add(product.default_code.lower().strip())
+                if product.barcode:
+                    product_identifiers.add(product.barcode.lower().strip())
 
         pages_with_products = 0
 
@@ -29,11 +39,14 @@ class ReportController(report.ReportController):
             try:
                 page = pdf_reader.pages[page_num]
                 text = page.extract_text()
-
-                # Verificar si algún código/nombre de producto aparece en esta página
-                has_products = any(
-                    product_code and product_code in text for product_code in product_codes if product_code
-                )
+                if not text:
+                    continue
+                text_lower = text.lower()
+                if product_identifiers and any(pid in text_lower for pid in product_identifiers):
+                    has_products = True
+                else:
+                    # Fallback: patrón numérico genérico (independiente del idioma)
+                    has_products = bool(re.search(r"\b\d+[.,]\d+\b", text_lower))
 
                 if has_products:
                     pages_with_products += 1
