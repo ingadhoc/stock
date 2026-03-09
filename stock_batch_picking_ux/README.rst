@@ -21,7 +21,6 @@ This module add the following features:
 -  Add the number of packages in the batch transfer
 #. While proccesing the batch picking:
 -  In the transfer lines it add information of the vouchers, from & to and source document, among others.
--  Allow to unreserve everything from the batch
 -  A smart button is added to go to the list view of associated transfers.
 -  When you click on a transfer (from the transfer tab) you see all the possible actions that would be seen by entering it directly, such as the possibility of printing the voucher.
 
