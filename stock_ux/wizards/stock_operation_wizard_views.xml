@@ -32,4 +32,39 @@
         <field name="group_ids" eval="[(4, ref('stock.group_stock_multi_locations'))]"/>
     </record>
 
+    <!-- Tree view for picking lines - Define FIRST -->
+    <record id="stock_picking_zpl_lines_tree_view" model="ir.ui.view">
+        <field name="name">stock.picking.zpl.lines.tree</field>
+        <field name="model">stock.picking.zpl.lines</field>
+        <field name="arch" type="xml">
+            <list editable="bottom" create="false" delete="false">
+                <field name="product_name" readonly="1"/>
+                <field name="move_quantity"/>
+                <field name="move_uom_id" readonly="1"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Label Printing Wizard View -->
+    <record id="product_label_layout_form_view_picking" model="ir.ui.view">
+        <field name="name">product.label.layout.form.picking</field>
+        <field name="model">product.label.layout</field>
+        <field name="arch" type="xml">
+            <form string="Print Transfer Labels">
+                <group>
+                    <group name="print_format" string="Print Format">
+                        <field name="print_format" widget="radio"/>
+                    </group>
+                </group>
+                <group name="picking_lines" string="Products to Print" invisible="print_format != 'zpl_custom'">
+                    <field name="line_ids" nolabel="1" context="{'tree_view_ref': 'stock_ux.stock_picking_zpl_lines_tree_view'}"/>
+                </group>
+                <footer>
+                    <button name="action_print" string="Print" type="object" class="btn-primary" data-hotkey="q"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel" data-hotkey="z"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
 </odoo>
