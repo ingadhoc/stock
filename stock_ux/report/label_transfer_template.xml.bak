@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ZPL Template for Thermal Printers - Simple 2 labels per page like v18 -->
+    <template id="custom_barcode_transfer_template_view_zpl">
+        <t t-foreach="docs" t-as="o">
+            <t t-foreach="o.line_ids" t-as="line">
+^XA
+^CI28
+^LH0,0
+^FO20,10,0
+
+^FO250,10
+^A0N,20,25^FD<t t-esc="o.env.company.name or ''\"/>^FS
+
+^FO10,40
+^A0N,40,30
+^TBN,360,40
+^FD<t t-esc="line.move_id.product_id.display_name or ''\"/>^FS
+
+^FO10,90
+^BY3
+^BCN,60,Y,N,N,A
+^FD<t t-esc="line.move_id.product_id.barcode or line.move_id.product_id.default_code or ''\"/>^FS
+^FX Nueva etiqueta
+^LH445,0
+^FO20,10,0
+^FO250,10
+^A0N,20,25^FD<t t-esc="o.env.company.name or ''\"/>^FS
+^FO10,40
+^A0N,40,30
+^TBN,360,40
+^FD<t t-esc="line.move_id.product_id.display_name or ''\"/>^FS
+^FO10,90
+^BY3
+^BCN,60,Y,N,N,A
+^FD<t t-esc="line.move_id.product_id.barcode or line.move_id.product_id.default_code or ''\"/>^FS
+^XZ
+            </t>
+        </t>
+    </template>
+
+    <!-- PDF Template Fallback - Simple product labels -->
+    <template id="custom_label_transfer_template_view_pdf">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-foreach="o.line_ids" t-as="line">
+                <div class="page" style="page-break-after: always; width: 10cm; height: 7.5cm; padding: 10px; font-family: Arial, sans-serif; border: 1px solid #ccc;">
+                    <!-- Company Header -->
+                    <div style="text-align: center; font-size: 12px; margin-bottom: 10px;">
+                        <t t-esc="o.env.company.name or ''"/>
+                    </div>
+
+                    <!-- Product Name -->
+                    <div style="text-align: center; font-size: 16px; font-weight: bold; margin: 15px 0; min-height: 50px; display: flex; align-items: center; justify-content: center;">
+                        <t t-esc="line.move_id.product_id.display_name or ''"/>
+                    </div>
+
+                    <!-- Barcode -->
+                    <div style="text-align: center; margin-top: 20px;">
+                        <t t-set="barcode_value" t-value="line.move_id.product_id.barcode or line.move_id.product_id.default_code or ''"/>
+                        <t t-if="barcode_value">
+                            <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', barcode_value, 400, 80)" style="max-width: 90%;"/>
+                        </t>
+                    </div>
+                </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>
