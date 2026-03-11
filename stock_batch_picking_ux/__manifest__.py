@@ -36,6 +36,7 @@
         "views/stock_move_line_views.xml",
         "reports/ir.actions.report.xml",
         "reports/picking_templates.xml",
+        "reports/report_batch_deliveryslip.xml",
     ],
     "demo": [],
     "installable": True,
