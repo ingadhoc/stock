@@ -37,4 +37,14 @@
         <field name="binding_type">report</field>
         <field name="paperformat_id" ref="stock_batch_picking_ux.label_10x15_batch"/>
     </record>
+
+    <record id="action_report_batch_deliveryslip" model="ir.actions.report">
+        <field name="name">Delivery Slip</field>
+        <field name="model">stock.picking.batch</field>
+        <field name="binding_model_id" ref="stock_picking_batch.model_stock_picking_batch"/>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">stock_batch_picking_ux.report_batch_deliveryslip</field>
+        <field name="report_file">stock_batch_picking_ux.report_batch_deliveryslip</field>
+        <field name="binding_type">report</field>
+    </record>
 </odoo>

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--
+        Main entry point: iterates over batches and renders one document per batch.
+        Analogous to stock.report_deliveryslip which calls stock.report_delivery_document.
+        This template can be overridden by l10n_ar_stock_picking_batch (primary="True")
+        to add an Argentine look, just as l10n_ar_stock_ux does for stock.report_delivery_document.
+    -->
+    <template id="report_batch_deliveryslip">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="stock_batch_picking_ux.report_batch_delivery_document"/>
+        </t>
+    </template>
+
+    <!--
+        Batch delivery document.
+        Re-uses the stock line sub-templates (serial, aggregated, package sections)
+        to avoid duplicating that logic.  Header/footer intentionally kept minimal
+        so that l10n_ar_stock_picking_batch can inherit it as primary and add the
+        Argentine look (custom_header, custom_footer, document_letter, etc.).
+    -->
+    <template id="report_batch_delivery_document">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+
+                    <!-- ── Header ─────────────────────────────────────── -->
+                    <h2 style="margin-top: 15px;">
+                        <span>Batch Transfer</span>
+                        <span t-field="o.name"/>
+                    </h2>
+
+                    <div class="row mb-4">
+                        <div class="col-3" t-if="o.scheduled_date">
+                            <strong>Scheduled Date</strong>
+                            <div t-field="o.scheduled_date"/>
+                        </div>
+                        <div t-if="o.user_id" class="col-auto">
+                            <strong>Responsible:</strong>
+                            <p t-field="o.user_id"/>
+                        </div>
+                        <div t-if="o.picking_type_id" class="col-3">
+                            <strong>Operation Type:</strong>
+                            <p t-field="o.picking_type_id"/>
+                        </div>
+                    </div>
+
+                    <!-- ── Line tables ────────────────────────────────── -->
+                    <t t-set="format_number" t-value="lambda x: int(x) if x == int(x) else x"/>
+
+                    <!--
+                        Batch state is draft/in_progress/done/cancel.
+                        We show the demand table when not done/cancelled (mirrors
+                        how stock.report_delivery_document uses state!='done').
+                    -->
+                    <table class="table table-sm table-borderless"
+                           t-if="o.state not in ('done', 'cancel')"
+                           name="stock_move_table">
+                        <thead>
+                            <tr>
+                                <th name="th_sm_product"><strong>Product</strong></th>
+                                <th name="th_sm_ordered" class="text-end"><strong>Ordered</strong></th>
+                                <th name="th_sm_quantity" class="text-end"><strong>Delivered</strong></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="lines" t-value="o.move_ids.filtered(lambda x: x.product_uom_qty)"/>
+                            <tr t-foreach="lines" t-as="move">
+                                <td>
+                                    <span t-field="move.product_id"/>
+                                    <p t-if="move.description_picking
+                                             and move.description_picking != move.product_id.name
+                                             and move._get_report_description_picking()">
+                                        <span t-out="move._get_report_description_picking()"
+                                              t-options="{'widget': 'text'}"/>
+                                    </p>
+                                </td>
+                                <td class="o_td_quantity text-end">
+                                    <span t-out="format_number(move.product_uom_qty)"
+                                          class="text-nowrap"/>
+                                    <span t-field="move.product_uom" groups="uom.group_uom"/>
+                                </td>
+                                <td class="o_td_quantity text-end">
+                                    <span t-out="format_number(move.quantity)"
+                                          class="text-nowrap"/>
+                                    <span t-field="move.product_uom" groups="uom.group_uom"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!--
+                        Done lines table.
+                        Packages are derived from move_line_ids directly (batch has no
+                        package_history_ids / packages_count like stock.picking does).
+                        Multi-level packages are not supported at this level; they can
+                        be added in future iterations.
+                        Sub-templates re-used from stock to avoid duplication:
+                          · stock.stock_report_delivery_has_serial_move_line
+                          · stock.stock_report_delivery_aggregated_move_lines
+                          · stock.stock_report_delivery_package_section_line
+                          · stock.stock_report_delivery_no_package_section_line
+                    -->
+                    <table class="table table-sm table-borderless"
+                           t-elif="o.move_line_ids"
+                           name="stock_move_line_table">
+                        <t t-set="has_multi_level_packages" t-value="False"/>
+                        <t t-set="has_serial_number" t-value="False"/>
+                        <t t-set="has_serial_number"
+                           t-value="o.move_line_ids.mapped('lot_id')"
+                           groups="stock.group_lot_on_delivery_slip"/>
+                        <!-- Packages that appear as result packages on move lines -->
+                        <t t-set="result_packages"
+                           t-value="o.move_line_ids.filtered(lambda l: l.result_package_id).mapped('result_package_id')"/>
+                        <thead>
+                            <tr>
+                                <th name="th_sml_product">Product</th>
+                                <th name="lot_serial" class="text-end"
+                                    t-if="has_serial_number">Lot/Serial Number</th>
+                                <th name="th_sml_qty_ordered" class="text-end"
+                                    t-else="">Ordered</th>
+                                <th name="th_sml_quantity" class="text-end">Delivered</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- With destination packages -->
+                            <t t-if="result_packages">
+                                <t t-foreach="result_packages" t-as="package">
+                                    <t t-call="stock.stock_report_delivery_package_section_line"/>
+                                    <t t-set="package_move_lines"
+                                       t-value="o.move_line_ids.filtered(
+                                           lambda l: l.result_package_id == package
+                                       ).sorted('product_id')"/>
+                                    <t t-if="has_serial_number">
+                                        <tr t-foreach="package_move_lines" t-as="move_line">
+                                            <t t-call="stock.stock_report_delivery_has_serial_move_line"/>
+                                        </tr>
+                                    </t>
+                                    <t t-else="">
+                                        <t t-set="aggregated_lines"
+                                           t-value="package_move_lines._get_aggregated_product_quantities(strict=True)"/>
+                                        <t t-call="stock.stock_report_delivery_aggregated_move_lines"/>
+                                    </t>
+                                </t>
+                                <!-- Lines with no package -->
+                                <t t-set="move_lines"
+                                   t-value="o.move_line_ids.filtered(lambda l: not l.result_package_id)"/>
+                                <t t-set="aggregated_lines"
+                                   t-value="o.move_line_ids._get_aggregated_product_quantities(except_package=True)"/>
+                                <t t-if="move_lines or aggregated_lines">
+                                    <t t-call="stock.stock_report_delivery_no_package_section_line"/>
+                                    <t t-if="has_serial_number">
+                                        <tr t-foreach="move_lines" t-as="move_line">
+                                            <t t-call="stock.stock_report_delivery_has_serial_move_line"/>
+                                        </tr>
+                                    </t>
+                                    <t t-elif="aggregated_lines">
+                                        <t t-call="stock.stock_report_delivery_aggregated_move_lines"/>
+                                    </t>
+                                </t>
+                            </t>
+                            <!-- No destination packages -->
+                            <t t-else="">
+                                <t t-if="has_serial_number">
+                                    <tr t-foreach="o.move_line_ids" t-as="move_line">
+                                        <t t-call="stock.stock_report_delivery_has_serial_move_line"/>
+                                    </tr>
+                                </t>
+                                <t t-else="">
+                                    <t t-set="aggregated_lines"
+                                       t-value="o.move_line_ids._get_aggregated_product_quantities()"/>
+                                    <t t-call="stock.stock_report_delivery_aggregated_move_lines"/>
+                                </t>
+                            </t>
+                        </tbody>
+                    </table>
+
+                </div>
+            </t>
+        </t>
+    </template>
+
+</odoo>

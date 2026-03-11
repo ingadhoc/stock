@@ -1,0 +1,14 @@
+<odoo>
+    <record model="ir.ui.view" id="stock_picking_form_exception">
+        <field name="name">stock.picking.form.exception</field>
+        <field name="model">stock.picking</field>
+        <field name="priority">99</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <!-- si hay batch los paquetes los definimos por batch -->
+            <field name="number_of_packages" position="attributes">
+                <attribute name="invisible">batch_id</attribute>
+            </field>
+        </field>
+    </record>
+</odoo>
