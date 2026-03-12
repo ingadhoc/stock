@@ -47,13 +47,22 @@
                     </div>
                 </button>
             </xpath>
+            <field name="picking_type_id" position="before">
+                <field name="partner_id" context="{'res_partner_search_mode': picking_type_code == 'incoming' and 'supplier' or 'customer'}"/>
+            </field>
+            <!-- dejamos user despues de type para que quede mas parecido a pickings -->
+            <field name="picking_type_id" position="after">
+                <field name="user_id" position="move"/>
+            </field>
             <group id="batch_delivery_data" position="after">
                 <group id="column2">
-                    <field name="partner_id" context="{'res_partner_search_mode': picking_type_code == 'incoming' and 'supplier' or 'customer'}"/>
-                    <field name="number_of_packages"/>
+                    <field name="number_of_packages" invisible="picking_type_code == 'incoming' or not partner_id"/>
                 </group>
             </group>
-
+            <!-- deamos scheduled_date del lado derecho igual que en pickings -->
+            <field name="number_of_packages" position="before">
+                <field name="scheduled_date" position="move"/>
+            </field>
             <xpath expr="//notebook" position="inside">
                 <page string="Notes">
                     <field name="notes" colspan="4" nolabel="1"/>

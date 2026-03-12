@@ -14,16 +14,15 @@ class StockPicking(models.Model):
         store=True,
         readonly=False,
     )
-    automatic_declare_value = fields.Boolean(
-        related="picking_type_id.automatic_declare_value",
-    )
 
     @api.depends(
         "move_ids.state",
         "move_ids.quantity",
     )
     def _compute_declared_value(self):
-        for rec in self.filtered(lambda p: p.automatic_declare_value and p.state not in ["done", "cancel"]):
+        for rec in self.filtered(
+            lambda p: p.picking_type_id.automatic_declare_value and p.state not in ["done", "cancel"]
+        ):
             done_value = 0.0
             picking_value = 0.0
             inmediate_transfer = True
