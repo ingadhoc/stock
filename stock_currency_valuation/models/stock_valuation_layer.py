@@ -20,7 +20,7 @@ class StockValuationLayer(models.Model):
     )
     product_tmpl_id = fields.Many2one(store=True)
     bypass_currency_valuation = fields.Boolean()
-    manual_currency_rate = fields.Float(store=True, digits=0, compute="_compute_manual_currency_rate")
+    manual_currency_rate = fields.Float(store=True, compute="_compute_manual_currency_rate")
 
     def move_is_return(self):
         return bool(
