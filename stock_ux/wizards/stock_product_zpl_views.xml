@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_product_zpl" model="ir.ui.view">
+        <field name="model">product.label.layout</field>
+        <field name="inherit_id" ref="product.product_label_layout_form"/>
+        <field name="name">product.label.layout.product.zpl</field>
+        <field name="arch" type="xml">
+            <xpath expr="//group" position="before">
+                <field name="product_line_ids" invisible="1"/>
+                <group invisible="not product_line_ids">
+                    <field name="product_line_ids" widget="one2many_list" nolabel="1" colspan="2">
+                        <list editable="top" create="false" delete="false">
+                            <field name="product_id" column_invisible="True"/>
+                            <field name="product_name" string="Producto"/>
+                            <field name="quantity" string="Cantidad de etiquetas"/>
+                        </list>
+                    </field>
+                </group>
+                <div invisible="not product_line_ids">
+                    <button name="action_print_product_zpl" type="object" string="Etiqueta de producto (ZPL)" class="btn btn-primary" style="font-size: 10px; margin-right: 10px;" help="Imprime etiquetas ZPL con código de barras del producto"/>
+                </div>
+                <br invisible="not product_line_ids"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
