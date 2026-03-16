@@ -92,7 +92,10 @@ class StockMove(models.Model):
 
     def _merge_moves(self, merge_into=False):
         # 22/04/2024: Agregamos esto porque sino al intentar confirmar compras con usuarios sin permisos, podia pasar que salga la constrain de arriba (check_cancel)
-        return super(StockMove, self.with_context(cancel_from_order=True))._merge_moves(merge_into=merge_into)
+        # Agregamos bypass_stock_ux_protect_moves para permitir el unlink de moves duplicados durante el merge
+        return super(
+            StockMove, self.with_context(cancel_from_order=True, bypass_stock_ux_protect_moves=True)
+        )._merge_moves(merge_into=merge_into)
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -113,6 +116,47 @@ class StockMove(models.Model):
                     )
 
         return super(StockMove, self).create(vals_list)
+
+    def unlink(self):
+        """
+        Prevenir eliminación de moves que provienen de ventas o compras.
+        Los usuarios deben hacer modificaciones desde la orden correspondiente.
+        """
+        # Verificar si la protección está habilitada en la compañía
+        # Permitir unlink cuando viene de procesos internos de Odoo (merge, backorder, etc)
+        if not self.company_id.stock_ux_protect_moves or self._context.get("bypass_stock_ux_protect_moves"):
+            return super().unlink()
+
+        # Verificar si hay moves que provienen de órdenes de venta o compra
+        # Verificamos primero si los campos existen para soportar instalación parcial de módulos
+        protected_moves = self.env["stock.move"]
+        origins = []
+
+        # Verificar moves de ventas (si sale_stock está instalado)
+        if "sale_line_id" in self._fields:
+            sale_moves = self.filtered(lambda m: m.sale_line_id)
+            if sale_moves:
+                protected_moves |= sale_moves
+                origins.append("sales orders")
+
+        # Verificar moves de compras (si purchase_stock está instalado)
+        if "purchase_line_id" in self._fields:
+            purchase_moves = self.filtered(lambda m: m.purchase_line_id)
+            if purchase_moves:
+                protected_moves |= purchase_moves
+                origins.append("purchase orders")
+
+        if protected_moves:
+            raise UserError(
+                _(
+                    "Cannot delete stock moves that originate from %s.\n"
+                    "Please make changes from the corresponding order instead.\n\n"
+                    "Affected moves: %s"
+                )
+                % (" or ".join(origins), ", ".join(protected_moves.mapped("reference")))
+            )
+
+        return super().unlink()
 
     @api.depends("state", "picking_id")
     def _compute_is_initial_demand_editable(self):
