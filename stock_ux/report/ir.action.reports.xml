@@ -10,6 +10,15 @@
         <field name="binding_type">report</field>
     </record>
 
+    <record id="action_product_barcode_zpl" model="ir.actions.report">
+        <field name="name">Etiquetas de Productos (ZPL)</field>
+        <field name="model">product.label.layout</field>
+        <field name="report_type">qweb-text</field>
+        <field name="report_name">stock_ux.custom_product_barcode_zpl</field>
+        <field name="report_file">stock_ux.custom_product_barcode_zpl</field>
+        <field name="binding_type">report</field>
+    </record>
+
      <record id="action_report_picking_ux" model="ir.actions.report">
         <field name="name">Picking Operations</field>
         <field name="model">stock.picking</field>
