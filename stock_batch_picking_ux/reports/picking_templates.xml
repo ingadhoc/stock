@@ -12,35 +12,20 @@
                     <t t-translation="off">
 ^XA
 <!-- Inicio encabezado -->
-<t t-if="batch.book_id">
-<t t-if="batch.book_id.report_partner_id">
+<t t-set="report_partner" t-value="batch.picking_ids[:1].picking_type_id.report_partner_id"/>
+<t t-if="report_partner">
 ^CF0,60^CI28^FO50,50^FD
-<t t-esc="batch.book_id.report_partner_id.name"/>
+<t t-esc="report_partner.name"/>
 ^FS ^CF0,30 ^FO50,115^FD
-<t t-esc="batch.book_id.report_partner_id.street"/>
+<t t-esc="report_partner.street"/>
 ^FS ^FO50,155^FD
 (<t t-esc="batch.company_id.zip"/>
-)<t t-esc="batch.book_id.report_partner_id.city"/>
+)<t t-esc="report_partner.city"/>
 ^FS ^FO50,195^FD
-<t class="oe_inline" t-esc="batch.book_id.report_partner_id.state_id.name"/>
+<t class="oe_inline" t-esc="report_partner.state_id.name"/>
 ,
-<t class="oe_inline" t-esc="batch.book_id.report_partner_id.country_id.name"/>
+<t class="oe_inline" t-esc="report_partner.country_id.name"/>
 ^FS ^FO50,250^GB700,3,3^FS
-</t>
-<t t-else="">
-^CF0,60^CI28^FO50,50^FD
-<t t-esc="batch.book_id.company_id.name"/>
-^FS ^CF0,30 ^FO50,115^FD
-<t t-esc="batch.book_id.company_id.street"/>
-^FS ^FO50,155^FD
-(<t t-esc="batch.company_id.zip"/>
-)<t t-esc="batch.book_id.company_id.city"/>
-^FS ^FO50,195^FD
-<t class="oe_inline" t-esc="batch.book_id.company_id.state_id.name"/>
-,
-<t class="oe_inline" t-esc="batch.book_id.company_id.country_id.name"/>
-^FS ^FO50,250^GB700,3,3^FS
-</t>
 </t>
 <t t-else="">
 ^CF0,60 ^FO50,50^FD
@@ -113,7 +98,7 @@
 ^FX Referencias Odoo ^CFJ,25 ^FO50,680^FDOrden:^FS ^FO50,720^FDRemito:^FS ^CF0,28 ^FO160,680^FD
 <t t-esc="', '.join([o for o in batch.picking_ids.mapped('origin') if o])" styles="font-size:7px"/>
 ^FS ^FO160,720^FD
-<t t-set="voucher_names" t-value="','.join(batch.voucher_ids.mapped('name'))"/>
+<t t-set="voucher_names" t-value="batch._fields.get('l10n_ar_delivery_guide_number') and batch.l10n_ar_delivery_guide_number or ''"/>
 <t t-esc="voucher_names"/>
 ^FS ^BY3,2,160 ^FO100,765^BC^FD
 <t t-esc="batch.name"/>
@@ -147,37 +132,22 @@ Fecha
                         <div class="container" style="page-break-before: always;">
                             <div name="section0" class="row">
                                 <div class="col-12" style="page-break-before: always;">
-                                    <t t-if="batch._fields.get('book_id') and batch.book_id">
-                                        <t t-if="batch.book_id.report_partner_id">
-                                            <h4>
-                                                <span t-field="batch.book_id.report_partner_id.name"/>
-                                            </h4>
-                                            <br/>
-                                            <span t-field="batch.book_id.report_partner_id.street"/>
-                                            <br/>
+                                    <t t-set="report_partner" t-value="batch.picking_ids[:1].picking_type_id.report_partner_id"/>
+                                    <t t-if="report_partner">
+                                        <h4>
+                                            <span t-esc="report_partner.name"/>
+                                        </h4>
+                                        <br/>
+                                        <span t-esc="report_partner.street"/>
+                                        <br/>
 
-(                                            <span t-field="batch.company_id.zip"/>
-)                                            <span t-field="batch.book_id.report_partner_id.city"/>
-                                            <br/>
-                                            <span class="oe_inline" t-field="batch.book_id.report_partner_id.state_id.name"/>
+(                                        <span t-esc="batch.company_id.zip"/>
+)                                        <span t-esc="report_partner.city"/>
+                                        <br/>
+                                        <span class="oe_inline" t-esc="report_partner.state_id.name"/>
 ,
-                                            <span class="oe_inline" t-field="batch.book_id.report_partner_id.country_id.name"/>
+                                        <span class="oe_inline" t-esc="report_partner.country_id.name"/>
 
-                                        </t>
-                                        <t t-else="">
-                                            <h4>
-                                                <span t-field="batch.book_id.company_id.name"/>
-                                            </h4>
-
-                                            <span t-field="batch.book_id.company_id.street"/>
-                                            <br/>
-(                                            <span t-field="batch.company_id.zip"/>
-)                                            <span t-field="batch.book_id.company_id.city"/>
-                                            <br/>
-                                            <span class="oe_inline" t-field="batch.book_id.company_id.state_id.name"/>
-,
-                                            <span class="oe_inline" t-field="batch.book_id.company_id.country_id.name"/>
-                                        </t>
                                     </t>
                                     <t t-else="">
                                         <h4>
@@ -253,7 +223,7 @@ Transportista:
                                 <t t-esc="', '.join([o for o in batch.picking_ids.mapped('origin') if o])"/>
                             </div>
                             <div style="font-weight: normal;">Remito/s:
-                                <t t-set="voucher_names" t-value="','.join(batch.voucher_ids.mapped('name'))"/>
+                                <t t-set="voucher_names" t-value="batch._fields.get('l10n_ar_delivery_guide_number') and batch.l10n_ar_delivery_guide_number or ''"/>
                                 <t t-esc="voucher_names"/>
                             </div>
                             <br/>
