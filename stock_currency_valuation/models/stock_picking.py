@@ -31,6 +31,9 @@ class StockPicking(models.Model):
                 and rec.mapped("move_ids.purchase_line_id")
                 and rec.valuation_currency_id in rec.mapped("move_ids.purchase_line_id.order_id.currency_id")
                 and rec.currency_rate == 0
+                and rec.move_ids.purchase_line_id.order_id.invoice_ids.filtered(
+                    lambda inv: inv.state == "posted" and inv.currency_id == rec.valuation_currency_id
+                )
             ):
                 raise UserError(
                     """You cannot validate a picking with a zero currency rate.
@@ -61,7 +64,7 @@ class StockPicking(models.Model):
                     lambda line: line.parent_state == "posted"
                 )
                 if invoice_lines:
-                    rec.currency_rate = invoice_lines[:-1].move_id.invoice_currency_rate
+                    rec.currency_rate = invoice_lines[-1].move_id.invoice_currency_rate
 
     def _compute_valuation_currency_id(self):
         for rec in self.filtered(lambda x: x.purchase_id and x.picking_type_id.code == "incoming"):
