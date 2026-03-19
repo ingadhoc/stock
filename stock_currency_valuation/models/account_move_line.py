@@ -10,7 +10,7 @@ class AccountMoveLine(models.Model):
         )
         valuation_currency_id = self.product_id.with_company(self.company_id.id).categ_id.valuation_currency_id
         use_valuation_currency = valuation_currency_id == self.currency_id == self.purchase_line_id.currency_id
-        if use_valuation_currency:
+        if use_valuation_currency and svl_vals_list:
             # TODO pueden ser diferentes unidades de media
             svl_vals_list[0]["bypass_currency_valuation"] = True
             svl_vals_list[0]["value_in_currency"] = (
