@@ -54,7 +54,6 @@ class StockMoveLine(models.Model):
                 product_uom_qty_location = 0.0 if rec.location_dest_id in locations else -rec.quantity
             rec.product_uom_qty_location = product_uom_qty_location
 
-    @api.constrains("quantity")
     def _check_manual_lines(self):
         # Si tenemos este contexto es porque si o si viene de una compra
         if "previous_product_qty" in self.env.context:
@@ -106,7 +105,7 @@ class StockMoveLine(models.Model):
             quants = self.env["stock.quant"].search(
                 [("product_id", "=", self.product_id.id), ("location_id", "in", locations.ids)]
             )
-            total_available = sum(quants.mapped("available_quantity")) - self.quantity
+            total_available = sum(quants.mapped("available_quantity"))
         return total_available
 
     @api.model_create_multi
@@ -118,6 +117,7 @@ class StockMoveLine(models.Model):
             if rec.picking_id and not rec.description_picking:
                 product = rec.product_id.with_context(lang=rec.picking_id.partner_id.lang or rec.env.user.lang)
                 rec.description_picking = product._get_description(rec.picking_id.picking_type_id)
+        recs._check_manual_lines()
         return recs
 
     def _get_aggregated_product_quantities(self, **kwargs):
