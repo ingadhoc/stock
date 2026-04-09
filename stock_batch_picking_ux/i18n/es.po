@@ -124,6 +124,12 @@ msgstr "Talonario de Remitos"
 #. module: stock_batch_picking_ux
 #. odoo-python
 #: code:addons/stock_batch_picking_ux/models/stock_batch_picking.py:0
+msgid "Please complete the vouchers book for the following pickings: %s"
+msgstr "Por favor completá los talonarios de remito en los siguientes traslados: %s"
+
+#. module: stock_batch_picking_ux
+#. odoo-python
+#: code:addons/stock_batch_picking_ux/models/stock_batch_picking.py:0
 msgid "The number of packages can not be 0"
 msgstr "El numero de bultos no puede ser 0"
 
