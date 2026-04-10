@@ -18,7 +18,7 @@
     </record>
 
     <record id="action_custom_barcode_transfer_template_view_zpl" model="ir.actions.report">
-        <field name="name">Etiquetas de Productos del picking (ZPL)</field>
+        <field name="name">Product Labels from Picking (ZPL)</field>
         <field name="model">product.label.layout</field>
         <field name="report_type">qweb-text</field>
         <field name="report_name">stock_ux.custom_barcode_transfer_template_view_zpl</field>
@@ -26,7 +26,16 @@
         <field name="binding_type">report</field>
     </record>
 
-     <record id="action_report_picking_ux" model="ir.actions.report">
+    <record id="action_product_barcode_zpl" model="ir.actions.report">
+        <field name="name">Product Labels (ZPL)</field>
+        <field name="model">product.label.layout</field>
+        <field name="report_type">qweb-text</field>
+        <field name="report_name">stock_ux.custom_product_barcode_zpl</field>
+        <field name="report_file">stock_ux.custom_product_barcode_zpl</field>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="action_report_picking_ux" model="ir.actions.report">
         <field name="name">Picking Operations</field>
         <field name="model">stock.picking</field>
         <field name="report_type">qweb-pdf</field>
@@ -35,18 +44,6 @@
         <field name="print_report_name">'Picking Operations - %s - %s' % (object.partner_id.name or '', object.name)</field>
         <field name="binding_model_id" ref="model_stock_picking"/>
         <field name="binding_type">report</field>
-    </record>
-
-    <record id="action_custom_label_transfer_template_view_pdf" model="ir.actions.report">
-        <field name="name">Etiqueta de Transferencia (PDF)</field>
-        <field name="model">stock.picking</field>
-        <field name="report_type">qweb-pdf</field>
-        <field name="report_name">stock_ux.custom_label_transfer_template_view_pdf</field>
-        <field name="report_file">stock_ux.custom_label_transfer_template_view_pdf</field>
-        <field name="print_report_name">'Etiqueta - %s' % object.name</field>
-        <field name="binding_model_id" ref="model_stock_picking"/>
-        <field name="binding_type">report</field>
-        <field name="paperformat_id" ref="stock_ux.paperformat_label_10x15"/>
     </record>
 
 </odoo>

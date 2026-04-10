@@ -23,22 +23,6 @@ class StockPicking(models.Model):
         copy=False,
     )
 
-    # Label/Voucher fields for tracking printed labels
-    vouchers = fields.Char(
-        string="Labels",
-        compute="_compute_vouchers",
-        help="Summary of printed labels for this transfer",
-    )
-
-    def _compute_vouchers(self):
-        """Compute vouchers field - can be extended for tracking printed labels"""
-        for rec in self:
-            # Simple implementation - can be extended to track actual prints
-            if rec.state == "done" and rec.date_done:
-                rec.vouchers = f"Completed {rec.date_done.strftime('%d/%m/%Y')}"
-            else:
-                rec.vouchers = ""
-
     def button_validate(self):
         """
         We make checks before calling transfer
