@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- When opening from picking: replaces Copies field with per-product quantity table -->
+    <record id="view_picking_label_custom_qty" model="ir.ui.view">
+        <field name="model">product.label.layout</field>
+        <field name="inherit_id" ref="stock.product_label_layout_form_picking"/>
+        <field name="name">product.label.layout.picking.custom.qty</field>
+        <field name="arch" type="xml">
+            <!-- Insert picking_id hidden field into the existing options group -->
+            <xpath expr="//group[1]" position="inside">
+                <field name="picking_id" invisible="1"/>
+            </xpath>
+            <!-- Place quantities table and empty alert below all option groups, just before footer -->
+            <xpath expr="//footer" position="before">
+                <div class="alert alert-info" role="alert"
+                     invisible="not (picking_id and move_quantity == 'custom') or line_ids">
+                    No processed moves found in this picking.
+                </div>
+                <group string="Quantities per Product"
+                       invisible="not (picking_id and move_quantity == 'custom')">
+                    <field name="line_ids" nolabel="1" colspan="2">
+                        <list editable="bottom" create="false" delete="false">
+                            <!-- move_id must be here (even if hidden) so the client includes it in the POST -->
+                            <field name="move_id" column_invisible="True"/>
+                            <field name="name" readonly="1" string="Product"/>
+                            <field name="move_quantity" string="Quantity"/>
+                        </list>
+                    </field>
+                </group>
+            </xpath>
+            <!-- Hide Copies field when per-product quantity table is shown instead -->
+            <field name="custom_quantity" position="attributes">
+                <attribute name="invisible">move_quantity == 'move' or (picking_id and move_quantity == 'custom')</attribute>
+            </field>
+        </field>
+    </record>
+
+    <!-- When opening from product.template: shows per-variant quantity table -->
+    <record id="view_template_label_variant_qty" model="ir.ui.view">
+        <field name="model">product.label.layout</field>
+        <field name="inherit_id" ref="product.product_label_layout_form"/>
+        <field name="name">product.label.layout.template.variant.qty</field>
+        <field name="arch" type="xml">
+            <!-- Insert variant table and from_template state just before the footer,
+                 to avoid displacing //group[1] used by the picking inherited view. -->
+            <xpath expr="//footer" position="before">
+                <field name="from_template" invisible="1"/>
+                <group string="Variants to Print" invisible="not from_template">
+                    <field name="product_line_ids" nolabel="1" colspan="2">
+                        <list editable="bottom" create="false" delete="false">
+                            <field name="product_id" column_invisible="True"/>
+                            <field name="product_name" readonly="1" string="Variant"/>
+                            <field name="quantity" string="Quantity"/>
+                        </list>
+                    </field>
+                </group>
+            </xpath>
+            <!-- Hide Copies when variant table takes over -->
+            <field name="custom_quantity" position="attributes">
+                <attribute name="invisible">from_template</attribute>
+            </field>
+        </field>
+    </record>
+
+</odoo>
