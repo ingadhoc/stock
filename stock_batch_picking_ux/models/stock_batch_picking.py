@@ -16,7 +16,7 @@ class StockPickingBatch(models.Model):
         # maneje en la vista para que si esta seteado pase dominio
         # y si no esta seteado no
         # required=True,
-        help="If you choose a partner then only pickings of this partner will" "be sellectable",
+        help="If you choose a partner then only pickings of this partner willbe sellectable",
     )
     voucher_number = fields.Char()
     voucher_required = fields.Boolean(
@@ -112,10 +112,23 @@ class StockPickingBatch(models.Model):
             # al agregar la restriccion de que al menos una tenga que tener
             # cantidad entonces nunca se manda el force_qty al picking
             if all(operation.quantity == 0 for operation in rec.move_line_ids):
-                raise UserError(_("Debe definir Cantidad Realizada en al menos una " "operación."))
+                raise UserError(_("Debe definir Cantidad Realizada en al menos una operación."))
 
             if rec.restrict_number_package and not rec.number_of_packages > 0:
                 raise UserError(_("The number of packages can not be 0"))
+
+            if rec.picking_type_id.book_required:
+                if rec.picking_type_id.book_id:
+                    pickings_without_book = rec.picking_ids.filtered(lambda p: not p.book_id)
+                    pickings_without_book.book_id = rec.picking_type_id.book_id
+                else:
+                    pickings_without_book = rec.picking_ids.filtered(lambda p: not p.book_id)
+                    if pickings_without_book:
+                        raise UserError(
+                            _("Please complete the vouchers book for the following pickings: %s")
+                            % ", ".join(pickings_without_book.mapped("name"))
+                        )
+
             if rec.number_of_packages:
                 rec.picking_ids.write({"number_of_packages": rec.number_of_packages})
 
@@ -133,6 +146,16 @@ class StockPickingBatch(models.Model):
                             "name": rec.voucher_number,
                         }
                     )
+            else:
+                for picking in rec.picking_ids:
+                    if not picking.picking_type_id.auto_print_delivery_slip:
+                        continue
+                    book = picking.book_id or picking.picking_type_id.book_id
+                    if not book:
+                        continue
+                    if all(operation.quantity == 0 for operation in picking.move_line_ids):
+                        continue
+                    picking.assign_numbers(picking.get_estimated_number_of_pages(), book)
         return super(StockPickingBatch, self.with_context(do_not_assign_numbers=True)).action_done()
 
     def action_view_stock_picking(self):
