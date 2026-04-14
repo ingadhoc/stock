@@ -22,6 +22,7 @@
                 </header>
                 <sheet>
                     <group>
+                        <field name="active" invisible="1"/>
                         <field name="name"/>
                         <field name="sequence_id"/>
                         <field name="lines_per_voucher"/>

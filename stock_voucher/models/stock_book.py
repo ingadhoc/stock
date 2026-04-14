@@ -37,3 +37,4 @@ class StockBook(models.Model):
         default=lambda self: self.env.company,
     )
     next_number = fields.Integer(related="sequence_id.number_next_actual", readonly=False)
+    active = fields.Boolean(default=True)
