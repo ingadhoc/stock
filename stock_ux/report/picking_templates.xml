@@ -46,4 +46,158 @@
             </t>
 <t t-if="numero % 2 != 0 "> ^PQ1,0,1,Y^XZ </t>
 </template>
+
+<template id="stock_ux.custom_label_transfer_template_view_pdf">
+    <t t-call="web.basic_layout">
+        <t t-foreach="docs" t-as="picking">
+            <t t-set="numero" t-value="0"/>
+            <t t-set="qty" t-value="picking.number_of_packages"/>
+            <t t-if="qty == 0">
+                <t t-set="qty" t-value="1"/>
+            </t>
+            <t t-foreach="range(qty)" t-as="item">
+                <t t-set="numero" t-value="numero + 1"/>
+                <t t-translation="off">
+                    <!--inicio encabezado-->
+                    <div class="container" style="page-break-before: always;">
+                        <div name="section0" class="row">
+                            <div class="col-12" style="page-break-before: always;">
+                                <t t-if="picking._fields.get('book_id') and picking.book_id">
+                                    <t t-if="picking.book_id.report_partner_id">
+                                        <h4>
+                                            <span t-field="picking.book_id.report_partner_id.name"/>
+                                        </h4>
+                                        <br/>
+                                        <span t-field="picking.book_id.report_partner_id.street"/>
+                                        <br/>
+                                        (<span t-field="picking.company_id.zip"/>)
+                                        <span t-field="picking.book_id.report_partner_id.city"/>
+                                        <br/>
+                                        <span class="oe_inline" t-field="picking.book_id.report_partner_id.state_id.name"/>,
+                                        <span class="oe_inline" t-field="picking.book_id.report_partner_id.country_id.name"/>
+                                        <br/>
+                                        <label>Tel: </label><span t-field="picking.company_id.phone"/>
+                                    </t>
+                                    <t t-else="">
+                                        <h4>
+                                            <span t-field="picking.book_id.company_id.name"/>
+                                        </h4>
+                                        <span t-field="picking.book_id.company_id.street"/>
+                                        <br/>
+                                        (<span t-field="picking.company_id.zip"/>)
+                                        <span t-field="picking.book_id.company_id.city"/>
+                                        <br/>
+                                        <span class="oe_inline" t-field="picking.book_id.company_id.state_id.name"/>,
+                                        <span class="oe_inline" t-field="picking.book_id.company_id.country_id.name"/>
+                                        <br/>
+                                        <label>Tel: </label><span t-field="picking.company_id.phone"/>
+                                    </t>
+                                </t>
+                                <t t-else="">
+                                    <h4>
+                                        <span t-field="picking.company_id.name"/>
+                                    </h4>
+                                    <br/>
+                                    <span t-field="picking.company_id.street"/>
+                                    <br/>
+                                    (<span t-field="picking.company_id.zip"/>)
+                                    <span t-field="picking.company_id.city"/>
+                                    <br/>
+                                    <span class="oe_inline" t-field="picking.company_id.state_id.name"/>,
+                                    <span class="oe_inline" t-field="picking.company_id.country_id.name"/>
+                                    <br/>
+                                    <label>Tel: </label><span t-field="picking.company_id.phone"/>
+                                </t>
+                            </div>
+                        </div>
+
+                        <!--Fin encabezado-->
+                        <hr style="border-top: 1px solid black"/>
+                        <!-- Inicio destino -->
+                        <div style="font-weight: normal;">Destinatario:</div>
+                        <h4 style="font-weight: normal;">
+                            <t t-if="picking.partner_id.parent_id">
+                                <t t-out="picking.partner_id.parent_id.name"/>
+                            </t>
+                            <t t-else="">
+                                <t t-out="picking.partner_id.name"/>
+                            </t>
+                        </h4>
+
+                        <t t-out="picking.partner_id.street"/>
+                        <br/>
+                        [<t class="oe_inline" t-out="picking.partner_id.zip"/>]
+                        <t class="oe_inline" t-out="picking.partner_id.city"/>,
+                        <t class="oe_inline" t-out="picking.partner_id.state_id.name"/>,
+                        <t class="oe_inline" t-out="picking.partner_id.country_id.name"/>
+                        <div style="font-weight: normal;">Tel:
+                            <t t-if="picking.partner_id and (picking.partner_id.phone or picking.partner_id.mobile)">
+                                <t t-if="picking.partner_id.phone">
+                                    <t t-out="picking.partner_id.phone"/>
+                                </t>
+                                <t t-else="">
+                                    <t t-out="picking.partner_id.mobile"/>
+                                </t>
+                            </t>
+                            <t t-elif="picking.partner_id.parent_id and (picking.partner_id.parent_id.phone or picking.partner_id.parent_id.mobile)">
+                                <t t-if="picking.partner_id.parent_id.phone">
+                                    <t t-out="picking.partner_id.parent_id.phone"/>
+                                </t>
+                                <t t-else="">
+                                    <t t-out="picking.partner_id.parent_id.mobile"/>
+                                </t>
+                            </t>
+                        </div>
+                        <!-- Fin destino -->
+                        <hr style="border-top: 1px solid black"/>
+                        <!--Inicio pie-->
+
+                        <t t-if="picking._fields.get('carrier_id') and picking.carrier_id">
+                            Transportista: <t t-out="picking.carrier_id.name"/>
+                        </t>
+                        <div style="font-weight: normal;">Orden:
+                            <t t-out="picking.origin"/>
+                        </div>
+                        <br/>
+                        <div>
+                            <img t-if="picking.name"
+                                 t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', picking.name, 400, 40)"
+                                 alt="barcode" style="height:40px"/>
+                        </div>
+
+                        <div style="text-align: center;">
+                            <t t-out="picking.name"/>
+                        </div>
+
+                        <br/>
+
+                        <table class="table table-bordered" style="width:100%; border: 1px solid black;">
+                            <thead>
+                                <tr>
+                                    <th style="width:50%">Número</th>
+                                    <th style="width:50%">Fecha</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="text-align:center;">
+                                        <t t-out="numero"/> de
+                                        <t t-if="picking.number_of_packages == 0">1</t>
+                                        <t t-else="">
+                                            <t t-out="picking.number_of_packages"/>
+                                        </t>
+                                    </td>
+                                    <td style="text-align:center;">
+                                        <t t-out="picking.date_done" t-options="{'widget': 'date'}"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!--Fin pie-->
+                    </div>
+                </t>
+            </t>
+        </t>
+    </t>
+</template>
 </odoo>

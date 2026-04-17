@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+    <record id="paperformat_label_10x15" model="report.paperformat">
+        <field name="name">Etiqueta de despacho (10x15)</field>
+        <field name="default" eval="False"/>
+        <field name="format">custom</field>
+        <field name="page_height">150</field>
+        <field name="page_width">100</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">5</field>
+        <field name="margin_bottom">5</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">20</field>
+        <field name="dpi">90</field>
+    </record>
+
     <record id="action_custom_barcode_transfer_template_view_zpl" model="ir.actions.report">
         <field name="name">Etiquetas de Productos del picking (ZPL)</field>
         <field name="model">product.label.layout</field>
@@ -19,6 +35,18 @@
         <field name="print_report_name">'Picking Operations - %s - %s' % (object.partner_id.name or '', object.name)</field>
         <field name="binding_model_id" ref="model_stock_picking"/>
         <field name="binding_type">report</field>
+    </record>
+
+    <record id="action_custom_label_transfer_template_view_pdf" model="ir.actions.report">
+        <field name="name">Etiqueta de Transferencia (PDF)</field>
+        <field name="model">stock.picking</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">stock_ux.custom_label_transfer_template_view_pdf</field>
+        <field name="report_file">stock_ux.custom_label_transfer_template_view_pdf</field>
+        <field name="print_report_name">'Etiqueta - %s' % object.name</field>
+        <field name="binding_model_id" ref="model_stock_picking"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="stock_ux.paperformat_label_10x15"/>
     </record>
 
 </odoo>
