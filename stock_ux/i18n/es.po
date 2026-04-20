@@ -10,15 +10,17 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-17 18:17+0000\n"
-"PO-Revision-Date: 2025-11-04 14:45+0000\n"
-"Last-Translator: ADHOC - Bot <transbot@adhoc.com.ar>, 2025\n"
-"Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
+"PO-Revision-Date: 2026-04-20 16:41+0000\n"
+"Last-Translator: julia elizondo <jue@adhoc.inc>\n"
+"Language-Team: Spanish <https://translation.dev-adhoc.com/projects/"
+"stock-19-0/stock-19-0-stock_ux/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? "
-"1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0)"
+" ? 1 : 2);\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: stock_ux
 #: model:ir.actions.report,print_report_name:stock_ux.action_custom_label_transfer_template_view_pdf
@@ -30,6 +32,8 @@ msgstr ""
 msgid ""
 "'Picking Operations - %s - %s' % (object.partner_id.name or '', object.name)"
 msgstr ""
+"'Operaciones de preparación de pedidos - %s - %s' % (object.partner_id.name "
+"or '', object.name)"
 
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.report_delivery_document
@@ -60,7 +64,7 @@ msgstr ""
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_type_form
 msgid "Advance Configuration"
-msgstr ""
+msgstr "Configuración Avanzada"
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_res_config_settings__delivery_slip_add_product_name
@@ -115,7 +119,7 @@ msgstr "Bloquear forzar disponibilidad"
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_picking_type__number_of_packages
 msgid "Calculate package number"
-msgstr ""
+msgstr "Calcular número de paquete"
 
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
@@ -136,6 +140,11 @@ msgid ""
 "\n"
 "Affected moves: %s"
 msgstr ""
+"No se pueden eliminar los movimientos de inventario vinculados a órdenes de "
+"venta o de compra.\n"
+"Modifique las cantidades en la orden de origen.\n"
+"\n"
+"Movimientos afectados: %s"
 
 #. module: stock_ux
 #: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint__rotation
@@ -407,6 +416,7 @@ msgstr ""
 #: model:ir.model.fields,help:stock_ux.field_stock_picking_type__restrict_number_package
 msgid "If true, the number of packages will be required before validation"
 msgstr ""
+"Si es Verdadero, se solicitará el número de paquetes antes de la validación"
 
 #. module: stock_ux
 #: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint__active_product
@@ -1021,6 +1031,8 @@ msgid ""
 "When a picking of this type is validated, the number of packages will be "
 "computed according to the packages contained in the moves."
 msgstr ""
+"Cuando se valide una selección de este tipo, el número de paquetes se "
+"calculará en función de los paquetes que contengan los movimientos."
 
 #. module: stock_ux
 #: model:ir.model.fields,help:stock_ux.field_stock_rule__propagate_carrier
@@ -1053,6 +1065,8 @@ msgid ""
 "You can not duplicate a Picking because \"Block Additional Quantity\" is "
 "enabled on the picking type \"%(name)s\""
 msgstr ""
+"No se puede duplicar una selección porque la opción «Bloquear cantidad "
+"adicional» está activada en el tipo de selección «%(name)s»"
 
 #. module: stock_ux
 #. odoo-python
@@ -1074,6 +1088,9 @@ msgid ""
 "restricted for your user. Please contact your Inventory Manager if you need "
 "to perform this operation."
 msgstr ""
+"No se puede modificar el tipo de operación una vez que se ha establecido. "
+"Esta acción está restringida para su usuario. Póngase en contacto con su "
+"administrador de inventario si necesita realizar esta operación."
 
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.custom_barcode_transfer_template_view_zpl
