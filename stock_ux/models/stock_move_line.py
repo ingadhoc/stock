@@ -36,12 +36,18 @@ class StockMoveLine(models.Model):
         if not location:
             self.update({"product_uom_qty_location": 0.0})
             return False
-        # because now we use location_id to select location, we have compelte
-        # location name. If y need we can use some code of
-        # _get_domain_locations on stock/product.py
-        location_name = location[0]
-        if isinstance(location[0], int):
-            location_name = self.env["stock.location"].browse(location[0]).reference
+        # `location` puede venir como int (ID único), list/tuple de ints, o string.
+        # En v19 algunas vistas lo pasan como int directo → location[0] explota.
+        if isinstance(location, int):
+            location_name = self.env["stock.location"].browse(location).complete_name
+        elif isinstance(location, (list, tuple)):
+            first = location[0]
+            location_name = (
+                self.env["stock.location"].browse(first).complete_name
+                if isinstance(first, int) else first
+            )
+        else:
+            location_name = location  # string
         locations = self.env["stock.location"].search([("complete_name", "ilike", location_name)])
         for rec in self:
             product_uom_qty_location = rec.quantity
