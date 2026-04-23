@@ -131,20 +131,14 @@
                         <t class="oe_inline" t-out="picking.partner_id.state_id.name"/>,
                         <t class="oe_inline" t-out="picking.partner_id.country_id.name"/>
                         <div style="font-weight: normal;">Tel:
-                            <t t-if="picking.partner_id and (picking.partner_id.phone or picking.partner_id.mobile)">
+                            <t t-if="picking.partner_id and picking.partner_id.phone">
                                 <t t-if="picking.partner_id.phone">
                                     <t t-out="picking.partner_id.phone"/>
                                 </t>
-                                <t t-else="">
-                                    <t t-out="picking.partner_id.mobile"/>
-                                </t>
                             </t>
-                            <t t-elif="picking.partner_id.parent_id and (picking.partner_id.parent_id.phone or picking.partner_id.parent_id.mobile)">
+                            <t t-elif="picking.partner_id.parent_id and picking.partner_id.parent_id.phone">
                                 <t t-if="picking.partner_id.parent_id.phone">
                                     <t t-out="picking.partner_id.parent_id.phone"/>
-                                </t>
-                                <t t-else="">
-                                    <t t-out="picking.partner_id.parent_id.mobile"/>
                                 </t>
                             </t>
                         </div>
