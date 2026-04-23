@@ -97,6 +97,11 @@ class StockMove(models.Model):
             merge_into=merge_into
         )
 
+    def action_explode(self):
+        # Cuando se explota un kit, MRP cancela y elimina el move original del producto kit,
+        # aunque tenga sale_line_id. Permitimos ese unlink con can_delete=True.
+        return super(StockMove, self.with_context(can_delete=True)).action_explode()
+
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
