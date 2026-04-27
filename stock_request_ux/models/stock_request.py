@@ -8,17 +8,6 @@ from odoo import api, fields, models
 class StockRequest(models.Model):
     _inherit = "stock.request"
 
-    picking_ids = fields.One2many(
-        compute="_compute_picking_ids",
-    )
-    picking_count = fields.Integer(
-        compute="_compute_picking_ids",
-    )
-    # clean this field because of _check_product_stock_request
-    # and the fact that we add copy=True to stock_request_ids
-    procurement_group_id = fields.Many2one(
-        copy=False,
-    )
     order_id = fields.Many2one(
         ondelete="cascade",
     )
@@ -29,15 +18,6 @@ class StockRequest(models.Model):
         if self.order_id.route_id.id in self.route_ids.ids:
             self.route_id = self.order_id.route_id.id
         return res
-
-    @api.depends("allocation_ids")
-    def _compute_picking_ids(self):
-        sro_with_procurement = self.filtered("procurement_group_id")
-        (self - sro_with_procurement).update({"picking_ids": self.env["stock.picking"], "picking_count": 0})
-        for rec in sro_with_procurement:
-            all_moves = self.env["stock.move"].search([("group_id", "=", rec.procurement_group_id.id)])
-            rec.picking_ids = all_moves.mapped("picking_id")
-            rec.picking_count = len(rec.picking_ids)
 
     # DEPRECATED def action_cancel(self):
 
@@ -55,7 +35,7 @@ class StockRequest(models.Model):
             # cosas que ya se entregaron parcialmente)
             to_cancel_moves._action_cancel()
             rec.order_id.message_post(
-                body=self.env._('Cancel remaining call for line "%s" (id %s), line ' "qty updated from %s to %s")
+                body=self.env._('Cancel remaining call for line "%s" (id %s), line qty updated from %s to %s')
                 % (rec.name, rec.id, old_product_uom_qty, rec.qty_done)
             )
             rec.check_done()
