@@ -2,7 +2,7 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import _, api, fields, models
+from odoo import Command, _, api, fields, models
 from odoo.exceptions import UserError
 
 
@@ -16,7 +16,7 @@ class StockPickingBatch(models.Model):
         # maneje en la vista para que si esta seteado pase dominio
         # y si no esta seteado no
         # required=True,
-        help="If you choose a partner then only pickings of this partner will be sellectable",
+        help="If you choose a partner then only pickings of this partner will be selectable",
     )
     restrict_number_package = fields.Boolean(
         compute="_compute_picking_type_data",
@@ -27,7 +27,6 @@ class StockPickingBatch(models.Model):
     picking_type_id = fields.Many2one(required=True)
     picking_type_ids = fields.Many2many(
         "stock.picking.type",
-        # related='picking_type_id.voucher_required',
         compute="_compute_picking_type_data",
     )
     picking_count = fields.Integer(
@@ -54,16 +53,12 @@ class StockPickingBatch(models.Model):
             rec.allowed_picking_ids = rec.allowed_picking_ids.filtered(lambda p: p.partner_id == rec.partner_id)
 
     def write(self, vals):
-        # Interceptamos las operaciones de picking_ids para evitar que se borren físicamente
-        # En lugar de comando 2 (delete), usamos comando 3 (unlink) que solo desvincula
+        # Intercept DELETE commands on picking_ids to prevent physical deletion —
+        # removing from the batch (UNLINK) is sufficient.
         if "picking_ids" in vals:
-            new_picking_ops = []
-            for operation in vals["picking_ids"]:
-                if operation[0] == 2:  # Si es un delete (2), lo convertimos a unlink (3)
-                    new_picking_ops.append((3, operation[1]))  # Unlink en lugar de delete
-                else:
-                    new_picking_ops.append(operation)
-            vals["picking_ids"] = new_picking_ops
+            vals["picking_ids"] = [
+                Command.unlink(op[1]) if op[0] == Command.DELETE else op for op in vals["picking_ids"]
+            ]
         return super().write(vals)
 
     @api.depends("picking_ids")

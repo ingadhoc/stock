@@ -67,7 +67,7 @@
                     <field name="number_of_packages" invisible="picking_type_code == 'incoming' or not partner_id"/>
                 </group>
             </group>
-            <!-- deamos scheduled_date del lado derecho igual que en pickings -->
+            <!-- dejamos scheduled_date del lado derecho igual que en pickings -->
             <field name="number_of_packages" position="before">
                 <field name="scheduled_date" position="move"/>
             </field>

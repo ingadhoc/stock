@@ -19,7 +19,7 @@
             </field>
 
             <field name="origin" position="after">
-                <!-- tecnicamente es para outgoing pero muchos clientes imprimen remito en paso anterior -->
+                <!-- técnicamente es para outgoing pero muchos clientes imprimen remito en paso anterior -->
                 <field name="number_of_packages" invisible="picking_type_code == 'incoming'"/>
             </field>
 
