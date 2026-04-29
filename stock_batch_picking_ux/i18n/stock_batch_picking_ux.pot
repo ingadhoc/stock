@@ -1,0 +1,154 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_batch_picking_ux
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-29 14:17+0000\n"
+"PO-Revision-Date: 2026-04-29 14:17+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_batch_picking_ux
+#: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_picking_batch__picking_count
+msgid "# Transferencias"
+msgstr ""
+
+#. module: stock_batch_picking_ux
+#: model_terms:ir.ui.view,arch_db:stock_batch_picking_ux.report_batch_delivery_document
+msgid "<strong>Operation Type:</strong>"
+msgstr ""
+
+#. module: stock_batch_picking_ux
+#: model_terms:ir.ui.view,arch_db:stock_batch_picking_ux.report_batch_delivery_document
+msgid "<strong>Responsible:</strong>"
+msgstr ""
+
+#. module: stock_batch_picking_ux
+#: model_terms:ir.ui.view,arch_db:stock_batch_picking_ux.report_batch_delivery_document
+msgid "<strong>Scheduled Date</strong>"
+msgstr ""
+
+#. module: stock_batch_picking_ux
+#: model:ir.model,name:stock_batch_picking_ux.model_stock_picking_batch
+#: model_terms:ir.ui.view,arch_db:stock_batch_picking_ux.report_batch_delivery_document
+msgid "Batch Transfer"
+msgstr ""
+
+#. module: stock_batch_picking_ux
+#: model:ir.model,name:stock_batch_picking_ux.model_stock_picking_to_batch
+msgid "Batch Transfer Lines"
+msgstr ""
+
+#. module: stock_batch_picking_ux
+#: model:ir.actions.report,name:stock_batch_picking_ux.action_report_batch_deliveryslip
+msgid "Delivery Slip"
+msgstr ""
+
+#. module: stock_batch_picking_ux
+#: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_picking__display_name
+#: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_picking_batch__display_name
+#: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_picking_to_batch__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: stock_batch_picking_ux
+#: model:ir.actions.report,name:stock_batch_picking_ux.action_custom_label_transfer_template_view_pdf
+msgid "Etiqueta de despacho (PDF)"
+msgstr ""
+
+#. module: stock_batch_picking_ux
+#: model:ir.actions.report,name:stock_batch_picking_ux.action_custom_label_transfer_template_zpl
+msgid "Etiqueta de despacho (ZPL)"
+msgstr ""
+
+#. module: stock_batch_picking_ux
+#: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_picking__id
+#: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_picking_batch__id
+#: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_picking_to_batch__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_batch_picking_ux
+#: model:ir.model.fields,help:stock_batch_picking_ux.field_stock_picking_batch__partner_id
+msgid ""
+"If you choose a partner then only pickings of this partner will be "
+"selectable"
+msgstr ""
+
+#. module: stock_batch_picking_ux
+#: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_picking_batch__notes
+#: model_terms:ir.ui.view,arch_db:stock_batch_picking_ux.stock_batch_picking_form
+msgid "Notes"
+msgstr ""
+
+#. module: stock_batch_picking_ux
+#: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_picking_batch__number_of_packages
+msgid "Number Of Packages"
+msgstr ""
+
+#. module: stock_batch_picking_ux
+#: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_picking_batch__picking_type_id
+msgid "Operation Type"
+msgstr ""
+
+#. module: stock_batch_picking_ux
+#: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_picking_batch__partner_id
+msgid "Partner"
+msgstr ""
+
+#. module: stock_batch_picking_ux
+#: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_picking_batch__picking_type_ids
+msgid "Picking Type"
+msgstr ""
+
+#. module: stock_batch_picking_ux
+#: model_terms:ir.ui.view,arch_db:stock_batch_picking_ux.stock_batch_picking_form
+msgid "Pickings"
+msgstr ""
+
+#. module: stock_batch_picking_ux
+#: model_terms:ir.ui.view,arch_db:stock_batch_picking_ux.stock_batch_picking_form
+msgid "Print"
+msgstr ""
+
+#. module: stock_batch_picking_ux
+#: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_picking_batch__restrict_number_package
+msgid "Restrict Number Package"
+msgstr ""
+
+#. module: stock_batch_picking_ux
+#. odoo-python
+#: code:addons/stock_batch_picking_ux/models/stock_batch_picking.py:0
+msgid "The number of packages can not be 0"
+msgstr ""
+
+#. module: stock_batch_picking_ux
+#: model:ir.model,name:stock_batch_picking_ux.model_stock_picking
+msgid "Transfer"
+msgstr ""
+
+#. module: stock_batch_picking_ux
+#: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_picking_batch__picking_type_code
+#: model_terms:ir.ui.view,arch_db:stock_batch_picking_ux.stock_batch_picking_search
+msgid "Type of Operation"
+msgstr ""
+
+#. module: stock_batch_picking_ux
+#. odoo-python
+#: code:addons/stock_batch_picking_ux/models/stock_picking.py:0
+msgid ""
+"You cannot change the operation type of a picking if it is already assigned "
+"to a batch."
+msgstr ""
+
+#. module: stock_batch_picking_ux
+#: model:ir.model.fields,help:stock_batch_picking_ux.field_stock_picking_batch__notes
+msgid "free form remarks"
+msgstr ""
