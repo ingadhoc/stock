@@ -2,7 +2,8 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import api, fields, models
+from odoo import _, api, fields, models
+from odoo.exceptions import UserError
 
 
 class StockPickingBatch(models.Model):
@@ -15,11 +16,11 @@ class StockPickingBatch(models.Model):
         # maneje en la vista para que si esta seteado pase dominio
         # y si no esta seteado no
         # required=True,
-        help="If you choose a partner then only pickings of this partner will" "be sellectable",
+        help="If you choose a partner then only pickings of this partner will be sellectable",
     )
-    # restrict_number_package = fields.Boolean(
-    #     compute="_compute_picking_type_data",
-    # )
+    restrict_number_package = fields.Boolean(
+        compute="_compute_picking_type_data",
+    )
     number_of_packages = fields.Integer(
         copy=False,
     )
@@ -70,18 +71,23 @@ class StockPickingBatch(models.Model):
         for rec in self:
             types = rec.picking_ids.mapped("picking_type_id")
             rec.picking_type_ids = types
-            # rec.voucher_required = any(x.voucher_required for x in types)
-            # rec.restrict_number_package = False
-            # este viene exigido desde la cia pero seguramente lo movamos a
-            # exigir desde picking type
+            rec.restrict_number_package = False
             # solo es requerido para outgoings
-            # if rec.picking_type_code == "outgoing":
-            #     rec.restrict_number_package = any(x.picking_type_id.restrict_number_package for x in rec.picking_ids)
+            if rec.picking_type_code == "outgoing":
+                rec.restrict_number_package = any(t.restrict_number_package for t in types)
 
     @api.onchange("picking_type_code", "partner_id")
     def changes_set_pickings(self):
         # if we change type or partner reset pickings
         self.picking_ids = False
+
+    def action_done(self):
+        for rec in self:
+            if rec.restrict_number_package and not rec.number_of_packages > 0:
+                raise UserError(_("The number of packages can not be 0"))
+            if rec.number_of_packages:
+                rec.picking_ids.write({"number_of_packages": rec.number_of_packages})
+        return super().action_done()
 
     def action_view_stock_picking(self):
         """This function returns an action that display existing pickings of
