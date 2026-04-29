@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-17 18:17+0000\n"
+"POT-Creation-Date: 2026-04-29 14:17+0000\n"
 "PO-Revision-Date: 2026-04-20 16:41+0000\n"
 "Last-Translator: julia elizondo <jue@adhoc.inc>\n"
 "Language-Team: Spanish <https://translation.dev-adhoc.com/projects/"
@@ -18,8 +18,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0)"
-" ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == "
+"0) ? 1 : 2);\n"
 "X-Generator: Weblate 5.10.4\n"
 
 #. module: stock_ux
@@ -628,7 +628,6 @@ msgstr "Paquete"
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_operation_wizard__picking_id
-#: model_terms:ir.ui.view,arch_db:stock_ux.stock_move_line_view_search
 msgid "Picking"
 msgstr "Transferencia"
 
@@ -649,13 +648,13 @@ msgid "Picking Operations"
 msgstr "Operaciones de Traslado"
 
 #. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.stock_move_line_view_search
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_move_tree
 msgid "Picking Partner"
 msgstr "Contacto de Transferencia"
 
 #. module: stock_ux
 #: model:ir.model,name:stock_ux.model_stock_picking_type
-#: model_terms:ir.ui.view,arch_db:stock_ux.stock_move_line_view_search
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_move_search
 msgid "Picking Type"
 msgstr "Tipo de albarán"
@@ -853,6 +852,11 @@ msgstr "Mostrar lotes seleccionados en movimientos de stock"
 msgid ""
 "Si marca esta opción, en los comprobantes de entrega se mostrarán las "
 "cantidades pendientes de entrega."
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.stock_move_line_view_search
+msgid "Source"
 msgstr ""
 
 #. module: stock_ux
