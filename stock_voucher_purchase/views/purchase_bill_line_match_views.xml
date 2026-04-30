@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="purchase_bill_line_match_tree" model="ir.ui.view">
+        <field name="name">purchase.bill.line.match.list.stock_voucher</field>
+        <field name="model">purchase.bill.line.match</field>
+        <field name="inherit_id" ref="purchase.purchase_bill_line_match_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='qty_invoiced']" position="after">
+                <field name="vouchers" string="Remitos" optional="show" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
