@@ -17,6 +17,27 @@
         <field name="dpi">90</field>
     </record>
 
+    <record id="action_custom_label_transfer_template_zpl" model="ir.actions.report">
+        <field name="name">Etiqueta de despacho (ZPL)</field>
+        <field name="model">stock.picking</field>
+        <field name="binding_model_id" ref="stock.model_stock_picking"/>
+        <field name="report_type">qweb-text</field>
+        <field name="report_name">stock_ux.custom_label_transfer_template_view_zpl</field>
+        <field name="report_file">stock_ux.custom_label_transfer_template_view_zpl</field>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="action_custom_label_transfer_template_view_pdf" model="ir.actions.report">
+        <field name="name">Etiqueta de despacho (PDF)</field>
+        <field name="model">stock.picking</field>
+        <field name="binding_model_id" ref="stock.model_stock_picking"/>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">stock_ux.custom_label_transfer_template_view_pdf</field>
+        <field name="report_file">stock_ux.custom_label_transfer_template_view_pdf</field>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="stock_ux.paperformat_label_10x15"/>
+    </record>
+
     <record id="action_custom_barcode_transfer_template_view_zpl" model="ir.actions.report">
         <field name="name">Product Labels from Picking (ZPL)</field>
         <field name="model">product.label.layout</field>
