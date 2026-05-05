@@ -43,6 +43,12 @@ msgid "Clean Voucher Data"
 msgstr "Limpiar Remitos"
 
 #. module: stock_voucher_ux
+#. odoo-python
+#: code:addons/stock_voucher_ux/models/stock_picking.py:0
+msgid "The voucher number %s exceeds the range specified in the CAI. Please update the range or use a different CAI with a different range."
+msgstr "El número de remito %s excede el rango especificado en el CAI. Actualice el rango o utilice otro CAI con un rango diferente."
+
+#. module: stock_voucher_ux
 #: model:ir.model.fields,help:stock_voucher_ux.field_stock_book__autoprinted
 #: model:ir.model.fields,help:stock_voucher_ux.field_stock_picking__autoprinted
 msgid ""
@@ -89,6 +95,11 @@ msgstr "Imprimir Remitos"
 #: model:ir.model.fields,field_description:stock_voucher_ux.field_stock_picking__printed
 msgid "Printed"
 msgstr "Impreso"
+
+#. module: stock_voucher_ux
+#: model:ir.model.fields,field_description:stock_voucher_ux.field_stock_book__sequence_to
+msgid "Sequence To"
+msgstr "Secuencia Hasta"
 
 #. module: stock_voucher_ux
 #: model:ir.model,name:stock_voucher_ux.model_stock_book
