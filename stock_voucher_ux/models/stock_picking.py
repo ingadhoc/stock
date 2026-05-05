@@ -2,7 +2,7 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import api, fields, models
+from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
 
@@ -44,7 +44,7 @@ class StockPicking(models.Model):
         else:
             if self.book_id.sequence_to and int(self.next_voucher_number) > int(self.book_id.sequence_to):
                 raise UserError(
-                    self.env._(
+                    _(
                         "The voucher number %s exceeds the range specified in the CAI. Please update the range or use a different CAI with a different range.",
                         self.next_voucher_number,
                     )
