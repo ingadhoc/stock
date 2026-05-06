@@ -29,3 +29,7 @@ msgstr "Movimientos de producto detallados"
 #: model:ir.ui.menu,name:stock.stock_move_menu
 msgid "Products Moves Detailed"
 msgstr "Movimientos de productos"
+#. module: stock
+#: model:ir.ui.menu,name:stock.menu_product_stock
+msgid "Stock"
+msgstr "Existencias"
