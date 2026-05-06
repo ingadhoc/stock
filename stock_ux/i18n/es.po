@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-29 14:17+0000\n"
+"POT-Creation-Date: 2026-05-05 16:10+0000\n"
 "PO-Revision-Date: 2026-04-20 16:41+0000\n"
 "Last-Translator: julia elizondo <jue@adhoc.inc>\n"
 "Language-Team: Spanish <https://translation.dev-adhoc.com/projects/"
@@ -21,11 +21,6 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == "
 "0) ? 1 : 2);\n"
 "X-Generator: Weblate 5.10.4\n"
-
-#. module: stock_ux
-#: model:ir.actions.report,print_report_name:stock_ux.action_custom_label_transfer_template_view_pdf
-msgid "'Etiqueta - %s' % object.name"
-msgstr ""
 
 #. module: stock_ux
 #: model:ir.actions.report,print_report_name:stock_ux.action_report_picking_ux
@@ -199,12 +194,14 @@ msgstr "Confirmar"
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_operation_wizard__create_uid
 #: model:ir.model.fields,field_description:stock_ux.field_stock_picking_zpl_lines__create_uid
+#: model:ir.model.fields,field_description:stock_ux.field_stock_product_zpl_lines__create_uid
 msgid "Created by"
 msgstr "Creado por"
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_operation_wizard__create_date
 #: model:ir.model.fields,field_description:stock_ux.field_stock_picking_zpl_lines__create_date
+#: model:ir.model.fields,field_description:stock_ux.field_stock_product_zpl_lines__create_date
 msgid "Created on"
 msgstr "Creado el"
 
@@ -265,6 +262,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_ux.field_stock_picking__display_name
 #: model:ir.model.fields,field_description:stock_ux.field_stock_picking_type__display_name
 #: model:ir.model.fields,field_description:stock_ux.field_stock_picking_zpl_lines__display_name
+#: model:ir.model.fields,field_description:stock_ux.field_stock_product_zpl_lines__display_name
 #: model:ir.model.fields,field_description:stock_ux.field_stock_return_picking__display_name
 #: model:ir.model.fields,field_description:stock_ux.field_stock_rule__display_name
 #: model:ir.model.fields,field_description:stock_ux.field_stock_scrap__display_name
@@ -338,12 +336,12 @@ msgstr ""
 
 #. module: stock_ux
 #: model:ir.actions.report,name:stock_ux.action_custom_label_transfer_template_view_pdf
-msgid "Etiqueta de Transferencia (PDF)"
+msgid "Etiqueta de despacho (PDF)"
 msgstr ""
 
 #. module: stock_ux
-#: model:ir.actions.report,name:stock_ux.action_custom_barcode_transfer_template_view_zpl
-msgid "Etiquetas de Productos del picking (ZPL)"
+#: model:ir.actions.report,name:stock_ux.action_custom_label_transfer_template_zpl
+msgid "Etiqueta de despacho (ZPL)"
 msgstr ""
 
 #. module: stock_ux
@@ -360,6 +358,11 @@ msgstr "Seguidores (Canales)"
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_form
 msgid "Force Availability"
 msgstr "Forzar Disponibilidad"
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_product_label_layout__from_template
+msgid "From Template"
+msgstr ""
 
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
@@ -384,6 +387,7 @@ msgstr "Tiene Mensaje"
 #: model:ir.model.fields,field_description:stock_ux.field_stock_picking__id
 #: model:ir.model.fields,field_description:stock_ux.field_stock_picking_type__id
 #: model:ir.model.fields,field_description:stock_ux.field_stock_picking_zpl_lines__id
+#: model:ir.model.fields,field_description:stock_ux.field_stock_product_zpl_lines__id
 #: model:ir.model.fields,field_description:stock_ux.field_stock_return_picking__id
 #: model:ir.model.fields,field_description:stock_ux.field_stock_rule__id
 #: model:ir.model.fields,field_description:stock_ux.field_stock_scrap__id
@@ -447,12 +451,14 @@ msgstr "Es un seguidor"
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_operation_wizard__write_uid
 #: model:ir.model.fields,field_description:stock_ux.field_stock_picking_zpl_lines__write_uid
+#: model:ir.model.fields,field_description:stock_ux.field_stock_product_zpl_lines__write_uid
 msgid "Last Updated by"
 msgstr "Actualizado por"
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_operation_wizard__write_date
 #: model:ir.model.fields,field_description:stock_ux.field_stock_picking_zpl_lines__write_date
+#: model:ir.model.fields,field_description:stock_ux.field_stock_product_zpl_lines__write_date
 msgid "Last Updated on"
 msgstr "Actualizado el"
 
@@ -553,6 +559,11 @@ msgid "Net Quantity Location"
 msgstr "Cantidad neta en ubicación"
 
 #. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_label_custom_qty
+msgid "No processed moves found in this picking."
+msgstr ""
+
+#. module: stock_ux
 #. odoo-python
 #: code:addons/stock_ux/models/stock_scrap.py:0
 msgid ""
@@ -627,6 +638,7 @@ msgid "Package"
 msgstr "Paquete"
 
 #. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_product_label_layout__picking_id
 #: model:ir.model.fields,field_description:stock_ux.field_stock_operation_wizard__picking_id
 msgid "Picking"
 msgstr "Transferencia"
@@ -691,14 +703,12 @@ msgid ""
 msgstr ""
 
 #. module: stock_ux
-#: model:ir.model,name:stock_ux.model_stock_picking_zpl_lines
-msgid "Print Stock Voucher lines"
-msgstr "Imprimir las Líneas de Remito"
-
-#. module: stock_ux
 #: model:ir.model,name:stock_ux.model_product_template
+#: model:ir.model.fields,field_description:stock_ux.field_stock_picking_zpl_lines__name
+#: model:ir.model.fields,field_description:stock_ux.field_stock_product_zpl_lines__product_id
 #: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__product_id
 #: model_terms:ir.ui.view,arch_db:stock_ux.stock_move_line_view_search
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_label_custom_qty
 msgid "Product"
 msgstr "Producto"
 
@@ -706,6 +716,16 @@ msgstr "Producto"
 #: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__active_product
 msgid "Product Active"
 msgstr "Producto Activo"
+
+#. module: stock_ux
+#: model:ir.actions.report,name:stock_ux.action_product_barcode_zpl
+msgid "Product Labels (ZPL)"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.actions.report,name:stock_ux.action_custom_barcode_transfer_template_view_zpl
+msgid "Product Labels from Picking (ZPL)"
+msgstr ""
 
 #. module: stock_ux
 #. odoo-javascript
@@ -722,6 +742,16 @@ msgstr "Movimientos de producto (línea de movimiento de stock)"
 #: model:ir.model,name:stock_ux.model_product_product
 msgid "Product Variant"
 msgstr "Variante de producto"
+
+#. module: stock_ux
+#: model:ir.model,name:stock_ux.model_stock_product_zpl_lines
+msgid "Product ZPL Label lines"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_product_label_layout__product_line_ids
+msgid "Products"
+msgstr ""
 
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.product_form_view_procurement_button
@@ -750,6 +780,18 @@ msgid "Qty Multiple"
 msgstr "Cantidad múltiple"
 
 #. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_label_custom_qty
+msgid "Quantities per Product"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_product_zpl_lines__quantity
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_label_custom_qty
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_template_label_variant_qty
+msgid "Quantity"
+msgstr ""
+
+#. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
 msgid "Ready"
 msgstr "Listo"
@@ -758,11 +800,6 @@ msgstr "Listo"
 #: model:ir.model.fields,field_description:stock_ux.field_stock_return_picking__reason
 msgid "Reason for the return"
 msgstr "Razón de devolución"
-
-#. module: stock_ux
-#: model:ir.model.fields,field_description:stock_ux.field_stock_picking_zpl_lines__name
-msgid "Reference"
-msgstr "Descripción"
 
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
@@ -890,6 +927,11 @@ msgid "Stock Operation Wizard"
 msgstr "Asistente de Operaciones de Stock"
 
 #. module: stock_ux
+#: model:ir.model,name:stock_ux.model_stock_picking_zpl_lines
+msgid "Stock Picking ZPL Label Lines"
+msgstr ""
+
+#. module: stock_ux
 #: model:ir.model,name:stock_ux.model_stock_forecasted_product_product
 msgid "Stock Replenishment Report"
 msgstr "Informe de reposición de stock"
@@ -995,6 +1037,17 @@ msgid "Used Lots"
 msgstr "Lotes Usados"
 
 #. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_product_zpl_lines__product_name
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_template_label_variant_qty
+msgid "Variant"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_template_label_variant_qty
+msgid "Variants to Print"
+msgstr ""
+
+#. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
 msgid "Waiting"
 msgstr "Esperando"
@@ -1049,6 +1102,11 @@ msgid "With Quantity Done"
 msgstr "Con Cantidad Hecha"
 
 #. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_product_zpl_lines__wizard_id
+msgid "Wizard"
+msgstr ""
+
+#. module: stock_ux
 #. odoo-python
 #: code:addons/stock_ux/models/stock_picking.py:0
 msgid ""
@@ -1097,12 +1155,24 @@ msgstr ""
 "administrador de inventario si necesita realizar esta operación."
 
 #. module: stock_ux
+#: model:ir.model.fields.selection,name:stock_ux.selection__product_label_layout__zpl_template__zpl_5x25
+msgid "ZPL 5 x 2,5 cm"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_product_label_layout__zpl_template
+msgid "ZPL Template"
+msgstr ""
+
+#. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.custom_barcode_transfer_template_view_zpl
+#: model_terms:ir.ui.view,arch_db:stock_ux.custom_product_barcode_zpl
 msgid "^FS"
 msgstr ""
 
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.custom_barcode_transfer_template_view_zpl
+#: model_terms:ir.ui.view,arch_db:stock_ux.custom_product_barcode_zpl
 msgid ""
 "^FS\n"
 "\n"
@@ -1114,6 +1184,7 @@ msgstr ""
 
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.custom_barcode_transfer_template_view_zpl
+#: model_terms:ir.ui.view,arch_db:stock_ux.custom_product_barcode_zpl
 msgid ""
 "^FS\n"
 "\n"
@@ -1125,6 +1196,7 @@ msgstr ""
 
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.custom_barcode_transfer_template_view_zpl
+#: model_terms:ir.ui.view,arch_db:stock_ux.custom_product_barcode_zpl
 msgid ""
 "^FS\n"
 "^FO10,40\n"
@@ -1135,6 +1207,7 @@ msgstr ""
 
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.custom_barcode_transfer_template_view_zpl
+#: model_terms:ir.ui.view,arch_db:stock_ux.custom_product_barcode_zpl
 msgid ""
 "^FS\n"
 "^FO10,90\n"
@@ -1145,6 +1218,7 @@ msgstr ""
 
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.custom_barcode_transfer_template_view_zpl
+#: model_terms:ir.ui.view,arch_db:stock_ux.custom_product_barcode_zpl
 msgid ""
 "^FS\n"
 "^XZ"
@@ -1152,35 +1226,40 @@ msgstr ""
 
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.custom_barcode_transfer_template_view_zpl
+#: model_terms:ir.ui.view,arch_db:stock_ux.custom_product_barcode_zpl
 msgid ""
-"^FX Nueva etiqueta\n"
+"^FX Second label\n"
 "^LH445,0\n"
-"^FO20,10,0\n"
 "^FO250,10\n"
 "^A0N,20,25^FD"
 msgstr ""
 
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.custom_barcode_transfer_template_view_zpl
+#: model_terms:ir.ui.view,arch_db:stock_ux.custom_product_barcode_zpl
 msgid "^PQ1,0,1,Y^XZ"
 msgstr ""
 
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.custom_barcode_transfer_template_view_zpl
+#: model_terms:ir.ui.view,arch_db:stock_ux.custom_product_barcode_zpl
 msgid ""
 "^XA\n"
 "^CI28\n"
 "^LH0,0\n"
-"^FO20,10,0\n"
 "\n"
 "^FO250,10\n"
 "^A0N,20,25^FD"
 msgstr ""
 
-#. module: stock_ux
-#: model:ir.model.fields,field_description:stock_ux.field_product_label_layout__picking_id
-msgid "picking"
-msgstr "Traslado"
+#~ msgid "Print Stock Voucher lines"
+#~ msgstr "Imprimir las Líneas de Remito"
+
+#~ msgid "Reference"
+#~ msgstr "Descripción"
+
+#~ msgid "picking"
+#~ msgstr "Traslado"
 
 #~ msgid ""
 #~ "You can not duplicate a Picking because \"Block Additional Quantity\" is "
