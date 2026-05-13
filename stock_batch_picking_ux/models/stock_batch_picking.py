@@ -93,6 +93,19 @@ class StockPickingBatch(models.Model):
                 rec.picking_ids.write({"number_of_packages": rec.number_of_packages})
         return super().action_done()
 
+    def action_print_delivery_slip(self):
+        """Choose between consolidated batch report and per-picking individual
+        delivery slips depending on whether the batch has a partner.
+
+        Batch with partner → consolidated (all transfers share one customer,
+        one delivery slip). Batch without partner → individual slips, one per
+        picking (mixed-partner batch handles delivery guides at picking level).
+        """
+        self.ensure_one()
+        if self.partner_id:
+            return self.env.ref("stock_batch_picking_ux.action_report_batch_deliveryslip").report_action(self)
+        return self.env.ref("stock.action_report_delivery").report_action(self.picking_ids)
+
     def action_view_stock_picking(self):
         """This function returns an action that display existing pickings of
         given batch picking.
