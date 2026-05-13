@@ -24,6 +24,7 @@
         <field name="inherit_id" ref="stock_picking_batch.stock_picking_batch_tree"/>
         <field name="arch" type="xml">
             <field name="name" position="after">
+                <field name="partner_id" optional="show"/>
                 <field name="picking_type_code"/>
             </field>
         </field>
@@ -56,7 +57,9 @@
                 </button>
             </xpath>
             <field name="picking_type_id" position="before">
-                <field name="partner_id" context="{'res_partner_search_mode': picking_type_code == 'incoming' and 'supplier' or 'customer'}"/>
+                <field name="partner_id"
+                       readonly="state in ('done', 'cancel')"
+                       context="{'res_partner_search_mode': picking_type_code == 'incoming' and 'supplier' or 'customer'}"/>
             </field>
             <!-- dejamos user despues de type para que quede mas parecido a pickings -->
             <field name="picking_type_id" position="after">

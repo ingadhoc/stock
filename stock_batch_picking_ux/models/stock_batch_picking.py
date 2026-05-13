@@ -12,11 +12,14 @@ class StockPickingBatch(models.Model):
     picking_type_code = fields.Selection(store=True)
     partner_id = fields.Many2one(
         "res.partner",
-        # por ahora lo hacemos requerido porque si no tenemos que hacer algun
-        # maneje en la vista para que si esta seteado pase dominio
-        # y si no esta seteado no
-        # required=True,
-        help="If you choose a partner then only pickings of this partner will be selectable",
+        compute="_compute_partner_id",
+        store=True,
+        readonly=False,
+        help=(
+            "Computed from the pickings in the batch: set automatically when all "
+            "pickings share the same partner; cleared when there are multiple. "
+            "Editable manually until the batch is done."
+        ),
     )
     restrict_number_package = fields.Boolean(
         compute="_compute_picking_type_data",
@@ -45,6 +48,12 @@ class StockPickingBatch(models.Model):
         counts = {g[0].id: g[1] for g in groups}
         for batch in self:
             batch.picking_count = counts.get(batch.id, 0)
+
+    @api.depends("picking_ids.partner_id")
+    def _compute_partner_id(self):
+        for batch in self:
+            partners = batch.picking_ids.mapped("partner_id")
+            batch.partner_id = partners if len(partners) == 1 else False
 
     @api.depends("partner_id")
     def _compute_allowed_picking_ids(self):
