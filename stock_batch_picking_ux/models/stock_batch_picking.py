@@ -38,6 +38,15 @@ class StockPickingBatch(models.Model):
     )
     notes = fields.Text(help="free form remarks")
 
+    # Stub to prevent AttributeError when l10n_pe_edi_stock is installed.
+    # PE adds a non-primary inheritance on stock.report_delivery_document with
+    # a t-if block guarded by o.l10n_pe_edi_status. Our batch primary template
+    # inherits the parent's combined arch and the PE block lands inside; at
+    # render time `o` is a stock.picking.batch (no such field) and Qweb raises.
+    # Exposing the field with a False value at the batch level short-circuits
+    # the t-if cleanly without needing a bridge module.
+    l10n_pe_edi_status = fields.Char(default=False, store=False, readonly=True)
+
     def _compute_picking_count(self):
         """Calculate number of pickings."""
         groups = self.env["stock.picking"]._read_group(
