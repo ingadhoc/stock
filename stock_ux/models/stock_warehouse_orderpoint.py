@@ -8,6 +8,7 @@ from ast import literal_eval
 
 from odoo import api, fields, models
 from odoo.fields import Domain
+from odoo.tools import float_compare, float_is_zero
 
 _logger = logging.getLogger(__name__)
 
@@ -44,6 +45,17 @@ class StockWarehouseOrderpoint(models.Model):
     product_min_qty = fields.Float(tracking=True)
     product_max_qty = fields.Float(tracking=True)
     qty_multiple = fields.Float(tracking=True)
+    qty_multiple_over_max = fields.Selection(
+        selection=[
+            ("company", "Use Company Setting"),
+            ("allow", "Allow Exceeding Max"),
+            ("restrict", "Respect Max"),
+        ],
+        string="Multiple Above Max",
+        default="company",
+        required=True,
+        tracking=True,
+    )
     location_id = fields.Many2one(tracking=True)
     product_id = fields.Many2one(tracking=True)
     reviewed = fields.Boolean()
@@ -118,6 +130,46 @@ class StockWarehouseOrderpoint(models.Model):
         # deactivate toggle after ordering
         self._change_review_toggle_negative()
         return super(StockWarehouseOrderpoint, self).action_replenish(force_to_max)
+
+    def _is_qty_multiple_over_max_allowed(self):
+        self.ensure_one()
+        if self.qty_multiple_over_max == "allow":
+            return True
+        if self.qty_multiple_over_max == "restrict":
+            return False
+        return self.company_id.stock_orderpoint_allow_multiple_over_max
+
+    def _get_qty_to_order(self, force_visibility_days=False, qty_in_progress_by_orderpoint=None):
+        self.ensure_one()
+        visibility_days = self.visibility_days
+        if force_visibility_days is not False:
+            visibility_days = force_visibility_days
+        qty_to_order = 0.0
+        qty_in_progress_by_orderpoint = qty_in_progress_by_orderpoint or {}
+        qty_in_progress = qty_in_progress_by_orderpoint.get(self.id)
+        if qty_in_progress is None:
+            qty_in_progress = self._quantity_in_progress()[self.id]
+        rounding = self.product_uom.rounding
+        if float_compare(self.qty_forecast, self.product_min_qty, precision_rounding=rounding) < 0:
+            product_context = self._get_product_context(visibility_days=visibility_days)
+            qty_forecast_with_visibility = (
+                self.product_id.with_context(**product_context).read(["virtual_available"])[0]["virtual_available"]
+                + qty_in_progress
+            )
+            qty_to_order = max(self.product_min_qty, self.product_max_qty) - qty_forecast_with_visibility
+            remainder = (self.qty_multiple > 0.0 and qty_to_order % self.qty_multiple) or 0.0
+            if (
+                float_compare(remainder, 0.0, precision_rounding=rounding) > 0
+                and float_compare(self.qty_multiple - remainder, 0.0, precision_rounding=rounding) > 0
+            ):
+                if (
+                    float_is_zero(self.product_max_qty, precision_rounding=rounding)
+                    or self._is_qty_multiple_over_max_allowed()
+                ):
+                    qty_to_order += self.qty_multiple - remainder
+                else:
+                    qty_to_order -= remainder
+        return qty_to_order
 
     def update_qty_to_order(self):
         # Redefinimos ya que el metodo _compute_qty_to_order es privado
