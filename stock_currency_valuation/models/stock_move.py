@@ -18,7 +18,10 @@ class StockMove(models.Model):
                 self.picking_id.currency_rate
                 and self.purchase_line_id.order_id.currency_id == self.picking_id.valuation_currency_id
             ):
-                price_units[index[0]] = self.purchase_line_id.price_unit / self.picking_id.currency_rate
+                # Use _get_gross_price_unit() so that UoM conversion (e.g. Box→Unit)
+                # and discounts are already applied; then divide by currency_rate
+                # to get the price in company currency per reference UoM.
+                price_units[index[0]] = self.purchase_line_id._get_gross_price_unit() / self.picking_id.currency_rate
         return price_units
 
     def _account_entry_move(self, qty, description, svl_id, cost):
@@ -105,12 +108,22 @@ class StockMove(models.Model):
         if hasattr(self, "sale_line_id") and self.sale_line_id:
             currency_id = self.sale_line_id.currency_id
 
-        price_unit = currency_id._convert(
-            from_amount=self.price_unit,
-            to_currency=self.product_id.categ_id.valuation_currency_id,
-            company=self.company_id,
-            date=fields.date.today(),
-        )
+        if (
+            self.picking_id.currency_rate
+            and self.purchase_line_id
+            and self.purchase_line_id.order_id.currency_id == self.picking_id.valuation_currency_id
+        ):
+            # When a custom currency_rate is set on the picking, use the PO line
+            # price directly in secondary currency (already UoM-converted by
+            # _get_gross_price_unit), so the AVCO update is consistent with the SVL.
+            price_unit = self.purchase_line_id._get_gross_price_unit()
+        else:
+            price_unit = currency_id._convert(
+                from_amount=self.price_unit,
+                to_currency=self.product_id.with_company(self.company_id.id).categ_id.valuation_currency_id,
+                company=self.company_id,
+                date=fields.date.today(),
+            )
         precision = self.env["decimal.precision"].precision_get("Product Price")
         # If the move is a return, use the original move's price unit.
         if self.origin_returned_move_id and self.origin_returned_move_id.sudo().stock_valuation_layer_ids:
