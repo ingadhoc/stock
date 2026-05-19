@@ -47,8 +47,10 @@ class StockMove(models.Model):
         for rec in self:
             if rec.sale_line_id:
                 rec.origin_description = rec.sale_line_id.name
-            else:
+            elif rec.picking_id.origin:
                 rec.origin_description = rec.product_id.name
+            else:
+                rec.origin_description = rec.description_picking
 
     def action_view_linked_record(self):
         """This function returns an action that display existing sales order
