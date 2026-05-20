@@ -52,11 +52,8 @@ class StockWarehouseOrderpoint(models.Model):
             domain.append(("id", "in", location_ids))
         return self.env["stock.location"].search(domain)
 
-    def action_replenish(self):
-        notification = super().action_replenish()
-        # Si el super devuelve una notificación (para transferencias inter-warehouse), la devolvemos
-        if notification:
-            return notification
+    def action_replenish(self, force_to_max=False):
+        result = super().action_replenish(force_to_max=force_to_max)
         action = self.with_context()._get_orderpoint_action()
         orderpoint_domain = self.with_context().env["stock.warehouse.orderpoint.wizard"].get_orderpoint_domain()
         action["domain"] = Domain.AND(
@@ -65,6 +62,9 @@ class StockWarehouseOrderpoint(models.Model):
                 orderpoint_domain,
             ]
         )
+        if result and result.get("tag") == "display_notification":
+            result.setdefault("params", {})["next"] = action
+            return result
         return action
 
     def update_qty_to_order_orderpoint(self):
