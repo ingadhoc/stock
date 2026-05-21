@@ -72,13 +72,10 @@ class StockPickingBatch(models.Model):
             rec.with_vouchers = bool(self.voucher_ids)
 
     def do_print_and_assign(self):
-        # We override the method to avoid assignation
         if not self.book_id:
             raise UserError("Primero debe setear un talonario")
-        if not self.book_id.autoprinted:
-            self.printed = True
-            return self.with_context(batch=True).do_print_batch_vouchers()
-        self.assign_numbers(1, self.book_id)
+        pages = 1 if self.book_id.autoprinted else (self.estimated_number_of_pages or 1)
+        self.assign_numbers(pages, self.book_id)
         return self.do_print_batch_vouchers()
 
     def do_print_batch_vouchers(self):
