@@ -16,16 +16,19 @@ Stock Ux with Batch Picking and stock vouchers
 
 This module add the following features:
 #. Add notes tab.
-#. While creating a batch picking:
--  Add the partner in the batch transfer, and then filter the transfers able to be selected according to it.
--  Add the number of packages in the batch transfer
-#. While proccesing the batch picking:
--  In the transfer lines it add information of the vouchers, from & to and source document, among others.
+#. Partner on the batch transfer:
+-  The ``partner_id`` on the batch is **computed** from the partners of its pickings: it is set when all pickings share the same partner and cleared when there is a mix. It remains **editable manually** (e.g. to pre-set a partner on an empty batch and constrain which pickings can be attached via the domain).
+-  Locked once the batch is ``done`` or ``cancel``.
+-  Shown in the list view of batches.
+#. While processing the batch picking:
+-  In the transfer lines it adds information of the vouchers, from & to and source document, among others.
 -  A smart button is added to go to the list view of associated transfers.
 -  When you click on a transfer (from the transfer tab) you see all the possible actions that would be seen by entering it directly, such as the possibility of printing the voucher.
 #. Batch Delivery Slip report:
 -  A **Delivery Slip** report for batch transfers is included, analogous to the one available for individual pickings.
 -  The **Print** button in the batch form view follows the same logic as native pickings: when the batch is ``in_progress`` it prints the *Batch Transfer* report; once the batch is ``done`` it prints the *Delivery Slip* instead.
+-  In the ``done`` state the slip is **dual-mode**: a batch *with* partner prints the consolidated *Batch Delivery Slip* (one document for the whole batch); a batch *without* partner falls back to printing the individual delivery slip of each picking (mixed-partner batches manage delivery documents at picking level).
+#. Compatibility: exposes an ``l10n_pe_edi_status`` stub on ``stock.picking.batch`` so the Peruvian EDI delivery slip block (which inherits the same primary template) does not raise at render time when the record is a batch.
 
 Installation
 ============
