@@ -12,14 +12,13 @@ def new_write(self, vals):
     res = super(StockMove, self).write(vals)
     if vals.get("state", "") == "done":
         stock_moves = self.get_moves_delivery_link_invoice()
-        for stock_move in stock_moves.filtered(
-            lambda sm: sm.sale_line_id
-            and (
-                sm.sale_line_id.order_id.type_id.invoice_policy == "order"
-                or sm.sale_line_id.order_id.type_id.invoice_policy == "by_product"
-                and sm.product_id.invoice_policy == "order"
-            )
-        ):
+        for stock_move in stock_moves.filtered(lambda sm: sm.sale_line_id):
+            invoice_policy = stock_move.sudo().sale_line_id.order_id.type_id.invoice_policy
+            if not (
+                invoice_policy == "order"
+                or (invoice_policy == "by_product" and stock_move.product_id.invoice_policy == "order")
+            ):
+                continue
             inv_type = stock_move.to_refund and "out_refund" or "out_invoice"
             inv_line = (
                 self.env["account.move.line"]
