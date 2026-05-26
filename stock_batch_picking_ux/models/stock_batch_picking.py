@@ -89,10 +89,12 @@ class StockPickingBatch(models.Model):
             if rec.picking_type_code == "outgoing":
                 rec.restrict_number_package = any(t.restrict_number_package for t in types)
 
-    @api.onchange("picking_type_code", "partner_id")
+    @api.onchange("partner_id")
     def changes_set_pickings(self):
-        # if we change type or partner reset pickings
-        self.picking_ids = False
+        """we reset pickings if partner_id is changed and set, if partner is empty we keep previous pickings.
+        Operation type is protected by odoo (without onchange, by a constraint), no need to trigger onchange"""
+        for rec in self.filtered("partner_id"):
+            rec.picking_ids = False
 
     def action_done(self):
         for rec in self:
