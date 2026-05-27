@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="stock_delivery_zone_report_delivery_document" inherit_id="stock_ux.report_delivery_document">
+        <xpath expr="//div[@name='outgoing_delivery_address']/div" position="after">
+            <div t-if="o.delivery_zone_id">
+                <strong>Zone</strong>
+                <div t-field="o.delivery_zone_id"/>
+            </div>
+        </xpath>
+    </template>
+
+    <template id="stock_delivery_zone_report_picking_ux" inherit_id="stock_ux.report_picking_ux">
+        <xpath expr="//div[@name='div_outgoing_address']/div[@t-if='o.should_print_delivery_address()']/div" position="after">
+            <div t-if="o.delivery_zone_id">
+                <strong>Zone:</strong>
+                <div t-field="o.delivery_zone_id"/>
+            </div>
+        </xpath>
+    </template>
+</odoo>
