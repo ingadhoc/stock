@@ -25,4 +25,8 @@
     <field name="mode">extension</field>
   </record>
 
+    <record id="stock.product_template_action_product" model="ir.actions.act_window">
+        <field name="context">{"search_default_goods": 1, "default_is_storable": True, "stock_product_template": 1}</field>
+    </record>
+
 </odoo>
