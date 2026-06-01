@@ -93,17 +93,31 @@ class StockPickingBatch(models.Model):
                 vals["voucher_number"] = voucher_number
         return super().write(vals)
 
+    def action_confirm(self):
+        batches_in_draft = self.filtered(lambda batch: batch.state == "draft")
+        res = super().action_confirm()
+        # When the batch is confirmed for the first time, Odoo already created
+        # the operation lines from the selected pickings. We reset them to zero
+        # so the operator can input only the quantities that will actually be processed.
+        batches_in_draft.move_line_ids.filtered(lambda line: line.state not in ("done", "cancel")).write(
+            {"quantity": 0}
+        )
+        return res
+
     def add_picking_operation(self):
         self.ensure_one()
-        view_id = self.env.ref("stock_ux.view_move_line_tree").id
-        search_view_id = self.env.ref("stock_ux.stock_move_line_view_search").id
+        view_id = self.env.ref("stock_batch_picking_ux.view_move_line_tree_smart_button").id
+        search_view_id = self.env.ref("stock_batch_picking_ux.stock_move_line_view_search").id
         return {
             "type": "ir.actions.act_window",
             "res_model": "stock.move.line",
             "search_view_id": search_view_id,
             "views": [[view_id, "list"], [False, "form"]],
             "domain": [["id", "in", self.move_line_ids.ids]],
-            "context": {"create": False, "from_batch": True},
+            "context": {
+                "create": False,
+                "from_batch": True,
+            },
         }
 
     def action_done(self):
