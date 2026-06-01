@@ -91,10 +91,90 @@ class StockPickingBatch(models.Model):
 
     @api.onchange("partner_id")
     def changes_set_pickings(self):
+<<<<<<< 8b1493de9906b9f991195e66de149c8aa7f66608
         """we reset pickings if partner_id is changed and set, if partner is empty we keep previous pickings.
         Operation type is protected by odoo (without onchange, by a constraint), no need to trigger onchange"""
         for rec in self.filtered("partner_id"):
             rec.picking_ids = False
+||||||| 6480d59457f874a6a49914b50d200bc588a70271
+        # if we change type or partner reset pickings
+        self.picking_ids = False
+
+    @api.onchange("voucher_number", "picking_ids")
+    def format_voucher_number(self):
+        for rec in self:
+            if not rec.voucher_number:
+                continue
+            voucher_number = self.env["stock.picking.voucher"]._format_document_number(rec.voucher_number)
+            if voucher_number and voucher_number != rec.voucher_number:
+                rec.voucher_number = voucher_number
+
+    def write(self, vals):
+        if "voucher_number" in vals and vals.get("voucher_number"):
+            voucher_number = self.env["stock.picking.voucher"]._format_document_number(vals.get("voucher_number"))
+            if voucher_number and voucher_number != vals.get("voucher_number"):
+                vals["voucher_number"] = voucher_number
+        return super().write(vals)
+
+    def add_picking_operation(self):
+        self.ensure_one()
+        view_id = self.env.ref("stock_ux.view_move_line_tree").id
+        search_view_id = self.env.ref("stock_ux.stock_move_line_view_search").id
+        return {
+            "type": "ir.actions.act_window",
+            "res_model": "stock.move.line",
+            "search_view_id": search_view_id,
+            "views": [[view_id, "list"], [False, "form"]],
+            "domain": [["id", "in", self.move_line_ids.ids]],
+            "context": {"create": False, "from_batch": True},
+        }
+=======
+        # if we change type or partner reset pickings
+        self.picking_ids = False
+
+    @api.onchange("voucher_number", "picking_ids")
+    def format_voucher_number(self):
+        for rec in self:
+            if not rec.voucher_number:
+                continue
+            voucher_number = self.env["stock.picking.voucher"]._format_document_number(rec.voucher_number)
+            if voucher_number and voucher_number != rec.voucher_number:
+                rec.voucher_number = voucher_number
+
+    def write(self, vals):
+        if "voucher_number" in vals and vals.get("voucher_number"):
+            voucher_number = self.env["stock.picking.voucher"]._format_document_number(vals.get("voucher_number"))
+            if voucher_number and voucher_number != vals.get("voucher_number"):
+                vals["voucher_number"] = voucher_number
+        return super().write(vals)
+
+    def action_confirm(self):
+        batches_in_draft = self.filtered(lambda batch: batch.state == "draft")
+        res = super().action_confirm()
+        # When the batch is confirmed for the first time, Odoo already created
+        # the operation lines from the selected pickings. We reset them to zero
+        # so the operator can input only the quantities that will actually be processed.
+        batches_in_draft.move_line_ids.filtered(lambda line: line.state not in ("done", "cancel")).write(
+            {"quantity": 0}
+        )
+        return res
+
+    def add_picking_operation(self):
+        self.ensure_one()
+        view_id = self.env.ref("stock_batch_picking_ux.view_move_line_tree_smart_button").id
+        search_view_id = self.env.ref("stock_batch_picking_ux.stock_move_line_view_search").id
+        return {
+            "type": "ir.actions.act_window",
+            "res_model": "stock.move.line",
+            "search_view_id": search_view_id,
+            "views": [[view_id, "list"], [False, "form"]],
+            "domain": [["id", "in", self.move_line_ids.ids]],
+            "context": {
+                "create": False,
+                "from_batch": True,
+            },
+        }
+>>>>>>> d3e250553190905d374d616c9b4b9edc2225a432
 
     def action_done(self):
         for rec in self:
