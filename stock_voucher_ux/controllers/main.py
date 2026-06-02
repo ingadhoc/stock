@@ -107,36 +107,47 @@ class ReportController(report.ReportController):
             match = re.search(r"(\d+)$", json.loads(data)[0])
             if match:
                 picking_id = int(match.group(1))
-                book_id = request.env["stock.picking"].browse(picking_id).book_id
+                picking = request.env["stock.picking"].browse(picking_id)
+                book_id = picking.book_id
                 if book_id and book_id.autoprinted == False and picking_id:
-                    try:
-                        pdf_response = response.response[0]
-                        reader = PdfFileReader(io.BytesIO(pdf_response))
+                    if not picking.voucher_ids and book_id:
+                        try:
+                            pdf_response = response.response[0]
+                            reader = PdfFileReader(io.BytesIO(pdf_response))
 
-                        # Usar el nuevo método para contar páginas con productos
-                        copies_result = request.env["ir.actions.report"].search_read(
-                            [("report_name", "=", "stock.report_deliveryslip")], ["l10n_ar_copies"], limit=1
-                        )
-                        copies = copies_result[0]["l10n_ar_copies"] if copies_result else None
+                            # Usar el nuevo método para contar páginas con productos
+                            copies_result = request.env["ir.actions.report"].search_read(
+                                [("report_name", "=", "stock.report_deliveryslip")], ["l10n_ar_copies"], limit=1
+                            )
+                            copies = copies_result[0]["l10n_ar_copies"] if copies_result else None
 
-                        if copies == "triplicado":
-                            total_pages = int(len(reader.pages) / 3)
-                        elif copies == "duplicado":
-                            total_pages = int(len(reader.pages) / 2)
-                        else:
-                            total_pages = len(reader.pages)
+                            if copies == "triplicado":
+                                total_pages = int(len(reader.pages) / 3)
+                            elif copies == "duplicado":
+                                total_pages = int(len(reader.pages) / 2)
+                            else:
+                                total_pages = len(reader.pages)
 
-                        number_pages = self._count_pages_with_products(reader, picking_id)
-                        number_pages = min(number_pages, total_pages)
-                    except Exception:
-                        # If not PDF or can't process, assign only 1 voucher
-                        number_pages = 1
+                            number_pages = self._count_pages_with_products(reader, picking_id)
+                            number_pages = min(number_pages, total_pages)
+                        except Exception:
+                            # If not PDF or can't process, assign only 1 voucher
+                            number_pages = 1
 
-                    if not request.env["stock.picking"].browse(picking_id).voucher_ids and book_id:
-                        request.env["stock.picking"].browse(picking_id).assign_numbers(number_pages, book_id)
+                        picking.assign_numbers(number_pages, book_id)
+
+                        # Regenerate PDF so voucher numbers appear on the first print
+                        try:
+                            new_pdf, _ = request.env["ir.actions.report"]._render_qweb_pdf(
+                                "stock.report_deliveryslip", picking.ids
+                            )
+                            response.response = [new_pdf]
+                            response.headers["Content-Length"] = str(len(new_pdf))
+                        except Exception:
+                            pass
 
                 elif book_id and picking_id:
-                    if not request.env["stock.picking"].browse(picking_id).voucher_ids and book_id:
-                        request.env["stock.picking"].browse(picking_id).assign_numbers(1, book_id)
+                    if not picking.voucher_ids and book_id:
+                        picking.assign_numbers(1, book_id)
 
         return response
