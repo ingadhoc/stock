@@ -137,14 +137,11 @@ class ReportController(report.ReportController):
                         picking.assign_numbers(number_pages, book_id)
 
                         # Regenerate PDF so voucher numbers appear on the first print
-                        try:
-                            new_pdf, _ = request.env["ir.actions.report"]._render_qweb_pdf(
-                                "stock.report_deliveryslip", picking.ids
-                            )
-                            response.response = [new_pdf]
-                            response.headers["Content-Length"] = str(len(new_pdf))
-                        except Exception:
-                            pass
+                        new_pdf, _ = request.env["ir.actions.report"]._render_qweb_pdf(
+                            "stock.action_report_delivery", picking.ids
+                        )
+                        response.response = [new_pdf]
+                        response.headers["Content-Length"] = str(len(new_pdf))
 
                 elif book_id and picking_id:
                     if not picking.voucher_ids and book_id:
