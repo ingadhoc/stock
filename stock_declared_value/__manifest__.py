@@ -18,8 +18,16 @@
 #
 ##############################################################################
 {
+<<<<<<< 8b1493de9906b9f991195e66de149c8aa7f66608:stock_declared_value/__manifest__.py
     "name": "Stock Declared Value",
     "version": "19.0.1.1.0",
+||||||| 5510a864c7fa81e197b0c52486c3933f87d7908c:stock_voucher_ux/__manifest__.py
+    "name": "Stock Voucher UX",
+    "version": "18.0.1.3.0",
+=======
+    "name": "Stock Voucher UX",
+    "version": "18.0.1.4.0",
+>>>>>>> c46207d64e28343c267dd8e7280fbc486a6ef26f:stock_voucher_ux/__manifest__.py
     "category": "Warehouse Management",
     "sequence": 14,
     "author": "ADHOC SA",
