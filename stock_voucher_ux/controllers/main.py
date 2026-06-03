@@ -135,6 +135,9 @@ class ReportController(report.ReportController):
                             number_pages = 1
 
                         picking.assign_numbers(number_pages, book_id)
+                        # Flush pending ORM writes (computed store=True fields like
+                        # 'vouchers') to DB so the re-render reads the updated values.
+                        picking.env.flush_all()
 
                         # Regenerate PDF so voucher numbers appear on the first print
                         new_pdf, _ = request.env["ir.actions.report"]._render_qweb_pdf(
