@@ -39,8 +39,10 @@ class StockPicking(models.Model):
         if not self.book_id and self.picking_type_code != "incoming":
             raise UserError("Primero debe seleccionar un talonario")
         if self.autoprinted == False:
+            if self.book_id and not self.voucher_ids:
+                self.assign_numbers(self.get_estimated_number_of_pages(), self.book_id)
             self.printed = True
-            return self.with_context(assign=True).do_print_voucher()
+            return self.do_print_voucher()
         else:
             if self.book_id.sequence_to and int(self.next_voucher_number) > int(self.book_id.sequence_to):
                 raise UserError(

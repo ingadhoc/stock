@@ -103,7 +103,10 @@ class ReportController(report.ReportController):
                     request.env["stock.picking"].browse(picking_id).assign_numbers(number_pages, book_id)
 
         elif "report_deliveryslip" in url:
-            # If the report is not an aeroo, the assign method should only assign one voucher
+            # Fallback: if numbers weren't pre-assigned (e.g. printed outside
+            # do_print_and_assign), assign them post-render based on actual page count.
+            # Note: in this path the first PDF won't show the numbers; use
+            # do_print_and_assign to guarantee numbers on the first print.
             match = re.search(r"(\d+)$", json.loads(data)[0])
             if match:
                 picking_id = int(match.group(1))
@@ -115,7 +118,6 @@ class ReportController(report.ReportController):
                             pdf_response = response.response[0]
                             reader = PdfFileReader(io.BytesIO(pdf_response))
 
-                            # Usar el nuevo método para contar páginas con productos
                             copies_result = request.env["ir.actions.report"].search_read(
                                 [("report_name", "=", "stock.report_deliveryslip")], ["l10n_ar_copies"], limit=1
                             )
@@ -131,20 +133,9 @@ class ReportController(report.ReportController):
                             number_pages = self._count_pages_with_products(reader, picking_id)
                             number_pages = min(number_pages, total_pages)
                         except Exception:
-                            # If not PDF or can't process, assign only 1 voucher
                             number_pages = 1
 
                         picking.assign_numbers(number_pages, book_id)
-                        # Flush pending ORM writes (computed store=True fields like
-                        # 'vouchers') to DB so the re-render reads the updated values.
-                        picking.env.flush_all()
-
-                        # Regenerate PDF so voucher numbers appear on the first print
-                        new_pdf, _ = request.env["ir.actions.report"]._render_qweb_pdf(
-                            "stock.action_report_delivery", picking.ids
-                        )
-                        response.response = [new_pdf]
-                        response.headers["Content-Length"] = str(len(new_pdf))
 
                 elif book_id and picking_id:
                     if not picking.voucher_ids and book_id:

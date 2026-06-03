@@ -58,7 +58,7 @@ class StockPicking(models.Model):
         if lines_per_voucher == 0:
             return res
 
-        operations = len(self.move_ids)
+        operations = len(self.move_line_ids)
         res = int(-(-float(operations) // float(lines_per_voucher)))
         return res
 
