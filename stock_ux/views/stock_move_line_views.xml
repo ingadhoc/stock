@@ -23,7 +23,7 @@
                 <field name="origin"/>
             </field>
             <field name="location_id" position="before">
-                <field name="product_id" string="Product" context="{'group_by':'product_id'}"/>
+                <field name="product_id" string="Product"/>
                 <field name="location_id" string="Net Quantity Location" filter_domain="['|',('location_id','ilike',self),('location_dest_id','ilike',self)]" context="{'location': self}"/>
             </field>
             <filter name="manufacturing" position="after">
