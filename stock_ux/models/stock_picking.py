@@ -5,6 +5,7 @@
 ##############################################################################
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError, UserError
+from odoo.tools.float_utils import float_compare
 
 
 class StockPicking(models.Model):
@@ -89,6 +90,35 @@ class StockPicking(models.Model):
                 )
         return super()._action_done()
 
+    def _sanity_check(self, separate_pickings=True):
+        res = super()._sanity_check(separate_pickings=separate_pickings)
+        self._check_serial_quantity_consistency()
+        return res
+
+    def _check_serial_quantity_consistency(self):
+        precision = self.env['decimal.precision'].precision_get('Product Unit of Measure')
+        broken = []
+        for picking in self:
+            moves = picking.move_ids.filtered(
+                lambda m: m.state not in ('done', 'cancel')
+                and m.picked
+                and m.product_id.tracking == 'serial')
+            for move in moves:
+                serial_count = len(move.move_line_ids.filtered(
+                    lambda ml: ml.picked and ml.lot_id
+                    and float_compare(ml.quantity, 0, precision_digits=precision) != 0))
+                if float_compare(abs(move.quantity), serial_count, precision_digits=precision) != 0:
+                    broken.append((move, serial_count))
+        if broken:
+            raise UserError(_(
+                "You can not validate this transfer: the following serial tracked products "
+                "have a done quantity different from the number of assigned serial numbers. "
+                "Please assign the missing serials or adjust the quantity:\n%s") % (
+                "\n".join(
+                    _("- %s: done quantity %s, assigned serials %s") % (
+                        move.product_id.display_name, move.quantity, serial_count)
+                    for move, serial_count in broken)))
+
     def new_force_availability(self):
         self.action_assign()
         for rec in self.mapped('move_ids').filtered(lambda m: m.state not in ['cancel', 'done']):
@@ -111,10 +141,7 @@ class StockPicking(models.Model):
         To avoid errors when trying to render a template with a large number of packages
         """
         if self.number_of_packages > 100:
-            return {
-                "warning": {
-                    "title": "High Number of Packages",
-                    "message": "Be careful about the number of packages you are trying to insert. "
-                    "It may cause an error when trying to render the 'Shipping Label' template",
-                }
-            }
+            raise UserError(
+                _("Be careful about the number of packages you are trying to insert. "
+                  "It may cause an error when trying to render the 'Shipping Label' template")
+            )
