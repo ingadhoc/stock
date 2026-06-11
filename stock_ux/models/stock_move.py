@@ -151,6 +151,15 @@ class StockMove(models.Model):
             return super().with_context(trigger_assign=True)._trigger_assign()
         return super()._trigger_assign()
 
+    def _action_assign(self, force_qty=False):
+        """Reservar / Comprobar disponibilidad crea líneas de reserva, no líneas
+        cargadas a mano, por lo que no debe dispararse el chequeo de
+        _check_manual_lines. El _trigger_assign automático ya lo evitaba, pero el
+        action_assign manual del picking no pasaba por ahí; marcamos el contexto
+        para saltear _check_quantity_available al crear las stock.move.line.
+        """
+        return super(StockMove, self.with_context(trigger_assign=True))._action_assign(force_qty=force_qty)
+
     @api.ondelete(at_uninstall=False)
     def _unlink_if_not_from_order(self):
         """
