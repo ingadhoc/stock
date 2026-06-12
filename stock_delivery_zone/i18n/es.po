@@ -1,0 +1,101 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_delivery_zone
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-02 13:00+0000\n"
+"PO-Revision-Date: 2026-06-02 13:00+0000\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#. module: stock_delivery_zone
+#: model_terms:ir.ui.view,arch_db:stock_delivery_zone.stock_delivery_zone_report_picking_ux
+msgid "<strong>Zone:</strong>"
+msgstr ""
+
+#. module: stock_delivery_zone
+#: model_terms:ir.ui.view,arch_db:stock_delivery_zone.stock_delivery_zone_report_delivery_document
+msgid "<strong>Zone</strong>"
+msgstr ""
+
+#. module: stock_delivery_zone
+#: model:ir.model.fields,field_description:stock_delivery_zone.field_stock_delivery_zone__active
+msgid "Active"
+msgstr ""
+
+#. module: stock_delivery_zone
+#: model:ir.model,name:stock_delivery_zone.model_res_partner
+msgid "Contact"
+msgstr ""
+
+#. module: stock_delivery_zone
+#: model:ir.model.fields,field_description:stock_delivery_zone.field_stock_delivery_zone__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: stock_delivery_zone
+#: model:ir.model.fields,field_description:stock_delivery_zone.field_stock_delivery_zone__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: stock_delivery_zone
+#: model:ir.model,name:stock_delivery_zone.model_stock_delivery_zone
+msgid "Delivery Zone"
+msgstr ""
+
+#. module: stock_delivery_zone
+#: model:ir.model.fields,field_description:stock_delivery_zone.field_res_partner__display_name
+#: model:ir.model.fields,field_description:stock_delivery_zone.field_stock_delivery_zone__display_name
+#: model:ir.model.fields,field_description:stock_delivery_zone.field_stock_picking__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: stock_delivery_zone
+#: model:ir.model.fields,field_description:stock_delivery_zone.field_res_partner__id
+#: model:ir.model.fields,field_description:stock_delivery_zone.field_stock_delivery_zone__id
+#: model:ir.model.fields,field_description:stock_delivery_zone.field_stock_picking__id
+msgid "ID"
+msgstr ""
+
+#. module: stock_delivery_zone
+#: model:ir.model.fields,field_description:stock_delivery_zone.field_stock_delivery_zone__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: stock_delivery_zone
+#: model:ir.model.fields,field_description:stock_delivery_zone.field_stock_delivery_zone__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: stock_delivery_zone
+#: model:ir.model.fields,field_description:stock_delivery_zone.field_stock_delivery_zone__name
+msgid "Name"
+msgstr ""
+
+#. module: stock_delivery_zone
+#: model:ir.model,name:stock_delivery_zone.model_stock_picking
+msgid "Transfer"
+msgstr ""
+
+#. module: stock_delivery_zone
+#: model:ir.model.fields,field_description:stock_delivery_zone.field_res_partner__delivery_zone_id
+#: model:ir.model.fields,field_description:stock_delivery_zone.field_res_users__delivery_zone_id
+#: model:ir.model.fields,field_description:stock_delivery_zone.field_stock_picking__delivery_zone_id
+#: model_terms:ir.ui.view,arch_db:stock_delivery_zone.stock_delivery_zone_view_stock_delivery_zone_form
+msgid "Zone"
+msgstr ""
+
+#. module: stock_delivery_zone
+#: model:ir.actions.act_window,name:stock_delivery_zone.stock_delivery_zone_action_stock_delivery_zone
+#: model:ir.ui.menu,name:stock_delivery_zone.stock_delivery_zone_menu_stock_delivery_zone
+#: model_terms:ir.ui.view,arch_db:stock_delivery_zone.stock_delivery_zone_view_stock_delivery_zone_list
+msgid "Zones"
+msgstr ""
