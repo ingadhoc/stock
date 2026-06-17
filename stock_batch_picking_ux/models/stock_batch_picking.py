@@ -97,11 +97,13 @@ class StockPickingBatch(models.Model):
         batches_in_draft = self.filtered(lambda batch: batch.state == "draft")
         res = super().action_confirm()
         # When the batch is confirmed for the first time, Odoo already created
-        # the operation lines from the selected pickings. We reset them to zero
-        # so the operator can input only the quantities that will actually be processed.
-        batches_in_draft.move_line_ids.filtered(lambda line: line.state not in ("done", "cancel")).write(
-            {"quantity": 0}
-        )
+        # the operation lines from the selected pickings. For receptions we reset
+        # them to zero so the operator can input only the quantities physically
+        # received (partial reception). This must NOT touch deliveries/waves,
+        # where zeroing the quantity wrongly removes product availability.
+        batches_in_draft.move_line_ids.filtered(
+            lambda line: line.state not in ("done", "cancel") and line.picking_id.picking_type_id.code == "incoming"
+        ).write({"quantity": 0})
         return res
 
     def add_picking_operation(self):
