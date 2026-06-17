@@ -10,4 +10,16 @@
             </xpath>
         </field>
     </record>
+
+    <!-- Move the inventory adjustment entry points to the adjustment group so a
+         plain Inventory User no longer sees them. "Set to 0" and "Relocate" are
+         already manager-only in core, and "Inventory" / "Locations"
+         (action_view_quants, read-only) stays on group_stock_user on purpose. -->
+    <record model="ir.actions.server" id="stock.action_view_inventory_tree">
+        <field name="group_ids" eval="[(6, 0, [ref('stock_ux.group_stock_inventory_adjustment')])]"/>
+    </record>
+
+    <record model="ir.actions.server" id="stock.action_view_set_quants_tree">
+        <field name="group_ids" eval="[(6, 0, [ref('stock_ux.group_stock_inventory_adjustment')])]"/>
+    </record>
 </odoo>

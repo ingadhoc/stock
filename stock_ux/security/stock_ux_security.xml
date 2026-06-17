@@ -17,4 +17,35 @@
         <field name="name">Restrict editing Operation Type in Pickings</field>
     </record>
 
+    <!-- Inventory adjustments capability, carved out of the plain Inventory User.
+         An independent group (no privilege_id) so it shows as a standalone
+         checkbox. A plain Inventory User without it is the "basic" user that
+         can do everything but inventory adjustments. -->
+    <record model="res.groups" id="group_stock_inventory_adjustment">
+        <field name="name">Inventory Adjustments</field>
+        <field name="comment">Allows the user to perform inventory adjustments (physical inventory counts and on-hand quantity updates).</field>
+    </record>
+
+    <!-- Inventory Managers must always be able to adjust. -->
+    <record model="res.groups" id="stock.group_stock_manager">
+        <field name="implied_ids" eval="[(4, ref('stock_ux.group_stock_inventory_adjustment'))]"/>
+    </record>
+
+    <!-- The plain Inventory User keeps read-only access on quants; write/create
+         (i.e. applying an adjustment) is moved to the adjustment group below. -->
+    <record model="ir.model.access" id="stock.access_stock_quant_user">
+        <field name="perm_write" eval="0"/>
+        <field name="perm_create" eval="0"/>
+    </record>
+
+    <record model="ir.model.access" id="access_stock_quant_adjustment">
+        <field name="name">stock.quant inventory adjustment</field>
+        <field name="model_id" ref="stock.model_stock_quant"/>
+        <field name="group_id" ref="stock_ux.group_stock_inventory_adjustment"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="0"/>
+    </record>
+
 </odoo>

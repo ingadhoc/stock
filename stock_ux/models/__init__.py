@@ -15,3 +15,4 @@ from . import stock_rule
 from . import stock_scrap
 from . import stock_location
 from . import stock_forecasted
+from . import stock_quant
