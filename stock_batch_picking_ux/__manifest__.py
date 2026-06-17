@@ -18,8 +18,16 @@
 #
 ##############################################################################
 {
+<<<<<<< 8b1493de9906b9f991195e66de149c8aa7f66608
     "name": "Stock Usability with Batch Picking",
     "version": "19.0.1.2.0",
+||||||| 5c4c4f22e4695c1a7871d31b873b66b0e893cf18
+    "name": "Stock Usability with Batch Picking and stock vouchers",
+    "version": "18.0.1.3.0",
+=======
+    "name": "Stock Usability with Batch Picking and stock vouchers",
+    "version": "18.0.1.3.1",
+>>>>>>> e8b8a7009dcdf451dfe9edf66870269aef808a28
     "category": "Warehouse Management",
     "sequence": 14,
     "summary": "",
