@@ -127,7 +127,7 @@ class StockMove(models.Model):
                 and sp.sale_id
                 and (sp.sale_id.state == "sale" or sp.sale_id.state == "done")
             ):
-                if vals.get("additional", False):
+                if vals.get("additional", False) and not vals.get("origin_returned_move_id"):
                     raise UserError(
                         "No se puede agregar productos adicionales ni modificar las cantidades demandadas:\n"
                         "- El pedido de venta se encuentra bloqueado.\n"
