@@ -12,8 +12,19 @@ class StockMove(models.Model):
 
     @api.constrains("state", "location_id", "location_dest_id")
     def check_user_location_rights(self):
-        moves = self.filtered(lambda x: x.state in ["done", "cancel"])
+        # (b) Cancelar un movimiento no procesa mercadería: solo validamos los
+        # movimientos que pasan a "done". Los movimientos encadenados que quedan
+        # en "cancel" al modificar/confirmar una OC con ruta MTO no deben
+        # disparar la constraint. Ver ticket 109676.
+        moves = self.filtered(lambda x: x.state == "done")
         if not moves or not self.env.user.restrict_locations:
+            return True
+        # (a) La verificación de ubicaciones permitidas pertenece a la validación
+        # explícita del picking (botón "Validar"). Fuera de ese flujo la
+        # constraint se dispara por efectos colaterales (ej. recreación de
+        # movimientos encadenados MTO) generando falsos positivos de
+        # "Invalid Location". Ver ticket 109676.
+        if not self.env.context.get("button_validate_picking_ids"):
             return True
         user_locations = self.env.user.stock_location_ids
         for user_location in user_locations:
