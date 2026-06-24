@@ -153,7 +153,9 @@ class StockMove(models.Model):
         physical_warehouse = self.location_id.warehouse_id
         propagated_warehouse = values.get("warehouse_id")
         is_subcontracting_move = (
-            "raw_material_production_id" in self._fields and bool(self.raw_material_production_id.subcontractor_id)
+            "raw_material_production_id" in self._fields
+            and "subcontractor_id" in self.raw_material_production_id._fields
+            and bool(self.raw_material_production_id.subcontractor_id)
         )
 
         # In some multi-warehouse MTO chains the move keeps the commercial
