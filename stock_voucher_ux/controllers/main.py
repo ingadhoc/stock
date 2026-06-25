@@ -98,9 +98,18 @@ class ReportController(report.ReportController):
                     # If not PDF or can't process (like .doc), assign only 1 voucher
                     number_pages = 1
 
-                # See if there are vouchers already assigned. If not, then it assigns the vouchers
-                if not request.env["stock.picking"].browse(picking_id).voucher_ids and book_id:
-                    request.env["stock.picking"].browse(picking_id).assign_numbers(number_pages, book_id)
+                # See if there are vouchers already assigned. If not, assign them
+                # based on the real page count, then re-render so the numbers show.
+                picking = request.env["stock.picking"].browse(picking_id)
+                if not picking.voucher_ids and book_id:
+                    picking.assign_numbers(number_pages, book_id)
+                    picking.env.flush_all()
+                    # Re-render: the first PDF had no numbers yet; this second
+                    # render includes the just-assigned voucher numbers.
+                    try:
+                        response = super().report_download(data, context=context, token=token, **kwargs)
+                    except Exception:
+                        pass
 
         elif "report_deliveryslip" in url:
             # Fallback: if numbers weren't pre-assigned (e.g. printed outside
@@ -136,6 +145,12 @@ class ReportController(report.ReportController):
                             number_pages = 1
 
                         picking.assign_numbers(number_pages, book_id)
+                        picking.env.flush_all()
+                        # Re-render so the assigned numbers appear on the first PDF.
+                        try:
+                            response = super().report_download(data, context=context, token=token, **kwargs)
+                        except Exception:
+                            pass
 
                 elif book_id and picking_id:
                     if not picking.voucher_ids and book_id:
