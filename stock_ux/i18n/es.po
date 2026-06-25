@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-03 16:12+0000\n"
+"POT-Creation-Date: 2026-06-25 19:33+0000\n"
 "PO-Revision-Date: 2026-04-20 16:41+0000\n"
 "Last-Translator: julia elizondo <jue@adhoc.inc>\n"
 "Language-Team: Spanish <https://translation.dev-adhoc.com/projects/"
@@ -70,6 +70,13 @@ msgstr ""
 #: model:res.groups,name:stock_ux.allow_picking_cancellation
 msgid "Allow picking cancellation"
 msgstr "Permitir cancelar transferencias"
+
+#. module: stock_ux
+#: model:res.groups,comment:stock_ux.group_stock_inventory_adjustment
+msgid ""
+"Allows the user to perform inventory adjustments (physical inventory counts "
+"and on-hand quantity updates)."
+msgstr ""
 
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.product_form_view_procurement_button
@@ -263,6 +270,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_ux.field_stock_picking_type__display_name
 #: model:ir.model.fields,field_description:stock_ux.field_stock_picking_zpl_lines__display_name
 #: model:ir.model.fields,field_description:stock_ux.field_stock_product_zpl_lines__display_name
+#: model:ir.model.fields,field_description:stock_ux.field_stock_quant__display_name
 #: model:ir.model.fields,field_description:stock_ux.field_stock_return_picking__display_name
 #: model:ir.model.fields,field_description:stock_ux.field_stock_rule__display_name
 #: model:ir.model.fields,field_description:stock_ux.field_stock_scrap__display_name
@@ -388,6 +396,7 @@ msgstr "Tiene Mensaje"
 #: model:ir.model.fields,field_description:stock_ux.field_stock_picking_type__id
 #: model:ir.model.fields,field_description:stock_ux.field_stock_picking_zpl_lines__id
 #: model:ir.model.fields,field_description:stock_ux.field_stock_product_zpl_lines__id
+#: model:ir.model.fields,field_description:stock_ux.field_stock_quant__id
 #: model:ir.model.fields,field_description:stock_ux.field_stock_return_picking__id
 #: model:ir.model.fields,field_description:stock_ux.field_stock_rule__id
 #: model:ir.model.fields,field_description:stock_ux.field_stock_scrap__id
@@ -443,6 +452,11 @@ msgstr "Interno"
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_form
 msgid "Internal Notes"
 msgstr "Notas Internas"
+
+#. module: stock_ux
+#: model:res.groups,name:stock_ux.group_stock_inventory_adjustment
+msgid "Inventory Adjustments"
+msgstr ""
 
 #. module: stock_ux
 #: model:ir.model,name:stock_ux.model_stock_location
@@ -795,6 +809,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_label_custom_qty
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_template_label_variant_qty
 msgid "Quantity"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model,name:stock_ux.model_stock_quant
+msgid "Quants"
 msgstr ""
 
 #. module: stock_ux
