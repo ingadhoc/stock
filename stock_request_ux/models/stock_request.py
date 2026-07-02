@@ -40,6 +40,17 @@ class StockRequest(models.Model):
             )
             rec.check_done()
 
+    def _prepare_procurement_values(self, reference_ids=False):
+        values = super()._prepare_procurement_values(reference_ids=reference_ids)
+        # Si la línea pertenece a una orden y no se cargaron referencias a mano,
+        # inyectamos una referencia por defecto por orden para que todas las
+        # líneas se agrupen en un único picking (ver
+        # StockRequestOrder._get_default_stock_reference). En Odoo 19 el
+        # agrupamiento se basa en reference_ids, no en el procurement group.
+        if self.order_id and not values.get("reference_ids"):
+            values["reference_ids"] = self.order_id._get_default_stock_reference()
+        return values
+
     def _action_launch_procurement_rule(self):
         """TODO we could create an option or check if procurement_jit
         is installed
