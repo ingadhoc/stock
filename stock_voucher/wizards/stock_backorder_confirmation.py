@@ -34,7 +34,7 @@ class StockBackorderConfirmation(models.TransientModel):
             return res
 
     def process_cancel_backorder(self):
-        super().process_cancel_backorder()
+        res = super().process_cancel_backorder()
         pickings = (
             self.env["stock.picking"]
             .browse(
@@ -47,4 +47,7 @@ class StockBackorderConfirmation(models.TransientModel):
             .filtered("book_required")
         )
         if pickings:
+            if isinstance(res, dict):
+                return res, pickings.do_print_voucher()
             return pickings.do_print_voucher()
+        return res
