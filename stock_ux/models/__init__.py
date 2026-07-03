@@ -16,3 +16,5 @@ from . import stock_scrap
 from . import stock_location
 from . import stock_forecasted
 from . import stock_quant
+from . import res_company
+from . import stock_warehouse

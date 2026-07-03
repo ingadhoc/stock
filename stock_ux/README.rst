@@ -40,6 +40,7 @@ Stock UX
 #. Add a "All transfers" view form in Menu: Operations
 #. Add a restriction to edit operation type for users with the "Restrict editing Operation Type in Pickings" check.
 #. Add number of packages on pickings
+#. Auto-activate the "Manage Multiple Warehouses" permission when a company has branches (child companies) with warehouses: warehouses are counted across the whole company tree instead of per single company, so one warehouse per branch also enables it. Warehouses of archived companies are not counted, and archiving or restoring a branch re-checks the permission.
 
 Installation
 ============
