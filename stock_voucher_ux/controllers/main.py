@@ -77,10 +77,8 @@ class ReportController(report.ReportController):
             assign = context_dict.get("assign")
             book_id = request.env["stock.picking"].browse(picking_id).book_id
             if assign and book_id and picking_id:
-                copies_result = request.env["ir.actions.report"].search_read(
-                    [("report_name", "ilike", "remito")], ["copies"], limit=1
-                )
-                copies = copies_result[0]["copies"] if copies_result else None
+                # Copias del reporte que se imprime, resuelto por su report_name en la URL.
+                copies = request.env["ir.actions.report"]._get_voucher_copies_from_url(url)
                 # Check if response is PDF, if not (like .doc), assign 1 voucher
                 try:
                     pdf_response = response.response[0]
