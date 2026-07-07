@@ -160,6 +160,34 @@ class StockMove(models.Model):
         """
         return super(StockMove, self.with_context(trigger_assign=True))._action_assign(force_qty=force_qty)
 
+    def _prepare_procurement_values(self):
+        values = super()._prepare_procurement_values()
+        physical_warehouse = self.location_id.warehouse_id
+        propagated_warehouse = values.get("warehouse_id")
+        is_subcontracting_move = (
+            "raw_material_production_id" in self._fields
+            and "subcontractor_id" in self.raw_material_production_id._fields
+            and bool(self.raw_material_production_id.subcontractor_id)
+        )
+
+        # In some multi-warehouse MTO chains the move keeps the commercial
+        # warehouse in `warehouse_id` even when the real source location belongs
+        # to another warehouse. If we propagate that stale warehouse to the next
+        # procurement, Odoo may reuse a draft RFQ from the wrong warehouse and
+        # end up mixing destinations across warehouses in the same PO.
+        # Scope the correction to MTO moves only so other procurement flows can
+        # keep their intentional warehouse propagation.
+        if (
+            self.procure_method == "make_to_order"
+            and not is_subcontracting_move
+            and physical_warehouse
+            and propagated_warehouse
+            and propagated_warehouse != physical_warehouse
+        ):
+            values["warehouse_id"] = physical_warehouse
+
+        return values
+
     @api.ondelete(at_uninstall=False)
     def _unlink_if_not_from_order(self):
         """
