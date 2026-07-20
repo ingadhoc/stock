@@ -12,8 +12,10 @@ class TestRemitoPreimpresoNumbering(TransactionCase):
     estimación ``lines_per_voucher`` (subnumera). La cantidad se determina al
     imprimir, según las páginas reales del reporte (controller).
 
-    Autoimpreso (``autoprinted=True``): conserva el comportamiento previo
-    (asigna en la validación).
+    Autoimpreso (``autoprinted=True``): se numera en la validación sólo si el
+    tipo de operación pide imprimir el remito al validar
+    (``auto_print_delivery_slip``) — el remito reemplaza al recibo de entrega
+    nativo. Sin ese flag no se numera al validar (se asigna al imprimir a mano).
     """
 
     @classmethod
@@ -54,9 +56,16 @@ class TestRemitoPreimpresoNumbering(TransactionCase):
         cls.src = cls.env.ref("stock.stock_location_stock")
         cls.dest = cls.env.ref("stock.stock_location_customers")
 
-    def _make_done_picking(self, book):
+    def _make_done_picking(self, book, auto_print=False):
         picking_type = self.env.ref("stock.picking_type_out")
-        picking_type.write({"book_required": True, "book_id": book.id, "voucher_required": False})
+        picking_type.write(
+            {
+                "book_required": True,
+                "book_id": book.id,
+                "voucher_required": False,
+                "auto_print_delivery_slip": auto_print,
+            }
+        )
         picking = self.env["stock.picking"].create(
             {
                 "picking_type_id": picking_type.id,
@@ -94,11 +103,24 @@ class TestRemitoPreimpresoNumbering(TransactionCase):
             "la numeración se hace al imprimir según páginas reales.",
         )
 
-    def test_autoprinted_assigned_on_validation(self):
-        picking = self._make_done_picking(self.book_auto)
+    def test_autoprinted_assigned_on_validation_with_flag(self):
+        # Con auto_print_delivery_slip el remito reemplaza al recibo de entrega
+        # y el autoimpreso se numera al validar.
+        picking = self._make_done_picking(self.book_auto, auto_print=True)
         self.assertEqual(picking.state, "done")
         self.assertEqual(
             len(picking.voucher_ids),
             1,
-            "Un talonario autoimpreso debe asignar un único remito en la validación.",
+            "Un talonario autoimpreso debe asignar un único remito en la validación "
+            "cuando el tipo de operación tiene auto_print_delivery_slip.",
+        )
+
+    def test_autoprinted_not_assigned_without_flag(self):
+        # Sin el flag, validar no numera: el número se asigna al imprimir a mano.
+        picking = self._make_done_picking(self.book_auto, auto_print=False)
+        self.assertEqual(picking.state, "done")
+        self.assertFalse(
+            picking.voucher_ids,
+            "Sin auto_print_delivery_slip, un talonario autoimpreso no debe numerarse "
+            "en la validación; el número se asigna al imprimir.",
         )
