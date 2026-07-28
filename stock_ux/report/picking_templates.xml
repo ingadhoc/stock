@@ -52,14 +52,8 @@
 <t t-if="picking.partner_id and picking.partner_id.phone">
 ^FO100,545^FD<t t-esc="picking.partner_id.phone"/>^FS
 </t>
-<t t-elif="picking.partner_id and picking.partner_id.mobile">
-^FO100,545^FD<t t-esc="picking.partner_id.mobile"/>^FS
-</t>
 <t t-elif="picking.partner_id.parent_id and picking.partner_id.parent_id.phone">
 ^FO100,545^FD<t t-esc="picking.partner_id.parent_id.phone"/>^FS
-</t>
-<t t-elif="picking.partner_id.parent_id and picking.partner_id.parent_id.mobile">
-^FO100,545^FD<t t-esc="picking.partner_id.parent_id.mobile"/>^FS
 </t>
 <!-- Fin destino -->
 <t t-if="picking._fields.get('carrier_id') and picking.carrier_id">
