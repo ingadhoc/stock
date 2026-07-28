@@ -67,29 +67,15 @@
 ,
 <t class="oe_inline" t-esc="batch.partner_id.country_id.name"/>
 ^FS ^FO50,545^FDTel: ^FS
-<t t-if="batch.partner_id and (batch.partner_id.phone != False or batch.partner_id.mobile != False)">
-<t t-if="batch.partner_id.phone">
+<t t-if="batch.partner_id and batch.partner_id.phone">
 ^FO100,545^FD
 <t t-esc="batch.partner_id.phone"/>
 ^FS
 </t>
-<t t-else="">
-^FO100,545^FD
-<t t-esc="batch.partner_id.mobile"/>
-^FS
-</t>
-</t>
-<t t-if="batch.partner_id.parent_id and (batch.partner_id.parent_id.phone != False or batch.partner_id.parent_id.mobile != False) and (batch.partner_id.phone == False and batch.partner_id.mobile == False)">
-<t t-if="batch.partner_id.parent_id.phone">
+<t t-elif="batch.partner_id.parent_id and batch.partner_id.parent_id.phone">
 ^FO100,545^FD
 <t t-esc="batch.partner_id.parent_id.phone"/>
 ^FS
-</t>
-<t t-else="">
-^FO100,545^FD
-<t t-esc="batch.partner_id.parent_id.mobile"/>
-^FS
-</t>
 </t>
 <t t-else="">
 ^FS
@@ -190,21 +176,11 @@ Fecha
 ,
                             <t class="oe_inline" t-esc="batch.partner_id.country_id.name"/>
                             <div style="font-weight: normal;">Tel:
-                                <t t-if="batch.partner_id and (batch.partner_id.phone != False or batch.partner_id.mobile != False)">
-                                    <t t-if="batch.partner_id.phone">
-                                        <t t-esc="batch.partner_id.phone"/>
-                                    </t>
-                                    <t t-else="">
-                                        <t t-esc="batch.partner_id.mobile"/>
-                                    </t>
+                                <t t-if="batch.partner_id and batch.partner_id.phone">
+                                    <t t-esc="batch.partner_id.phone"/>
                                 </t>
-                                <t t-if="batch.partner_id.parent_id and (batch.partner_id.parent_id.phone != False or batch.partner_id.parent_id.mobile != False) and (batch.partner_id.phone == False and batch.partner_id.mobile == False)">
-                                    <t t-if="batch.partner_id.parent_id.phone">
-                                        <t t-esc="batch.partner_id.parent_id.phone"/>
-                                    </t>
-                                    <t t-else="">
-                                        <t t-esc="batch.partner_id.parent_id.mobile"/>
-                                    </t>
+                                <t t-elif="batch.partner_id.parent_id and batch.partner_id.parent_id.phone">
+                                    <t t-esc="batch.partner_id.parent_id.phone"/>
                                 </t>
                                 <t t-else="">
                                 </t>
