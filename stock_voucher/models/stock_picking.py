@@ -87,8 +87,39 @@ class StockPicking(models.Model):
         self.message_post(body=_("Números de remitos asignados: %s") % (self.vouchers))
         self.write({"book_id": book.id})
 
-        # Send confirmation email with voucher numbers already assigned
-        self.with_context(from_assign_numbers=True)._send_confirmation_email()
+        # Send confirmation email with voucher numbers already assigned.
+        # The confirmation path may reach the carrier integration (send_to_shipper),
+        # which can raise a UserError unrelated to the voucher itself (e.g. a
+        # base_on_rule carrier without a matching price rule). The voucher is a
+        # fiscal document already numbered above, so it must not be rolled back by
+        # such an error: we isolate the call in a savepoint and, on failure,
+        # degrade the error to a chatter note plus a warning activity for the user.
+        try:
+            with self.env.cr.savepoint():
+                self.with_context(from_assign_numbers=True)._send_confirmation_email()
+        except UserError as error:
+            carrier = "carrier_id" in self._fields and self.carrier_id
+            if carrier:
+                hint = _(
+                    'The delivery method "%(carrier)s" could not compute a shipping '
+                    "cost for this transfer, usually because it has no price rule "
+                    "matching the order. Add an applicable price rule to that "
+                    "delivery method (e.g. a catch-all rule), or change/remove the "
+                    "delivery method on the transfer."
+                ) % {"carrier": carrier.name}
+            else:
+                hint = _("Please review the delivery method configured on the transfer.")
+            message = _(
+                "The voucher was numbered correctly, but the confirmation email / "
+                "carrier notification could not be sent.\n\n%(hint)s\n\nDetails: %(error)s"
+            ) % {"hint": hint, "error": error}
+            self.message_post(body=message)
+            self.activity_schedule(
+                "mail.mail_activity_data_warning",
+                summary=_("Voucher confirmation could not be sent"),
+                note=message,
+                user_id=self.user_id.id or self.env.user.id,
+            )
 
     def clean_voucher_data(self):
         self.voucher_ids.unlink()
