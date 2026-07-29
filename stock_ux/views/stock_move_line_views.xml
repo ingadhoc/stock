@@ -71,15 +71,15 @@
                 <attribute name="readonly">1</attribute>
             </field>
             <field name="date" position="attributes">
-                <attribute name="invisible">1</attribute>
+                <attribute name="column_invisible">True</attribute>
             </field>
             <field name="state" position="attributes">
-                <attribute name="invisible">1</attribute>
+                <attribute name="column_invisible">True</attribute>
             </field>
             <field name="product_id" position="after">
                 <field name="package_id" column_invisible="True"/>
                 <field name="result_package_id" column_invisible="True"/>
-                <field name="quantity" invisible="1"/>
+                <field name="quantity" column_invisible="True"/>
                 <field name="picking_id" column_invisible="True"/>
                 <field name="company_id" column_invisible="True"/>
                 <field name="product_uom_id" position="move"/>
