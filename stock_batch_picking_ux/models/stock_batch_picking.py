@@ -123,7 +123,6 @@ class StockPickingBatch(models.Model):
         }
 
     def action_done(self):
-        # agregamos los numeros de remito
         for rec in self:
             # al agregar la restriccion de que al menos una tenga que tener
             # cantidad entonces nunca se manda el force_qty al picking
@@ -148,8 +147,19 @@ class StockPickingBatch(models.Model):
             if rec.number_of_packages:
                 rec.picking_ids.write({"number_of_packages": rec.number_of_packages})
 
+        # los remitos se numeran después de validar y sólo para los traslados
+        # que quedaron en "done" y todavía sin remito
+        res = super(StockPickingBatch, self.with_context(do_not_assign_numbers=True)).action_done()
+
+        batch_voucher_installed = "stock_batch_picking_voucher" in self.env["ir.module.module"].search(
+            [("name", "=", "stock_batch_picking_voucher"), ("state", "=", "installed")]
+        ).mapped("name")
+
+        for rec in self:
             if rec.picking_type_code == "incoming" and rec.voucher_number:
                 for picking in rec.picking_ids:
+                    if picking.state != "done" or picking.voucher_ids:
+                        continue
                     # agregamos esto para que no se asigne a los pickings
                     # que no se van a recibir ya que todavia no se limpiaron
                     # y ademas, por lo de arriba, no se fuerza la cantidad
@@ -162,21 +172,19 @@ class StockPickingBatch(models.Model):
                             "name": rec.voucher_number,
                         }
                     )
-            else:
-                batch_voucher_installed = "stock_batch_picking_voucher" in self.env["ir.module.module"].search(
-                    [("name", "=", "stock_batch_picking_voucher"), ("state", "=", "installed")]
-                ).mapped("name")
-                if not batch_voucher_installed:
-                    for picking in rec.picking_ids:
-                        if not picking.picking_type_id.auto_print_delivery_slip:
-                            continue
-                        book = picking.book_id or picking.picking_type_id.book_id
-                        if not book:
-                            continue
-                        if all(operation.quantity == 0 for operation in picking.move_line_ids):
-                            continue
-                        picking.assign_numbers(picking.get_estimated_number_of_pages(), book)
-        return super(StockPickingBatch, self.with_context(do_not_assign_numbers=True)).action_done()
+            elif not batch_voucher_installed:
+                for picking in rec.picking_ids:
+                    if picking.state != "done" or picking.voucher_ids:
+                        continue
+                    if not picking.picking_type_id.auto_print_delivery_slip:
+                        continue
+                    book = picking.book_id or picking.picking_type_id.book_id
+                    if not book:
+                        continue
+                    if all(operation.quantity == 0 for operation in picking.move_line_ids):
+                        continue
+                    picking.assign_numbers(picking.get_estimated_number_of_pages(), book)
+        return res
 
     def action_view_stock_picking(self):
         """This function returns an action that display existing pickings of
