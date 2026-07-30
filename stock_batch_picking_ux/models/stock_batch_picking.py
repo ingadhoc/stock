@@ -114,6 +114,7 @@ class StockPickingBatch(models.Model):
                 rec.picking_ids.write({"number_of_packages": rec.number_of_packages})
         return super().action_done()
 
+<<<<<<< 3529fd70e3c0cedd3deb192eb6f86020b6df6fee
     def action_print_delivery_slip(self):
         """Choose between consolidated batch report and per-picking individual
         delivery slips depending on whether the batch has a partner.
@@ -126,6 +127,76 @@ class StockPickingBatch(models.Model):
         if self.partner_id:
             return self.env.ref("stock_batch_picking_ux.action_report_batch_deliveryslip").report_action(self)
         return self.env.ref("stock.action_report_delivery").report_action(self.picking_ids)
+||||||| 9aea90f8e894d7dbd84c19fa1b58dfba32b4c49f
+            if rec.picking_type_code == "incoming" and rec.voucher_number:
+                for picking in rec.picking_ids:
+                    # agregamos esto para que no se asigne a los pickings
+                    # que no se van a recibir ya que todavia no se limpiaron
+                    # y ademas, por lo de arriba, no se fuerza la cantidad
+                    # si son todos cero, se terminan sacando
+                    if all(operation.quantity == 0 for operation in picking.move_line_ids):
+                        continue
+                    rec.env["stock.picking.voucher"].create(
+                        {
+                            "picking_id": picking.id,
+                            "name": rec.voucher_number,
+                        }
+                    )
+            else:
+                batch_voucher_installed = "stock_batch_picking_voucher" in self.env["ir.module.module"].search(
+                    [("name", "=", "stock_batch_picking_voucher"), ("state", "=", "installed")]
+                ).mapped("name")
+                if not batch_voucher_installed:
+                    for picking in rec.picking_ids:
+                        if not picking.picking_type_id.auto_print_delivery_slip:
+                            continue
+                        book = picking.book_id or picking.picking_type_id.book_id
+                        if not book:
+                            continue
+                        if all(operation.quantity == 0 for operation in picking.move_line_ids):
+                            continue
+                        picking.assign_numbers(picking.get_estimated_number_of_pages(), book)
+        return super(StockPickingBatch, self.with_context(do_not_assign_numbers=True)).action_done()
+=======
+        # los remitos se numeran después de validar y sólo para los traslados
+        # que quedaron en "done" y todavía sin remito
+        res = super(StockPickingBatch, self.with_context(do_not_assign_numbers=True)).action_done()
+
+        batch_voucher_installed = "stock_batch_picking_voucher" in self.env["ir.module.module"].search(
+            [("name", "=", "stock_batch_picking_voucher"), ("state", "=", "installed")]
+        ).mapped("name")
+
+        for rec in self:
+            if rec.picking_type_code == "incoming" and rec.voucher_number:
+                for picking in rec.picking_ids:
+                    if picking.state != "done" or picking.voucher_ids:
+                        continue
+                    # agregamos esto para que no se asigne a los pickings
+                    # que no se van a recibir ya que todavia no se limpiaron
+                    # y ademas, por lo de arriba, no se fuerza la cantidad
+                    # si son todos cero, se terminan sacando
+                    if all(operation.quantity == 0 for operation in picking.move_line_ids):
+                        continue
+                    rec.env["stock.picking.voucher"].create(
+                        {
+                            "picking_id": picking.id,
+                            "name": rec.voucher_number,
+                        }
+                    )
+            elif not batch_voucher_installed:
+                for picking in rec.picking_ids:
+                    if picking.state != "done" or picking.voucher_ids:
+                        continue
+                    if not picking.picking_type_id.auto_print_delivery_slip:
+                        continue
+                    book = picking.book_id or picking.picking_type_id.book_id
+                    if not book:
+                        continue
+                    if all(operation.quantity == 0 for operation in picking.move_line_ids):
+                        continue
+                    picking.assign_numbers(picking.get_estimated_number_of_pages(), book)
+        return res
+>>>>>>> 1ec26dde0f12b1bc11d6864540f04ab7566733c9
 
     def action_view_stock_picking(self):
         """This function returns an action that display existing pickings of
