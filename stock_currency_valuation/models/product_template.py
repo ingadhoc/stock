@@ -33,7 +33,7 @@ class productTemplate(models.Model):
                 from_amount=rec.standard_price_in_currency,
                 to_currency=product_currency,
                 company=company_id,
-                date=fields.date.today(),
+                date=fields.Date.today(),
             )
             # Then apply the rule on the converted amount
             replenishment_cost = replenishment_base_cost_on_currency
