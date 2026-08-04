@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-25 19:33+0000\n"
+"POT-Creation-Date: 2026-08-04 16:32+0000\n"
 "PO-Revision-Date: 2026-04-20 16:41+0000\n"
 "Last-Translator: julia elizondo <jue@adhoc.inc>\n"
 "Language-Team: Spanish <https://translation.dev-adhoc.com/projects/"
@@ -216,11 +216,6 @@ msgstr "Creado el"
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
 msgid "Deadline exceed or/and by the scheduled"
 msgstr "Plazo excedido y/o por lo programado"
-
-#. module: stock_ux
-#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_form
-msgid "Descripción 2"
-msgstr "Description 2"
 
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_form_inherited
@@ -1276,6 +1271,9 @@ msgid ""
 "^FO250,10\n"
 "^A0N,20,25^FD"
 msgstr ""
+
+#~ msgid "Descripción 2"
+#~ msgstr "Description 2"
 
 #~ msgid "Print Stock Voucher lines"
 #~ msgstr "Imprimir las Líneas de Remito"
