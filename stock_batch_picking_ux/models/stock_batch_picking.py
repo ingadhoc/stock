@@ -62,7 +62,14 @@ class StockPickingBatch(models.Model):
     def _compute_partner_id(self):
         for batch in self:
             partners = batch.picking_ids.mapped("partner_id")
-            batch.partner_id = partners if len(partners) == 1 else False
+            if len(partners) == 1:
+                batch.partner_id = partners
+            elif partners:
+                # varios clientes entre los traslados: ambiguo, se limpia
+                batch.partner_id = False
+            else:
+                # lote sin traslados: no pisar el cliente cargado a mano
+                batch.partner_id = batch.partner_id
 
     @api.depends("partner_id")
     def _compute_allowed_picking_ids(self):
@@ -91,10 +98,13 @@ class StockPickingBatch(models.Model):
 
     @api.onchange("partner_id")
     def changes_set_pickings(self):
-        """we reset pickings if partner_id is changed and set, if partner is empty we keep previous pickings.
-        Operation type is protected by odoo (without onchange, by a constraint), no need to trigger onchange"""
+        """Al fijar/cambiar el cliente sacamos del lote solo los traslados que no
+        son de ese cliente (antes vaciaba todo, lo que se peleaba con el compute
+        de partner_id y dejaba el campo inutilizable en un lote nuevo). Con cliente
+        vacío se mantienen los traslados. El tipo de operación lo protege un
+        constraint de Odoo, no hace falta disparar onchange."""
         for rec in self.filtered("partner_id"):
-            rec.picking_ids = False
+            rec.picking_ids = rec.picking_ids.filtered(lambda p: p.partner_id == rec.partner_id)
 
     def action_done(self):
         for rec in self:

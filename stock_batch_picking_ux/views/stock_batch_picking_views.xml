@@ -37,6 +37,17 @@
         <field name="inherit_id" ref="stock_picking_batch.stock_picking_batch_form"/>
         <field name="arch" type="xml">
 
+            <!-- No permitir cargar traslados hasta elegir el tipo de operación:
+                 sin tipo, allowed_picking_ids nativo no filtra por picking_type y
+                 ofrece todos los traslados de la compañía (recepciones, entregas,
+                 internos mezclados). Forzamos el orden tipo → traslados. -->
+            <xpath expr="//field[@name='picking_ids'][@widget='many2many']" position="attributes">
+                <attribute name="readonly">not picking_type_id or state not in ['draft', 'in_progress']</attribute>
+            </xpath>
+            <xpath expr="//field[@name='picking_ids'][@widget='stock_picking_many2many']" position="attributes">
+                <attribute name="readonly">not picking_type_id or state not in ['draft', 'in_progress']</attribute>
+            </xpath>
+
             <button name="action_cancel" position="attributes">
                 <attribute name="groups">stock_ux.allow_picking_cancellation</attribute>
             </button>
