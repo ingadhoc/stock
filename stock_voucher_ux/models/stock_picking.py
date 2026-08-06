@@ -35,6 +35,34 @@ class StockPicking(models.Model):
             self.book_id = self.book_id.id
         return super(StockPicking, self).do_print_voucher()
 
+    def _get_voucher_report(self):
+        """Reporte que efectivamente se imprime como remito para este picking: el
+        recibo de entrega nativo, o el remito que lo sustituye cuando
+        ``report_substitute`` tiene una regla para su talonario."""
+        self.ensure_one()
+        report = self.env.ref("stock.action_report_delivery")
+        # ``report_substitute`` es opcional: sin él el reporte es el nativo.
+        if hasattr(report, "get_substitution_report"):
+            report = report.get_substitution_report(self.ids)
+        return report
+
+    def _assign_preprinted_numbers(self):
+        """Numera los remitos preimpresos server-side, según las páginas reales.
+
+        El camino de impresión numera en el controller ``/report/download`` o en
+        ``render_and_send`` (IoT), y los dos dependen de que un cliente web ejecute
+        la acción de reporte. Cuando valida una automatización server-side —la de
+        entregas del tipo de pedido de venta— esa acción se descarta y el remito
+        queda validado sin número. Numerando acá los otros dos caminos quedan
+        no-op, porque ambos chequean que no haya números todavía.
+        """
+        for picking in self.filtered(lambda p: p.book_id and not p.book_id.autoprinted and not p.voucher_ids):
+            number_of_pages = picking._get_voucher_report()._count_voucher_pages(picking)
+            # Sin páginas reales no inventamos una cantidad: que numere el camino
+            # de impresión, como antes.
+            if number_of_pages:
+                picking.assign_numbers(number_of_pages, picking.book_id)
+
     def do_print_and_assign(self):
         if not self.book_id and self.picking_type_code != "incoming":
             raise UserError("Primero debe seleccionar un talonario")
@@ -42,10 +70,12 @@ class StockPicking(models.Model):
             # Talonario preimpreso: la cantidad de remitos debe coincidir con las
             # páginas REALES del reporte. No pre-asignamos por la estimación
             # ``lines_per_voucher`` (subnumera: p. ej. asigna 3 cuando el remito
-            # tiene 5 páginas). Imprimimos con ``assign=True`` para que el
-            # controller cuente las páginas renderizadas, asigne los números y
-            # re-renderice el PDF ya con los números puestos.
+            # tiene 5 páginas). Numeramos server-side contando las páginas del
+            # render, así el número no depende de que alguien ejecute la acción que
+            # devolvemos, e imprimimos con ``assign=True`` para que el controller
+            # numere igual si acá no se pudo renderizar.
             self.printed = True
+            self._assign_preprinted_numbers()
             return self.with_context(assign=True).do_print_voucher()
         else:
             if self.book_id.sequence_to and int(self.next_voucher_number) > int(self.book_id.sequence_to):
