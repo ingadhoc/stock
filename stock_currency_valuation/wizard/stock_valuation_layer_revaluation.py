@@ -26,7 +26,7 @@ class StockValuationLayerRevaluation(models.TransientModel):
     )
     new_value_in_currency_by_qty = fields.Monetary(
         "New value in currency by quantity",
-        compute="_compute_new_value",
+        compute="_compute_new_value_in_currency",
     )
 
     @api.depends("product_id", "company_id")
@@ -69,8 +69,11 @@ class StockValuationLayerRevaluation(models.TransientModel):
     def _compute_new_value_in_currency(self):
         for reval in self:
             product_id = reval.product_id.with_company(reval.company_id)
-            reval.new_value_in_currency = product_id.standard_price_in_currency + reval.added_value_in_currency
-            if not float_is_zero(reval.current_quantity_svl, precision_rounding=self.product_id.uom_id.rounding):
+            # standard_price_in_currency es el costo unitario: hay que llevarlo a valor total
+            # antes de sumarle el valor agregado, igual que el nativo con current_value_svl.
+            current_value_in_currency = product_id.standard_price_in_currency * reval.current_quantity_svl
+            reval.new_value_in_currency = current_value_in_currency + reval.added_value_in_currency
+            if not float_is_zero(reval.current_quantity_svl, precision_rounding=reval.product_id.uom_id.rounding):
                 reval.new_value_in_currency_by_qty = reval.new_value_in_currency / reval.current_quantity_svl
             else:
                 reval.new_value_in_currency_by_qty = 0.0
@@ -107,6 +110,12 @@ class StockValuationLayerRevaluation(models.TransientModel):
                     lot_id.with_context(disable_auto_svl=True).standard_price += self.added_value / total_product_qty
                 product_id.with_context(disable_auto_svl=True).standard_price += (
                     self.added_value / product_id.quantity_svl
+                )
+                # El costo en moneda secundaria no lo actualiza ningun otro camino: el
+                # _update_currency_standard_price del layer solo corre para landed costs
+                # y el layer de revaluacion no tiene, asi que se actualiza aca.
+                product_id.with_context(disable_auto_svl=True).standard_price_in_currency += (
+                    self.added_value_in_currency / product_id.quantity_svl
                 )
                 if self.lot_id:
                     description += _(

@@ -47,7 +47,11 @@ class productTemplate(models.Model):
             )
 
     @api.depends_context("company")
-    @api.depends("product_variant_ids", "product_variant_ids.standard_price")
+    @api.depends(
+        "product_variant_ids",
+        "product_variant_ids.standard_price",
+        "product_variant_ids.standard_price_in_currency",
+    )
     def _compute_standard_price_in_currency(self):
         # Por ahora hacemos esto porque replishment cost no es compatible al 100% con variantes
         # obtenemos el precio del primer producto
