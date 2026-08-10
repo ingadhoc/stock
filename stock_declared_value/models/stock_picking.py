@@ -70,9 +70,7 @@ class StockPicking(models.Model):
                         bom_moves = so_bom_line.move_ids & stock_bom_lines._origin
                         done_avg = []
                         picking_avg = []
-                        boms, lines = bom.sudo().explode(
-                            so_bom_line.product_id, so_bom_line.product_uom_qty, picking_type=bom.picking_type_id
-                        )
+                        boms, lines = bom.sudo().explode(so_bom_line.product_id, 1.0, picking_type=bom.picking_type_id)
                         for move in bom_moves:
                             bom_quantity = 0.0
                             for bom_line, line_data in lines:
