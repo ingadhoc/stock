@@ -28,6 +28,7 @@ class StockWarehouseOrderpointWizard(models.TransientModel):
         orderpoint_domain = self._get_orderpoint_domain()
         orderpoints = self.env["stock.warehouse.orderpoint"].with_context(active_test=False).search(orderpoint_domain)
         orderpoints.update_qty_forecast()
+        orderpoints.update_qty_to_order_manual()
         if self.compute_rotation:
             orderpoints._compute_rotation()
         orderpoints._change_review_toggle_negative()
