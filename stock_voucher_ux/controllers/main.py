@@ -151,7 +151,14 @@ class ReportController(report.ReportController):
                             pass
 
                 elif book_id and picking_id:
+                    # Autoimpreso impreso por fuera de ``do_print_voucher`` (menú
+                    # nativo): se numera y re-renderiza, como las otras dos ramas.
                     if not picking.voucher_ids and book_id:
                         picking.assign_numbers(1, book_id)
+                        picking.env.flush_all()
+                        try:
+                            response = super().report_download(data, context=context, token=token, **kwargs)
+                        except Exception:
+                            pass
 
         return response
