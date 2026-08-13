@@ -19,71 +19,71 @@ msgstr ""
 #. module: stock_delivery_zone
 #: model_terms:ir.ui.view,arch_db:stock_delivery_zone.stock_delivery_zone_report_picking_ux
 msgid "<strong>Zone:</strong>"
-msgstr ""
+msgstr "<strong>Zona:</strong>"
 
 #. module: stock_delivery_zone
 #: model_terms:ir.ui.view,arch_db:stock_delivery_zone.stock_delivery_zone_report_delivery_document
 msgid "<strong>Zone</strong>"
-msgstr ""
+msgstr "<strong>Zona</strong>"
 
 #. module: stock_delivery_zone
 #: model:ir.model.fields,field_description:stock_delivery_zone.field_stock_delivery_zone__active
 msgid "Active"
-msgstr ""
+msgstr "Activo"
 
 #. module: stock_delivery_zone
 #: model:ir.model,name:stock_delivery_zone.model_res_partner
 msgid "Contact"
-msgstr ""
+msgstr "Contacto"
 
 #. module: stock_delivery_zone
 #: model:ir.model.fields,field_description:stock_delivery_zone.field_stock_delivery_zone__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Creado por"
 
 #. module: stock_delivery_zone
 #: model:ir.model.fields,field_description:stock_delivery_zone.field_stock_delivery_zone__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Fecha de creación"
 
 #. module: stock_delivery_zone
 #: model:ir.model,name:stock_delivery_zone.model_stock_delivery_zone
 msgid "Delivery Zone"
-msgstr ""
+msgstr "Zona de entrega"
 
 #. module: stock_delivery_zone
 #: model:ir.model.fields,field_description:stock_delivery_zone.field_res_partner__display_name
 #: model:ir.model.fields,field_description:stock_delivery_zone.field_stock_delivery_zone__display_name
 #: model:ir.model.fields,field_description:stock_delivery_zone.field_stock_picking__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nombre mostrado"
 
 #. module: stock_delivery_zone
 #: model:ir.model.fields,field_description:stock_delivery_zone.field_res_partner__id
 #: model:ir.model.fields,field_description:stock_delivery_zone.field_stock_delivery_zone__id
 #: model:ir.model.fields,field_description:stock_delivery_zone.field_stock_picking__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: stock_delivery_zone
 #: model:ir.model.fields,field_description:stock_delivery_zone.field_stock_delivery_zone__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Última actualización por"
 
 #. module: stock_delivery_zone
 #: model:ir.model.fields,field_description:stock_delivery_zone.field_stock_delivery_zone__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Última actualización"
 
 #. module: stock_delivery_zone
 #: model:ir.model.fields,field_description:stock_delivery_zone.field_stock_delivery_zone__name
 msgid "Name"
-msgstr ""
+msgstr "Nombre"
 
 #. module: stock_delivery_zone
 #: model:ir.model,name:stock_delivery_zone.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Transferencia"
 
 #. module: stock_delivery_zone
 #: model:ir.model.fields,field_description:stock_delivery_zone.field_res_partner__delivery_zone_id
@@ -91,11 +91,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_delivery_zone.field_stock_picking__delivery_zone_id
 #: model_terms:ir.ui.view,arch_db:stock_delivery_zone.stock_delivery_zone_view_stock_delivery_zone_form
 msgid "Zone"
-msgstr ""
+msgstr "Zona"
 
 #. module: stock_delivery_zone
 #: model:ir.actions.act_window,name:stock_delivery_zone.stock_delivery_zone_action_stock_delivery_zone
 #: model:ir.ui.menu,name:stock_delivery_zone.stock_delivery_zone_menu_stock_delivery_zone
 #: model_terms:ir.ui.view,arch_db:stock_delivery_zone.stock_delivery_zone_view_stock_delivery_zone_list
 msgid "Zones"
-msgstr ""
+msgstr "Zonas"
