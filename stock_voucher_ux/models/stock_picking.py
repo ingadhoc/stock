@@ -27,13 +27,39 @@ class StockPicking(models.Model):
     @api.depends("voucher_ids")
     def _compute_with_vouchers(self):
         for rec in self:
-            rec.with_vouchers = bool(self.voucher_ids)
+            rec.with_vouchers = bool(rec.voucher_ids)
 
     def do_print_voucher(self):
+        # El autoimpreso se numera antes del render: el reporte imprime
+        # ``o.vouchers or o.name``. El preimpreso, por páginas reales al imprimir.
+        if self.autoprinted and not self.voucher_ids:
+            self.assign_numbers(1, self.book_id)
         self.printed = True
         if self.book_id:
             self.book_id = self.book_id.id
         return super(StockPicking, self).do_print_voucher()
+
+    def assign_numbers(self, estimated_number_of_pages, book):
+        # Único punto por el que pasan todos los caminos de numeración.
+        self._check_voucher_cai_range(book, estimated_number_of_pages)
+        return super().assign_numbers(estimated_number_of_pages, book)
+
+    def _check_voucher_cai_range(self, book, estimated_number_of_pages):
+        """No numerar por encima del tope del CAI (``sequence_to``)."""
+        sequence_to = (book.sequence_to or "").strip()
+        if not book.autoprinted or not sequence_to.isdigit():
+            return
+        # ``number_next_actual`` no declara depends y la secuencia se consume con
+        # SQL crudo: sin invalidar, el segundo remito de la transacción lee viejo.
+        book.sequence_id.invalidate_recordset(["number_next_actual"])
+        last_number = book.sequence_id.number_next_actual + estimated_number_of_pages - 1
+        if last_number > int(sequence_to):
+            raise UserError(
+                _(
+                    "The voucher number %s exceeds the range specified in the CAI. Please update the range or use a different CAI with a different range.",
+                    last_number,
+                )
+            )
 
     def do_print_and_assign(self):
         if not self.book_id and self.picking_type_code != "incoming":
@@ -48,13 +74,9 @@ class StockPicking(models.Model):
             self.printed = True
             return self.with_context(assign=True).do_print_voucher()
         else:
-            if self.book_id.sequence_to and int(self.next_voucher_number) > int(self.book_id.sequence_to):
-                raise UserError(
-                    _(
-                        "The voucher number %s exceeds the range specified in the CAI. Please update the range or use a different CAI with a different range.",
-                        self.next_voucher_number,
-                    )
-                )
+            if self.voucher_ids:
+                # El botón sigue clickeable después de imprimir: no renumerar.
+                return self.do_print_voucher()
             self.assign_numbers(1, self.book_id)
             return self.do_print_voucher()
 
@@ -77,22 +99,13 @@ class StockPicking(models.Model):
         return res
 
     def _action_done(self):
-        # Los talonarios preimpresos (``autoprinted=False``) se numeran al
-        # IMPRIMIR según las páginas reales del reporte, no en la validación por
-        # la estimación ``lines_per_voucher``. Los autoimpresos se numeran acá al
-        # validar, pero sólo si el tipo de operación pide imprimir el remito al
-        # validar (``auto_print_delivery_slip``) — el remito reemplaza al recibo
-        # de entrega nativo. Sin ese flag el número se asigna al IMPRIMIR a mano.
+        # Autoimpreso: un remito de N hojas, un solo número, acá. Preimpreso: al
+        # imprimir, tantos como hojas reales tenga el PDF.
         res = super(StockPicking, self.with_context(do_not_assign_numbers=True))._action_done()
         if self._context.get("do_not_assign_numbers"):
             return res
-        for picking in self.filtered(
-            lambda p: p.book_required
-            and p.book_id
-            and p.book_id.autoprinted
-            and p.picking_type_id.auto_print_delivery_slip
-        ):
-            picking.assign_numbers(picking.get_estimated_number_of_pages(), picking.book_id)
+        for picking in self.filtered(lambda p: p.book_required and p.book_id and p.book_id.autoprinted):
+            picking.assign_numbers(1, picking.book_id)
         return res
 
     def clean_voucher_data(self):
