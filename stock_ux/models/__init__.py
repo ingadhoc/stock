@@ -12,7 +12,6 @@ from . import stock_move_line
 from . import stock_picking_type
 from . import res_config_settings
 from . import stock_rule
-from . import stock_scrap
 from . import stock_location
 from . import stock_forecasted
 from . import stock_quant
