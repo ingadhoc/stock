@@ -127,6 +127,24 @@ class StockPicking(models.Model):
                 }
             }
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        """Propaga el destino de la cabecera a los movimientos, como ya hace write().
+
+        El core solo lo hace en write(): si el traslado se crea con sus lineas en un
+        solo guardado, una linea puede quedar con el destino por defecto del tipo de
+        operacion en vez del que se cargo en la cabecera.
+        """
+        pickings = super().create(vals_list)
+        for picking, vals in zip(pickings, vals_list):
+            if not vals.get("location_dest_id"):
+                continue
+            moves = picking.move_ids.filtered(
+                lambda x: not x.scrapped and not x.location_final_id and x.location_dest_id != picking.location_dest_id
+            )
+            moves.write({"location_dest_id": picking.location_dest_id.id})
+        return pickings
+
     def write(self, vals):
         """
         Overrides the default write method to restrict changing the 'picking_type_id' field
