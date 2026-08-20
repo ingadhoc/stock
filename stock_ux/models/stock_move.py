@@ -99,6 +99,25 @@ class StockMove(models.Model):
             merge_into=merge_into
         )
 
+    @api.model
+    def _prepare_merge_negative_moves_excluded_distinct_fields(self):
+        # Al cancelar remanente / bajar cantidad, el core genera un movimiento
+        # negativo que debe fusionarse (netear) contra el pendiente para
+        # cancelarlo. Ese neteo usa una clave que, por defecto, incluye
+        # `date_deadline`. Si la orden se editó DESPUES de confirmar (p.ej. se
+        # agregó otra línea), Odoo le bumpea el `date_deadline` al movimiento
+        # pendiente, pero el negativo conserva el original. Al diferir, no
+        # fusionan y el negativo termina dándose vuelta como una contraentrega
+        # (ingreso fantasma `to_refund`), dejando además el pendiente huérfano.
+        # Sacamos `date_deadline` de la clave del movimiento negativo (solo bajo
+        # `cancel_from_order`, que es cuando hay una baja de cantidad) para que
+        # el neteo nativo cancele el pendiente sin importar el deadline. No toca
+        # el merge positivo↔positivo (usa la clave completa). Ver ticket 125936.
+        excluded = super()._prepare_merge_negative_moves_excluded_distinct_fields()
+        if self.env.context.get("cancel_from_order") and "date_deadline" not in excluded:
+            excluded = excluded + ["date_deadline"]
+        return excluded
+
     def action_explode(self):
         # Cuando se explota un kit, MRP cancela y elimina el move original del producto kit,
         # aunque tenga sale_line_id. Permitimos ese unlink con can_delete=True.
