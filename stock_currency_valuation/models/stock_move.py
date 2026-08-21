@@ -102,9 +102,14 @@ class StockMove(models.Model):
                     base_value_in_currency = base_value * move.picking_id.currency_rate
                     move.value_in_currency = base_value_in_currency + lc_value_in_currency
                 else:
-                    base_value_in_currency = move.with_company(move.company_id).company_id.currency_id._convert(
+                    # ``valuation_currency_id`` comes from the product category and is
+                    # company-dependent: resolved off the move's own company, not the
+                    # ambient one, which can be another company entirely under
+                    # account_multicompany_ux.
+                    move_in_company = move.with_company(move.company_id)
+                    base_value_in_currency = move_in_company.company_id.currency_id._convert(
                         from_amount=base_value,
-                        to_currency=move.valuation_currency_id,
+                        to_currency=move_in_company.valuation_currency_id,
                         company=move.company_id,
                         date=move.date,
                     )
