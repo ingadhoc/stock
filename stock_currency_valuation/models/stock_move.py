@@ -63,7 +63,6 @@ class StockMove(models.Model):
         # self.env.company puede no coincidir con move.company_id (batch multi-compañía,
         # jobs automatizados). Mezclarlos filtraría/recomputaría con la compañía equivocada.
         products_to_recompute_by_company = defaultdict(set)
-        lots_to_recompute = set()
 
         # sudo: stock.valuation.adjustment.lines sólo es legible por
         # stock.group_stock_manager, pero este cómputo interno de valuación
@@ -74,8 +73,6 @@ class StockMove(models.Model):
             if move.with_company(move.company_id).valuation_currency_id and move.value:
                 if move.is_dropship or move.is_in:
                     products_to_recompute_by_company[move.company_id.id].add(move.product_id.id)
-                    if move.product_id.lot_valuated:
-                        lots_to_recompute.update(move.move_line_ids.lot_id.ids)
 
                 lcs = landed_costs_by_move.get(move, self.env["stock.valuation.adjustment.lines"])
                 lc_value = sum(lcs.mapped("additional_landed_cost"))
@@ -116,4 +113,3 @@ class StockMove(models.Model):
         # Recompute the standard price, con la compañía de cada move (no la ambiente)
         for company_id, product_ids in products_to_recompute_by_company.items():
             self.env["product.product"].browse(product_ids).with_company(company_id)._update_standard_price()
-        # self.env['stock.lot'].browse(lots_to_recompute)._update_standard_price()

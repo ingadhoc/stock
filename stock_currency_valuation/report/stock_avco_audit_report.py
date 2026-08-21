@@ -32,6 +32,13 @@ class StockAverageCostReport(models.AbstractModel):
     )
 
     def init(self):
+        """MAINTENANCE NOTE: this view is a COPY of the standard one in
+        ``stock_account/report/stock_avco_audit_report.py::init`` with the
+        ``value_in_currency`` column added to both legs of the UNION. It does not call
+        ``super()`` —a view cannot be extended column by column— so it has to be
+        RE-SYNCED whenever Odoo touches theirs. Drift here is silent: the view builds
+        fine and the numbers come out wrong. ``test_avco_report_quantity_in_product_uom``
+        covers the last one that happened (the UoM conversion was missing)."""
         tools.drop_view_if_exists(self.env.cr, "stock_avco_report")
         query = """
 CREATE OR REPLACE VIEW stock_avco_report AS (
@@ -44,7 +51,7 @@ SELECT
     sm.reference,
     CASE WHEN sm.is_in THEN sm.value ELSE -sm.value END AS value,
     CASE WHEN sm.is_in THEN sm.value_in_currency ELSE -sm.value_in_currency END AS value_in_currency,
-    CASE WHEN sm.is_in THEN sm.quantity ELSE -sm.quantity END AS quantity,
+    CASE WHEN sm.is_in THEN sm.quantity * (um.factor / up.factor) ELSE -sm.quantity * (um.factor / up.factor) END AS quantity,
     'stock.move' AS res_model_name,
     'Operation' AS description
 FROM
@@ -59,9 +66,14 @@ LEFT JOIN
     product_category pc ON pt.categ_id = pc.id
 LEFT JOIN
     res_company company ON sm.company_id = company.id
+LEFT JOIN
+    uom_uom um ON um.id = sm.product_uom
+LEFT JOIN
+    uom_uom up ON up.id = pt.uom_id
 WHERE
     sm.state = 'done'
     AND (sm.is_in = TRUE OR sm.is_out = TRUE)
+    -- Ignore moves for standard cost method. Only display the list of cost updates
     AND (
         (pt.categ_id IS NOT NULL AND pc.property_cost_method ->> company.id::text IN ('fifo', 'average'))
         OR (pt.categ_id IS NULL OR (pc.property_cost_method IS NULL OR pc.property_cost_method ->> company.id::text IS NULL) AND company.cost_method IN ('fifo', 'average'))
@@ -73,10 +85,10 @@ SELECT
     pv.date,
     pv.user_id,
     pv.company_id,
-    'Adjustment' AS reference,
+    'Adjustment' AS reference, -- Set a fixed string for the reference
     pv.value,
     pv.value_in_currency,
-    0 AS quantity,
+    0 AS quantity, -- Set quantity to 0 as requested,
     'product.value' AS res_model_name,
     pv.description
 FROM
@@ -88,6 +100,10 @@ WHERE
         self.env.cr.execute(query)
 
     def _compute_cumulative_fields(self):
+        """MAINTENANCE NOTE: copy of the standard computation, carrying the
+        secondary-currency amounts alongside the company-currency ones. Same deal as
+        ``init`` above: no ``super()``, so it has to be re-synced on upgrades.
+        """
         total_records_grouped = (
             self.env["stock.avco.report"]
             .search(

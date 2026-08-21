@@ -232,13 +232,12 @@ Organización propuesta del `tests/` (a crear):
 tests/
     __init__.py
     common.py                              # setUpClass: ARS/USD, categ, producto, rates
-    test_purchase_receipt.py               # Op 1, casos múltiples
     test_landed_cost_currency.py           # Op 2 + casos rate distinto
     test_delivery_and_return.py            # Op 4 + Op 5
     test_inventory_adjustment.py           # Op 6 + Op 7  (valuación por AVCO en USD)
     test_combined_walkthrough.py           # walkthrough Op 1→7 completo
-    test_replenishment_in_currency.py      # average_in_currency rule
-    test_revaluation_product_value.py      # standard_price_in_currency write + product.value
+    test_replenishment_cost_average_in_currency.py   # replenishment_cost_type = average_in_currency
+    test_avco_report_uom.py                # cantidad del reporte AVCO en UoM de referencia
 ```
 
 ### `common.py` — fixture base
@@ -271,12 +270,31 @@ Un solo método largo que ejecuta Op 1 a Op 7 en orden, asertando después de ca
 - `test_lc_with_rate_different_from_picking` — disparidad esperada/documentada.
 - `test_lc_zero_in_currency_when_company_eq_valuation` — categoría con `valuation_currency = company.currency_id`.
 
-### `test_revaluation_product_value.py`
+### `test_replenishment_cost_average_in_currency.py`
 
-- `test_write_std_price_in_currency_only_creates_product_value` — actualmente FALLA por la rama dead-code (ver TESTING — caso 2.5). Dejar como `xfail` o marcar TODO.
-- `test_write_both_prices_creates_single_product_value`.
-- `test_disable_auto_revaluation_skips_product_value`.
-- `test_change_with_fifo_skips_product_value` — la guarda `cost_method == "fifo"` en `_change_standard_price`.
+- `test_average_in_currency_converts_using_valuation_currency_rate` — con
+  `replenishment_cost_type = 'average_in_currency'`, el costo de reposición
+  convierte `standard_price_in_currency` a la moneda del producto a la
+  cotización del día, y sigue el cambio de cotización entre Día 1 y Día 2.
+- `test_average_in_currency_applies_replenishment_cost_rule_on_converted_amount` —
+  la regla de reposición se aplica sobre el importe ya convertido, no sobre el
+  valor en moneda secundaria.
+
+Regresión que cubre: la conversión usaba `fields.date.today()` (minúscula), que
+no existe en `odoo.fields`, así que leer `replenishment_cost` rompía con
+`AttributeError`.
+
+### `test_avco_report_uom.py`
+
+- `test_avco_report_quantity_in_product_uom` — una recepción de 1 docena informa
+  cantidad 12 en el reporte de auditoría AVCO, no 1: la vista tiene que convertir a
+  la UoM de referencia del producto.
+- `test_avco_report_unit_cost_uses_converted_quantity` — el costo unitario del
+  reporte se calcula sobre la cantidad convertida.
+
+Regresión que cubre: la vista SQL de este módulo es copia de la del core y había
+perdido la conversión de UoM, así que el AVCO salía 12 veces más caro en productos
+comprados en una unidad distinta a la de stock.
 
 ## Datos y precisión
 

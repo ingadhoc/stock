@@ -9,12 +9,15 @@ code# Stock Currency Valuation - Referencia funcional
   - `stock.picking`: cotización manual para ingresos de compra.
   - `product.value`: valor histórico en moneda secundaria.
   - `stock.quant`: valor secundario por quant.
+  - `stock.landed.cost` y `stock.valuation.adjustment.lines`: costos de importación en moneda secundaria.
 - Vistas activas:
   - categoría de producto
   - picking
   - quants
   - producto/template
   - movimientos de stock
+  - histórico de valores (`product.value`)
+  - landed costs
 - Demo activa:
   - categoría hija de Furniture con valuación en moneda secundaria
   - producto demo en esa categoría
@@ -64,8 +67,9 @@ Archivo:
   - `value` desde `standard_price`
   - `value_in_currency` desde `standard_price_in_currency` (si aplica)
 
-Archivo:
+Archivos:
 - `models/product_value.py`
+- `views/product_value_views.xml`
 
 ### 5) Movimientos de stock con valor secundario
 
@@ -117,24 +121,19 @@ Archivos:
 Archivo:
 - `demo/stock_currency_valuation_demo.xml`
 
-## Implementado pero no activo actualmente
+### 9) Landed costs en moneda secundaria
 
-Estas piezas existen en el módulo, pero hoy no se cargan porque están comentadas en imports o en el manifest:
-
-- Landed costs en moneda secundaria.
-- Vista de `product.value` extendida.
-- Vista de `stock.valuation.layer` extendida.
-- Wizard de revaluación con campos y asientos en moneda secundaria.
+- Extiende `stock.landed.cost` con:
+  - `valuation_currency_id`
+  - `currency_rate` / `inverse_currency_rate` (cotización manual del costo)
+- Extiende `stock.valuation.adjustment.lines` con:
+  - `valuation_currency_id`
+  - `former_cost_in_currency`
+  - `additional_landed_cost_in_currency`
+  - `final_cost_in_currency`
+- El valor en moneda secundaria del landed cost se descuenta del valor base del
+  movimiento en `stock.move._set_value` para no contarlo dos veces.
 
 Archivos:
 - `models/stock_landed_cost.py`
 - `views/stock_landed_cost_views.xml`
-- `views/product_value_views.xml`
-- `views/stock_valuation_layer.xml`
-- `wizard/stock_valuation_layer_revaluation.py`
-- `wizard/stock_valuation_layer_revaluation_views.xml`
-
-Puntos de control:
-- `__init__.py` (wizard comentado)
-- `models/__init__.py` (landed cost comentado)
-- `__manifest__.py` (vistas/wizard comentadas)
