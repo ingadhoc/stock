@@ -18,4 +18,76 @@
             </field>
         </field>
     </record>
+
+    <!-- Tarea 58212: los gemelos en moneda secundaria, al lado de los de moneda de
+         compañía que agrega stock_account_ux. Sólo visibles cuando la categoría del
+         producto define moneda de valuación. -->
+    <record id="product_value_view_list_inherit" model="ir.ui.view">
+        <field name="name">product.value.list.inherit.currency.valuation</field>
+        <field name="model">product.value</field>
+        <field name="inherit_id" ref="stock_account_ux.product_value_view_list"/>
+        <field name="arch" type="xml">
+            <field name="currency_id" position="after">
+                <field name="valuation_currency_id" column_invisible="1"/>
+            </field>
+            <field name="previous_value" position="after">
+                <field name="previous_value_in_currency"
+                    widget="monetary"
+                    options="{'currency_field': 'valuation_currency_id'}"
+                    optional="hide"/>
+            </field>
+            <field name="value" position="after">
+                <field name="value_in_currency"
+                    string="New Value in Currency"
+                    widget="monetary"
+                    options="{'currency_field': 'valuation_currency_id'}"
+                    optional="hide"/>
+            </field>
+            <field name="delta" position="after">
+                <field name="delta_in_currency"
+                    widget="monetary"
+                    options="{'currency_field': 'valuation_currency_id'}"
+                    optional="hide"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="product_value_view_search_inherit" model="ir.ui.view">
+        <field name="name">product.value.search.inherit.currency.valuation</field>
+        <field name="model">product.value</field>
+        <field name="inherit_id" ref="stock_account_ux.product_value_view_search"/>
+        <field name="arch" type="xml">
+            <filter name="move_adjustment" position="after">
+                <separator/>
+                <filter string="With Secondary Currency" name="with_valuation_currency"
+                    domain="[('valuation_currency_id', '!=', False)]"
+                    help="Value adjustments of products whose category is valued in a secondary currency."/>
+            </filter>
+            <filter name="groupby_date" position="after">
+                <filter string="Valuation Currency" name="groupby_valuation_currency"
+                    domain="[]" context="{'group_by': 'valuation_currency_id'}"/>
+            </filter>
+        </field>
+    </record>
+
+    <!-- priority explícita: ``delta`` lo agrega la vista heredada
+         stock_account_ux.product_value_form_view_entry_link (priority 16), así que ésta
+         tiene que aplicarse DESPUÉS para poder colgarse de ese nodo. Sin la priority el
+         orden queda determinado por los ids, que es frágil. -->
+    <record id="product_value_form_view_delta_in_currency" model="ir.ui.view">
+        <field name="name">product.value.form.delta.in.currency</field>
+        <field name="model">product.value</field>
+        <field name="inherit_id" ref="stock_account.product_value_form_view"/>
+        <field name="priority">20</field>
+        <field name="arch" type="xml">
+            <field name="delta" position="after">
+                <field name="delta_in_currency"
+                    widget="monetary"
+                    options="{'currency_field': 'valuation_currency_id', 'field_digits': True}"
+                    invisible="not id or not valuation_currency_id"
+                    readonly="1"
+                />
+            </field>
+        </field>
+    </record>
 </odoo>

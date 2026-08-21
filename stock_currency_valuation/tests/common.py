@@ -86,6 +86,33 @@ class TestStockCurrencyValuationCommon(TransactionCase):
         )
         cls.category.with_company(cls.company).valuation_currency_id = cls.secondary_currency
 
+        # The category gets its OWN valuation account. Sharing the company default with the
+        # rest of the catalogue puts products valued in a second currency and products
+        # valued in none on the same account, and such an account is deliberately left in
+        # company currency (see ``_get_valuation_currency_by_account``), so every assertion
+        # about the secondary amount would measure nothing. It is also how a database that
+        # uses this module is set up.
+        default_valuation_account = cls.company.account_stock_valuation_id
+        cls.valuation_account = cls.env["account.account"].create(
+            {
+                "name": "SCV Stock Valuation",
+                "code": "SCVVAL",
+                "account_type": "asset_current",
+                "account_stock_variation_id": default_valuation_account.account_stock_variation_id.id,
+            }
+        )
+        cls.category.with_company(cls.company).property_stock_valuation_account_id = cls.valuation_account
+
+        # No OTHER category may be valued in a second currency. This module's own demo
+        # data puts one on a demo category, and the tests that assert the module is INERT
+        # —nothing valued in a second currency, so the twins return nothing and the vals
+        # come back untouched— read the whole company, not just this fixture. On a
+        # database with demo data that premise is false before the test starts.
+        others = cls.env["product.category"].search([("id", "!=", cls.category.id)])
+        polluted = others.with_company(cls.company).filtered("valuation_currency_id")
+        if polluted:
+            polluted.valuation_currency_id = False
+
         cls.uom_unit = cls.env.ref("uom.product_uom_unit")
         cls.product = cls.env["product.product"].create(
             {

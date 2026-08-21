@@ -6,3 +6,11 @@ from . import test_delivery_and_return
 from . import test_replenishment_cost_average_in_currency
 from . import test_avco_report_uom
 from . import test_multicompany_currency
+from . import test_move_adjustment_default
+from . import test_previous_value_in_currency
+from . import test_manual_value_in_currency
+from . import test_revaluation_criterion_in_currency
+from . import test_inventory_value_in_currency
+from . import test_wizard_amount_currency
+from . import test_closing_amount_currency
+from . import test_inert_without_valuation_currency

@@ -137,3 +137,56 @@ Archivo:
 Archivos:
 - `models/stock_landed_cost.py`
 - `views/stock_landed_cost_views.xml`
+
+## Limitaciones y caveats
+
+Cosas que el módulo **no** hace, o hace de una forma que conviene saber antes de
+reportarlas como error.
+
+### La valuación en moneda secundaria de la contabilidad aplica sólo hacia adelante
+
+El balance inicial y la variación en moneda secundaria salen del `amount_currency` de
+los apuntes de valuación. Los asientos posteados **antes** de esta versión no lo tienen,
+y no se puede reconstruir: exigiría revaluar asientos ya contabilizados a una cotización
+que nadie registró. Así que el histórico queda sin importe en moneda secundaria, y se
+muestra así en vez de estimarlo.
+
+### El reporte de valuación todavía no muestra la moneda secundaria
+
+Los datos ya se guardan —los asientos del cierre y del wizard llevan `amount_currency`,
+y `product.value` guarda el valor previo y el delta en moneda—, pero el reporte de
+valuación de inventario sigue mostrando sólo la moneda de compañía. Las tres secciones en
+moneda secundaria y el filtro por moneda de valuación quedan para una segunda etapa.
+
+### La cuenta de valuación tiene que ser de una sola moneda
+
+Un apunte contable lleva **una** moneda. Si una misma cuenta de valuación junta productos
+valuados en monedas secundarias distintas, no hay forma de expresar las dos en la línea
+del cierre, así que esa línea queda en moneda de compañía en lugar de elegir una. Mismo
+criterio en el borrador del wizard: el total en moneda aparece sólo si todas las líneas
+coinciden.
+
+Los productos **sin** moneda secundaria descalifican la cuenta igual, y ese es el caso
+frecuente: una categoría valuada en dólares y todo el resto del catálogo, sin moneda, en
+la cuenta de valuación por defecto. La línea del cierre se parte en una línea por producto
+y el importe en moneda se reparte entre **todas**, así que los productos que no se valúan
+en esa moneda se llevan una parte que no les corresponde y el que sí queda con una
+fracción de su propio valor (medido sobre una base con demo: de 100 en moneda secundaria
+de un solo producto, ese producto se quedaba con 14,49 y el resto se repartía entre una
+docena de productos de mobiliario).
+
+**Implicancia práctica:** una categoría valuada en moneda secundaria necesita su **propia
+cuenta de valuación**. Mientras comparta la cuenta con categorías sin moneda, el cierre y
+el wizard trabajan esa cuenta en moneda de compañía — no se pierde información contable,
+pero la columna en moneda secundaria queda vacía para esa cuenta.
+
+### Las reclasificaciones de ubicación no se netean del lado en moneda
+
+El `extra_balance` que el cierre netea por reclasificaciones de ubicación es hoy un
+concepto sólo en moneda de compañía. La variación en moneda secundaria se calcula como
+valor de inventario menos lo contabilizado, sin ese neteo.
+
+### Cambiar la moneda de valuación de una categoría no es un flujo soportado
+
+Se define una vez al implementar la categoría. Los `product.value` históricos **no** se
+recalculan si cambia: cada uno queda pineado a la moneda vigente cuando se registró.

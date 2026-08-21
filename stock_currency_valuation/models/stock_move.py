@@ -1,6 +1,7 @@
 from collections import defaultdict
 
 from odoo import api, fields, models
+from odoo.fields import Domain
 
 
 class StockMove(models.Model):
@@ -46,6 +47,38 @@ class StockMove(models.Model):
         for move in self:
             move.value_manual_in_currency = move.value_in_currency
 
+    def _get_inventory_value_in_currency(self):
+        """What the move contributes to the inventory valuation IN THE SECONDARY currency.
+
+        Twin of ``stock.move._get_inventory_value``, which answers the same in company
+        currency. Single home of the criterion, so the wizard that books selected moves
+        and the report's breakdown of the variation measure the same thing instead of each
+        deciding on its own.
+
+        It is ``value_in_currency`` and not a recomputation on purpose: that field already
+        holds the move's valuation in force, manual adjustments included (see
+        ``_get_manual_value_in_currency``). Recomputing here would ignore a correction the
+        user made by hand. A move whose category has no secondary currency contributes
+        zero, which is what the field holds.
+        """
+        self.ensure_one()
+        return self.value_in_currency
+
+    def _get_manual_value_in_currency(self, at_date=None):
+        """Manual override of this move's value in the secondary currency, or ``None``.
+
+        Mirror of the core's ``_get_manual_value``, which does the same for the company
+        currency: same lookup —the move's most recent ``product.value``— reading the other
+        amount off it. ``None`` and not ``0`` marks "no adjustment", so an explicit zero
+        (a manual correction down to nothing) is honoured instead of being read as absence.
+        """
+        self.ensure_one()
+        domain = Domain([("move_id", "=", self.id)])
+        if at_date:
+            domain &= Domain([("date", "<=", at_date)])
+        adjustment = self.env["product.value"].sudo().search(domain, order="date desc, id desc", limit=1)
+        return adjustment.value_in_currency if adjustment else None
+
     def _set_value(self, correction_quantity=None):
         # AVCO en moneda secundaria ANTES de que super() dispare _update_standard_price.
         # Los OUT (con o sin picking) y los ajustes de entrada sin picking valúan
@@ -78,6 +111,17 @@ class StockMove(models.Model):
                 lc_value = sum(lcs.mapped("additional_landed_cost"))
                 lc_value_in_currency = sum(lcs.mapped("additional_landed_cost_in_currency"))
                 base_value = move.value - lc_value
+
+                # Un ajuste manual del importe en moneda tiene PRIORIDAD sobre el cálculo,
+                # igual que en el core el _get_manual_value la tiene sobre factura,
+                # cotización y costo (ver stock.move._get_value_data). Sin esto el campo
+                # que el diálogo "Adjust Valuation" expone como "New Value in Currency"
+                # escribía un registro que nadie leía: acá abajo value_in_currency se
+                # recalculaba siempre desde el AVCO o la cotización del remito.
+                manual_value_in_currency = move._get_manual_value_in_currency()
+                if manual_value_in_currency is not None:
+                    move.value_in_currency = manual_value_in_currency
+                    continue
 
                 # move.is_out es un campo stored que sólo se recomputa con state=='done',
                 # pero _set_value() de los OUT corre ANTES de que action_done marque ese

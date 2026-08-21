@@ -21,9 +21,7 @@ class TestMultiCompanyCurrency(TestStockCurrencyValuationCommon):
         super().setUpClass()
         cls.company_b = cls.env["res.company"].create({"name": "SCV Company B"})
         cls.env.user.company_ids = [Command.link(cls.company_b.id)]
-        cls.currency_b = cls.env["res.currency"].create(
-            {"name": "SCB", "symbol": "B$", "rounding": 0.01}
-        )
+        cls.currency_b = cls.env["res.currency"].create({"name": "SCB", "symbol": "B$", "rounding": 0.01})
         cls.env["res.currency.rate"].create(
             {
                 "name": cls.DAY_1,
@@ -37,9 +35,7 @@ class TestMultiCompanyCurrency(TestStockCurrencyValuationCommon):
         # And a different secondary cost in each one, so a crossed read is visible.
         cls.product.with_company(cls.company).standard_price_in_currency = 100.0
         cls.product.with_company(cls.company_b).standard_price_in_currency = 700.0
-        cls.warehouse_b = cls.env["stock.warehouse"].search(
-            [("company_id", "=", cls.company_b.id)], limit=1
-        )
+        cls.warehouse_b = cls.env["stock.warehouse"].search([("company_id", "=", cls.company_b.id)], limit=1)
         # Category whose valuation currency exists ONLY in company B. This is what makes
         # the divergence visible: with both companies configured, a read off the wrong one
         # still returns A currency and the amount comes out the same, so the test would

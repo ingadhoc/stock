@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tarea 58212: el importe en moneda secundaria en el borrador, para que el usuario
+         vea antes de publicar qué va a decir el asiento en la otra moneda. -->
+    <record id="stock_move_valuation_form_view_inherit" model="ir.ui.view">
+        <field name="name">stock.move.valuation.form.inherit.currency.valuation</field>
+        <field name="model">stock.move.valuation</field>
+        <field name="inherit_id" ref="stock_account_ux.stock_move_valuation_form_view"/>
+        <field name="arch" type="xml">
+            <field name="currency_id" position="after">
+                <field name="valuation_currency_id" invisible="1"/>
+            </field>
+            <xpath expr="//field[@name='line_ids']/list/field[@name='credit']" position="after">
+                <field name="valuation_currency_id" column_invisible="1"/>
+                <field name="amount_currency"
+                    widget="monetary"
+                    options="{'currency_field': 'valuation_currency_id'}"
+                    sum="Total in Currency"
+                    column_invisible="not parent.valuation_currency_id"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
