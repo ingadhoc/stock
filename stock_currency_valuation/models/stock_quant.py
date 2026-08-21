@@ -25,7 +25,15 @@ class StockQuant(models.Model):
     def _compute_secondary_value(self):
         self.secondary_value = 0.0
         for quant in self:
-            if not quant.valuation_currency_id:
+            # The product is resolved ONCE with the quant's own company and reused for
+            # both the guard and the price. The valuation currency lives on the product
+            # category and is company-dependent, so reading it off the ambient company
+            # —as ``quant.valuation_currency_id`` does— can disagree with the price read
+            # below: with account_multicompany_ux a user can have company A selected
+            # while looking at a quant of company B, and then the guard answered for A
+            # and the amount for B.
+            product = quant.product_id.with_company(quant.company_id)
+            if not product.valuation_currency_id:
                 continue
             if not quant.location_id or not quant.product_id:
                 continue
@@ -33,5 +41,4 @@ class StockQuant(models.Model):
                 continue
             if quant.product_id.uom_id.is_zero(quant.quantity):
                 continue
-            secondary_price = quant.product_id.with_company(quant.company_id).standard_price_in_currency
-            quant.secondary_value = quant.quantity * secondary_price
+            quant.secondary_value = quant.quantity * product.standard_price_in_currency
