@@ -33,6 +33,7 @@
             <filter name="by_state" position="after">
                 <filter string="Picking Partner" name="picking_partner_id"  context="{'group_by':'picking_partner_id'}"/>
                 <filter name="origin" context="{'group_by':'origin'}" string="Source"/>
+                <filter name="picking_scheduled_date" context="{'group_by':'picking_scheduled_date'}" string="Transfer Scheduled Date"/>
             </filter>
         </field>
     </record>
@@ -49,6 +50,7 @@
                      ocultamos cuando no hay ubicacion (antes daba 0,00 y confundia). -->
                 <field name="product_uom_qty_location" sum="Total"
                        column_invisible="not context.get('location', False)"/>
+                <field name="picking_scheduled_date" optional="hide"/>
             </field>
         </field>
     </record>
