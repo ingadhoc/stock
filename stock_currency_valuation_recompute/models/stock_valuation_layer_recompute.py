@@ -1,5 +1,25 @@
+import logging
+import time
+
 from odoo import Command, _, api, fields, models
 from odoo.exceptions import UserError
+
+_logger = logging.getLogger(__name__)
+
+# Segundos de trabajo por invocacion del cron. No es un tope de lo que se puede encolar:
+# el cron reporta cuantos quedan y Odoo lo relanza enseguida hasta vaciar la cola.
+#
+# Es un presupuesto de tiempo y no una cantidad de registros porque lo que hay que no
+# pasarse es el `--limit-time-real-cron` del worker (por defecto cae en
+# `--limit-time-real`, 120 segundos): pasado ese tiempo mata el thread. Un numero fijo de
+# registros no protege eso, porque revaluar un producto con 500 layers no cuesta lo mismo
+# que uno con 5.
+#
+# El valor es chico porque el presupuesto es POR INVOCACION y no por thread:
+# `ir.cron._run_job` reinvoca el callback hasta `MAX_BATCH_PER_CRON_JOB` (10) veces
+# seguidas mientras quede trabajo, commiteando entre una y otra. Diez invocaciones tienen
+# que entrar en el limite del worker, asi que el presupuesto va en el orden de un decimo.
+REVALUATION_TIME_BUDGET = 10
 
 
 class StockValuationLayerRecompute(models.Model):
@@ -23,6 +43,7 @@ class StockValuationLayerRecompute(models.Model):
     last_manual_svl_id = fields.Many2one("stock.valuation.layer")
     amount_changed = fields.Boolean()
     slv_changed = fields.Boolean()
+    revaluation_error = fields.Text(readonly=True, copy=False)
     final_rate = fields.Float(
         compute="_compute_final_rate",
         store=True,
@@ -32,8 +53,10 @@ class StockValuationLayerRecompute(models.Model):
         [
             ("draft", "Draft"),
             ("in_process", "In Process"),
+            ("revaluating", "Revaluating"),
             ("done", "Done"),
             ("no_change", "Not changes Required"),
+            ("error", "Error"),
             ("cancel", "Cancelled"),
         ],
         default="draft",
@@ -133,6 +156,7 @@ class StockValuationLayerRecompute(models.Model):
             raise UserError("El producto tiene valuación por lote (lot_valuated) y este recálculo no la contempla.")
 
     def action_compute_lines(self):
+        self.ensure_one()
         self._check_supported_product()
 
         last_manual_svl_id = self.env["stock.valuation.layer"].search(
@@ -374,6 +398,7 @@ class StockValuationLayerRecompute(models.Model):
         self.final_amount_in_currency = standard_price_in_currency
         self.final_amount = standard_price
         self.state = "in_process"
+        self.revaluation_error = False
         self.action_check_need_changes()
 
     def action_check_need_changes(self):
@@ -385,6 +410,11 @@ class StockValuationLayerRecompute(models.Model):
             self.state = "no_change"
 
     def action_manual_slv_revaluation(self):
+        self.ensure_one()
+        # Sin lineas no hay nada calculado, y los importes finales estan en cero: aplicar
+        # escribiria 0 en el costo del producto sin dejar rastro en ningun layer.
+        if not self.line_ids:
+            raise UserError(_("Compute the lines before revaluating %s.", self.display_name))
         self._check_supported_product()
         slv_changed = False
         # to_reconciled_line_ids guarda todas las conciliaciones
@@ -445,6 +475,79 @@ class StockValuationLayerRecompute(models.Model):
             if not any(to_reconciled_lines.mapped("reconciled")):
                 to_reconciled_lines.reconcile()
         self.state = "done"
+        self.revaluation_error = False
+
+    def _batch_selection(self, states):
+        """Registros de la seleccion sobre los que corresponde correr la accion masiva."""
+        records = self.filtered(lambda rec: rec.state in states)
+        if not records:
+            raise UserError(_("None of the selected records is in a state that allows this action."))
+        return records
+
+    def _apply_isolated(self, method_name):
+        """Corre `method_name` sobre este registro, aislado en su propio savepoint.
+
+        Uno que falla no se lleva a los demas de la tanda: se revierte solo y queda en
+        `error` con el motivo a la vista. Se atrapa `UserError` y sus subclases, que es
+        todo lo que levanta el propio flujo (incluidos los de validacion y de acceso). Un
+        fallo de infraestructura —un deadlock, un conflicto de serializacion— no es
+        `UserError` y se propaga a proposito: parquearlo en un estado que nadie reintenta
+        solo lo haria pasar por un rechazo definitivo.
+        """
+        self.ensure_one()
+        try:
+            with self.env.cr.savepoint():
+                getattr(self, method_name)()
+        except UserError as error:
+            self.write({"state": "error", "revaluation_error": str(error)})
+            _logger.warning("%s failed on recompute %s: %s", method_name, self.id, error)
+
+    def action_compute_lines_multi(self):
+        """Boton de la vista lista: recalcula la seleccion de a un registro.
+
+        Sin tope de registros. Recalcular no toca los layers ni sus asientos —lo unico
+        que escribe son las lineas propuestas del propio recompute— asi que se hace en el
+        request y el operador ve el resultado al toque.
+        """
+        for rec in self._batch_selection(("draft", "in_process", "no_change", "error")):
+            rec._apply_isolated("action_compute_lines")
+            # El cache crece con cada producto (sus layers, sus asientos): en una
+            # seleccion grande hay que soltarlo o la memoria no para de subir.
+            self.env.invalidate_all()
+
+    def action_queue_revaluation(self):
+        """Boton de la vista lista: encola la seleccion para que la revalue el cron.
+
+        No revalua en el request. Aplicar un registro reescribe los asientos de cada
+        layer que cambia, asi que una seleccion grande se pasa del timeout y no queda
+        nada aplicado. Encolar es una escritura de estado, cueste lo que cueste la cola.
+        """
+        records = self._batch_selection(("in_process",))
+        records.write({"state": "revaluating", "revaluation_error": False})
+        self.env.ref("stock_currency_valuation_recompute.cron_revaluate_queued").sudo()._trigger()
+
+    @api.model
+    def _cron_revaluate_queued(self):
+        """Revalua los encolados de a uno hasta agotar el presupuesto de tiempo."""
+        started = time.monotonic()
+        # Solo los ids: iterar el recordset entero traeria de una las lineas de los cientos
+        # de encolados, cuando en el presupuesto entra un punado.
+        queued_ids = self.search([("state", "=", "revaluating")]).ids
+        for done, rec_id in enumerate(queued_ids, start=1):
+            # sudo y la compania del registro: el usuario del cron no tiene por que estar
+            # habilitado en la compania donde se valua el producto, y sin eso los layers y
+            # los asientos de otra compania no se pueden ni leer.
+            rec = self.browse(rec_id).sudo()
+            if rec.state == "revaluating":
+                # La cola se leyo al arrancar: entre eso y ahora lo pueden haber cancelado.
+                rec.with_company(rec.company_id)._apply_isolated("action_manual_slv_revaluation")
+            # Adentro del loop: si algo corta la corrida, lo hecho hasta aca cuenta como
+            # progreso y el corte no se anota como falla del cron. Y mientras `remaining`
+            # no llegue a cero, Odoo lo relanza enseguida en vez de esperar el intervalo.
+            self.env["ir.cron"]._notify_progress(done=done, remaining=len(queued_ids) - done)
+            self.env.invalidate_all()
+            if time.monotonic() - started > REVALUATION_TIME_BUDGET:
+                break
 
 
 class StockValuationLayerRecomputeLine(models.Model):

@@ -6,13 +6,16 @@
         <field name="arch" type="xml">
             <form>
                 <header>
-                    <button name="action_compute_lines" type="object" string="Compute lines" invisible="state in ['done', 'cancel']"/>
-                    <button name="action_manual_slv_revaluation" type="object" string="Revaluate" class="btn-primary" invisible="state in ['draft', 'cancel', 'done']"/>
+                    <button name="action_compute_lines" type="object" string="Compute lines" invisible="state in ['revaluating', 'done', 'cancel']"/>
+                    <button name="action_manual_slv_revaluation" type="object" string="Revaluate" class="btn-primary" invisible="state in ['draft', 'revaluating', 'error', 'cancel', 'done']"/>
                     <button name="action_cancel" type="object" string="Cancel" invisible="state in ['done', 'cancel']"/>
                     <button name="back_to_draft" type="object" string="Back to Draft" invisible="state != 'cancel'"/>
-                    <field name="state" widget="statusbar" statusbar_visible="draft,in_process,done,cancel"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,in_process,revaluating,done,cancel"/>
                 </header>
                 <sheet>
+                    <div class="alert alert-danger" role="alert" invisible="state != 'error'">
+                        <field name="revaluation_error" readonly="1" nolabel="1"/>
+                    </div>
                     <group>
                         <group colspan="2">
                             <field name="company_id" readonly="state != 'draft'"/>
@@ -62,6 +65,11 @@
         <field name="model">stock.valuation.layer.recompute</field>
         <field name="arch" type="xml">
             <list>
+                <header>
+                    <button name="action_compute_lines_multi" type="object" string="Compute lines"/>
+                    <button name="action_queue_revaluation" type="object" string="Revaluate" class="btn-primary"
+                        confirm="The selected records are queued and revaluated one by one in the background, writing on the layers and their journal entries. Continue?"/>
+                </header>
                 <field name="product_id"/>
                 <field name="valuation_currency_id"/>
                 <field name="amount_changed"/>
@@ -71,6 +79,7 @@
                 <field name="initial_amount_in_currency"/>
                 <field name="final_amount_in_currency"/>
                 <field name="state"/>
+                <field name="revaluation_error" optional="hide"/>
                 <field name="last_manual_svl_id"/>
             </list>
         </field>
@@ -83,7 +92,9 @@
             <search>
                 <filter string="Draft" name="filter_draft" domain="[('state', '=', 'draft')]"/>
                 <filter string="In Process" name="filter_in_process" domain="[('state', '=', 'in_process')]"/>
+                <filter string="Revaluating" name="filter_revaluating" domain="[('state', '=', 'revaluating')]"/>
                 <filter string="Done" name="filter_done" domain="[('state', '=', 'done')]"/>
+                <filter string="Error" name="filter_error" domain="[('state', '=', 'error')]"/>
                 <filter string="Cancelled" name="filter_cancel" domain="[('state', '=', 'cancel')]"/>
                 <filter string="SLV Changed" name="filter_slv_changed" domain="[('slv_changed', '=', True)]"/>
                 <field name="product_id" string="Product"/>
