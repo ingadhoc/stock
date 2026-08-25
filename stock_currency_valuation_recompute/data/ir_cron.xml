@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="cron_revaluate_queued" model="ir.cron">
+        <field name="name">Stock Currency Valuation: revaluate queued recomputes</field>
+        <field name="model_id" ref="model_stock_valuation_layer_recompute"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_revaluate_queued()</field>
+        <!-- Si no se declara, queda el usuario que instalo el modulo: la revaluacion
+             reescribe asientos, y de quien depende que pueda hacerlo no puede ser un accidente. -->
+        <field name="user_id" ref="base.user_root"/>
+        <field name="interval_number">15</field>
+        <field name="interval_type">minutes</field>
+    </record>
+</odoo>

@@ -32,6 +32,7 @@
     ],
     "data": [
         "security/ir.model.access.csv",
+        "data/ir_cron.xml",
         "views/stock_valuation_layer_recompute.xml",
     ],
     "demo": [],
