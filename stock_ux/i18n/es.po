@@ -574,6 +574,7 @@ msgid "Net Quantity Location"
 msgstr "Cantidad neta en ubicación"
 
 #. module: stock_ux
+<<<<<<< 727167f20b0aaba93b9e6d443e4c44cb279add7e
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_label_custom_qty
 msgid "No processed moves found in this picking."
 msgstr ""
@@ -587,6 +588,17 @@ msgid ""
 msgstr ""
 
 #. module: stock_ux
+||||||| 0e9da7f8b474f960bdbb66075366307acf08b525
+#. odoo-python
+#: code:addons/stock_ux/models/stock_scrap.py:0
+msgid ""
+"No se puede desechar una cantidad mayor a la cantidad dentro de la "
+"transferencia del producto: %s."
+msgstr ""
+
+#. module: stock_ux
+=======
+>>>>>>> 694717de50a56b7598d16eaf2199edf126ef7920
 #: model_terms:ir.actions.act_window,help:stock_ux.action_picking_tree_all
 msgid "No transfer found. Let's create one!"
 msgstr "No se encontró ningúna transferencia. Creemos una!"
@@ -872,11 +884,6 @@ msgstr "Error de entrega de SMS"
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
 msgid "Scheduled Date"
 msgstr "Fecha Programada"
-
-#. module: stock_ux
-#: model:ir.model,name:stock_ux.model_stock_scrap
-msgid "Scrap"
-msgstr "Desechar"
 
 #. module: stock_ux
 #: model:ir.actions.server,name:stock_ux.action_operation_set_all_undone
