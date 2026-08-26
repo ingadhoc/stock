@@ -814,6 +814,13 @@ msgid "Reviewed"
 msgstr ""
 
 #. module: stock_ux
+#: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint__reviewed
+msgid ""
+"Marks the replenishment line as reviewed. It is set automatically when the "
+"quantity to order is adjusted and cleared when the replenishment is generated."
+msgstr ""
+
+#. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__rotation
 msgid "Rotation"
 msgstr ""

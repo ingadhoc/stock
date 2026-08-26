@@ -46,7 +46,10 @@ class StockWarehouseOrderpoint(models.Model):
     qty_multiple = fields.Float(tracking=True)
     location_id = fields.Many2one(tracking=True)
     product_id = fields.Many2one(tracking=True)
-    reviewed = fields.Boolean()
+    reviewed = fields.Boolean(
+        help="Marks the replenishment line as reviewed. It is set automatically when the "
+        "quantity to order is adjusted and cleared when the replenishment is generated.",
+    )
 
     @api.depends("product_id", "location_id")
     def _compute_rotation(self):
