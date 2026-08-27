@@ -149,9 +149,20 @@ class StockPicking(models.Model):
                 if picking.picking_type_id.restrict_number_package and not picking.number_of_packages > 0:
                     raise UserError(_("The number of packages can not be 0"))
             batch_exists = "batch_id" in picking._fields and picking.batch_id
+            # el lote numera los remitos después de validar, pero sólo en su
+            # rama incoming: fuera de ahí su número no se usa y el traslado
+            # tiene que seguir exigiendo el suyo
+            batch_numbers_voucher = (
+                batch_exists and batch_exists.picking_type_code == "incoming" and batch_exists.voucher_number
+            )
             if picking.book_required and not picking.book_id and not batch_exists:
                 raise UserError(_("You must select a Voucher Book"))
-            elif not picking.location_id.usage == "customer" and picking.voucher_required and not picking.voucher_ids:
+            elif (
+                not picking.location_id.usage == "customer"
+                and picking.voucher_required
+                and not picking.voucher_ids
+                and not batch_numbers_voucher
+            ):
                 raise UserError(_("You must set stock voucher numbers"))
         return True
 
