@@ -19,7 +19,7 @@
 ##############################################################################
 {
     "name": "Stock Currency Valuation Recompute",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.1.0",
     "category": "Warehouse Management",
     "sequence": 14,
     "summary": "Repair tool to recompute stock valuation layer values in the secondary currency",
