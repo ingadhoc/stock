@@ -31,8 +31,17 @@
         "stock_ux",
     ],
     "data": [
+<<<<<<< e7b0bcbaa2a2dec7563194cd6b88c75574549c97:stock_declared_value/__manifest__.py
         "views/stock_picking_type_views.xml",
         "views/stock_picking_views.xml",
+||||||| 46f1b98f015c52a9711eaac217a741d2958e7c29:stock_currency_valuation_recompute/__manifest__.py
+        "security/ir.model.access.csv",
+        "views/stock_valuation_layer_recompute.xml",
+=======
+        "security/ir.model.access.csv",
+        "data/ir_cron.xml",
+        "views/stock_valuation_layer_recompute.xml",
+>>>>>>> cc294791114f6985d45f05432c7010b0e8f9d955:stock_currency_valuation_recompute/__manifest__.py
     ],
     "demo": [],
     "installable": True,
