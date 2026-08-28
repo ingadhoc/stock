@@ -29,6 +29,12 @@ class StockMoveLine(models.Model):
     origin_description = fields.Char(
         related="move_id.origin_description",
     )
+    # el scheduled_date nativo es related a move_id.date, que al validar pasa a la fecha de proceso
+    picking_scheduled_date = fields.Datetime(
+        related="picking_id.scheduled_date",
+        string="Transfer Scheduled Date",
+        help="Scheduled date of the transfer, not replaced by the processing date once done.",
+    )
 
     @api.depends_context("location")
     def _compute_product_uom_qty_location(self):

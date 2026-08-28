@@ -33,6 +33,7 @@
             <filter name="by_state" position="after">
                 <filter string="Picking Partner" name="picking_partner_id"  context="{'group_by':'picking_partner_id'}"/>
                 <filter name="origin" context="{'group_by':'origin'}" string="Source"/>
+                <filter name="picking_scheduled_date" context="{'group_by':'picking_scheduled_date'}" string="Transfer Scheduled Date"/>
             </filter>
         </field>
     </record>
@@ -44,6 +45,7 @@
         <field name="arch" type="xml">
             <field name="location_dest_id" position="after">
                 <field name="product_uom_qty_location" sum="Total"/>
+                <field name="picking_scheduled_date" optional="hide"/>
                 <!-- on enterprise view is not refres -->
                 <!-- <field name="product_uom_qty_location" sum="Total" invisible="not context.get('location', False)"/> -->
             </field>
