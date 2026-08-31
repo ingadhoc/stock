@@ -56,3 +56,19 @@ class StockPicking(models.Model):
             return True
         else:
             return super(StockPicking, self)._action_generate_backorder_wizard(show_transfers=show_transfers)
+
+    def _action_done(self):
+        # el número del lote de recepción se estampa al llegar a done (lote, wizard de
+        # orden parcial o traslado solo) y se lee antes del super, que desasigna batch_id;
+        # la condición es la misma que el guard de stock_voucher deja pasar
+        numbers = {
+            picking.id: picking.batch_id.voucher_number
+            for picking in self
+            if picking.batch_id.picking_type_code == "incoming"
+        }
+        res = super()._action_done()
+        for picking in self.filtered(lambda p: p.state == "done" and not p.voucher_ids):
+            number = numbers.get(picking.id)
+            if number and any(operation.quantity for operation in picking.move_line_ids):
+                self.env["stock.picking.voucher"].create({"picking_id": picking.id, "name": number})
+        return res
