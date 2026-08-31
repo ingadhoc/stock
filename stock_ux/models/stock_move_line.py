@@ -25,6 +25,10 @@ class StockMoveLine(models.Model):
     product_uom_qty_location = fields.Float(
         compute="_compute_product_uom_qty_location",
         string="Net Quantity",
+        help="Quantity of this line relative to the location searched with the 'Net Quantity "
+        "Location' filter: negative when the line leaves that location, positive when it enters, "
+        "and 0 when it does not apply. Without that filter it is always 0 by design; the useful "
+        "value is the column total at the bottom.",
     )
     origin_description = fields.Char(
         related="move_id.origin_description",
@@ -41,7 +45,10 @@ class StockMoveLine(models.Model):
         # _get_domain_locations on stock/product.py
         location_name = location[0]
         if isinstance(location[0], int):
-            location_name = self.env["stock.location"].browse(location[0]).reference
+            # When the location is picked from the search dropdown, 'location' carries the record
+            # id (int) instead of the typed text. stock.location has no 'reference' field, so we
+            # resolve it through 'complete_name' (same field the ilike below matches against).
+            location_name = self.env["stock.location"].browse(location[0]).complete_name
         locations = self.env["stock.location"].search([("complete_name", "ilike", location_name)])
         for rec in self:
             product_uom_qty_location = rec.quantity

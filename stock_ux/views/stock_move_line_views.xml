@@ -43,9 +43,12 @@
         <field name="inherit_id" ref="stock.view_move_line_tree"/>
         <field name="arch" type="xml">
             <field name="location_dest_id" position="after">
-                <field name="product_uom_qty_location" sum="Total"/>
-                <!-- on enterprise view is not refres -->
-                <!-- <field name="product_uom_qty_location" sum="Total" invisible="not context.get('location', False)"/> -->
+                <!-- La columna solo tiene sentido cuando se filtra por "Cantidad neta en
+                     ubicacion" (ese facet inyecta 'location' en el contexto). En el cliente web
+                     Owl la visibilidad de columna por contexto de facet ya refresca, por eso la
+                     ocultamos cuando no hay ubicacion (antes daba 0,00 y confundia). -->
+                <field name="product_uom_qty_location" sum="Total"
+                       column_invisible="not context.get('location', False)"/>
             </field>
         </field>
     </record>
