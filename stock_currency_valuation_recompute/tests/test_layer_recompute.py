@@ -1,3 +1,4 @@
+from odoo import fields
 from odoo.exceptions import UserError
 from odoo.tests.common import TransactionCase, tagged
 from odoo.tools import mute_logger
@@ -153,6 +154,72 @@ class TestLayerRecompute(TransactionCase):
 
         with self.assertRaises(UserError):
             recompute.action_queue_revaluation()
+
+    def test_layers_in_a_locked_period_are_not_proposed_for_change(self):
+        """Lo que el bloqueo fiscal no deja escribir tampoco se propone.
+
+        Revaluar es todo o nada por registro, asi que una sola linea en periodo cerrado
+        hace fallar la correccion entera del producto, incluida la parte aplicable.
+        """
+        product, _adjustment = self._make_product_with_drift("Producto A")
+        self._close_period_up_to(fields.Date.today())
+
+        recompute = self.env["stock.valuation.layer.recompute"].create(
+            {"company_id": self.env.company.id, "product_id": product.id}
+        )
+        recompute.action_compute_lines()
+
+        self.assertTrue(recompute.line_ids, "Las lineas se arman igual, para poder mirarlas")
+        self.assertFalse(
+            recompute.line_ids.filtered("need_changes"),
+            "Ninguna capa del periodo cerrado se puede proponer para ajuste",
+        )
+        self.assertEqual(set(recompute.line_ids.mapped("svl_type")), {"locked period"})
+
+    def test_the_floor_can_be_moved_forward_from_the_context(self):
+        """El script puede acotar una corrida a un periodo mas chico que el bloqueo."""
+        product, _adjustment = self._make_product_with_drift("Producto A")
+        Recompute = self.env["stock.valuation.layer.recompute"]
+
+        without_floor = Recompute.create({"company_id": self.env.company.id, "product_id": product.id})
+        without_floor.action_compute_lines()
+        self.assertTrue(without_floor.line_ids.filtered("need_changes"), "Sin piso hay ajustes")
+
+        with_floor = Recompute.create({"company_id": self.env.company.id, "product_id": product.id})
+        with_floor.with_context(recompute_from_date=fields.Date.today()).action_compute_lines()
+
+        self.assertFalse(
+            with_floor.line_ids.filtered("need_changes"),
+            "Con el piso en hoy, las capas de hoy quedan fuera del ajuste",
+        )
+
+    def test_the_floor_cannot_be_moved_back_before_the_lock(self):
+        """El contexto no puede aflojar el bloqueo: proponer bajo el es lo que se evita."""
+        product, _adjustment = self._make_product_with_drift("Producto A")
+        self._close_period_up_to(fields.Date.today())
+
+        recompute = self.env["stock.valuation.layer.recompute"].create(
+            {"company_id": self.env.company.id, "product_id": product.id}
+        )
+        recompute.with_context(recompute_from_date="2020-01-01").action_compute_lines()
+
+        self.assertFalse(
+            recompute.line_ids.filtered("need_changes"),
+            "El bloqueo manda por sobre el contexto",
+        )
+
+    def _close_period_up_to(self, lock_date):
+        """Cierra el ejercicio hasta esa fecha, escribiendo el campo directo.
+
+        No via `write`: el `_validate_locks` de Odoo rechaza cerrar un periodo que tenga
+        lineas de extracto sin conciliar, y la data demo de la base de test las tiene. Eso
+        es una precondicion del entorno, no lo que se esta probando, asi que se saltea.
+        """
+        self.env.cr.execute(
+            "UPDATE res_company SET fiscalyear_lock_date = %s WHERE id = %s",
+            (lock_date, self.env.company.id),
+        )
+        self.env.company.invalidate_recordset()
 
     def _make_computed_recompute(self, name):
         """Recompute ya calculado y con diferencias, o sea aplicable."""

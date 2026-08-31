@@ -155,6 +155,34 @@ class StockValuationLayerRecompute(models.Model):
         if self.product_id.with_company(self.company_id).lot_valuated:
             raise UserError("El producto tiene valuación por lote (lot_valuated) y este recálculo no la contempla.")
 
+    def _layer_accounting_date(self, layer):
+        """La fecha con la que se juzga si una capa cae en periodo cerrado.
+
+        Es la del asiento, que es la que mira el bloqueo fiscal; la de la capa queda de
+        respaldo para las que no tienen asiento.
+        """
+        return layer.account_move_id.date or layer.create_date.date()
+
+    def _get_recompute_floor_date(self):
+        """Fecha desde la cual tiene sentido corregir.
+
+        Lo anterior al bloqueo fiscal no se puede escribir, y proponerlo igual no es
+        inocuo: revaluar es todo o nada por registro, asi que una sola linea en periodo
+        cerrado hace fallar la correccion entera del producto, incluida la parte que si
+        se podia aplicar.
+
+        La clave de contexto `recompute_from_date` corre el piso hacia adelante, para
+        acotar una corrida a un periodo mas chico que el que el bloqueo ya permite. Nunca
+        hacia atras: proponer por debajo del bloqueo es exactamente lo que se esta
+        evitando. Sin bloqueo configurado el piso es `date.min` y esto no cambia nada.
+        """
+        self.ensure_one()
+        # Sin diario: el de valuacion no es de venta ni de compra, asi que el piso sale
+        # del cierre de ejercicio y del bloqueo duro.
+        floor = self.company_id.sudo()._get_user_fiscal_lock_date(self.env["account.journal"])
+        forced = self.env.context.get("recompute_from_date")
+        return max(floor, fields.Date.to_date(forced)) if forced else floor
+
     def action_compute_lines(self):
         self.ensure_one()
         self._check_supported_product()
@@ -165,6 +193,7 @@ class StockValuationLayerRecompute(models.Model):
         self.last_manual_svl_id = last_manual_svl_id
 
         lines_to_zero = self.env.context.get("lines_to_zero", {})
+        floor_date = self._get_recompute_floor_date()
 
         leaf = [("company_id", "=", self.company_id.id), ("product_id", "=", self.product_id.id)]
         svl_ids = self.env["stock.valuation.layer"].search(leaf, order="create_date asc")
@@ -198,7 +227,8 @@ class StockValuationLayerRecompute(models.Model):
             }
             quantity_at_time = quantity_at_time + svl_id.quantity
             after_last_manual = not last_manual_svl_id or svl_id.id > last_manual_svl_id.id
-            if not after_last_manual:
+            in_locked_period = self._layer_accounting_date(svl_id) <= floor_date
+            if not after_last_manual or in_locked_period:
                 # El ajuste manual y todo lo anterior se respeta, asi que estos layers no
                 # se van a escribir. El promedio ponderado tiene que avanzar con el valor
                 # REGISTRADO, que es el que va a quedar, y no con el recalculado: si no,
@@ -212,7 +242,7 @@ class StockValuationLayerRecompute(models.Model):
                 standard_price_in_currency = self._get_standard_price(
                     new_value_in_currency, standard_price_in_currency, quantity_at_time, svl_id.quantity
                 )
-                svl_type = "before adjustment"
+                svl_type = "locked period" if in_locked_period else "before adjustment"
 
             elif svl_id.id in lines_to_zero:
                 new_unit_cost = 0
@@ -388,7 +418,7 @@ class StockValuationLayerRecompute(models.Model):
             # usuario se respeta tal cual, y con el todo lo anterior. Sin este corte, un
             # ajuste que compensaba un layer mal valuado se termina contando dos veces:
             # una en el layer recalculado y otra en el ajuste que sigue ahi.
-            need_change_5 = after_last_manual
+            need_change_5 = after_last_manual and not in_locked_period
             need_change_6 = svl_id.id in lines_to_zero
             vals["need_changes"] = bool(
                 (need_change_1 or need_change_2 or need_change_3 or need_change_4 or need_change_6) and need_change_5
