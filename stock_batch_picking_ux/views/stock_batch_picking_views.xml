@@ -40,12 +40,21 @@
             <!-- No permitir cargar traslados hasta elegir el tipo de operación:
                  sin tipo, allowed_picking_ids nativo no filtra por picking_type y
                  ofrece todos los traslados de la compañía (recepciones, entregas,
-                 internos mezclados). Forzamos el orden tipo → traslados. -->
+                 internos mezclados). Forzamos el orden tipo → traslados.
+
+                 El acotado por cliente va acá, como dominio del campo, y no
+                 dentro de allowed_picking_ids: ese lo usa el _sanity_check
+                 nativo (ver comentario en el modelo). -->
+            <field name="allowed_picking_ids" position="after">
+                <field name="partner_allowed_picking_ids" invisible="1"/>
+            </field>
             <xpath expr="//field[@name='picking_ids'][@widget='many2many']" position="attributes">
                 <attribute name="readonly">not picking_type_id or state not in ['draft', 'in_progress']</attribute>
+                <attribute name="domain">[('id', 'in', partner_allowed_picking_ids)]</attribute>
             </xpath>
             <xpath expr="//field[@name='picking_ids'][@widget='stock_picking_many2many']" position="attributes">
                 <attribute name="readonly">not picking_type_id or state not in ['draft', 'in_progress']</attribute>
+                <attribute name="domain">[('id', 'in', partner_allowed_picking_ids)]</attribute>
             </xpath>
 
             <button name="action_cancel" position="attributes">
