@@ -118,6 +118,7 @@ class StockPickingBatch(models.Model):
         """Choose between consolidated batch report and per-picking individual
         delivery slips depending on whether the batch has a partner.
 
+<<<<<<< e7187e20818a805c2f7052b82ccfe61d203f06e3
         Batch with partner → consolidated (all transfers share one customer,
         one delivery slip). Batch without partner → individual slips, one per
         picking (mixed-partner batch handles delivery guides at picking level).
@@ -126,6 +127,65 @@ class StockPickingBatch(models.Model):
         if self.partner_id:
             return self.env.ref("stock_batch_picking_ux.action_report_batch_deliveryslip").report_action(self)
         return self.env.ref("stock.action_report_delivery").report_action(self.picking_ids)
+||||||| cbc65dc965efe4401550426b45fad1bc2cc27e97
+        batch_voucher_installed = "stock_batch_picking_voucher" in self.env["ir.module.module"].search(
+            [("name", "=", "stock_batch_picking_voucher"), ("state", "=", "installed")]
+        ).mapped("name")
+
+        for rec in self:
+            if rec.picking_type_code == "incoming" and rec.voucher_number:
+                for picking in rec.picking_ids:
+                    if picking.state != "done" or picking.voucher_ids:
+                        continue
+                    # agregamos esto para que no se asigne a los pickings
+                    # que no se van a recibir ya que todavia no se limpiaron
+                    # y ademas, por lo de arriba, no se fuerza la cantidad
+                    # si son todos cero, se terminan sacando
+                    if all(operation.quantity == 0 for operation in picking.move_line_ids):
+                        continue
+                    rec.env["stock.picking.voucher"].create(
+                        {
+                            "picking_id": picking.id,
+                            "name": rec.voucher_number,
+                        }
+                    )
+            elif not batch_voucher_installed:
+                for picking in rec.picking_ids:
+                    if picking.state != "done" or picking.voucher_ids:
+                        continue
+                    if not picking.picking_type_id.auto_print_delivery_slip:
+                        continue
+                    book = picking.book_id or picking.picking_type_id.book_id
+                    if not book:
+                        continue
+                    if all(operation.quantity == 0 for operation in picking.move_line_ids):
+                        continue
+                    picking.assign_numbers(picking.get_estimated_number_of_pages(), book)
+        return res
+=======
+        batch_voucher_installed = "stock_batch_picking_voucher" in self.env["ir.module.module"].search(
+            [("name", "=", "stock_batch_picking_voucher"), ("state", "=", "installed")]
+        ).mapped("name")
+
+        for rec in self:
+            # la rama incoming la estampa stock.picking._action_done, que además alcanza
+            # la validación diferida por el wizard de orden parcial
+            if rec.picking_type_code == "incoming" and rec.voucher_number:
+                continue
+            elif not batch_voucher_installed:
+                for picking in rec.picking_ids:
+                    if picking.state != "done" or picking.voucher_ids:
+                        continue
+                    if not picking.picking_type_id.auto_print_delivery_slip:
+                        continue
+                    book = picking.book_id or picking.picking_type_id.book_id
+                    if not book:
+                        continue
+                    if all(operation.quantity == 0 for operation in picking.move_line_ids):
+                        continue
+                    picking.assign_numbers(picking.get_estimated_number_of_pages(), book)
+        return res
+>>>>>>> 6aa17ff3cb50293ac232a6f602b9539d50e28bba
 
     def action_view_stock_picking(self):
         """This function returns an action that display existing pickings of
