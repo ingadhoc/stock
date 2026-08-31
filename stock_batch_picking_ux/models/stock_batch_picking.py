@@ -156,22 +156,10 @@ class StockPickingBatch(models.Model):
         ).mapped("name")
 
         for rec in self:
+            # la rama incoming la estampa stock.picking._action_done, que además alcanza
+            # la validación diferida por el wizard de orden parcial
             if rec.picking_type_code == "incoming" and rec.voucher_number:
-                for picking in rec.picking_ids:
-                    if picking.state != "done" or picking.voucher_ids:
-                        continue
-                    # agregamos esto para que no se asigne a los pickings
-                    # que no se van a recibir ya que todavia no se limpiaron
-                    # y ademas, por lo de arriba, no se fuerza la cantidad
-                    # si son todos cero, se terminan sacando
-                    if all(operation.quantity == 0 for operation in picking.move_line_ids):
-                        continue
-                    rec.env["stock.picking.voucher"].create(
-                        {
-                            "picking_id": picking.id,
-                            "name": rec.voucher_number,
-                        }
-                    )
+                continue
             elif not batch_voucher_installed:
                 for picking in rec.picking_ids:
                     if picking.state != "done" or picking.voucher_ids:

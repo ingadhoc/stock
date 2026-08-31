@@ -90,3 +90,31 @@ class TestBatchVoucherOnValidate(TransactionCase):
         batch.action_done()
         self.assertEqual(picking.state, "done")
         self.assertEqual(len(picking.voucher_ids), 1)
+
+    def test_incoming_batch_numbers_after_backorder_wizard(self):
+        """El wizard de orden parcial valida por fuera del lote: el número tiene que quedar igual."""
+        picking_type = self.env.ref("stock.picking_type_in")
+        picking = self.env["stock.picking"].create(
+            {
+                "picking_type_id": picking_type.id,
+                "location_id": self.env.ref("stock.stock_location_suppliers").id,
+                "location_dest_id": self.src.id,
+                "move_ids": [
+                    (0, 0, {"name": self.product.name, "product_id": self.product.id, "product_uom_qty": 2.0})
+                ],
+            }
+        )
+        batch = self.env["stock.picking.batch"].create(
+            {
+                "picking_type_id": picking_type.id,
+                "picking_ids": [(6, 0, picking.ids)],
+                "voucher_number": "0001-00000456",
+            }
+        )
+        batch.action_confirm()
+        picking.move_ids.quantity = 1.0
+        action = batch.action_done()
+        self.assertFalse(picking.voucher_ids)
+
+        self.env[action["res_model"]].with_context(**action["context"]).create({}).process()
+        self.assertEqual(picking.voucher_ids.mapped("name"), ["0001-00000456"])
