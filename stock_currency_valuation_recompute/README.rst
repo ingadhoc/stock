@@ -87,6 +87,21 @@ them; once the cause is sorted out, compute their lines again — which clears t
 and revaluate. Only a record with computed lines can be revaluated, so a failure of the
 compute step can never be applied.
 
+Closed periods
+--------------
+
+A layer whose journal entry falls on or before the company's fiscal lock date is never
+proposed for adjustment. It is listed with the type *locked period* so it can be seen, and
+left with its recorded values, exactly as the layers before a manual valuation are.
+
+This is not only about respecting the close. Revaluating is all or nothing per record, so a
+single line in a closed period makes the whole product's correction fail — including the
+part that could have been applied. Reopening the period is an accounting decision; once the
+lock moves, the tool follows it with no configuration.
+
+A run can be narrowed further with the ``recompute_from_date`` context key, which moves the
+floor forward — never back, since proposing below the lock is what this avoids.
+
 Known issues / Roadmap
 ======================
 
