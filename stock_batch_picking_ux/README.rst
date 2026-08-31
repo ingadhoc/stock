@@ -18,6 +18,7 @@ This module add the following features:
 #. Add notes tab.
 #. Partner on the batch transfer:
 -  The ``partner_id`` on the batch is **computed** from the partners of its pickings: it is set when all pickings share the same partner and cleared when there is a mix. It remains **editable manually** (e.g. to pre-set a partner on an empty batch and constrain which pickings can be attached via the domain).
+-  When a partner is set, the **Transfers** field only offers that partner's eligible transfers. This is UI help only: it is a domain on the field (``partner_allowed_picking_ids``) and does **not** narrow the native ``allowed_picking_ids``, which is what Odoo's ``_sanity_check`` uses to decide whether a transfer is compatible with the batch. Narrowing that field made adding a transfer of another partner — or with no partner at all — fail with "check their states and operation types", and only on some paths.
 -  Locked once the batch is ``done`` or ``cancel``.
 -  Shown in the list view of batches.
 #. While processing the batch picking:
