@@ -36,6 +36,17 @@ class StockPickingBatch(models.Model):
         string="# Transferencias",
         compute="_compute_picking_count",
     )
+    # Ayuda de UI: los traslados elegibles acotados al cliente del lote. Es el
+    # dominio del campo Traslados en la vista. Va aparte de allowed_picking_ids
+    # a propósito: ese campo lo usa el _sanity_check nativo, así que filtrarlo
+    # por cliente hacía estallar el alta de un traslado de otro cliente (o sin
+    # cliente) con un mensaje que manda a revisar estado y tipo de operación,
+    # que estaban perfectos — y solo por algunos caminos, según si el compute de
+    # partner_id llegaba a recalcular antes (tarea 73086).
+    partner_allowed_picking_ids = fields.One2many(
+        "stock.picking",
+        compute="_compute_partner_allowed_picking_ids",
+    )
     notes = fields.Text(help="free form remarks")
 
     # Stub to prevent AttributeError when l10n_pe_edi_stock is installed.
@@ -71,11 +82,13 @@ class StockPickingBatch(models.Model):
                 # lote sin traslados: no pisar el cliente cargado a mano
                 batch.partner_id = batch.partner_id
 
-    @api.depends("partner_id")
-    def _compute_allowed_picking_ids(self):
-        super()._compute_allowed_picking_ids()
-        for rec in self.filtered("partner_id"):
-            rec.allowed_picking_ids = rec.allowed_picking_ids.filtered(lambda p: p.partner_id == rec.partner_id)
+    @api.depends("partner_id", "allowed_picking_ids")
+    def _compute_partner_allowed_picking_ids(self):
+        for rec in self:
+            pickings = rec.allowed_picking_ids
+            if rec.partner_id:
+                pickings = pickings.filtered(lambda p: p.partner_id == rec.partner_id)
+            rec.partner_allowed_picking_ids = pickings
 
     def write(self, vals):
         # Intercept DELETE commands on picking_ids to prevent physical deletion —
