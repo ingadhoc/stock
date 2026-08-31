@@ -34,7 +34,10 @@
                         <field name="last_manual_svl_id" readonly="1"/>
                     </group>
                     <field name="line_ids" readonly="state in ['done', 'cancel']">
-                        <list>
+                        <!-- editable en la fila: la correccion se tilda y se tipea ahi mismo,
+                             sin abrir el dialogo. `create` en cero porque las lineas salen de
+                             los layers del producto, no se cargan a mano. -->
+                        <list editable="bottom" create="0">
                             <field name="currency_id" column_invisible="True"/>
                             <field name="company_currency_id" column_invisible="True"/>
                             <field name="layer_date" readonly="1" optional="hide"/>
@@ -52,7 +55,9 @@
                             <field name="new_value_in_currency"/>
                             <field name="standard_price" currency_field="company_currency_id"/>
                             <field name="standard_price_in_currency"/>
-                            <field name="need_changes" readonly="1"/>
+                            <!-- editable a proposito: permite corregir a mano una
+                                 revaluacion que el recalculo respeta por diseno -->
+                            <field name="need_changes"/>
                         </list>
                     </field>
                 </sheet>

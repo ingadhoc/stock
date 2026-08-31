@@ -87,6 +87,34 @@ them; once the cause is sorted out, compute their lines again — which clears t
 and revaluate. Only a record with computed lines can be revaluated, so a failure of the
 compute step can never be applied.
 
+Correcting a manual revaluation
+-------------------------------
+
+Only the layers created after the last manual valuation are adjusted, so the tool never
+rewrites a manual revaluation on its own. To correct one whose value in the secondary
+currency was loaded wrong, drive it in two passes:
+
+#. Compute the lines. The manual revaluation appears as a line of type *before adjustment*,
+   unticked
+#. Tick it, and set the value in the secondary currency to what it should be. A revaluation
+   has no quantity, so the unit cost does not matter, and the company-currency side is
+   already filled in with the recorded value — leave it as it is to keep the amount in
+   company currency unchanged
+#. Optionally, untick the remaining lines. They were computed from the wrong revaluation,
+   so leaving them ticked writes them — and reposts their journal entries — with figures the
+   second pass corrects anyway. The end state is the same either way; unticking only avoids
+   the round trip
+#. Press "Revaluate". The layer and its journal entry are corrected, and the entry is
+   posted again with the same amount in company currency
+#. Create a **new** recompute for the product and compute its lines. The corrected
+   revaluation is now respected as the cut, and every layer after it — and the product cost
+   — is recalculated from it
+#. Review and press "Revaluate"
+
+The second pass is not optional: the product cost written by the first one still comes from
+the figures computed before the correction. Only after the second pass does the cost match
+the sum of the layers again.
+
 Known issues / Roadmap
 ======================
 
