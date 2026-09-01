@@ -41,6 +41,7 @@ Stock UX
 #. Add a restriction to edit operation type for users with the "Restrict editing Operation Type in Pickings" check.
 #. Add number of packages on pickings
 #. Create the lots a counted row names and the product does not have yet, instead of stopping the whole file at the first one.
+#. Import an inventory count onto the stock lines that already exist: each row is matched by product, location, lot, package and owner, so the counted quantity replaces the quantity of that line instead of adding a second one to it.
 
 Installation
 ============
