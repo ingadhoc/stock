@@ -40,6 +40,8 @@ Stock UX
 #. Add a "All transfers" view form in Menu: Operations
 #. Add a restriction to edit operation type for users with the "Restrict editing Operation Type in Pickings" check.
 #. Add number of packages on pickings
+#. Accept the columns identifying a stock line on import while they repeat what the line already holds, so a file exported from Odoo can be re-imported as it is, and name the line and the column when they do not.
+#. Report which row, product or column an inventory import cannot take, instead of one message for the whole file, and refuse the columns that would move stock with no move behind them.
 
 Installation
 ============
