@@ -40,6 +40,7 @@ Stock UX
 #. Add a "All transfers" view form in Menu: Operations
 #. Add a restriction to edit operation type for users with the "Restrict editing Operation Type in Pickings" check.
 #. Add number of packages on pickings
+#. Offer an import template for inventory adjustments carrying the column that identifies each stock line, only columns an adjustment can take, and the export/fill/re-import order of work.
 
 Installation
 ============
