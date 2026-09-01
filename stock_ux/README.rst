@@ -40,6 +40,20 @@ Stock UX
 #. Add a "All transfers" view form in Menu: Operations
 #. Add a restriction to edit operation type for users with the "Restrict editing Operation Type in Pickings" check.
 #. Add number of packages on pickings
+<<<<<<< 0c05244f81949f9815b904f248af75228aa301bf
+||||||| 5e8bce90e15b8889cf5d79759da45035e92be151
+#. Log routes configuration changes: routes and warehouses get a chatter, changes on their rules are logged on the route chatter, and changing the warehouse reception or delivery steps logs which rules were activated, archived or created. It is off by default and is turned on with "Track Routes Configuration Changes" in the Inventory settings.
+#. Add the menu "Routes Configuration Changes" (Inventory / Configuration / Warehouse Management) with every logged change, and an optional "Procurement Rule" column on stock moves lists to see which rule created a move.
+#. Create the lots a counted row names and the product does not have yet, instead of stopping the whole file at the first one.
+=======
+#. Log routes configuration changes: routes and warehouses get a chatter, changes on their rules are logged on the route chatter, and changing the warehouse reception or delivery steps logs which rules were activated, archived or created. It is off by default and is turned on with "Track Routes Configuration Changes" in the Inventory settings.
+#. Add the menu "Routes Configuration Changes" (Inventory / Configuration / Warehouse Management) with every logged change, and an optional "Procurement Rule" column on stock moves lists to see which rule created a move.
+#. Create the lots a counted row names and the product does not have yet, instead of stopping the whole file at the first one.
+#. Import an inventory count onto the stock lines that already exist: each row is matched by product, location, lot, package and owner, so the counted quantity replaces the quantity of that line instead of adding a second one to it.
+#. Accept the columns identifying a stock line on import while they repeat what the line already holds, so a file exported from Odoo can be re-imported as it is, and name the line and the column when they do not.
+#. Report which row, product or column an inventory import cannot take, instead of one message for the whole file, and refuse the columns that would move stock with no move behind them.
+#. Offer an import template for inventory adjustments carrying the column that identifies each stock line, only columns an adjustment can take, and the export/fill/re-import order of work.
+>>>>>>> 030178f0de4bf6b569154b44b52c9c1d1616fee1
 
 Installation
 ============
