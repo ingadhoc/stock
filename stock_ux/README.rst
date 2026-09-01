@@ -42,6 +42,7 @@ Stock UX
 #. Add number of packages on pickings
 #. Log routes configuration changes: routes and warehouses get a chatter, changes on their rules are logged on the route chatter, and changing the warehouse reception or delivery steps logs which rules were activated, archived or created. It is off by default and is turned on with "Track Routes Configuration Changes" in the Inventory settings.
 #. Add the menu "Routes Configuration Changes" (Inventory / Configuration / Warehouse Management) with every logged change, and an optional "Procurement Rule" column on stock moves lists to see which rule created a move.
+#. Offer an import template for inventory adjustments carrying the column that identifies each stock line, only columns an adjustment can take, and the export/fill/re-import order of work.
 
 Installation
 ============
