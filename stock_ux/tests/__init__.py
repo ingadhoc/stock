@@ -8,3 +8,4 @@ from . import test_serial_quantity
 from . import test_quant_import_lots
 from . import test_quant_import
 from . import test_quant_import_messages
+from . import test_quant_import_template
