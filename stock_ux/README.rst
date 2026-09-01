@@ -42,6 +42,8 @@ Stock UX
 #. Add number of packages on pickings
 #. Log routes configuration changes: routes and warehouses get a chatter, changes on their rules are logged on the route chatter, and changing the warehouse reception or delivery steps logs which rules were activated, archived or created. It is off by default and is turned on with "Track Routes Configuration Changes" in the Inventory settings.
 #. Add the menu "Routes Configuration Changes" (Inventory / Configuration / Warehouse Management) with every logged change, and an optional "Procurement Rule" column on stock moves lists to see which rule created a move.
+#. Accept the columns identifying a stock line on import while they repeat what the line already holds, so a file exported from Odoo can be re-imported as it is, and name the line and the column when they do not.
+#. Report which row, product or column an inventory import cannot take, instead of one message for the whole file, and refuse the columns that would move stock with no move behind them.
 
 Installation
 ============
