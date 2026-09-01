@@ -146,6 +146,50 @@ class TestLayerRecompute(TransactionCase):
 
         self.assertFalse(recompute.revaluation_error, "Un registro sano no puede mostrar un motivo de falla")
 
+    def test_a_manual_revaluation_can_be_corrected_in_two_passes(self):
+        """Corregir a mano una revaluacion, y que el recompute siguiente la respete.
+
+        Es el recorrido que le queda al operador para arreglar una revaluacion cuyo valor
+        en la moneda secundaria se cargo mal: el recalculo no la toca por diseno, asi que
+        la correccion se tilda a mano y el segundo recompute reacomoda todo lo posterior.
+        """
+        Recompute = self.env["stock.valuation.layer.recompute"]
+        product, adjustment = self._make_product_with_drift("Producto A")
+
+        # pasada 1: tildo la linea del ajuste, la corrijo, y destildo las demas
+        first = Recompute.create({"company_id": self.env.company.id, "product_id": product.id})
+        first.action_compute_lines()
+        adjustment_line = first.line_ids.filtered(lambda line: line.layer_id == adjustment)
+        self.assertFalse(adjustment_line.need_changes, "El ajuste manual sale sin marcar")
+        value_in_company_currency = adjustment.value
+        adjustment_line.need_changes = True
+        adjustment_line.new_value_in_currency = 30.0
+        (first.line_ids - adjustment_line).need_changes = False
+
+        first.action_manual_slv_revaluation()
+
+        self.assertEqual(adjustment.value_in_currency, 30.0, "La correccion tiene que aplicarse")
+        self.assertEqual(adjustment.value, value_in_company_currency, "El importe en pesos no cambia")
+
+        # pasada 2: recompute nuevo, sin tocar nada a mano
+        second = Recompute.create({"company_id": self.env.company.id, "product_id": product.id})
+        second.action_compute_lines()
+        second_line = second.line_ids.filtered(lambda line: line.layer_id == adjustment)
+        self.assertEqual(second_line.new_value_in_currency, 30.0, "Tiene que respetar la correccion")
+        self.assertFalse(second_line.need_changes, "Y no querer volver a escribirla")
+
+        second.action_manual_slv_revaluation()
+
+        layers = self.env["stock.valuation.layer"].search(
+            [("product_id", "=", product.id), ("company_id", "=", self.env.company.id)]
+        )
+        self.assertAlmostEqual(
+            product.standard_price_in_currency * sum(layers.mapped("quantity")),
+            sum(layers.mapped("value_in_currency")),
+            places=2,
+            msg="Despues de la segunda pasada el costo tiene que cerrar contra la suma de capas",
+        )
+
     def test_queue_revaluation_skips_records_already_applied(self):
         """Encolar en masa no vuelve a mandar un registro ya aplicado."""
         recompute = self.env["stock.valuation.layer.recompute"].create({"company_id": self.env.company.id})
