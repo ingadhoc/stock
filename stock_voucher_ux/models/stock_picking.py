@@ -2,6 +2,8 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
+import re
+
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
@@ -60,6 +62,42 @@ class StockPicking(models.Model):
                     last_number,
                 )
             )
+
+    def _count_pages_with_products(self, pdf_reader):
+        """Páginas del PDF con productos del traslado: las demás no consumen remito."""
+        self.ensure_one()
+        products = (self.move_line_ids or self.move_ids).product_id
+        identifiers = set()
+        for product in products:
+            if product.default_code:
+                identifiers.add(product.default_code.lower().strip())
+            if product.barcode:
+                identifiers.add(product.barcode.lower().strip())
+        texts = []
+        for page in pdf_reader.pages:
+            try:
+                texts.append((page.extract_text() or "").lower())
+            except Exception:  # si no se puede leer, asumimos que trae productos
+                texts.append(None)
+        # Descartamos hojas sólo si toda línea se reconoce por código y el reporte
+        # los imprime. Si no, contamos como hasta ahora: de más antes que de menos,
+        # porque una hoja impresa sin número es peor que un número consumido.
+        identifiable = products and all(product.default_code or product.barcode for product in products)
+        use_codes = identifiable and any(text and any(code in text for code in identifiers) for text in texts)
+        pages_with_products = 0
+        for text in texts:
+            if text is None:
+                pages_with_products += 1
+                continue
+            if not text:
+                continue
+            if use_codes:
+                has_products = any(code in text for code in identifiers)
+            else:
+                has_products = bool(re.search(r"\b\d+[.,]\d+\b", text))
+            if has_products:
+                pages_with_products += 1
+        return max(1, pages_with_products)
 
     def do_print_and_assign(self):
         if not self.book_id and self.picking_type_code != "incoming":

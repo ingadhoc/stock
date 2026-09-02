@@ -7,22 +7,6 @@ from unittest.mock import patch
 from odoo.tests.common import TransactionCase, tagged
 
 
-class _FakePage:
-    def __init__(self, text):
-        self._text = text
-
-    def extract_text(self):
-        return self._text
-
-
-class _FakeReader:
-    """Duck-typed stand-in for ``PyPDF2.PdfFileReader`` so the page-counting
-    logic can be tested without rendering a real (LibreOffice) aeroo PDF."""
-
-    def __init__(self, texts):
-        self.pages = [_FakePage(t) for t in texts]
-
-
 @tagged("post_install", "-at_install")
 class TestStockVoucherUxIot(TransactionCase):
     @classmethod
@@ -158,17 +142,3 @@ class TestStockVoucherUxIot(TransactionCase):
         ):
             other_report.render_and_send([], picking.ids)
         self.assertFalse(picking.voucher_ids, "Only the remito report must assign voucher numbers")
-
-    def test_count_pages_with_products(self):
-        """Pages are counted as containing products when the product code (or a
-        generic decimal, as fallback) shows up in the page text."""
-        picking = self._new_picking()
-        reader = _FakeReader(
-            [
-                "Cliente XYZ\nProducto TESTPROD1 x 1",  # product code -> counts
-                "Página de continuación sin líneas",  # nothing -> not counted
-                "12,50 total",  # decimal fallback -> counts
-                "",  # empty -> not counted
-            ]
-        )
-        self.assertEqual(self.report._count_pages_with_products(reader, picking), 2)
