@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-04 16:32+0000\n"
+"POT-Creation-Date: 2026-09-02 12:51+0000\n"
 "PO-Revision-Date: 2026-04-20 16:41+0000\n"
 "Last-Translator: julia elizondo <jue@adhoc.inc>\n"
 "Language-Team: Spanish <https://translation.dev-adhoc.com/projects/"
@@ -804,6 +804,15 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_label_custom_qty
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_template_label_variant_qty
 msgid "Quantity"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,help:stock_ux.field_stock_move_line__product_uom_qty_location
+msgid ""
+"Quantity of this line relative to the location searched with the 'Net "
+"Quantity Location' filter: negative when the line leaves that location, "
+"positive when it enters, and 0 when it does not apply. Without that filter "
+"it is always 0 by design; the useful value is the column total at the bottom."
 msgstr ""
 
 #. module: stock_ux
