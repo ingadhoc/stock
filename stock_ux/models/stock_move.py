@@ -4,6 +4,7 @@
 ##############################################################################
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
+from odoo.tools.float_utils import float_compare
 
 
 class StockMove(models.Model):
@@ -98,6 +99,65 @@ class StockMove(models.Model):
         return super(StockMove, self.with_context(cancel_from_order=True, can_delete=True))._merge_moves(
             merge_into=merge_into
         )
+
+    def _get_undone_push_rule(self):
+        """Regla de push del movimiento que este espejo negativo viene a deshacer.
+
+        Devuelve False si no aplica (movimiento positivo, sin destino final, con
+        movimientos destino que el core tiene que re-encadenar, o sin un
+        movimiento vivo del tramo siguiente al que netear).
+        """
+        self.ensure_one()
+        if (
+            float_compare(self.product_uom_qty, 0, precision_rounding=self.product_uom.rounding) >= 0
+            or not self.location_final_id
+            or self.location_dest_id == self.location_final_id
+            or self.move_dest_ids
+        ):
+            return False
+        undone = self.search(
+            [
+                ("id", "!=", self.id),
+                ("group_id", "=", self.group_id.id),
+                ("product_id", "=", self.product_id.id),
+                ("location_id", "=", self.location_dest_id.id),
+                ("location_dest_id", "=", self.location_final_id.id),
+                ("state", "not in", ("draft", "done", "cancel")),
+                ("rule_id.action", "=", "push"),
+                ("product_uom_qty", ">", 0),
+            ],
+            limit=1,
+        )
+        return undone.rule_id
+
+    def _push_apply(self):
+        """El espejo negativo hereda la puerta del movimiento que deshace.
+
+        El core empuja el movimiento positivo en `_action_done` (ya con move
+        lines y con el transportista propagado al picking) y el espejo negativo
+        del cancel-remanente en `_action_confirm` (todavia sin move lines). Si la
+        regla de push discrimina por `push_domain`, las dos evaluaciones pueden
+        resolver reglas distintas: el negativo nace en otro tipo de operacion, no
+        llega a ser candidato del merge, no netea y termina materializado como
+        contra-entrega, dejando el movimiento original huerfano (tarea 73048 /
+        ticket 124472).
+
+        Cuando el tramo siguiente ya existe y esta vivo, la puerta no se vuelve a
+        decidir: se reusa la regla con la que el core creo ese movimiento.
+        """
+        inherited = {}
+        for move in self:
+            rule = move._get_undone_push_rule()
+            if rule:
+                inherited[move.id] = rule
+        if not inherited:
+            return super()._push_apply()
+        new_moves = super(StockMove, self.filtered(lambda m: m.id not in inherited))._push_apply()
+        for move_id, rule in inherited.items():
+            new_move = rule._run_push(self.browse(move_id))
+            if new_move:
+                new_moves |= new_move.sudo()._action_confirm()
+        return new_moves
 
     def action_explode(self):
         # Cuando se explota un kit, MRP cancela y elimina el move original del producto kit,
