@@ -193,7 +193,20 @@ class StockPicking(models.Model):
             inmediate_transfer = True
             pricelist = False
             stock_bom_lines = self.env["stock.move"]
-            for move_line in rec.move_ids.filtered(lambda x: x.state != "cancel"):
+            moves = rec.move_ids.filtered(lambda x: x.state != "cancel")
+            # While _action_done runs, the picking still holds the moves that are about
+            # to be split off into the backorder: stock.move._create_backorder already
+            # created and confirmed them (so they are reserved when there is stock) and
+            # stock.picking._create_backorder has not moved them out yet. Right in
+            # between, _create_backorder_picking copies the picking and copy_data reads
+            # this field, forcing the pending recomputation. Counting those moves would
+            # declare what was shipped plus what the backorder reserved, and the state
+            # filter above would then freeze that value. Once a move is done, only the
+            # done ones are what this voucher actually ships.
+            done_moves = moves.filtered(lambda x: x.state == "done")
+            if done_moves:
+                moves = done_moves
+            for move_line in moves:
                 order_line = move_line.sale_line_id
                 if move_line.quantity:
                     inmediate_transfer = False
