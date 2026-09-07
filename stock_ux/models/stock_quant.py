@@ -2,11 +2,8 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import api, fields, models
-from odoo import _, api, models
+from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
-from odoo import _, api, models
-from odoo import api, models
 
 
 class StockQuant(models.Model):
@@ -160,6 +157,7 @@ class StockQuant(models.Model):
                 for position in entry["positions"]:
                     records[position] = record
         return self.browse(tuple(record.id for record in records))
+
     # Actionable messages: name the offending column, product or line so the
     # importer points at the row instead of collapsing into "multiple rows"
     # ------------------------------------------------------------------
@@ -261,6 +259,7 @@ class StockQuant(models.Model):
                     products='", "'.join(wrong.sudo().product_id.mapped("display_name")),
                 )
             )
+
     @api.model
     def get_import_templates(self):
         """Ours carries the identifying column and the export/fill/re-import order, the
@@ -271,6 +270,7 @@ class StockQuant(models.Model):
                 "template": "/stock_ux/static/xls/stock_quant.xlsx",
             }
         ]
+
     # Spreadsheet import: lots the count brings and Odoo does not have yet
     # ------------------------------------------------------------------
 
