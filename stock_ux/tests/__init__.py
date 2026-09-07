@@ -5,3 +5,4 @@
 from . import test_mto_warehouse_propagation
 from . import test_product_uom_qty_location
 from . import test_quant_import
+from . import test_quant_import_messages
