@@ -30,3 +30,27 @@ class TestVoucherRequired(TransactionCase):
         batch.voucher_number = False
         with self.assertRaises(UserError):
             picking.do_stock_voucher_transfer_check()
+
+
+class TestAssignNumbers(TransactionCase):
+    def test_foreign_error_is_not_degraded(self):
+        """Sólo se degrada el error del aviso de envío, no lo que ya estaba pendiente."""
+        sequence = self.env["ir.sequence"].create(
+            {"name": "Test", "code": "stock.voucher", "prefix": "0001-", "padding": 8}
+        )
+        book = self.env["stock.book"].create({"name": "Test", "sequence_id": sequence.id, "lines_per_voucher": 0})
+        picking = self.env["stock.picking"].create(
+            {
+                "picking_type_id": self.env.ref("stock.picking_type_in").id,
+                "location_id": self.env.ref("stock.stock_location_suppliers").id,
+                "location_dest_id": self.env.ref("stock.stock_location_stock").id,
+            }
+        )
+
+        def raise_foreign_error():
+            raise UserError("ajeno al aviso de envío")
+
+        with self.assertRaises(UserError):
+            # el savepoint de assertRaises flushea al entrar: el pendiente se registra adentro
+            self.env.cr.precommit.add(raise_foreign_error)
+            picking.assign_numbers(1, book)
