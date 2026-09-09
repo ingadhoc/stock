@@ -94,6 +94,10 @@ class StockPicking(models.Model):
         # fiscal document already numbered above, so it must not be rolled back by
         # such an error: we isolate the call in a savepoint and, on failure,
         # degrade the error to a chatter note plus a warning activity for the user.
+
+        # ``savepoint()`` flushea la transacción al abrirse, ya dentro del try: los
+        # pendientes corren antes para que sólo se degrade el error del propio aviso.
+        self.env.cr.flush()
         try:
             with self.env.cr.savepoint():
                 self.with_context(from_assign_numbers=True)._send_confirmation_email()
