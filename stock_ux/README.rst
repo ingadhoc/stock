@@ -40,6 +40,7 @@ Stock UX
 #. Add a "All transfers" view form in Menu: Operations
 #. Add a restriction to edit operation type for users with the "Restrict editing Operation Type in Pickings" check.
 #. Add number of packages on pickings
+#. Create the lots a counted row names and the product does not have yet, instead of stopping the whole file at the first one.
 
 Installation
 ============
