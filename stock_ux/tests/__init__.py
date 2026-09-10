@@ -6,3 +6,9 @@ from . import test_mto_warehouse_propagation
 from . import test_product_uom_qty_location
 from . import test_check_quantity
 from . import test_serial_quantity
+from . import test_quant_import_lots
+from . import test_quant_import
+from . import test_quant_import_messages
+from . import test_quant_import_template
+from . import test_merge_negative_moves
+from . import test_block_manual_lines_lot
