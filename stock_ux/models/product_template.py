@@ -2,11 +2,19 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import _, api, models
+from odoo import _, api, fields, models
 
 
 class ProductTemplate(models.Model):
     _inherit = "product.template"
+
+    route_ids = fields.Many2many(tracking=True)
+
+    def write(self, vals):
+        # el seguimiento de rutas se puede apagar desde Ajustes de Inventario
+        if "route_ids" in vals and not self.env["stock.route"]._is_route_tracking_enabled():
+            self = self.with_context(tracking_disable=True)
+        return super(ProductTemplate, self).write(vals)
 
     @api.model
     def get_import_templates(self):

@@ -28,3 +28,9 @@ class ResConfigSettings(models.TransientModel):
         "En Comprobantes de Transferencia mostrar cantidades pendientes de entrega",
         config_parameter="stock_ux.delivery_slip_remaining_qty",
     )
+
+    route_tracking = fields.Boolean(
+        "Track Routes Configuration Changes",
+        config_parameter="stock_ux.route_tracking",
+        help="Log in the chatter who changed routes, rules and warehouse steps, and what changed.",
+    )
