@@ -19,7 +19,7 @@
 ##############################################################################
 {
     "name": "Stock Picking State",
-    "version": "19.0.1.1.0",
+    "version": "19.0.1.1.1",
     "category": "Warehouse Management",
     "sequence": 14,
     "summary": "",

@@ -119,6 +119,14 @@ msgid "State Detail"
 msgstr ""
 
 #. module: stock_picking_state
+#: model:ir.model.fields,help:stock_picking_state.field_stock_picking__state_detail_id
+msgid ""
+"Configurable sub-status within the transfer status (e.g. within 'Ready': 'In "
+"preparation', 'In control'). It is filtered by the transfer status and the "
+"operation type."
+msgstr ""
+
+#. module: stock_picking_state
 #: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail__state
 msgid "Status"
 msgstr ""
