@@ -51,6 +51,17 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-xs-12 col-md-6 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="route_tracking"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="route_tracking"/>
+                            <div class="text-muted">
+                                Registra en el chatter de rutas, reglas y almacenes quién cambió la configuración y qué cambió. Ayuda a rastrear el origen de movimientos inesperados después de tocar las rutas.
+                            </div>
+                        </div>
+                    </div>
             </xpath>
         </field>
     </record>
