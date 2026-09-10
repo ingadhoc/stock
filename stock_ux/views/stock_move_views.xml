@@ -42,6 +42,7 @@
             </list>
             <field name="reference" position="after">
                 <field name="origin" optional="hide"/>
+                <field name="rule_id" optional="hide" groups="stock.group_adv_location"/>
             </field>
             <field name="uom_id" position="after">
                 <field name="product_qty" string="Q. UdM Producto" groups="uom.group_uom"/>
