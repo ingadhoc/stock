@@ -27,6 +27,7 @@
     "website": "www.adhoc.com.ar",
     "images": [],
     "depends": [
+        "mail",
         "sale_stock",
     ],
     "data": [
@@ -37,6 +38,7 @@
         "views/stock_move_views.xml",
         "views/stock_move_line_views.xml",
         "views/stock_warehouse_orderpoint_views.xml",
+        "views/stock_route_views.xml",
         "views/stock_backorder_confirmation_views.xml",
         "views/stock_picking_type_views.xml",
         "views/stock_lot_views.xml",
