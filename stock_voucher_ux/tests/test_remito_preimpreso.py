@@ -42,7 +42,7 @@ class TestRemitoNumbering(TransactionCase):
         cls.src = cls.env.ref("stock.stock_location_stock")
         cls.dest = cls.env.ref("stock.stock_location_customers")
 
-    def _make_done_picking(self, book, book_required=True, nlines=1):
+    def _make_done_picking(self, book, book_required=True, nlines=1, auto_print=False, validate=True):
         picking_type = self.env.ref("stock.picking_type_out")
         picking_type.write(
             {
@@ -50,7 +50,7 @@ class TestRemitoNumbering(TransactionCase):
                 "book_id": book.id,
                 "voucher_required": False,
                 # Gobierna la impresión, no la numeración.
-                "auto_print_delivery_slip": False,
+                "auto_print_delivery_slip": auto_print,
             }
         )
         # Productos distintos: los del mismo producto se agrupan en una línea.
@@ -85,7 +85,8 @@ class TestRemitoNumbering(TransactionCase):
         picking.action_confirm()
         for move in picking.move_ids:
             move.quantity = move.product_uom_qty
-        picking.with_context(skip_sms=True).button_validate()
+        if validate:
+            picking.with_context(skip_sms=True).button_validate()
         return picking
 
     def test_preprinted_not_numbered_on_validation(self):
@@ -133,3 +134,11 @@ class TestRemitoNumbering(TransactionCase):
         self.assertEqual(len(self._make_done_picking(book).voucher_ids), 1)
         with self.assertRaises(UserError):
             self._make_done_picking(book)
+
+    def test_batch_validation_marks_every_autoprinted_picking(self):
+        """Un lote valida los N juntos: se marcan igual que de a uno."""
+        pickings = self.env["stock.picking"]
+        for _index in range(2):
+            pickings |= self._make_done_picking(self.book_auto, auto_print=True, validate=False)
+        pickings.with_context(skip_sms=True).button_validate()
+        self.assertTrue(all(pickings.mapped("printed")))
