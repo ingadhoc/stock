@@ -32,11 +32,12 @@ class StockPicking(models.Model):
     def do_print_voucher(self):
         # El autoimpreso se numera antes del render: el reporte imprime
         # ``o.vouchers or o.name``. El preimpreso, por páginas reales al imprimir.
-        if self.autoprinted and not self.voucher_ids:
-            self.assign_numbers(1, self.book_id)
-        self.printed = True
-        if self.book_id:
-            self.book_id = self.book_id.id
+        for picking in self:
+            if picking.autoprinted and not picking.voucher_ids:
+                picking.assign_numbers(1, picking.book_id)
+            picking.printed = True
+            if picking.book_id:
+                picking.book_id = picking.book_id.id
         return super(StockPicking, self).do_print_voucher()
 
     def assign_numbers(self, estimated_number_of_pages, book):
@@ -86,16 +87,20 @@ class StockPicking(models.Model):
         # ``_action_done``, sólo imprime. Preimpreso: numera al imprimir por
         # páginas reales (mismo camino que "Imprimir Remito").
         res = super().button_validate()
-        if (
-            len(self) == 1
-            and self.state == "done"
-            and self.book_required
-            and self.book_id
-            and self.picking_type_id.auto_print_delivery_slip
-        ):
-            if self.autoprinted:
-                return self.do_print_voucher()
-            return self.do_print_and_assign()
+        to_print = self.filtered(
+            lambda p: p.state == "done" and p.book_required and p.book_id and p.picking_type_id.auto_print_delivery_slip
+        )
+        if not to_print:
+            return res
+        if len(self) == 1:
+            if to_print.autoprinted:
+                return to_print.do_print_voucher()
+            return to_print.do_print_and_assign()
+        # Validando varios el core ya imprime: sólo falta el efecto, y su acción
+        # se devuelve intacta. El preimpreso numera por páginas de un render.
+        pending = to_print.filtered(lambda p: p.autoprinted and not p.printed)
+        if pending:
+            pending.do_print_voucher()
         return res
 
     def _action_done(self):
