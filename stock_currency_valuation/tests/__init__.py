@@ -11,6 +11,7 @@ from . import test_previous_value_in_currency
 from . import test_manual_value_in_currency
 from . import test_revaluation_criterion_in_currency
 from . import test_inventory_value_in_currency
+from . import test_fifo_value_in_currency
 from . import test_wizard_amount_currency
 from . import test_closing_amount_currency
 from . import test_inert_without_valuation_currency

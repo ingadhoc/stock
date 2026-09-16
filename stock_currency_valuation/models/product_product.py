@@ -204,10 +204,12 @@ class productProduct(models.Model):
             quantity = product.qty_available
             value = product._run_fifo(quantity, lot, at_date)
             if value and product.valuation_currency_id:
-                value_in_currency = product.company_id.currency_id._convert(
+                # product.company_id is empty on shared products and _convert would then apply rate 1
+                company = product.company_id or self.env.company
+                value_in_currency = company.currency_id._convert(
                     from_amount=value,
                     to_currency=product.valuation_currency_id,
-                    company=product.company_id,
+                    company=company,
                     date=fields.Date.today(),
                 )
             else:
@@ -381,10 +383,11 @@ class productProduct(models.Model):
                     qty_available = product._with_valuation_context().qty_available
                     if product.uom_id.compare(qty_available, 0) > 0 and product.standard_price:
                         # Calcular usando la tasa de cambio actual entre company_currency y valuation_currency
-                        new_price_in_currency = product.company_id.currency_id._convert(
+                        company = product.company_id or self.env.company
+                        new_price_in_currency = company.currency_id._convert(
                             from_amount=product.standard_price,
                             to_currency=product.valuation_currency_id,
-                            company=product.company_id,
+                            company=company,
                             date=fields.Date.today(),
                         )
                         product.with_context(
