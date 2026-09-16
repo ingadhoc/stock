@@ -10,6 +10,8 @@
             <field name="currency_id" position="after">
                 <field name="valuation_currency_id" invisible="1"/>
             </field>
+            <!-- Disabled together with _get_aml_vals_for_key: without it the entry carries
+                 no secondary amount, so the column would show 0.
             <xpath expr="//field[@name='line_ids']/list/field[@name='credit']" position="after">
                 <field name="valuation_currency_id" column_invisible="1"/>
                 <field name="amount_currency"
@@ -18,6 +20,7 @@
                     sum="Total in Currency"
                     column_invisible="not parent.valuation_currency_id"/>
             </xpath>
+            -->
         </field>
     </record>
 </odoo>
