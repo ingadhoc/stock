@@ -96,7 +96,7 @@
                 <filter string="Done" name="filter_done" domain="[('state', '=', 'done')]"/>
                 <filter string="Error" name="filter_error" domain="[('state', '=', 'error')]"/>
                 <filter string="Cancelled" name="filter_cancel" domain="[('state', '=', 'cancel')]"/>
-                <filter string="SLV Changed" name="filter_slv_changed" domain="[('slv_changed', '=', True)]"/>
+                <filter string="SVL Changed" name="filter_slv_changed" domain="[('slv_changed', '=', True)]"/>
                 <field name="product_id" string="Product"/>
                 <group expand="0" name="group_by" string="Group By">
                     <filter string="Product" name="group_by_product_id" context="{'group_by': 'product_id'}"/>
@@ -114,6 +114,6 @@
         <field name="view_mode">list,form</field>
     </record>
 
-    <menuitem action="action_stock_valuation_layer_recompute" id="layer_recompute_menu" parent="stock.menu_warehouse_report" name="Layer recompute" sequence="2"/>
+    <menuitem action="action_stock_valuation_layer_recompute" id="layer_recompute_menu" parent="stock.menu_warehouse_report" name="Layer recompute" sequence="260"/>
 
 </odoo>
