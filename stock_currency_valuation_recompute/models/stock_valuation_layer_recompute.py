@@ -24,7 +24,7 @@ REVALUATION_TIME_BUDGET = 10
 
 class StockValuationLayerRecompute(models.Model):
     _name = "stock.valuation.layer.recompute"
-    _description = "layer recompute"
+    _description = "Layer Recompute"
 
     company_id = fields.Many2one("res.company", default=lambda self: self.env.company)
     currency_id = fields.Many2one("res.currency", related="company_id.currency_id")
@@ -40,9 +40,9 @@ class StockValuationLayerRecompute(models.Model):
         comodel_name="stock.valuation.layer.recompute.line",
         inverse_name="recompute_id",
     )
-    last_manual_svl_id = fields.Many2one("stock.valuation.layer")
+    last_manual_svl_id = fields.Many2one("stock.valuation.layer", string="Last Manual SVL")
     amount_changed = fields.Boolean()
-    slv_changed = fields.Boolean()
+    slv_changed = fields.Boolean(string="SVL Changed")
     revaluation_error = fields.Text(readonly=True, copy=False)
     final_rate = fields.Float(
         compute="_compute_final_rate",
@@ -55,7 +55,7 @@ class StockValuationLayerRecompute(models.Model):
             ("in_process", "In Process"),
             ("revaluating", "Revaluating"),
             ("done", "Done"),
-            ("no_change", "Not changes Required"),
+            ("no_change", "No Changes Required"),
             ("error", "Error"),
             ("cancel", "Cancelled"),
         ],
@@ -582,7 +582,7 @@ class StockValuationLayerRecompute(models.Model):
 
 class StockValuationLayerRecomputeLine(models.Model):
     _name = "stock.valuation.layer.recompute.line"
-    _description = "lines layer recompute"
+    _description = "Layer Recompute Lines"
 
     layer_id = fields.Many2one("stock.valuation.layer")
     quantity = fields.Float(related="layer_id.quantity")

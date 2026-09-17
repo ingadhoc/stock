@@ -1,0 +1,343 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* stock_currency_valuation_recompute
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-17 15:35+0000\n"
+"PO-Revision-Date: 2026-09-17 15:35+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: stock_currency_valuation_recompute
+#. odoo-python
+#: code:addons/stock_currency_valuation_recompute/models/stock_valuation_layer_recompute.py:0
+msgid ""
+"%(product)s has no valuation layers in %(company)s. Check that you picked "
+"the company where the product is valued."
+msgstr "%(product)s no tiene capas de valoración en %(company)s. Verificá que elegiste la compañía donde se valúa el producto."
+
+#. module: stock_currency_valuation_recompute
+#: model:ir.model.fields,field_description:stock_currency_valuation_recompute.field_stock_valuation_layer_recompute__amount_changed
+msgid "Amount Changed"
+msgstr "Monto Modificado"
+
+#. module: stock_currency_valuation_recompute
+#: model_terms:ir.ui.view,arch_db:stock_currency_valuation_recompute.stock_valuation_layer_recompute_form_view
+msgid "Back to Draft"
+msgstr "Volver a Borrador"
+
+#. module: stock_currency_valuation_recompute
+#: model_terms:ir.ui.view,arch_db:stock_currency_valuation_recompute.stock_valuation_layer_recompute_form_view
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: stock_currency_valuation_recompute
+#: model:ir.model.fields.selection,name:stock_currency_valuation_recompute.selection__stock_valuation_layer_recompute__state__cancel
+#: model_terms:ir.ui.view,arch_db:stock_currency_valuation_recompute.stock_valuation_layer_recompute_search_view
+msgid "Cancelled"
+msgstr "Cancelado"
+
+#. module: stock_currency_valuation_recompute
+#: model:ir.model.fields,field_description:stock_currency_valuation_recompute.field_stock_valuation_layer_recompute__company_id
+#: model_terms:ir.ui.view,arch_db:stock_currency_valuation_recompute.stock_valuation_layer_recompute_search_view
+msgid "Company"
+msgstr "Compañía"
+
+#. module: stock_currency_valuation_recompute
+#: model_terms:ir.ui.view,arch_db:stock_currency_valuation_recompute.stock_valuation_layer_recompute_form_view
+#: model_terms:ir.ui.view,arch_db:stock_currency_valuation_recompute.stock_valuation_layer_recompute_list_view
+msgid "Compute lines"
+msgstr "Calcular líneas"
+
+#. module: stock_currency_valuation_recompute
+#. odoo-python
+#: code:addons/stock_currency_valuation_recompute/models/stock_valuation_layer_recompute.py:0
+msgid "Compute the lines before revaluating %s."
+msgstr "Calculá las líneas antes de revaluar %s."
+
+#. module: stock_currency_valuation_recompute
+#: model:ir.model.fields,field_description:stock_currency_valuation_recompute.field_stock_valuation_layer_recompute__create_uid
+#: model:ir.model.fields,field_description:stock_currency_valuation_recompute.field_stock_valuation_layer_recompute_line__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: stock_currency_valuation_recompute
+#: model:ir.model.fields,field_description:stock_currency_valuation_recompute.field_stock_valuation_layer_recompute__create_date
+#: model:ir.model.fields,field_description:stock_currency_valuation_recompute.field_stock_valuation_layer_recompute_line__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: stock_currency_valuation_recompute
+#: model:ir.model.fields,field_description:stock_currency_valuation_recompute.field_stock_valuation_layer_recompute__currency_id
+#: model:ir.model.fields,field_description:stock_currency_valuation_recompute.field_stock_valuation_layer_recompute_line__company_currency_id
+msgid "Currency"
+msgstr "Moneda"
+
+#. module: stock_currency_valuation_recompute
+#: model:ir.model.fields,field_description:stock_currency_valuation_recompute.field_stock_valuation_layer_recompute__display_name
+#: model:ir.model.fields,field_description:stock_currency_valuation_recompute.field_stock_valuation_layer_recompute_line__display_name
+msgid "Display Name"
+msgstr "Nombre a Mostrar"
+
+#. module: stock_currency_valuation_recompute
+#: model:ir.model.fields.selection,name:stock_currency_valuation_recompute.selection__stock_valuation_layer_recompute__state__done
+#: model_terms:ir.ui.view,arch_db:stock_currency_valuation_recompute.stock_valuation_layer_recompute_search_view
+msgid "Done"
+msgstr "Hecho"
+
+#. module: stock_currency_valuation_recompute
+#: model:ir.model.fields.selection,name:stock_currency_valuation_recompute.selection__stock_valuation_layer_recompute__state__draft
+#: model_terms:ir.ui.view,arch_db:stock_currency_valuation_recompute.stock_valuation_layer_recompute_search_view
+msgid "Draft"
+msgstr "Borrador"
+
+#. module: stock_currency_valuation_recompute
+#: model:ir.model.fields.selection,name:stock_currency_valuation_recompute.selection__stock_valuation_layer_recompute__state__error
+#: model_terms:ir.ui.view,arch_db:stock_currency_valuation_recompute.stock_valuation_layer_recompute_search_view
+msgid "Error"
+msgstr "Error"
+
+#. module: stock_currency_valuation_recompute
+#: model:ir.model.fields,field_description:stock_currency_valuation_recompute.field_stock_valuation_layer_recompute__final_amount
+msgid "Final Amount"
+msgstr "Monto Final"
+
+#. module: stock_currency_valuation_recompute
+#: model:ir.model.fields,field_description:stock_currency_valuation_recompute.field_stock_valuation_layer_recompute__final_amount_in_currency
+msgid "Final Amount In Currency"
+msgstr "Monto Final en Moneda"
+
+#. module: stock_currency_valuation_recompute
+#: model:ir.model.fields,field_description:stock_currency_valuation_recompute.field_stock_valuation_layer_recompute__final_rate
+msgid "Final Rate"
+msgstr "Tasa Final"
+
+#. module: stock_currency_valuation_recompute
+#: model_terms:ir.ui.view,arch_db:stock_currency_valuation_recompute.stock_valuation_layer_recompute_search_view
+msgid "Group By"
+msgstr "Agrupar Por"
+
+#. module: stock_currency_valuation_recompute
+#: model:ir.model.fields,field_description:stock_currency_valuation_recompute.field_stock_valuation_layer_recompute__id
+#: model:ir.model.fields,field_description:stock_currency_valuation_recompute.field_stock_valuation_layer_recompute_line__id
+msgid "ID"
+msgstr "ID"
+
+#. module: stock_currency_valuation_recompute
+#: model:ir.model.fields.selection,name:stock_currency_valuation_recompute.selection__stock_valuation_layer_recompute__state__in_process
+#: model_terms:ir.ui.view,arch_db:stock_currency_valuation_recompute.stock_valuation_layer_recompute_search_view
+msgid "In Process"
+msgstr "En Proceso"
+
+#. module: stock_currency_valuation_recompute
+#: model:ir.model.fields,field_description:stock_currency_valuation_recompute.field_stock_valuation_layer_recompute__initial_amount
+msgid "Initial Amount"
+msgstr "Monto Inicial"
+
+#. module: stock_currency_valuation_recompute
+#: model:ir.model.fields,field_description:stock_currency_valuation_recompute.field_stock_valuation_layer_recompute__initial_amount_in_currency
+msgid "Initial Amount In Currency"
+msgstr "Monto Inicial en Moneda"
+
+#. module: stock_currency_valuation_recompute
+#: model:ir.model.fields,field_description:stock_currency_valuation_recompute.field_stock_valuation_layer_recompute__last_manual_svl_id
+msgid "Last Manual SVL"
+msgstr "Última SVL Manual"
+
+#. module: stock_currency_valuation_recompute
+#: model:ir.model.fields,field_description:stock_currency_valuation_recompute.field_stock_valuation_layer_recompute__write_uid
+#: model:ir.model.fields,field_description:stock_currency_valuation_recompute.field_stock_valuation_layer_recompute_line__write_uid
+msgid "Last Updated by"
+msgstr "Última Actualización por"
+
+#. module: stock_currency_valuation_recompute
+#: model:ir.model.fields,field_description:stock_currency_valuation_recompute.field_stock_valuation_layer_recompute__write_date
+#: model:ir.model.fields,field_description:stock_currency_valuation_recompute.field_stock_valuation_layer_recompute_line__write_date
+msgid "Last Updated on"
+msgstr "Última Actualización el"
+
+#. module: stock_currency_valuation_recompute
+#: model:ir.model.fields,field_description:stock_currency_valuation_recompute.field_stock_valuation_layer_recompute_line__layer_id
+msgid "Layer"
+msgstr "Capa"
+
+#. module: stock_currency_valuation_recompute
+#: model:ir.model.fields,field_description:stock_currency_valuation_recompute.field_stock_valuation_layer_recompute_line__layer_date
+msgid "Layer Date"
+msgstr "Fecha de la Capa"
+
+#. module: stock_currency_valuation_recompute
+#: model:ir.model,name:stock_currency_valuation_recompute.model_stock_valuation_layer_recompute
+msgid "Layer Recompute"
+msgstr "Recálculo de Capas"
+
+#. module: stock_currency_valuation_recompute
+#: model:ir.model,name:stock_currency_valuation_recompute.model_stock_valuation_layer_recompute_line
+msgid "Layer Recompute Lines"
+msgstr "Líneas de Recálculo de Capas"
+
+#. module: stock_currency_valuation_recompute
+#: model:ir.model.fields,field_description:stock_currency_valuation_recompute.field_stock_valuation_layer_recompute_line__layer_unit_cost
+msgid "Layer Unit Cost"
+msgstr "Costo Unitario de la Capa"
+
+#. module: stock_currency_valuation_recompute
+#: model:ir.model.fields,field_description:stock_currency_valuation_recompute.field_stock_valuation_layer_recompute_line__layer_unit_cost_in_currency
+msgid "Layer Unit Cost In Currency"
+msgstr "Costo Unitario de la Capa en Moneda"
+
+#. module: stock_currency_valuation_recompute
+#: model:ir.model.fields,field_description:stock_currency_valuation_recompute.field_stock_valuation_layer_recompute_line__layer_value
+msgid "Layer Value"
+msgstr "Valor de la Capa"
+
+#. module: stock_currency_valuation_recompute
+#: model:ir.model.fields,field_description:stock_currency_valuation_recompute.field_stock_valuation_layer_recompute_line__layer_value_in_currency
+msgid "Layer Value In Currency"
+msgstr "Valor de la Capa en Moneda"
+
+#. module: stock_currency_valuation_recompute
+#: model:ir.ui.menu,name:stock_currency_valuation_recompute.layer_recompute_menu
+msgid "Layer recompute"
+msgstr "Recálculo de capas"
+
+#. module: stock_currency_valuation_recompute
+#: model:ir.model.fields,field_description:stock_currency_valuation_recompute.field_stock_valuation_layer_recompute__line_ids
+msgid "Line"
+msgstr "Línea"
+
+#. module: stock_currency_valuation_recompute
+#: model:ir.model.fields,field_description:stock_currency_valuation_recompute.field_stock_valuation_layer_recompute_line__need_changes
+msgid "Need Changes"
+msgstr "Necesita Cambios"
+
+#. module: stock_currency_valuation_recompute
+#: model:ir.model.fields,field_description:stock_currency_valuation_recompute.field_stock_valuation_layer_recompute_line__new_unit_cost
+msgid "New Unit Cost"
+msgstr "Nuevo Costo Unitario"
+
+#. module: stock_currency_valuation_recompute
+#: model:ir.model.fields,field_description:stock_currency_valuation_recompute.field_stock_valuation_layer_recompute_line__new_unit_cost_in_currency
+msgid "New Unit Cost In Currency"
+msgstr "Nuevo Costo Unitario en Moneda"
+
+#. module: stock_currency_valuation_recompute
+#: model:ir.model.fields,field_description:stock_currency_valuation_recompute.field_stock_valuation_layer_recompute_line__new_value
+msgid "New Value"
+msgstr "Nuevo Valor"
+
+#. module: stock_currency_valuation_recompute
+#: model:ir.model.fields,field_description:stock_currency_valuation_recompute.field_stock_valuation_layer_recompute_line__new_value_in_currency
+msgid "New Value In Currency"
+msgstr "Nuevo Valor en Moneda"
+
+#. module: stock_currency_valuation_recompute
+#: model:ir.model.fields.selection,name:stock_currency_valuation_recompute.selection__stock_valuation_layer_recompute__state__no_change
+msgid "No Changes Required"
+msgstr "No se Requieren Cambios"
+
+#. module: stock_currency_valuation_recompute
+#. odoo-python
+#: code:addons/stock_currency_valuation_recompute/models/stock_valuation_layer_recompute.py:0
+msgid "None of the selected records is in a state that allows this action."
+msgstr "Ninguno de los registros seleccionados está en un estado que permita esta acción."
+
+#. module: stock_currency_valuation_recompute
+#: model:ir.model.fields,field_description:stock_currency_valuation_recompute.field_stock_valuation_layer_recompute__product_id
+#: model_terms:ir.ui.view,arch_db:stock_currency_valuation_recompute.stock_valuation_layer_recompute_search_view
+msgid "Product"
+msgstr "Producto"
+
+#. module: stock_currency_valuation_recompute
+#: model:ir.model.fields,field_description:stock_currency_valuation_recompute.field_stock_valuation_layer_recompute_line__quantity
+msgid "Quantity"
+msgstr "Cantidad"
+
+#. module: stock_currency_valuation_recompute
+#: model:ir.model.fields,field_description:stock_currency_valuation_recompute.field_stock_valuation_layer_recompute_line__quantity_at_time
+msgid "Quantity At Time"
+msgstr "Cantidad en ese Momento"
+
+#. module: stock_currency_valuation_recompute
+#: model:ir.model.fields,field_description:stock_currency_valuation_recompute.field_stock_valuation_layer_recompute_line__recompute_id
+msgid "Recompute"
+msgstr "Recálculo"
+
+#. module: stock_currency_valuation_recompute
+#: model:ir.actions.act_window,name:stock_currency_valuation_recompute.action_stock_valuation_layer_recompute
+msgid "Recompute layer"
+msgstr "Recalcular capa"
+
+#. module: stock_currency_valuation_recompute
+#: model_terms:ir.ui.view,arch_db:stock_currency_valuation_recompute.stock_valuation_layer_recompute_form_view
+#: model_terms:ir.ui.view,arch_db:stock_currency_valuation_recompute.stock_valuation_layer_recompute_list_view
+msgid "Revaluate"
+msgstr "Revaluar"
+
+#. module: stock_currency_valuation_recompute
+#: model:ir.model.fields.selection,name:stock_currency_valuation_recompute.selection__stock_valuation_layer_recompute__state__revaluating
+#: model_terms:ir.ui.view,arch_db:stock_currency_valuation_recompute.stock_valuation_layer_recompute_search_view
+msgid "Revaluating"
+msgstr "Revaluando"
+
+#. module: stock_currency_valuation_recompute
+#: model:ir.model.fields,field_description:stock_currency_valuation_recompute.field_stock_valuation_layer_recompute__revaluation_error
+msgid "Revaluation Error"
+msgstr "Error de Revaluación"
+
+#. module: stock_currency_valuation_recompute
+#: model:ir.model.fields,field_description:stock_currency_valuation_recompute.field_stock_valuation_layer_recompute__slv_changed
+#: model_terms:ir.ui.view,arch_db:stock_currency_valuation_recompute.stock_valuation_layer_recompute_search_view
+msgid "SVL Changed"
+msgstr "SVL Modificada"
+
+#. module: stock_currency_valuation_recompute
+#: model:ir.model.fields,field_description:stock_currency_valuation_recompute.field_stock_valuation_layer_recompute__valuation_currency_id
+#: model:ir.model.fields,field_description:stock_currency_valuation_recompute.field_stock_valuation_layer_recompute_line__currency_id
+msgid "Secondary Currency Valuation"
+msgstr "Valuación en Moneda Secundaria"
+
+#. module: stock_currency_valuation_recompute
+#: model:ir.model.fields,field_description:stock_currency_valuation_recompute.field_stock_valuation_layer_recompute_line__standard_price
+msgid "Standard Price"
+msgstr "Costo"
+
+#. module: stock_currency_valuation_recompute
+#: model:ir.model.fields,field_description:stock_currency_valuation_recompute.field_stock_valuation_layer_recompute_line__standard_price_in_currency
+msgid "Standard Price In Currency"
+msgstr "Costo en Moneda"
+
+#. module: stock_currency_valuation_recompute
+#: model_terms:ir.ui.view,arch_db:stock_currency_valuation_recompute.stock_valuation_layer_recompute_search_view
+msgid "State"
+msgstr "Estado"
+
+#. module: stock_currency_valuation_recompute
+#: model:ir.model.fields,field_description:stock_currency_valuation_recompute.field_stock_valuation_layer_recompute__state
+msgid "Status"
+msgstr "Estado"
+
+#. module: stock_currency_valuation_recompute
+#: model:ir.actions.server,name:stock_currency_valuation_recompute.cron_revaluate_queued_ir_actions_server
+msgid "Stock Currency Valuation: revaluate queued recomputes"
+msgstr "Valuación en Moneda de Stock: revaluar recálculos en cola"
+
+#. module: stock_currency_valuation_recompute
+#: model:ir.model.fields,field_description:stock_currency_valuation_recompute.field_stock_valuation_layer_recompute_line__svl_type
+msgid "Svl Type"
+msgstr "Tipo de SVL"
+
+#. module: stock_currency_valuation_recompute
+#: model_terms:ir.ui.view,arch_db:stock_currency_valuation_recompute.stock_valuation_layer_recompute_list_view
+msgid ""
+"The selected records are queued and revaluated one by one in the background,"
+" writing on the layers and their journal entries. Continue?"
+msgstr "Los registros seleccionados se encolan y revalúan de a uno en segundo plano, escribiendo sobre las capas y sus asientos contables. ¿Continuar?"
