@@ -15,6 +15,9 @@ class StockPicking(models.Model):
         tracking=True,
         index=True,
         copy=False,
+        help="Configurable sub-status within the transfer status (e.g. within 'Ready': "
+        "'In preparation', 'In control'). It is filtered by the transfer status and "
+        "the operation type.",
     )
 
     @api.constrains("state")
