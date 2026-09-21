@@ -42,7 +42,7 @@ class TestRemitoNumbering(TransactionCase):
         cls.src = cls.env.ref("stock.stock_location_stock")
         cls.dest = cls.env.ref("stock.stock_location_customers")
 
-    def _make_done_picking(self, book, book_required=True, nlines=1):
+    def _make_done_picking(self, book, book_required=True, nlines=1, validate=True):
         picking_type = self.env.ref("stock.picking_type_out")
         picking_type.write(
             {
@@ -85,7 +85,8 @@ class TestRemitoNumbering(TransactionCase):
         picking.action_confirm()
         for move in picking.move_ids:
             move.quantity = move.product_uom_qty
-        picking.with_context(skip_sms=True).button_validate()
+        if validate:
+            picking.with_context(skip_sms=True).button_validate()
         return picking
 
     def test_preprinted_not_numbered_on_validation(self):
@@ -133,3 +134,17 @@ class TestRemitoNumbering(TransactionCase):
         self.assertEqual(len(self._make_done_picking(book).voucher_ids), 1)
         with self.assertRaises(UserError):
             self._make_done_picking(book)
+
+    def test_print_before_validation_does_not_number(self):
+        """Imprimir el remito de un traslado sin validar no consume número."""
+        picking = self._make_done_picking(self.book_auto, validate=False)
+        picking.do_print_voucher()
+        self.assertFalse(picking.voucher_ids)
+        picking.with_context(skip_sms=True).button_validate()
+        self.assertEqual(len(picking.voucher_ids), 1)
+
+    def test_preprinted_numbers_before_validation(self):
+        """La hoja preimpresa sale numerada de la imprenta: imprimir la consume igual."""
+        picking = self._make_done_picking(self.book_pre, validate=False)
+        picking.assign_numbers(1, self.book_pre)
+        self.assertEqual(len(picking.voucher_ids), 1)
