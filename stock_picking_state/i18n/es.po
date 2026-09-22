@@ -131,8 +131,8 @@ msgid ""
 "operation type."
 msgstr ""
 "Sub-estado configurable dentro del estado del traslado (por ej. dentro de "
-"'Listo': 'En preparación', 'En control'). Se filtra según el estado y el tipo "
-"de operación."
+"'Listo': 'En preparación', 'En control'). Se filtra según el estado y el "
+"tipo de operación."
 
 #. module: stock_picking_state
 #: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail__state
