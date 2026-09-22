@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-25 17:21+0000\n"
+"POT-Creation-Date: 2026-09-22 18:35+0000\n"
 "PO-Revision-Date: 2025-11-20 18:57+0000\n"
 "Last-Translator: ADHOC - Bot <transbot@adhoc.com.ar>, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
@@ -24,6 +24,17 @@ msgstr ""
 #: model:ir.model.fields.selection,name:stock_picking_state.selection__stock_picking_state_detail__state__cancel
 msgid "Cancelled"
 msgstr "Cancelado"
+
+#. module: stock_picking_state
+#: model:ir.model.fields,help:stock_picking_state.field_stock_picking__state_detail_id
+msgid ""
+"Configurable sub-status within the transfer status (e.g. within 'Ready': 'In "
+"preparation', 'In control'). It is filtered by the transfer status and the "
+"operation type."
+msgstr ""
+"Sub-estado configurable dentro del estado del traslado (por ej. dentro de "
+"'Listo': 'En preparación', 'En control'). Se filtra según el estado y el "
+"tipo de operación."
 
 #. module: stock_picking_state
 #: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail__create_uid
@@ -122,17 +133,6 @@ msgstr "Sequencia"
 #: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking__state_detail_id
 msgid "State Detail"
 msgstr "Subestado"
-
-#. module: stock_picking_state
-#: model:ir.model.fields,help:stock_picking_state.field_stock_picking__state_detail_id
-msgid ""
-"Configurable sub-status within the transfer status (e.g. within 'Ready': 'In "
-"preparation', 'In control'). It is filtered by the transfer status and the "
-"operation type."
-msgstr ""
-"Sub-estado configurable dentro del estado del traslado (por ej. dentro de "
-"'Listo': 'En preparación', 'En control'). Se filtra según el estado y el "
-"tipo de operación."
 
 #. module: stock_picking_state
 #: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail__state
