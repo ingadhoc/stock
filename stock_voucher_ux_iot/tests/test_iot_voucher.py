@@ -80,6 +80,8 @@ class TestStockVoucherUxIot(TransactionCase):
         cls.report_cls = type(cls.report)
 
     def _new_picking(self, book=None):
+        # Dispatched: only a done transfer is numbered, whatever the print path.
+        self.picking_type_out.write({"book_required": False, "voucher_required": False})
         picking = self.env["stock.picking"].create(
             {
                 "picking_type_id": self.picking_type_out.id,
@@ -99,6 +101,10 @@ class TestStockVoucherUxIot(TransactionCase):
                 "location_dest_id": self.dest_location.id,
             }
         )
+        picking.action_confirm()
+        for move in picking.move_ids:
+            move.quantity = move.product_uom_qty
+        picking.with_context(skip_sms=True).button_validate()
         return picking
 
     def test_iot_assigns_voucher_numbers(self):

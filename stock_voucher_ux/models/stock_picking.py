@@ -41,9 +41,9 @@ class StockPicking(models.Model):
 
     def assign_numbers(self, estimated_number_of_pages, book):
         # Único punto por el que pasan todos los caminos de numeración.
-        # El autoimpreso se numera al despachar: imprimirlo antes no consume
-        # número. El preimpreso sí, porque la hoja ya salió de la impresora.
-        if book.autoprinted and self.state != "done":
+        # Sólo se numera un traslado despachado: imprimir antes es vista previa.
+        # El tipo que exige el remito para validar tiene que numerar antes.
+        if self.state != "done" and not self.voucher_required:
             return
         self._check_voucher_cai_range(book, estimated_number_of_pages)
         return super().assign_numbers(estimated_number_of_pages, book)
