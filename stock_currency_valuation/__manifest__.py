@@ -3,7 +3,7 @@
     "version": "19.0.1.1.0",
     "category": "Warehouse Management",
     "sequence": 14,
-    "summary": "",
+    "summary": "Valuá el inventario en una segunda moneda (por ejemplo, dólares) además de la moneda de la compañía.",
     "author": "ADHOC SA",
     "website": "www.adhoc.com.ar",
     "images": [],
