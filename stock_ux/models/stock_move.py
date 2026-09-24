@@ -2,8 +2,9 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import _, api, fields, models
+from odoo import Command, _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
+from odoo.tools import float_compare, float_is_zero
 
 
 class StockMove(models.Model):
@@ -95,9 +96,133 @@ class StockMove(models.Model):
     def _merge_moves(self, merge_into=False):
         # 22/04/2024: Agregamos esto porque sino al intentar confirmar compras con usuarios sin permisos, podia pasar que salga la constrain de arriba (check_cancel)
         # Agregamos can_delete=True para permitir el unlink de moves duplicados durante el merge
-        return super(StockMove, self.with_context(cancel_from_order=True, can_delete=True))._merge_moves(
+        moves = super(StockMove, self.with_context(cancel_from_order=True, can_delete=True))._merge_moves(
             merge_into=merge_into
         )
+        return moves._merge_negative_moves_into_sibling_pickings()
+
+    def _merge_negative_moves_into_sibling_pickings(self):
+        """Absorb what core left of a negative move into pending moves of the same demand,
+        instead of letting it become a phantom return."""
+        neg_moves = self.filtered(
+            lambda m: m.state not in ("done", "cancel")
+            and m.group_id
+            and float_compare(m.product_uom_qty, 0.0, precision_rounding=m.product_uom.rounding) < 0
+        )
+        if not neg_moves:
+            return self
+        # Fields that drift between a pending move and its negative mirror; the sale line and
+        # the locations are compared by _carries_demand_of instead.
+        relaxed = ["date", "date_deadline", "price_unit", "procure_method", "sale_line_id"]
+        relaxed += ["location_id", "location_dest_id", "location_final_id", "created_purchase_request_line_id"]
+        neg_key = self._merge_move_itemgetter(
+            self._prepare_merge_moves_distinct_fields(),
+            self._prepare_merge_negative_moves_excluded_distinct_fields() + relaxed,
+        )
+        merged_moves = moves_to_unlink = moves_to_cancel = self.env["stock.move"]
+        reserved_before = {}
+        for neg_move in neg_moves:
+            key = neg_key(neg_move)
+            candidates = (
+                self.search(
+                    [
+                        ("group_id", "=", neg_move.group_id.id),
+                        ("product_id", "=", neg_move.product_id.id),
+                        ("picking_id", "!=", False),
+                        ("state", "not in", ("draft", "done", "cancel")),
+                    ]
+                )
+                .filtered(
+                    lambda m: float_compare(m.product_uom_qty, 0.0, precision_rounding=m.product_uom.rounding) > 0
+                    # Never undo what the warehouse already prepared.
+                    and not m.picked
+                    and neg_key(m) == key
+                    and m._carries_demand_of(neg_move)
+                )
+                .sorted(lambda m: (m._is_in_progress_transfer(), m.state == "assigned", -m.id))
+            )
+            # Core's absorption, without its price averaging: the prices may differ here.
+            for pos_move in candidates:
+                reserved_before.setdefault(pos_move.id, pos_move.quantity)
+                if (
+                    float_compare(
+                        pos_move.product_uom_qty,
+                        abs(neg_move.product_uom_qty),
+                        precision_rounding=pos_move.product_uom.rounding,
+                    )
+                    >= 0
+                ):
+                    pos_move.write(
+                        {
+                            "product_uom_qty": pos_move.product_uom_qty + neg_move.product_uom_qty,
+                            "move_dest_ids": [
+                                Command.link(m.id)
+                                for m in neg_move.move_dest_ids
+                                if m.location_id == pos_move.location_dest_id
+                            ],
+                            "move_orig_ids": [
+                                Command.link(m.id)
+                                for m in neg_move.move_orig_ids
+                                if m.location_dest_id == pos_move.location_id
+                            ],
+                        }
+                    )
+                    merged_moves |= pos_move
+                    moves_to_unlink |= neg_move
+                    if float_is_zero(pos_move.product_uom_qty, precision_rounding=pos_move.product_uom.rounding):
+                        moves_to_cancel |= pos_move
+                    break
+                neg_move.product_uom_qty += pos_move.product_uom_qty
+                pos_move.product_uom_qty = 0
+                moves_to_cancel |= pos_move
+        (moves_to_unlink | moves_to_cancel)._clean_merged()
+        if moves_to_unlink:
+            moves_to_unlink._action_cancel()
+            moves_to_unlink.sudo().unlink()
+        moves_to_cancel._action_cancel()
+        reduced = merged_moves - moves_to_cancel
+        # Lowering the demand of a reserved move unreserves it; reserve what it still needs.
+        reduced.filtered(lambda m: reserved_before.get(m.id) and m.state != "assigned")._action_assign()
+        return (self | reduced) - moves_to_unlink
+
+    def _is_in_progress_transfer(self):
+        """Whether the warehouse already started on this move's transfer."""
+        picking = self.picking_id
+        return bool(
+            picking.printed
+            or ("batch_id" in picking._fields and picking.batch_id)
+            or ("voucher_ids" in picking._fields and picking.voucher_ids)
+        )
+
+    def _carries_demand_of(self, neg_move):
+        """Whether this pending move carries the demand that ``neg_move`` removes."""
+        self.ensure_one()
+        # Pull legs have no sale line of their own: compare the lines of their chains.
+        lines, neg_lines = self._get_sale_order_lines(), neg_move._get_sale_order_lines()
+        if (lines or neg_lines) and not lines & neg_lines:
+            return False
+        # A pull chain the mirror lacks (route changed): reducing it here would strand its next leg.
+        if not neg_move.move_dest_ids and self.move_dest_ids.filtered(lambda m: m.state not in ("done", "cancel")):
+            return False
+        start, neg_start = self.location_id, neg_move.location_id
+        end = self.location_final_id or self.location_dest_id
+        neg_end = neg_move.location_final_id or neg_move.location_dest_id
+        # Same leg, the source possibly moved to a sub-location. An empty final
+        # location (migrated data) matches; a different one is another chain.
+        same_leg = (
+            start._child_of(neg_start)
+            and self.location_dest_id == neg_move.location_dest_id
+            and (
+                not self.location_final_id
+                or not neg_move.location_final_id
+                or self.location_final_id == neg_move.location_final_id
+            )
+        )
+        # Same end through another leg shape or source. A later leg under the stock location
+        # must not pass for the first one: same exact start, or a first leg of the same type.
+        same_start = start == neg_start or (self.picking_type_id == neg_move.picking_type_id and not self.move_orig_ids)
+        same_trip = same_start and end._child_of(neg_end)
+        return same_leg or same_trip
 
     def action_explode(self):
         # Cuando se explota un kit, MRP cancela y elimina el move original del producto kit,
