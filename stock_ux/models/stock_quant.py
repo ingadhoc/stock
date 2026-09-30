@@ -5,6 +5,7 @@
 from odoo import api, fields, models
 from odoo import _, api, models
 from odoo.exceptions import UserError, ValidationError
+from odoo import _, api, models
 
 
 class StockQuant(models.Model):
@@ -259,3 +260,13 @@ class StockQuant(models.Model):
                     products='", "'.join(wrong.sudo().product_id.mapped("display_name")),
                 )
             )
+    @api.model
+    def get_import_templates(self):
+        """Ours carries the identifying column and the export/fill/re-import order, the
+        core one carries neither."""
+        return [
+            {
+                "label": _("Import Template for Inventory Adjustments"),
+                "template": "/stock_ux/static/xls/stock_quant.xlsx",
+            }
+        ]
