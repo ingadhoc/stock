@@ -2,7 +2,7 @@
 # For copyright and license notices, see __manifest__.py file in module root
 # directory
 ##############################################################################
-from odoo import models
+from odoo import _, api, models
 
 
 class StockQuant(models.Model):
@@ -18,3 +18,14 @@ class StockQuant(models.Model):
         return self.env.context.get("inventory_mode") and self.env.user.has_group(
             "stock_ux.group_stock_inventory_adjustment"
         )
+
+    @api.model
+    def get_import_templates(self):
+        """Ours carries the identifying column and the export/fill/re-import order, the
+        core one carries neither."""
+        return [
+            {
+                "label": _("Import Template for Inventory Adjustments"),
+                "template": "/stock_ux/static/xls/stock_quant.xlsx",
+            }
+        ]
