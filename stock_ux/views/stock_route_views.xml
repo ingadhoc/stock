@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="view_stock_route_chatter" model="ir.ui.view">
+        <field name="name">stock.route.chatter</field>
+        <field name="model">stock.route</field>
+        <field name="inherit_id" ref="stock.stock_location_route_form_view"/>
+        <field name="arch" type="xml">
+            <sheet position="after">
+                <chatter/>
+            </sheet>
+        </field>
+    </record>
+
+    <record id="view_warehouse_chatter" model="ir.ui.view">
+        <field name="name">stock.warehouse.chatter</field>
+        <field name="model">stock.warehouse</field>
+        <field name="inherit_id" ref="stock.view_warehouse"/>
+        <field name="arch" type="xml">
+            <sheet position="after">
+                <chatter/>
+            </sheet>
+        </field>
+    </record>
+
+    <record id="view_route_config_changes_tree" model="ir.ui.view">
+        <field name="name">mail.message.route.changes.list</field>
+        <field name="model">mail.message</field>
+        <field name="arch" type="xml">
+            <list string="Routes Configuration Changes" create="false" edit="false">
+                <field name="date"/>
+                <field name="model"/>
+                <field name="record_name" string="Record"/>
+                <field name="author_id"/>
+                <field name="body"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_route_config_changes" model="ir.actions.act_window">
+        <field name="name">Routes Configuration Changes</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">mail.message</field>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="view_route_config_changes_tree"/>
+        <field name="domain">[('model', 'in', ['stock.route', 'stock.warehouse'])]</field>
+        <field name="context">{'create': False}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No changes on routes configuration yet</p>
+            <p>Every change on routes, on their rules and on the warehouse reception and delivery
+               steps is logged here: who changed it, when and what changed.</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_route_config_changes"
+        action="action_route_config_changes"
+        parent="stock.menu_warehouse_config"
+        sequence="5"
+        groups="stock.group_adv_location"/>
+
+</odoo>

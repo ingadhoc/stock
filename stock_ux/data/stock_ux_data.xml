@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<odoo noupdate="1">
+    <!-- El seguimiento de configuración de rutas viene activo; se apaga desde
+         Ajustes de Inventario. -->
+    <record id="route_tracking_parameter" model="ir.config_parameter">
+        <field name="key">stock_ux.route_tracking</field>
+        <field name="value">True</field>
+    </record>
+</odoo>
