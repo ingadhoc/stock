@@ -27,7 +27,7 @@
     "demo": [
         "demo/stock_currency_valuation_demo.xml",
     ],
-    "installable": True,
+    "installable": False,
     "auto_install": False,
     "application": False,
     "assets": {},
