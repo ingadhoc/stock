@@ -54,11 +54,12 @@ class StockMove(models.Model):
                 rec.origin_description = rec.description_picking
 
     @api.constrains("quantity")
-    def _check_quantity(self):
+    def _check_additional_quantity(self):
+        """``_check_quantity`` is core's own method, which it calls at the end of
+        ``_action_done`` to guard that a serial number holds a single unit: naming our
+        constraint the same left that guard out of every move."""
         precision = self.env["decimal.precision"].precision_get("Product Unit of Measure")
-        if any(self.filtered(lambda x: x.location_dest_usage == "inventory")):
-            return super()._check_quantity()
-        elif any(
+        if any(
             self.filtered(
                 lambda x: x.picking_id.picking_type_id.block_additional_quantity
                 and float_compare(x.product_uom_qty, x.quantity, precision_digits=precision) == -1
