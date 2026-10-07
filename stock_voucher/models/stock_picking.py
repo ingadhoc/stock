@@ -86,15 +86,19 @@ class StockPicking(models.Model):
         self.env["stock.picking.voucher"].create(list_of_vouchers)
         self.message_post(body=_("Números de remitos asignados: %s") % (self.vouchers))
         self.write({"book_id": book.id})
+        # El aviso al cliente lleva el número de remito: sólo sale con el traslado
+        # despachado. Si se numeró antes, lo manda ``_action_done`` al validar.
+        if self.state == "done":
+            self._send_voucher_confirmation_email()
 
-        # Send confirmation email with voucher numbers already assigned.
+    def _send_voucher_confirmation_email(self):
+        """Aviso al cliente con los remitos ya numerados."""
         # The confirmation path may reach the carrier integration (send_to_shipper),
         # which can raise a UserError unrelated to the voucher itself (e.g. a
         # base_on_rule carrier without a matching price rule). The voucher is a
-        # fiscal document already numbered above, so it must not be rolled back by
-        # such an error: we isolate the call in a savepoint and, on failure,
-        # degrade the error to a chatter note plus a warning activity for the user.
-
+        # fiscal document already numbered, so it must not be rolled back by such an
+        # error: we isolate the call in a savepoint and, on failure, degrade the error
+        # to a chatter note plus a warning activity for the user.
         # ``savepoint()`` flushea la transacción al abrirse, ya dentro del try: los
         # pendientes corren antes para que sólo se degrade el error del propio aviso.
         self.env.cr.flush()
