@@ -18,3 +18,9 @@ class ProductTemplate(models.Model):
                 }
             ]
         return super().get_import_templates()
+
+    def action_archive(self):
+        variants = self.filtered("active").product_variant_ids
+        warning = variants._get_archive_stock_warning()
+        res = super().action_archive()
+        return variants._archive_warning_action(warning, res)
