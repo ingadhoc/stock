@@ -40,6 +40,15 @@ Stock UX
 #. Add a "All transfers" view form in Menu: Operations
 #. Add a restriction to edit operation type for users with the "Restrict editing Operation Type in Pickings" check.
 #. Add number of packages on pickings
+<<<<<<< 0c05244f81949f9815b904f248af75228aa301bf
+||||||| 8ed2cd6196d15b9702107c1a2c5eff07b43c258e
+#. Log routes configuration changes: routes and warehouses get a chatter, changes on their rules are logged on the route chatter, and changing the warehouse reception or delivery steps logs which rules were activated, archived or created. It is off by default and is turned on with "Track Routes Configuration Changes" in the Inventory settings.
+#. Add the menu "Routes Configuration Changes" (Inventory / Configuration / Warehouse Management) with every logged change, and an optional "Procurement Rule" column on stock moves lists to see which rule created a move.
+=======
+#. Log routes configuration changes: routes and warehouses get a chatter, changes on their rules are logged on the route chatter, and changing the warehouse reception or delivery steps logs which rules were activated, archived or created. It is off by default and is turned on with "Track Routes Configuration Changes" in the Inventory settings.
+#. Add the menu "Routes Configuration Changes" (Inventory / Configuration / Warehouse Management) with every logged change, and an optional "Procurement Rule" column on stock moves lists to see which rule created a move.
+#. Create the lots a counted row names and the product does not have yet, instead of stopping the whole file at the first one.
+>>>>>>> 443b3ae39a1c945dab58a5b94f070d6aca91afa7
 
 Installation
 ============
