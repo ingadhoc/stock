@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-07 16:51+0000\n"
-"PO-Revision-Date: 2026-10-07 16:51+0000\n"
+"POT-Creation-Date: 2026-10-07 21:35+0000\n"
+"PO-Revision-Date: 2026-10-07 21:35+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -492,6 +492,12 @@ msgstr ""
 #: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint__active_product
 msgid ""
 "If unchecked, it will allow you to hide the product without removing it."
+msgstr ""
+
+#. module: stock_ux
+#. odoo-python
+#: code:addons/stock_ux/models/stock_quant.py:0
+msgid "Import Template for Inventory Adjustments"
 msgstr ""
 
 #. module: stock_ux
@@ -1190,6 +1196,24 @@ msgid "Supplying Warehouse"
 msgstr ""
 
 #. module: stock_ux
+#. odoo-python
+#: code:addons/stock_ux/models/stock_quant.py:0
+msgid ""
+"The column \"%(columns)s\" cannot be imported into an inventory adjustment: "
+"it only takes the counted quantity and the columns identifying the stock "
+"line. Remove it from the file."
+msgstr ""
+
+#. module: stock_ux
+#. odoo-python
+#: code:addons/stock_ux/models/stock_quant.py:0
+msgid ""
+"The file does not say where the count was taken and there is more than one "
+"warehouse to take it in, so every row would land in \"%(location)s\". Add "
+"the location column, or the column that identifies each stock line."
+msgstr ""
+
+#. module: stock_ux
 #: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint__product_min_qty
 msgid "The minimum Stock level that will trigger a replenishment."
 msgstr ""
@@ -1198,6 +1222,25 @@ msgstr ""
 #. odoo-python
 #: code:addons/stock_ux/models/stock_picking.py:0
 msgid "The number of packages cannot be 0"
+msgstr ""
+
+#. module: stock_ux
+#. odoo-python
+#: code:addons/stock_ux/models/stock_quant.py:0
+msgid ""
+"The product \"%(products)s\" does not track inventory, so it cannot hold "
+"stock. Enable \"Track Inventory\" on the product or remove its rows from the"
+" file."
+msgstr ""
+
+#. module: stock_ux
+#. odoo-python
+#: code:addons/stock_ux/models/stock_quant.py:0
+msgid ""
+"The stock line \"%(quant)s\" cannot be moved to another \"%(field)s\" from a"
+" file: it holds \"%(current)s\" and the file brings \"%(new)s\". Product, "
+"location, lot, package and owner identify the line: fix that row or drop the"
+" column."
 msgstr ""
 
 #. module: stock_ux
@@ -1528,4 +1571,10 @@ msgid ""
 "\n"
 "^FO250,10\n"
 "^A0N,20,25^FD"
+msgstr ""
+
+#. module: stock_ux
+#. odoo-python
+#: code:addons/stock_ux/models/stock_quant.py:0
+msgid "empty"
 msgstr ""
