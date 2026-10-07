@@ -49,6 +49,7 @@ class TestRemitoNumbering(TransactionCase):
                 "book_required": book_required,
                 "book_id": book.id,
                 "voucher_required": voucher_required,
+                "allow_voucher_before_validation": False,
                 # Gobierna la impresión, no la numeración.
                 "auto_print_delivery_slip": False,
             }
@@ -142,6 +143,46 @@ class TestRemitoNumbering(TransactionCase):
         self.assertFalse(picking.voucher_ids)
         picking.with_context(skip_sms=True).button_validate()
         self.assertEqual(len(picking.voucher_ids), 1)
+
+    def test_type_can_allow_numbering_before_validation(self):
+        """Con el permiso del tipo de operación, imprimir antes de validar sí numera."""
+        picking = self._make_done_picking(self.book_auto, validate=False)
+        picking.picking_type_id.allow_voucher_before_validation = True
+        picking.do_print_voucher()
+        self.assertEqual(len(picking.voucher_ids), 1)
+        # Validar después no renumera: el remito asignado es uno solo.
+        picking.with_context(skip_sms=True).button_validate()
+        self.assertEqual(len(picking.voucher_ids), 1)
+
+    def test_customer_notice_waits_for_the_dispatch(self):
+        """El aviso al cliente lleva el remito, así que espera al traslado despachado."""
+        picking = self._make_done_picking(self.book_auto, validate=False)
+        picking.picking_type_id.allow_voucher_before_validation = True
+        picking.partner_id = self.env["res.partner"].create({"name": "Cliente remito test"})
+        # Plantilla propia: la del core adjunta el remito y el render no es parte de esto.
+        template = self.env["mail.template"].create(
+            {
+                "name": "Aviso de entrega test",
+                "model_id": self.env.ref("stock.model_stock_picking").id,
+                "subject": "Entrega {{ object.name }}",
+                "body_html": "<p>Remito {{ object.vouchers }}</p>",
+                "partner_to": "{{ object.partner_id.id }}",
+            }
+        )
+        picking.company_id.write(
+            {
+                "stock_move_email_validation": True,
+                "stock_mail_confirmation_template_id": template.id,
+            }
+        )
+        picking.do_print_voucher()
+        self.assertFalse(self._customer_notices(picking), "Sin despachar no se le avisa al cliente.")
+        picking.with_context(skip_sms=True).button_validate()
+        self.assertEqual(len(self._customer_notices(picking)), 1)
+
+    def _customer_notices(self, picking):
+        comment = self.env.ref("mail.mt_comment")
+        return picking.message_ids.filtered(lambda message: message.subtype_id == comment)
 
     def test_preprinted_not_numbered_before_validation(self):
         picking = self._make_done_picking(self.book_pre, validate=False)
