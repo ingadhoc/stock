@@ -41,9 +41,17 @@ class StockPicking(models.Model):
 
     def assign_numbers(self, estimated_number_of_pages, book):
         # Único punto por el que pasan todos los caminos de numeración.
+        # Un remito ya asignado no se renumera: para eso está "Limpiar remitos".
+        if self.voucher_ids:
+            return
         # Sólo se numera un traslado despachado: imprimir antes es vista previa.
-        # El tipo que exige el remito para validar tiene que numerar antes.
-        if self.state != "done" and not self.voucher_required:
+        # El tipo que exige el remito para validar, o que lo permite expresamente,
+        # numera antes.
+        if (
+            self.state != "done"
+            and not self.voucher_required
+            and not self.picking_type_id.allow_voucher_before_validation
+        ):
             return
         self._check_voucher_cai_range(book, estimated_number_of_pages)
         return super().assign_numbers(estimated_number_of_pages, book)
@@ -108,8 +116,12 @@ class StockPicking(models.Model):
         res = super(StockPicking, self.with_context(do_not_assign_numbers=True))._action_done()
         if self._context.get("do_not_assign_numbers"):
             return res
-        for picking in self.filtered(lambda p: p.book_required and p.book_id and p.book_id.autoprinted):
-            picking.assign_numbers(1, picking.book_id)
+        for picking in self.filtered("book_id"):
+            if picking.voucher_ids:
+                # Numerado antes de validar: el aviso al cliente esperaba el despacho.
+                picking._send_voucher_confirmation_email()
+            elif picking.book_required and picking.book_id.autoprinted:
+                picking.assign_numbers(1, picking.book_id)
         return res
 
     def clean_voucher_data(self):

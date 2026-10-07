@@ -14,6 +14,7 @@
                     </group>
                     <group>
                         <field name="book_required" invisible="code == 'incoming'"/>
+                        <field name="allow_voucher_before_validation" invisible="code != 'outgoing'"/>
                         <field name="voucher_required" invisible="code != 'incoming'"/>
                         <field name="automatic_declare_value"/>
                         <field name="restrict_number_package"/>

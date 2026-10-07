@@ -17,6 +17,11 @@ class StockPickingType(models.Model):
         string="Voucher Required?",
         help="If true, voucher numbers will be required before validation",
     )
+    allow_voucher_before_validation = fields.Boolean(
+        string="Assign Vouchers Without Validating?",
+        help="If true, printing the voucher of a transfer of this type assigns its number even if "
+        "the transfer is not validated yet.",
+    )
     # only for incoming
     voucher_number_unique = fields.Boolean(
         string="Book Unique?",
