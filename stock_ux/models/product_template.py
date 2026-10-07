@@ -28,3 +28,9 @@ class ProductTemplate(models.Model):
             "default_product_id": self.product_variant_id.id,
         }
         return action
+
+    def action_archive(self):
+        variants = self.filtered("active").product_variant_ids
+        warning = variants._get_archive_stock_warning()
+        res = super().action_archive()
+        return variants._archive_warning_action(warning, res)

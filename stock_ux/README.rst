@@ -40,6 +40,7 @@ Stock UX
 #. Add a "All transfers" view form in Menu: Operations
 #. Add a restriction to edit operation type for users with the "Restrict editing Operation Type in Pickings" check.
 #. Add number of packages on pickings
+#. Warn, without blocking, when archiving a storable product (template or variant) that still has stock in internal or transit locations, or pending stock moves.
 
 Installation
 ============
