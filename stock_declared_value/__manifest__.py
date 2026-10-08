@@ -19,7 +19,7 @@
 ##############################################################################
 {
     "name": "Stock Declared Value",
-    "version": "19.0.1.2.0",
+    "version": "20.0.1.0.0",
     "category": "Warehouse Management",
     "sequence": 14,
     "author": "ADHOC SA",
@@ -35,7 +35,7 @@
         "views/stock_picking_views.xml",
     ],
     "demo": [],
-    "installable": False,
+    "installable": True,
     "auto_install": False,
     "application": False,
 }
