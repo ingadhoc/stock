@@ -15,9 +15,6 @@
             <xpath expr="//a[@name='get_action_picking_tree_backorder']" position="attributes">
                 <attribute name="class">col-12 pe-0 text-truncate</attribute>
             </xpath>
-            <xpath expr="//a[@name='get_action_picking_type_ready_moves']" position="attributes">
-                <attribute name="class">col-12 pe-0 text-truncate</attribute>
-            </xpath>
         </field>
     </record>
 

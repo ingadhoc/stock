@@ -18,10 +18,6 @@ class StockMove(models.Model):
         related="picking_id.create_uid",
         string="Picking Creator",
     )
-    picking_dest_id = fields.Many2one(
-        related="move_dest_ids.picking_id",
-        string="Destination Transfer",
-    )
     lots_visible = fields.Boolean(
         related="move_line_ids.lots_visible",
     )
@@ -58,7 +54,7 @@ class StockMove(models.Model):
         """``_check_quantity`` is core's own method, which it calls at the end of
         ``_action_done`` to guard that a serial number holds a single unit: naming our
         constraint the same left that guard out of every move."""
-        precision = self.env["decimal.precision"].precision_get("Product Unit of Measure")
+        precision = self.env["decimal.precision"].precision_get("Product Unit")
         if any(
             self.filtered(
                 lambda x: x.picking_id.picking_type_id.block_additional_quantity
@@ -196,6 +192,8 @@ class StockMove(models.Model):
         Only manual moves (not from orders) can be deleted.
         Allow deletion when coming from internal Odoo processes (like merge_moves).
         """
+        if self.pool.uninstalling_modules:
+            return
         # Allow deletion when coming from internal processes
         if self.env.context.get("can_delete"):
             return

@@ -14,60 +14,60 @@
 <!-- Inicio encabezado -->
 <t t-if="picking._fields.get('book_id') and picking.book_id">
     <t t-if="picking.book_id.report_partner_id">
-^CF0,60^CI28^FO50,50^FD<t t-esc="picking.book_id.report_partner_id.name"/>^FS
-^CF0,30 ^FO50,115^FD<t t-esc="picking.book_id.report_partner_id.street"/>^FS
-^FO50,155^FD(<t t-esc="picking.company_id.zip"/>)<t t-esc="picking.book_id.report_partner_id.city"/>^FS
-^FO50,195^FD<t class="oe_inline" t-esc="picking.book_id.report_partner_id.state_id.name"/>, <t class="oe_inline" t-esc="picking.book_id.report_partner_id.country_id.name"/>^FS
+^CF0,60^CI28^FO50,50^FD<t t-out="picking.book_id.report_partner_id.name"/>^FS
+^CF0,30 ^FO50,115^FD<t t-out="picking.book_id.report_partner_id.street"/>^FS
+^FO50,155^FD(<t t-out="picking.company_id.zip"/>)<t t-out="picking.book_id.report_partner_id.city"/>^FS
+^FO50,195^FD<t class="oe_inline" t-out="picking.book_id.report_partner_id.state_id.name"/>, <t class="oe_inline" t-out="picking.book_id.report_partner_id.country_id.name"/>^FS
 ^FO50,250^GB700,3,3^FS
     </t>
     <t t-else="">
-^CF0,60^CI28^FO50,50^FD<t t-esc="picking.book_id.company_id.name"/>^FS
-^CF0,30 ^FO50,115^FD<t t-esc="picking.book_id.company_id.street"/>^FS
-^FO50,155^FD(<t t-esc="picking.company_id.zip"/>)<t t-esc="picking.book_id.company_id.city"/>^FS
-^FO50,195^FD<t class="oe_inline" t-esc="picking.book_id.company_id.state_id.name"/>, <t class="oe_inline" t-esc="picking.book_id.company_id.country_id.name"/>^FS
+^CF0,60^CI28^FO50,50^FD<t t-out="picking.book_id.company_id.name"/>^FS
+^CF0,30 ^FO50,115^FD<t t-out="picking.book_id.company_id.street"/>^FS
+^FO50,155^FD(<t t-out="picking.company_id.zip"/>)<t t-out="picking.book_id.company_id.city"/>^FS
+^FO50,195^FD<t class="oe_inline" t-out="picking.book_id.company_id.state_id.name"/>, <t class="oe_inline" t-out="picking.book_id.company_id.country_id.name"/>^FS
 ^FO50,250^GB700,3,3^FS
     </t>
 </t>
 <t t-else="">
-^CF0,60 ^FO50,50^FD<t t-esc="picking.company_id.name"/>^FS
-^CF0,30 ^CI28 ^FO50,115^FD<t t-esc="picking.company_id.street"/>^FS
-^FO50,155^FD(<t t-esc="picking.company_id.zip"/>)<t t-esc="picking.company_id.city"/>^FS
-^FO50,195^FD<t class="oe_inline" t-esc="picking.company_id.state_id.name"/>, <t class="oe_inline" t-esc="picking.company_id.country_id.name"/>^FS
+^CF0,60 ^FO50,50^FD<t t-out="picking.company_id.name"/>^FS
+^CF0,30 ^CI28 ^FO50,115^FD<t t-out="picking.company_id.street"/>^FS
+^FO50,155^FD(<t t-out="picking.company_id.zip"/>)<t t-out="picking.company_id.city"/>^FS
+^FO50,195^FD<t class="oe_inline" t-out="picking.company_id.state_id.name"/>, <t class="oe_inline" t-out="picking.company_id.country_id.name"/>^FS
 ^FO50,250^GB700,3,3^FS
 </t>
 <!-- Fin encabezado -->
 <!-- Inicio destino -->
 <t t-if="picking.partner_id.parent_id">
 ^FX Second section with recipient address and permit information. ^CFJ,23 ^FO50,280^FDDestinatario^FS ^CF0,45 ^TBN,700,100
-^FO50,310^FD<t t-esc="picking.partner_id.parent_id.name"/>^FS
+^FO50,310^FD<t t-out="picking.partner_id.parent_id.name"/>^FS
 </t>
 <t t-else="">
 ^FX Second section with recipient address and permit information. ^CFJ,23 ^FO50,280^FDDestinatario^FS ^CF0,45 ^TBN,700,100
-^FO50,310^FD<t t-esc="picking.partner_id.name"/>^FS
+^FO50,310^FD<t t-out="picking.partner_id.name"/>^FS
 </t>
-^CF0,30 ^FO50,425^FD<t t-esc="picking.partner_id.street"/>^FS
-^FO50,465^FD<t class="oe_inline" t-esc="picking.partner_id.zip"/>, <t class="oe_inline" t-esc="picking.partner_id.city"/>^FS
-^FO50,505^FD<t class="oe_inline" t-esc="picking.partner_id.state_id.name"/>, <t class="oe_inline" t-esc="picking.partner_id.country_id.name"/>^FS
+^CF0,30 ^FO50,425^FD<t t-out="picking.partner_id.street"/>^FS
+^FO50,465^FD<t class="oe_inline" t-out="picking.partner_id.zip"/>, <t class="oe_inline" t-out="picking.partner_id.city"/>^FS
+^FO50,505^FD<t class="oe_inline" t-out="picking.partner_id.state_id.name"/>, <t class="oe_inline" t-out="picking.partner_id.country_id.name"/>^FS
 ^FO50,545^FDTel: ^FS
 <t t-if="picking.partner_id and picking.partner_id.phone">
-^FO100,545^FD<t t-esc="picking.partner_id.phone"/>^FS
+^FO100,545^FD<t t-out="picking.partner_id.phone"/>^FS
 </t>
 <t t-elif="picking.partner_id.parent_id and picking.partner_id.parent_id.phone">
-^FO100,545^FD<t t-esc="picking.partner_id.parent_id.phone"/>^FS
+^FO100,545^FD<t t-out="picking.partner_id.parent_id.phone"/>^FS
 </t>
 <!-- Fin destino -->
 <t t-if="picking._fields.get('carrier_id') and picking.carrier_id">
-^FX Transportista ^CFJ,30 ^FO50,615^FDTransportista: ^FS ^FO260,615^FD<t t-esc="picking.carrier_id.name"/>^FS
+^FX Transportista ^CFJ,30 ^FO50,615^FDTransportista: ^FS ^FO260,615^FD<t t-out="picking.carrier_id.name"/>^FS
 </t>
 ^FO50,655^GB700,3,3^FS
 ^FX Referencias Odoo ^CFJ,25 ^FO50,680^FDOrden:^FS
-^CF0,28 ^FO160,680^FD<t t-esc="picking.origin"/>^FS
-^BY3,2,160 ^FO100,765^BC^FD<t t-esc="picking.name"/>^FS
+^CF0,28 ^FO160,680^FD<t t-out="picking.origin"/>^FS
+^BY3,2,160 ^FO100,765^BC^FD<t t-out="picking.name"/>^FS
 ^FX Fecha y nro de bultos ^FO50,980^GB700,170,3^FS ^FO400,980^GB3,170,3^FS
 ^CFJ,30 ^FO180,1020^FDBultos^FS
-^CF0,50 ^FO160,1070^FD<t t-esc="numero"/> de <t t-if="picking.number_of_packages == 0">1</t><t t-else=""><t t-esc="picking.number_of_packages"/></t>^FS
+^CF0,50 ^FO160,1070^FD<t t-out="numero"/> de <t t-if="picking.number_of_packages == 0">1</t><t t-else=""><t t-out="picking.number_of_packages"/></t>^FS
 ^CFJ,30 ^FO520,1020^FDFecha^FS
-^CF0,50 ^FO460,1070^FD<t t-esc="picking.date_done" t-options="{'widget': 'date'}"/>^FS
+^CF0,50 ^FO460,1070^FD<t t-out="picking.date_done" t-options="{'widget': 'date'}"/>^FS
 ^XZ
             </t>
         </t>
@@ -86,31 +86,31 @@
 ^LH0,0
 
 ^FO250,10
-^A0N,20,25^FD<t t-esc="o.move_id.picking_id.date_done" t-options="{'widget': 'date'}"/>^FS
+^A0N,20,25^FD<t t-out="o.move_id.picking_id.date_done" t-options="{'widget': 'date'}"/>^FS
 
 ^FO10,40
 ^A0N,40,30
 ^TBN,360,40
-^FD<t t-esc="o.move_id.product_id.display_name"/>^FS
+^FD<t t-out="o.move_id.product_id.display_name"/>^FS
 
 ^FO10,90
 ^BY3
 ^BCN,60,Y,N,N,A
-^FD<t t-esc="o.move_id.product_id.barcode"/>^FS
+^FD<t t-out="o.move_id.product_id.barcode"/>^FS
                 </t>
                 <t t-if="label_count % 2 == 0">
 ^FX Second label
 ^LH445,0
 ^FO250,10
-^A0N,20,25^FD<t t-esc="o.move_id.picking_id.date_done" t-options="{'widget': 'date'}"/>^FS
+^A0N,20,25^FD<t t-out="o.move_id.picking_id.date_done" t-options="{'widget': 'date'}"/>^FS
 ^FO10,40
 ^A0N,40,30
 ^TBN,360,40
-^FD<t t-esc="o.move_id.product_id.display_name"/>^FS
+^FD<t t-out="o.move_id.product_id.display_name"/>^FS
 ^FO10,90
 ^BY3
 ^BCN,60,Y,N,N,A
-^FD<t t-esc="o.move_id.product_id.barcode"/>^FS
+^FD<t t-out="o.move_id.product_id.barcode"/>^FS
 ^XZ
                 </t>
             </t>
@@ -131,31 +131,31 @@
 ^LH0,0
 
 ^FO250,10
-^A0N,20,25^FD<t t-esc="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y')"/>^FS
+^A0N,20,25^FD<t t-out="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y')"/>^FS
 
 ^FO10,40
 ^A0N,40,30
 ^TBN,360,40
-^FD<t t-esc="o.product_id.display_name"/>^FS
+^FD<t t-out="o.product_id.display_name"/>^FS
 
 ^FO10,90
 ^BY3
 ^BCN,60,Y,N,N,A
-^FD<t t-esc="o.product_id.barcode"/>^FS
+^FD<t t-out="o.product_id.barcode"/>^FS
                 </t>
                 <t t-if="label_count % 2 == 0">
 ^FX Second label
 ^LH445,0
 ^FO250,10
-^A0N,20,25^FD<t t-esc="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y')"/>^FS
+^A0N,20,25^FD<t t-out="context_timestamp(datetime.datetime.now()).strftime('%d/%m/%Y')"/>^FS
 ^FO10,40
 ^A0N,40,30
 ^TBN,360,40
-^FD<t t-esc="o.product_id.display_name"/>^FS
+^FD<t t-out="o.product_id.display_name"/>^FS
 ^FO10,90
 ^BY3
 ^BCN,60,Y,N,N,A
-^FD<t t-esc="o.product_id.barcode"/>^FS
+^FD<t t-out="o.product_id.barcode"/>^FS
 ^XZ
                 </t>
             </t>

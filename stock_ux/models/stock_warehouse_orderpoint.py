@@ -20,26 +20,26 @@ class StockWarehouseOrderpoint(models.Model):
     rotation_stdev = fields.Float(
         compute="_compute_rotation",
         help="Desvío estandar de las cantidades entregas a clientes en los " "últimos 120 días.",
-        digits="Product Unit of Measure",
+        digits="Product Unit",
     )
     warehouse_rotation_stdev = fields.Float(
         compute="_compute_rotation",
         help="Desvío estandar de las cantidades entregas desde este almacen" " a clientes en los últimos 120 días.",
-        digits="Product Unit of Measure",
+        digits="Product Unit",
     )
     rotation = fields.Float(
         help="Cantidades entregadas a clientes en los "
         "últimos 120 días dividido por 4 para mensualizar "
         "(restadas devoluciones).",
         compute="_compute_rotation",
-        digits="Product Unit of Measure",
+        digits="Product Unit",
     )
     warehouse_rotation = fields.Float(
         help="Cantidades entregadas desde este almacen a clientes en los "
         "últimos 120 días dividido por 4 para mensualizar"
         "(restadas devoluciones).",
         compute="_compute_rotation",
-        digits="Product Unit of Measure",
+        digits="Product Unit",
     )
     product_min_qty = fields.Float(tracking=True)
     product_max_qty = fields.Float(tracking=True)
@@ -117,10 +117,10 @@ class StockWarehouseOrderpoint(models.Model):
     def _change_review_toggle_positive(self):
         self.reviewed = True
 
-    def action_replenish(self, force_to_max=False):
+    def action_replenish(self):
         # deactivate toggle after ordering
         self._change_review_toggle_negative()
-        return super(StockWarehouseOrderpoint, self).action_replenish(force_to_max)
+        return super().action_replenish()
 
     def update_qty_to_order(self):
         # Redefinimos ya que el metodo _compute_qty_to_order es privado

@@ -19,6 +19,7 @@ class StockMoveLine(models.Model):
         related="picking_type_id.code",
     )
     picking_type_id = fields.Many2one(
+        compute=None,
         related="picking_id.picking_type_id",
         store=True,
     )
@@ -64,8 +65,6 @@ class StockMoveLine(models.Model):
             rec.product_uom_qty_location = product_uom_qty_location
 
     def _check_manual_lines(self):
-        if self.env.context.get("put_in_pack", False):
-            return
         if any(
             self.filtered(
                 lambda x: not x.location_id.should_bypass_reservation()
@@ -81,7 +80,6 @@ class StockMoveLine(models.Model):
         if (
             self.product_id.is_storable
             and not self.env.context.get("trigger_assign")
-            and not self.env.context.get("from_inverse_qty_done")
             and not self.env.context.get("sale_automation")
             and (
                 self.picking_id.id in self.env.context.get("picking_ids", [])
@@ -115,22 +113,11 @@ class StockMoveLine(models.Model):
         recs._check_manual_lines()
         return recs
 
-    def _inverse_qty_done(self):
-        """
-        It uses the `from_inverse_qty_done` context key to indicate that the update originates from
-        this method.
-        """
-        for line in self:
-            line.with_context(from_inverse_qty_done=True).quantity = line.qty_done
-            line.picked = line.quantity > 0
-
     def _get_aggregated_properties(self, move_line=False, move=False):
         """Con delivery_slip_use_origin mostramos la descripción de origen en vez de la de la
         operación, pisando solo lo necesario sobre el dict del super."""
         properties = super()._get_aggregated_properties(move_line=move_line, move=move)
-        use_origin = (
-            self.env["ir.config_parameter"].sudo().get_param("stock_ux.delivery_slip_use_origin", "False") == "True"
-        )
+        use_origin = self.env["ir.config_parameter"].sudo().get_bool("stock_ux.delivery_slip_use_origin")
         picking = move_line.picking_id if move_line else (move.picking_id if move else False)
         move = move or move_line.move_id
         if not use_origin or not picking or not picking.origin or not move.origin_description:
@@ -140,10 +127,7 @@ class StockMoveLine(models.Model):
         reference = product.display_name
         origin_description = move.origin_description
 
-        add_product_name = (
-            self.env["ir.config_parameter"].sudo().get_param("stock_ux.delivery_slip_add_product_name", "False")
-            == "True"
-        )
+        add_product_name = self.env["ir.config_parameter"].sudo().get_bool("stock_ux.delivery_slip_add_product_name")
 
         # Clean the origin_description by removing product name prefix
         clean_description = origin_description

@@ -4,4 +4,5 @@
 ##############################################################################
 from . import test_mto_warehouse_propagation
 from . import test_product_uom_qty_location
+from . import test_check_quantity
 from . import test_serial_quantity
