@@ -26,7 +26,7 @@
                 <field name="product_id" string="Product"/>
                 <field name="location_id" string="Net Quantity Location" filter_domain="['|',('location_id','ilike',self),('location_dest_id','ilike',self)]" context="{'location': self}"/>
             </field>
-            <filter name="manufacturing" position="after">
+            <filter name="internal" position="after">
                 <separator/>
                 <filter string="With Quantity Done" name="with_quantity_done" domain="[('quantity', '&gt;', 0.0)]"/>
             </filter>
@@ -55,50 +55,6 @@
         </field>
     </record>
 
-    <record id="view_move_line_tree" model="ir.ui.view">
-        <field name="name">stock.move.line.list</field>
-        <field name="model">stock.move.line</field>
-        <field name="mode">primary</field>
-        <field name="priority">50</field>
-        <field name="inherit_id" ref="stock.view_move_line_tree"/>
-        <field name="arch" type="xml">
-            <list position="attributes">
-                <attribute name="editable">bottom</attribute>
-                <attribute name="decoration-muted">result_package_id</attribute>
-            </list>
-            <field name="location_dest_id" position="attributes">
-                <attribute name="readonly">1</attribute>
-            </field>
-            <field name="location_id" position="attributes">
-                <attribute name="readonly">1</attribute>
-            </field>
-            <field name="product_id" position="attributes">
-                <attribute name="readonly">1</attribute>
-            </field>
-            <field name="date" position="attributes">
-                <attribute name="column_invisible">True</attribute>
-            </field>
-            <field name="state" position="attributes">
-                <attribute name="column_invisible">True</attribute>
-            </field>
-            <field name="product_id" position="after">
-                <field name="package_id" column_invisible="True"/>
-                <field name="result_package_id" column_invisible="True"/>
-                <field name="quantity" column_invisible="True"/>
-                <field name="picking_id" column_invisible="True"/>
-                <field name="company_id" column_invisible="True"/>
-                <field name="product_uom_id" position="move"/>
-                <field name="lots_visible" column_invisible="True"/>
-                <field name="owner_id" readonly="1" optional="hide"/>
-            </field>
-            <field name="lot_id" position="attributes">
-                <attribute name="invisible">not lots_visible</attribute>
-                <attribute name="domain">[('product_id', '=', product_id), ('company_id', '=', company_id)]</attribute>
-                <attribute name="options">{'create':True, 'create_edit':True}</attribute>
-                <attribute name="context">{'default_product_id': product_id, 'active_picking_id': picking_id, 'default_company_id':company_id, 'display_complete':True}</attribute>
-            </field>
-        </field>
-    </record>
 
     <record id="view_stock_move_line_detailed_operation_tree" model="ir.ui.view">
             <field name="name">stock.move.line.operations.list</field>

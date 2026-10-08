@@ -1,0 +1,5 @@
+id,name,model_id,group_id/id,operation,domain
+access_stock_quant_adjustment,stock.quant inventory adjustment,stock.quant,stock_ux.group_stock_inventory_adjustment,cru,
+access_stock_operation_wizard,access_stock_operation_wizard,stock.operation.wizard,base.group_user,crud,
+access_stock_picking_zpl_lines,access_stock_picking_zpl_lines,stock.picking.zpl.lines,base.group_user,crud,
+access_stock_product_zpl_lines,access_stock_product_zpl_lines,stock.product.zpl.lines,base.group_user,crud,
