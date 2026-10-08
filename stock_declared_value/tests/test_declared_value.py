@@ -148,3 +148,18 @@ class TestDeclaredValue(TransactionCase):
 
         price = self._line_price(order, kit)
         self.assertAlmostEqual(picking.declared_value, price * 6, places=2)
+
+    def test_pricelist_price_in_move_uom(self):
+        """Sin venta, el precio de la lista sale en la unidad del movimiento."""
+        dozen = self.env.ref("uom.product_uom_dozen")
+        self.warehouse.out_type_id.pricelist_id = self.pricelist
+        picking = self.env["stock.picking"].create(
+            {
+                "picking_type_id": self.warehouse.out_type_id.id,
+                "partner_id": self.partner.id,
+                "move_ids": [
+                    (0, 0, {"product_id": self.product_a.id, "product_uom_qty": 2, "uom_id": dozen.id}),
+                ],
+            }
+        )
+        self.assertAlmostEqual(picking.declared_value, 100.0 * 12 * 2, places=2)
