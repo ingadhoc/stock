@@ -79,12 +79,6 @@ class StockPicking(models.Model):
                 )
         return super().copy(default=default)
 
-    @api.onchange("location_id")
-    def change_location(self):
-        # we only change moves locations if picking in draft
-        if self.state == "draft":
-            self.move_ids.update({"location_id": self.location_id.id})
-
     @api.onchange("location_dest_id")
     def change_location_dest(self):
         # we only change moves locations if picking in draft
@@ -125,10 +119,6 @@ class StockPicking(models.Model):
             else:
                 for line in rec.move_line_ids:
                     line.quantity = line.quantity_product_uom
-
-    def _put_in_pack(self, move_line_ids):
-        # we send to skip a process of check qty when is sending through the copy method.
-        return super()._put_in_pack(move_line_ids.with_context(put_in_pack=True))
 
     @api.onchange("number_of_packages")
     def _check_number_of_packages(self):

@@ -52,7 +52,7 @@ class ProductLabelLayout(models.TransientModel):
     def _line_commands_from_moves(self, moves):
         """Build Command.create list for line_ids (done qty > 0 only)."""
         return [
-            Command.create({"move_id": m.id, "move_quantity": m.quantity, "move_uom_id": m.product_uom.id})
+            Command.create({"move_id": m.id, "move_quantity": m.quantity, "move_uom_id": m.uom_id.id})
             for m in moves.filtered(lambda m: m.quantity > 0)
         ]
 
@@ -65,16 +65,23 @@ class ProductLabelLayout(models.TransientModel):
             return self.action_print_product_zpl()
         return super().process()
 
-    def _prepare_report_data(self):
+    def _get_label_requests(self):
         """When in picking context with per-product custom quantities, use line_ids values."""
-        xml_id, data = super()._prepare_report_data()
-        if self.picking_id and self.move_quantity == "custom" and self.line_ids:
-            qty_map = {}
-            for line in self.line_ids:
-                pid = line.move_id.product_id.id
-                qty_map[pid] = qty_map.get(pid, 0) + int(line.move_quantity)
-            data["quantity_by_product"] = qty_map
-        return xml_id, data
+        if not (self.picking_id and self.move_quantity == "custom" and self.line_ids) or self.print_packaging:
+            return super()._get_label_requests()
+        qty_map = {}
+        for line in self.line_ids:
+            product = line.move_id.product_id
+            qty_map[product] = qty_map.get(product, 0) + int(line.move_quantity)
+        return [
+            {
+                "product": product,
+                "barcode_value": product.barcode or "",
+                "copies": quantity,
+                "packaging": self.env["uom.uom"],
+            }
+            for product, quantity in qty_map.items()
+        ]
 
     def action_print(self):
         self.ensure_one()
@@ -84,7 +91,7 @@ class ProductLabelLayout(models.TransientModel):
         if not self.line_ids.filtered(lambda l: l.move_id) and self.move_ids:
             self.line_ids = self._line_commands_from_moves(self.move_ids)
         report_action = self.env.ref("stock_ux.action_custom_barcode_transfer_template_view_zpl").report_action(
-            self.ids
+            self.ids, config=False
         )
         report_action["close_on_report_download"] = True
         return report_action
@@ -95,7 +102,7 @@ class ProductLabelLayout(models.TransientModel):
         # For product.template: per-variant quantities are edited directly in the table.
         if not self.from_template and self.custom_quantity and self.product_line_ids:
             self.product_line_ids.write({"quantity": self.custom_quantity})
-        report_action = self.env.ref("stock_ux.action_product_barcode_zpl").report_action(self.ids)
+        report_action = self.env.ref("stock_ux.action_product_barcode_zpl").report_action(self.ids, config=False)
         report_action["close_on_report_download"] = True
         return report_action
 
@@ -117,7 +124,9 @@ class StockPickingZplLines(models.TransientModel):
             if line.move_quantity > line.move_id.quantity:
                 raise exceptions.ValidationError(
                     _(
-                        f"The quantity to print ({line.move_quantity}) cannot be greater than the original quantity ({line.move_id.quantity})."
+                        "The quantity to print (%(to_print)s) cannot be greater than the original quantity (%(original)s).",
+                        to_print=line.move_quantity,
+                        original=line.move_id.quantity,
                     )
                 )
 
