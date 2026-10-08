@@ -9,26 +9,116 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-22 19:16+0000\n"
-"PO-Revision-Date: 2026-09-03 16:54+0000\n"
+"POT-Creation-Date: 2026-10-09 18:43+0000\n"
+"PO-Revision-Date: 2026-10-09 18:43+0000\n"
 "Last-Translator: Luciano Esperlazza <les@adhoc.inc>\n"
-"Language-Team: Spanish <https://translation.dev-adhoc.com/projects/"
-"stock-19-0/stock-19-0-stock_ux/es/>\n"
+"Language-Team: Spanish <https://translation.dev-adhoc.com/projects/stock-19-0/stock-19-0-stock_ux/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == "
-"0) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0) ? 1 : 2);\n"
 "X-Generator: Weblate 5.10.4\n"
 
 #. module: stock_ux
-#: model:ir.actions.report,print_report_name:stock_ux.action_report_picking_ux
+#: model:ir.module.module,description:base.module_stock_ux
 msgid ""
-"'Picking Operations - %s - %s' % (object.partner_id.name or '', object.name)"
+".. |company| replace:: ADHOC SA\n"
+"\n"
+".. |company_logo| image:: https://raw.githubusercontent.com/ingadhoc/maintainer-tools/master/resources/adhoc-logo.png\n"
+"   :alt: ADHOC SA\n"
+"   :target: https://www.adhoc.com.ar\n"
+"\n"
+".. |icon| image:: https://raw.githubusercontent.com/ingadhoc/maintainer-tools/master/resources/adhoc-icon.png\n"
+"\n"
+".. image:: https://img.shields.io/badge/license-AGPL--3-blue.png\n"
+"   :target: https://www.gnu.org/licenses/agpl\n"
+"   :alt: License: AGPL-3\n"
+"\n"
+"========\n"
+"Stock UX\n"
+"========\n"
+"\n"
+"\n"
+"#. Add observations on pickings (and deliveryslip)\n"
+"#. Add a wizard action in the stock move lines of a picking to change locations for several lines at the same time with the 'Manage Multiple Stock Locations' permission.\n"
+"#. Show always visible (for an existing lots configuration in the type operation) the notebook pages in lot form view when create and edit a lot from a stock move line.\n"
+"#. Add reason return field in the picking return wizard and then bring that field to internal notes in the created picking.\n"
+"#. Add an optional setting to print in Delivery Slip reports the origin description instead of the product name\n"
+"#. We create a new group \"Allow picking cancellation\", only users with that right can cancel pickings or validate without back orders\n"
+"#. Only allow to delete pickings on draft/cancel state and \"Block Picking Deletion?\" is not checked in Pick operation type.\n"
+"#. Add new field \"\"Net Quantity\"\" in stock moves lines. When you filter by locations, the field will be computed this way:\n"
+"#. If filtered location is found on source location: use negative quantity.\n"
+"#. If filtered location is found on destiny location: use positive quantity.\n"
+"#. If filtered location is found on source and destiny location: use \"0\".\n"
+"#. Add in products (template and variants) a button to access to stock moves related.\n"
+"#. When accessing stock moves through the products form group by picking type and filter according to do.\n"
+"#. Add Rotation and Location Rotation to Reordering Rules (orderpoint): delivered quantities to customers on last 120 days divided per 4 (to make it monthly)\n"
+"#. Add optional constraints configurable by Picking Type: Block additional quantity, Block force availability, Block picking deletion\n"
+"#. Add partner field on procurement group form view.\n"
+"#. Show location and warehouse filters on all products and product templates views (not only the one on inventory)\n"
+"#. When archive a replenishment rule set min, max and multiple quantities in 0.\n"
+"#. Show inactive replenishment rules if the product is active (with warning decorator).\n"
+"#. Send template established in operation type when confirm picking.\n"
+"#. Add an optional setting to print remaining quantities not yet delivered on Delivery Slips: \"Show remaining quantities not yet delivered on Delivery Slips.\"print remaining quantities not yet delivered\n"
+"#. Adds a review toggle per line that allows the user to indicate when the replenishment order is ready to be confirmed.\n"
+"#. Add a \"All transfers\" view form in Menu: Operations\n"
+"#. Add a restriction to edit operation type for users with the \"Restrict editing Operation Type in Pickings\" check.\n"
+"#. Add number of packages on pickings\n"
+"\n"
+"Installation\n"
+"============\n"
+"\n"
+"To install this module, you need to:\n"
+"\n"
+"#. Only need to install the module\n"
+"\n"
+"Configuration\n"
+"=============\n"
+"\n"
+"To configure this module, you need to:\n"
+"\n"
+"#. Go to STOCK Configuration and in the section \"Products\" set \"Show Used Lots on Picking Operations\" to see the lots you used in the move lines.\n"
+"\n"
+"Usage\n"
+"=====\n"
+"\n"
+"To use this module, you need to:\n"
+"\n"
+"#. Go to ...\n"
+"\n"
+".. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas\n"
+"   :alt: Try me on Runbot\n"
+"   :target: http://runbot.adhoc.com.ar/\n"
+"\n"
+"Bug Tracker\n"
+"===========\n"
+"\n"
+"Bugs are tracked on `GitHub Issues\n"
+"<https://github.com/ingadhoc/stock/issues>`_. In case of trouble, please\n"
+"check there if your issue has already been reported. If you spotted it first,\n"
+"help us smashing it by providing a detailed and welcomed feedback.\n"
+"\n"
+"Credits\n"
+"=======\n"
+"\n"
+"Images\n"
+"------\n"
+"\n"
+"* |company| |icon|\n"
+"\n"
+"Contributors\n"
+"------------\n"
+"\n"
+"Maintainer\n"
+"----------\n"
+"\n"
+"|company_logo|\n"
+"\n"
+"This module is maintained by the |company|.\n"
+"\n"
+"To contribute to this module, please visit https://www.adhoc.com.ar.\n"
 msgstr ""
-"'Operaciones de preparación de pedidos - %s - %s' % (object.partner_id.name "
-"or '', object.name)"
 
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.report_delivery_document
@@ -77,6 +167,8 @@ msgid ""
 "Allows the user to perform inventory adjustments (physical inventory counts "
 "and on-hand quantity updates)."
 msgstr ""
+"Permite al usuario realizar ajustes de inventario (conteos físicos de "
+"inventario y actualizaciones de la cantidad a la mano)."
 
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.product_form_view_procurement_button
@@ -142,8 +234,7 @@ msgid ""
 "\n"
 "Affected moves: %s"
 msgstr ""
-"No se pueden eliminar los movimientos de inventario vinculados a órdenes de "
-"venta o de compra.\n"
+"No se pueden eliminar los movimientos de inventario vinculados a órdenes de venta o de compra.\n"
 "Modifique las cantidades en la orden de origen.\n"
 "\n"
 "Movimientos afectados: %s"
@@ -151,8 +242,8 @@ msgstr ""
 #. module: stock_ux
 #: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint__rotation
 msgid ""
-"Cantidades entregadas a clientes en los últimos 120 días dividido por 4 para "
-"mensualizar (restadas devoluciones)."
+"Cantidades entregadas a clientes en los últimos 120 días dividido por 4 para"
+" mensualizar (restadas devoluciones)."
 msgstr ""
 
 #. module: stock_ux
@@ -229,11 +320,6 @@ msgid "Destination Location"
 msgstr "Ubicación destino"
 
 #. module: stock_ux
-#: model:ir.model.fields,field_description:stock_ux.field_stock_move__picking_dest_id
-msgid "Destination Transfer"
-msgstr "Transferencia de destino"
-
-#. module: stock_ux
 #: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint__rotation_stdev
 msgid ""
 "Desvío estandar de las cantidades entregas a clientes en los últimos 120 "
@@ -279,8 +365,8 @@ msgid ""
 "Do not allow to confirm pickings with more quantity than the initial demand "
 "and also block pickings duplication"
 msgstr ""
-"No permitir confirmar transferencias con más cantidad que la demanda inicial "
-"y tampoco dejar duplicar transferencias"
+"No permitir confirmar transferencias con más cantidad que la demanda inicial"
+" y tampoco dejar duplicar transferencias"
 
 #. module: stock_ux
 #: model:ir.model.fields,help:stock_ux.field_stock_picking__block_manual_lines
@@ -290,8 +376,8 @@ msgid ""
 "This will only apply for moves where origin location is not of type "
 "'supplier', 'customer', 'inventory', 'production'"
 msgstr ""
-"No permitir confirmar transferencias con mas cantidad que la reservada. Esto "
-"solo va a aplicar para movimientos donde la ubicación de origen no es del "
+"No permitir confirmar transferencias con mas cantidad que la reservada. Esto"
+" solo va a aplicar para movimientos donde la ubicación de origen no es del "
 "tipo 'proveedor', 'cliente', 'inventario', 'producción'"
 
 #. module: stock_ux
@@ -362,9 +448,20 @@ msgid "Force Availability"
 msgstr "Forzar Disponibilidad"
 
 #. module: stock_ux
+#: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint__product_max_qty
+msgid ""
+"Forecasted stock level when replenishing.\n"
+"Automatically calculated as = Min + Max (Order frequency x Daily Demand x Growth factor, MoQ) with MoQ = Minimum quantity from vendor pricelist / BOM.\n"
+"Won't be reached by on Hand stock if unforecasted demand is delivered while waiting for arrival."
+msgstr ""
+"Nivel de stock pronosticado al reabastecer.\n"
+"Se calcula automáticamente como = Mín + Máx (Frecuencia de pedido x Demanda diaria x Factor de crecimiento, CMP) con CMP = Cantidad mínima de la lista de precios del proveedor / LdM.\n"
+"El stock a la mano no lo alcanzará si se entrega una demanda no pronosticada mientras se espera la llegada."
+
+#. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_product_label_layout__from_template
 msgid "From Template"
-msgstr ""
+msgstr "Desde plantilla"
 
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
@@ -434,7 +531,7 @@ msgstr "Si no está marcado, le permitirá ocultar el producto sin removerlo."
 #. odoo-python
 #: code:addons/stock_ux/models/product_template.py:0
 msgid "Import Template for Products"
-msgstr ""
+msgstr "Plantilla de importación de productos"
 
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_move_search
@@ -449,12 +546,12 @@ msgstr "Notas Internas"
 #. module: stock_ux
 #: model:res.groups,name:stock_ux.group_stock_inventory_adjustment
 msgid "Inventory Adjustments"
-msgstr ""
+msgstr "Ajustes de inventario"
 
 #. module: stock_ux
 #: model:ir.model,name:stock_ux.model_stock_location
-msgid "Inventory Locations"
-msgstr "Ubicaciones de inventario"
+msgid "Inventory Location"
+msgstr "Ubicación de inventario"
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__message_is_follower
@@ -536,6 +633,15 @@ msgid "Min Quantity"
 msgstr "Cantidad mínima"
 
 #. module: stock_ux
+#: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint__product_min_qty
+msgid ""
+"Minimum Forecasted stock level that will trigger a replenishment.\n"
+"A safety stock is included in the min to cover unusual situations if days of demand covered by the Minimum Level is > Replenishment Lead Times - Availability Time."
+msgstr ""
+"Nivel mínimo de stock pronosticado que activará un reabastecimiento.\n"
+"El mínimo incluye un stock de seguridad para cubrir situaciones inusuales si los días de demanda cubiertos por el nivel mínimo son > Plazos de reabastecimiento - Tiempo de disponibilidad."
+
+#. module: stock_ux
 #: model:ir.model,name:stock_ux.model_stock_warehouse_orderpoint
 msgid "Minimum Inventory Rule"
 msgstr "Regla de inventario mínimo"
@@ -584,7 +690,7 @@ msgstr "Cantidad neta en ubicación"
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_label_custom_qty
 msgid "No processed moves found in this picking."
-msgstr ""
+msgstr "No se encontraron movimientos procesados en esta transferencia."
 
 #. module: stock_ux
 #: model_terms:ir.actions.act_window,help:stock_ux.action_picking_tree_all
@@ -670,11 +776,6 @@ msgid "Picking Lists"
 msgstr "Listas de Recogida"
 
 #. module: stock_ux
-#: model:ir.actions.report,name:stock_ux.action_report_picking_ux
-msgid "Picking Operations"
-msgstr "Operaciones de Traslado"
-
-#. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.stock_move_line_view_search
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_move_tree
 msgid "Picking Partner"
@@ -706,7 +807,8 @@ msgstr "Problemas de Planificación"
 #: code:addons/stock_ux/models/stock_picking.py:0
 msgid "Please check the email template associated with the picking type."
 msgstr ""
-"Consulte la plantilla de correo electrónico asociada con el tipo de recogida."
+"Consulte la plantilla de correo electrónico asociada con el tipo de "
+"recogida."
 
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.res_config_settings_view_form
@@ -735,12 +837,12 @@ msgstr "Producto Activo"
 #. module: stock_ux
 #: model:ir.actions.report,name:stock_ux.action_product_barcode_zpl
 msgid "Product Labels (ZPL)"
-msgstr ""
+msgstr "Etiquetas de producto (ZPL)"
 
 #. module: stock_ux
 #: model:ir.actions.report,name:stock_ux.action_custom_barcode_transfer_template_view_zpl
 msgid "Product Labels from Picking (ZPL)"
-msgstr ""
+msgstr "Etiquetas de producto desde la transferencia (ZPL)"
 
 #. module: stock_ux
 #. odoo-javascript
@@ -756,17 +858,17 @@ msgstr "Movimientos de producto (línea de movimiento de stock)"
 #. module: stock_ux
 #: model:ir.model,name:stock_ux.model_product_product
 msgid "Product Variant"
-msgstr "Variante de producto"
+msgstr "Variante del producto"
 
 #. module: stock_ux
 #: model:ir.model,name:stock_ux.model_stock_product_zpl_lines
 msgid "Product ZPL Label lines"
-msgstr ""
+msgstr "Líneas de etiquetas ZPL de producto"
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_product_label_layout__product_line_ids
 msgid "Products"
-msgstr ""
+msgstr "Productos"
 
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.product_form_view_procurement_button
@@ -795,16 +897,21 @@ msgid "Qty Multiple"
 msgstr "Cantidad múltiple"
 
 #. module: stock_ux
+#: model:ir.model,name:stock_ux.model_stock_quant
+msgid "Quant"
+msgstr "Cant"
+
+#. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_label_custom_qty
 msgid "Quantities per Product"
-msgstr ""
+msgstr "Cantidades por producto"
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_product_zpl_lines__quantity
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_label_custom_qty
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_template_label_variant_qty
 msgid "Quantity"
-msgstr ""
+msgstr "Cantidad"
 
 #. module: stock_ux
 #: model:ir.model.fields,help:stock_ux.field_stock_move_line__product_uom_qty_location
@@ -812,28 +919,19 @@ msgid ""
 "Quantity of this line relative to the location searched with the 'Net "
 "Quantity Location' filter: negative when the line leaves that location, "
 "positive when it enters, and 0 when it does not apply. Without that filter "
-"it is always 0 by design; the useful value is the column total at the bottom."
+"it is always 0 by design; the useful value is the column total at the "
+"bottom."
 msgstr ""
 "Cantidad de esta línea en relación con la ubicación buscada mediante el "
-"filtro \"Cantidad neta por ubicación\": negativa cuando la línea sale de esa "
-"ubicación, positiva cuando ingresa y 0 cuando no aplica. Sin ese filtro, "
-"siempre es 0 por diseño; el valor útil es el total de la columna que aparece "
-"en la parte inferior."
-
-#. module: stock_ux
-#: model:ir.model,name:stock_ux.model_stock_quant
-msgid "Quants"
-msgstr ""
+"filtro \"Cantidad neta por ubicación\": negativa cuando la línea sale de esa"
+" ubicación, positiva cuando ingresa y 0 cuando no aplica. Sin ese filtro, "
+"siempre es 0 por diseño; el valor útil es el total de la columna que aparece"
+" en la parte inferior."
 
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
 msgid "Ready"
 msgstr "Listo"
-
-#. module: stock_ux
-#: model:ir.model.fields,field_description:stock_ux.field_stock_return_picking__reason
-msgid "Reason for the return"
-msgstr "Razón de devolución"
 
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
@@ -850,17 +948,12 @@ msgstr "Número de Paquetes"
 #. module: stock_ux
 #: model:res.groups,name:stock_ux.group_restrict_edit_picking_type
 msgid "Restrict editing Operation Type in Pickings"
-msgstr ""
+msgstr "Restringir la edición del tipo de operación en transferencias"
 
 #. module: stock_ux
 #: model:res.groups,name:stock_ux.group_restrict_to_modify_reservations_from_planned
 msgid "Restrict to modify reservations from planned"
 msgstr "No permitir modificar reservas desde previsto"
-
-#. module: stock_ux
-#: model:ir.model,name:stock_ux.model_stock_return_picking
-msgid "Return Picking"
-msgstr "Albarán de devolución"
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__reviewed
@@ -893,6 +986,8 @@ msgid ""
 "Scheduled date of the transfer, not replaced by the processing date once "
 "done."
 msgstr ""
+"Fecha programada de la transferencia; no se reemplaza por la fecha de "
+"procesamiento una vez hecha."
 
 #. module: stock_ux
 #: model:ir.actions.server,name:stock_ux.action_operation_set_all_undone
@@ -930,7 +1025,7 @@ msgstr ""
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.stock_move_line_view_search
 msgid "Source"
-msgstr ""
+msgstr "Origen"
 
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
@@ -965,7 +1060,7 @@ msgstr "Asistente de Operaciones de Stock"
 #. module: stock_ux
 #: model:ir.model,name:stock_ux.model_stock_picking_zpl_lines
 msgid "Stock Picking ZPL Label Lines"
-msgstr ""
+msgstr "Líneas de etiquetas ZPL de transferencias"
 
 #. module: stock_ux
 #: model:ir.model,name:stock_ux.model_stock_forecasted_product_product
@@ -978,21 +1073,9 @@ msgid "Stock Rule"
 msgstr "Regla de inventario"
 
 #. module: stock_ux
-#: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint__product_max_qty
-msgid "Stock level to reach when replenishing."
-msgstr ""
-"Cuando el stock virtual desciende por debajo de la cantidad mínima, Odoo "
-"genera un aprovisionamiento para llevar la cantidad prognosticada hasta (o "
-"cerca de) la cantidad máxima especificada para este campo (o hasta la "
-"cantidad mínima, la que sea mayor)."
-
-#. module: stock_ux
-#: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint__product_min_qty
-msgid "The minimum Stock level that will trigger a replenishment."
-msgstr ""
-"Cuando el stock virtual desciende por debajo de la cantidad mínima "
-"especificada para este campo, Odoo genera un aprovisionamiento para que la "
-"cantidad prognosticada supere esta cantidad mínima."
+#: model:ir.module.module,shortdesc:base.module_stock_ux
+msgid "Stock UX"
+msgstr "Stock UX"
 
 #. module: stock_ux
 #. odoo-python
@@ -1001,6 +1084,16 @@ msgstr ""
 #| msgid "Number of Packages"
 msgid "The number of packages cannot be 0"
 msgstr "Número de Paquetes"
+
+#. module: stock_ux
+#. odoo-python
+#: code:addons/stock_ux/wizards/stock_label_type.py:0
+msgid ""
+"The quantity to print (%(to_print)s) cannot be greater than the original "
+"quantity (%(original)s)."
+msgstr ""
+"La cantidad a imprimir (%(to_print)s) no puede ser mayor que la cantidad "
+"original (%(original)s)."
 
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.product_form_view_procurement_button
@@ -1030,7 +1123,7 @@ msgstr "Actividades de Hoy"
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_move_line_tree2
 msgid "Total"
-msgstr ""
+msgstr "Total"
 
 #. module: stock_ux
 #: model:ir.model,name:stock_ux.model_stock_picking
@@ -1047,7 +1140,7 @@ msgstr "Dirección de destino de la transferencia"
 #: model:ir.model.fields,field_description:stock_ux.field_stock_move_line__picking_scheduled_date
 #: model_terms:ir.ui.view,arch_db:stock_ux.stock_move_line_view_search
 msgid "Transfer Scheduled Date"
-msgstr ""
+msgstr "Fecha programada de la transferencia"
 
 #. module: stock_ux
 #: model:ir.actions.act_window,name:stock_ux.action_picking_tree_all
@@ -1082,12 +1175,12 @@ msgstr "Lotes Usados"
 #: model:ir.model.fields,field_description:stock_ux.field_stock_product_zpl_lines__product_name
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_template_label_variant_qty
 msgid "Variant"
-msgstr ""
+msgstr "Variante"
 
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_template_label_variant_qty
 msgid "Variants to Print"
-msgstr ""
+msgstr "Variantes a imprimir"
 
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
@@ -1115,16 +1208,6 @@ msgid "Warnings"
 msgstr "Advertencias"
 
 #. module: stock_ux
-#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__website_message_ids
-msgid "Website Messages"
-msgstr "Mensajes del sitio web"
-
-#. module: stock_ux
-#: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint__website_message_ids
-msgid "Website communication history"
-msgstr "Historial de comunicación del sitio web"
-
-#. module: stock_ux
 #: model:ir.model.fields,help:stock_ux.field_stock_picking_type__number_of_packages
 msgid ""
 "When a picking of this type is validated, the number of packages will be "
@@ -1146,20 +1229,16 @@ msgstr "Con Cantidad Hecha"
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_product_zpl_lines__wizard_id
 msgid "Wizard"
-msgstr ""
+msgstr "Asistente"
 
 #. module: stock_ux
 #. odoo-python
 #: code:addons/stock_ux/models/stock_picking.py:0
 msgid ""
-"You can not delete this pickings because \"Block picking deletion\" is "
-"enable on the picking type/s \"%s\" or the state of the picking is not draft "
-"or cancel.\n"
+"You can not delete this pickings because \"Block picking deletion\" is enable on the picking type/s \"%s\" or the state of the picking is not draft or cancel.\n"
 "Picking Ids: %s"
 msgstr ""
-"No puedes eliminar los traslados porque \"Bloquear eliminación de "
-"traslados\" Está establecido en el tipo de operación \"%s\" o el estado de "
-"los traslados no es borrador o cancelado.\n"
+"No puedes eliminar los traslados porque \"Bloquear eliminación de traslados\" Está establecido en el tipo de operación \"%s\" o el estado de los traslados no es borrador o cancelado.\n"
 "id de los traslados: %s"
 
 #. module: stock_ux
@@ -1204,7 +1283,7 @@ msgstr ""
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_product_label_layout__zpl_template
 msgid "ZPL Template"
-msgstr ""
+msgstr "Plantilla ZPL"
 
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.custom_barcode_transfer_template_view_zpl
@@ -1293,22 +1372,3 @@ msgid ""
 "^FO250,10\n"
 "^A0N,20,25^FD"
 msgstr ""
-
-#~ msgid "Descripción 2"
-#~ msgstr "Description 2"
-
-#~ msgid "Print Stock Voucher lines"
-#~ msgstr "Imprimir las Líneas de Remito"
-
-#~ msgid "Reference"
-#~ msgstr "Descripción"
-
-#~ msgid "picking"
-#~ msgstr "Traslado"
-
-#~ msgid ""
-#~ "You can not duplicate a Picking because \"Block Additional Quantity\" is "
-#~ "enabled on the picking type \"%s\""
-#~ msgstr ""
-#~ "No puede duplicar el traslado ya que \"Bloquear Cantidades Adicionales\" "
-#~ "se encuentra configurado en el tipo de traslado."
