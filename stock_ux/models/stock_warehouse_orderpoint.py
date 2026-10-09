@@ -117,10 +117,10 @@ class StockWarehouseOrderpoint(models.Model):
     def _change_review_toggle_positive(self):
         self.reviewed = True
 
-    def action_replenish(self, force_to_max=False):
+    def action_replenish(self):
         # deactivate toggle after ordering
         self._change_review_toggle_negative()
-        return super(StockWarehouseOrderpoint, self).action_replenish(force_to_max)
+        return super().action_replenish()
 
     def update_qty_to_order(self):
         # Redefinimos ya que el metodo _compute_qty_to_order es privado

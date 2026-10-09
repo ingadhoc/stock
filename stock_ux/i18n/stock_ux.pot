@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 19.0+e\n"
+"Project-Id-Version: Odoo Server 20.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-22 19:16+0000\n"
-"PO-Revision-Date: 2026-09-22 19:16+0000\n"
+"POT-Creation-Date: 2026-10-09 18:43+0000\n"
+"PO-Revision-Date: 2026-10-09 18:43+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,9 +16,103 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: stock_ux
-#: model:ir.actions.report,print_report_name:stock_ux.action_report_picking_ux
+#: model:ir.module.module,description:base.module_stock_ux
 msgid ""
-"'Picking Operations - %s - %s' % (object.partner_id.name or '', object.name)"
+".. |company| replace:: ADHOC SA\n"
+"\n"
+".. |company_logo| image:: https://raw.githubusercontent.com/ingadhoc/maintainer-tools/master/resources/adhoc-logo.png\n"
+"   :alt: ADHOC SA\n"
+"   :target: https://www.adhoc.com.ar\n"
+"\n"
+".. |icon| image:: https://raw.githubusercontent.com/ingadhoc/maintainer-tools/master/resources/adhoc-icon.png\n"
+"\n"
+".. image:: https://img.shields.io/badge/license-AGPL--3-blue.png\n"
+"   :target: https://www.gnu.org/licenses/agpl\n"
+"   :alt: License: AGPL-3\n"
+"\n"
+"========\n"
+"Stock UX\n"
+"========\n"
+"\n"
+"\n"
+"#. Add observations on pickings (and deliveryslip)\n"
+"#. Add a wizard action in the stock move lines of a picking to change locations for several lines at the same time with the 'Manage Multiple Stock Locations' permission.\n"
+"#. Show always visible (for an existing lots configuration in the type operation) the notebook pages in lot form view when create and edit a lot from a stock move line.\n"
+"#. Add reason return field in the picking return wizard and then bring that field to internal notes in the created picking.\n"
+"#. Add an optional setting to print in Delivery Slip reports the origin description instead of the product name\n"
+"#. We create a new group \"Allow picking cancellation\", only users with that right can cancel pickings or validate without back orders\n"
+"#. Only allow to delete pickings on draft/cancel state and \"Block Picking Deletion?\" is not checked in Pick operation type.\n"
+"#. Add new field \"\"Net Quantity\"\" in stock moves lines. When you filter by locations, the field will be computed this way:\n"
+"#. If filtered location is found on source location: use negative quantity.\n"
+"#. If filtered location is found on destiny location: use positive quantity.\n"
+"#. If filtered location is found on source and destiny location: use \"0\".\n"
+"#. Add in products (template and variants) a button to access to stock moves related.\n"
+"#. When accessing stock moves through the products form group by picking type and filter according to do.\n"
+"#. Add Rotation and Location Rotation to Reordering Rules (orderpoint): delivered quantities to customers on last 120 days divided per 4 (to make it monthly)\n"
+"#. Add optional constraints configurable by Picking Type: Block additional quantity, Block force availability, Block picking deletion\n"
+"#. Add partner field on procurement group form view.\n"
+"#. Show location and warehouse filters on all products and product templates views (not only the one on inventory)\n"
+"#. When archive a replenishment rule set min, max and multiple quantities in 0.\n"
+"#. Show inactive replenishment rules if the product is active (with warning decorator).\n"
+"#. Send template established in operation type when confirm picking.\n"
+"#. Add an optional setting to print remaining quantities not yet delivered on Delivery Slips: \"Show remaining quantities not yet delivered on Delivery Slips.\"print remaining quantities not yet delivered\n"
+"#. Adds a review toggle per line that allows the user to indicate when the replenishment order is ready to be confirmed.\n"
+"#. Add a \"All transfers\" view form in Menu: Operations\n"
+"#. Add a restriction to edit operation type for users with the \"Restrict editing Operation Type in Pickings\" check.\n"
+"#. Add number of packages on pickings\n"
+"\n"
+"Installation\n"
+"============\n"
+"\n"
+"To install this module, you need to:\n"
+"\n"
+"#. Only need to install the module\n"
+"\n"
+"Configuration\n"
+"=============\n"
+"\n"
+"To configure this module, you need to:\n"
+"\n"
+"#. Go to STOCK Configuration and in the section \"Products\" set \"Show Used Lots on Picking Operations\" to see the lots you used in the move lines.\n"
+"\n"
+"Usage\n"
+"=====\n"
+"\n"
+"To use this module, you need to:\n"
+"\n"
+"#. Go to ...\n"
+"\n"
+".. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas\n"
+"   :alt: Try me on Runbot\n"
+"   :target: http://runbot.adhoc.com.ar/\n"
+"\n"
+"Bug Tracker\n"
+"===========\n"
+"\n"
+"Bugs are tracked on `GitHub Issues\n"
+"<https://github.com/ingadhoc/stock/issues>`_. In case of trouble, please\n"
+"check there if your issue has already been reported. If you spotted it first,\n"
+"help us smashing it by providing a detailed and welcomed feedback.\n"
+"\n"
+"Credits\n"
+"=======\n"
+"\n"
+"Images\n"
+"------\n"
+"\n"
+"* |company| |icon|\n"
+"\n"
+"Contributors\n"
+"------------\n"
+"\n"
+"Maintainer\n"
+"----------\n"
+"\n"
+"|company_logo|\n"
+"\n"
+"This module is maintained by the |company|.\n"
+"\n"
+"To contribute to this module, please visit https://www.adhoc.com.ar.\n"
 msgstr ""
 
 #. module: stock_ux
@@ -205,11 +299,6 @@ msgid "Destination Location"
 msgstr ""
 
 #. module: stock_ux
-#: model:ir.model.fields,field_description:stock_ux.field_stock_move__picking_dest_id
-msgid "Destination Transfer"
-msgstr ""
-
-#. module: stock_ux
 #: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint__rotation_stdev
 msgid ""
 "Desvío estandar de las cantidades entregas a clientes en los últimos 120 "
@@ -238,7 +327,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_ux.field_stock_picking_zpl_lines__display_name
 #: model:ir.model.fields,field_description:stock_ux.field_stock_product_zpl_lines__display_name
 #: model:ir.model.fields,field_description:stock_ux.field_stock_quant__display_name
-#: model:ir.model.fields,field_description:stock_ux.field_stock_return_picking__display_name
 #: model:ir.model.fields,field_description:stock_ux.field_stock_rule__display_name
 #: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__display_name
 msgid "Display Name"
@@ -329,6 +417,14 @@ msgid "Force Availability"
 msgstr ""
 
 #. module: stock_ux
+#: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint__product_max_qty
+msgid ""
+"Forecasted stock level when replenishing.\n"
+"Automatically calculated as = Min + Max (Order frequency x Daily Demand x Growth factor, MoQ) with MoQ = Minimum quantity from vendor pricelist / BOM.\n"
+"Won't be reached by on Hand stock if unforecasted demand is delivered while waiting for arrival."
+msgstr ""
+
+#. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_product_label_layout__from_template
 msgid "From Template"
 msgstr ""
@@ -358,7 +454,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_ux.field_stock_picking_zpl_lines__id
 #: model:ir.model.fields,field_description:stock_ux.field_stock_product_zpl_lines__id
 #: model:ir.model.fields,field_description:stock_ux.field_stock_quant__id
-#: model:ir.model.fields,field_description:stock_ux.field_stock_return_picking__id
 #: model:ir.model.fields,field_description:stock_ux.field_stock_rule__id
 #: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__id
 msgid "ID"
@@ -416,7 +511,7 @@ msgstr ""
 
 #. module: stock_ux
 #: model:ir.model,name:stock_ux.model_stock_location
-msgid "Inventory Locations"
+msgid "Inventory Location"
 msgstr ""
 
 #. module: stock_ux
@@ -494,6 +589,13 @@ msgstr ""
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__product_min_qty
 msgid "Min Quantity"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint__product_min_qty
+msgid ""
+"Minimum Forecasted stock level that will trigger a replenishment.\n"
+"A safety stock is included in the min to cover unusual situations if days of demand covered by the Minimum Level is > Replenishment Lead Times - Availability Time."
 msgstr ""
 
 #. module: stock_ux
@@ -631,11 +733,6 @@ msgid "Picking Lists"
 msgstr ""
 
 #. module: stock_ux
-#: model:ir.actions.report,name:stock_ux.action_report_picking_ux
-msgid "Picking Operations"
-msgstr ""
-
-#. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.stock_move_line_view_search
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_move_tree
 msgid "Picking Partner"
@@ -643,7 +740,6 @@ msgstr ""
 
 #. module: stock_ux
 #: model:ir.model,name:stock_ux.model_stock_picking_type
-#: model_terms:ir.ui.view,arch_db:stock_ux.view_move_search
 msgid "Picking Type"
 msgstr ""
 
@@ -755,6 +851,11 @@ msgid "Qty Multiple"
 msgstr ""
 
 #. module: stock_ux
+#: model:ir.model,name:stock_ux.model_stock_quant
+msgid "Quant"
+msgstr ""
+
+#. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_label_custom_qty
 msgid "Quantities per Product"
 msgstr ""
@@ -777,18 +878,8 @@ msgid ""
 msgstr ""
 
 #. module: stock_ux
-#: model:ir.model,name:stock_ux.model_stock_quant
-msgid "Quants"
-msgstr ""
-
-#. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
 msgid "Ready"
-msgstr ""
-
-#. module: stock_ux
-#: model:ir.model.fields,field_description:stock_ux.field_stock_return_picking__reason
-msgid "Reason for the return"
 msgstr ""
 
 #. module: stock_ux
@@ -809,11 +900,6 @@ msgstr ""
 #. module: stock_ux
 #: model:res.groups,name:stock_ux.group_restrict_to_modify_reservations_from_planned
 msgid "Restrict to modify reservations from planned"
-msgstr ""
-
-#. module: stock_ux
-#: model:ir.model,name:stock_ux.model_stock_return_picking
-msgid "Return Picking"
 msgstr ""
 
 #. module: stock_ux
@@ -931,19 +1017,22 @@ msgid "Stock Rule"
 msgstr ""
 
 #. module: stock_ux
-#: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint__product_max_qty
-msgid "Stock level to reach when replenishing."
-msgstr ""
-
-#. module: stock_ux
-#: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint__product_min_qty
-msgid "The minimum Stock level that will trigger a replenishment."
+#: model:ir.module.module,shortdesc:base.module_stock_ux
+msgid "Stock UX"
 msgstr ""
 
 #. module: stock_ux
 #. odoo-python
 #: code:addons/stock_ux/models/stock_picking.py:0
 msgid "The number of packages cannot be 0"
+msgstr ""
+
+#. module: stock_ux
+#. odoo-python
+#: code:addons/stock_ux/wizards/stock_label_type.py:0
+msgid ""
+"The quantity to print (%(to_print)s) cannot be greater than the original "
+"quantity (%(original)s)."
 msgstr ""
 
 #. module: stock_ux
@@ -1051,16 +1140,6 @@ msgstr ""
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
 msgid "Warnings"
-msgstr ""
-
-#. module: stock_ux
-#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__website_message_ids
-msgid "Website Messages"
-msgstr ""
-
-#. module: stock_ux
-#: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint__website_message_ids
-msgid "Website communication history"
 msgstr ""
 
 #. module: stock_ux

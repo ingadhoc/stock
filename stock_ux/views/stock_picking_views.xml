@@ -11,8 +11,8 @@
                 <field name="operation_type_additional_quantities" invisible="1"/>
                 <button name="new_force_availability" string="Force Availability" invisible="block_manual_lines or state not in ('confirmed', 'waiting', 'assigned') or not is_locked" type="object"/>
             </button>
-            <xpath expr="//button[@name='button_validate'][hasclass('o_btn_validate')]" position="attributes">
-                <attribute name="invisible">(state in ('waiting', 'assigned', 'done', 'cancel')) or (state in ('draft') and operation_type_additional_quantities)</attribute>
+            <xpath expr="//button[@name='button_validate'][hasclass('btn-secondary')]" position="attributes">
+                <attribute name="invisible">validate_button_style != 'secondary' or (state == 'draft' and operation_type_additional_quantities)</attribute>
             </xpath>
             <field name="partner_id" position="attributes">
                 <attribute name="readonly"/>
@@ -23,7 +23,7 @@
                 <field name="number_of_packages" invisible="picking_type_code == 'incoming'"/>
             </field>
 
-            <field name="product_uom" position="before">
+            <field name="uom_id" position="before">
                 <field name="lots_visible" column_invisible="True"/>
                 <field name="used_lots" groups="stock_ux.group_operation_used_lots" invisible="not lots_visible or state not in ['confirmed', 'assigned', 'waiting', 'partially_available', 'done']"/>
             </field>
@@ -41,9 +41,6 @@
             <page name="note" position="attributes">
                 <attribute name="invisible">1</attribute>
             </page>
-            <xpath expr="//button[@name='%(stock.act_stock_return_picking)d']" position="attributes">
-                <attribute name="invisible">state != 'done'</attribute>
-            </xpath>
         </field>
     </record>
 

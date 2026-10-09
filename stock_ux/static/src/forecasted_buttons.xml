@@ -5,7 +5,7 @@
             <button t-name="Movements"
                 class="btn btn-primary"
                 type="button" title="Product Movements"
-                t-on-click="_onClickTrace">
+                t-on-click="this._onClickTrace">
                 Movements
             </button>
         </xpath>
