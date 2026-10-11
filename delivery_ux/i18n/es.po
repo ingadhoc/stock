@@ -43,3 +43,4 @@ msgstr "Métodos de envío"
 #: model:ir.model.fields,help:delivery_ux.field_delivery_carrier__partner_id
 msgid "Utilizado para el remito."
 msgstr ""
+# Prueba de carga de traducciones desde Tuqui Work
