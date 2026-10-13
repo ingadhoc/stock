@@ -170,3 +170,59 @@ class StockPicking(models.Model):
                             )
                         )
         return super().write(vals)
+<<<<<<< d7ee28c4b4ab5fc1e7c9dc0f91f045b368fb8908
+||||||| 8c94b5858668ed8ed261987e7ad767f5caa1beb5
+
+    def button_validate(self):
+        """Valida que no se transfiera más de la demanda inicial."""
+        for picking in self:
+            if picking.picking_type_id.block_additional_quantity:
+                precision = self.env["decimal.precision"].precision_get("Product Unit of Measure")
+                for move in picking.move_ids.filtered(lambda m: m.state not in ("draft", "cancel")):
+                    if float_compare(move.quantity, move.product_uom_qty, precision_digits=precision) == 1:
+                        raise UserError(
+                            _(
+                                "Cannot transfer more than initial demand!\n\n"
+                                "Product: %(product)s\n"
+                                "Initial Demand: %(demand)s\n"
+                                "Attempted Transfer: %(quantity)s\n\n"
+                                "Please update the source document (Purchase/Sales Order) to increase quantities.",
+                                product=move.product_id.display_name,
+                                demand=move.product_uom_qty,
+                                quantity=move.quantity,
+                            )
+                        )
+        return super().button_validate()
+=======
+
+    def button_validate(self):
+        """Valida que no se transfiera más de la demanda inicial."""
+        for picking in self:
+            if picking.picking_type_id.block_additional_quantity:
+                precision = self.env["decimal.precision"].precision_get("Product Unit of Measure")
+                for move in picking.move_ids.filtered(lambda m: m.state not in ("draft", "cancel")):
+                    if float_compare(move.quantity, move.product_uom_qty, precision_digits=precision) == 1:
+                        raise UserError(
+                            _(
+                                "Cannot transfer more than initial demand!\n\n"
+                                "Product: %(product)s\n"
+                                "Initial Demand: %(demand)s\n"
+                                "Attempted Transfer: %(quantity)s\n\n"
+                                "Please update the source document (Purchase/Sales Order) to increase quantities.",
+                                product=move.product_id.display_name,
+                                demand=move.product_uom_qty,
+                                quantity=move.quantity,
+                            )
+                        )
+        return super().button_validate()
+
+    def _prepare_for_automatic_invoicing(self):
+        """Settle picking data that an invoice created on this validation has to carry.
+
+        ``sale_order_type_automation`` calls it on the pickings whose order is
+        invoiced inside their own ``_action_done``, before building the invoice.
+        It lives here, and not there, so a module numbering a delivery document
+        can override it without depending on the sale side.
+        """
+        return
+>>>>>>> 0d7e8f70e6c7cf30e5341f0a5636010a2da8a8b0
