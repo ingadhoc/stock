@@ -9,4 +9,20 @@
             </td>
         </xpath>
     </template>
+    <!-- v19 dropped the company layout from this report; restore it like the other stock reports -->
+    <template id="report_picking_company_layout" inherit_id="stock.report_picking">
+        <xpath expr="//div[hasclass('article')]" position="attributes">
+            <attribute name="class" remove="article o_report_layout_standard" separator=" "/>
+        </xpath>
+        <xpath expr="//div[hasclass('page')]" position="replace">
+            <t t-call="web.external_layout">$0</t>
+        </xpath>
+        <!-- keep the 19.0 table look instead of the company layout table style -->
+        <xpath expr="//table[hasclass('o_main_table')]" position="attributes">
+            <attribute name="class" add="o_ignore_layout_styling" separator=" "/>
+        </xpath>
+        <xpath expr="//table[hasclass('table-borderless')]" position="attributes">
+            <attribute name="class" add="o_ignore_layout_styling" separator=" "/>
+        </xpath>
+    </template>
 </odoo>
