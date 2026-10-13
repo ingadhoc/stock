@@ -110,6 +110,18 @@ class StockPicking(models.Model):
             return self.do_print_and_assign()
         return res
 
+    def _prepare_for_automatic_invoicing(self):
+        # Sólo llegan acá los traslados cuyo pedido se factura en esta misma
+        # validación: la factura se crea y se renderiza ahí, y tiene que mostrar
+        # el remito. El traslado ya está despachado. El preimpreso va por la
+        # estimación de hojas: las reales recién se saben al imprimir, tarde
+        # para esta factura.
+        res = super()._prepare_for_automatic_invoicing()
+        for picking in self.filtered(lambda p: p.book_required and p.book_id and not p.voucher_ids):
+            pages = 1 if picking.book_id.autoprinted else picking.get_estimated_number_of_pages()
+            picking.assign_numbers(pages, picking.book_id)
+        return res
+
     def _action_done(self):
         # Autoimpreso: un remito de N hojas, un solo número, acá. Preimpreso: al
         # imprimir, tantos como hojas reales tenga el PDF.

@@ -174,3 +174,13 @@ class StockPicking(models.Model):
                             )
                         )
         return super().button_validate()
+
+    def _prepare_for_automatic_invoicing(self):
+        """Settle picking data that an invoice created on this validation has to carry.
+
+        ``sale_order_type_automation`` calls it on the pickings whose order is
+        invoiced inside their own ``_action_done``, before building the invoice.
+        It lives here, and not there, so a module numbering a delivery document
+        can override it without depending on the sale side.
+        """
+        return
