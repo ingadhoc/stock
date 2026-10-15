@@ -11,9 +11,6 @@
                 <field name="picking_ids"/>
                 <field name="picking_type_code"/>
             </field>
-            <group>
-                <filter name="picking_type_code" string="Type of Operation" context="{'group_by':'picking_type_code'}"/>
-            </group>
         </field>
     </record>
 
