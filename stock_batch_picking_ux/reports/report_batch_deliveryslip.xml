@@ -41,6 +41,9 @@
             <attribute name="t-value">o</attribute>
         </t>
 
+        <!-- sale_stock takes the company from the picking's sale: batch has no sale_id -->
+        <xpath expr="//t[@t-set='company'][contains(@t-if, 'sale_id')]" position="replace"/>
+
         <!-- Batch partner is directly o.partner_id -->
         <t t-set="partner" position="attributes">
             <attribute name="t-value">o.partner_id or False</attribute>
