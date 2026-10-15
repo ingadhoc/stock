@@ -143,4 +143,11 @@ class StockMove(models.Model):
                 if not float_is_zero(quantity, precision_rounding=layers.uom_id.rounding)
                 else 0
             )
-        return price_unit if not float_is_zero(price_unit, precision) or self._should_force_price_unit() else default
+        # Like purchase_stock does in company currency, a purchase line price is used as is, even when it is zero.
+        if (
+            float_is_zero(price_unit, precision)
+            and not self._should_force_price_unit()
+            and self._should_ignore_pol_price()
+        ):
+            return default
+        return price_unit
