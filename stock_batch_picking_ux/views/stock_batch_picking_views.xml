@@ -4,16 +4,13 @@
     <record model="ir.ui.view" id="stock_batch_picking_search">
         <field name="name">stock.picking.batch.form</field>
         <field name="model">stock.picking.batch</field>
-        <field name="inherit_id" ref="stock_picking_batch.stock_picking_batch_filter"/>
+        <field name="inherit_id" ref="stock.stock_picking_batch_filter"/>
         <field name="arch" type="xml">
             <field name="name" position="after">
                 <!-- Al buscar por picking busca por nro de remito -->
                 <field name="picking_ids"/>
                 <field name="picking_type_code"/>
             </field>
-            <group>
-                <filter name="picking_type_code" string="Type of Operation" context="{'group_by':'picking_type_code'}"/>
-            </group>
         </field>
     </record>
 
@@ -21,7 +18,7 @@
     <record model="ir.ui.view" id="stock_batch_picking_tree">
         <field name="name">stock.picking.batch.form</field>
         <field name="model">stock.picking.batch</field>
-        <field name="inherit_id" ref="stock_picking_batch.stock_picking_batch_tree"/>
+        <field name="inherit_id" ref="stock.stock_picking_batch_tree"/>
         <field name="arch" type="xml">
             <field name="name" position="after">
                 <field name="partner_id" optional="show"/>
@@ -34,7 +31,7 @@
     <record model="ir.ui.view" id="stock_batch_picking_form">
         <field name="name">stock.picking.batch.form</field>
         <field name="model">stock.picking.batch</field>
-        <field name="inherit_id" ref="stock_picking_batch.stock_picking_batch_form"/>
+        <field name="inherit_id" ref="stock.stock_picking_batch_form"/>
         <field name="arch" type="xml">
 
             <!-- No permitir cargar traslados hasta elegir el tipo de operación:
