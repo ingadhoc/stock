@@ -119,6 +119,8 @@ class TestBatchPartnerUx(TransactionCase):
         self.assertEqual(batch_con.partner_id, self.partner_a)
         action_con = batch_con.action_print_delivery_slip()
         self.assertEqual(action_con.get("report_name"), consolidated.report_name)
+        html = self.env["ir.actions.report"]._render_qweb_html(consolidated.report_name, batch_con.ids)[0]
+        self.assertIn(batch_con.name, html.decode())
 
         picking_b = self._new_delivery(self.partner_b)
         batch_sin = self._new_batch().with_context(discard_logo_check=True)
