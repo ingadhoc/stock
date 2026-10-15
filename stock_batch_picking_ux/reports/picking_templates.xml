@@ -182,8 +182,6 @@ Fecha
                                 <t t-elif="batch.partner_id.parent_id and batch.partner_id.parent_id.phone">
                                     <t t-esc="batch.partner_id.parent_id.phone"/>
                                 </t>
-                                <t t-else="">
-                                </t>
                             </div>
                             <!-- Fin destino -->
                             <hr style="border-top: 1px solid black"/>
@@ -192,8 +190,6 @@ Fecha
                             <t t-if="batch._fields.get('carrier_id') and batch.carrier_id">
 Transportista:
                                 <t t-esc="batch.carrier_id.name"/>
-                            </t>
-                            <t t-else="">
                             </t>
                             <div style="font-weight: normal;">ordenes:
                                 <t t-esc="', '.join([o for o in batch.picking_ids.mapped('origin') if o])"/>
