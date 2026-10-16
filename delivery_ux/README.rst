@@ -14,7 +14,9 @@
 Delivery Ux
 ===========
 
-#. Add partner_id field on delivery method.
+Adds a "Carrier Address" field (``partner_id``) on shipping methods, to link
+each carrier with its contact. Other modules use it to print the carrier data
+on the delivery slip.
 
 Installation
 ============
@@ -28,14 +30,16 @@ Configuration
 
 To configure this module, you need to:
 
-#. Just select the partner in the carrier.
+#. Go to Sales > Configuration > Deliveries, open a shipping method and set its
+   "Carrier Address".
 
 Usage
 =====
 
 To use this module, you need to:
 
-#. Just use it.
+#. Validate and print a transfer that uses that shipping method: the carrier
+   contact is available for the delivery slip.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
