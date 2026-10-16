@@ -251,6 +251,12 @@ class StockMove(models.Model):
 
         return super(StockMove, self).create(vals_list)
 
+    def write(self, vals):
+        res = super().write(vals)
+        if "location_id" in vals or "location_dest_id" in vals:
+            self.product_id._update_orderpoints_qty_to_order()
+        return res
+
     @api.depends("state", "picking_id")
     def _compute_is_initial_demand_editable(self):
         super(StockMove, self)._compute_is_initial_demand_editable()

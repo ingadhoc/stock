@@ -118,7 +118,16 @@ class StockMoveLine(models.Model):
                 product = rec.product_id.with_context(lang=rec.picking_id.partner_id.lang or rec.env.user.lang)
                 rec.description_picking = product._get_description(rec.picking_id.picking_type_id)
         recs._check_manual_lines()
+        recs.filtered(lambda ml: ml.state == "done").product_id._update_orderpoints_qty_to_order()
         return recs
+
+    def write(self, vals):
+        done_lines = self.env["stock.move.line"]
+        if {"quantity", "product_uom_id", "location_id", "location_dest_id"} & vals.keys():
+            done_lines = self.filtered(lambda ml: ml.state == "done")
+        res = super().write(vals)
+        done_lines.product_id._update_orderpoints_qty_to_order()
+        return res
 
     def _get_aggregated_product_quantities(self, **kwargs):
         aggregated_move_lines = super()._get_aggregated_product_quantities(**kwargs)
