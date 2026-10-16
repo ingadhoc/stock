@@ -41,5 +41,5 @@ msgstr "Métodos de envío"
 
 #. module: delivery_ux
 #: model:ir.model.fields,help:delivery_ux.field_delivery_carrier__partner_id
-msgid "Utilizado para el remito."
-msgstr ""
+msgid "Used on the delivery slip."
+msgstr "Utilizado para el remito."
