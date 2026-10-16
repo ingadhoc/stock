@@ -17,7 +17,6 @@
         <xpath expr="//div[hasclass('page')]" position="replace">
             <t t-call="web.external_layout">$0</t>
         </xpath>
-        <xpath expr="//t[@t-if='not o_last']" position="replace"/>
         <!-- keep the 19.0 table look instead of the company layout table style -->
         <xpath expr="//table[hasclass('o_main_table')]" position="attributes">
             <attribute name="class" add="o_ignore_layout_styling" separator=" "/>
