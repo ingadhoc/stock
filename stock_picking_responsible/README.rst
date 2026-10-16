@@ -14,7 +14,10 @@
 Stock Picking Responsible
 =========================
 
-Create a new field "Responsible" on stock move, related to the respective pickings field.
+Shows the responsible of the transfer on its stock moves and makes it easier to search transfers by responsible:
+
+* Adds the "Picking Responsible" field to the stock moves list and form views, related to the responsible of the transfer.
+* Adds a "Responsible" search field and a "Responsible" group by to the transfers search view.
 
 Installation
 ============
@@ -28,14 +31,15 @@ Configuration
 
 To configure this module, you need to:
 
-#. No configuration nedeed.
+#. No configuration needed.
 
 Usage
 =====
 
 To use this module, you need to:
 
-#. Go to ...
+#. Go to Inventory > Reporting > Moves Analysis to see the "Picking Responsible" column on the stock moves.
+#. Go to Inventory > Operations > Transfers to search or group the transfers by responsible.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot

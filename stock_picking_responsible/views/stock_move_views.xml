@@ -16,7 +16,7 @@
         <field name="model">stock.move</field>
         <field name="inherit_id" ref="stock.view_move_form"/>
         <field name="arch" type="xml">
-            <field name="origin" position="before">
+            <field name="reference" position="after">
                 <field name="picking_user_id"/>
             </field>
         </field>
