@@ -3,6 +3,7 @@
 # directory
 ##############################################################################
 from odoo import _, api, fields, models
+from odoo.addons.web.controllers.utils import clean_action
 from odoo.exceptions import UserError
 
 
@@ -105,10 +106,44 @@ class StockPicking(models.Model):
             and self.book_id
             and self.picking_type_id.auto_print_delivery_slip
         ):
-            if self.autoprinted:
-                return self.do_print_voucher()
-            return self.do_print_and_assign()
+            # ``discard_logo_check`` evita que ``report_action`` devuelva el wizard de
+            # configuración del membrete en vez del reporte: una validación no es el
+            # momento de configurarlo, y el core ya lo saltea con ``config=False``.
+            picking = self.with_context(discard_logo_check=True)
+            voucher_action = picking.do_print_voucher() if self.autoprinted else picking.do_print_and_assign()
+            return self._merge_voucher_print_action(res, voucher_action)
         return res
+
+    def _merge_voucher_print_action(self, res, voucher_action):
+        """Devolver el remito dentro de la acción cliente ``do_multi_print`` del core.
+
+        Un ``ir.actions.report`` pelado sólo lo ejecuta el formulario: el cliente
+        de Código de barras descarta toda acción sin ``res_model`` que no sea
+        ``ir.actions.client``, y el traslado queda validado sin bajar el PDF.
+        """
+        clean_action(voucher_action, self.env)
+        reports = []
+        another_action = False
+        if isinstance(res, dict) and res.get("tag") != "do_multi_print":
+            # Otra acción del core (p. ej. el reporte de recepción): no se descarta,
+            # viaja donde el cliente la espera después de imprimir.
+            another_action = res
+        elif isinstance(res, dict):
+            params = res.get("params") or {}
+            # El remito reemplaza al recibo de entrega que arma el core con el
+            # mismo reporte: el nuestro va numerado y con el contexto que el
+            # preimpreso necesita para que el controller cuente las hojas. Se
+            # compara contra el reporte propio y no contra
+            # ``stock.action_report_delivery`` porque ``report_substitute``
+            # resuelve la regla de sustitución dentro de ``report_action``.
+            voucher_report = voucher_action.get("report_name")
+            reports = [report for report in params.get("reports") or [] if report.get("report_name") != voucher_report]
+            another_action = params.get("anotherAction", False)
+        return {
+            "type": "ir.actions.client",
+            "tag": "do_multi_print",
+            "params": {"reports": [voucher_action] + reports, "anotherAction": another_action},
+        }
 
     def _prepare_for_automatic_invoicing(self):
         # Sólo llegan acá los traslados cuyo pedido se factura en esta misma
