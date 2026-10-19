@@ -113,8 +113,69 @@ class StockMoveLine(models.Model):
                 product = rec.product_id.with_context(lang=rec.picking_id.partner_id.lang or rec.env.user.lang)
                 rec.description_picking = product._get_description(rec.picking_id.picking_type_id)
         recs._check_manual_lines()
+        recs.filtered(lambda ml: ml.state == "done").product_id._update_orderpoints_qty_to_order()
         return recs
 
+<<<<<<< 9ad1dda987a83a88d6b2f238fac535577951133b
+||||||| a9de920fc17b1a40cb1414eca64adb7093ebd5bd
+    def _get_aggregated_product_quantities(self, **kwargs):
+        aggregated_move_lines = super()._get_aggregated_product_quantities(**kwargs)
+        use_origin = (
+            self.env["ir.config_parameter"].sudo().get_param("stock_ux.delivery_slip_use_origin", "False") == "True"
+        )
+        if use_origin:
+            move_line_by_move = {}
+            for sml in self:
+                move = sml.move_id
+                if move and move.origin_description and sml.picking_id.origin:
+                    move_line_by_move.setdefault(
+                        move.id, {"description": move.origin_description, "product_id": sml.product_id.id}
+                    )
+            used_moves = set()
+            for line_data in aggregated_move_lines.values():
+                for move_id, move_info in move_line_by_move.items():
+                    if move_info["product_id"] == line_data["product"].id and move_id not in used_moves:
+                        line_data["description"] = False
+                        line_data["name"] = move_info["description"]
+                        used_moves.add(move_id)
+                        break
+
+        return aggregated_move_lines
+
+=======
+    def write(self, vals):
+        done_lines = self.env["stock.move.line"]
+        if {"quantity", "product_uom_id", "location_id", "location_dest_id"} & vals.keys():
+            done_lines = self.filtered(lambda ml: ml.state == "done")
+        res = super().write(vals)
+        done_lines.product_id._update_orderpoints_qty_to_order()
+        return res
+
+    def _get_aggregated_product_quantities(self, **kwargs):
+        aggregated_move_lines = super()._get_aggregated_product_quantities(**kwargs)
+        use_origin = (
+            self.env["ir.config_parameter"].sudo().get_param("stock_ux.delivery_slip_use_origin", "False") == "True"
+        )
+        if use_origin:
+            move_line_by_move = {}
+            for sml in self:
+                move = sml.move_id
+                if move and move.origin_description and sml.picking_id.origin:
+                    move_line_by_move.setdefault(
+                        move.id, {"description": move.origin_description, "product_id": sml.product_id.id}
+                    )
+            used_moves = set()
+            for line_data in aggregated_move_lines.values():
+                for move_id, move_info in move_line_by_move.items():
+                    if move_info["product_id"] == line_data["product"].id and move_id not in used_moves:
+                        line_data["description"] = False
+                        line_data["name"] = move_info["description"]
+                        used_moves.add(move_id)
+                        break
+
+        return aggregated_move_lines
+
+>>>>>>> d4193bb425cb381b046b62ef33173959250f2a1e
     def _inverse_qty_done(self):
         """
         It uses the `from_inverse_qty_done` context key to indicate that the update originates from
