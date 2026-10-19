@@ -101,6 +101,17 @@ class TestRemitoNumbering(TransactionCase):
         self.assertEqual(picking.state, "done")
         self.assertEqual(len(picking.voucher_ids), 1)
 
+    def test_validation_returns_an_action_the_barcode_can_run(self):
+        # El cliente de Código de barras descarta un ``ir.actions.report`` pelado:
+        # tiene que viajar dentro de la acción cliente ``do_multi_print``, y una
+        # sola vez (el core arma el mismo reporte con ``auto_print_delivery_slip``).
+        picking = self._make_done_picking(self.book_auto, validate=False)
+        picking.picking_type_id.auto_print_delivery_slip = True
+        action = picking.with_context(skip_sms=True).button_validate()
+        self.assertEqual(action["type"], "ir.actions.client")
+        self.assertEqual(action["tag"], "do_multi_print")
+        self.assertEqual(len(action["params"]["reports"]), 1, "El core arma el mismo reporte: no se imprime dos veces.")
+
     def test_print_numbers_the_autoprinted_book(self):
         picking = self._make_done_picking(self.book_auto, book_required=False)
         picking.do_print_voucher()
