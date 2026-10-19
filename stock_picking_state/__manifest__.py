@@ -31,7 +31,7 @@
         "stock",
     ],
     "data": [
-        "security/ir.model.access.csv",
+        "security/ir.access.csv",
         "views/stock_picking_state_detail.xml",
         "views/stock_picking_views.xml",
     ],
