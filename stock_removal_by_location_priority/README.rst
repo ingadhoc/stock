@@ -14,14 +14,18 @@
 Stock Removal by Location priority
 ==================================
 
-Add a new option on product categories to force removal strategy by locations priority, this is the default value for categories. It also creates this new field for ordering the locations. The locations priority will be appended to the removal strategy (FIFO, LIFO, etc)
+Add a new removal strategy, By Location Priority, that takes the stock out of the locations with the lowest removal priority first. It also adds a Removal Priority field on locations, used to order them. This strategy replaces the order of the standard ones (FIFO, LIFO, etc), it is not appended to them.
 
 Usage
 =====
 
 To use this module, you need to:
 
-#. Go to ...
+#. Go to Inventory > Configuration > Locations, open a location and set its
+   Removal Priority. The lower the value, the sooner the stock leaves that
+   location. New locations get 10.
+#. Set "By Location Priority" as the Force Removal Strategy of a product
+   category, or as the Removal Strategy of a location.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
