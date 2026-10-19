@@ -4,7 +4,6 @@
 ##############################################################################
 import io
 import logging
-import re
 
 from odoo import models
 
@@ -71,7 +70,7 @@ class IrActionsReport(models.Model):
         try:
             content = self._render(self.report_name, picking.ids, data=data)[0]
             reader = PdfFileReader(io.BytesIO(content))
-            pages_with_products = self._count_pages_with_products(reader, picking)
+            pages_with_products = picking._count_pages_with_products(reader)
             copies = self.copies or 0
             if copies:
                 total_pages = int(len(reader.pages) / copies)
@@ -79,40 +78,3 @@ class IrActionsReport(models.Model):
             return max(1, pages_with_products)
         except Exception:  # noqa: BLE001 - any render/parse issue -> single voucher
             return 1
-
-    def _count_pages_with_products(self, pdf_reader, picking):
-        """Count the pages that actually contain products by matching product
-        identifiers (internal reference / barcode) in the page text, in a
-        language independent way. Mirrors the logic used by the download
-        controller in ``stock_voucher_ux``."""
-        move_lines = picking.move_line_ids or picking.move_ids
-
-        product_identifiers = set()
-        for line in move_lines:
-            product = line.product_id
-            if not product:
-                continue
-            if product.default_code:
-                product_identifiers.add(product.default_code.lower().strip())
-            if product.barcode:
-                product_identifiers.add(product.barcode.lower().strip())
-
-        pages_with_products = 0
-        for page_num in range(len(pdf_reader.pages)):
-            try:
-                text = pdf_reader.pages[page_num].extract_text()
-                if not text:
-                    continue
-                text_lower = text.lower()
-                if product_identifiers and any(pid in text_lower for pid in product_identifiers):
-                    has_products = True
-                else:
-                    # Fallback: generic numeric pattern (language independent).
-                    has_products = bool(re.search(r"\b\d+[.,]\d+\b", text_lower))
-                if has_products:
-                    pages_with_products += 1
-            except Exception:  # noqa: BLE001 - if text can't be extracted assume it has products
-                pages_with_products += 1
-
-        # There is always at least one page with products.
-        return max(1, pages_with_products)
