@@ -15,30 +15,30 @@
 <t t-set="report_partner" t-value="batch.picking_ids[:1].picking_type_id.report_partner_id"/>
 <t t-if="report_partner">
 ^CF0,60^CI28^FO50,50^FD
-<t t-esc="report_partner.name"/>
+<t t-out="report_partner.name"/>
 ^FS ^CF0,30 ^FO50,115^FD
-<t t-esc="report_partner.street"/>
+<t t-out="report_partner.street"/>
 ^FS ^FO50,155^FD
-(<t t-esc="batch.company_id.zip"/>
-)<t t-esc="report_partner.city"/>
+(<t t-out="batch.company_id.zip"/>
+)<t t-out="report_partner.city"/>
 ^FS ^FO50,195^FD
-<t class="oe_inline" t-esc="report_partner.state_id.name"/>
+<t class="oe_inline" t-out="report_partner.state_id.name"/>
 ,
-<t class="oe_inline" t-esc="report_partner.country_id.name"/>
+<t class="oe_inline" t-out="report_partner.country_id.name"/>
 ^FS ^FO50,250^GB700,3,3^FS
 </t>
 <t t-else="">
 ^CF0,60 ^FO50,50^FD
-<t t-esc="batch.company_id.name"/>
+<t t-out="batch.company_id.name"/>
 ^FS ^CF0,30 ^CI28 ^FO50,115^FD
-<t t-esc="batch.company_id.street"/>
+<t t-out="batch.company_id.street"/>
 ^FS ^FO50,155^FD
-(<t t-esc="batch.company_id.zip"/>
-)<t t-esc="batch.company_id.city"/>
+(<t t-out="batch.company_id.zip"/>
+)<t t-out="batch.company_id.city"/>
 ^FS ^FO50,195^FD
-<t class="oe_inline" t-esc="batch.company_id.state_id.name"/>
+<t class="oe_inline" t-out="batch.company_id.state_id.name"/>
 ,
-<t class="oe_inline" t-esc="batch.company_id.country_id.name"/>
+<t class="oe_inline" t-out="batch.company_id.country_id.name"/>
 
 ^FS ^FO50,250^GB700,3,3^FS
 <!-- Fin encabezado -->
@@ -47,34 +47,34 @@
 <t t-if="batch.partner_id.parent_id">
 ^FX Second section with recipient address and permit information. ^CFJ,23 ^FO50,280^FDDestinatario^FS ^CF0,45 ^TBN,700,100
 ^FO50,310^FD
-<t t-esc="batch.partner_id.parent_id.name"/>
+<t t-out="batch.partner_id.parent_id.name"/>
 ^FS
 </t>
 <t t-else="">
 ^FX Second section with recipient address and permit information. ^CFJ,23 ^FO50,280^FDDestinatario^FS ^CF0,45 ^TBN,700,100
 ^FO50,310^FD
-<t t-esc="batch.partner_id.name"/>
+<t t-out="batch.partner_id.name"/>
 ^FS
 </t>
 ^CF0,30 ^FO50,425^FD
-<t t-esc="batch.partner_id.street"/>
+<t t-out="batch.partner_id.street"/>
 ^FS ^FO50,465^FD
-<t class="oe_inline" t-esc="batch.partner_id.zip"/>
+<t class="oe_inline" t-out="batch.partner_id.zip"/>
 ,
-<t class="oe_inline" t-esc="batch.partner_id.city"/>
+<t class="oe_inline" t-out="batch.partner_id.city"/>
 ^FS ^FO50,505^FD
-<t class="oe_inline" t-esc="batch.partner_id.state_id.name"/>
+<t class="oe_inline" t-out="batch.partner_id.state_id.name"/>
 ,
-<t class="oe_inline" t-esc="batch.partner_id.country_id.name"/>
+<t class="oe_inline" t-out="batch.partner_id.country_id.name"/>
 ^FS ^FO50,545^FDTel: ^FS
 <t t-if="batch.partner_id and batch.partner_id.phone">
 ^FO100,545^FD
-<t t-esc="batch.partner_id.phone"/>
+<t t-out="batch.partner_id.phone"/>
 ^FS
 </t>
 <t t-elif="batch.partner_id.parent_id and batch.partner_id.parent_id.phone">
 ^FO100,545^FD
-<t t-esc="batch.partner_id.parent_id.phone"/>
+<t t-out="batch.partner_id.parent_id.phone"/>
 ^FS
 </t>
 <t t-else="">
@@ -82,21 +82,21 @@
 </t>
 ^FS^FS ^FO50,655^GB700,3,3^FS
 ^FX Referencias Odoo ^CFJ,25 ^FO50,680^FDOrden:^FS ^FO50,720^FDRemito:^FS ^CF0,28 ^FO160,680^FD
-<t t-esc="', '.join([o for o in batch.picking_ids.mapped('origin') if o])" styles="font-size:7px"/>
+<t t-out="', '.join([o for o in batch.picking_ids.mapped('origin') if o])" styles="font-size:7px"/>
 ^FS ^FO160,720^FD
 <t t-set="voucher_names" t-value="batch._fields.get('l10n_ar_delivery_guide_number') and batch.l10n_ar_delivery_guide_number or ''"/>
-<t t-esc="voucher_names"/>
+<t t-out="voucher_names"/>
 ^FS ^BY3,2,160 ^FO100,765^BC^FD
-<t t-esc="batch.name"/>
+<t t-out="batch.name"/>
 ^FS ^FX Fecha y nro de bultos ^FO50,980^GB700,170,3^FS ^FO400,980^GB3,170,3^FS ^CFJ,30 ^FO180,1020^FDBultos^FS
-^CF0,50 ^FO160,1070^FD<t t-esc="numero"/>
+^CF0,50 ^FO160,1070^FD<t t-out="numero"/>
  de <t t-if="batch.number_of_packages == 0">1</t>
 <t t-else="">
-<t t-esc="batch.number_of_packages"/>
+<t t-out="batch.number_of_packages"/>
 </t>^FS ^CFJ,30 ^FO520,1020^FD
 Fecha
 ^FS ^CF0,50 ^FO460,1070^FD
-<t t-esc="batch.picking_ids[:1].date_done" t-options="{'widget': 'date'}"/>
+<t t-out="batch.picking_ids[:1].date_done" t-options="{'widget': 'date'}"/>
 ^FS ^XZ
                 </t>
             </t>
@@ -121,18 +121,18 @@ Fecha
                                     <t t-set="report_partner" t-value="batch.picking_ids[:1].picking_type_id.report_partner_id"/>
                                     <t t-if="report_partner">
                                         <h4>
-                                            <span t-esc="report_partner.name"/>
+                                            <span t-out="report_partner.name"/>
                                         </h4>
                                         <br/>
-                                        <span t-esc="report_partner.street"/>
+                                        <span t-out="report_partner.street"/>
                                         <br/>
 
-(                                        <span t-esc="batch.company_id.zip"/>
-)                                        <span t-esc="report_partner.city"/>
+(                                        <span t-out="batch.company_id.zip"/>
+)                                        <span t-out="report_partner.city"/>
                                         <br/>
-                                        <span class="oe_inline" t-esc="report_partner.state_id.name"/>
+                                        <span class="oe_inline" t-out="report_partner.state_id.name"/>
 ,
-                                        <span class="oe_inline" t-esc="report_partner.country_id.name"/>
+                                        <span class="oe_inline" t-out="report_partner.country_id.name"/>
 
                                     </t>
                                     <t t-else="">
@@ -159,28 +159,28 @@ Fecha
                             <div style="font-weight: normal;">Destinatario:</div>
                             <h4 style="font-weight: normal;">
                                 <t t-if="batch.partner_id.parent_id">
-                                    <t t-esc="batch.partner_id.parent_id.name"/>
+                                    <t t-out="batch.partner_id.parent_id.name"/>
                                 </t>
                                 <t t-else="">
-                                    <t t-esc="batch.partner_id.name"/>
+                                    <t t-out="batch.partner_id.name"/>
                                 </t>
                             </h4>
 
-                            <t t-esc="batch.partner_id.street"/>
+                            <t t-out="batch.partner_id.street"/>
                             <br/>
-                    [                            <t class="oe_inline" t-esc="batch.partner_id.zip"/>
+                    [                            <t class="oe_inline" t-out="batch.partner_id.zip"/>
 ]
-                            <t class="oe_inline" t-esc="batch.partner_id.city"/>
+                            <t class="oe_inline" t-out="batch.partner_id.city"/>
                     ,
-                            <t class="oe_inline" t-esc="batch.partner_id.state_id.name"/>
+                            <t class="oe_inline" t-out="batch.partner_id.state_id.name"/>
 ,
-                            <t class="oe_inline" t-esc="batch.partner_id.country_id.name"/>
+                            <t class="oe_inline" t-out="batch.partner_id.country_id.name"/>
                             <div style="font-weight: normal;">Tel:
                                 <t t-if="batch.partner_id and batch.partner_id.phone">
-                                    <t t-esc="batch.partner_id.phone"/>
+                                    <t t-out="batch.partner_id.phone"/>
                                 </t>
                                 <t t-elif="batch.partner_id.parent_id and batch.partner_id.parent_id.phone">
-                                    <t t-esc="batch.partner_id.parent_id.phone"/>
+                                    <t t-out="batch.partner_id.parent_id.phone"/>
                                 </t>
                             </div>
                             <!-- Fin destino -->
@@ -189,14 +189,14 @@ Fecha
 
                             <t t-if="batch._fields.get('carrier_id') and batch.carrier_id">
 Transportista:
-                                <t t-esc="batch.carrier_id.name"/>
+                                <t t-out="batch.carrier_id.name"/>
                             </t>
                             <div style="font-weight: normal;">ordenes:
-                                <t t-esc="', '.join([o for o in batch.picking_ids.mapped('origin') if o])"/>
+                                <t t-out="', '.join([o for o in batch.picking_ids.mapped('origin') if o])"/>
                             </div>
                             <div style="font-weight: normal;">Remito/s:
                                 <t t-set="voucher_names" t-value="batch._fields.get('l10n_ar_delivery_guide_number') and batch.l10n_ar_delivery_guide_number or ''"/>
-                                <t t-esc="voucher_names"/>
+                                <t t-out="voucher_names"/>
                             </div>
                             <br/>
                             <div name="footer_left_column" position="inside">
@@ -204,7 +204,7 @@ Transportista:
                             </div>
 
                             <div style="text-align: center;">
-                                <t t-esc="batch.name"/>
+                                <t t-out="batch.name"/>
                             </div>
 
                             <br/>
@@ -219,14 +219,14 @@ Transportista:
                                 <tbody>
                                     <tr>
                                         <td style="text-align:center;">
-                                            <t t-esc="numero"/>
+                                            <t t-out="numero"/>
  de <t t-if="batch.number_of_packages == 0">1</t>
                                             <t t-else="">
-                                                <t t-esc="batch.number_of_packages"/>
+                                                <t t-out="batch.number_of_packages"/>
                                             </t>
                                         </td>
                                         <td style="text-align:center;">
-                                            <t t-esc="batch.picking_ids[:1].date_done" t-options="{'widget': 'date'}"/>
+                                            <t t-out="batch.picking_ids[:1].date_done" t-options="{'widget': 'date'}"/>
                                         </td>
                                     </tr>
                                 </tbody>
