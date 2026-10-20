@@ -35,9 +35,9 @@ Walkthrough numérico combinado para validar el comportamiento de `standard_pric
 | 2  | 2   | Landed cost sobre Op 1    | —   | (+200 LC) | (+0.17)| 10 | 10.17 | 1020 | **1.02** |
 | 3  | 2   | Recepción compra 2        | +10 | 24 000 | 20.00 | 20 | 30.17 | 1710 | **1.51** |
 | 4  | 2   | Entrega a cliente         | -5  | -8 550 | -7.54 (qty × AVCO USD) | 15 | 22.63 | 1710 | **1.51** |
-| 5  | 3   | Devolución del cliente    | +2  |  3 420 |  2.28 (conv. fecha) | 17 | 24.91 | 1710 | **1.47** |
-| 6  | 3   | Ajuste de inventario +3   | +3  |  5 130 |  4.40 (qty × AVCO USD) | 20 | 29.30 | 1710 | **1.47** |
-| 7  | 3   | Ajuste de inventario -2   | -2  | -3 420 | -2.93 (qty × AVCO USD) | 18 | 26.37 | 1710 | **1.47** |
+| 5  | 3   | Devolución del cliente    | +2  |  3 420 |  3.02 (espejo de la entrega) | 17 | 25.65 | 1710 | **1.51** |
+| 6  | 3   | Ajuste de inventario +3   | +3  |  5 130 |  4.53 (qty × AVCO USD) | 20 | 30.18 | 1710 | **1.51** |
+| 7  | 3   | Ajuste de inventario -2   | -2  | -3 420 | -3.02 (qty × AVCO USD) | 18 | 27.16 | 1710 | **1.51** |
 
 ## Detalle por operación
 
@@ -165,17 +165,16 @@ más disparara el recompute. Cubierto por
 **Asserts sobre el move**
 - `move.value = 2 × 1710 = 3420 ARS` (Odoo estándar devuelve a costo actual).
 - `_compute_valuation_currency_id` filtra `purchase_id and incoming` → no setea `picking.currency_rate`. Queda en 0.
-- Branch `elif move.picking_id` → conversión por fecha Día 3 (0.000667).
-- `move.value_in_currency = 3420 × 0.000667 ≈ 2.28 USD`.
+- Branch `elif move.origin_returned_move_id.is_out` → espejo de la entrega, como el core en ARS (`_get_value_from_returns`).
+- `move.value_in_currency = 7.54 × 2 / 5 ≈ 3.02 USD` (no 3420 ARS a la tasa del Día 3).
 
 **Asserts sobre el producto**
-- Replay: previous_qty=15>0; in_value=2.28; value=22.63+2.28=24.91; qty=17; avg=24.91/17 ≈ **1.4651 USD**.
-- `standard_price_in_currency ≈ 1.47 USD`.
+- Replay: previous_qty=15>0; in_value=3.02; value=22.6275+3.02=25.6475; qty=17; avg ≈ **1.5087 USD**.
+- `standard_price_in_currency ≈ 1.51 USD`.
 - `standard_price` (Odoo AVG) ≈ 1710 ARS (devolución valuada a avg actual, mismo valor).
 
 **Punto crítico**
-- La tasa USADA en la devolución es la de Día 3, NO la del costo promedio histórico. Esto **degrada** el avg en USD aunque en ARS no haya cambio.
-- Caso a documentar: si el negocio espera que las devoluciones de cliente sean "espejo" de la entrega, hay divergencia. Posible mejora: usar tasa del move original al que se devuelve.
+- La devolución vuelve al valor en USD con que salió, igual que en ARS vuelve al valor de la entrega. El avg en USD no cambia, como tampoco cambia en ARS.
 
 ### Op 6 — Ajuste de inventario +3 (Día 3)
 
@@ -191,23 +190,26 @@ más disparara el recompute. Cubierto por
       # OUT (con o sin picking) y ajustes IN sin picking (inventario, scrap, producción):
       # qty × standard_price_in_currency (AVCO USD vigente, previo al move).
       base_value_in_currency = move._get_valued_qty() * std_price_in_currency
+  elif move.origin_returned_move_id.is_out:
+      # devolución del cliente: espejo de la entrega
+      base_value_in_currency = origin_move.value_in_currency * qty / origin_qty
   elif move.picking_id.currency_rate:
       base_value_in_currency = base_value * move.picking_id.currency_rate
   else:
-      # conversión por fecha (IN con picking sin tasa propia: devoluciones, etc.)
+      # conversión por fecha (IN con picking sin tasa propia ni movimiento de origen)
       base_value_in_currency = move.company_id.currency_id._convert(...)
   move.value_in_currency = base_value_in_currency + lc_value_in_currency
   ```
-- Este ajuste es IN sin picking → cae en la primera rama. Resultado: `move.value_in_currency = 3 × 1.4651 ≈ 4.40 USD` (usa el `standard_price_in_currency` del producto justo antes del ajuste).
+- Este ajuste es IN sin picking → cae en la primera rama. Resultado: `move.value_in_currency = 3 × 1.5087 ≈ 4.53 USD` (usa el `standard_price_in_currency` del producto justo antes del ajuste).
 
 **Asserts sobre el producto**
-- Replay (precisión interna): previous_qty=17>0; in_value=3 × 1.46514 ≈ 4.3954; value=24.9075+4.3954=29.3029; qty=20; avg=29.3029/20 ≈ **1.4651 USD** (preservado).
-- `total_value_in_currency = 29.30 USD` (display redondeado a 2 decimales).
-- `standard_price_in_currency = 1.47 USD` (sin cambio — el ajuste se valua al AVCO actual).
+- Replay: previous_qty=17>0; in_value=4.53 (almacenado con el redondeo de la moneda); value=25.6475+4.53=30.1775; qty=20; avg ≈ **1.5089 USD** (preservado salvo redondeo).
+- `total_value_in_currency = 30.18 USD`.
+- `standard_price_in_currency = 1.51 USD` (sin cambio — el ajuste se valua al AVCO actual).
 
 **Criterio de diseño**
 - Simétrico al comportamiento de Odoo en ARS: el ajuste se valua a `standard_price`, así que en USD se valua a `standard_price_in_currency`. Esto preserva el promedio en USD (igual que el ajuste preserva el promedio en ARS).
-- Todo OUT (con o sin picking, ver Op 4) cae en esta misma rama: no hay tasa de picking/fecha que tenga sentido para un egreso, así que siempre hereda el AVCO vigente. Sólo el IN con picking sin tasa propia (devoluciones, etc.) usa la conversión por fecha.
+- Todo OUT (con o sin picking, ver Op 4) cae en esta misma rama: no hay tasa de picking/fecha que tenga sentido para un egreso, así que siempre hereda el AVCO vigente. Sólo el IN con picking sin tasa propia ni movimiento de origen usa la conversión por fecha.
 
 ### Op 7 — Ajuste de inventario -2 (Día 3)
 
@@ -217,12 +219,12 @@ más disparara el recompute. Cubierto por
 **Asserts sobre el move**
 - Move sin `picking_id`, es OUT.
 - `move.value = -2 × 1710 = -3420 ARS` (Odoo estándar valua el ajuste negativo al `standard_price`).
-- `_set_value` rama "sin picking" (misma que Op 6): `move.value_in_currency = -2 × standard_price_in_currency = -2 × 1.4651 ≈ -2.93 USD`.
+- `_set_value` rama "sin picking" (misma que Op 6): `move.value_in_currency = -2 × standard_price_in_currency = -2 × 1.5089 ≈ -3.02 USD`.
 
 **Asserts sobre el producto**
-- Replay (precisión interna): previous_qty=20>0; out_value = 2 × 1.46514 ≈ 2.9303; value = 29.3029 - 2.9303 = 26.3726; qty=18; avg ≈ 1.4651 USD.
-- `total_value_in_currency = 26.37 USD` (display redondeado).
-- `standard_price_in_currency` ≈ **1.47 USD** (OUT no dispara recompute; el avg queda preservado).
+- Replay: previous_qty=20>0; out_value = 2 × 1.50888 ≈ 3.0178; value = 30.1775 - 3.0178 = 27.1597; qty=18; avg ≈ 1.5089 USD.
+- `total_value_in_currency = 27.16 USD`.
+- `standard_price_in_currency` ≈ **1.51 USD** (OUT no dispara recompute; el avg queda preservado).
 
 ## Suite de tests sugerida (clases / métodos)
 
@@ -260,7 +262,7 @@ Un solo método largo que ejecuta Op 1 a Op 7 en orden, asertando después de ca
 ### `test_delivery_and_return.py`
 
 - `test_delivery_does_not_change_std_price_in_currency` — invariante.
-- `test_return_uses_current_date_rate` — confirma la conversión por fecha (Op 5).
+- `test_return_comes_back_at_the_value_it_went_out_with` — la devolución es espejo de la entrega (Op 5).
 - `test_return_with_currency_rate_match` — escenario donde se setea manualmente la tasa del momento original; el avg en USD se preserva.
 
 ### `test_landed_cost_currency.py`
@@ -307,7 +309,7 @@ comprados en una unidad distinta a la de stock.
 - Multi-warehouse y `ratio_by_product_id`.
 - Multi-compañía: mismo producto con `valuation_currency` distinta por compañía (company_dependent).
 - Lot-valuated: hoy se devuelve 0; testear que no rompa.
-- Cost method `fifo`: testear `_run_fifo_batch_in_currency` (usa tasa de **hoy**, no de los moves).
+- Cost method `fifo`: cubierto en `test_fifo_value_in_currency.py` (capas en USD a su propio valor, no a la tasa de hoy).
 - Cost method `standard`: que `standard_price_in_currency` NO se autorecompute (decisión actual).
 - Dropship: `is_dropship and (is_in or is_out)` — comportamiento doble.
 - `valuation_currency_id == company.currency_id`: caminos atajo en `stock_landed_cost._compute_amounts_in_currency`.
