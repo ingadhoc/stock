@@ -96,6 +96,7 @@ class StockMove(models.Model):
         # self.env.company puede no coincidir con move.company_id (batch multi-compañía,
         # jobs automatizados). Mezclarlos filtraría/recomputaría con la compañía equivocada.
         products_to_recompute_by_company = defaultdict(set)
+        fifo_qty_processed = defaultdict(float)
 
         # sudo: stock.valuation.adjustment.lines sólo es legible por
         # stock.group_stock_manager, pero este cómputo interno de valuación
@@ -139,9 +140,32 @@ class StockMove(models.Model):
                     # para IN), así que sumarlo acá rompería la paridad y el invariante
                     # "OUT preserva el AVCO" (ver stock.landed.cost.picking_ids: un LC puede
                     # linkearse a un move OUT sin restricción de dirección).
+                    product = move.product_id.with_company(move.company_id)
+                    if move._is_out() and product.cost_method == "fifo":
+                        # FIFO consumes the same layers as the core, at their own value in
+                        # currency, and a quantity correction scales the value like the core does.
+                        previous_qty = correction_quantity and move._quantity_sml() - correction_quantity
+                        if previous_qty:
+                            move.value_in_currency += correction_quantity / previous_qty * move.value_in_currency
+                            continue
+                        valued_qty = move._get_valued_qty()
+                        move.value_in_currency = product.with_context(
+                            fifo_qty_already_processed=fifo_qty_processed[product.id]
+                        )._run_fifo_in_currency(valued_qty)
+                        fifo_qty_processed[product.id] += valued_qty
+                        continue
                     std_price_in_currency = std_price_in_currency_before.get(move.product_id.id, 0)
                     base_value_in_currency = move._get_valued_qty() * std_price_in_currency
                     move.value_in_currency = base_value_in_currency
+                elif move.origin_returned_move_id.is_out:
+                    # A customer return comes back at the value it went out with, as the
+                    # core does in company currency (_get_value_from_returns).
+                    origin_move = move.origin_returned_move_id
+                    origin_qty = origin_move._get_valued_qty()
+                    base_value_in_currency = (
+                        origin_move.value_in_currency * move._get_valued_qty() / origin_qty if origin_qty else 0
+                    )
+                    move.value_in_currency = base_value_in_currency + lc_value_in_currency
                 elif move.picking_id.currency_rate:
                     base_value_in_currency = base_value * move.picking_id.currency_rate
                     move.value_in_currency = base_value_in_currency + lc_value_in_currency
