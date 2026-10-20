@@ -157,6 +157,62 @@ class ResCompany(models.Model):
                 vals["amount_currency"] = amount if vals["debit"] else -amount
         return vals_list
 
+    def _split_valuation_vals_by_product(self, vals_list, accounts_by_product, at_date=None, deltas_by_product=None):
+        """When each product takes its own pending difference (the full closing), give it
+        its own difference in the secondary currency too, instead of a share of the
+        account's amount prorated by the company-currency balances, which hands a product
+        whose layers came in at another rate an amount that is not its own.
+
+        A closing filtered by Movement Type passes its own ``deltas_by_product`` and keeps
+        the proration: there is no per-origin secondary value to book per product.
+        """
+        company = self
+        if deltas_by_product is None:
+            company = self.with_context(
+                valuation_deltas_in_currency=self._get_pending_valuation_deltas_in_currency(
+                    accounts_by_product, at_date
+                )
+            )
+        return super(ResCompany, company)._split_valuation_vals_by_product(
+            vals_list, accounts_by_product, at_date=at_date, deltas_by_product=deltas_by_product
+        )
+
+    def _get_pending_valuation_deltas_in_currency(self, accounts_by_product, at_date=None):
+        """Each product's inventory value in the secondary currency minus the
+        ``amount_currency`` already booked for it, by ``(account id, product id)``."""
+        currency_by_account = self._get_valuation_currency_by_account(accounts_by_product)
+        products = self.env["product.product"].browse(
+            product.id
+            for product, accounts in accounts_by_product.items()
+            if accounts.get("valuation") in currency_by_account
+        )
+        if not products:
+            return {}
+        domain = Domain(
+            [
+                ("account_id", "in", [account.id for account in currency_by_account]),
+                ("company_id", "=", self.id),
+                ("parent_state", "=", "posted"),
+                ("product_id", "in", products.ids),
+                ("currency_id", "in", [currency.id for currency in currency_by_account.values()]),
+            ]
+        )
+        if at_date:
+            domain &= Domain([("date", "<=", at_date)])
+        booked = {
+            (account.id, product.id, currency): amount
+            for account, product, currency, amount in self.env["account.move.line"]._read_group(
+                domain, ["account_id", "product_id", "currency_id"], ["amount_currency:sum"]
+            )
+        }
+        deltas = {}
+        for product in products:
+            account = accounts_by_product[product]["valuation"]
+            currency = currency_by_account[account]
+            inventory_value = product.with_company(self).with_context(to_date=at_date).total_value_in_currency
+            deltas[account.id, product.id] = inventory_value - booked.get((account.id, product.id, currency), 0.0)
+        return deltas
+
     def _get_valuation_val_extra_vals(self, vals, balance, net):
         """Prorate the secondary amount with the SAME denominator as the balance.
 
@@ -188,6 +244,19 @@ class ResCompany(models.Model):
         currency = self.env["res.currency"].browse(vals.get("currency_id"))
         if not (amount_currency and currency):
             return product_vals
+        deltas = self.env.context.get("valuation_deltas_in_currency") or {}
+        if any((vals["account_id"], share.get("product_id")) in deltas for share in product_vals):
+            # Each product takes its own difference and the line with no product what is left
+            product_shares = [share for share in product_vals if share.get("product_id")]
+            for share in product_shares:
+                share["amount_currency"] = currency.round(deltas.get((vals["account_id"], share["product_id"]), 0.0))
+            residual = currency.round(amount_currency - sum(share["amount_currency"] for share in product_shares))
+            unattributed = [share for share in product_vals if not share.get("product_id")]
+            if unattributed:
+                unattributed[0]["amount_currency"] = residual
+                return product_vals
+            if currency.is_zero(residual):
+                return product_vals
         shares = [share for share in product_vals if share.get("amount_currency")]
         if not shares:
             return product_vals
