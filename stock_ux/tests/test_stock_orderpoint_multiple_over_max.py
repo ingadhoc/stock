@@ -41,6 +41,17 @@ class TestStockOrderpointMultipleOverMax(TransactionCase):
 
         self.assertEqual(orderpoint.qty_to_order_computed, 0.0)
 
+    def test_qty_to_order_follows_multiple_over_max_changes(self):
+        self.env.company.stock_orderpoint_allow_multiple_over_max = True
+        orderpoint = self._create_orderpoint()
+        self.assertEqual(orderpoint.qty_to_order_computed, 20.0)
+
+        self.env.company.stock_orderpoint_allow_multiple_over_max = False
+        self.assertEqual(orderpoint.qty_to_order_computed, 0.0)
+
+        orderpoint.qty_multiple_over_max = "allow"
+        self.assertEqual(orderpoint.qty_to_order_computed, 20.0)
+
     def test_orderpoint_can_force_legacy_behavior(self):
         self.env.company.stock_orderpoint_allow_multiple_over_max = False
         orderpoint = self._create_orderpoint(qty_multiple_over_max="allow")

@@ -81,6 +81,8 @@ class StockWarehouseOrderpoint(models.Model):
         "product_id",
         "location_id",
         "product_id.seller_ids.delay",
+        "qty_multiple_over_max",
+        "company_id.stock_orderpoint_allow_multiple_over_max",
     )
     def _compute_qty_to_order_computed(self):
         """Extend to add more depends values.
