@@ -46,9 +46,43 @@ class StockWarehouseOrderpoint(models.Model):
     qty_multiple = fields.Float(tracking=True)
     location_id = fields.Many2one(tracking=True)
     product_id = fields.Many2one(tracking=True)
+<<<<<<< 9ad1dda987a83a88d6b2f238fac535577951133b
     reviewed = fields.Boolean(
         help="Marks the replenishment line as reviewed. It is set automatically when the "
         "quantity to order is adjusted and cleared when the replenishment is generated.",
+||||||| a675106514c5c8570966f47a83e1d00c6fef5f82
+    reviewed = fields.Boolean()
+
+    # Backport from v19: updated depends for qty_to_order_computed
+    # Note: qty_forecast depends on stock_move_ids which changes frequently.
+    # We intentionally don't include it to avoid constant recomputation.
+    # Instead, we rely on the explicit recomputation in _run_pull when moves are created.
+    @api.depends(
+        "qty_multiple",
+        "product_min_qty",
+        "product_max_qty",
+        "visibility_days",
+        "product_id",
+        "location_id",
+        "product_id.seller_ids.delay",
+=======
+    reviewed = fields.Boolean()
+
+    # Backport from v19: updated depends for qty_to_order_computed
+    # Note: qty_forecast depends on stock_move_ids which changes frequently.
+    # We intentionally don't include it to avoid constant recomputation.
+    # Instead, we rely on the explicit recomputation in _run_pull when moves are created.
+    @api.depends(
+        "qty_multiple",
+        "product_min_qty",
+        "product_max_qty",
+        "visibility_days",
+        "product_id",
+        "location_id",
+        "product_id.seller_ids.delay",
+        "qty_multiple_over_max",
+        "company_id.stock_orderpoint_allow_multiple_over_max",
+>>>>>>> 95c8a4c88c57e1723eb2e85b5da2d526e8d1c4f0
     )
 
     @api.depends("product_id", "location_id")
