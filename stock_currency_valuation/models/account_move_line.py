@@ -8,12 +8,8 @@ class AccountMoveLine(models.Model):
         svl_vals_list, aml_vals_list = super()._prepare_pdiff_vals(
             layer, aml, layer_price_unit, out_qty_to_invoice, qty_to_correct
         )
-        valuation_currency_id = self.product_id.with_company(self.company_id.id).categ_id.valuation_currency_id
-        use_valuation_currency = valuation_currency_id == self.currency_id == self.purchase_line_id.currency_id
-        if use_valuation_currency and svl_vals_list:
-            # TODO pueden ser diferentes unidades de media
+        # a bill in another currency keeps the layer compute (converted at the bill date)
+        if svl_vals_list and layer.quantity and layer.valuation_currency_id == aml.currency_id:
             svl_vals_list[0]["bypass_currency_valuation"] = True
-            svl_vals_list[0]["value_in_currency"] = (
-                self.price_total - self.purchase_line_id.price_total / self.purchase_line_id.product_qty * self.quantity
-            )
+            svl_vals_list[0]["value_in_currency"] = layer._get_pdiff_value_in_currency(aml, qty_to_correct)
         return svl_vals_list, aml_vals_list
