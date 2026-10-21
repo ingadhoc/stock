@@ -49,8 +49,12 @@ class StockValuationLayer(models.Model):
                 continue
             # rec.stock_valuation_layer_id
             if not rec.bypass_currency_valuation and rec.valuation_currency_id:
-                if rec.stock_move_id and (rec.stock_move_id._is_out() or rec.stock_move_id.is_inventory):
-                    # Si el movimento es de salida o de inventario, valor es el registrado en el producto
+                if rec.stock_move_id and (
+                    rec.stock_move_id._is_out()
+                    or rec.stock_move_id.is_inventory
+                    or (rec.quantity > 0 and rec.stock_move_id._is_unpriced_receipt())
+                ):
+                    # Si el movimento es de salida, de inventario o un ingreso sin precio, valor es el registrado en el producto
                     rec.value_in_currency = (
                         rec.product_id.with_company(rec.company_id.id).standard_price_in_currency * rec.quantity
                     )
@@ -89,9 +93,31 @@ class StockValuationLayer(models.Model):
         res._update_currency_standard_price()
         return res
 
+    def _is_price_difference(self):
+        """Value-only layer a vendor bill adds on a received layer."""
+        self.ensure_one()
+        return bool(self.account_move_line_id and self.stock_valuation_layer_id and not self.quantity)
+
+    def _get_bill_unit_price(self, aml):
+        """Untaxed bill price after discount, in the product unit, as stock_account takes it."""
+        return aml.product_uom_id._compute_price(aml._get_gross_unit_price(), self.product_id.uom_id)
+
+    def _get_pdiff_value_in_currency(self, aml, quantity):
+        """Price difference of a bill in the valuation currency on this received layer.
+
+        Same terms stock_account uses in company currency: bill unit price against the layer unit
+        cost, only for the quantity still on hand.
+        """
+        self.ensure_one()
+        unit_cost = self.value_in_currency / self.quantity
+        return self.valuation_currency_id.round((self._get_bill_unit_price(aml) - unit_cost) * quantity)
+
     def _update_currency_standard_price(self):
+        # Value-only layers that stock_account also spreads on the cost: landed costs and vendor bill price differences.
         for layer_id in self.filtered(
-            lambda x: x.stock_landed_cost_id and x.product_id.cost_method == "average" and x.value_in_currency
+            lambda x: (x.stock_landed_cost_id or x._is_price_difference())
+            and x.product_id.with_company(x.company_id).cost_method == "average"
+            and x.value_in_currency
         ):
             # batch standard price computation avoid recompute quantity_svl at each iteration
             product = layer_id.product_id.with_company(layer_id.company_id)
