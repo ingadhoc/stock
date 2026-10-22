@@ -7,20 +7,22 @@ from odoo import fields, models
 
 class StockPickingStateDetail(models.Model):
     _name = "stock.picking.state_detail"
-    _description = "stock.picking.state_detail"
-    _order = "sequence"
+    _description = "Transfer State Detail"
+    _order = "sequence, id"
 
     name = fields.Char(
         copy=False,
         required=True,
     )
-    sequence = fields.Integer(copy=False)
+    sequence = fields.Integer(copy=False, default=10)
+    active = fields.Boolean(default=True)
     picking_type = fields.Selection(
+        string="Operation Type",
         required=True,
         selection=[
-            ("internal", "Internal"),
-            ("outgoing", "Outgoing"),
-            ("incoming", "Incoming"),
+            ("internal", "Internal Transfer"),
+            ("outgoing", "Delivery"),
+            ("incoming", "Receipt"),
             ("dropship", "Dropship"),
         ],
     )

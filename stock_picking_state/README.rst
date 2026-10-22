@@ -32,8 +32,10 @@ Configuration
 To configure this module, you need to:
 
 #. Go to Inventory / Configuration / Picking State Detail.
-#. Create the state details, setting for each one its name, sequence, status
-   and operation type.
+#. Create the state details, setting for each one its name, status and
+   operation type. Drag the lines to set their order.
+#. Archive the state details you no longer use: they are not assigned to new
+   transfers.
 
 Usage
 =====
@@ -43,11 +45,11 @@ To use this module, you need to:
 #. When a transfer changes its status, it gets the first state detail (by
    sequence) that matches its new status and operation type. If its current
    state detail still matches, it is kept.
-#. On the transfer form, choose another state detail from the extra status bar
-   under the header. Only the state details of the current status and operation
-   type can be chosen; any other one raises an error.
-#. The state detail is also shown in the transfers list view, and its changes
-   are tracked in the chatter.
+#. On the transfer form, choose another state detail next to the scheduled
+   date. Only the state details of the current status and operation type can be
+   chosen; any other one raises an error.
+#. The state detail is also shown in the transfers list view, where you can
+   search, filter and group by it, and its changes are tracked in the chatter.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
