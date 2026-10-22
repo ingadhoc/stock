@@ -134,3 +134,65 @@ class TestLocationSecurity(TransactionCase):
                 with self.assertRaises(ValidationError):
                     getattr(wizard, method)()
                 self.assertNotEqual(picking.state, "done")
+
+    def test_error_lists_denied_locations(self):
+        """El error nombra todas las ubicaciones que el usuario no controla, no
+        solo la primera."""
+        other_dest_loc = self.env["stock.location"].create(
+            {"name": "Otra zona ajena", "location_id": self.warehouse.lot_stock_id.id}
+        )
+        picking = self._new_picking(self.other_loc, other_dest_loc)
+        with self.assertRaises(ValidationError) as error:
+            picking.with_user(self.user).button_validate()
+        self.assertIn(self.other_loc.name, str(error.exception))
+        self.assertIn(other_dest_loc.name, str(error.exception))
+
+    def test_moves_of_other_pickings_do_not_stop_the_check(self):
+        """Un movimiento de un picking que no se está validando no corta la
+        revisión de los demás: antes el loop hacía `return True` y los
+        movimientos que seguían no se revisaban."""
+        with self.subTest("se revisan los movimientos que siguen a uno de otro picking"):
+            skipped = self._new_picking(self.allowed_loc, self.customer_loc)
+            validated = self._new_picking(self.other_loc, self.customer_loc)
+            moves = skipped.move_ids | validated.move_ids
+            with self.assertRaises(ValidationError):
+                moves.with_user(self.user).with_context(button_validate_picking_ids=validated.ids)._action_done()
+
+        with self.subTest("los movimientos de un picking que no se está validando no se revisan"):
+            skipped = self._new_picking(self.other_loc, self.customer_loc)
+            validated = self._new_picking(self.allowed_loc, self.customer_loc)
+            moves = skipped.move_ids | validated.move_ids
+            moves.with_user(self.user).with_context(button_validate_picking_ids=validated.ids)._action_done()
+            self.assertEqual(validated.move_ids.state, "done")
+
+    def test_location_shows_restricted_users(self):
+        """La ubicación muestra los usuarios restringidos que la tienen entre
+        sus ubicaciones permitidas, y no a los que no restringen."""
+        unrestricted = self.env["res.users"].create(
+            {
+                "name": "Usuario sin restricción",
+                "login": "location_security_unrestricted",
+                "group_ids": [(6, 0, [self.env.ref("stock.group_stock_user").id])],
+                "stock_location_ids": [(6, 0, self.allowed_loc.ids)],
+            }
+        )
+        self.assertIn(self.user, self.allowed_loc.restricted_user_ids)
+        self.assertNotIn(unrestricted, self.allowed_loc.restricted_user_ids)
+        self.assertFalse(self.other_loc.restricted_user_ids)
+
+    def test_location_cannot_grant_locations(self):
+        """Las ubicaciones permitidas no se ganan desde la ubicación: ni
+        escribiendo los usuarios ni duplicándola."""
+        manager = self.env["res.users"].create(
+            {
+                "name": "Responsable de inventario",
+                "login": "location_security_manager",
+                "group_ids": [(6, 0, [self.env.ref("stock.group_stock_manager").id])],
+                "restrict_locations": True,
+                "stock_location_ids": [(6, 0, self.allowed_loc.ids)],
+            }
+        )
+        self.other_loc.with_user(manager).write({"restricted_user_ids": [(4, manager.id), (4, self.user.id)]})
+        copy = self.allowed_loc.with_user(manager).copy()
+        self.assertNotIn(self.other_loc, manager.stock_location_ids | self.user.stock_location_ids)
+        self.assertNotIn(copy, manager.stock_location_ids | self.user.stock_location_ids)

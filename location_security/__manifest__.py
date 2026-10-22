@@ -29,6 +29,7 @@
     ],
     "data": [
         "views/res_users_view.xml",
+        "views/stock_location_view.xml",
     ],
     "demo": [],
     "installable": True,
