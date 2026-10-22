@@ -38,8 +38,8 @@ Usage
 
 To use this module, you need to:
 
-#. Validate and print a transfer that uses that shipping method: the carrier
-   contact is available for the delivery slip.
+#. Open a transfer that uses that shipping method: its carrier contact is then
+   available to other modules, for example to print it on the delivery slip.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot

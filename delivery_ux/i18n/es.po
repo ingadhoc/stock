@@ -111,7 +111,7 @@ msgstr "Método de entrega"
 #. module: delivery_ux
 #: model:ir.module.module,shortdesc:base.module_delivery_ux
 msgid "Delivery UX"
-msgstr ""
+msgstr "Delivery UX"
 
 #. module: delivery_ux
 #: model:ir.model.fields,field_description:delivery_ux.field_delivery_carrier__display_name
