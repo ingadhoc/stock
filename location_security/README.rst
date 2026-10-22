@@ -14,7 +14,9 @@
 Location Security
 =================
 
-Restrict users from accessing certain stock locations in the Inventory app. This ensures that users can only see and access the stock locations assigned to them, enhancing control and security in your inventory management. Users attempting to perform actions involving restricted locations will receive an error message and be unable to proceed.
+Restrict the stock locations a user can validate transfers from and to. When a restricted user validates a transfer, its source and destination locations must be among the user's allowed locations or their sublocations; otherwise the validation is blocked with an error that lists the locations the user does not control.
+
+The restriction applies only when validating a transfer, including through the backorder wizard. It does not hide locations or transfers, and it does not apply to stock moves done outside the transfer validation, such as scraps, or to cancelled moves.
 
 Installation
 ============
@@ -30,15 +32,16 @@ To configure this module, you need to:
 
 #. Go to Settings>Users & Companies>Users.
 #. Select the user you want to configure.
-#. Under the Preference tab, enable the Restrict Location option.
-#. In the Allowed Stock Locations tab, assign the stock locations the user is allowed to access.
+#. Under the Preferences tab, in the Locations section, enable the Restrict Locations option.
+#. In Allowed Locations, set the locations the user is allowed to work with. Their sublocations are allowed too. Include the partner locations the transfers use, such as Vendors or Customers.
 
 Usage
 =====
 
 To use this module, you need to:
 
-#. No usage needed.
+#. Validate transfers as usual. If the user has restricted locations and a transfer uses a location that is not allowed, the validation is blocked.
+#. On a location form, Restricted Users shows the restricted users that have that location among their allowed locations.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot

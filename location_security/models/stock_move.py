@@ -24,22 +24,20 @@ class StockMove(models.Model):
         # constraint se dispara por efectos colaterales (ej. recreación de
         # movimientos encadenados MTO) generando falsos positivos de
         # "Invalid Location". Ver ticket 109676.
-        if not self.env.context.get("button_validate_picking_ids"):
+        picking_ids = self.env.context.get("button_validate_picking_ids")
+        if not picking_ids:
             return True
-        user_locations = self.env.user.stock_location_ids
-        for user_location in user_locations:
-            location = user_locations.search([("id", "child_of", user_location.id)])
-            user_locations |= location
-        message = _(
-            'Invalid Location. You cannot process this picking "%s" since you do not control the location "%s".'
-        )
-
-        for rec in moves:
-            if self.env.context.get("button_validate_picking_ids") and rec.picking_id.id not in self.env.context.get(
-                "button_validate_picking_ids"
-            ):
-                return True
-            elif rec.location_id not in user_locations:
-                raise ValidationError(message % (rec.picking_id.name, rec.location_id.name))
-            elif rec.location_dest_id not in user_locations:
-                raise ValidationError(message % (rec.picking_id.name, rec.location_dest_id.name))
+        # Solo los movimientos de los pickings que se están validando.
+        moves = moves.filtered(lambda x: x.picking_id.id in picking_ids)
+        user_locations = self.env.user._get_allowed_stock_locations()
+        for picking, picking_moves in moves.grouped("picking_id").items():
+            denied = (picking_moves.location_id | picking_moves.location_dest_id) - user_locations
+            if denied:
+                raise ValidationError(
+                    _(
+                        'Invalid Location. You cannot process the transfer "%(picking)s" since you do not control '
+                        "these locations: %(locations)s.",
+                        picking=picking.name,
+                        locations=", ".join(denied.mapped("display_name")),
+                    )
+                )
