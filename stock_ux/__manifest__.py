@@ -19,7 +19,7 @@
 ##############################################################################
 {
     "name": "Stock UX",
-    "version": "19.0.1.20.0",
+    "version": "19.0.1.21.0",
     "category": "Warehouse Management",
     "sequence": 14,
     "summary": "",
@@ -27,6 +27,7 @@
     "website": "www.adhoc.com.ar",
     "images": [],
     "depends": [
+        "mail",
         "sale_stock",
     ],
     "data": [
@@ -38,6 +39,7 @@
         "views/stock_move_views.xml",
         "views/stock_move_line_views.xml",
         "views/stock_warehouse_orderpoint_views.xml",
+        "views/stock_route_views.xml",
         "views/stock_backorder_confirmation_views.xml",
         "views/stock_return_picking_views.xml",
         "views/stock_picking_type_views.xml",
