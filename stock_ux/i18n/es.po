@@ -536,13 +536,13 @@ msgstr "Si no está marcado, le permitirá ocultar el producto sin removerlo."
 #. odoo-python
 #: code:addons/stock_ux/models/stock_quant.py:0
 msgid "Import Template for Inventory Adjustments"
-msgstr ""
+msgstr "Plantilla de importación de ajustes de inventario"
 
 #. module: stock_ux
 #. odoo-python
 #: code:addons/stock_ux/models/product_template.py:0
 msgid "Import Template for Products"
-msgstr ""
+msgstr "Plantilla de importación de productos"
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse__reception_steps
@@ -1255,6 +1255,9 @@ msgid ""
 "it only takes the counted quantity and the columns identifying the stock "
 "line. Remove it from the file."
 msgstr ""
+"La columna \"%(columns)s\" no se puede importar en un ajuste de inventario: "
+"solo admite la cantidad contada y las columnas que identifican la línea de "
+"stock. Elimínela del archivo."
 
 #. module: stock_ux
 #. odoo-python
@@ -1264,6 +1267,9 @@ msgid ""
 "warehouse to take it in, so every row would land in \"%(location)s\". Add "
 "the location column, or the column that identifies each stock line."
 msgstr ""
+"El archivo no indica dónde se hizo el conteo y hay más de un almacén donde "
+"hacerlo, así que todas las filas quedarían en \"%(location)s\". Agregue la "
+"columna de ubicación, o la columna que identifica cada línea de stock."
 
 #. module: stock_ux
 #: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint__product_min_qty
@@ -1289,6 +1295,9 @@ msgid ""
 "stock. Enable \"Track Inventory\" on the product or remove its rows from the "
 "file."
 msgstr ""
+"El producto \"%(products)s\" no rastrea inventario, así que no puede tener "
+"stock. Active \"Rastrear inventario\" en el producto o elimine sus filas del "
+"archivo."
 
 #. module: stock_ux
 #. odoo-python
@@ -1299,6 +1308,10 @@ msgid ""
 "location, lot, package and owner identify the line: fix that row or drop the "
 "column."
 msgstr ""
+"La línea de stock \"%(quant)s\" no se puede mover a otro \"%(field)s\" desde "
+"un archivo: tiene \"%(current)s\" y el archivo trae \"%(new)s\". El "
+"producto, la ubicación, el lote, el paquete y el propietario identifican la "
+"línea: corrija esa fila o quite la columna."
 
 #. module: stock_ux
 #. odoo-python
@@ -1652,7 +1665,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/stock_ux/models/stock_quant.py:0
 msgid "empty"
-msgstr ""
+msgstr "vacío"
 
 #~ msgid "Descripción 2"
 #~ msgstr "Description 2"
