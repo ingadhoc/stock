@@ -6,7 +6,7 @@
         <field name="inherit_id" ref="stock.vpicktree"/>
         <field name="arch" type="xml">
             <field name="state" position="after">
-                <field name="state_detail_id" domain="[('state','=', state),'|',('picking_type','=', picking_type_code), ('picking_type','=', False)]"/>
+                <field name="state_detail_id" widget="badge" optional="show" domain="[('state', '=', state), ('picking_type', '=', picking_type_code)]"/>
             </field>
         </field>
     </record>
@@ -16,11 +16,23 @@
         <field name="model">stock.picking</field>
         <field name="inherit_id" ref="stock.view_picking_form"/>
         <field name="arch" type="xml">
-            <header position="after">
-                <header>
-                    <field name="state_detail_id" widget="statusbar" options="{'clickable': '1'}" domain="[('state','=', state),'|',('picking_type','=', picking_type_code), ('picking_type','=', False)]"/>
-                </header>
-            </header>
+            <label for="scheduled_date" position="before">
+                <field name="state_detail_id" widget="radio" options="{'horizontal': true}" invisible="not state_detail_id" domain="[('state', '=', state), ('picking_type', '=', picking_type_code)]"/>
+            </label>
+        </field>
+    </record>
+
+    <record id="view_picking_internal_search" model="ir.ui.view">
+        <field name="name">Stock picking search</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_internal_search"/>
+        <field name="arch" type="xml">
+            <field name="picking_type_id" position="after">
+                <field name="state_detail_id"/>
+            </field>
+            <filter name="picking_type" position="after">
+                <filter string="State Detail" name="group_by_state_detail" context="{'group_by': 'state_detail_id'}"/>
+            </filter>
         </field>
     </record>
 </odoo>
