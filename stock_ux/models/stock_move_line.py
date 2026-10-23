@@ -97,7 +97,8 @@ class StockMoveLine(models.Model):
 
     def _get_lot_quantity_in_location(self):
         """On hand of the lot in the exact location of the line: validating takes it from that
-        quant, a sublocation holding it does not count."""
+        quant, a sublocation holding it does not count. Strict gather also brings the quants
+        without lot; as when it takes the quantity, only those with stock count."""
         self.ensure_one()
         quants = (
             self.env["stock.quant"]
@@ -111,7 +112,8 @@ class StockMoveLine(models.Model):
                 strict=True,
             )
         )
-        return sum(quants.mapped("quantity"))
+        uom = self.product_id.uom_id
+        return sum(quants.filtered(lambda q: q.lot_id or uom.compare(q.quantity, 0) > 0).mapped("quantity"))
 
     def _is_manual_line_check_needed(self):
         self.ensure_one()

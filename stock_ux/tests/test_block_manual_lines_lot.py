@@ -91,6 +91,15 @@ class TestBlockManualLinesLot(TransactionCase):
         line = self._create_line(picking, self.lot_on_shelf, self.shelf)
         self.assertEqual(line.location_id, self.shelf)
 
+    def test_negative_quant_without_lot_does_not_hide_the_serial(self):
+        """Odoo skips negative quants without lot when it takes the serial out."""
+        self.env["stock.quant"]._update_available_quantity(self.product, self.shelf, -3)
+        # keep the product total positive, so only the lot check is at stake
+        self.env["stock.quant"]._update_available_quantity(self.product, self.stock, 5)
+        picking = self._create_picking()
+        line = self._create_line(picking, self.lot_on_shelf, self.shelf)
+        self.assertEqual(line.lot_id, self.lot_on_shelf)
+
     def test_switching_the_line_to_a_serial_without_stock_is_refused(self):
         picking = self._create_picking()
         line = self._create_line(picking, self.lot_on_shelf, self.shelf)
