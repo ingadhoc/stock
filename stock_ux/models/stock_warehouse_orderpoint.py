@@ -20,35 +20,34 @@ class StockWarehouseOrderpoint(models.Model):
     rotation_stdev = fields.Float(
         compute="_compute_rotation",
         help="Desvío estandar de las cantidades entregas a clientes en los " "últimos 120 días.",
-        digits="Product Unit of Measure",
+        digits="Product Unit",
     )
     warehouse_rotation_stdev = fields.Float(
         compute="_compute_rotation",
         help="Desvío estandar de las cantidades entregas desde este almacen" " a clientes en los últimos 120 días.",
-        digits="Product Unit of Measure",
+        digits="Product Unit",
     )
     rotation = fields.Float(
         help="Cantidades entregadas a clientes en los "
         "últimos 120 días dividido por 4 para mensualizar "
         "(restadas devoluciones).",
         compute="_compute_rotation",
-        digits="Product Unit of Measure",
+        digits="Product Unit",
     )
     warehouse_rotation = fields.Float(
         help="Cantidades entregadas desde este almacen a clientes en los "
         "últimos 120 días dividido por 4 para mensualizar"
         "(restadas devoluciones).",
         compute="_compute_rotation",
-        digits="Product Unit of Measure",
+        digits="Product Unit",
     )
     product_min_qty = fields.Float(tracking=True)
     product_max_qty = fields.Float(tracking=True)
-    qty_multiple = fields.Float(tracking=True)
     location_id = fields.Many2one(tracking=True)
     product_id = fields.Many2one(tracking=True)
     reviewed = fields.Boolean(
         help="Marks the replenishment line as reviewed. It is set automatically when the "
-        "quantity to order is adjusted and cleared when the replenishment is generated.",
+        "quantity to order is entered by hand and cleared when the replenishment is generated.",
     )
 
     @api.depends("product_id", "location_id")
@@ -78,14 +77,13 @@ class StockWarehouseOrderpoint(models.Model):
 
     def write(self, vals):
         """When archive a replenishment rule
-        set min, max and multiple quantities in 0.
+        set min and max quantities in 0.
         """
         if "active" in vals and not vals["active"]:
             self.write(
                 {
                     "product_min_qty": 0.0,
                     "product_max_qty": 0.0,
-                    "qty_multiple": 0.0,
                 }
             )
         return super().write(vals)
@@ -113,14 +111,17 @@ class StockWarehouseOrderpoint(models.Model):
     def _change_review_toggle_negative(self):
         self.reviewed = False
 
-    @api.onchange("qty_to_order")
-    def _change_review_toggle_positive(self):
-        self.reviewed = True
+    def _inverse_qty_to_order(self):
+        # qty_to_order is recomputed on its own, so an onchange on it also marked new rules
+        # and min/max edits; a quantity entered by hand is what core keeps as manual
+        super()._inverse_qty_to_order()
+        self.filtered("qty_to_order_manual").reviewed = True
 
-    def action_replenish(self, force_to_max=False):
-        # deactivate toggle after ordering
-        self._change_review_toggle_negative()
-        return super(StockWarehouseOrderpoint, self).action_replenish(force_to_max)
+    def action_replenish(self):
+        res = super().action_replenish()
+        # super() writes the quantity to order, which marks the rule again
+        self.exists()._change_review_toggle_negative()
+        return res
 
     def update_qty_to_order(self):
         # Redefinimos ya que el metodo _compute_qty_to_order es privado

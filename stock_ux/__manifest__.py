@@ -19,7 +19,7 @@
 ##############################################################################
 {
     "name": "Stock UX",
-    "version": "19.0.1.20.0",
+    "version": "20.0.1.0.0",
     "category": "Warehouse Management",
     "sequence": 14,
     "summary": "",
@@ -27,19 +27,18 @@
     "website": "www.adhoc.com.ar",
     "images": [],
     "depends": [
+        "mail",
         "sale_stock",
     ],
     "data": [
         "security/stock_ux_security.xml",
-        "security/ir.model.access.csv",
         "views/product_template_views.xml",
-        "views/product_product_views.xml",
         "views/stock_picking_views.xml",
         "views/stock_move_views.xml",
         "views/stock_move_line_views.xml",
         "views/stock_warehouse_orderpoint_views.xml",
+        "views/stock_route_views.xml",
         "views/stock_backorder_confirmation_views.xml",
-        "views/stock_return_picking_views.xml",
         "views/stock_picking_type_views.xml",
         "views/stock_lot_views.xml",
         "views/report_deliveryslip.xml",
@@ -52,15 +51,10 @@
         "views/stock_quant_views.xml",
         "report/stock_picking_operations.xml",
         "data/ir_cron.xml",
+        "security/ir.access.csv",
     ],
-    "installable": False,
+    "installable": True,
     "auto_install": False,
     "application": False,
-    "assets": {
-        "web.assets_backend": [
-            "stock_ux/static/src/**/*.xml",
-            "stock_ux/static/src/**/*.js",
-        ],
-    },
     "license": "AGPL-3",
 }
