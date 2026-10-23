@@ -19,7 +19,7 @@
 ##############################################################################
 {
     "name": "Stock Usability with Batch Picking",
-    "version": "19.0.1.5.0",
+    "version": "20.0.1.0.0",
     "category": "Warehouse Management",
     "sequence": 14,
     "summary": "",
@@ -29,7 +29,6 @@
     "images": [],
     "depends": [
         "stock_ux",
-        "stock_picking_batch",
     ],
     "data": [
         "reports/ir.actions.report.xml",
@@ -40,7 +39,7 @@
         "views/stock_move_line_views.xml",
     ],
     "demo": [],
-    "installable": False,
+    "installable": True,
     "auto_install": True,
     "application": False,
 }
