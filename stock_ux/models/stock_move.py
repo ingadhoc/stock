@@ -22,12 +22,6 @@ class StockMove(models.Model):
         related="move_line_ids.lots_visible",
     )
 
-    picking_partner_id = fields.Many2one(
-        "res.partner",
-        "Transfer Destination Address",
-        related="picking_id.partner_id",
-    )
-
     origin_description = fields.Char(compute="_compute_origin_description", compute_sudo=True)
 
     @api.depends(
