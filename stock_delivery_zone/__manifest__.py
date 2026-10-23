@@ -19,7 +19,7 @@
 ##############################################################################
 {
     "name": "Stock Delivery Zone",
-    "version": "19.0.1.0.0",
+    "version": "19.0.1.1.0",
     "category": "Warehouse Management",
     "summary": "Assign delivery zones to contacts and show them on transfers",
     "author": "ADHOC SA",
