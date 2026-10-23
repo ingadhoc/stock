@@ -33,7 +33,6 @@
     "data": [
         "security/stock_ux_security.xml",
         "views/product_template_views.xml",
-        "views/product_product_views.xml",
         "views/stock_picking_views.xml",
         "views/stock_move_views.xml",
         "views/stock_move_line_views.xml",
@@ -57,11 +56,5 @@
     "installable": True,
     "auto_install": False,
     "application": False,
-    "assets": {
-        "web.assets_backend": [
-            "stock_ux/static/src/**/*.xml",
-            "stock_ux/static/src/**/*.js",
-        ],
-    },
     "license": "AGPL-3",
 }

@@ -15,10 +15,6 @@
         <field name="model">stock.move</field>
         <field name="inherit_id" ref="stock.view_move_search"/>
         <field name="arch" type="xml">
-            <filter name="by_product" position="after">
-                <!-- This it's not posible to use becase the field it's not stored -->
-                <!-- <filter string="Picking Partner" name="picking_partner_id" context="{'group_by':'picking_partner_id'}"/> -->
-            </filter>
             <filter name="outgoing" position="after">
                 <filter string="Internal" name="internal" domain="[('picking_code','=','internal')]"/>
                 <filter string="Manufacturing" name="manufacturing" domain="[('picking_code','=','mrp_operation')]"/>
@@ -34,9 +30,6 @@
         <field name="model">stock.move</field>
         <field name="inherit_id" ref="stock.view_move_tree"/>
         <field name="arch" type="xml">
-            <field name="product_id" position="before">
-                <field name="picking_partner_id" string="Picking Partner"/>
-            </field>
             <list>
                 <field name="picking_create_user_id"/>
             </list>
