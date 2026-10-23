@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-22 18:35+0000\n"
-"PO-Revision-Date: 2025-11-20 18:57+0000\n"
+"POT-Creation-Date: 2026-10-22 15:48+0000\n"
+"PO-Revision-Date: 2026-10-22 15:48+0000\n"
 "Last-Translator: ADHOC - Bot <transbot@adhoc.com.ar>, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
 "Language: es\n"
@@ -19,6 +19,105 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? "
 "1 : 2;\n"
+
+#. module: stock_picking_state
+#: model:ir.module.module,description:base.module_stock_picking_state
+msgid ""
+".. |company| replace:: ADHOC SA\n"
+"\n"
+".. |company_logo| image:: https://raw.githubusercontent.com/ingadhoc/maintainer-tools/master/resources/adhoc-logo.png\n"
+"   :alt: ADHOC SA\n"
+"   :target: https://www.adhoc.com.ar\n"
+"\n"
+".. |icon| image:: https://raw.githubusercontent.com/ingadhoc/maintainer-tools/master/resources/adhoc-icon.png\n"
+"\n"
+".. image:: https://img.shields.io/badge/license-AGPL--3-blue.png\n"
+"   :target: https://www.gnu.org/licenses/agpl\n"
+"   :alt: License: AGPL-3\n"
+"\n"
+"===================\n"
+"Stock Picking State\n"
+"===================\n"
+"\n"
+"This module adds a configurable state detail (sub-status) to transfers. Each\n"
+"state detail belongs to one transfer status (Draft, Waiting Another Operation,\n"
+"Waiting, Ready, Done or Cancelled) and one operation type (Receipt, Delivery,\n"
+"Internal Transfer or Dropship).\n"
+"\n"
+"Installation\n"
+"============\n"
+"\n"
+"To install this module, you need to:\n"
+"\n"
+"#. Only need to install the module\n"
+"\n"
+"Configuration\n"
+"=============\n"
+"\n"
+"To configure this module, you need to:\n"
+"\n"
+"#. Go to Inventory / Configuration / Picking State Detail.\n"
+"#. Create the state details, setting for each one its name, status and\n"
+"   operation type. Drag the lines to set their order.\n"
+"#. Archive the state details you no longer use: they are not assigned to new\n"
+"   transfers.\n"
+"\n"
+"Usage\n"
+"=====\n"
+"\n"
+"To use this module, you need to:\n"
+"\n"
+"#. When a transfer changes its status, it gets the first state detail (by\n"
+"   sequence) that matches its new status and operation type. If its current\n"
+"   state detail still matches, it is kept.\n"
+"#. On the transfer form, choose another state detail next to the scheduled\n"
+"   date. Only the state details of the current status and operation type can be\n"
+"   chosen; any other one raises an error.\n"
+"#. The state detail is also shown in the transfers list view, where you can\n"
+"   search, filter and group by it, and its changes are tracked in the chatter.\n"
+"\n"
+".. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas\n"
+"   :alt: Try me on Runbot\n"
+"   :target: http://runbot.adhoc.com.ar/\n"
+"\n"
+"Bug Tracker\n"
+"===========\n"
+"\n"
+"Bugs are tracked on `GitHub Issues\n"
+"<https://github.com/ingadhoc/stock/issues>`_. In case of trouble, please\n"
+"check there if your issue has already been reported. If you spotted it first,\n"
+"help us smashing it by providing a detailed and welcomed feedback.\n"
+"\n"
+"Credits\n"
+"=======\n"
+"\n"
+"Images\n"
+"------\n"
+"\n"
+"* |company| |icon|\n"
+"\n"
+"Contributors\n"
+"------------\n"
+"\n"
+"Maintainer\n"
+"----------\n"
+"\n"
+"|company_logo|\n"
+"\n"
+"This module is maintained by the |company|.\n"
+"\n"
+"To contribute to this module, please visit https://www.adhoc.com.ar.\n"
+msgstr ""
+
+#. module: stock_picking_state
+#: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail__active
+msgid "Active"
+msgstr "Activo"
+
+#. module: stock_picking_state
+#: model_terms:ir.ui.view,arch_db:stock_picking_state.view_picking_detail_search
+msgid "Archived"
+msgstr "Archivado"
 
 #. module: stock_picking_state
 #: model:ir.model.fields.selection,name:stock_picking_state.selection__stock_picking_state_detail__state__cancel
@@ -37,6 +136,11 @@ msgstr ""
 "tipo de operación."
 
 #. module: stock_picking_state
+#: model_terms:ir.actions.act_window,help:stock_picking_state.stock_picking_state_detail_action
+msgid "Create a state detail"
+msgstr "Crear un subestado"
+
+#. module: stock_picking_state
 #: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail__create_uid
 msgid "Created by"
 msgstr "Creado por"
@@ -45,6 +149,11 @@ msgstr "Creado por"
 #: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail__create_date
 msgid "Created on"
 msgstr "Creado el"
+
+#. module: stock_picking_state
+#: model:ir.model.fields.selection,name:stock_picking_state.selection__stock_picking_state_detail__picking_type__outgoing
+msgid "Delivery"
+msgstr "Entrega"
 
 #. module: stock_picking_state
 #: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking__display_name
@@ -65,7 +174,7 @@ msgstr "Borrador"
 #. module: stock_picking_state
 #: model:ir.model.fields.selection,name:stock_picking_state.selection__stock_picking_state_detail__picking_type__dropship
 msgid "Dropship"
-msgstr ""
+msgstr "Triangular"
 
 #. module: stock_picking_state
 #: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking__id
@@ -74,14 +183,9 @@ msgid "ID"
 msgstr "ID (identificación)"
 
 #. module: stock_picking_state
-#: model:ir.model.fields.selection,name:stock_picking_state.selection__stock_picking_state_detail__picking_type__incoming
-msgid "Incoming"
-msgstr "Proveedores"
-
-#. module: stock_picking_state
 #: model:ir.model.fields.selection,name:stock_picking_state.selection__stock_picking_state_detail__picking_type__internal
-msgid "Internal"
-msgstr "Interno"
+msgid "Internal Transfer"
+msgstr "Traslado interno"
 
 #. module: stock_picking_state
 #: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail__write_uid
@@ -99,20 +203,16 @@ msgid "Name"
 msgstr "Nombre"
 
 #. module: stock_picking_state
-#: model:ir.model.fields.selection,name:stock_picking_state.selection__stock_picking_state_detail__picking_type__outgoing
-msgid "Outgoing"
-msgstr "Clientes"
+#: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail__picking_type
+#: model_terms:ir.ui.view,arch_db:stock_picking_state.view_picking_detail_search
+msgid "Operation Type"
+msgstr "Tipo de operación"
 
 #. module: stock_picking_state
 #: model:ir.actions.act_window,name:stock_picking_state.stock_picking_state_detail_action
 #: model:ir.ui.menu,name:stock_picking_state.menu_state_detail
 msgid "Picking State Detail"
 msgstr "Detalle de Estados de Remitos"
-
-#. module: stock_picking_state
-#: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail__picking_type
-msgid "Picking Type"
-msgstr "Tipo de operación"
 
 #. module: stock_picking_state
 #: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail__picking_ids
@@ -125,9 +225,14 @@ msgid "Ready"
 msgstr "Listo"
 
 #. module: stock_picking_state
+#: model:ir.model.fields.selection,name:stock_picking_state.selection__stock_picking_state_detail__picking_type__incoming
+msgid "Receipt"
+msgstr "Recepción"
+
+#. module: stock_picking_state
 #: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail__sequence
 msgid "Sequence"
-msgstr "Sequencia"
+msgstr "Secuencia"
 
 #. module: stock_picking_state
 #: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking__state_detail_id
@@ -135,14 +240,47 @@ msgid "State Detail"
 msgstr "Subestado"
 
 #. module: stock_picking_state
+#: model_terms:ir.actions.act_window,help:stock_picking_state.stock_picking_state_detail_action
+msgid ""
+"State details split a transfer status into steps of your own, for example\n"
+"                \"Waiting for authorization\" and \"Authorized\" within \"Ready\". Each transfer\n"
+"                gets the first state detail of its status and operation type, and you can\n"
+"                change it from the transfer form."
+msgstr ""
+"Los subestados dividen un estado del traslado en pasos propios, por ejemplo\n"
+"                \"Esperando autorización\" y \"Autorizado\" dentro de \"Listo\". Cada traslado\n"
+"                toma el primer subestado de su estado y su tipo de operación, y se puede\n"
+"                cambiar desde el formulario del traslado."
+
+#. module: stock_picking_state
 #: model:ir.model.fields,field_description:stock_picking_state.field_stock_picking_state_detail__state
 msgid "Status"
 msgstr "Estado"
 
 #. module: stock_picking_state
+#: model:ir.module.module,shortdesc:base.module_stock_picking_state
+msgid "Stock Picking State"
+msgstr "Subestados de traslados"
+
+#. module: stock_picking_state
+#. odoo-python
+#: code:addons/stock_picking_state/models/stock_picking.py:0
+msgid ""
+"The state detail %(detail)s does not belong to the status or the operation "
+"type of %(picking)s."
+msgstr ""
+"El subestado %(detail)s no corresponde al estado ni al tipo de operación de "
+"%(picking)s."
+
+#. module: stock_picking_state
 #: model:ir.model,name:stock_picking_state.model_stock_picking
 msgid "Transfer"
 msgstr "Traslado"
+
+#. module: stock_picking_state
+#: model:ir.model,name:stock_picking_state.model_stock_picking_state_detail
+msgid "Transfer State Detail"
+msgstr "Subestado de traslado"
 
 #. module: stock_picking_state
 #: model:ir.model.fields.selection,name:stock_picking_state.selection__stock_picking_state_detail__state__confirmed
@@ -153,8 +291,3 @@ msgstr "Esperando"
 #: model:ir.model.fields.selection,name:stock_picking_state.selection__stock_picking_state_detail__state__waiting
 msgid "Waiting Another Operation"
 msgstr "Esperando Otra Operacion"
-
-#. module: stock_picking_state
-#: model:ir.model,name:stock_picking_state.model_stock_picking_state_detail
-msgid "stock.picking.state_detail"
-msgstr ""
