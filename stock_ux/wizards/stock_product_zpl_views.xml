@@ -13,11 +13,11 @@
             <!-- Place quantities table and empty alert below all option groups, just before footer -->
             <xpath expr="//footer" position="before">
                 <div class="alert alert-info" role="alert"
-                     invisible="not (picking_id and move_quantity == 'custom') or line_ids">
+                     invisible="not (picking_id and move_quantity == 'custom') or print_packaging or line_ids">
                     No processed moves found in this picking.
                 </div>
                 <group string="Quantities per Product"
-                       invisible="not (picking_id and move_quantity == 'custom')">
+                       invisible="not (picking_id and move_quantity == 'custom') or print_packaging">
                     <field name="line_ids" nolabel="1" colspan="2">
                         <list editable="bottom" create="false" delete="false">
                             <!-- move_id must be here (even if hidden) so the client includes it in the POST -->
@@ -30,7 +30,7 @@
             </xpath>
             <!-- Hide Copies field when per-product quantity table is shown instead -->
             <field name="custom_quantity" position="attributes">
-                <attribute name="invisible">move_quantity == 'move' or (picking_id and move_quantity == 'custom')</attribute>
+                <attribute name="invisible">move_quantity == 'move' or (picking_id and move_quantity == 'custom' and not print_packaging)</attribute>
             </field>
         </field>
     </record>

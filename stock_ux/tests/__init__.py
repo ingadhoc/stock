@@ -13,3 +13,4 @@ from . import test_quant_import_template
 from . import test_merge_negative_moves
 from . import test_block_manual_lines_lot
 from . import test_orderpoint_reviewed
+from . import test_picking_labels
