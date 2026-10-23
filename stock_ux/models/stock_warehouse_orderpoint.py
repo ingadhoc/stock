@@ -47,7 +47,7 @@ class StockWarehouseOrderpoint(models.Model):
     product_id = fields.Many2one(tracking=True)
     reviewed = fields.Boolean(
         help="Marks the replenishment line as reviewed. It is set automatically when the "
-        "quantity to order is adjusted and cleared when the replenishment is generated.",
+        "quantity to order is entered by hand and cleared when the replenishment is generated.",
     )
 
     @api.depends("product_id", "location_id")
@@ -111,14 +111,17 @@ class StockWarehouseOrderpoint(models.Model):
     def _change_review_toggle_negative(self):
         self.reviewed = False
 
-    @api.onchange("qty_to_order")
-    def _change_review_toggle_positive(self):
-        self.reviewed = True
+    def _inverse_qty_to_order(self):
+        # qty_to_order is recomputed on its own, so an onchange on it also marked new rules
+        # and min/max edits; a quantity entered by hand is what core keeps as manual
+        super()._inverse_qty_to_order()
+        self.filtered("qty_to_order_manual").reviewed = True
 
     def action_replenish(self):
-        # deactivate toggle after ordering
-        self._change_review_toggle_negative()
-        return super().action_replenish()
+        res = super().action_replenish()
+        # super() writes the quantity to order, which marks the rule again
+        self.exists()._change_review_toggle_negative()
+        return res
 
     def update_qty_to_order(self):
         # Redefinimos ya que el metodo _compute_qty_to_order es privado
