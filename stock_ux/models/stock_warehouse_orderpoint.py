@@ -43,7 +43,6 @@ class StockWarehouseOrderpoint(models.Model):
     )
     product_min_qty = fields.Float(tracking=True)
     product_max_qty = fields.Float(tracking=True)
-    qty_multiple = fields.Float(tracking=True)
     location_id = fields.Many2one(tracking=True)
     product_id = fields.Many2one(tracking=True)
     reviewed = fields.Boolean(
@@ -78,14 +77,13 @@ class StockWarehouseOrderpoint(models.Model):
 
     def write(self, vals):
         """When archive a replenishment rule
-        set min, max and multiple quantities in 0.
+        set min and max quantities in 0.
         """
         if "active" in vals and not vals["active"]:
             self.write(
                 {
                     "product_min_qty": 0.0,
                     "product_max_qty": 0.0,
-                    "qty_multiple": 0.0,
                 }
             )
         return super().write(vals)

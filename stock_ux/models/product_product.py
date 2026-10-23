@@ -34,13 +34,3 @@ class ProductProduct(models.Model):
             stdev = len(quantities) > 1 and statistics.stdev(quantities) or 0.0
             return rotation, stdev
         return rotation
-
-    def action_view_stock_move(self):
-        self.ensure_one()
-        action = self.env["ir.actions.actions"]._for_xml_id("stock.stock_move_action")
-        action["domain"] = [("product_id", "=", self.id)]
-        action["context"] = {
-            "search_default_product_id": self.id,
-            "default_product_id": self.id,
-        }
-        return action
