@@ -8,6 +8,9 @@
             <xpath expr="//span[@name='address_name']/following-sibling::div[hasclass('o_address_format')]" position="after">
                 <field name="delivery_zone_id"/>
             </xpath>
+            <xpath expr="//field[@name='child_ids']/form//div[@name='div_address']" position="after">
+                <field name="delivery_zone_id" invisible="type == 'contact'"/>
+            </xpath>
         </field>
     </record>
 </odoo>
