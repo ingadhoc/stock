@@ -112,8 +112,8 @@ class StockValuationLayerRevaluation(models.TransientModel):
                     self.added_value / product_id.quantity_svl
                 )
                 # El costo en moneda secundaria no lo actualiza ningun otro camino: el
-                # _update_currency_standard_price del layer solo corre para landed costs
-                # y el layer de revaluacion no tiene, asi que se actualiza aca.
+                # _update_currency_standard_price del layer solo corre para landed costs y
+                # diferencias de precio de factura, y el layer de revaluacion no es ninguno.
                 product_id.with_context(disable_auto_svl=True).standard_price_in_currency += (
                     self.added_value_in_currency / product_id.quantity_svl
                 )

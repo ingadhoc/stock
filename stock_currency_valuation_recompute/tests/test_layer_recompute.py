@@ -1,4 +1,5 @@
 from odoo import fields
+from odoo.addons.stock_currency_valuation.tests.common import bill_with_price_difference, has_purchase_journal
 from odoo.exceptions import UserError
 from odoo.tests.common import TransactionCase, tagged
 from odoo.tools import mute_logger
@@ -207,6 +208,34 @@ class TestLayerRecompute(TransactionCase):
             recompute.line_ids.filtered("need_changes"),
             "El bloqueo manda por sobre el contexto",
         )
+
+    def test_recompute_rebuilds_a_wrong_price_difference_without_touching_the_bill(self):
+        """Una diferencia de precio mal valuada en moneda se recalcula desde la factura, sin tocar la factura."""
+        if not has_purchase_journal(self.env):
+            self.skipTest("La compañia no tiene diario de compras")
+        product = self._make_product("Producto con diferencia mal valuada")
+        bill = bill_with_price_difference(self.env, product)
+        pdiff = bill.stock_valuation_layer_ids
+        # what the previous computation left: taxed total of all billed units, cost not moved
+        pdiff.value_in_currency = 36.40
+        product.standard_price_in_currency = 52.02
+        bill_amount = bill.invoice_line_ids.amount_currency
+
+        recompute = self.env["stock.valuation.layer.recompute"].create(
+            {"company_id": self.env.company.id, "product_id": product.id}
+        )
+        recompute.action_compute_lines()
+        line = recompute.line_ids.filtered(lambda x: x.layer_id == pdiff)
+        self.assertTrue(line.need_changes)
+        self.assertAlmostEqual(line.new_value_in_currency, -36.12, places=2)
+        self.assertAlmostEqual(recompute.final_amount_in_currency, 46.0, places=2)
+
+        recompute.action_manual_slv_revaluation()
+        self.assertAlmostEqual(pdiff.value_in_currency, -36.12, places=2)
+        self.assertAlmostEqual(product.standard_price_in_currency, 46.0, places=2)
+        # the price difference entry is the bill: it is not rewritten
+        self.assertEqual(bill.state, "posted")
+        self.assertAlmostEqual(bill.invoice_line_ids.amount_currency, bill_amount, places=2)
 
     def _close_period_up_to(self, lock_date):
         """Cierra el ejercicio hasta esa fecha, escribiendo el campo directo.

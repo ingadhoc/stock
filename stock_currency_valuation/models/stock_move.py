@@ -79,7 +79,8 @@ class StockMove(models.Model):
                     or product_with_company.standard_price_in_currency
                 )
                 new_std_price_in_currency = (
-                    (amount_unit * product_tot_qty_available) + (move._get_currency_price_unit() * qty)
+                    (amount_unit * product_tot_qty_available)
+                    + (move._get_currency_price_unit(default=amount_unit) * qty)
                 ) / (product_tot_qty_available + qty)
 
             tmpl_dict[move.product_id.id] += qty_done
@@ -94,8 +95,13 @@ class StockMove(models.Model):
             lambda move: move.with_company(move.company_id).product_id.cost_method == "fifo"
             and float_is_zero(move.product_id.sudo().quantity_svl, precision_rounding=move.product_id.uom_id.rounding)
         ):
-            move.product_id.with_company(move.company_id.id).sudo().write(
-                {"standard_price_in_currency": move._get_currency_price_unit()}
+            product = move.product_id.with_company(move.company_id.id)
+            product.sudo().write(
+                {
+                    "standard_price_in_currency": move._get_currency_price_unit(
+                        default=product.standard_price_in_currency
+                    )
+                }
             )
 
     def _get_currency_price_unit(self, default=0.0):
@@ -116,6 +122,9 @@ class StockMove(models.Model):
             # price directly in secondary currency (already UoM-converted by
             # _get_gross_price_unit), so the AVCO update is consistent with the SVL.
             price_unit = self.purchase_line_id._get_gross_price_unit()
+        elif self.picking_id.currency_rate:
+            # same manual rate the layer is valued with (manual_currency_rate)
+            price_unit = self.price_unit * self.picking_id.currency_rate
         else:
             price_unit = currency_id._convert(
                 from_amount=self.price_unit,
@@ -151,3 +160,16 @@ class StockMove(models.Model):
         ):
             return default
         return price_unit
+
+    def _is_unpriced_receipt(self):
+        """Incoming move without purchase line nor price: stock_account values it at the current cost."""
+        self.ensure_one()
+        return (
+            not self.purchase_line_id
+            and not self.origin_returned_move_id
+            and float_is_zero(
+                self.price_unit, precision_digits=self.env["decimal.precision"].precision_get("Product Price")
+            )
+            and not self._should_force_price_unit()
+            and self._is_in()
+        )
