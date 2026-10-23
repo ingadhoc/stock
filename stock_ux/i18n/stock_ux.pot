@@ -6,14 +6,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 20.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-09 18:43+0000\n"
-"PO-Revision-Date: 2026-10-09 18:43+0000\n"
+"POT-Creation-Date: 2026-10-23 19:07+0000\n"
+"PO-Revision-Date: 2026-10-23 19:07+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: stock_ux
+#. odoo-python
+#: code:addons/stock_ux/models/stock_route.py:0
+msgid "(empty)"
+msgstr ""
 
 #. module: stock_ux
 #: model:ir.module.module,description:base.module_stock_ux
@@ -38,7 +44,6 @@ msgid ""
 "#. Add observations on pickings (and deliveryslip)\n"
 "#. Add a wizard action in the stock move lines of a picking to change locations for several lines at the same time with the 'Manage Multiple Stock Locations' permission.\n"
 "#. Show always visible (for an existing lots configuration in the type operation) the notebook pages in lot form view when create and edit a lot from a stock move line.\n"
-"#. Add reason return field in the picking return wizard and then bring that field to internal notes in the created picking.\n"
 "#. Add an optional setting to print in Delivery Slip reports the origin description instead of the product name\n"
 "#. We create a new group \"Allow picking cancellation\", only users with that right can cancel pickings or validate without back orders\n"
 "#. Only allow to delete pickings on draft/cancel state and \"Block Picking Deletion?\" is not checked in Pick operation type.\n"
@@ -46,20 +51,25 @@ msgid ""
 "#. If filtered location is found on source location: use negative quantity.\n"
 "#. If filtered location is found on destiny location: use positive quantity.\n"
 "#. If filtered location is found on source and destiny location: use \"0\".\n"
-"#. Add in products (template and variants) a button to access to stock moves related.\n"
-"#. When accessing stock moves through the products form group by picking type and filter according to do.\n"
 "#. Add Rotation and Location Rotation to Reordering Rules (orderpoint): delivered quantities to customers on last 120 days divided per 4 (to make it monthly)\n"
-"#. Add optional constraints configurable by Picking Type: Block additional quantity, Block force availability, Block picking deletion\n"
-"#. Add partner field on procurement group form view.\n"
+"#. Add optional constraints configurable by Picking Type: Block additional quantity, Block force availability, Block picking deletion. With Block force availability, a line with a lot or serial number can only take it from the location that holds it.\n"
 "#. Show location and warehouse filters on all products and product templates views (not only the one on inventory)\n"
-"#. When archive a replenishment rule set min, max and multiple quantities in 0.\n"
+"#. When archive a replenishment rule set min and max quantities in 0.\n"
 "#. Show inactive replenishment rules if the product is active (with warning decorator).\n"
 "#. Send template established in operation type when confirm picking.\n"
 "#. Add an optional setting to print remaining quantities not yet delivered on Delivery Slips: \"Show remaining quantities not yet delivered on Delivery Slips.\"print remaining quantities not yet delivered\n"
-"#. Adds a review toggle per line that allows the user to indicate when the replenishment order is ready to be confirmed.\n"
+"#. Adds a review toggle per line that allows the user to indicate when the replenishment order is ready to be confirmed. It is set when the quantity to order is entered by hand and cleared when the replenishment is ordered.\n"
 "#. Add a \"All transfers\" view form in Menu: Operations\n"
 "#. Add a restriction to edit operation type for users with the \"Restrict editing Operation Type in Pickings\" check.\n"
 "#. Add number of packages on pickings\n"
+"#. Print product labels from a picking with a quantity per line, and add a ZPL 5 x 2,5 cm label with two labels per row. With \"Print Packaging\" checked the native logic applies, also on the ZPL 5 x 2,5 cm label: one label per move with the \"Copies\" quantity.\n"
+"#. Log routes configuration changes: routes and warehouses get a chatter, changes on their rules are logged on the route chatter, and changing the warehouse reception or delivery steps logs which rules were activated, archived or created. It is off by default and is turned on with \"Track Routes Configuration Changes\" in the Inventory settings.\n"
+"#. Add the menu \"Routes Configuration Changes\" (Inventory / Configuration / Warehouse Management) with every logged change, and an optional \"Procurement Rule\" column on stock moves lists to see which rule created a move.\n"
+"#. Create the lots a counted row names and the product does not have yet, instead of stopping the whole file at the first one.\n"
+"#. Import an inventory count onto the stock lines that already exist: each row is matched by product, location, lot, package and owner, so the counted quantity replaces the quantity of that line instead of adding a second one to it.\n"
+"#. Accept the columns identifying a stock line on import while they repeat what the line already holds, so a file exported from Odoo can be re-imported as it is, and name the line and the column when they do not.\n"
+"#. Report which row, product or column an inventory import cannot take, instead of one message for the whole file, and refuse the columns that would move stock with no move behind them.\n"
+"#. Offer an import template for inventory adjustments carrying the column that identifies each stock line, only columns an adjustment can take, and the export/fill/re-import order of work.\n"
 "\n"
 "Installation\n"
 "============\n"
@@ -121,8 +131,22 @@ msgid "<strong>Ordered</strong>"
 msgstr ""
 
 #. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_route__message_needaction
+#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse__message_needaction
 #: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__message_needaction
 msgid "Action Needed"
+msgstr ""
+
+#. module: stock_ux
+#. odoo-python
+#: code:addons/stock_ux/models/stock_warehouse.py:0
+msgid "Activated rules"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_route__active
+#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse__active
+msgid "Active"
 msgstr ""
 
 #. module: stock_ux
@@ -160,9 +184,29 @@ msgid ""
 msgstr ""
 
 #. module: stock_ux
-#: model_terms:ir.ui.view,arch_db:stock_ux.product_form_view_procurement_button
-#: model_terms:ir.ui.view,arch_db:stock_ux.product_template_form_view_procurement_button
-msgid "Are all stock movements without lot detail or save locations."
+#: model:ir.model.fields,field_description:stock_ux.field_stock_route__package_type_selectable
+msgid "Applicable on Package Type"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_route__product_selectable
+msgid "Applicable on Product"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_route__product_categ_selectable
+msgid "Applicable on Product Category"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_route__warehouse_selectable
+msgid "Applicable on Warehouse"
+msgstr ""
+
+#. module: stock_ux
+#. odoo-python
+#: code:addons/stock_ux/models/stock_warehouse.py:0
+msgid "Archived rules"
 msgstr ""
 
 #. module: stock_ux
@@ -171,6 +215,8 @@ msgid "Assigned Moves"
 msgstr ""
 
 #. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_route__message_attachment_count
+#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse__message_attachment_count
 #: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__message_attachment_count
 msgid "Attachment Count"
 msgstr ""
@@ -237,6 +283,12 @@ msgid ""
 msgstr ""
 
 #. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_mail_mail__tracking_summary
+#: model:ir.model.fields,field_description:stock_ux.field_mail_message__tracking_summary
+msgid "Change"
+msgstr ""
+
+#. module: stock_ux
 #: model:ir.actions.act_window,name:stock_ux.action_stock_operation_wizard
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_stock_operation_wizard_form
 msgid "Change Locations"
@@ -251,6 +303,11 @@ msgstr ""
 #. module: stock_ux
 #: model:ir.model,name:stock_ux.model_product_label_layout
 msgid "Choose the sheet layout to print the labels"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_route__company_id
+msgid "Company"
 msgstr ""
 
 #. module: stock_ux
@@ -288,6 +345,16 @@ msgid "Deadline exceed or/and by the scheduled"
 msgstr ""
 
 #. module: stock_ux
+#: model:ir.model.fields,help:stock_ux.field_stock_warehouse__reception_steps
+msgid "Default incoming route to follow"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,help:stock_ux.field_stock_warehouse__delivery_steps
+msgid "Default outgoing route to follow"
+msgstr ""
+
+#. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_form_inherited
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_stock_move_line_detailed_operation_tree
 msgid "Descripción de origen"
@@ -313,6 +380,7 @@ msgid ""
 msgstr ""
 
 #. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_mail_message__display_name
 #: model:ir.model.fields,field_description:stock_ux.field_product_label_layout__display_name
 #: model:ir.model.fields,field_description:stock_ux.field_product_product__display_name
 #: model:ir.model.fields,field_description:stock_ux.field_product_template__display_name
@@ -327,7 +395,9 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_ux.field_stock_picking_zpl_lines__display_name
 #: model:ir.model.fields,field_description:stock_ux.field_stock_product_zpl_lines__display_name
 #: model:ir.model.fields,field_description:stock_ux.field_stock_quant__display_name
+#: model:ir.model.fields,field_description:stock_ux.field_stock_route__display_name
 #: model:ir.model.fields,field_description:stock_ux.field_stock_rule__display_name
+#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse__display_name
 #: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__display_name
 msgid "Display Name"
 msgstr ""
@@ -402,11 +472,22 @@ msgid "Etiqueta de despacho (ZPL)"
 msgstr ""
 
 #. module: stock_ux
+#: model_terms:ir.actions.act_window,help:stock_ux.action_route_config_changes
+msgid ""
+"Every change on routes, on their rules and on the warehouse reception and delivery\n"
+"               steps is logged here: who changed it, when and what changed."
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_route__message_follower_ids
+#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse__message_follower_ids
 #: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__message_follower_ids
 msgid "Followers"
 msgstr ""
 
 #. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_route__message_partner_ids
+#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse__message_partner_ids
 #: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__message_partner_ids
 msgid "Followers (Partners)"
 msgstr ""
@@ -435,11 +516,14 @@ msgid "Future Activities"
 msgstr ""
 
 #. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_route__has_message
+#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse__has_message
 #: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__has_message
 msgid "Has Message"
 msgstr ""
 
 #. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_mail_message__id
 #: model:ir.model.fields,field_description:stock_ux.field_product_label_layout__id
 #: model:ir.model.fields,field_description:stock_ux.field_product_product__id
 #: model:ir.model.fields,field_description:stock_ux.field_product_template__id
@@ -454,17 +538,25 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_ux.field_stock_picking_zpl_lines__id
 #: model:ir.model.fields,field_description:stock_ux.field_stock_product_zpl_lines__id
 #: model:ir.model.fields,field_description:stock_ux.field_stock_quant__id
+#: model:ir.model.fields,field_description:stock_ux.field_stock_route__id
 #: model:ir.model.fields,field_description:stock_ux.field_stock_rule__id
+#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse__id
 #: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__id
 msgid "ID"
 msgstr ""
 
 #. module: stock_ux
+#: model:ir.model.fields,help:stock_ux.field_stock_route__message_needaction
+#: model:ir.model.fields,help:stock_ux.field_stock_warehouse__message_needaction
 #: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint__message_needaction
 msgid "If checked, new messages require your attention."
 msgstr ""
 
 #. module: stock_ux
+#: model:ir.model.fields,help:stock_ux.field_stock_route__message_has_error
+#: model:ir.model.fields,help:stock_ux.field_stock_route__message_has_sms_error
+#: model:ir.model.fields,help:stock_ux.field_stock_warehouse__message_has_error
+#: model:ir.model.fields,help:stock_ux.field_stock_warehouse__message_has_sms_error
 #: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint__message_has_error
 #: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
@@ -475,6 +567,13 @@ msgstr ""
 msgid ""
 "If set an email will be sent to the customer after the picking related to "
 "this picking type has been validated."
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,help:stock_ux.field_stock_route__active
+msgid ""
+"If the active field is set to False, it will allow you to hide the route "
+"without removing it."
 msgstr ""
 
 #. module: stock_ux
@@ -490,8 +589,27 @@ msgstr ""
 
 #. module: stock_ux
 #. odoo-python
+#: code:addons/stock_ux/models/stock_quant.py:0
+msgid "Import Template for Inventory Adjustments"
+msgstr ""
+
+#. module: stock_ux
+#. odoo-python
 #: code:addons/stock_ux/models/product_template.py:0
 msgid "Import Template for Products"
+msgstr ""
+
+#. module: stock_ux
+#. odoo-python
+#: code:addons/stock_ux/models/stock_quant.py:0
+msgid ""
+"Importing an inventory count needs the \"Inventory Adjustments\" permission."
+" Ask an administrator to grant it."
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse__reception_steps
+msgid "Incoming Shipments"
 msgstr ""
 
 #. module: stock_ux
@@ -515,6 +633,13 @@ msgid "Inventory Location"
 msgstr ""
 
 #. module: stock_ux
+#: model:ir.model,name:stock_ux.model_stock_route
+msgid "Inventory Route"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_route__message_is_follower
+#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse__message_is_follower
 #: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__message_is_follower
 msgid "Is Follower"
 msgstr ""
@@ -544,6 +669,11 @@ msgid "Late Activities"
 msgstr ""
 
 #. module: stock_ux
+#: model:ir.model.fields,help:stock_ux.field_stock_route__company_id
+msgid "Leave this field empty if this route is shared between all companies"
+msgstr ""
+
+#. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__location_id
 msgid "Location"
 msgstr ""
@@ -551,6 +681,13 @@ msgstr ""
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_stock_operation_wizard_form
 msgid "Locations"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,help:stock_ux.field_res_config_settings__route_tracking
+msgid ""
+"Log in the chatter who changed routes, rules and warehouse steps, and what "
+"changed."
 msgstr ""
 
 #. module: stock_ux
@@ -567,7 +704,7 @@ msgstr ""
 #: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint__reviewed
 msgid ""
 "Marks the replenishment line as reviewed. It is set automatically when the "
-"quantity to order is adjusted and cleared when the replenishment is "
+"quantity to order is entered by hand and cleared when the replenishment is "
 "generated."
 msgstr ""
 
@@ -577,11 +714,20 @@ msgid "Max Quantity"
 msgstr ""
 
 #. module: stock_ux
+#: model:ir.model,name:stock_ux.model_mail_message
+msgid "Message"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_route__message_has_error
+#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse__message_has_error
 #: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__message_has_error
 msgid "Message Delivery error"
 msgstr ""
 
 #. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_route__message_ids
+#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse__message_ids
 #: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__message_ids
 msgid "Messages"
 msgstr ""
@@ -619,12 +765,6 @@ msgid "Move Uom"
 msgstr ""
 
 #. module: stock_ux
-#. odoo-javascript
-#: code:addons/stock_ux/static/src/forecasted_buttons.xml:0
-msgid "Movements"
-msgstr ""
-
-#. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_product_label_layout__line_ids
 msgid "Moves"
 msgstr ""
@@ -645,6 +785,23 @@ msgid "Net Quantity Location"
 msgstr ""
 
 #. module: stock_ux
+#. odoo-python
+#: code:addons/stock_ux/models/stock_warehouse.py:0
+msgid "New rules"
+msgstr ""
+
+#. module: stock_ux
+#. odoo-python
+#: code:addons/stock_ux/models/stock_route.py:0
+msgid "No"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.actions.act_window,help:stock_ux.action_route_config_changes
+msgid "No changes on routes configuration yet"
+msgstr ""
+
+#. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_label_custom_qty
 msgid "No processed moves found in this picking."
 msgstr ""
@@ -655,6 +812,8 @@ msgid "No transfer found. Let's create one!"
 msgstr ""
 
 #. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_route__message_needaction_counter
+#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse__message_needaction_counter
 #: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__message_needaction_counter
 msgid "Number of Actions"
 msgstr ""
@@ -665,16 +824,22 @@ msgid "Number of Packages"
 msgstr ""
 
 #. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_route__message_has_error_counter
+#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse__message_has_error_counter
 #: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__message_has_error_counter
 msgid "Number of errors"
 msgstr ""
 
 #. module: stock_ux
+#: model:ir.model.fields,help:stock_ux.field_stock_route__message_needaction_counter
+#: model:ir.model.fields,help:stock_ux.field_stock_warehouse__message_needaction_counter
 #: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint__message_needaction_counter
 msgid "Number of messages requiring action"
 msgstr ""
 
 #. module: stock_ux
+#: model:ir.model.fields,help:stock_ux.field_stock_route__message_has_error_counter
+#: model:ir.model.fields,help:stock_ux.field_stock_warehouse__message_has_error_counter
 #: model:ir.model.fields,help:stock_ux.field_stock_warehouse_orderpoint__message_has_error_counter
 msgid "Number of messages with delivery error"
 msgstr ""
@@ -711,6 +876,11 @@ msgid "Original Source Location"
 msgstr ""
 
 #. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse__delivery_steps
+msgid "Outgoing Shipments"
+msgstr ""
+
+#. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
 msgid "Package"
 msgstr ""
@@ -734,7 +904,6 @@ msgstr ""
 
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.stock_move_line_view_search
-#: model_terms:ir.ui.view,arch_db:stock_ux.view_move_tree
 msgid "Picking Partner"
 msgstr ""
 
@@ -799,12 +968,6 @@ msgid "Product Labels from Picking (ZPL)"
 msgstr ""
 
 #. module: stock_ux
-#. odoo-javascript
-#: code:addons/stock_ux/static/src/forecasted_buttons.xml:0
-msgid "Product Movements"
-msgstr ""
-
-#. module: stock_ux
 #: model:ir.model,name:stock_ux.model_stock_move_line
 msgid "Product Moves (Stock Move Line)"
 msgstr ""
@@ -825,17 +988,6 @@ msgid "Products"
 msgstr ""
 
 #. module: stock_ux
-#: model_terms:ir.ui.view,arch_db:stock_ux.product_form_view_procurement_button
-#: model_terms:ir.ui.view,arch_db:stock_ux.product_template_form_view_procurement_button
-msgid "Products Moves"
-msgstr ""
-
-#. module: stock_ux
-#: model_terms:ir.ui.view,arch_db:stock_ux.product_form_view_procurement_button
-msgid "Products Moves Detailed"
-msgstr ""
-
-#. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_rule__propagate_carrier
 msgid "Propagation of carrier"
 msgstr ""
@@ -843,11 +995,6 @@ msgstr ""
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_move_tree
 msgid "Q. UdM Producto"
-msgstr ""
-
-#. module: stock_ux
-#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__qty_multiple
-msgid "Qty Multiple"
 msgstr ""
 
 #. module: stock_ux
@@ -878,8 +1025,29 @@ msgid ""
 msgstr ""
 
 #. module: stock_ux
+#: model:ir.model.fields,help:stock_ux.field_mail_mail__tracking_summary
+#: model:ir.model.fields,help:stock_ux.field_mail_message__tracking_summary
+msgid ""
+"Readable summary of the message: its tracked field changes, or its body when"
+" it has none."
+msgstr ""
+
+#. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
 msgid "Ready"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_route_config_changes_tree
+msgid "Record"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.res_config_settings_view_form
+msgid ""
+"Registra en el chatter de rutas, reglas y almacenes quién cambió la "
+"configuración y qué cambió. Ayuda a rastrear el origen de movimientos "
+"inesperados después de tocar las rutas."
 msgstr ""
 
 #. module: stock_ux
@@ -903,6 +1071,11 @@ msgid "Restrict to modify reservations from planned"
 msgstr ""
 
 #. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse__resupply_wh_ids
+msgid "Resupply From"
+msgstr ""
+
+#. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__reviewed
 msgid "Reviewed"
 msgstr ""
@@ -918,6 +1091,45 @@ msgid "Rotation Stdev"
 msgstr ""
 
 #. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_route__name
+msgid "Route"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.actions.act_window,name:stock_ux.action_route_config_changes
+#: model:ir.ui.menu,name:stock_ux.menu_route_config_changes
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_route_config_changes_tree
+msgid "Routes Configuration Changes"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,help:stock_ux.field_stock_warehouse__resupply_wh_ids
+msgid ""
+"Routes will be created automatically to resupply this warehouse from the "
+"warehouses ticked"
+msgstr ""
+
+#. module: stock_ux
+#. odoo-python
+#: code:addons/stock_ux/models/stock_rule.py:0
+msgid "Rule %s changed:"
+msgstr ""
+
+#. module: stock_ux
+#. odoo-python
+#: code:addons/stock_ux/models/stock_rule.py:0
+msgid "Rules added: %s"
+msgstr ""
+
+#. module: stock_ux
+#. odoo-python
+#: code:addons/stock_ux/models/stock_rule.py:0
+msgid "Rules deleted: %s"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_route__message_has_sms_error
+#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse__message_has_sms_error
 #: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__message_has_sms_error
 msgid "SMS Delivery error"
 msgstr ""
@@ -935,8 +1147,23 @@ msgid ""
 msgstr ""
 
 #. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_route__sequence
+msgid "Sequence"
+msgstr ""
+
+#. module: stock_ux
 #: model:ir.actions.server,name:stock_ux.action_operation_set_all_undone
 msgid "Set all undone"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse__code
+msgid "Short Name"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,help:stock_ux.field_stock_warehouse__code
+msgid "Short name used to identify your warehouse"
 msgstr ""
 
 #. module: stock_ux
@@ -1022,9 +1249,46 @@ msgid "Stock UX"
 msgstr ""
 
 #. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_route__supplied_wh_id
+msgid "Supplied Warehouse"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_route__supplier_wh_id
+msgid "Supplying Warehouse"
+msgstr ""
+
+#. module: stock_ux
+#. odoo-python
+#: code:addons/stock_ux/models/stock_quant.py:0
+msgid ""
+"The column \"%(columns)s\" cannot be imported into an inventory adjustment: "
+"it only takes the counted quantity and the columns identifying the stock "
+"line. Remove it from the file."
+msgstr ""
+
+#. module: stock_ux
+#. odoo-python
+#: code:addons/stock_ux/models/stock_quant.py:0
+msgid ""
+"The file does not say where the count was taken and there is more than one "
+"warehouse to take it in, so every row would land in \"%(location)s\". Add "
+"the location column, or the column that identifies each stock line."
+msgstr ""
+
+#. module: stock_ux
 #. odoo-python
 #: code:addons/stock_ux/models/stock_picking.py:0
 msgid "The number of packages cannot be 0"
+msgstr ""
+
+#. module: stock_ux
+#. odoo-python
+#: code:addons/stock_ux/models/stock_quant.py:0
+msgid ""
+"The product \"%(products)s\" does not track inventory, so it cannot hold "
+"stock. Enable \"Track Inventory\" on the product or remove its rows from the"
+" file."
 msgstr ""
 
 #. module: stock_ux
@@ -1036,11 +1300,19 @@ msgid ""
 msgstr ""
 
 #. module: stock_ux
-#: model_terms:ir.ui.view,arch_db:stock_ux.product_form_view_procurement_button
-#: model_terms:ir.ui.view,arch_db:stock_ux.product_template_form_view_procurement_button
+#. odoo-python
+#: code:addons/stock_ux/models/stock_quant.py:0
 msgid ""
-"They are only stock movements made or reserved, includes information of "
-"batches and storage locations."
+"The stock line \"%(quant)s\" cannot be moved to another \"%(field)s\" from a"
+" file: it holds \"%(current)s\" and the file brings \"%(new)s\". Product, "
+"location, lot, package and owner identify the line: fix that row or drop the"
+" column."
+msgstr ""
+
+#. module: stock_ux
+#. odoo-python
+#: code:addons/stock_ux/models/stock_warehouse.py:0
+msgid "The warehouse steps changed and the rules were rewritten:"
 msgstr ""
 
 #. module: stock_ux
@@ -1064,14 +1336,14 @@ msgid "Total"
 msgstr ""
 
 #. module: stock_ux
-#: model:ir.model,name:stock_ux.model_stock_picking
-#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
-msgid "Transfer"
+#: model:ir.model.fields,field_description:stock_ux.field_res_config_settings__route_tracking
+msgid "Track Routes Configuration Changes"
 msgstr ""
 
 #. module: stock_ux
-#: model:ir.model.fields,field_description:stock_ux.field_stock_move__picking_partner_id
-msgid "Transfer Destination Address"
+#: model:ir.model,name:stock_ux.model_stock_picking
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
+msgid "Transfer"
 msgstr ""
 
 #. module: stock_ux
@@ -1128,6 +1400,12 @@ msgid "Waiting Moves"
 msgstr ""
 
 #. module: stock_ux
+#: model:ir.model,name:stock_ux.model_stock_warehouse
+#: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse__name
+msgid "Warehouse"
+msgstr ""
+
+#. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__warehouse_rotation
 msgid "Warehouse Rotation"
 msgstr ""
@@ -1135,6 +1413,11 @@ msgstr ""
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse_orderpoint__warehouse_rotation_stdev
 msgid "Warehouse Rotation Stdev"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_stock_route__warehouse_ids
+msgid "Warehouses"
 msgstr ""
 
 #. module: stock_ux
@@ -1150,6 +1433,30 @@ msgid ""
 msgstr ""
 
 #. module: stock_ux
+#: model:ir.model.fields,help:stock_ux.field_stock_route__warehouse_selectable
+msgid ""
+"When a warehouse is selected for this route, this route should be seen as "
+"the default route when products pass through this warehouse."
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,help:stock_ux.field_stock_route__product_selectable
+msgid ""
+"When checked, the route will be selectable in the Inventory tab of the "
+"Product form."
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,help:stock_ux.field_stock_route__package_type_selectable
+msgid "When checked, the route will be selectable on package types"
+msgstr ""
+
+#. module: stock_ux
+#: model:ir.model.fields,help:stock_ux.field_stock_route__product_categ_selectable
+msgid "When checked, the route will be selectable on the Product Category."
+msgstr ""
+
+#. module: stock_ux
 #: model:ir.model.fields,help:stock_ux.field_stock_rule__propagate_carrier
 msgid "When ticked, carrier of shipment will be propagated."
 msgstr ""
@@ -1162,6 +1469,12 @@ msgstr ""
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_product_zpl_lines__wizard_id
 msgid "Wizard"
+msgstr ""
+
+#. module: stock_ux
+#. odoo-python
+#: code:addons/stock_ux/models/stock_route.py:0
+msgid "Yes"
 msgstr ""
 
 #. module: stock_ux
@@ -1190,6 +1503,14 @@ msgstr ""
 #. odoo-python
 #: code:addons/stock_ux/models/stock_move_line.py:0
 msgid "You can't transfer more quantity than the quantity on stock!"
+msgstr ""
+
+#. module: stock_ux
+#. odoo-python
+#: code:addons/stock_ux/models/stock_move_line.py:0
+msgid ""
+"You can't transfer the lot/serial number %(lot)s from %(location)s: it has "
+"no stock there. Pick it from the location that holds it."
 msgstr ""
 
 #. module: stock_ux
@@ -1297,4 +1618,10 @@ msgid ""
 "\n"
 "^FO250,10\n"
 "^A0N,20,25^FD"
+msgstr ""
+
+#. module: stock_ux
+#. odoo-python
+#: code:addons/stock_ux/models/stock_quant.py:0
+msgid "empty"
 msgstr ""
