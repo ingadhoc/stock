@@ -63,22 +63,61 @@ class StockMoveLine(models.Model):
                 product_uom_qty_location = 0.0 if rec.location_dest_id in locations else -rec.quantity
             rec.product_uom_qty_location = product_uom_qty_location
 
-    def _check_manual_lines(self):
+    def _get_manual_lines_to_check(self):
         if self.env.context.get("put_in_pack", False):
-            return
-        if any(
-            self.filtered(
-                lambda x: not x.location_id.should_bypass_reservation()
-                and x.picking_id.picking_type_id.block_manual_lines
-                and x._check_quantity_available() < 0
-            )
-        ):
-            raise ValidationError(_("You can't transfer more quantity than the quantity on stock!"))
+            return self.browse()
+        return self.filtered(
+            lambda x: not x.location_id.should_bypass_reservation()
+            and x.picking_id.picking_type_id.block_manual_lines
+            and x._is_manual_line_check_needed()
+        )
 
-    def _check_quantity_available(self):
+    def _check_manual_lines(self):
+        lines = self._get_manual_lines_to_check()
+        if any(line._check_quantity_available() < 0 for line in lines):
+            raise ValidationError(_("You can't transfer more quantity than the quantity on stock!"))
+        lines._check_manual_lines_lot()
+
+    def _check_manual_lines_lot(self):
+        """Odoo never reserves more of a serial than the location holds, so a line on a serial
+        that is not there leaves the product total untouched and slips through that check."""
+        for line in self.filtered(lambda x: x.lot_id and not x.product_uom_id.is_zero(x.quantity)):
+            on_hand = line._get_lot_quantity_in_location()
+            # a done line already took its quantity out of the location
+            needed = 0.0 if line.state == "done" else line.quantity_product_uom
+            if line.product_id.uom_id.compare(on_hand, needed) < 0:
+                raise ValidationError(
+                    _(
+                        "You can't transfer the lot/serial number %(lot)s from %(location)s: "
+                        "it has no stock there. Pick it from the location that holds it.",
+                        lot=line.lot_id.name,
+                        location=line.location_id.display_name,
+                    )
+                )
+
+    def _get_lot_quantity_in_location(self):
+        """On hand of the lot in the exact location of the line: validating takes it from that
+        quant, a sublocation holding it does not count. Strict gather also brings the quants
+        without lot; as when it takes the quantity, only those with stock count."""
         self.ensure_one()
-        total_available = 0.0
-        if (
+        quants = (
+            self.env["stock.quant"]
+            .sudo()
+            ._gather(
+                self.product_id,
+                self.location_id,
+                lot_id=self.lot_id,
+                package_id=self.package_id,
+                owner_id=self.owner_id,
+                strict=True,
+            )
+        )
+        uom = self.product_id.uom_id
+        return sum(quants.filtered(lambda q: q.lot_id or uom.compare(q.quantity, 0) > 0).mapped("quantity"))
+
+    def _is_manual_line_check_needed(self):
+        self.ensure_one()
+        return (
             self.product_id.is_storable
             and not self.env.context.get("trigger_assign")
             and not self.env.context.get("from_inverse_qty_done")
@@ -87,7 +126,12 @@ class StockMoveLine(models.Model):
                 self.picking_id.id in self.env.context.get("picking_ids", [])
                 or not self.env.context.get("picking_ids", [])
             )
-        ):
+        )
+
+    def _check_quantity_available(self):
+        self.ensure_one()
+        total_available = 0.0
+        if self._is_manual_line_check_needed():
             locations = self.env["stock.location"].search(
                 [
                     ("id", "child_of", self.picking_id.location_id.id),
@@ -114,6 +158,14 @@ class StockMoveLine(models.Model):
                 rec.description_picking = product._get_description(rec.picking_id.picking_type_id)
         recs._check_manual_lines()
         return recs
+
+    def write(self, vals):
+        res = super().write(vals)
+        # only the lot check: the product total runs on create, and here it would also
+        # refuse moving a line to the location that does hold the lot
+        if {"lot_id", "location_id"} & set(vals):
+            self._get_manual_lines_to_check()._check_manual_lines_lot()
+        return res
 
     def _inverse_qty_done(self):
         """
