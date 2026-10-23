@@ -15,7 +15,7 @@ Stock Delivery Zone
 ===================
 
 #. Add delivery zones, a simple list of zones that can be archived.
-#. Add a "Zone" field on contacts, below the address.
+#. Add a "Zone" field on contacts, below the address, also on the Delivery, Invoice and Other addresses of the "Contacts & Addresses" tab.
 #. Show the zone of the transfer contact on delivery orders, read only.
 #. Print the zone below the delivery address on the Delivery Slip and on the Picking Operations report.
 
