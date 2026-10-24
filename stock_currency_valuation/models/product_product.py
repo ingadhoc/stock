@@ -195,29 +195,69 @@ class productProduct(models.Model):
         return std_price_in_currency_by_product_id, value_by_product_id
 
     def _run_fifo_batch_in_currency(self, at_date=None, lot=None):
-        """Equivalent of _run_fifo_batch but for the secondary valuation currency.
-        Translates the FIFO stack value (company currency) to valuation_currency
-        using today's exchange rate."""
+        """Equivalent of _run_fifo_batch but for the secondary valuation currency: the
+        remaining FIFO layers valued at their own ``value_in_currency``."""
         std_price_in_currency_by_product_id = {}
         value_in_currency_by_product_id = {}
         for product in self:
             quantity = product.qty_available
-            value = product._run_fifo(quantity, lot, at_date)
-            if value and product.valuation_currency_id:
-                # product.company_id is empty on shared products and _convert would then apply rate 1
-                company = product.company_id or self.env.company
-                value_in_currency = company.currency_id._convert(
-                    from_amount=value,
-                    to_currency=product.valuation_currency_id,
-                    company=company,
-                    date=fields.Date.today(),
-                )
-            else:
-                value_in_currency = 0
+            if lot:
+                quantity = lot.product_qty
+            value_in_currency = (
+                product._run_fifo_in_currency(quantity, lot, at_date) if product.valuation_currency_id else 0
+            )
             std_price = value_in_currency / quantity if quantity else 0
             std_price_in_currency_by_product_id[product.id] = std_price
             value_in_currency_by_product_id[product.id] = value_in_currency
         return std_price_in_currency_by_product_id, value_in_currency_by_product_id
+
+    def _run_fifo_in_currency(self, quantity, lot=None, at_date=None):
+        """Twin of ``_run_fifo`` in the secondary currency.
+
+        Walks the same stack of incoming moves the core consumes (``_run_fifo_get_stack``,
+        which also honours ``fifo_qty_already_processed``) in the same order and proportion,
+        but adds up each layer's ``value_in_currency``. Converting the company-currency
+        result instead would apply one rate to layers that came in at different rates.
+        """
+        self.ensure_one()
+        if self.uom_id.compare(quantity, 0) <= 0:
+            if at_date:
+                last_in = self._get_last_in(at_date)
+                last_in_qty = last_in._get_valued_qty() if last_in else 0
+                if last_in_qty:
+                    return quantity * last_in.value_in_currency / last_in_qty
+            return quantity * self.standard_price_in_currency
+
+        fifo_cost = 0
+        fifo_stack, qty_on_first_move = self._run_fifo_get_stack(lot=lot, at_date=at_date)
+        last_move = False
+        while quantity > 0 and fifo_stack:
+            move = fifo_stack.pop(0)
+            last_move = move
+            move_value = move.value_in_currency
+            if qty_on_first_move:
+                valued_qty = move._get_valued_qty()
+                in_qty = qty_on_first_move
+                in_value = move_value * in_qty / valued_qty
+                qty_on_first_move = 0
+            else:
+                in_qty = move._get_valued_qty(lot=lot)
+                in_value = move_value
+                if lot:
+                    valued_qty = move._get_valued_qty()
+                    in_value = in_value * in_qty / valued_qty if valued_qty else 0
+            if in_qty > quantity:
+                in_value = in_value * quantity / in_qty
+                in_qty = quantity
+            fifo_cost += in_value
+            quantity -= in_qty
+        # Same extrapolation as the core when more quantity is required than available
+        if quantity > 0:
+            if last_move and last_move.quantity:
+                fifo_cost += quantity * (last_move.value_in_currency / last_move.quantity)
+            else:
+                fifo_cost += quantity * self.standard_price_in_currency
+        return fifo_cost
 
     def _run_average_batch_in_currency(self, at_date=None, lot=None, force_recompute=False):
         """Replica de _run_average_batch pero calculando el costo promedio en la moneda
@@ -377,19 +417,20 @@ class productProduct(models.Model):
                 continue
 
             if cost_method == "fifo":
-                # Para FIFO: ratio entre standard_price_in_currency y standard_price
-                # proporcional al último precio de entrada, usando la tasa de la moneda actual.
+                # Same rule as the core: remaining layers / quantity, or the last incoming
+                # price when there is no stock left.
                 for product in products:
-                    qty_available = product._with_valuation_context().qty_available
-                    if product.uom_id.compare(qty_available, 0) > 0 and product.standard_price:
-                        # Calcular usando la tasa de cambio actual entre company_currency y valuation_currency
-                        company = product.company_id or self.env.company
-                        new_price_in_currency = company.currency_id._convert(
-                            from_amount=product.standard_price,
-                            to_currency=product.valuation_currency_id,
-                            company=company,
-                            date=fields.Date.today(),
+                    product_in_valuation = product._with_valuation_context()
+                    qty_available = product_in_valuation.qty_available
+                    new_price_in_currency = None
+                    if product.uom_id.compare(qty_available, 0) > 0:
+                        new_price_in_currency = (
+                            product_in_valuation._run_fifo_in_currency(qty_available) / qty_available
                         )
+                    elif last_in := product._get_last_in():
+                        if last_in_qty := last_in._get_valued_qty():
+                            new_price_in_currency = last_in.value_in_currency / last_in_qty
+                    if new_price_in_currency is not None:
                         product.with_context(
                             disable_auto_revaluation=True
                         ).sudo().standard_price_in_currency = new_price_in_currency

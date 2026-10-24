@@ -43,9 +43,10 @@ class StockLandedCost(models.Model):
 class StockValuationAdjustmentLines(models.Model):
     _inherit = "stock.valuation.adjustment.lines"
 
+    # The product's own currency: a landed cost may also reach products valued in none
     valuation_currency_id = fields.Many2one(
         "res.currency",
-        related="cost_id.valuation_currency_id",
+        compute="_compute_valuation_currency_id",
         store=True,
     )
     former_cost_in_currency = fields.Monetary(
@@ -66,6 +67,11 @@ class StockValuationAdjustmentLines(models.Model):
         compute="_compute_amounts_in_currency",
         store=True,
     )
+
+    @api.depends("product_id.categ_id", "cost_id.company_id")
+    def _compute_valuation_currency_id(self):
+        for line in self:
+            line.valuation_currency_id = line.product_id.with_company(line.cost_id.company_id).valuation_currency_id
 
     def _get_currency_rate(self):
         """Return the effective rate to convert from company currency to valuation currency.
@@ -97,18 +103,27 @@ class StockValuationAdjustmentLines(models.Model):
         "valuation_currency_id",
         "cost_id.currency_rate",
         "cost_id.date",
+        "cost_id.state",
+        "move_id.value_in_currency",
     )
     def _compute_amounts_in_currency(self):
-        for line in self:
-            if not line.valuation_currency_id or line.valuation_currency_id == line.currency_id:
-                line.former_cost_in_currency = line.former_cost
-                line.additional_landed_cost_in_currency = line.additional_landed_cost
-                line.final_cost_in_currency = line.final_cost
-                continue
+        to_convert = self.filtered(lambda line: line.valuation_currency_id)
+        for line in self - to_convert:
+            line.former_cost_in_currency = 0
+            line.additional_landed_cost_in_currency = 0
+            line.final_cost_in_currency = 0
+        for line in to_convert:
             rate = line._get_currency_rate()
-            rounding = line.valuation_currency_id.rounding
-            line.former_cost_in_currency = float_round(line.former_cost * rate, precision_rounding=rounding)
             line.additional_landed_cost_in_currency = float_round(
-                line.additional_landed_cost * rate, precision_rounding=rounding
+                line.additional_landed_cost * rate, precision_rounding=line.valuation_currency_id.rounding
             )
-            line.final_cost_in_currency = float_round(line.final_cost * rate, precision_rounding=rounding)
+        # Same criterion as the core's former_cost (the move's value with no landed cost):
+        # the move's value in currency, at the receipt's own rate, minus the landed costs
+        # already applied to it, this one included once validated.
+        landed_costs_by_move = to_convert.move_id.sudo()._get_landed_cost()
+        for line in to_convert:
+            applied = landed_costs_by_move.get(line.move_id, self.browse())
+            line.former_cost_in_currency = line.move_id.value_in_currency - sum(
+                applied.mapped("additional_landed_cost_in_currency")
+            )
+            line.final_cost_in_currency = line.former_cost_in_currency + line.additional_landed_cost_in_currency
