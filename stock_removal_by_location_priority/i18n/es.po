@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-12 18:25+0000\n"
-"PO-Revision-Date: 2025-11-12 18:25+0000\n"
+"POT-Creation-Date: 2026-10-20 18:21+0000\n"
+"PO-Revision-Date: 2026-10-20 18:21+0000\n"
 "Last-Translator: ADHOC - Bot <transbot@adhoc.com.ar>, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
@@ -20,15 +20,84 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
 #. module: stock_removal_by_location_priority
+#: model:ir.module.module,description:base.module_stock_removal_by_location_priority
+msgid ""
+".. |company| replace:: ADHOC SA\n"
+"\n"
+".. |company_logo| image:: https://raw.githubusercontent.com/ingadhoc/maintainer-tools/master/resources/adhoc-logo.png\n"
+"   :alt: ADHOC SA\n"
+"   :target: https://www.adhoc.com.ar\n"
+"\n"
+".. |icon| image:: https://raw.githubusercontent.com/ingadhoc/maintainer-tools/master/resources/adhoc-icon.png\n"
+"\n"
+".. image:: https://img.shields.io/badge/license-AGPL--3-blue.png\n"
+"   :target: https://www.gnu.org/licenses/agpl\n"
+"   :alt: License: AGPL-3\n"
+"\n"
+"==================================\n"
+"Stock Removal by Location priority\n"
+"==================================\n"
+"\n"
+"Add a new removal strategy, By Location Priority, that takes the stock out of the locations with the lowest removal priority first. It also adds a Removal Priority field on locations, used to order them. This strategy replaces the order of the standard ones (FIFO, LIFO, etc), it is not appended to them.\n"
+"\n"
+"Usage\n"
+"=====\n"
+"\n"
+"To use this module, you need to:\n"
+"\n"
+"#. Go to Inventory > Configuration > Locations, open a location and set its\n"
+"   Removal Priority. The lower the value, the sooner the stock leaves that\n"
+"   location. New locations get 10.\n"
+"#. Set \"By Location Priority\" as the Force Removal Strategy of a product\n"
+"   category, or as the Removal Strategy of a location.\n"
+"\n"
+".. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas\n"
+"   :alt: Try me on Runbot\n"
+"   :target: http://runbot.adhoc.com.ar/\n"
+"\n"
+"Bug Tracker\n"
+"===========\n"
+"\n"
+"Bugs are tracked on `GitHub Issues\n"
+"<https://github.com/ingadhoc/stock/issues>`_. In case of trouble, please\n"
+"check there if your issue has already been reported. If you spotted it first,\n"
+"help us smashing it by providing a detailed and welcomed feedback.\n"
+"\n"
+"Credits\n"
+"=======\n"
+"\n"
+"Images\n"
+"------\n"
+"\n"
+"* |company| |icon|\n"
+"\n"
+"Contributors\n"
+"------------\n"
+"\n"
+"* Juan Jose Scarafia <jjs@adhoc.com.ar>\n"
+"* Miquel Raïch <miquel.raich@eficent.com>\n"
+"* Lois Rilo <lois.rilo@eficent.com>\n"
+"\n"
+"Maintainer\n"
+"----------\n"
+"\n"
+"|company_logo|\n"
+"\n"
+"This module is maintained by the |company|.\n"
+"\n"
+"To contribute to this module, please visit https://www.adhoc.com.ar.\n"
+msgstr ""
+
+#. module: stock_removal_by_location_priority
 #: model:product.removal,name:stock_removal_by_location_priority.removal_by_location_priority
 msgid "By Location Priority"
-msgstr ""
+msgstr "Por prioridad de ubicación"
 
 #. module: stock_removal_by_location_priority
 #: model:ir.model.fields,field_description:stock_removal_by_location_priority.field_stock_location__display_name
 #: model:ir.model.fields,field_description:stock_removal_by_location_priority.field_stock_quant__display_name
 msgid "Display Name"
-msgstr "Nombre para mostrar"
+msgstr "Nombre en pantalla"
 
 #. module: stock_removal_by_location_priority
 #: model:ir.model.fields,help:stock_removal_by_location_priority.field_stock_location__removal_strategy_method
@@ -39,12 +108,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_removal_by_location_priority.field_stock_location__id
 #: model:ir.model.fields,field_description:stock_removal_by_location_priority.field_stock_quant__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: stock_removal_by_location_priority
 #: model:ir.model,name:stock_removal_by_location_priority.model_stock_location
-msgid "Inventory Locations"
-msgstr "Ubicaciones de inventario"
+msgid "Inventory Location"
+msgstr "Ubicación de inventario"
 
 #. module: stock_removal_by_location_priority
 #: model_terms:ir.ui.view,arch_db:stock_removal_by_location_priority.view_location_form
@@ -68,14 +137,19 @@ msgstr ""
 
 #. module: stock_removal_by_location_priority
 #: model:ir.model,name:stock_removal_by_location_priority.model_stock_quant
-msgid "Quants"
-msgstr "Cuantos"
+msgid "Quant"
+msgstr "Quants"
 
 #. module: stock_removal_by_location_priority
 #: model:ir.model.fields,field_description:stock_removal_by_location_priority.field_stock_location__removal_priority
 #: model:ir.model.fields,field_description:stock_removal_by_location_priority.field_stock_quant__removal_priority
 msgid "Removal Priority"
 msgstr "Prioridad de retirada"
+
+#. module: stock_removal_by_location_priority
+#: model:ir.module.module,shortdesc:base.module_stock_removal_by_location_priority
+msgid "Stock Removal by Location priority"
+msgstr "Retirada de stock por prioridad de ubicación"
 
 #. module: stock_removal_by_location_priority
 #: model:product.removal,method:stock_removal_by_location_priority.removal_by_location_priority
