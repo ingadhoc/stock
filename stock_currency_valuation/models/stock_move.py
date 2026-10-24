@@ -159,6 +159,227 @@ class StockMove(models.Model):
                     )
                     move.value_in_currency = base_value_in_currency + lc_value_in_currency
 
+<<<<<<< 9ad1dda987a83a88d6b2f238fac535577951133b
         # Recompute the standard price, con la compañía de cada move (no la ambiente)
         for company_id, product_ids in products_to_recompute_by_company.items():
             self.env["product.product"].browse(product_ids).with_company(company_id)._update_standard_price()
+||||||| 8c94b5858668ed8ed261987e7ad767f5caa1beb5
+    def product_price_update_before_done(self, forced_qty=None):
+        super().product_price_update_before_done(forced_qty=forced_qty)
+        # Actualizo tambien el costo en moneda
+        tmpl_dict = defaultdict(lambda: 0.0)
+        # adapt standard price on incomming moves if the product cost_method is 'average'
+        std_price_update = {}
+        for move in self.filtered(
+            lambda move: move._is_in()
+            and move.with_company(move.company_id).product_id.categ_id.valuation_currency_id
+            and move.with_company(move.company_id).product_id.cost_method == "average"
+        ):
+            product_with_company = move.product_id.with_company(move.company_id)
+            product_tot_qty_available = product_with_company.sudo().quantity_svl + tmpl_dict[move.product_id.id]
+            rounding = product_with_company.uom_id.rounding
+
+            valued_move_lines = move._get_in_move_lines()
+            qty_done = 0
+            for valued_move_line in valued_move_lines:
+                qty_done += valued_move_line.product_uom_id._compute_quantity(
+                    valued_move_line.qty_done, product_with_company.uom_id
+                )
+
+            qty = forced_qty or qty_done
+            if float_is_zero(product_tot_qty_available, precision_rounding=rounding):
+                new_std_price_in_currency = move._get_currency_price_unit(
+                    default=product_with_company.standard_price_in_currency
+                )
+            elif float_is_zero(
+                product_tot_qty_available + move.product_qty, precision_rounding=rounding
+            ) or float_is_zero(product_tot_qty_available + qty, precision_rounding=rounding):
+                new_std_price_in_currency = move._get_currency_price_unit(
+                    default=product_with_company.standard_price_in_currency
+                )
+            else:
+                # Get the standard price
+                amount_unit = (
+                    std_price_update.get((move.company_id.id, move.product_id.id))
+                    or product_with_company.standard_price_in_currency
+                )
+                new_std_price_in_currency = (
+                    (amount_unit * product_tot_qty_available) + (move._get_currency_price_unit() * qty)
+                ) / (product_tot_qty_available + qty)
+
+            tmpl_dict[move.product_id.id] += qty_done
+            # Write the standard price, as SUPERUSER_ID because a warehouse manager may not have the right to write on products
+            product_with_company.with_context(disable_auto_svl=True).sudo().write(
+                {"standard_price_in_currency": new_std_price_in_currency}
+            )
+
+            std_price_update[move.company_id.id, move.product_id.id] = new_std_price_in_currency
+        # adapt standard price on incomming moves if the product cost_method is 'fifo'
+        for move in self.filtered(
+            lambda move: move.with_company(move.company_id).product_id.cost_method == "fifo"
+            and float_is_zero(move.product_id.sudo().quantity_svl, precision_rounding=move.product_id.uom_id.rounding)
+        ):
+            move.product_id.with_company(move.company_id.id).sudo().write(
+                {"standard_price_in_currency": move._get_currency_price_unit()}
+            )
+
+    def _get_currency_price_unit(self, default=0.0):
+        """Returns the unit price from this stock move"""
+        self.ensure_one()
+        currency_id = self.company_id.currency_id
+        if hasattr(self, "purchase_order_Line") and self.purchase_order_Line:
+            currency_id = self.purchase_order_Line.currency_id
+        if hasattr(self, "sale_line_id") and self.sale_line_id:
+            currency_id = self.sale_line_id.currency_id
+
+        if (
+            self.picking_id.currency_rate
+            and self.purchase_line_id
+            and self.purchase_line_id.order_id.currency_id == self.picking_id.valuation_currency_id
+        ):
+            # When a custom currency_rate is set on the picking, use the PO line
+            # price directly in secondary currency (already UoM-converted by
+            # _get_gross_price_unit), so the AVCO update is consistent with the SVL.
+            price_unit = self.purchase_line_id._get_gross_price_unit()
+        else:
+            price_unit = currency_id._convert(
+                from_amount=self.price_unit,
+                to_currency=self.product_id.with_company(self.company_id.id).categ_id.valuation_currency_id,
+                company=self.company_id,
+                date=fields.date.today(),
+            )
+        precision = self.env["decimal.precision"].precision_get("Product Price")
+        # If the move is a return, use the original move's price unit.
+        if self.origin_returned_move_id and self.origin_returned_move_id.sudo().stock_valuation_layer_ids:
+            layers = self.origin_returned_move_id.sudo().stock_valuation_layer_ids
+            # dropshipping create additional positive svl to make sure there is no impact on the stock valuation
+            # We need to remove them from the computation of the price unit.
+            if (
+                self.origin_returned_move_id._is_dropshipped()
+                or self.origin_returned_move_id._is_dropshipped_returned()
+            ):
+                layers = layers.filtered(
+                    lambda l: float_compare(l.value, 0, precision_rounding=l.product_id.uom_id.rounding) <= 0
+                )
+            layers |= layers.stock_valuation_layer_ids
+            quantity = sum(layers.mapped("quantity"))
+            return (
+                sum(layers.mapped("value_in_currency")) / quantity
+                if not float_is_zero(quantity, precision_rounding=layers.uom_id.rounding)
+                else 0
+            )
+        return price_unit if not float_is_zero(price_unit, precision) or self._should_force_price_unit() else default
+=======
+    def product_price_update_before_done(self, forced_qty=None):
+        super().product_price_update_before_done(forced_qty=forced_qty)
+        # Actualizo tambien el costo en moneda
+        tmpl_dict = defaultdict(lambda: 0.0)
+        # adapt standard price on incomming moves if the product cost_method is 'average'
+        std_price_update = {}
+        for move in self.filtered(
+            lambda move: move._is_in()
+            and move.with_company(move.company_id).product_id.categ_id.valuation_currency_id
+            and move.with_company(move.company_id).product_id.cost_method == "average"
+        ):
+            product_with_company = move.product_id.with_company(move.company_id)
+            product_tot_qty_available = product_with_company.sudo().quantity_svl + tmpl_dict[move.product_id.id]
+            rounding = product_with_company.uom_id.rounding
+
+            valued_move_lines = move._get_in_move_lines()
+            qty_done = 0
+            for valued_move_line in valued_move_lines:
+                qty_done += valued_move_line.product_uom_id._compute_quantity(
+                    valued_move_line.qty_done, product_with_company.uom_id
+                )
+
+            qty = forced_qty or qty_done
+            if float_is_zero(product_tot_qty_available, precision_rounding=rounding):
+                new_std_price_in_currency = move._get_currency_price_unit(
+                    default=product_with_company.standard_price_in_currency
+                )
+            elif float_is_zero(
+                product_tot_qty_available + move.product_qty, precision_rounding=rounding
+            ) or float_is_zero(product_tot_qty_available + qty, precision_rounding=rounding):
+                new_std_price_in_currency = move._get_currency_price_unit(
+                    default=product_with_company.standard_price_in_currency
+                )
+            else:
+                # Get the standard price
+                amount_unit = (
+                    std_price_update.get((move.company_id.id, move.product_id.id))
+                    or product_with_company.standard_price_in_currency
+                )
+                new_std_price_in_currency = (
+                    (amount_unit * product_tot_qty_available) + (move._get_currency_price_unit() * qty)
+                ) / (product_tot_qty_available + qty)
+
+            tmpl_dict[move.product_id.id] += qty_done
+            # Write the standard price, as SUPERUSER_ID because a warehouse manager may not have the right to write on products
+            product_with_company.with_context(disable_auto_svl=True).sudo().write(
+                {"standard_price_in_currency": new_std_price_in_currency}
+            )
+
+            std_price_update[move.company_id.id, move.product_id.id] = new_std_price_in_currency
+        # adapt standard price on incomming moves if the product cost_method is 'fifo'
+        for move in self.filtered(
+            lambda move: move.with_company(move.company_id).product_id.cost_method == "fifo"
+            and float_is_zero(move.product_id.sudo().quantity_svl, precision_rounding=move.product_id.uom_id.rounding)
+        ):
+            move.product_id.with_company(move.company_id.id).sudo().write(
+                {"standard_price_in_currency": move._get_currency_price_unit()}
+            )
+
+    def _get_currency_price_unit(self, default=0.0):
+        """Returns the unit price from this stock move"""
+        self.ensure_one()
+        currency_id = self.company_id.currency_id
+        if hasattr(self, "purchase_order_Line") and self.purchase_order_Line:
+            currency_id = self.purchase_order_Line.currency_id
+        if hasattr(self, "sale_line_id") and self.sale_line_id:
+            currency_id = self.sale_line_id.currency_id
+
+        if (
+            self.picking_id.currency_rate
+            and self.purchase_line_id
+            and self.purchase_line_id.order_id.currency_id == self.picking_id.valuation_currency_id
+        ):
+            # When a custom currency_rate is set on the picking, use the PO line
+            # price directly in secondary currency (already UoM-converted by
+            # _get_gross_price_unit), so the AVCO update is consistent with the SVL.
+            price_unit = self.purchase_line_id._get_gross_price_unit()
+        else:
+            price_unit = currency_id._convert(
+                from_amount=self.price_unit,
+                to_currency=self.product_id.with_company(self.company_id.id).categ_id.valuation_currency_id,
+                company=self.company_id,
+                date=fields.date.today(),
+            )
+        precision = self.env["decimal.precision"].precision_get("Product Price")
+        # If the move is a return, use the original move's price unit.
+        if self.origin_returned_move_id and self.origin_returned_move_id.sudo().stock_valuation_layer_ids:
+            layers = self.origin_returned_move_id.sudo().stock_valuation_layer_ids
+            # dropshipping create additional positive svl to make sure there is no impact on the stock valuation
+            # We need to remove them from the computation of the price unit.
+            if (
+                self.origin_returned_move_id._is_dropshipped()
+                or self.origin_returned_move_id._is_dropshipped_returned()
+            ):
+                layers = layers.filtered(
+                    lambda l: float_compare(l.value, 0, precision_rounding=l.product_id.uom_id.rounding) <= 0
+                )
+            layers |= layers.stock_valuation_layer_ids
+            quantity = sum(layers.mapped("quantity"))
+            return (
+                sum(layers.mapped("value_in_currency")) / quantity
+                if not float_is_zero(quantity, precision_rounding=layers.uom_id.rounding)
+                else 0
+            )
+        # Like purchase_stock does in company currency, a purchase line price is used as is, even when it is zero.
+        if (
+            float_is_zero(price_unit, precision)
+            and not self._should_force_price_unit()
+            and self._should_ignore_pol_price()
+        ):
+            return default
+        return price_unit
+>>>>>>> 708a2b90c2f124e8dc8919a2d87d6643880f7cf9
