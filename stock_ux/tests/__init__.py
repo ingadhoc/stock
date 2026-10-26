@@ -15,3 +15,4 @@ from . import test_block_manual_lines_lot
 from . import test_orderpoint_reviewed
 from . import test_picking_labels
 from . import test_inventory_adjustment_menu
+from . import test_change_locations
