@@ -157,14 +157,19 @@ class StockMoveLine(models.Model):
                 product = rec.product_id.with_context(lang=rec.picking_id.partner_id.lang or rec.env.user.lang)
                 rec.description_picking = product._get_description(rec.picking_id.picking_type_id)
         recs._check_manual_lines()
+        recs.filtered(lambda ml: ml.state == "done").product_id._update_orderpoints_qty_to_order()
         return recs
 
     def write(self, vals):
+        done_lines = self.env["stock.move.line"]
+        if {"quantity", "product_uom_id", "location_id", "location_dest_id"} & vals.keys():
+            done_lines = self.filtered(lambda ml: ml.state == "done")
         res = super().write(vals)
         # only the lot check: the product total runs on create, and here it would also
         # refuse moving a line to the location that does hold the lot
         if {"lot_id", "location_id"} & set(vals):
             self._get_manual_lines_to_check()._check_manual_lines_lot()
+        done_lines.product_id._update_orderpoints_qty_to_order()
         return res
 
     def _inverse_qty_done(self):
