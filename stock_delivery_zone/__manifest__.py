@@ -19,7 +19,7 @@
 ##############################################################################
 {
     "name": "Stock Delivery Zone",
-    "version": "19.0.1.0.0",
+    "version": "20.0.1.0.0",
     "category": "Warehouse Management",
     "summary": "Assign delivery zones to contacts and show them on transfers",
     "author": "ADHOC SA",
@@ -37,7 +37,7 @@
         "report/stock_picking_reports.xml",
     ],
     "demo": [],
-    "installable": False,
+    "installable": True,
     "auto_install": False,
     "application": False,
 }
