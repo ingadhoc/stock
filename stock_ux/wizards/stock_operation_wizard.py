@@ -37,12 +37,17 @@ class StockOperationWizard(models.TransientModel):
 
     @api.model
     def default_picking_id(self):
-        picking = self.env["stock.move.line"].browse(self.env.context.get("id", [])).mapped("picking_id")
+        picking = self._get_move_lines().mapped("picking_id")
         if len(picking) != 1:
             raise UserError(_("Change location must be called from operations of same " "picking!"))
         return picking.id
 
+    @api.model
+    def _get_move_lines(self):
+        # the lines selected in the list the wizard is called from
+        return self.env["stock.move.line"].browse(self.env.context.get("active_ids", []))
+
     def action_change_location(self):
-        move_lines = self.env["stock.move.line"].browse(self.env.context.get("id", []))
+        move_lines = self._get_move_lines()
         if move_lines:
             move_lines.write({"location_id": self.location_id.id, "location_dest_id": self.location_dest_id.id})
