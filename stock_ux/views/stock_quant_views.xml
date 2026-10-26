@@ -22,4 +22,9 @@
     <record model="ir.actions.server" id="stock.action_view_set_quants_tree">
         <field name="group_ids" eval="[(6, 0, [ref('stock_ux.group_stock_inventory_adjustment')])]"/>
     </record>
+
+    <!-- menus are shown by model access, not by the groups of their server action -->
+    <record model="ir.ui.menu" id="stock.menu_action_inventory_tree">
+        <field name="group_ids" eval="[(6, 0, [ref('stock_ux.group_stock_inventory_adjustment')])]"/>
+    </record>
 </odoo>
