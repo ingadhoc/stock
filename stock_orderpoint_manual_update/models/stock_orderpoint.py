@@ -52,8 +52,8 @@ class StockWarehouseOrderpoint(models.Model):
             domain.append(("id", "in", location_ids))
         return self.env["stock.location"].search(domain)
 
-    def action_replenish(self, force_to_max=False):
-        result = super().action_replenish(force_to_max=force_to_max)
+    def action_replenish(self):
+        result = super().action_replenish()
         action = self.with_context()._get_orderpoint_action()
         orderpoint_domain = self.with_context().env["stock.warehouse.orderpoint.wizard"].get_orderpoint_domain()
         action["domain"] = Domain.AND(
