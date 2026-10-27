@@ -47,6 +47,13 @@ class StockPicking(models.Model):
             self.book_id = self.book_id.id
         return super(StockPicking, self).do_print_voucher()
 
+    def assign_numbers(self, estimated_number_of_pages, book):
+        # A numbered picking is never renumbered: a failed print reuses its voucher.
+        self.ensure_one()
+        if self.voucher_ids:
+            return
+        return super().assign_numbers(estimated_number_of_pages, book)
+
     def do_print_and_assign(self):
         if not self.book_id and self.picking_type_code != 'incoming':
             raise UserError("Primero debe seleccionar un talonario")
