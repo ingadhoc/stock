@@ -3,7 +3,7 @@
 # directory
 ##############################################################################
 from odoo import _, api, fields, models
-from odoo.exceptions import UserError, ValidationError
+from odoo.exceptions import AccessError, UserError, ValidationError
 
 
 class StockQuant(models.Model):
@@ -307,18 +307,27 @@ class StockQuant(models.Model):
                     raise UserError(
                         _(
                             'The stock line "%(quant)s" cannot be moved to another '
-                            '"%(field)s" from a file: it holds "%(current)s" and the file '
-                            'brings "%(new)s". Product, location, lot, package and owner '
-                            "identify the line: fix that row or drop the column.",
-                            quant=quant.sudo().display_name,
+                            '"%(field)s": it holds "%(current)s" and the value given is '
+                            '"%(new)s". Product, location, lot, package and owner identify '
+                            "the line: correct that value or leave the line where it is.",
+                            quant=self._name_for_message(quant),
                             field=self.fields_get([field], ["string"])[field]["string"],
-                            current=quant.sudo()[field].display_name or _("empty"),
-                            new=self.env[self._fields[field].comodel_name].browse(vals[field]).sudo().display_name
-                            or _("empty"),
+                            current=self._name_for_message(quant[field]),
+                            new=self._name_for_message(self.env[self._fields[field].comodel_name].browse(vals[field])),
                         )
                     )
             vals = {k: v for k, v in vals.items() if k not in forbidden}
         return super().write(vals)
+
+    def _name_for_message(self, record):
+        """Name a message gives to a record, read as whoever triggered it: a line of another
+        company it cannot read is not named."""
+        if not record:
+            return _("empty")
+        try:
+            return record.display_name
+        except AccessError:
+            return _("a record you cannot see")
 
     @api.constrains("product_id")
     def check_product_id(self):
