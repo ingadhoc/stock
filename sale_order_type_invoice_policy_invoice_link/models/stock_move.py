@@ -19,14 +19,16 @@ def new_write(self, vals):
                 or (invoice_policy == "by_product" and stock_move.product_id.invoice_policy == "order")
             ):
                 continue
-            inv_type = stock_move.to_refund and "out_refund" or "out_invoice"
+            # a move only refunds when it comes back from the customer
+            is_refund = stock_move.to_refund and stock_move.location_id.usage == "customer"
+            inv_type = is_refund and "out_refund" or "out_invoice"
             inv_line = (
                 self.env["account.move.line"]
                 .sudo()
                 .search([("sale_line_ids", "=", stock_move.sale_line_id.id), ("move_id.move_type", "=", inv_type)])
             )
             if inv_line:
-                stock_move.invoice_line_ids = [(4, m.id) for m in inv_line]
+                stock_move.sudo().invoice_line_ids = [(4, m.id) for m in inv_line]
     return res
 
 
