@@ -5,7 +5,7 @@ import { StockOrderpointListController } from '@stock/views/stock_orderpoint_lis
 
 patch(StockOrderpointListController.prototype, {
     async onClickOrder() {
-        const resIds = await this.getSelectedResIds();
+        const resIds = await this.model.root.getResIds(true);
         const action = await this.model.orm.call(this.props.resModel, 'action_replenish', [resIds], {
             context: this.props.context,
         });
