@@ -18,6 +18,8 @@ Stock Orderpoint Manual Update
 #. Allow to filter by main supplier when opening replenishment menu in case there is a main supplier.
 #. Allow to sort the lines in replenishment view according to the forecast qty and the rotation columns.
 #. Add the filter "Negative Forecast".
+#. Optionally recompute the rotation of the filtered replenishment rules from the wizard (it may take some time).
+#. After ordering from the filtered list, go back to the same filtered list.
 
 Installation
 ============
@@ -31,14 +33,17 @@ Configuration
 
 To configure this module, you need to:
 
-#. Just select the partner in the carrier.
+#. No configuration is needed.
 
 Usage
 =====
 
 To use this module, you need to:
 
-#. Just use it.
+#. Go to Inventory > Operations > Replenishment (Inventory Administrator).
+#. In the wizard, filter by product categories, products, vendors (optionally only the vendor set on the replenishment rule) and locations, and choose whether to compute the rotation.
+#. Confirm: only the replenishment rules that match the filters are computed and shown.
+#. Select lines and click "Order": the replenishment orders are generated and the list keeps the same filters.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
