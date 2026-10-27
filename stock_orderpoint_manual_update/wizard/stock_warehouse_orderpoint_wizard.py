@@ -22,6 +22,7 @@ class StockWarehouseOrderpointWizard(models.TransientModel):
             "filter_products": self.product_ids.ids,
             "filter_categories": self.category_ids.ids,
             "filter_suppliers": self.supplier_ids.ids,
+            "filter_by_main_supplier": self.filter_by_main_supplier,
             "filter_locations": self.location_ids.ids,
         }
         action = self.with_context(**ctx).env["stock.warehouse.orderpoint"]._get_orderpoint_action()
@@ -59,8 +60,11 @@ class StockWarehouseOrderpointWizard(models.TransientModel):
             orderpoint_domain.append(("product_id", "in", self.env.context.get("filter_products", [])))
         if self.env.context.get("filter_categories", []):
             orderpoint_domain.append(("product_category_id", "in", self.env.context.get("filter_categories", [])))
-        if self.env.context.get("filter_suppliers", []):
-            orderpoint_domain.append(("supplier_id.partner_id", "in", self.env.context.get("filter_suppliers", [])))
+        suppliers = self.env.context.get("filter_suppliers", [])
+        if suppliers and self.env.context.get("filter_by_main_supplier"):
+            orderpoint_domain.append(("supplier_id.partner_id", "in", suppliers))
+        elif suppliers:
+            orderpoint_domain.append(("product_id.seller_ids.partner_id", "in", suppliers))
         if self.env.context.get("filter_locations", []):
             orderpoint_domain.append(("location_id", "in", self.env.context.get("filter_locations", [])))
         return orderpoint_domain

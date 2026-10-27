@@ -104,18 +104,25 @@ class TestReplenishmentFilter(TransactionCase):
         """Ordering from the filtered list creates the RFQ and goes back to the same filtered list."""
         # Rules for every product, so that the filter has something to leave out
         self._confirm()
-        orderpoint_1 = self._orderpoints(self.product_1)
-        orderpoint_3 = self._orderpoints(self.product_3)
-        # The wizard puts its filters in the context of the list
-        filtered = (self.product_1 | self.product_3).ids
-        result = orderpoint_1.with_context(filter_products=filtered).action_replenish()
+        orderpoint_2, orderpoint_3 = self._orderpoints(self.product_2), self._orderpoints(self.product_3)
 
-        purchase_line = self.env["purchase.order.line"].search([("product_id", "=", self.product_1.id)])
-        self.assertEqual(purchase_line.order_id.partner_id, self.vendor_a)
-        self.assertEqual(purchase_line.product_qty, 5.0)
-        self.assertEqual(result["tag"], "display_notification")
-        next_action = result["params"]["next"]
-        self.assertEqual(next_action["res_model"], "stock.warehouse.orderpoint")
-        shown = self.env["stock.warehouse.orderpoint"].with_context(active_test=False).search(next_action["domain"])
-        # Core deletes the ordered manual rule, so the list shows the other filtered one
-        self.assertEqual(shown & self._orderpoints(self.products), orderpoint_3)
+        def order(orderpoint, **filters):
+            # The wizard puts its filters in the context of the list
+            result = orderpoint.with_context(**filters).action_replenish()
+            self.assertEqual(result["tag"], "display_notification")
+            next_action = result["params"]["next"]
+            self.assertEqual(next_action["res_model"], "stock.warehouse.orderpoint")
+            shown = self.env["stock.warehouse.orderpoint"].with_context(active_test=False).search(next_action["domain"])
+            return shown & self._orderpoints(self.products)
+
+        with self.subTest("filter by any vendor of the product"):
+            shown = order(self._orderpoints(self.product_1), filter_suppliers=self.vendor_a.ids)
+            purchase_line = self.env["purchase.order.line"].search([("product_id", "=", self.product_1.id)])
+            self.assertEqual(purchase_line.order_id.partner_id, self.vendor_a)
+            self.assertEqual(purchase_line.product_qty, 5.0)
+            # Core deletes the ordered manual rule, so the list shows the other one of vendor A
+            self.assertEqual(shown, orderpoint_3)
+
+        with self.subTest("filter by product"):
+            shown = order(orderpoint_3, filter_products=(self.product_2 | self.product_3).ids)
+            self.assertEqual(shown, orderpoint_2)
