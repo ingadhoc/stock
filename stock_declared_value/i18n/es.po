@@ -32,7 +32,7 @@ msgstr "Valor declarado"
 #: model:ir.model.fields,field_description:stock_declared_value.field_stock_picking__display_name
 #: model:ir.model.fields,field_description:stock_declared_value.field_stock_picking_type__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nombre para mostrar"
 
 #. module: stock_declared_value
 #: model:ir.model.fields,field_description:stock_declared_value.field_stock_picking__id
@@ -54,7 +54,7 @@ msgstr "Lista de precios"
 #. module: stock_declared_value
 #: model:ir.model,name:stock_declared_value.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Traslado"
 
 #. module: stock_declared_value
 #: model:ir.model.fields,help:stock_declared_value.field_stock_picking_type__pricelist_id
