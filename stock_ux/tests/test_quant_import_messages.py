@@ -103,3 +103,16 @@ class TestQuantImportMessages(TransactionCase):
 
         self.assertTrue(errors)
         self.assertIn(self.location.display_name, errors[0]["message"])
+
+    def test_file_with_an_empty_id_does_not_say_where_the_count_was_taken(self):
+        """Our own template carries the id column and invites leaving it empty on a file
+        built from the count, so the column alone does not place the rows."""
+        self.env["stock.warehouse"].create({"name": "Second Warehouse", "code": "SWH"})
+        fields = ["id", "product_id", "inventory_quantity"]
+
+        errors = self._errors(self._load(fields, [["", self.product.name, "4"]]))
+
+        self.assertTrue(errors)
+        self.assertIn(self.location.display_name, errors[0]["message"])
+        placed = self.quant.export_data(["id", "product_id"])["datas"][0] + ["4"]
+        self.assertFalse(self._errors(self._load(fields, [placed])), "an id with a value places the row")

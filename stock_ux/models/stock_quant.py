@@ -246,7 +246,7 @@ class StockQuant(models.Model):
                         columns='", "'.join(wrong.values()),
                     )
                 )
-            guessed = self._get_guessed_import_location(fields)
+            guessed = self._get_guessed_import_location(fields, data)
             if guessed:
                 return self._import_refused(
                     _(
@@ -263,16 +263,22 @@ class StockQuant(models.Model):
         """A file that cannot be imported as it stands, answered the way load() answers."""
         return {"ids": False, "messages": [{"type": "error", "message": message}], "nextrow": 0}
 
-    def _get_guessed_import_location(self, field_paths):
-        """The location every row would land in when the file names none, and there is more
-        than one to choose from. A count taken in the wrong warehouse reads as real stock."""
+    def _get_guessed_import_location(self, field_paths, data):
+        """The location a row would land in when it says nothing about where it was counted,
+        and there is more than one to choose from. A count taken in the wrong warehouse reads
+        as real stock. The columns that place a row only place it when the cell has a value:
+        our own template carries an empty id for files built from a count."""
         names = [path.split("/")[0] for path in field_paths]
-        if {"location_id", "id", ".id"} & set(names):
-            return self.env["stock.location"]
+        placing = [position for position, name in enumerate(names) if name in ("location_id", "id", ".id")]
         warehouses = self.env["stock.warehouse"].search([("company_id", "=", self.env.company.id)])
         if len(warehouses) < 2:
             return self.env["stock.location"]
-        return warehouses[0].lot_stock_id
+        for row in data:
+            if not any(str(cell or "").strip() for cell in row):
+                continue
+            if not any(str(row[position] or "").strip() for position in placing if position < len(row)):
+                return warehouses[0].lot_stock_id
+        return self.env["stock.location"]
 
     def _get_non_importable_columns(self, field_paths):
         """Columns of the file that an inventory adjustment cannot take, by label."""
