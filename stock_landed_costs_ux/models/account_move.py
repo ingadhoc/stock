@@ -7,38 +7,23 @@ class AccountMove(models.Model):
     _inherit = "account.move"
 
     def button_create_landed_costs(self):
-        """Modifies the original method changing the price_unit of the landed_costs
-        If the account.move has a different currency change from the one defined in the company,
-        takes this one to calculate the price_unit
+        """Extends the original method changing the price_unit and the account of the landed costs.
+        If the account.move has a currency rate, takes this one to calculate the price_unit
         """
-        self.ensure_one()
+        action = super().button_create_landed_costs()
+        landed_costs = self.env["stock.landed.cost"].browse(action["res_id"])
         landed_costs_lines = self.line_ids.filtered(lambda line: line.is_landed_costs_line)
-        rate_to_use = self.inverse_invoice_currency_rate if self.inverse_invoice_currency_rate else None
-        landed_costs = (
-            self.env["stock.landed.cost"]
-            .with_company(self.company_id)
-            .create(
+        rate_to_use = 1.0 / self.invoice_currency_rate if self.invoice_currency_rate else None
+        sign = -1 if self.move_type == "in_refund" else 1
+        # super() creates one cost line per landed costs line, in the same order
+        for cost_line, line in zip(landed_costs.cost_lines, landed_costs_lines, strict=True):
+            cost_line.write(
                 {
-                    "vendor_bill_id": self.id,
-                    "cost_lines": [
-                        (
-                            0,
-                            0,
-                            {
-                                "product_id": l.product_id.id,
-                                "name": l.product_id.name,
-                                "account_id": l.product_id.product_tmpl_id.get_product_accounts()["stock_valuation"].id,
-                                "price_unit": self._compute_price_unit(l, rate_to_use),
-                                "split_method": l.product_id.split_method_landed_cost or "equal",
-                            },
-                        )
-                        for l in landed_costs_lines
-                    ],
+                    "account_id": line.product_id.product_tmpl_id.get_product_accounts()["stock_valuation"].id,
+                    "price_unit": sign * self._compute_price_unit(line, rate_to_use),
                 }
             )
-        )
-        action = self.env["ir.actions.actions"]._for_xml_id("stock_landed_costs.action_stock_landed_cost")
-        return dict(action, view_mode="form", res_id=landed_costs.id, views=[(False, "form")])
+        return action
 
     def _compute_price_unit(self, landed_cost_line, rate_to_use):
         """Calculates the price_unit using the corresponding currency rate"""
