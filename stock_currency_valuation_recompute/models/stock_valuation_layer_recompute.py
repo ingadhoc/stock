@@ -144,6 +144,31 @@ class StockValuationLayerRecompute(models.Model):
             rate_type,
         ]
 
+    def _get_pdiff_value_in_currency(self, svl, lines):
+        """Value in currency of an existing price difference, rebuilt from its bill line and parent layer."""
+        aml = svl.account_move_line_id
+        parent = svl.stock_valuation_layer_id.with_company(svl.company_id)
+        if (
+            aml.move_id.move_type != "in_invoice"
+            or not parent.quantity
+            or aml.currency_id != parent.valuation_currency_id
+        ):
+            return svl.value_in_currency
+        # the parent may already be corrected in this same run: measure the bill against its new value
+        parent_value_in_currency = next(
+            (vals["new_value_in_currency"] for _cmd, _id, vals in lines if vals and vals["layer_id"] == parent.id),
+            parent.value_in_currency,
+        )
+        unit_cost = parent_value_in_currency / parent.quantity
+        bill_unit = parent._get_bill_unit_price(aml)
+        if parent.valuation_currency_id.is_zero(bill_unit - unit_cost):
+            return 0.0
+        # on-hand quantity the bill corrected, derived from the value stock_account gave the layer
+        unit_difference = (bill_unit / aml.currency_rate if aml.currency_rate else 0.0) - parent.value / parent.quantity
+        if self.currency_id.is_zero(unit_difference):
+            return svl.value_in_currency
+        return parent._get_pdiff_value_in_currency(aml, svl.value / unit_difference, unit_cost)
+
     def _get_standard_price(self, new_value, standard_price, quantity_at_time, quantity):
         if not quantity_at_time:
             return standard_price
@@ -196,7 +221,7 @@ class StockValuationLayerRecompute(models.Model):
         floor_date = self._get_recompute_floor_date()
 
         leaf = [("company_id", "=", self.company_id.id), ("product_id", "=", self.product_id.id)]
-        svl_ids = self.env["stock.valuation.layer"].search(leaf, order="create_date asc")
+        svl_ids = self.env["stock.valuation.layer"].search(leaf, order="create_date asc, id asc")
         if not svl_ids:
             # Sin este aviso el recalculo termina en "Not changes Required", que se lee
             # como "el producto esta bien" cuando en realidad se miro la compania equivocada.
@@ -252,7 +277,10 @@ class StockValuationLayerRecompute(models.Model):
                 quantity_at_time = quantity_at_time - svl_id.quantity
                 svl_type = "zero"
 
-            elif svl_id.stock_move_id and svl_id.stock_move_id.is_inventory:
+            elif svl_id.stock_move_id and (
+                svl_id.stock_move_id.is_inventory
+                or (svl_id.quantity > 0 and svl_id.stock_move_id._is_unpriced_receipt())
+            ):
                 standard_price_in_currency = (
                     standard_price_in_currency if standard_price_in_currency else svl_id.unit_cost_in_currency
                 )
@@ -278,15 +306,21 @@ class StockValuationLayerRecompute(models.Model):
 
             # es un ajuste? si no tiene movimiento de stock
             elif not svl_id.stock_move_id:
+                is_price_difference = svl_id._is_price_difference()
                 new_value = svl_id.value
                 new_unit_cost = svl_id.unit_cost
-                new_value_in_currency = svl_id.value_in_currency
+                # vendor bill price differences are rebuilt from the bill
+                new_value_in_currency = (
+                    self._get_pdiff_value_in_currency(svl_id, lines)
+                    if is_price_difference
+                    else svl_id.value_in_currency
+                )
                 new_unit_cost_in_currency = svl_id.unit_cost_in_currency
                 standard_price_in_currency = self._get_standard_price(
                     new_value_in_currency, standard_price_in_currency, quantity_at_time, svl_id.quantity
                 )
                 standard_price = self._get_standard_price(new_value, standard_price, quantity_at_time, svl_id.quantity)
-                svl_type = "ajustement"
+                svl_type = "price difference" if is_price_difference else "ajustement"
 
             # Es una devolucion
             elif svl_id.stock_move_id and svl_id.stock_move_id._is_returned(valued_type="in"):
@@ -369,7 +403,7 @@ class StockValuationLayerRecompute(models.Model):
                         from_currency_id=from_currency_id,
                         to_currency_id=to_currency_id,
                         qty=svl_id.quantity,
-                        unit_cost=svl_id.stock_move_id.purchase_line_id.price_unit,
+                        unit_cost=svl_id.stock_move_id.purchase_line_id._get_gross_price_unit(),
                         layer_date=svl_id.create_date,
                         manual_currency_rate=svl_id.manual_currency_rate,
                     )
@@ -461,6 +495,9 @@ class StockValuationLayerRecompute(models.Model):
                     "value_in_currency": line_id.new_value_in_currency,
                 }
             )
+            # the journal entry of a price difference is the vendor bill: never rewrite it
+            if line_id.layer_id._is_price_difference():
+                continue
             lines = []
             product_move_line_ids = line_id.layer_id.account_move_id.line_ids.filtered(
                 lambda x: x.product_id == self.product_id
