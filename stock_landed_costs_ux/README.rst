@@ -15,6 +15,7 @@ Stock Landed Costs UX
 =====================
 
 #. Changes the method of the creation of the landed costs in the account move, by using the currency rate defined in the account move.
+#. The landed cost lines use the stock valuation account of the landed cost product.
 
 Installation
 ============
@@ -35,7 +36,7 @@ Usage
 
 To use this module, you need to:
 
-#. Go to ...
+#. Go to a posted vendor bill with landed cost lines and click "Create Landed Costs".
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
