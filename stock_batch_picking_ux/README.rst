@@ -29,6 +29,13 @@ This module add the following features:
 -  A **Delivery Slip** report for batch transfers is included, analogous to the one available for individual pickings.
 -  The **Print** button in the batch form view follows the same logic as native pickings: when the batch is ``in_progress`` it prints the *Batch Transfer* report; once the batch is ``done`` it prints the *Delivery Slip* instead.
 -  In the ``done`` state the slip is **dual-mode**: a batch *with* partner prints the consolidated *Batch Delivery Slip* (one document for the whole batch); a batch *without* partner falls back to printing the individual delivery slip of each picking (mixed-partner batches manage delivery documents at picking level).
+#. Operation type on the batch:
+-  The **Operation Type** is required on the batch, so it has to be set before adding transfers.
+-  A transfer that already belongs to a batch cannot change its operation type.
+#. Number of packages:
+-  The batch has a **Number of Packages** field that is written to all its transfers when the batch is validated.
+-  On outgoing batches it must be greater than 0 when any of the operation types involved requires it (``restrict_number_package``).
+#. Removing a transfer from the **Transfers** list takes it out of the batch instead of deleting the transfer.
 #. Compatibility: exposes an ``l10n_pe_edi_status`` stub on ``stock.picking.batch`` so the Peruvian EDI delivery slip block (which inherits the same primary template) does not raise at render time when the record is a batch.
 
 Installation
