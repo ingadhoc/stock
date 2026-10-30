@@ -86,6 +86,10 @@ class TestReplenishmentFilter(TransactionCase):
             )
             self.assertEqual(shown, orderpoint_1)
 
+        with self.subTest("the vendor set on the rule without vendors does not filter"):
+            action, shown = self._confirm(filter_by_main_supplier=True)
+            self.assertEqual(shown, self._orderpoints(self.products))
+
         with self.subTest("rotation is refreshed only when asked"):
             # The stored rotation is computed when first read, before the delivery
             self.assertEqual(orderpoint_1.rotation, 0.0)
@@ -126,3 +130,18 @@ class TestReplenishmentFilter(TransactionCase):
         with self.subTest("filter by product"):
             shown = order(orderpoint_3, filter_products=(self.product_2 | self.product_3).ids)
             self.assertEqual(shown, orderpoint_2)
+
+    def test_kits_are_left_out(self):
+        """With mrp installed, a kit gets no manual replenishment rule, as in core."""
+        if "mrp.bom" not in self.env:
+            self.skipTest("mrp is not installed")
+        # Its pending delivery was confirmed before the product became a kit, so it keeps its own move
+        self.env["mrp.bom"].create(
+            {
+                "product_tmpl_id": self.product_2.product_tmpl_id.id,
+                "type": "phantom",
+                "bom_line_ids": [Command.create({"product_id": self.product_1.id, "product_qty": 1.0})],
+            }
+        )
+        self._confirm()
+        self.assertEqual(self._orderpoints(self.products).product_id, self.product_1 | self.product_3)
