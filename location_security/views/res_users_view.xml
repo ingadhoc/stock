@@ -6,15 +6,11 @@
         <field name="inherit_id" ref="base.view_users_form"/>
         <field name="arch" type="xml">
             <page name="preferences" position="inside">
-                <group string="Locations">
+                <group string="Locations" name="location_security">
                     <field name="restrict_locations"/>
+                    <field name="stock_location_ids" widget="many2many_tags" options="{'no_create': True}" domain="[('company_id', 'in', company_ids + [False])]" invisible="not restrict_locations"/>
                 </group>
             </page>
-            <notebook>
-                <page string="Allowed Stock Locations" invisible ='restrict_locations != True'>
-                    <field name="stock_location_ids" nolabel="1" colspan="2"/>
-                </page>
-            </notebook>
         </field>
     </record>
 </odoo>

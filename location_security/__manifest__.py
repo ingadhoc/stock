@@ -19,7 +19,7 @@
 ##############################################################################
 {
     "name": "Location Security",
-    "version": "19.0.1.0.0",
+    "version": "20.0.1.0.0",
     "category": "",
     "author": "ADHOC SA",
     "website": "www.adhoc.com.ar",
@@ -29,9 +29,10 @@
     ],
     "data": [
         "views/res_users_view.xml",
+        "views/stock_location_view.xml",
     ],
     "demo": [],
-    "installable": False,
+    "installable": True,
     "auto_install": False,
     "application": False,
 }

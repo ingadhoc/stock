@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-25 11:42+0000\n"
-"PO-Revision-Date: 2025-11-25 11:39+0000\n"
+"POT-Creation-Date: 2026-10-22 16:56+0000\n"
+"PO-Revision-Date: 2026-10-22 16:56+0000\n"
 "Last-Translator: ADHOC - Bot <transbot@adhoc.com.ar>, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
 "MIME-Version: 1.0\n"
@@ -20,34 +20,124 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
 #. module: location_security
-#: model_terms:ir.ui.view,arch_db:location_security.view_location_security_users_form
-msgid "Allowed Stock Locations"
-msgstr "Ubicaciones de stock permitidas"
-
-#. module: location_security
-#: model:ir.model.fields,field_description:location_security.field_res_users__display_name
-#: model:ir.model.fields,field_description:location_security.field_stock_move__display_name
-msgid "Display Name"
-msgstr "Nombre para mostrar"
-
-#. module: location_security
-#: model:ir.model.fields,field_description:location_security.field_res_users__id
-#: model:ir.model.fields,field_description:location_security.field_stock_move__id
-msgid "ID"
+#: model:ir.module.module,description:base.module_location_security
+msgid ""
+".. |company| replace:: ADHOC SA\n"
+"\n"
+".. |company_logo| image:: https://raw.githubusercontent.com/ingadhoc/maintainer-tools/master/resources/adhoc-logo.png\n"
+"   :alt: ADHOC SA\n"
+"   :target: https://www.adhoc.com.ar\n"
+"\n"
+".. |icon| image:: https://raw.githubusercontent.com/ingadhoc/maintainer-tools/master/resources/adhoc-icon.png\n"
+"\n"
+".. image:: https://img.shields.io/badge/license-AGPL--3-blue.png\n"
+"   :target: https://www.gnu.org/licenses/agpl\n"
+"   :alt: License: AGPL-3\n"
+"\n"
+"=================\n"
+"Location Security\n"
+"=================\n"
+"\n"
+"Restrict the stock locations a user can validate transfers from and to. When a restricted user validates a transfer, its source and destination locations must be among the user's allowed locations or their sublocations; otherwise the validation is blocked with an error that lists the locations the user does not control.\n"
+"\n"
+"The restriction applies only when validating a transfer, including through the backorder wizard. It does not hide locations or transfers, and it does not apply to stock moves done outside the transfer validation, such as scraps, or to cancelled moves.\n"
+"\n"
+"Installation\n"
+"============\n"
+"\n"
+"To install this module, you need to:\n"
+"\n"
+"#. Only need to install the module\n"
+"\n"
+"Configuration\n"
+"=============\n"
+"\n"
+"To configure this module, you need to:\n"
+"\n"
+"#. Go to Settings>Users & Companies>Users.\n"
+"#. Select the user you want to configure.\n"
+"#. Under the Preferences tab, in the Locations section, enable the Restrict Locations option.\n"
+"#. In Allowed Locations, set the locations the user is allowed to work with. Their sublocations are allowed too. Include the partner locations the transfers use, such as Vendors or Customers.\n"
+"\n"
+"Usage\n"
+"=====\n"
+"\n"
+"To use this module, you need to:\n"
+"\n"
+"#. Validate transfers as usual. If the user has restricted locations and a transfer uses a location that is not allowed, the validation is blocked.\n"
+"#. On a location form, Restricted Users shows the restricted users that have that location among their allowed locations.\n"
+"\n"
+".. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas\n"
+"   :alt: Try me on Runbot\n"
+"   :target: http://runbot.adhoc.com.ar/\n"
+"\n"
+"Bug Tracker\n"
+"===========\n"
+"\n"
+"Bugs are tracked on `GitHub Issues\n"
+"<https://github.com/ingadhoc/stock/issues>`_. In case of trouble, please\n"
+"check there if your issue has already been reported. If you spotted it first,\n"
+"help us smashing it by providing a detailed and welcomed feedback.\n"
+"\n"
+"Credits\n"
+"=======\n"
+"\n"
+"Images\n"
+"------\n"
+"\n"
+"* |company| |icon|\n"
+"\n"
+"Contributors\n"
+"------------\n"
+"\n"
+"Maintainer\n"
+"----------\n"
+"\n"
+"|company_logo|\n"
+"\n"
+"This module is maintained by the |company|.\n"
+"\n"
+"To contribute to this module, please visit https://www.adhoc.com.ar.\n"
 msgstr ""
 
 #. module: location_security
-#: model:ir.model.fields,help:location_security.field_res_users__restrict_locations
-msgid "If True, you can set the location allowed"
-msgstr "Si es Verdadero, usted puede definir la ubicación permitida"
+#: model:ir.model.fields,field_description:location_security.field_res_users__stock_location_ids
+msgid "Allowed Locations"
+msgstr "Ubicaciones permitidas"
+
+#. module: location_security
+#: model:ir.model.fields,field_description:location_security.field_res_users__display_name
+#: model:ir.model.fields,field_description:location_security.field_stock_location__display_name
+#: model:ir.model.fields,field_description:location_security.field_stock_move__display_name
+msgid "Display Name"
+msgstr "Nombre en pantalla"
+
+#. module: location_security
+#: model:ir.model.fields,field_description:location_security.field_res_users__id
+#: model:ir.model.fields,field_description:location_security.field_stock_location__id
+#: model:ir.model.fields,field_description:location_security.field_stock_move__id
+msgid "ID"
+msgstr "ID"
 
 #. module: location_security
 #. odoo-python
 #: code:addons/location_security/models/stock_move.py:0
 msgid ""
-"Invalid Location. You cannot process this picking \"%s\" since you do not "
-"control the location \"%s\"."
+"Invalid Location. You cannot process the transfer \"%(picking)s\" since you "
+"do not control these locations: %(locations)s."
 msgstr ""
+"Ubicación no válida. No puede procesar el traslado \"%(picking)s\" porque "
+"no controla estas ubicaciones: %(locations)s."
+
+#. module: location_security
+#: model:ir.model,name:location_security.model_stock_location
+msgid "Inventory Location"
+msgstr "Ubicación de inventario"
+
+#. module: location_security
+#: model:ir.module.module,shortdesc:base.module_location_security
+msgid "Location Security"
+msgstr "Seguridad de ubicaciones"
 
 #. module: location_security
 #: model_terms:ir.ui.view,arch_db:location_security.view_location_security_users_form
@@ -55,14 +145,34 @@ msgid "Locations"
 msgstr "Ubicaciones"
 
 #. module: location_security
+#: model:ir.model.fields,help:location_security.field_res_users__stock_location_ids
+msgid ""
+"Locations, and their sublocations, this user can validate transfers from and"
+" to. Include the partner locations the transfers use too, such as Vendors or"
+" Customers."
+msgstr ""
+"Ubicaciones, y sus sububicaciones, desde y hacia las que este usuario puede "
+"validar traslados. Incluya también las ubicaciones de contactos que usan "
+"los traslados, como Proveedores o Clientes."
+
+#. module: location_security
+#: model:ir.model.fields,help:location_security.field_res_users__restrict_locations
+msgid ""
+"Only allow this user to validate transfers whose source and destination "
+"locations are among the allowed locations or their sublocations."
+msgstr ""
+"Solo permitir que este usuario valide traslados cuyas ubicaciones de origen "
+"y destino estén entre las ubicaciones permitidas o sus sububicaciones."
+
+#. module: location_security
 #: model:ir.model.fields,field_description:location_security.field_res_users__restrict_locations
 msgid "Restrict Locations"
 msgstr "Restringir Ubicaciones"
 
 #. module: location_security
-#: model:ir.model.fields,field_description:location_security.field_res_users__stock_location_ids
-msgid "Stock Locations"
-msgstr "Ubicaciones"
+#: model:ir.model.fields,field_description:location_security.field_stock_location__restricted_user_ids
+msgid "Restricted Users"
+msgstr "Usuarios restringidos"
 
 #. module: location_security
 #: model:ir.model,name:location_security.model_stock_move
@@ -73,3 +183,14 @@ msgstr "Movimiento de stock"
 #: model:ir.model,name:location_security.model_res_users
 msgid "User"
 msgstr "Usuario"
+
+#. module: location_security
+#: model:ir.model.fields,help:location_security.field_stock_location__restricted_user_ids
+msgid ""
+"Users with restricted locations allowed on this location. Users without the "
+"restriction can operate every location; users allowed on a parent location "
+"can operate this one too."
+msgstr ""
+"Usuarios con ubicaciones restringidas habilitados en esta ubicación. Los "
+"usuarios sin restricción pueden operar todas las ubicaciones; los "
+"habilitados en una ubicación padre también pueden operar esta."
