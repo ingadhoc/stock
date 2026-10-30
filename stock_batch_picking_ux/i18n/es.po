@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-09 13:25+0000\n"
-"PO-Revision-Date: 2024-12-30 12:57+0000\n"
+"POT-Creation-Date: 2026-10-27 19:19+0000\n"
+"PO-Revision-Date: 2026-10-27 19:19+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
 "Language: es\n"
@@ -26,19 +26,110 @@ msgid "# Transferencias"
 msgstr ""
 
 #. module: stock_batch_picking_ux
+#: model:ir.module.module,description:base.module_stock_batch_picking_ux
+msgid ""
+".. |company| replace:: ADHOC SA\n"
+"\n"
+".. |company_logo| image:: https://raw.githubusercontent.com/ingadhoc/maintainer-tools/master/resources/adhoc-logo.png\n"
+"   :alt: ADHOC SA\n"
+"   :target: https://www.adhoc.com.ar\n"
+"\n"
+".. |icon| image:: https://raw.githubusercontent.com/ingadhoc/maintainer-tools/master/resources/adhoc-icon.png\n"
+"\n"
+".. image:: https://img.shields.io/badge/license-AGPL--3-blue.png\n"
+"   :target: https://www.gnu.org/licenses/agpl\n"
+"   :alt: License: AGPL-3\n"
+"\n"
+"==============================================\n"
+"Stock Ux with Batch Picking and stock vouchers\n"
+"==============================================\n"
+"\n"
+"This module add the following features:\n"
+"#. Add notes tab.\n"
+"#. Partner on the batch transfer:\n"
+"-  The ``partner_id`` on the batch is **computed** from the partners of its pickings: it is set when all pickings share the same partner and cleared when there is a mix. It remains **editable manually** (e.g. to pre-set a partner on an empty batch and constrain which pickings can be attached via the domain).\n"
+"-  When a partner is set, the **Transfers** field only offers that partner's eligible transfers. This is UI help only: it is a domain on the field (``partner_allowed_picking_ids``) and does **not** narrow the native ``allowed_picking_ids``, which is what Odoo's ``_sanity_check`` uses to decide whether a transfer is compatible with the batch. Narrowing that field made adding a transfer of another partner — or with no partner at all — fail with \"check their states and operation types\", and only on some paths.\n"
+"-  Locked once the batch is ``done`` or ``cancel``.\n"
+"-  Shown in the list view of batches.\n"
+"#. While processing the batch picking:\n"
+"-  In the transfer lines it adds information of the vouchers, from & to and source document, among others.\n"
+"-  A smart button is added to go to the list view of associated transfers.\n"
+"-  When you click on a transfer (from the transfer tab) you see all the possible actions that would be seen by entering it directly, such as the possibility of printing the voucher.\n"
+"#. Batch Delivery Slip report:\n"
+"-  A **Delivery Slip** report for batch transfers is included, analogous to the one available for individual pickings.\n"
+"-  The **Print** button in the batch form view follows the same logic as native pickings: when the batch is ``in_progress`` it prints the *Batch Transfer* report; once the batch is ``done`` it prints the *Delivery Slip* instead.\n"
+"-  In the ``done`` state the slip is **dual-mode**: a batch *with* partner prints the consolidated *Batch Delivery Slip* (one document for the whole batch); a batch *without* partner falls back to printing the individual delivery slip of each picking (mixed-partner batches manage delivery documents at picking level).\n"
+"#. Operation type on the batch:\n"
+"-  The **Operation Type** is required on the batch, so it has to be set before adding transfers.\n"
+"-  A transfer that already belongs to a batch cannot change its operation type.\n"
+"#. Number of packages:\n"
+"-  The batch has a **Number of Packages** field that is written to all its transfers when the batch is validated.\n"
+"-  On outgoing batches it must be greater than 0 when any of the operation types involved requires it (``restrict_number_package``).\n"
+"#. Removing a transfer from the **Transfers** list takes it out of the batch instead of deleting the transfer.\n"
+"#. Compatibility: exposes an ``l10n_pe_edi_status`` stub on ``stock.picking.batch`` so the Peruvian EDI delivery slip block (which inherits the same primary template) does not raise at render time when the record is a batch.\n"
+"\n"
+"Installation\n"
+"============\n"
+"\n"
+"To install this module, you need to:\n"
+"\n"
+"#. Only need to install the module\n"
+"\n"
+"Configuration\n"
+"=============\n"
+"\n"
+"To configure this module, you need to:\n"
+"\n"
+"#. Nothing to configure\n"
+"\n"
+"\n"
+".. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas\n"
+"   :alt: Try me on Runbot\n"
+"   :target: http://runbot.adhoc.com.ar/\n"
+"\n"
+"Bug Tracker\n"
+"===========\n"
+"\n"
+"Bugs are tracked on `GitHub Issues\n"
+"<https://github.com/ingadhoc/stock/issues>`_. In case of trouble, please\n"
+"check there if your issue has already been reported. If you spotted it first,\n"
+"help us smashing it by providing a detailed and welcomed feedback.\n"
+"\n"
+"Credits\n"
+"=======\n"
+"\n"
+"Images\n"
+"------\n"
+"\n"
+"* |company| |icon|\n"
+"\n"
+"Contributors\n"
+"------------\n"
+"\n"
+"Maintainer\n"
+"----------\n"
+"\n"
+"|company_logo|\n"
+"\n"
+"This module is maintained by the |company|.\n"
+"\n"
+"To contribute to this module, please visit https://www.adhoc.com.ar.\n"
+msgstr ""
+
+#. module: stock_batch_picking_ux
 #: model_terms:ir.ui.view,arch_db:stock_batch_picking_ux.report_batch_delivery_document
 msgid "<strong>Operation Type:</strong>"
-msgstr ""
+msgstr "<strong>Tipo de operación:</strong>"
 
 #. module: stock_batch_picking_ux
 #: model_terms:ir.ui.view,arch_db:stock_batch_picking_ux.report_batch_delivery_document
 msgid "<strong>Responsible:</strong>"
-msgstr ""
+msgstr "<strong>Responsable:</strong>"
 
 #. module: stock_batch_picking_ux
 #: model_terms:ir.ui.view,arch_db:stock_batch_picking_ux.report_batch_delivery_document
 msgid "<strong>Scheduled Date</strong>"
-msgstr ""
+msgstr "<strong>Fecha programada</strong>"
 
 #. module: stock_batch_picking_ux
 #: model:ir.model,name:stock_batch_picking_ux.model_stock_picking_batch
@@ -50,21 +141,21 @@ msgstr "Traslado por lote"
 #: model:ir.model.fields,help:stock_batch_picking_ux.field_stock_picking__batch_partner_id
 #: model:ir.model.fields,help:stock_batch_picking_ux.field_stock_picking_batch__partner_id
 msgid ""
-"Computed from the pickings in the batch: set automatically when all pickings "
-"share the same partner; cleared when there are multiple. Editable manually "
+"Computed from the pickings in the batch: set automatically when all pickings"
+" share the same partner; cleared when there are multiple. Editable manually "
 "until the batch is done."
-msgstr ""
+msgstr "Se calcula a partir de los traslados del lote: se completa automáticamente cuando todos los traslados son del mismo cliente y se limpia cuando hay varios. Se puede editar a mano hasta que el lote esté hecho."
 
 #. module: stock_batch_picking_ux
 #: model:ir.actions.report,name:stock_batch_picking_ux.action_report_batch_deliveryslip
 msgid "Delivery Slip"
-msgstr ""
+msgstr "Recibo de entrega"
 
 #. module: stock_batch_picking_ux
 #: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_picking__display_name
 #: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_picking_batch__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Mostrar nombre"
 
 #. module: stock_batch_picking_ux
 #: model:ir.actions.report,name:stock_batch_picking_ux.action_custom_label_transfer_template_view_pdf
@@ -112,7 +203,7 @@ msgstr "Cliente"
 #. module: stock_batch_picking_ux
 #: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_picking_batch__partner_allowed_picking_ids
 msgid "Partner Allowed Picking"
-msgstr ""
+msgstr "Traslados permitidos del cliente"
 
 #. module: stock_batch_picking_ux
 #: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_picking_batch__picking_type_ids
@@ -127,12 +218,17 @@ msgstr "Recogidas"
 #. module: stock_batch_picking_ux
 #: model_terms:ir.ui.view,arch_db:stock_batch_picking_ux.stock_batch_picking_form
 msgid "Print"
-msgstr ""
+msgstr "Imprimir"
 
 #. module: stock_batch_picking_ux
 #: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_picking_batch__restrict_number_package
 msgid "Restrict Number Package"
 msgstr "Restringir Número de Paquete"
+
+#. module: stock_batch_picking_ux
+#: model:ir.module.module,shortdesc:base.module_stock_batch_picking_ux
+msgid "Stock Usability with Batch Picking"
+msgstr "Usabilidad de Inventario con Lotes de Traslados"
 
 #. module: stock_batch_picking_ux
 #. odoo-python
@@ -143,11 +239,10 @@ msgstr "El numero de bultos no puede ser 0"
 #. module: stock_batch_picking_ux
 #: model:ir.model,name:stock_batch_picking_ux.model_stock_picking
 msgid "Transfer"
-msgstr "Traslado"
+msgstr "Transferir"
 
 #. module: stock_batch_picking_ux
 #: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_picking_batch__picking_type_code
-#: model_terms:ir.ui.view,arch_db:stock_batch_picking_ux.stock_batch_picking_search
 msgid "Type of Operation"
 msgstr "Tipo de operación"
 
@@ -157,49 +252,9 @@ msgstr "Tipo de operación"
 msgid ""
 "You cannot change the operation type of a picking if it is already assigned "
 "to a batch."
-msgstr ""
+msgstr "No se puede cambiar el tipo de operación de un traslado si ya está asignado a un lote."
 
 #. module: stock_batch_picking_ux
 #: model:ir.model.fields,help:stock_batch_picking_ux.field_stock_picking_batch__notes
 msgid "free form remarks"
 msgstr "Comentarios de forma libre"
-
-#~ msgid "Batch Transfer Lines"
-#~ msgstr "Líneas de traslado por lote"
-
-#~ msgid ""
-#~ "If you choose a partner then only pickings of this partner willbe "
-#~ "sellectable"
-#~ msgstr ""
-#~ "Si elige un Partner, entonces solo las ordenes de movimiento de este "
-#~ "Partner serán elegibles"
-
-#~ msgid "Picking voucher number must be unique per partner"
-#~ msgstr "El número de comprobante de albarán debe ser único por partner"
-
-#~ msgid "Product Moves (Stock Move Line)"
-#~ msgstr "Movimientos de producto (línea de movimiento de stock)"
-
-#~ msgid "Reference of the document"
-#~ msgstr "Referencia de el Documento"
-
-#~ msgid "Set all Done"
-#~ msgstr "Establecer todo Realizado"
-
-#~ msgid "Source"
-#~ msgstr "Origen"
-
-#~ msgid "Stock Voucher Book"
-#~ msgstr "Talonario de Remitos"
-
-#~ msgid "Voucher Number"
-#~ msgstr "Numero de Comprobante"
-
-#~ msgid "Voucher Required"
-#~ msgstr "Comprobante Requerido"
-
-#~ msgid "Vouchers"
-#~ msgstr "Remitos"
-
-#~ msgid "Vouchers (string)"
-#~ msgstr "Remitos (Cadena)"
