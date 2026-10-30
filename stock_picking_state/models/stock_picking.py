@@ -38,5 +38,9 @@ class StockPicking(models.Model):
                     or rec.state != rec.state_detail_id.state
                 ):
                     raise ValidationError(
-                        f"You're selecting a state detail that doesn’t belong to this state: {rec.state} or picking type: {rec.picking_type_id.code}"
+                        self.env._(
+                            "The state detail %(detail)s does not belong to the status or the operation type of %(picking)s.",
+                            detail=rec.state_detail_id.display_name,
+                            picking=rec.display_name,
+                        )
                     )
