@@ -26,7 +26,8 @@ class StockWarehouseOrderpointWizard(models.TransientModel):
             "filter_locations": self.location_ids.ids,
         }
         action = self.with_context(**ctx).env["stock.warehouse.orderpoint"]._get_orderpoint_action()
-        orderpoint_domain = self._get_orderpoint_domain()
+        # The same domain as the list shown after ordering, so both always match
+        orderpoint_domain = self.with_context(**ctx).get_orderpoint_domain()
         orderpoints = self.env["stock.warehouse.orderpoint"].with_context(active_test=False).search(orderpoint_domain)
         orderpoints.update_qty_forecast()
         if self.compute_rotation:
@@ -39,20 +40,6 @@ class StockWarehouseOrderpointWizard(models.TransientModel):
             ]
         )
         return action
-
-    def _get_orderpoint_domain(self):
-        orderpoint_domain = []
-        if self.product_ids:
-            orderpoint_domain.append(("product_id", "in", self.product_ids.ids))
-        if self.category_ids:
-            orderpoint_domain.append(("product_category_id", "in", self.category_ids.ids))
-        if self.filter_by_main_supplier:
-            orderpoint_domain.append(("supplier_id.partner_id", "in", self.supplier_ids.ids))
-        elif self.supplier_ids:
-            orderpoint_domain.append(("product_id.seller_ids.partner_id", "in", self.supplier_ids.ids))
-        if self.location_ids:
-            orderpoint_domain.append(("location_id", "in", self.location_ids.ids))
-        return orderpoint_domain
 
     def get_orderpoint_domain(self):
         orderpoint_domain = []

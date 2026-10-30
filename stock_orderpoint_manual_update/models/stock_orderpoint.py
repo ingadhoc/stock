@@ -1,5 +1,6 @@
 from odoo import fields, models
 from odoo.fields import Domain
+from odoo.tools import split_every
 
 
 class StockWarehouseOrderpoint(models.Model):
@@ -17,7 +18,8 @@ class StockWarehouseOrderpoint(models.Model):
     warehouse_rotation = fields.Float(store=True)
 
     qty_forecast_stored = fields.Float(
-        string="Previsión",
+        string="Stored Forecast",
+        digits="Product Unit",
     )
 
     def update_qty_forecast(self):
@@ -42,7 +44,15 @@ class StockWarehouseOrderpoint(models.Model):
         if product_ids:
             domain.append(("id", "in", product_ids))
 
-        return self.env["product.product"].search(domain)
+        products = self.env["product.product"].search(domain)
+        # mrp leaves kits out in its own override, which this one replaces without calling super()
+        if "mrp.bom" in self.env:
+            non_kit_ids = []
+            for batch in split_every(2000, products.ids, self.env["product.product"].browse):
+                kit_ids = {kit.id for kit in self.env["mrp.bom"]._bom_find(batch, bom_type="phantom")}
+                non_kit_ids.extend(product_id for product_id in batch.ids if product_id not in kit_ids)
+            products = self.env["product.product"].browse(non_kit_ids)
+        return products
 
     def _get_orderpoint_locations(self):
         domain = [("replenish_location", "=", True)]
@@ -66,17 +76,3 @@ class StockWarehouseOrderpoint(models.Model):
             result.setdefault("params", {})["next"] = action
             return result
         return action
-
-    def update_qty_to_order_orderpoint(self):
-        """
-        Updates qty_to_order for orderpoints.
-        In v19, qty_to_order is a computed field that depends on qty_to_order_computed (stored)
-        and qty_to_order_manual. We invalidate the cache to force recalculation.
-        """
-        valid_orderpoints = self.exists()
-        if valid_orderpoints:
-            # Invalidate cache to force recalculation instead of direct compute
-            # This avoids concurrency issues during scheduler execution
-            valid_orderpoints.invalidate_recordset(["qty_to_order_computed", "qty_to_order"])
-            # Access the field to safely trigger compute
-            valid_orderpoints.mapped("qty_to_order")
