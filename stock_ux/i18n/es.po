@@ -1034,10 +1034,8 @@ msgstr "Partes restantes de la recogida parcialmente procesadas"
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_picking_type__restrict_number_package
-#, fuzzy
-#| msgid "Number of Packages"
 msgid "Restrict Number Package"
-msgstr "Número de Paquetes"
+msgstr "Requerir número de paquetes"
 
 #. module: stock_ux
 #: model:res.groups,name:stock_ux.group_restrict_edit_picking_type
@@ -1282,10 +1280,8 @@ msgstr ""
 #. module: stock_ux
 #. odoo-python
 #: code:addons/stock_ux/models/stock_picking.py:0
-#, fuzzy
-#| msgid "Number of Packages"
 msgid "The number of packages cannot be 0"
-msgstr "Número de Paquetes"
+msgstr "El número de paquetes no puede ser 0"
 
 #. module: stock_ux
 #. odoo-python
