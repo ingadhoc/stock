@@ -36,7 +36,7 @@ class TestOrderpointQtyToOrderUpdate(TransactionCase):
                         {
                             "product_id": self.product.id,
                             "product_uom_qty": qty,
-                            "product_uom": self.product.uom_id.id,
+                            "uom_id": self.product.uom_id.id,
                             "location_id": self.supplier_location.id,
                             "location_dest_id": self.wh1.lot_stock_id.id,
                         },
@@ -75,7 +75,7 @@ class TestOrderpointQtyToOrderUpdate(TransactionCase):
                 "move_id": receipt.move_ids.id,
                 "picking_id": receipt.id,
                 "product_id": self.product.id,
-                "product_uom_id": self.product.uom_id.id,
+                "uom_id": self.product.uom_id.id,
                 "location_id": self.supplier_location.id,
                 "location_dest_id": self.wh1.lot_stock_id.id,
                 "quantity": 4,

@@ -160,7 +160,7 @@ class StockMoveLine(models.Model):
 
     def write(self, vals):
         done_lines = self.env["stock.move.line"]
-        if {"quantity", "product_uom_id", "location_id", "location_dest_id"} & vals.keys():
+        if {"quantity", "uom_id", "location_id", "location_dest_id"} & vals.keys():
             done_lines = self.filtered(lambda ml: ml.state == "done")
         res = super().write(vals)
         # only the lot check: the product total runs on create, and here it would also
