@@ -10,6 +10,25 @@ from odoo import fields, models
 class ProductProduct(models.Model):
     _inherit = "product.product"
 
+    def _update_orderpoints_qty_to_order(self):
+        """Mark the orderpoints of these products for recomputation of the stored qty_to_order_computed.
+
+        Use it when the stock changes without touching the move state, date or demand, which are
+        the only move fields the computation depends on.
+        """
+        products = self.filtered("is_storable")
+        if not products:
+            return
+        products.invalidate_recordset(["qty_available", "virtual_available"])
+        orderpoints = (
+            self.env["stock.warehouse.orderpoint"]
+            .sudo()
+            .with_context(active_test=False)
+            .search([("product_id", "in", products.ids)])
+        )
+        orderpoints.invalidate_recordset(["qty_forecast", "qty_to_order"])
+        self.env.add_to_compute(orderpoints._fields["qty_to_order_computed"], orderpoints)
+
     def get_product_rotation(self, location=False, compute_stdev=False):
         self.ensure_one()
         # we should use cache for this date
