@@ -64,8 +64,19 @@ class StockPicking(models.Model):
                     done_value += order_line.price_reduce_taxexcl * so_qty_done
                 elif rec.picking_type_id.pricelist_id:
                     pricelist = rec.picking_type_id.pricelist_id
+<<<<<<< 83120624d1b537b0a1156440d0e73959498c48c7
                     price = rec.picking_type_id.pricelist_id._price_get(
                         move_line.product_id, move_line.quantity or 1.0, uom=move_line.uom_id, partner=rec.partner_id.id
+||||||| 6a9046fc94ff825bd103e7e7650df4d6ecf5d9c4
+                    price = rec.picking_type_id.pricelist_id.with_context(uom=move_line.product_uom.id)._price_get(
+                        move_line.product_id, move_line.quantity or 1.0, partner=rec.partner_id.id
+=======
+                    price = rec.picking_type_id.pricelist_id._price_get(
+                        move_line.product_id,
+                        move_line.quantity or 1.0,
+                        uom=move_line.product_uom,
+                        partner=rec.partner_id.id,
+>>>>>>> 8b94620da0374315a5ff2bf7cc5bff6f86478e40
                     )[rec.picking_type_id.pricelist_id.id]
                     picking_value += price * move_line.product_uom_qty
                     done_value += price * move_line.quantity
