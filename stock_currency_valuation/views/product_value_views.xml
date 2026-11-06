@@ -25,25 +25,25 @@
     <record id="product_value_view_list_inherit" model="ir.ui.view">
         <field name="name">product.value.list.inherit.currency.valuation</field>
         <field name="model">product.value</field>
-        <field name="inherit_id" ref="stock_account_ux.product_value_view_list"/>
+        <field name="inherit_id" ref="stock_account.product_value_list_view"/>
         <field name="arch" type="xml">
-            <field name="currency_id" position="after">
+            <field name="quantity" position="before">
                 <field name="valuation_currency_id" column_invisible="1"/>
             </field>
-            <field name="previous_value" position="after">
+            <field name="old_value" position="after">
                 <field name="previous_value_in_currency"
                     widget="monetary"
                     options="{'currency_field': 'valuation_currency_id'}"
                     optional="hide"/>
             </field>
-            <field name="value" position="after">
+            <field name="new_value" position="after">
                 <field name="value_in_currency"
                     string="New Value in Currency"
                     widget="monetary"
                     options="{'currency_field': 'valuation_currency_id'}"
                     optional="hide"/>
             </field>
-            <field name="delta" position="after">
+            <field name="adjustment" position="after">
                 <field name="delta_in_currency"
                     widget="monetary"
                     options="{'currency_field': 'valuation_currency_id'}"
@@ -55,7 +55,7 @@
     <record id="product_value_view_search_inherit" model="ir.ui.view">
         <field name="name">product.value.search.inherit.currency.valuation</field>
         <field name="model">product.value</field>
-        <field name="inherit_id" ref="stock_account_ux.product_value_view_search"/>
+        <field name="inherit_id" ref="stock_account_ux.product_value_search_view_entry_link"/>
         <field name="arch" type="xml">
             <filter name="move_adjustment" position="after">
                 <separator/>
@@ -70,7 +70,7 @@
         </field>
     </record>
 
-    <!-- priority explícita: ``delta`` lo agrega la vista heredada
+    <!-- priority explícita: ``adjustment`` lo agrega la vista heredada
          stock_account_ux.product_value_form_view_entry_link (priority 16), así que ésta
          tiene que aplicarse DESPUÉS para poder colgarse de ese nodo. Sin la priority el
          orden queda determinado por los ids, que es frágil. -->
@@ -80,7 +80,7 @@
         <field name="inherit_id" ref="stock_account.product_value_form_view"/>
         <field name="priority">20</field>
         <field name="arch" type="xml">
-            <field name="delta" position="after">
+            <field name="adjustment" position="after">
                 <field name="delta_in_currency"
                     widget="monetary"
                     options="{'currency_field': 'valuation_currency_id', 'field_digits': True}"

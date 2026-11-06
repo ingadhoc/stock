@@ -37,7 +37,9 @@ class StockQuant(models.Model):
                 continue
             if not quant.location_id or not quant.product_id:
                 continue
-            if not quant.location_id._should_be_valued() or quant._should_exclude_for_valuation():
+            # In 20 _should_be_valued also compares the location's company with the active one.
+            location = quant.location_id.with_company(quant.company_id)
+            if not location._should_be_valued() or quant._should_exclude_for_valuation():
                 continue
             if quant.product_id.uom_id.is_zero(quant.quantity):
                 continue

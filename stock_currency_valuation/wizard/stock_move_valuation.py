@@ -69,9 +69,20 @@ class StockMoveValuation(models.TransientModel):
             counterpart = valuation_account.account_stock_variation_id or self.company_id.expense_account_id
             if not counterpart:
                 continue
-            value = move._get_inventory_value_in_currency()
             key = self._get_balance_key(move, valuation_account, counterpart)
-            balances[key] += value if move.is_in else -value
+            balances[key] += move._get_inventory_value_in_currency()
+        for product_value in self.product_value_ids:
+            product = product_value._get_valuation_product()
+            if product.id not in accounts_by_product:
+                accounts_by_product[product.id] = product.with_company(self.company_id)._get_product_accounts()
+            valuation_account = accounts_by_product[product.id].get("stock_valuation")
+            if not valuation_account:
+                continue
+            counterpart = valuation_account.account_stock_variation_id or self.company_id.expense_account_id
+            if not counterpart:
+                continue
+            key = self._get_product_value_balance_key(product_value, valuation_account, counterpart)
+            balances[key] += product_value.delta_in_currency
         return balances
 
     # def _get_aml_vals_for_key(self, key, balance):
