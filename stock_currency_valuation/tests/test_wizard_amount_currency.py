@@ -77,7 +77,7 @@ class TestWizardAmountCurrency(TestStockCurrencyValuationCommon):
                         {
                             "product_id": product.id,
                             "product_uom_qty": qty,
-                            "product_uom": self.uom_unit.id,
+                            "uom_id": self.uom_unit.id,
                             "location_id": self.supplier_location.id,
                             "location_dest_id": self.stock_location.id,
                         },

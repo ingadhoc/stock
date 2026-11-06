@@ -43,9 +43,9 @@ class TestInventoryAdjustmentInCurrency(TestStockCurrencyValuationCommon):
         self._seed_avg_state()
         _quant, move = self._inventory_adjustment(new_qty=8, date_str=self.DAY_1)
 
-        # Odoo 19: move.value es magnitud positiva (la dirección la da is_out).
-        self.assertAlmostEqual(move.value, 2000, places=2)
-        self.assertAlmostEqual(move.value_in_currency, 2.00, places=2)
+        # Odoo 20: el valor de una salida es negativo, en las dos monedas.
+        self.assertAlmostEqual(move.value, -2000, places=2)
+        self.assertAlmostEqual(move.value_in_currency, -2.00, places=2)
 
         product = self._product()
         self.assertEqual(product.qty_available, 8)

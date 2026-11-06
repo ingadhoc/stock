@@ -1,7 +1,8 @@
 import unittest
+from datetime import timedelta
 
 from freezegun import freeze_time
-from odoo import Command
+from odoo import Command, fields
 from odoo.tests import TransactionCase, tagged
 
 
@@ -60,7 +61,8 @@ class TestStockCurrencyValuationCommon(TransactionCase):
         ):
             cls.env["res.currency.rate"].create(
                 {
-                    "name": date_str,
+                    # In 20 a conversion at a date takes the last rate BEFORE that date.
+                    "name": fields.Date.to_date(date_str) - timedelta(days=1),
                     "rate": rate,
                     "currency_id": cls.secondary_currency.id,
                     "company_id": cls.company.id,
@@ -153,7 +155,7 @@ class TestStockCurrencyValuationCommon(TransactionCase):
                                 "product_qty": qty,
                                 "price_unit": price_unit,
                                 "name": self.product.name,
-                                "product_uom_id": self.uom_unit.id,
+                                "uom_id": self.uom_unit.id,
                                 "date_planned": date_str,
                             }
                         )
@@ -184,7 +186,7 @@ class TestStockCurrencyValuationCommon(TransactionCase):
                             {
                                 "product_id": self.product.id,
                                 "product_uom_qty": qty,
-                                "product_uom": self.uom_unit.id,
+                                "uom_id": self.uom_unit.id,
                                 "location_id": self.stock_location.id,
                                 "location_dest_id": self.customer_location.id,
                             }
@@ -203,19 +205,7 @@ class TestStockCurrencyValuationCommon(TransactionCase):
 
     def _return(self, source_picking, qty, date_str):
         with freeze_time(date_str):
-            wiz = (
-                self.env["stock.return.picking"]
-                .with_context(
-                    active_id=source_picking.id,
-                    active_ids=source_picking.ids,
-                    active_model="stock.picking",
-                )
-                .create({})
-            )
-            for line in wiz.product_return_moves:
-                line.quantity = qty
-            action = wiz.action_create_returns()
-            return_pick = self.env["stock.picking"].browse(action["res_id"])
+            return_pick = source_picking._create_return()
             move = return_pick.move_ids
             move.quantity = qty
             move.picked = True
