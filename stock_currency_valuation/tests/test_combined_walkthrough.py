@@ -82,40 +82,39 @@ class TestCombinedWalkthrough(TestStockCurrencyValuationCommon):
         # Devolución de 2 unid del picking de Op 4, en fecha Día 3 (rate 1/1500).
         return_pick, move = self._return(op4_picking, qty=2, date_str=self.DAY_3)
         self.assertAlmostEqual(move.value, 3420, places=2)
-        # 3420 × 0.000667 ≈ 2.28 USD (conversión por fecha, no espejo de la entrega)
-        self.assertAlmostEqual(move.value_in_currency, 2.28, places=2)
+        # Espejo de la entrega: 2/5 de los 7.54 USD con que salió (no 3420 ARS a la tasa Día 3)
+        self.assertAlmostEqual(move.value_in_currency, 3.02, places=2)
 
         product = self._product()
         self.assertEqual(product.qty_available, 17)
-        self.assertAlmostEqual(product.total_value_in_currency, 24.91, places=2)
-        self.assertAlmostEqual(product.standard_price_in_currency, 1.47, places=2)
+        self.assertAlmostEqual(product.total_value_in_currency, 25.65, places=2)
+        self.assertAlmostEqual(product.standard_price_in_currency, 1.51, places=2)
         return return_pick
 
     def _op6_inventory_adjustment_plus3_day_3(self):
         # Ajuste +3 (17 → 20) sin picking. Genera move IN con value_in_currency.
         _quant, move = self._inventory_adjustment(new_qty=20, date_str=self.DAY_3)
         self.assertAlmostEqual(move.value, 5130, places=2)
-        # Rama "sin picking" de _set_value: +qty × AVCO USD del momento ≈ 4.40
-        self.assertAlmostEqual(move.value_in_currency, 4.40, places=2)
+        # Rama "sin picking" de _set_value: +qty × AVCO USD del momento ≈ 4.53
+        self.assertAlmostEqual(move.value_in_currency, 4.53, places=2)
         product = self._product()
         self.assertEqual(product.qty_available, 20)
-        # 29.31 (no 29.30): value_in_currency se almacena con el redondeo de la moneda
-        # (0.01), así que el ajuste guarda 4.40 y el replay acumula ese redondeo.
-        self.assertAlmostEqual(product.total_value_in_currency, 29.31, places=2)
-        self.assertAlmostEqual(product.standard_price_in_currency, 1.47, places=2)
+        # value_in_currency se almacena con el redondeo de la moneda (0.01), así que el
+        # ajuste guarda 4.53 y el replay acumula ese redondeo.
+        self.assertAlmostEqual(product.total_value_in_currency, 30.18, places=2)
+        self.assertAlmostEqual(product.standard_price_in_currency, 1.51, places=2)
 
     def _op7_inventory_adjustment_minus2_day_3(self):
         # Ajuste -2 (20 → 18) sin picking. Genera move OUT con value_in_currency.
         _quant, move = self._inventory_adjustment(new_qty=18, date_str=self.DAY_3)
         # Odoo 19: move.value es magnitud positiva (la dirección la da is_out).
         self.assertAlmostEqual(move.value, 3420, places=2)
-        # Rama "sin picking" de _set_value: qty × AVCO USD del momento ≈ 2.93 (positivo).
-        self.assertAlmostEqual(move.value_in_currency, 2.93, places=2)
+        # Rama "sin picking" de _set_value: qty × AVCO USD del momento ≈ 3.02 (positivo).
+        self.assertAlmostEqual(move.value_in_currency, 3.02, places=2)
         product = self._product()
         self.assertEqual(product.qty_available, 18)
-        # 26.38 (no 26.37) por el mismo redondeo acumulado de Op 6.
-        self.assertAlmostEqual(product.total_value_in_currency, 26.38, places=2)
-        self.assertAlmostEqual(product.standard_price_in_currency, 1.47, places=2)
+        self.assertAlmostEqual(product.total_value_in_currency, 27.16, places=2)
+        self.assertAlmostEqual(product.standard_price_in_currency, 1.51, places=2)
 
     # ------------------------------------------------------------------
     # Tests

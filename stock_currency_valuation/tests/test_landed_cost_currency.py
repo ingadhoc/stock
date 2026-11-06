@@ -128,3 +128,44 @@ class TestLandedCostCurrency(TestStockCurrencyValuationCommon):
         product = self._product()
         self.assertAlmostEqual(product.total_value_in_currency, 10.00 - expected_value_in_currency, places=2)
         self.assertAlmostEqual(product.standard_price_in_currency, avg_before, places=2)
+
+    def test_lines_show_the_goods_at_the_receipt_rate(self):
+        """Valuation adjustments: the original value in currency is what the goods came in
+        at (receipt rate 1000), not the move's company value at the landed cost rate (1200)."""
+        picking, _move = self._purchase_receipt(10, 1000.0, self.INVERSE_D1, self.DAY_1)
+
+        lc = self._landed_cost(picking=picking, amount=1200, inverse_rate=self.INVERSE_D2, date_str=self.DAY_2)
+
+        line = lc.valuation_adjustment_lines
+        self._assert_almost(line.former_cost_in_currency, 10.0)
+        self._assert_almost(line.additional_landed_cost_in_currency, 1.0)
+        self._assert_almost(line.final_cost_in_currency, 11.0)
+
+    def test_lines_of_products_in_no_currency_show_none(self):
+        picking, _move = self._purchase_receipt(10, 1000.0, self.INVERSE_D1, self.DAY_1)
+        plain_category = self.env["product.category"].create(
+            {
+                "name": "Plain, no valuation currency",
+                "property_cost_method": "average",
+                "property_valuation": "real_time",
+            }
+        )
+        plain = self.env["product.product"].create(
+            {"name": "Producto N", "is_storable": True, "categ_id": plain_category.id, "uom_id": self.uom_unit.id}
+        )
+        product = self.product
+        self.product = plain
+        plain_picking, _plain_move = self._purchase_receipt(10, 1000.0, 0, self.DAY_1)
+        self.product = product
+
+        lc = self._landed_cost(
+            picking=picking | plain_picking, amount=1200, inverse_rate=self.INVERSE_D2, date_str=self.DAY_2
+        )
+
+        plain_line = lc.valuation_adjustment_lines.filtered(lambda line: line.product_id == plain)
+        self.assertFalse(plain_line.valuation_currency_id)
+        self.assertFalse(plain_line.former_cost_in_currency)
+        self.assertFalse(plain_line.final_cost_in_currency)
+        line = lc.valuation_adjustment_lines - plain_line
+        self.assertEqual(line.valuation_currency_id, self.secondary_currency)
+        self._assert_almost(line.former_cost_in_currency, 10.0)

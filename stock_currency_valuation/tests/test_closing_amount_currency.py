@@ -160,3 +160,30 @@ class TestClosingAmountCurrency(TestStockCurrencyValuationCommon):
                 self.secondary_currency.round(share["amount_currency"]),
                 "Every share is rounded to the currency precision.",
             )
+
+    def test_each_product_takes_its_own_secondary_value(self):
+        """Two products on the same account, received at different rates: each product
+        line carries its own value in the secondary currency, not a share of the account's
+        amount prorated by the company-currency balances (100 and 100 here, where the
+        proration gave 86,96 and 113,04)."""
+        self._purchase_receipt(4, 25000.0, self.INVERSE_D1, self.DAY_1)
+        first_product = self.product
+        second_product = self.env["product.product"].create(
+            {
+                "name": "Producto Q",
+                "is_storable": True,
+                "categ_id": self.category.id,
+                "uom_id": self.uom_unit.id,
+            }
+        )
+        self.product = second_product
+        self._purchase_receipt(10, 13000.0, 1300.0, self.DAY_1)
+        self.product = first_product
+
+        entry = self._close()
+
+        self._assert_balanced_per_currency(entry)
+        for product in first_product | second_product:
+            line = entry.line_ids.filtered(lambda line, product=product: line.product_id == product)
+            self.assertEqual(len(line), 1)
+            self._assert_almost(line.amount_currency, 100.0, msg=f"Secondary amount of {product.name}")

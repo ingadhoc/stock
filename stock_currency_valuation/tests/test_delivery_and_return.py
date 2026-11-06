@@ -55,22 +55,22 @@ class TestDeliveryAndReturn(TestStockCurrencyValuationCommon):
         expected_total = 30.17 - 5 * avg_before
         self.assertAlmostEqual(product.total_value_in_currency, expected_total, places=2)
 
-    def test_return_uses_date_rate_not_original_rate(self):
-        """Op 5: devolución del cliente — picking IN sin purchase_id. La tasa del move es
-        la conversión por fecha (Día 3), no la tasa histórica del move original (Día 2).
-        Esto degrada el AVCO en USD.
+    def test_return_comes_back_at_the_value_it_went_out_with(self):
+        """Op 5: devolución del cliente — vuelve al valor en moneda con que salió (como el
+        core en moneda de compañía), no a los pesos convertidos a la cotización del día.
+        El AVCO en USD no cambia.
         """
         self._seed_two_receipts()
-        delivery, _delivery_move = self._delivery(qty=5, date_str=self.DAY_2)
+        delivery, delivery_move = self._delivery(qty=5, date_str=self.DAY_2)
 
         return_pick, return_move = self._return(delivery, qty=2, date_str=self.DAY_3)
 
-        # 2 × 1710 = 3420 ARS; 3420 × 0.000667 ≈ 2.28 USD (rate Día 3, NO Día 2)
         self.assertAlmostEqual(return_move.value, 3420, places=2)
-        self.assertAlmostEqual(return_move.value_in_currency, 2.28, places=2)
+        # 2/5 of what went out (5 × 1.508335), not 3420 ARS at the Day 3 rate (2.28)
+        self.assertAlmostEqual(return_move.value_in_currency, delivery_move.value_in_currency * 2 / 5, places=2)
+        self.assertAlmostEqual(return_move.value_in_currency, 3.02, places=2)
 
         product = self._product()
         self.assertEqual(product.qty_available, 17)
-        self.assertAlmostEqual(product.total_value_in_currency, 24.91, places=2)
-        # avg cae de 1.51 a ≈1.47 — divergencia documentada en TESTING.md Op 5
-        self.assertAlmostEqual(product.standard_price_in_currency, 1.47, places=2)
+        self.assertAlmostEqual(product.total_value_in_currency, 25.65, places=2)
+        self.assertAlmostEqual(product.standard_price_in_currency, 1.51, places=2)
