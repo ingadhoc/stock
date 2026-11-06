@@ -3,3 +3,4 @@
 # directory
 ##############################################################################
 from . import test_batch_voucher_on_validate
+from . import test_auto_wave_skip_corrupt_wave
