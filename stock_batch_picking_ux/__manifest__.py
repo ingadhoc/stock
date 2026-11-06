@@ -19,7 +19,7 @@
 ##############################################################################
 {
     "name": "Stock Usability with Batch Picking and stock vouchers",
-    "version": "18.0.1.3.1",
+    "version": "18.0.1.4.0",
     "category": "Warehouse Management",
     "sequence": 14,
     "summary": "",
