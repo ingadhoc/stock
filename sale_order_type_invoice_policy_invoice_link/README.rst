@@ -35,7 +35,11 @@ Usage
 
 To use this module, you need to:
 
-#. Go to ...
+#. Set an invoicing policy that invoices ordered quantities on the sale order
+   type (or on the product, when the type is "Defined by Product").
+#. Invoice the sale order before delivering it.
+#. Validate the delivery: its stock moves are linked to the invoice lines that
+   already exist, so the invoice shows the related pickings.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
