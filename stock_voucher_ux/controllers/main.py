@@ -9,55 +9,6 @@ from PyPDF2 import PdfFileReader
 
 
 class ReportController(report.ReportController):
-    def _count_pages_with_products(self, pdf_reader, picking_id):
-        """
-        Cuenta las páginas que realmente contienen productos
-        analizando el contenido de texto de cada página.
-        Usa identificadores de producto (código interno, código de barras)
-        para la detección, de forma independiente del idioma.
-        """
-        picking = request.env["stock.picking"].browse(picking_id)
-        move_lines = picking.move_line_ids
-
-        # Si no hay move_lines, usar move_ids como fallback
-        if not move_lines:
-            move_lines = picking.move_ids
-
-        # Recopilar identificadores de producto
-        product_identifiers = set()
-        for line in move_lines:
-            product = getattr(line, "product_id", None)
-            if product:
-                if product.default_code:
-                    product_identifiers.add(product.default_code.lower().strip())
-                if product.barcode:
-                    product_identifiers.add(product.barcode.lower().strip())
-
-        pages_with_products = 0
-
-        for page_num in range(len(pdf_reader.pages)):
-            try:
-                page = pdf_reader.pages[page_num]
-                text = page.extract_text()
-                if not text:
-                    continue
-                text_lower = text.lower()
-                if product_identifiers and any(pid in text_lower for pid in product_identifiers):
-                    has_products = True
-                else:
-                    # Fallback: patrón numérico genérico (independiente del idioma)
-                    has_products = bool(re.search(r"\b\d+[.,]\d+\b", text_lower))
-
-                if has_products:
-                    pages_with_products += 1
-
-            except Exception:
-                # Si hay error extrayendo texto, asumimos que tiene productos
-                pages_with_products += 1
-
-        # Asegurar que al menos hay 1 página con productos
-        return max(1, pages_with_products)
-
     @route()
     def report_download(self, data, context=None, token=None, **kwargs):
         """This function is used by 'qwebactionmanager.js' in order to trigger
@@ -75,7 +26,8 @@ class ReportController(report.ReportController):
             context_dict = json.loads(urllib.parse.unquote(context_part))
             picking_id = context_dict.get("active_ids")
             assign = context_dict.get("assign")
-            book_id = request.env["stock.picking"].browse(picking_id).book_id
+            picking = request.env["stock.picking"].browse(picking_id)
+            book_id = picking.book_id
             if assign and book_id and picking_id:
                 # Copias del reporte que se imprime, resuelto por su report_name en la URL.
                 copies = request.env["ir.actions.report"]._get_voucher_copies_from_url(url)
@@ -83,22 +35,16 @@ class ReportController(report.ReportController):
                 try:
                     pdf_response = response.response[0]
                     reader = PdfFileReader(io.BytesIO(pdf_response))
-
-                    # Usar el nuevo método para contar páginas con productos
+                    number_pages = picking._count_pages_with_products(reader)
                     if copies:
-                        total_pages = int(len(reader.pages) / copies)
-                        number_pages = self._count_pages_with_products(reader, picking_id)
                         # Ajustar por número de copias
-                        number_pages = min(number_pages, total_pages)
-                    else:
-                        number_pages = self._count_pages_with_products(reader, picking_id)
+                        number_pages = min(number_pages, int(len(reader.pages) / copies))
                 except Exception:
                     # If not PDF or can't process (like .doc), assign only 1 voucher
                     number_pages = 1
 
                 # See if there are vouchers already assigned. If not, assign them
                 # based on the real page count, then re-render so the numbers show.
-                picking = request.env["stock.picking"].browse(picking_id)
                 if not picking.voucher_ids and book_id:
                     picking.assign_numbers(number_pages, book_id)
                     picking.env.flush_all()
@@ -137,7 +83,7 @@ class ReportController(report.ReportController):
                             else:
                                 total_pages = len(reader.pages)
 
-                            number_pages = self._count_pages_with_products(reader, picking_id)
+                            number_pages = picking._count_pages_with_products(reader)
                             number_pages = min(number_pages, total_pages)
                         except Exception:
                             number_pages = 1
