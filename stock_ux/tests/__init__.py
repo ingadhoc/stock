@@ -16,3 +16,4 @@ from . import test_orderpoint_reviewed
 from . import test_picking_labels
 from . import test_inventory_adjustment_menu
 from . import test_change_locations
+from . import test_product_archive_warning
