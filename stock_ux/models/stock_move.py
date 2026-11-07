@@ -34,6 +34,34 @@ class StockMove(models.Model):
 
     origin_description = fields.Char(compute="_compute_origin_description", compute_sudo=True)
 
+    @api.model
+    def _prepare_merge_negative_moves_excluded_distinct_fields(self):
+        # Al cancelar remanente desde la orden (cancel_from_order, tanto en compras como en
+        # ventas) Odoo genera un move negativo que tiene que netear (mergear) contra el move
+        # pendiente ya existente. Ese move nuevo se construye "fresco" y puede traer un
+        # price_unit distinto al del move pendiente original: si cambió el costo/replenishment
+        # del producto, o (en compras) si la línea tiene descuento (el move viejo quedó con el
+        # precio de lista y el nuevo se arma con price_unit_discounted). Como price_unit forma
+        # parte de la clave de merge, esa diferencia rompe el neteo y, en vez de cancelar el
+        # pendiente, se genera una contraentrega (OUT en compras / re-ingreso en ventas).
+        #
+        # Lo excluimos SOLO de la clave del move negativo (excluded fields) y no de
+        # _prepare_merge_moves_distinct_fields, para que el merge positivo-positivo siga
+        # estricto: así no fusionamos por error dos moves vivos del mismo producto que solo
+        # difieren en el precio. El neteo recalcula precio promedio ponderado (core), con lo
+        # cual la cantidad neta por producto siempre cierra bien.
+        #
+        # NOTA: location_final_id es el otro campo volátil que puede romper el neteo (move
+        # viejo vacío vs. nuevo poblado con el default_location_dest_id del tipo de operación).
+        # NO lo excluimos acá a propósito: dropearlo puede hacer que un negativo netee contra
+        # la cadena downstream equivocada cuando conviven dos positivos del mismo producto con
+        # igual origen/destino pero distinto destino final (MTO / multi-paso). Ese caso se
+        # ataca por separado, con la batería de tests correspondiente.
+        res = super()._prepare_merge_negative_moves_excluded_distinct_fields()
+        if self.env.context.get("cancel_from_order"):
+            res = res + ["price_unit"]
+        return res
+
     @api.depends(
         "move_line_ids.quantity",
         "move_line_ids.lot_id",
