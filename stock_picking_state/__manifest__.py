@@ -19,7 +19,7 @@
 ##############################################################################
 {
     "name": "Stock Picking State",
-    "version": "19.0.1.2.0",
+    "version": "20.0.1.0.0",
     "category": "Warehouse Management",
     "sequence": 14,
     "summary": "",
@@ -31,14 +31,14 @@
         "stock",
     ],
     "data": [
-        "security/ir.model.access.csv",
+        "security/ir.access.csv",
         "views/stock_picking_state_detail.xml",
         "views/stock_picking_views.xml",
     ],
     "demo": [
         "demo/stock_picking_state_detail_demo.xml",
     ],
-    "installable": False,
+    "installable": True,
     "auto_install": False,
     "application": False,
 }
