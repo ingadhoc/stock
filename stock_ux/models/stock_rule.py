@@ -16,6 +16,25 @@ class StockRule(models.Model):
         for rec in self:
             rec.propagate_carrier = rec.picking_type_id.code == "outgoing"
 
+    def _get_stock_move_values(
+        self, product_id, product_qty, product_uom, location_dest_id, name, origin, company_id, values
+    ):
+        move_values = super()._get_stock_move_values(
+            product_id, product_qty, product_uom, location_dest_id, name, origin, company_id, values
+        )
+        # El core marca to_refund=True para todo movimiento de cantidad negativa
+        # ("If the quantity is negative the move should be considered as a
+        # refund", stock_rule.py), asumiendo que un negativo es una devolucion.
+        # Pero el negativo que genera "cancelar remanente" cancela mercaderia que
+        # NUNCA se entrego al cliente: no es una devolucion. Al materializarse
+        # como put-back interno (p.ej. Zona de picking -> Stock) ese to_refund
+        # heredado infla las cantidades devueltas y el estado de facturacion de
+        # la orden. En el flujo de cancelar remanente (cancel_from_order) ningun
+        # movimiento generado es un refund. Ticket 127378.
+        if self.env.context.get("cancel_from_order") and move_values.get("to_refund"):
+            move_values["to_refund"] = False
+        return move_values
+
     def _run_pull(self, procurements):
         """Backport from v19: recompute orderpoints after move creation for performance.
 
