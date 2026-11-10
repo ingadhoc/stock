@@ -170,3 +170,20 @@ class TestWizardAmountCurrency(TestStockCurrencyValuationCommon):
         currencies = wizard.line_ids.valuation_currency_id
         self.assertEqual(len(currencies), 2, "The draft has to gather two currencies.")
         self.assertFalse(wizard.valuation_currency_id)
+
+    def test_entry_carries_the_amount_in_currency(self):
+        """The valuation line carries the move's value in currency and the counterpart
+        its opposite, so the entry balances in both currencies."""
+        _picking, move = self._purchase_receipt(4, 25000.0, self.INVERSE_D1, self.DAY_1)
+        self.assertTrue(move.value_in_currency)
+
+        wizard = self._wizard_for(move)
+        self._assert_almost(wizard.total_in_currency, move.value_in_currency)
+        wizard.action_post()
+
+        entry = move.account_move_id
+        valuation_account = self.product.with_company(self.company)._get_product_accounts()["stock_valuation"]
+        valuation_line = entry.line_ids.filtered(lambda line: line.account_id == valuation_account)
+        self.assertEqual(valuation_line.currency_id, self.secondary_currency)
+        self._assert_almost(valuation_line.amount_currency, move.value_in_currency)
+        self._assert_balanced_per_currency(entry)
