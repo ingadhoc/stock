@@ -56,11 +56,14 @@ class StockRequest(models.Model):
         is installed
         """
         res = super()._action_launch_procurement_rule()
-        for rec in self:
-            reassign = rec.picking_ids.filtered(
-                lambda x: x.state == "confirmed" or (x.state in ["waiting", "assigned"] and not x.printed)
-            ).sudo()
-            if reassign:
-                reassign.do_unreserve()
-                reassign.action_assign()
+        # Las líneas de una orden comparten picking (ver _prepare_procurement_values), así que
+        # reasignar línea por línea libera y reserva el mismo picking una vez por línea.
+        reassign = (
+            self.mapped("picking_ids")
+            .filtered(lambda x: x.state == "confirmed" or (x.state in ["waiting", "assigned"] and not x.printed))
+            .sudo()
+        )
+        if reassign:
+            reassign.do_unreserve()
+            reassign.action_assign()
         return res
