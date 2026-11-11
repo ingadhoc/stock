@@ -16,10 +16,12 @@ Stock Request UX
 
 Several improvements to Stock Request:
 
-#. When creating the procurements order we create the procurement group, we propagate that so when the requests are created it also takes that same group.
-#. Add new button in pickings to access to the stock request order if has the group "Stock Request Order"
-#. Add new button in Stock moves to access to the stock request order related.
-#. Hide the "Replenishment" button in products(template/variants) when stock request was installed.
+#. All the lines of a request order leave in a single picking: the procurements of an order share a grouping reference, and the picking origin is the name of the order.
+#. Add a button in pickings (if the group "Stock Request Order" is enabled) and in stock moves to access the related stock request order.
+#. Add a "Cancel remaining" button in the lines of an order in progress. It keeps on the line only what was delivered, cancels what is pending and closes the line. If other lines of the same product wait for the same stock move, that move only loses the quantity of the cancelled line.
+#. Show the stock moves and the allocations of a stock request to the technical group.
+#. Check that the location, warehouse and route of a stock request belong to its company.
+#. Enable the "Stock Request Order" setting when the module is installed.
 
 Installation
 ============
@@ -40,7 +42,9 @@ Usage
 
 To use this module, you need to:
 
-#. Go to ...
+#. Go to Stock Requests > Operations > Stock Request Orders and open an order in progress.
+#. In a line that was delivered in part, click the "Cancel remaining" button (block icon) and confirm.
+#. The line is left with the delivered quantity and done, and the order chatter records the change.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
