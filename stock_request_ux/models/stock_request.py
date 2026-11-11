@@ -26,6 +26,8 @@ class StockRequest(models.Model):
             old_product_uom_qty = rec.product_uom_qty
             # we need to do this using direct write because this constraints "_check_type" in original module.
             rec._write({"product_uom_qty": rec.qty_done})
+            # _write does not refresh the cache and check_done would read the old quantity
+            rec.invalidate_recordset(["product_uom_qty"])
             to_cancel_moves = rec.move_ids.filtered(lambda x: x.state not in ["done", "cancel"])
             # to_cancel_moves.cancel_move()
             # if float_compare(qty_done, request.product_uom_qty,
