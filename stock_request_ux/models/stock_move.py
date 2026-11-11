@@ -16,4 +16,10 @@ class StockMove(models.Model):
         for rec in self:
             rec.request_order_id = rec.stock_request_ids.mapped("order_id")
 
+    def _prepare_copy_allocation_vals(self, vals):
+        # a split, a return and a push link the copy to its origin; a manual duplicate does not and takes no allocation
+        if "move_orig_ids" not in vals and "origin_returned_move_id" not in vals:
+            return []
+        return super()._prepare_copy_allocation_vals(vals)
+
     # DEPRECATED def _split(self, qty, restrict_partner_id=False)
