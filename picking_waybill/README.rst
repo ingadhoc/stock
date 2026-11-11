@@ -10,11 +10,12 @@
    :target: https://www.gnu.org/licenses/agpl
    :alt: License: AGPL-3
 
-====================
-Stock Picking Labels
-====================
+===============
+Picking Waybill
+===============
 
-#. Prints picking waybill.
+#. Prints a picking waybill ("Hoja de ruta"), an Aeroo spreadsheet report with one row per picking: customer, carrier, address, weight and number of packages.
+#. Carrier and weight are printed only when stock_delivery is installed, and the number of packages only when stock_ux is installed.
 
 Installation
 ============
@@ -35,7 +36,7 @@ Usage
 
 To use this module, you need to:
 
-#. Go to the Picking and print the report "Stock Picking Labels".
+#. Go to Inventory, select one or more pickings and print the report "Hoja de ruta".
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
