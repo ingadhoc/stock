@@ -28,7 +28,10 @@ class StockRequest(models.Model):
             rec._write({"product_uom_qty": rec.qty_done})
             # _write does not refresh the cache and check_done would read the old quantity
             rec.invalidate_recordset(["product_uom_qty"])
-            pending_moves = rec.move_ids.filtered(lambda x: x.state not in ["done", "cancel"])
+            # a return in progress is not part of what the line still has pending
+            pending_moves = rec.move_ids.filtered(
+                lambda x: x.state not in ["done", "cancel"] and not x.origin_returned_move_id
+            )
             # lines of the same product share the move, so a shared move only gives up what this line has pending
             shared_allocations = rec.allocation_ids.filtered(
                 lambda a: a.stock_move_id in pending_moves
@@ -67,8 +70,13 @@ class StockRequest(models.Model):
     @api.model
     def _get_pending_orig_moves(self, moves):
         """Moves that feed the given ones through the route (previous steps) and are not finished."""
-        orig_moves = moves.move_orig_ids.filtered(lambda m: m.state not in ["done", "cancel"])
-        return orig_moves | self._get_pending_orig_moves(orig_moves) if orig_moves else orig_moves
+        # iterative with the visited moves, move_orig_ids can form cycles with returns
+        orig_moves = self.env["stock.move"]
+        to_visit = moves
+        while to_visit:
+            to_visit = to_visit.move_orig_ids.filtered(lambda m: m.state not in ["done", "cancel"]) - orig_moves - moves
+            orig_moves |= to_visit
+        return orig_moves
 
     def _prepare_procurement_values(self, reference_ids=False):
         values = super()._prepare_procurement_values(reference_ids=reference_ids)

@@ -59,6 +59,7 @@ class TestStockRequestUx(BaseCommon):
                     "location_src_id": cls.resupply_loc.id,
                     "location_dest_id": cls.transit_loc.id,
                     "action": "pull",
+                    "location_dest_from_rule": True,
                     "picking_type_id": cls.warehouse.int_type_id.id,
                     "procure_method": "make_to_stock",
                     "warehouse_id": cls.warehouse.id,
@@ -69,6 +70,7 @@ class TestStockRequestUx(BaseCommon):
                     "location_src_id": cls.transit_loc.id,
                     "location_dest_id": cls.warehouse.lot_stock_id.id,
                     "action": "pull",
+                    "location_dest_from_rule": True,
                     "picking_type_id": cls.warehouse.int_type_id.id,
                     "procure_method": "make_to_order",
                     "warehouse_id": cls.warehouse.id,
@@ -442,3 +444,63 @@ class TestStockRequestUx(BaseCommon):
             self.assertEqual(line_3.state, "open")
             self.assertEqual(pending_move.product_uom_qty, 1.0)
             self.assertNotIn(pending_move.state, ("cancel", "done"))
+
+    def test_cancel_remaining_keeps_return_in_progress(self):
+        """Cancel remaining does not cancel a return that is still in progress.
+
+        Covers: the return of what was delivered is waiting to be validated, the
+        pending move is cancelled and the return keeps its quantity.
+        """
+        order = self._create_order(self.products[:1], qty=5.0)
+        order.action_confirm()
+        picking = order.picking_ids
+        picking.action_assign()
+        picking.move_ids.quantity = 3.0
+        picking.move_ids.picked = True
+        self.env["stock.backorder.confirmation"].with_context(button_validate_picking_ids=[picking.id]).create(
+            {"pick_ids": [Command.link(picking.id)]}
+        ).process()
+        pending_move = picking.backorder_ids.move_ids
+        returned = picking._create_return()
+        returned.move_ids.product_uom_qty = 1.0
+        returned.action_assign()
+        return_move = returned.move_ids
+        line = order.stock_request_ids
+        self.assertNotIn(return_move.state, ("done", "cancel"))
+
+        line.button_cancel_remaining()
+
+        with self.subTest("the pending move is cancelled"):
+            self.assertEqual(pending_move.state, "cancel")
+        with self.subTest("the return keeps its quantity and is not cancelled"):
+            self.assertNotEqual(return_move.state, "cancel")
+            self.assertNotEqual(returned.state, "cancel")
+            self.assertEqual(return_move.product_uom_qty, 1.0)
+
+    def test_cancel_remaining_shared_move_keeps_return_in_progress(self):
+        """Cancel remaining with shared lines does not lower a return in progress.
+
+        Covers: two lines of one product, 4 of 5 delivered and returned (return
+        not validated yet), cancel remaining on the line that is still open.
+        """
+        order = self._create_shared_order(self.products[0], (3.0, 2.0))
+        order.action_confirm()
+        picking = order.picking_ids
+        picking.action_assign()
+        picking.move_ids.quantity = 4.0
+        picking.move_ids.picked = True
+        self.env["stock.backorder.confirmation"].with_context(button_validate_picking_ids=[picking.id]).create(
+            {"pick_ids": [Command.link(picking.id)]}
+        ).process()
+        returned = picking._create_return()
+        returned.move_ids.product_uom_qty = 4.0
+        returned.action_assign()
+        return_move = returned.move_ids
+        open_line = order.stock_request_ids.filtered(lambda r: r.qty_in_progress > 0)
+        self.assertEqual(len(open_line), 1)
+
+        open_line.button_cancel_remaining()
+
+        with self.subTest("the return keeps its quantity and is not cancelled"):
+            self.assertNotEqual(return_move.state, "cancel")
+            self.assertEqual(return_move.product_uom_qty, 4.0)
