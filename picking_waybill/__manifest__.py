@@ -19,7 +19,7 @@
 ##############################################################################
 {
     "name": "Picking Waybill",
-    "version": "19.0.1.0.0",
+    "version": "20.0.1.0.0",
     "category": "Warehouse Management",
     "sequence": 14,
     "summary": "",
@@ -35,7 +35,7 @@
         "report/stock_report_data.xml",
     ],
     "demo": [],
-    "installable": False,
+    "installable": True,
     "auto_install": False,
     "application": False,
 }
