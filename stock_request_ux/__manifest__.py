@@ -19,7 +19,7 @@
 ##############################################################################
 {
     "name": "Stock Request UX",
-    "version": "19.0.1.1.0",
+    "version": "20.0.1.0.0",
     "category": "Warehouse Management",
     "sequence": 14,
     "summary": "",
@@ -38,7 +38,7 @@
         "views/stock_picking_views.xml",
     ],
     "demo": [],
-    "installable": False,
+    "installable": True,
     "auto_install": True,
     "application": False,
     "post_init_hook": "init_settings",

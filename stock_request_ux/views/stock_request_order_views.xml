@@ -6,7 +6,7 @@
         <field name="inherit_id" ref="stock_request.stock_request_order_form"/>
         <field name="arch" type="xml">
             <field name="product_uom_qty" position="after">
-                <button name="button_cancel_remaining" icon="fa-ban" invisible="state != 'open'" type="object" title="Cancelar Pendiente. Se van a cancelar todos los movimientos asociados que no esten realizados." confirm="Se van a cancelar todos los movimientos asociados que no esten realizados. Esto no puede ser revertido, seguro que desea continuar?"/>
+                <button name="button_cancel_remaining" icon="block" invisible="state != 'open'" type="object" title="Cancelar Pendiente. Se van a cancelar todos los movimientos asociados que no esten realizados." confirm="Se van a cancelar todos los movimientos asociados que no esten realizados. Esto no puede ser revertido, seguro que desea continuar?"/>
             </field>
         </field>
     </record>
