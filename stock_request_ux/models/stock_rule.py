@@ -10,10 +10,10 @@ class StockRule(models.Model):
     _inherit = "stock.rule"
 
     def _get_stock_move_values(
-        self, product_id, product_qty, product_uom, location_id, name, origin, company_id, values
+        self, product_id, product_qty, uom_id, location_dest_id, name, origin, company_id, values
     ):
         result = super()._get_stock_move_values(
-            product_id, product_qty, product_uom, location_id, name, origin, company_id, values
+            product_id, product_qty, uom_id, location_dest_id, name, origin, company_id, values
         )
         stock_request_id = values.get("stock_request_id", False)
         if stock_request_id:
