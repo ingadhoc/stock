@@ -3,3 +3,4 @@
 # directory
 ##############################################################################
 from . import test_reassign_once
+from . import test_stock_request_ux
