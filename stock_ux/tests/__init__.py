@@ -17,3 +17,4 @@ from . import test_picking_labels
 from . import test_inventory_adjustment_menu
 from . import test_change_locations
 from . import test_orderpoint_qty_to_order_update
+from . import test_template_free_qty
