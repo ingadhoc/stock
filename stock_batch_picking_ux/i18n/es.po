@@ -144,7 +144,16 @@ msgid ""
 "Computed from the pickings in the batch: set automatically when all pickings"
 " share the same partner; cleared when there are multiple. Editable manually "
 "until the batch is done."
+<<<<<<< 5a2fcbdc6235641fb6fa236481c7f09de5c8e0b9
 msgstr "Se calcula a partir de los traslados del lote: se completa automáticamente cuando todos los traslados son del mismo cliente y se limpia cuando hay varios. Se puede editar a mano hasta que el lote esté hecho."
+||||||| 5c75c642c3a99b486a961405ab618bfb4069ccc9
+msgstr ""
+=======
+msgstr ""
+"Se calcula a partir de los traslados del lote: se completa automáticamente "
+"cuando todos los traslados tienen el mismo contacto y se vacía cuando hay "
+"más de uno. Se puede editar manualmente hasta que el lote esté realizado."
+>>>>>>> ddc7b0f004f37ce16cf7492cd0d4919358a11619
 
 #. module: stock_batch_picking_ux
 #: model:ir.actions.report,name:stock_batch_picking_ux.action_report_batch_deliveryslip
@@ -155,7 +164,13 @@ msgstr "Recibo de entrega"
 #: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_picking__display_name
 #: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_picking_batch__display_name
 msgid "Display Name"
+<<<<<<< 5a2fcbdc6235641fb6fa236481c7f09de5c8e0b9
 msgstr "Mostrar nombre"
+||||||| 5c75c642c3a99b486a961405ab618bfb4069ccc9
+msgstr ""
+=======
+msgstr "Nombre en pantalla"
+>>>>>>> ddc7b0f004f37ce16cf7492cd0d4919358a11619
 
 #. module: stock_batch_picking_ux
 #: model:ir.actions.report,name:stock_batch_picking_ux.action_custom_label_transfer_template_view_pdf
@@ -171,12 +186,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_picking__id
 #: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_picking_batch__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: stock_batch_picking_ux
 #: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_picking_batch__l10n_pe_edi_status
 msgid "L10N Pe Edi Status"
-msgstr ""
+msgstr "Estado EDI de Perú"
 
 #. module: stock_batch_picking_ux
 #: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_picking_batch__notes
@@ -187,7 +202,7 @@ msgstr "Notas"
 #. module: stock_batch_picking_ux
 #: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_picking_batch__number_of_packages
 msgid "Number Of Packages"
-msgstr "Numero de paquetes"
+msgstr "Número de bultos"
 
 #. module: stock_batch_picking_ux
 #: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_picking_batch__picking_type_id
@@ -203,17 +218,23 @@ msgstr "Cliente"
 #. module: stock_batch_picking_ux
 #: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_picking_batch__partner_allowed_picking_ids
 msgid "Partner Allowed Picking"
+<<<<<<< 5a2fcbdc6235641fb6fa236481c7f09de5c8e0b9
 msgstr "Traslados permitidos del cliente"
+||||||| 5c75c642c3a99b486a961405ab618bfb4069ccc9
+msgstr ""
+=======
+msgstr "Traslados permitidos por contacto"
+>>>>>>> ddc7b0f004f37ce16cf7492cd0d4919358a11619
 
 #. module: stock_batch_picking_ux
 #: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_picking_batch__picking_type_ids
 msgid "Picking Type"
-msgstr "Tipo de Recogida"
+msgstr "Tipo de operación"
 
 #. module: stock_batch_picking_ux
 #: model_terms:ir.ui.view,arch_db:stock_batch_picking_ux.stock_batch_picking_form
 msgid "Pickings"
-msgstr "Recogidas"
+msgstr "Traslados"
 
 #. module: stock_batch_picking_ux
 #: model_terms:ir.ui.view,arch_db:stock_batch_picking_ux.stock_batch_picking_form
@@ -252,7 +273,15 @@ msgstr "Tipo de operación"
 msgid ""
 "You cannot change the operation type of a picking if it is already assigned "
 "to a batch."
+<<<<<<< 5a2fcbdc6235641fb6fa236481c7f09de5c8e0b9
 msgstr "No se puede cambiar el tipo de operación de un traslado si ya está asignado a un lote."
+||||||| 5c75c642c3a99b486a961405ab618bfb4069ccc9
+msgstr ""
+=======
+msgstr ""
+"No se puede cambiar el tipo de operación de un traslado que ya está "
+"asignado a un lote."
+>>>>>>> ddc7b0f004f37ce16cf7492cd0d4919358a11619
 
 #. module: stock_batch_picking_ux
 #: model:ir.model.fields,help:stock_batch_picking_ux.field_stock_picking_batch__notes
