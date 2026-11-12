@@ -28,17 +28,17 @@ msgstr ""
 #. module: stock_batch_picking_ux
 #: model_terms:ir.ui.view,arch_db:stock_batch_picking_ux.report_batch_delivery_document
 msgid "<strong>Operation Type:</strong>"
-msgstr ""
+msgstr "<strong>Tipo de operación:</strong>"
 
 #. module: stock_batch_picking_ux
 #: model_terms:ir.ui.view,arch_db:stock_batch_picking_ux.report_batch_delivery_document
 msgid "<strong>Responsible:</strong>"
-msgstr ""
+msgstr "<strong>Responsable:</strong>"
 
 #. module: stock_batch_picking_ux
 #: model_terms:ir.ui.view,arch_db:stock_batch_picking_ux.report_batch_delivery_document
 msgid "<strong>Scheduled Date</strong>"
-msgstr ""
+msgstr "<strong>Fecha programada</strong>"
 
 #. module: stock_batch_picking_ux
 #: model:ir.model,name:stock_batch_picking_ux.model_stock_picking_batch
@@ -54,17 +54,20 @@ msgid ""
 "share the same partner; cleared when there are multiple. Editable manually "
 "until the batch is done."
 msgstr ""
+"Se calcula a partir de los traslados del lote: se completa automáticamente "
+"cuando todos los traslados tienen el mismo contacto y se vacía cuando hay "
+"más de uno. Se puede editar manualmente hasta que el lote esté realizado."
 
 #. module: stock_batch_picking_ux
 #: model:ir.actions.report,name:stock_batch_picking_ux.action_report_batch_deliveryslip
 msgid "Delivery Slip"
-msgstr ""
+msgstr "Recibo de entrega"
 
 #. module: stock_batch_picking_ux
 #: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_picking__display_name
 #: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_picking_batch__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nombre en pantalla"
 
 #. module: stock_batch_picking_ux
 #: model:ir.actions.report,name:stock_batch_picking_ux.action_custom_label_transfer_template_view_pdf
@@ -80,12 +83,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_picking__id
 #: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_picking_batch__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: stock_batch_picking_ux
 #: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_picking_batch__l10n_pe_edi_status
 msgid "L10N Pe Edi Status"
-msgstr ""
+msgstr "Estado EDI de Perú"
 
 #. module: stock_batch_picking_ux
 #: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_picking_batch__notes
@@ -96,7 +99,7 @@ msgstr "Notas"
 #. module: stock_batch_picking_ux
 #: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_picking_batch__number_of_packages
 msgid "Number Of Packages"
-msgstr "Numero de paquetes"
+msgstr "Número de bultos"
 
 #. module: stock_batch_picking_ux
 #: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_picking_batch__picking_type_id
@@ -112,22 +115,22 @@ msgstr "Cliente"
 #. module: stock_batch_picking_ux
 #: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_picking_batch__partner_allowed_picking_ids
 msgid "Partner Allowed Picking"
-msgstr ""
+msgstr "Traslados permitidos por contacto"
 
 #. module: stock_batch_picking_ux
 #: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_picking_batch__picking_type_ids
 msgid "Picking Type"
-msgstr "Tipo de Recogida"
+msgstr "Tipo de operación"
 
 #. module: stock_batch_picking_ux
 #: model_terms:ir.ui.view,arch_db:stock_batch_picking_ux.stock_batch_picking_form
 msgid "Pickings"
-msgstr "Recogidas"
+msgstr "Traslados"
 
 #. module: stock_batch_picking_ux
 #: model_terms:ir.ui.view,arch_db:stock_batch_picking_ux.stock_batch_picking_form
 msgid "Print"
-msgstr ""
+msgstr "Imprimir"
 
 #. module: stock_batch_picking_ux
 #: model:ir.model.fields,field_description:stock_batch_picking_ux.field_stock_picking_batch__restrict_number_package
@@ -158,6 +161,8 @@ msgid ""
 "You cannot change the operation type of a picking if it is already assigned "
 "to a batch."
 msgstr ""
+"No se puede cambiar el tipo de operación de un traslado que ya está "
+"asignado a un lote."
 
 #. module: stock_batch_picking_ux
 #: model:ir.model.fields,help:stock_batch_picking_ux.field_stock_picking_batch__notes
