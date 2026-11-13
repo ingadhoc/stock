@@ -7,17 +7,17 @@ from odoo.fields import Domain
 class ResCompany(models.Model):
     _inherit = "res.company"
 
-    def stock_value_in_currency(self, accounts_by_product=None, at_date=None):
+    def get_inventory_value_in_currency(self, accounts_by_product=None, at_date=None):
         """Inventory value per ``(valuation account, secondary currency)``.
 
-        Twin of ``stock_value``, which answers the same in company currency. Keyed by
+        Twin of ``get_inventory_value``, which answers the same in company currency. Keyed by
         currency as well because one valuation account can gather products valued in
         different secondary currencies; products without one contribute nothing.
         """
         self.ensure_one()
         value_by_account = defaultdict(float)
         if not accounts_by_product:
-            accounts_by_product = self.with_context(prefetch_fields=False)._get_accounts_by_product()
+            accounts_by_product = self.with_context(prefetch_fields=False)._get_accounts_by_product(at_date)
         for product, accounts in accounts_by_product.items():
             scoped = product.with_company(self)
             currency = scoped.valuation_currency_id
@@ -28,11 +28,11 @@ class ResCompany(models.Model):
             ).total_value_in_currency
         return value_by_account
 
-    def stock_accounting_value_in_currency(self, accounts_by_product=None, at_date=None):
+    def get_inventory_accounting_value_in_currency(self, accounts_by_product=None, at_date=None):
         """Booked value per ``(valuation account, secondary currency)``, off the
         ``amount_currency`` of the posted journal items.
 
-        Twin of ``stock_accounting_value``. It only sees what was booked WITH a secondary
+        Twin of ``get_inventory_accounting_value``. It only sees what was booked WITH a secondary
         amount, so entries posted before this module did carry none and contribute zero —
         the column is not retroactive, and that is documented rather than estimated.
 
@@ -42,7 +42,7 @@ class ResCompany(models.Model):
         """
         self.ensure_one()
         if not accounts_by_product:
-            accounts_by_product = self._get_accounts_by_product()
+            accounts_by_product = self._get_accounts_by_product(at_date)
         account_data = defaultdict(float)
         currencies = self.env["res.currency"]
         accounts = self.env["account.account"]
@@ -125,8 +125,8 @@ class ResCompany(models.Model):
         currency_by_account = self._get_valuation_currency_by_account(accounts_by_product)
         if not currency_by_account:
             return vals_list
-        inventory = self.stock_value_in_currency(accounts_by_product, at_date)
-        booked = self.stock_accounting_value_in_currency(accounts_by_product, at_date)
+        inventory = self.get_inventory_value_in_currency(accounts_by_product, at_date)
+        booked = self.get_inventory_accounting_value_in_currency(accounts_by_product, at_date)
         Account = self.env["account.account"]
         # Walked TWO BY TWO: the vals come as pairs —valuation leg plus counterpart, as
         # ``_prepare_inventory_aml_vals`` returns them— and BOTH have to be annotated.
@@ -154,7 +154,7 @@ class ResCompany(models.Model):
                 # nets to zero in the secondary currency exactly as it does in the company
                 # one.
                 vals["currency_id"] = currency.id
-                vals["amount_currency"] = amount if vals["debit"] else -amount
+                vals["amount_currency"] = amount if vals["balance"] > 0 else -amount
         return vals_list
 
     def _get_valuation_val_extra_vals(self, vals, balance, net):

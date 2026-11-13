@@ -29,7 +29,7 @@ class TestAvcoReportUom(TestStockCurrencyValuationCommon):
                             {
                                 "product_id": self.product.id,
                                 "product_uom_qty": qty,
-                                "product_uom": uom.id,
+                                "uom_id": uom.id,
                                 "location_id": self.supplier_location.id,
                                 "location_dest_id": self.stock_location.id,
                             }

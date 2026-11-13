@@ -67,9 +67,9 @@ class TestCombinedWalkthrough(TestStockCurrencyValuationCommon):
     def _op4_delivery_day_2(self):
         # Entrega a cliente: -5 unid. OUT: se valúa al AVCO USD vigente (1.508335 × 5 ≈ 7.54).
         picking, move = self._delivery(qty=5, date_str=self.DAY_2)
-        # Odoo 19: move.value es magnitud positiva (la dirección la da is_out).
-        self.assertAlmostEqual(move.value, 8550, places=2)
-        self.assertAlmostEqual(move.value_in_currency, 7.54, places=2)
+        # Odoo 20: el valor de una salida es negativo, en las dos monedas.
+        self.assertAlmostEqual(move.value, -8550, places=2)
+        self.assertAlmostEqual(move.value_in_currency, -7.54, places=2)
 
         product = self._product()
         self.assertEqual(product.qty_available, 15)
@@ -107,10 +107,10 @@ class TestCombinedWalkthrough(TestStockCurrencyValuationCommon):
     def _op7_inventory_adjustment_minus2_day_3(self):
         # Ajuste -2 (20 → 18) sin picking. Genera move OUT con value_in_currency.
         _quant, move = self._inventory_adjustment(new_qty=18, date_str=self.DAY_3)
-        # Odoo 19: move.value es magnitud positiva (la dirección la da is_out).
-        self.assertAlmostEqual(move.value, 3420, places=2)
+        # Odoo 20: el valor de una salida es negativo, en las dos monedas.
+        self.assertAlmostEqual(move.value, -3420, places=2)
         # Rama "sin picking" de _set_value: qty × AVCO USD del momento ≈ 2.93 (positivo).
-        self.assertAlmostEqual(move.value_in_currency, 2.93, places=2)
+        self.assertAlmostEqual(move.value_in_currency, -2.93, places=2)
         product = self._product()
         self.assertEqual(product.qty_available, 18)
         # 26.38 (no 26.37) por el mismo redondeo acumulado de Op 6.
