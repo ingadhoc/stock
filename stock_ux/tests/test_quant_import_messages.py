@@ -1,6 +1,6 @@
 from odoo.exceptions import UserError
 from odoo.tests import tagged
-from odoo.tests.common import TransactionCase
+from odoo.tests.common import TransactionCase, new_test_user
 
 
 @tagged("stock_ux_quant_import")
@@ -103,3 +103,36 @@ class TestQuantImportMessages(TransactionCase):
 
         self.assertTrue(errors)
         self.assertIn(self.location.display_name, errors[0]["message"])
+
+    def test_file_with_an_empty_id_does_not_say_where_the_count_was_taken(self):
+        """Our own template carries the id column and invites leaving it empty on a file
+        built from the count, so the column alone does not place the rows."""
+        self.env["stock.warehouse"].create({"name": "Second Warehouse", "code": "SWH"})
+        fields = ["id", "product_id", "inventory_quantity"]
+
+        errors = self._errors(self._load(fields, [["", self.product.name, "4"]]))
+
+        self.assertTrue(errors)
+        self.assertIn(self.location.display_name, errors[0]["message"])
+        placed = self.quant.export_data(["id", "product_id"])["datas"][0] + ["4"]
+        self.assertFalse(self._errors(self._load(fields, [placed])), "an id with a value places the row")
+
+    def test_a_refused_key_column_names_only_what_the_author_can_read(self):
+        """The message runs on the manual path too, where there is no file, and it must not
+        name a record of a company its author cannot see."""
+        other_company = self.env["res.company"].create({"name": "Other Company"})
+        lot = self.env["stock.lot"].create(
+            {"name": "FOREIGN-LOT", "product_id": self.product.id, "company_id": other_company.id}
+        )
+        user = new_test_user(
+            self.env,
+            login="counter",
+            groups="stock.group_stock_manager,stock_ux.group_stock_inventory_adjustment",
+        )
+
+        with self.assertRaises(UserError) as error:
+            self.quant.with_user(user).with_context(inventory_mode=True).write({"lot_id": lot.id})
+
+        message = str(error.exception)
+        self.assertNotIn(lot.name, message, "a line of another company is not named")
+        self.assertNotIn("file", message, "nothing was imported here")
