@@ -29,6 +29,11 @@ class SaleOrderTypeInvoicePolicyInvoiceLinkCommon(SaleOrderTypeInvoicePolicyComm
         invoice.action_post()
         return invoice
 
+    def _cancelar(self, invoice):
+        invoice.button_draft()
+        invoice.button_cancel()
+        return invoice
+
     def _nota_credito(self, invoice):
         refund = invoice._reverse_moves([{"invoice_date": invoice.invoice_date}])
         refund.action_post()
