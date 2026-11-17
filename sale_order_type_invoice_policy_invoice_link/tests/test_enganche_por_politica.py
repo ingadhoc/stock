@@ -54,6 +54,27 @@ class TestEnganchePorPolitica(SaleOrderTypeInvoicePolicyInvoiceLinkCommon):
                 self.assert_vinculo_coherente(order)
                 self.assert_invariantes(order)
 
+    def test_no_se_engancha_una_factura_cancelada(self):
+        """Una factura cancelada ya no cubre la entrega, así que no se engancha.
+
+        El puente buscaba la factura por línea de venta y tipo de comprobante, sin
+        mirar el estado: una venta refacturada después de cancelar quedaba enganchada
+        a las dos, la cancelada y la vigente.
+        """
+        order = self._order(self._sale_type("order"))
+        cancelada = self._cancelar(self._facturar(order))
+        vigente = self._facturar(order)
+
+        self._deliver(order.picking_ids)
+
+        enganchadas = order.picking_ids.move_ids.invoice_line_ids
+        self.assertEqual(enganchadas, vigente.invoice_line_ids, "la entrega es de la factura vigente")
+        self.assertFalse(
+            enganchadas & cancelada.invoice_line_ids,
+            "la entrega quedó enganchada a una factura cancelada",
+        )
+        self.assert_vinculo_coherente(order)
+
     def test_no_se_engancha_la_factura_de_otra_venta(self):
         otra = self._order(self._sale_type("order"))
         otra_factura = self._facturar(otra)

@@ -25,7 +25,14 @@ def new_write(self, vals):
             inv_line = (
                 self.env["account.move.line"]
                 .sudo()
-                .search([("sale_line_ids", "=", stock_move.sale_line_id.id), ("move_id.move_type", "=", inv_type)])
+                .search(
+                    [
+                        ("sale_line_ids", "=", stock_move.sale_line_id.id),
+                        ("move_id.move_type", "=", inv_type),
+                        # a cancelled invoice no longer covers the delivery
+                        ("move_id.state", "!=", "cancel"),
+                    ]
+                )
             )
             if inv_line:
                 stock_move.sudo().invoice_line_ids = [(4, m.id) for m in inv_line]
