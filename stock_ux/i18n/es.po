@@ -131,7 +131,7 @@ msgid ""
 msgstr ""
 
 #. module: stock_ux
-#: model_terms:ir.ui.view,arch_db:stock_ux.product_template_form_view_free_qty_button
+#: model_terms:ir.ui.view,arch_db:stock_ux.view_stock_available_form
 msgid "<span class=\"o_stat_text\">Free</span>"
 msgstr "<span class=\"o_stat_text\">Libre</span>"
 

@@ -14,7 +14,7 @@
         <field name="context">{"search_default_goods": 1, "default_is_storable": True, "stock_product_template": 1}</field>
     </record>
 
-    <record id="product_template_form_view_free_qty_button" model="ir.ui.view">
+    <record id="view_stock_available_form" model="ir.ui.view">
         <field name="name">product.template.form.free.qty.button</field>
         <field name="model">product.template</field>
         <field name="inherit_id" ref="stock.product_template_form_view_procurement_button"/>
