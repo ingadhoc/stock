@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-23 19:08+0000\n"
-"PO-Revision-Date: 2026-10-23 19:08+0000\n"
+"POT-Creation-Date: 2026-11-17 17:27+0000\n"
+"PO-Revision-Date: 2026-11-17 17:27+0000\n"
 "Last-Translator: Luciano Esperlazza <les@adhoc.inc>\n"
 "Language-Team: Spanish <https://translation.dev-adhoc.com/projects/stock-19-0/stock-19-0-stock_ux/es/>\n"
 "Language: es\n"
@@ -129,6 +129,11 @@ msgid ""
 "\n"
 "To contribute to this module, please visit https://www.adhoc.com.ar.\n"
 msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.product_template_form_view_free_qty_button
+msgid "<span class=\"o_stat_text\">Free</span>"
+msgstr "<span class=\"o_stat_text\">Libre</span>"
 
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.report_delivery_document
@@ -537,6 +542,11 @@ msgstr ""
 "Nivel de stock pronosticado al reabastecer.\n"
 "Se calcula automáticamente como = Mín + Máx (Frecuencia de pedido x Demanda diaria x Factor de crecimiento, CMP) con CMP = Cantidad mínima de la lista de precios del proveedor / LdM.\n"
 "El stock a la mano no lo alcanzará si se entrega una demanda no pronosticada mientras se espera la llegada."
+
+#. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_product_template__free_qty
+msgid "Free To Use"
+msgstr "Disponible para uso"
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_product_label_layout__from_template
@@ -1079,6 +1089,11 @@ msgstr ""
 " ubicación, positiva cuando ingresa y 0 cuando no aplica. Sin ese filtro, "
 "siempre es 0 por diseño; el valor útil es el total de la columna que aparece"
 " en la parte inferior."
+
+#. module: stock_ux
+#: model:ir.model.fields,help:stock_ux.field_product_template__free_qty
+msgid "Quantity on hand minus outgoing quantity."
+msgstr "Cantidad a la mano menos cantidad saliente."
 
 #. module: stock_ux
 #: model:ir.model.fields,help:stock_ux.field_mail_mail__tracking_summary
