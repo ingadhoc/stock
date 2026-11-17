@@ -511,6 +511,11 @@ msgid ""
 msgstr ""
 
 #. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.product_template_kanban_free_qty_view
+msgid "Free"
+msgstr ""
+
+#. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_product_template__free_qty
 msgid "Free To Use"
 msgstr ""

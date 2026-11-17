@@ -544,6 +544,11 @@ msgstr ""
 "El stock a la mano no lo alcanzará si se entrega una demanda no pronosticada mientras se espera la llegada."
 
 #. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.product_template_kanban_free_qty_view
+msgid "Free"
+msgstr "Libre"
+
+#. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_product_template__free_qty
 msgid "Free To Use"
 msgstr "Disponible para uso"
