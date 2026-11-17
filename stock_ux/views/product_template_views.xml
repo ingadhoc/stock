@@ -33,6 +33,24 @@
         </field>
     </record>
 
+    <record id="product_template_kanban_free_qty_view" model="ir.ui.view">
+        <field name="name">product.template.kanban.free.qty</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_kanban_view"/>
+        <field name="priority" eval="15"/>
+        <field name="arch" type="xml">
+            <div name="on_hand_qty_kanban" position="after">
+                <div groups="stock.group_stock_user" t-if="record.show_on_hand_qty_status_button.raw_value" class="d-flex gap-1 align-items-baseline">
+                    <strong>
+                        <field name="free_qty" digits="[16, 0]"/>
+                    </strong>
+                    <field name="uom_id" groups="uom.group_uom"/>
+                    <span class="text-muted">Free</span>
+                </div>
+            </div>
+        </field>
+    </record>
+
     <record id="view_stock_product_template_free_qty_tree" model="ir.ui.view">
         <field name="name">product.template.free.qty.list</field>
         <field name="model">product.template</field>
