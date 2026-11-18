@@ -9,6 +9,14 @@ class ProductTemplate(models.Model):
     _inherit = "product.template"
 
     @api.model
+    def _add_missing_default_values(self, values):
+        # Inventory > Products defaults is_storable to True, which skips compute_is_storable
+        values = super()._add_missing_default_values(values)
+        if values.get("type") != "consu":
+            values.pop("is_storable", None)
+        return values
+
+    @api.model
     def get_import_templates(self):
         if self.env.context.get("stock_product_template"):
             return [
