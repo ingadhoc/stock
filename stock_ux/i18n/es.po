@@ -7,12 +7,12 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 19.0+e\n"
+"Project-Id-Version: Odoo Server 20.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-23 19:08+0000\n"
-"PO-Revision-Date: 2026-10-23 19:08+0000\n"
+"POT-Creation-Date: 2026-11-18 15:14+0000\n"
+"PO-Revision-Date: 2026-11-18 15:14+0000\n"
 "Last-Translator: Luciano Esperlazza <les@adhoc.inc>\n"
-"Language-Team: Spanish <https://translation.dev-adhoc.com/projects/stock-19-0/stock-19-0-stock_ux/es/>\n"
+"Language-Team: Spanish <https://translation.dev-adhoc.com/projects/stock-20-0/stock-20-0-stock_ux/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -75,6 +75,7 @@ msgid ""
 "#. Accept the columns identifying a stock line on import while they repeat what the line already holds, so a file exported from Odoo can be re-imported as it is, and name the line and the column when they do not.\n"
 "#. Report which row, product or column an inventory import cannot take, instead of one message for the whole file, and refuse the columns that would move stock with no move behind them.\n"
 "#. Offer an import template for inventory adjustments carrying the column that identifies each stock line, only columns an adjustment can take, and the export/fill/re-import order of work.\n"
+"#. Only users with \"Inventory Adjustments\" can move stock from or to an inventory adjustment location. Scrapping is not an adjustment and keeps working without it.\n"
 "\n"
 "Installation\n"
 "============\n"
@@ -534,9 +535,9 @@ msgid ""
 "Automatically calculated as = Min + Max (Order frequency x Daily Demand x Growth factor, MoQ) with MoQ = Minimum quantity from vendor pricelist / BOM.\n"
 "Won't be reached by on Hand stock if unforecasted demand is delivered while waiting for arrival."
 msgstr ""
-"Nivel de stock pronosticado al reabastecer.\n"
-"Se calcula automáticamente como = Mín + Máx (Frecuencia de pedido x Demanda diaria x Factor de crecimiento, CMP) con CMP = Cantidad mínima de la lista de precios del proveedor / LdM.\n"
-"El stock a la mano no lo alcanzará si se entrega una demanda no pronosticada mientras se espera la llegada."
+"Nivel de existencias pronosticado al reabastecer.\n"
+"Se calcula de forma automática con la fórmula = Mín. + Máx. (frecuencia de la orden x demanda diaria x factor de crecimiento, cantidad mínima de la orden), donde la cantidad mínima de la orden corresponde a la cantidad mínima de la lista de precios del proveedor o de la lista de materiales.\n"
+"No se alcanzará este nivel con las existencias a la mano si se entrega una demanda no pronosticada mientras se espera la llegada del reabastecimiento."
 
 #. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_product_label_layout__from_template
@@ -790,8 +791,8 @@ msgid ""
 "Minimum Forecasted stock level that will trigger a replenishment.\n"
 "A safety stock is included in the min to cover unusual situations if days of demand covered by the Minimum Level is > Replenishment Lead Times - Availability Time."
 msgstr ""
-"Nivel mínimo de stock pronosticado que activará un reabastecimiento.\n"
-"El mínimo incluye un stock de seguridad para cubrir situaciones inusuales si los días de demanda cubiertos por el nivel mínimo son > Plazos de reabastecimiento - Tiempo de disponibilidad."
+"Nivel mínimo de existencias pronosticado que activa un reabastecimiento.\n"
+"El nivel mínimo incluye existencias de seguridad para cubrir situaciones excepcionales si los días de demanda que cubre el nivel mínimo corresponde a > los plazos de entrega del reabastecimiento - el tiempo de disponibilidad."
 
 #. module: stock_ux
 #: model:ir.model,name:stock_ux.model_stock_warehouse_orderpoint
@@ -897,6 +898,16 @@ msgstr "Número de mensajes con error de envío"
 #: model:ir.model.fields,field_description:stock_ux.field_stock_picking__observations
 msgid "Observations"
 msgstr "Observaciones"
+
+#. module: stock_ux
+#. odoo-python
+#: code:addons/stock_ux/models/stock_move.py:0
+msgid ""
+"Only a user with the Inventory Adjustments permission can move stock from or"
+" to %s."
+msgstr ""
+"Solo un usuario con el permiso Ajustes de inventario puede mover stock desde"
+" o hacia %s."
 
 #. module: stock_ux
 #: model_terms:ir.ui.view,arch_db:stock_ux.view_picking_internal_search
