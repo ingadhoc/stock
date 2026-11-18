@@ -19,6 +19,23 @@ class StockRequest(models.Model):
             self.route_id = self.order_id.route_id.id
         return res
 
+    @api.model
+    def _get_recovered_state_note(self, state):
+        """Text of the note the update to 20 leaves on a line that 19 had wrongly cancelled."""
+        if state == "done":
+            return self.env._(
+                "This line was shown as Cancelled, but everything requested was already delivered. In Odoo 19, "
+                "when only part of a line was delivered, the quantity left to deliver was not linked to the "
+                "line, so it showed as Cancelled even after the rest was delivered. When updating to Odoo 20 "
+                "that delivery was counted and the line is now Done."
+            )
+        return self.env._(
+            "This line was shown as Cancelled, but it still has a quantity left to deliver. In Odoo 19, when "
+            "only part of a line was delivered, the quantity left to deliver was not linked to the line, so it "
+            "showed as Cancelled. When updating to Odoo 20 that quantity was recovered and the line is now "
+            "In progress."
+        )
+
     # DEPRECATED def action_cancel(self):
 
     def button_cancel_remaining(self):
