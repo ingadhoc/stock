@@ -59,6 +59,24 @@ class TestInventoryLocationMoves(TransactionCase):
         self.assertEqual(move.state, "done")
         self.assertTrue(move.is_scrap)
 
+    def test_user_without_adjustment_removes_repair_parts(self):
+        if "repair_id" not in self.env["stock.move"]._fields:
+            self.skipTest("repair is not installed")
+        repair = self.env["repair.order"].create({"product_id": self.product.id})
+        move = self.env["stock.move"].create(
+            {
+                "product_id": self.product.id,
+                "product_uom_qty": 2,
+                "repair_id": repair.id,
+                "repair_line_type": "remove",
+            }
+        )
+        self.assertEqual(move.location_dest_id.usage, "inventory")
+        move._action_confirm()
+        move.write({"quantity": 2, "picked": True})
+        move.with_user(self.basic_user)._action_done()
+        self.assertEqual(move.state, "done")
+
     def test_user_without_adjustment_delivers(self):
         move = self._move(self.stock_location, self.customer_location)
         move.with_user(self.basic_user)._action_done()

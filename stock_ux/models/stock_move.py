@@ -277,10 +277,12 @@ class StockMove(models.Model):
         return super(StockMove, self.with_context(trigger_assign=True))._action_assign(force_qty=force_qty)
 
     def _action_done(self, cancel_backorder=False):
-        # Moving stock from or to an inventory loss location is an adjustment; scrapping is not.
+        # Moving stock from or to an inventory loss location is an adjustment; scrapping and repair parts are not.
         if not self.env.su and not self.env.user.has_group("stock_ux.group_stock_inventory_adjustment"):
             adjustments = self.filtered(
-                lambda m: not m.is_scrap and "inventory" in (m.location_id.usage, m.location_dest_id.usage)
+                lambda m: not m.is_scrap
+                and not ("repair_id" in m._fields and m.repair_id)
+                and "inventory" in (m.location_id.usage, m.location_dest_id.usage)
             )
             if adjustments:
                 locations = (adjustments.location_id | adjustments.location_dest_id).filtered(
