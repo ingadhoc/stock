@@ -102,3 +102,31 @@ class TestReturnAllUom(TransactionCase):
         return_move = self._return_all(picking)
         self.assertEqual(return_move.product_uom, self.uom_unit)
         self.assertEqual(return_move.product_uom_qty, 1.0)
+
+    def test_return_all_after_partial_return(self):
+        """Return All after a manual partial return (in the product UoM) returns
+        only the remaining quantity, in the delivered move UoM."""
+        product = self.env["product.product"].create(
+            {
+                "name": "Producto docenas devolución parcial",
+                "is_storable": True,
+                "uom_id": self.uom_dozen.id,
+                "uom_po_id": self.uom_dozen.id,
+            }
+        )
+        picking = self._deliver(product, self.uom_unit, 24)
+        wizard = (
+            self.env["stock.return.picking"]
+            .with_context(active_id=picking.id, active_ids=picking.ids, active_model="stock.picking")
+            .create({})
+        )
+        wizard.product_return_moves.quantity = 0.5
+        partial_return = wizard._create_return()
+        partial_return.move_ids.quantity = 0.5
+        partial_return.move_ids.picked = True
+        partial_return._action_done()
+        self.assertEqual(partial_return.move_ids.product_uom, self.uom_dozen)
+
+        return_move = self._return_all(picking)
+        self.assertEqual(return_move.product_uom, self.uom_unit)
+        self.assertEqual(return_move.product_uom_qty, 18.0)

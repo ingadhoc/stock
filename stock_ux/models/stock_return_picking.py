@@ -3,6 +3,7 @@
 # directory
 ##############################################################################
 from odoo import fields, models
+from odoo.tools.float_utils import float_round
 
 
 class StockReturnPicking(models.TransientModel):
@@ -41,4 +42,15 @@ class StockReturnPickingLine(models.TransientModel):
         move = self.move_id
         if self.env.context.get("return_all_move_uom") and move and move.product_uom != self.product_id.uom_id:
             vals["product_uom"] = move.product_uom.id
+            vals["product_uom_qty"] = self._get_remaining_qty_in_move_uom()
         return vals
+
+    def _get_remaining_qty_in_move_uom(self):
+        # Computed from the original move: the line quantity is in the product UoM and converting it back loses precision.
+        move = self.move_id
+        quantity = move.quantity
+        for dest_move in move.move_dest_ids.filtered(lambda m: m.origin_returned_move_id == move):
+            quantity -= dest_move.product_uom._compute_quantity(
+                dest_move.quantity, move.product_uom, rounding_method="HALF-UP"
+            )
+        return float_round(quantity, precision_rounding=move.product_uom.rounding)
