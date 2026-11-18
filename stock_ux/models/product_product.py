@@ -4,11 +4,19 @@
 ##############################################################################
 import statistics
 
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class ProductProduct(models.Model):
     _inherit = "product.product"
+
+    @api.model
+    def _add_missing_default_values(self, values):
+        # same as product.template: is_storable is inherited and would keep the default in cache
+        values = super()._add_missing_default_values(values)
+        if values.get("type") != "consu":
+            values.pop("is_storable", None)
+        return values
 
     def _update_orderpoints_qty_to_order(self):
         """Mark the orderpoints of these products for recomputation of the stored qty_to_order_computed.
