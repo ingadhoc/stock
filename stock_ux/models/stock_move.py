@@ -276,6 +276,24 @@ class StockMove(models.Model):
         """
         return super(StockMove, self.with_context(trigger_assign=True))._action_assign(force_qty=force_qty)
 
+    def _action_done(self, cancel_backorder=False):
+        # Moving stock from or to an inventory loss location is an adjustment; scrapping is not.
+        if not self.env.su and not self.env.user.has_group("stock_ux.group_stock_inventory_adjustment"):
+            adjustments = self.filtered(
+                lambda m: not m.is_scrap and "inventory" in (m.location_id.usage, m.location_dest_id.usage)
+            )
+            if adjustments:
+                locations = (adjustments.location_id | adjustments.location_dest_id).filtered(
+                    lambda loc: loc.usage == "inventory"
+                )
+                raise UserError(
+                    _(
+                        "Only a user with the Inventory Adjustments permission can move stock from or to %s.",
+                        ", ".join(locations.mapped("display_name")),
+                    )
+                )
+        return super()._action_done(cancel_backorder=cancel_backorder)
+
     def _prepare_procurement_values(self):
         values = super()._prepare_procurement_values()
         physical_warehouse = self.location_id.warehouse_id
