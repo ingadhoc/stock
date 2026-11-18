@@ -8,14 +8,13 @@ from odoo import _, api, models
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
-    @api.model_create_multi
-    def create(self, vals_list):
-        # Inventory > Products defaults is_storable to True, and a value in vals skips compute_is_storable
-        default_type = self.env.context.get("default_type", "consu")
-        for vals in vals_list:
-            if vals.get("type", default_type) != "consu":
-                vals["is_storable"] = False
-        return super().create(vals_list)
+    @api.model
+    def _add_missing_default_values(self, values):
+        # Inventory > Products defaults is_storable to True, which skips compute_is_storable
+        values = super()._add_missing_default_values(values)
+        if values.get("type") != "consu":
+            values.pop("is_storable", None)
+        return values
 
     @api.model
     def get_import_templates(self):

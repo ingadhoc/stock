@@ -14,6 +14,10 @@ class TestProductIsStorableDefault(TransactionCase):
         cls.action_context = safe_eval(action.context)
         cls.Template = cls.env["product.template"].with_context(**cls.action_context)
 
+    def test_action_still_defaults_is_storable(self):
+        # if Odoo drops this default, the override in stock_ux is no longer needed
+        self.assertTrue(self.action_context.get("default_is_storable"))
+
     def test_create_from_inventory_action(self):
         goods, service = self.Template.create(
             [
