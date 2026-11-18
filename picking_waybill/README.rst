@@ -14,8 +14,8 @@
 Picking Waybill
 ===============
 
-#. Prints a picking waybill ("Hoja de ruta"), an Aeroo spreadsheet report with one row per picking: customer, carrier, address, weight and number of packages.
-#. Carrier and weight are printed only when stock_delivery is installed, and the number of packages only when stock_ux is installed.
+#. Prints a picking waybill ("Hoja de ruta"), an Aeroo spreadsheet report with one row per picking: customer, carrier, address, delivery guide number, weight and number of packages.
+#. Carrier and weight are printed only when stock_delivery is installed, the delivery guide number only when l10n_ar_stock is installed, and the number of packages only when stock_ux is installed.
 
 Installation
 ============
