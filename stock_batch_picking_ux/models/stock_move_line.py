@@ -15,7 +15,17 @@ class StockMoveLine(models.Model):
     )
 
     def _is_potential_existing_wave_extra(self, wave):
-        # Skip waves already holding incompatible pickings: auto-waving into them would raise the batch sanity check.
-        if wave.picking_ids and not (wave.picking_ids <= wave.allowed_picking_ids):
+        # Skip waves already holding a picking its sanity check would reject: auto-waving into them would raise it.
+        allowed_states = (
+            ("draft", "waiting", "confirmed", "assigned")
+            if wave.state == "draft"
+            else ("waiting", "confirmed", "assigned")
+        )
+        if any(
+            picking.state not in allowed_states
+            or picking.company_id != wave.company_id
+            or (wave.picking_type_id and picking.picking_type_id != wave.picking_type_id)
+            for picking in wave.picking_ids
+        ):
             return False
         return super()._is_potential_existing_wave_extra(wave)
