@@ -17,4 +17,9 @@ from . import test_picking_labels
 from . import test_inventory_adjustment_menu
 from . import test_change_locations
 from . import test_orderpoint_qty_to_order_update
+<<<<<<< 27f67f8b189d317745338540c76a296f87f926eb
 from . import test_template_free_qty
+||||||| b07c9e760335edcf4694f4a7a21514c9296a824c
+=======
+from . import test_product_is_storable_default
+>>>>>>> b0bebef280b4c464f9225d9b5a7f5237f429f546
