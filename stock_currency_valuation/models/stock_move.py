@@ -79,7 +79,7 @@ class StockMove(models.Model):
         adjustment = self.env["product.value"].sudo().search(domain, order="date desc, id desc", limit=1)
         return adjustment.value_in_currency if adjustment else None
 
-    def _set_value(self, correction_quantity=None):
+    def _set_value(self, recompute_date=None, skip_check=False):
         # AVCO en moneda secundaria ANTES de que super() dispare _update_standard_price.
         # Los OUT (con o sin picking) y los ajustes de entrada sin picking valúan
         # value_in_currency a este AVCO; capturamos el valor previo para que, si ese
@@ -90,7 +90,22 @@ class StockMove(models.Model):
             for move in self
             if move.with_company(move.company_id).valuation_currency_id
         }
-        super()._set_value(correction_quantity=correction_quantity)
+        # Same conditions as the core: those paths end in a replay, which values these
+        # moves through this method and _correct_inventory_valuation.
+        is_replay = (
+            not recompute_date
+            and not skip_check
+            and any(m.is_in and m.remaining_qty != m._get_valued_qty() for m in self)
+        ) or (recompute_date and any(m.remaining_qty != m._get_valued_qty() or m.is_out for m in self))
+        # The amounts in currency are not set yet: the cost in currency follows them below.
+        res = super(StockMove, self.with_context(skip_standard_price_in_currency=True))._set_value(
+            recompute_date=recompute_date, skip_check=skip_check
+        )
+        if not is_replay:
+            self._set_value_in_currency(std_price_in_currency_before)
+        return res
+
+    def _set_value_in_currency(self, std_price_in_currency_before):
         # Agrupado por compañía (no un set plano): el core recompute standard_price con
         # with_company(company) de cada move (ver stock_account._set_value), porque
         # self.env.company puede no coincidir con move.company_id (batch multi-compañía,
@@ -101,8 +116,12 @@ class StockMove(models.Model):
         # stock.group_stock_manager, pero este cómputo interno de valuación
         # corre para cualquier usuario que valide un move (p.ej. flujos de caja).
         landed_costs_by_move = self.sudo()._get_landed_cost()
+        # Same moves stock_account_ux leaves out of the revaluation on invoicing.
+        skip_migrated = self.env.context.get("skip_migrated_stock_revaluation")
 
         for move in self:
+            if skip_migrated and move.stock_valuation_migrated and (move.is_in or move.is_dropship):
+                continue
             if move.with_company(move.company_id).valuation_currency_id and move.value:
                 if move.is_dropship or move.is_in:
                     products_to_recompute_by_company[move.company_id.id].add(move.product_id.id)
@@ -123,25 +142,20 @@ class StockMove(models.Model):
                     move.value_in_currency = manual_value_in_currency
                     continue
 
-                # move.is_out es un campo stored que sólo se recomputa con state=='done',
-                # pero _set_value() de los OUT corre ANTES de que action_done marque ese
-                # estado (ver core: `moves_out = self.filtered(lambda m: m._is_out())`,
-                # usa el método, no el campo). Por eso acá también usamos el método.
-                if move._is_out() or not move.picking_id:
-                    # OUT (entregas, devoluciones a proveedor, etc.) y ajustes sin picking
-                    # (inventario, scrap, producción): se valúan siempre al AVCO en moneda
-                    # secundaria vigente (standard_price_in_currency previo a este move),
-                    # igual que el core los valúa al standard_price en moneda de compañía.
-                    # Esto preserva el promedio. Magnitud positiva, en línea con la
-                    # convención de signo de move.value.
+                std_price_in_currency = std_price_in_currency_before.get(move.product_id.id, 0)
+                if move._is_out():
+                    # OUT (entregas, devoluciones a proveedor, etc.): se valúan siempre al AVCO
+                    # en moneda secundaria vigente, igual que el core los valúa al standard_price
+                    # en moneda de compañía. Esto preserva el promedio. Negativo, como move.value.
                     # Nota: no se suma lc_value_in_currency acá — el core nunca incorpora
                     # landed costs a move.value en OUT (_get_value_from_extra sólo se usa
                     # para IN), así que sumarlo acá rompería la paridad y el invariante
                     # "OUT preserva el AVCO" (ver stock.landed.cost.picking_ids: un LC puede
                     # linkearse a un move OUT sin restricción de dirección).
-                    std_price_in_currency = std_price_in_currency_before.get(move.product_id.id, 0)
-                    base_value_in_currency = move._get_valued_qty() * std_price_in_currency
-                    move.value_in_currency = base_value_in_currency
+                    move.value_in_currency = -move._get_valued_qty() * std_price_in_currency
+                elif not move.picking_id:
+                    # Ajustes sin picking (inventario, scrap, producción): al AVCO vigente.
+                    move.value_in_currency = move._get_valued_qty() * std_price_in_currency
                 elif move.picking_id.currency_rate:
                     base_value_in_currency = base_value * move.picking_id.currency_rate
                     move.value_in_currency = base_value_in_currency + lc_value_in_currency
@@ -161,4 +175,6 @@ class StockMove(models.Model):
 
         # Recompute the standard price, con la compañía de cada move (no la ambiente)
         for company_id, product_ids in products_to_recompute_by_company.items():
-            self.env["product.product"].browse(product_ids).with_company(company_id)._update_standard_price()
+            self.env["product.product"].with_context(skip_standard_price_in_currency=False).browse(
+                product_ids
+            ).with_company(company_id)._update_standard_price()

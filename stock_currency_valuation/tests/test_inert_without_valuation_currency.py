@@ -26,8 +26,8 @@ class TestInertWithoutValuationCurrency(TestStockCurrencyValuationCommon):
 
     def test_secondary_twins_return_nothing(self):
         accounts_by_product = self.company._get_accounts_by_product()
-        self.assertFalse(self.company.stock_value_in_currency(accounts_by_product))
-        self.assertFalse(self.company.stock_accounting_value_in_currency(accounts_by_product))
+        self.assertFalse(self.company.get_inventory_value_in_currency(accounts_by_product))
+        self.assertFalse(self.company.get_inventory_accounting_value_in_currency(accounts_by_product))
 
     def test_closing_vals_are_not_annotated(self):
         """``_annotate_valuation_vals`` has to hand the vals back untouched: no
@@ -72,7 +72,7 @@ class TestInertWithoutValuationCurrency(TestStockCurrencyValuationCommon):
         """The ``_is_revaluation`` override must not change the base answer: an adjustment
         with no delta in company currency is not a revaluation when there is no secondary
         currency to look at."""
-        report = self.env["stock_account.stock.valuation.report"]
+        report = self.env["account.stock.valuation.report"]
         _picking, move = self._purchase_receipt(4, 25000.0, self.INVERSE_D1, self.DAY_1)
         self.env["product.value"].search([("move_id", "=", move.id)]).unlink()
         self.env["product.value"].create({"move_id": move.id, "value": move.value, "company_id": self.company.id})

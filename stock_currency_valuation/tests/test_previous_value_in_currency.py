@@ -30,7 +30,17 @@ class TestPreviousValueInCurrency(TestStockCurrencyValuationCommon):
         # The previous value comes off the previous adjustment, not off the product, which
         # by now already carries the new cost.
         self._assert_almost(second.previous_value_in_currency, 100.0)
-        self._assert_almost(second.delta_in_currency, 30.0)
+        self._assert_almost(second.delta_in_currency, 0.0)
+
+    def test_delta_in_currency_of_a_price_change_with_stock(self):
+        """Like the native ``adjustment``: cost variation by the quantity on hand."""
+        self._purchase_receipt(4, 25.0, self.INVERSE_D1, self.DAY_1)
+        product = self._product()
+        before = product.standard_price_in_currency
+        product.standard_price_in_currency = before + 3.0
+        adjustment = self._last_product_value([("product_id", "=", product.id), ("move_id", "=", False)])
+        self._assert_almost(adjustment.quantity, 4.0)
+        self._assert_almost(adjustment.delta_in_currency, 12.0)
 
     def test_previous_value_in_currency_of_a_move_adjustment(self):
         _picking, move = self._purchase_receipt(4, 25.0, self.INVERSE_D1, self.DAY_1)
@@ -57,4 +67,4 @@ class TestPreviousValueInCurrency(TestStockCurrencyValuationCommon):
         adjustment.invalidate_recordset(["delta_in_currency"])
 
         self._assert_almost(adjustment.previous_value_in_currency, 100.0)
-        self._assert_almost(adjustment.delta_in_currency, 30.0)
+        self._assert_almost(adjustment.delta_in_currency, 0.0)
