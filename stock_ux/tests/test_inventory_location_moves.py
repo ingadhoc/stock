@@ -77,6 +77,26 @@ class TestInventoryLocationMoves(TransactionCase):
         move.with_user(self.basic_user)._action_done()
         self.assertEqual(move.state, "done")
 
+    def test_user_without_adjustment_cannot_relocate_quants_to_inventory_location(self):
+        quant = self.env["stock.quant"].search(
+            [("product_id", "=", self.product.id), ("location_id", "=", self.stock_location.id)]
+        )
+        with self.assertRaises(UserError):
+            quant.with_user(self.basic_user).move_quants(self.inventory_location)
+        package = self.env["stock.package"].create({"name": "Inventory location package"})
+        quant.package_id = package
+        with self.assertRaises(UserError):
+            package.with_user(self.basic_user).write({"location_id": self.inventory_location.id})
+
+    def test_user_without_adjustment_moves_to_another_loss_location(self):
+        loss_location = self.env["stock.location"].create(
+            {"name": "Other loss", "usage": "inventory", "company_id": self.stock_location.company_id.id}
+        )
+        self.assertNotEqual(loss_location, self.inventory_location)
+        move = self._move(self.stock_location, loss_location)
+        move.with_user(self.basic_user)._action_done()
+        self.assertEqual(move.state, "done")
+
     def test_user_without_adjustment_delivers(self):
         move = self._move(self.stock_location, self.customer_location)
         move.with_user(self.basic_user)._action_done()
