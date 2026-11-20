@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 20.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-18 16:57+0000\n"
+"POT-Creation-Date: 2026-11-20 17:46+0000\n"
 "PO-Revision-Date: 2026-11-18 16:57+0000\n"
 "Last-Translator: Juan José Scarafía <scarafia.juanjose@gmail.com>, 2024\n"
 "Language-Team: Spanish (https://app.transifex.com/adhoc/teams/46451/es/)\n"
@@ -240,6 +240,22 @@ msgstr ""
 "cantidad que faltaba entregar no quedaba asociada a la línea y por eso "
 "figuraba como Cancelado. Al actualizar a Odoo 20 se recuperó esa cantidad y "
 "la línea pasa a En progreso."
+
+#. module: stock_request_ux
+#. odoo-python
+#: code:addons/stock_request_ux/models/stock_request.py:0
+msgid ""
+"This line was shown as Cancelled, but part of what was requested was "
+"delivered. In Odoo 19, when only part of a line was delivered, the quantity "
+"left to deliver was not linked to the line, so it showed as Cancelled. When "
+"updating to Odoo 20 that delivery was counted and, since the rest was "
+"cancelled, the line is now Done."
+msgstr ""
+"Esta línea figuraba como Cancelado, pero se entregó una parte de lo pedido. "
+"En Odoo 19, cuando solo se entregaba una parte de una línea, la cantidad que "
+"faltaba entregar no quedaba asociada a la línea y por eso figuraba como "
+"Cancelado. Al actualizar a Odoo 20 se contó esa entrega y, como el resto se "
+"canceló, la línea pasa a Hecho."
 
 #. module: stock_request_ux
 #: model:ir.model,name:stock_request_ux.model_stock_picking
