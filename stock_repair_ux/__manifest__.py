@@ -19,7 +19,7 @@
 ##############################################################################
 {
     "name": "Stock Repair UX",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.1.0",
     "category": "Warehouse Management",
     "summary": "Create a repair from any transfer of a repairable operation type",
     "author": "ADHOC SA",
@@ -28,7 +28,9 @@
     "depends": [
         "repair",
     ],
-    "data": [],
+    "data": [
+        "views/repair_order_views.xml",
+    ],
     "installable": True,
     "auto_install": True,
     "application": False,
