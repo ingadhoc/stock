@@ -30,7 +30,8 @@ class StockMove(models.Model):
         if layer.valuation_currency_id:
             for am_vals in am_vals_list:
                 for line_id in am_vals["line_ids"]:
-                    sign = -1 if line_id[2]["balance"] < 0 else 1
+                    # 0 for native exchange difference lines: the main lines carry the amount
+                    sign = self.company_id.currency_id.compare_amounts(line_id[2]["balance"], 0.0)
                     line_id[2].update(
                         {
                             "currency_id": layer.valuation_currency_id.id,

@@ -160,6 +160,28 @@ class TestCurrencyCostPaths(TransactionCase):
         layers = self.env["stock.valuation.layer"].search([("product_id", "=", product.id)])
         self.assertAlmostEqual(sum(layers.mapped("value_in_currency")), 46.0 * 6, places=2)
 
+    def test_vendor_bill_price_difference_entry_in_currency(self):
+        """El asiento de la diferencia de precio lleva en moneda lo mismo que la capa, sin duplicarlo."""
+        if not has_purchase_journal(self.env):
+            self.skipTest("La compañia no tiene diario de compras")
+        categ = self.categ.copy({"property_valuation": "real_time"})
+        if not categ.property_stock_valuation_account_id:
+            self.skipTest("La compañia no tiene cuenta de valuacion de stock")
+        if self.company.currency_id == self.env.ref("base.USD"):
+            self.skipTest("Con la compañia en USD no hay lineas de diferencia de cambio")
+        product = self._new_product("Producto facturado con otro precio en tiempo real", categ)
+        bill = bill_with_price_difference(self.env, product)
+
+        pdiff = bill.stock_valuation_layer_ids
+        self.assertEqual(len(pdiff), 1)
+        entry_lines = pdiff.account_move_id.line_ids
+        valuation_lines = entry_lines.filtered(
+            lambda line: line.account_id == categ.property_stock_valuation_account_id
+        )
+        self.assertTrue(valuation_lines)
+        self.assertAlmostEqual(sum(valuation_lines.mapped("amount_currency")), pdiff.value_in_currency, places=2)
+        self.assertAlmostEqual(sum(entry_lines.mapped("amount_currency")), 0.0, places=2)
+
     def test_purchase_with_discount(self):
         """La compra con descuento entra al costo en moneda con el descuento, igual que la capa."""
         product = self._new_product("Producto comprado con descuento")
