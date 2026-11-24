@@ -53,6 +53,7 @@
         "views/res_company_views.xml",
         "views/stock_quant_views.xml",
         "report/stock_picking_operations.xml",
+        "report/report_stockinventory.xml",
         "data/ir_cron.xml",
     ],
     "installable": True,
