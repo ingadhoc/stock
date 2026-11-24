@@ -29,6 +29,16 @@ This module drops that second condition: the operation type is the only switch,
 so every transfer of a repairable operation type offers the button. This is how
 Odoo 19 behaves natively.
 
+It also protects the customer of a repair order. In core, deleting a contact
+leaves empty the customer of the repairs that use it, and the field stays
+read-only when the repair has a sale order, so it cannot be fixed from the form.
+With this module:
+
+* a contact used in a repair order cannot be deleted, as already happens with
+  sale orders;
+* the customer of a repair order with a sale order can be edited while it is
+  empty.
+
 Installation
 ============
 
