@@ -154,6 +154,12 @@ class StockPicking(models.Model):
                         )
         return super().write(vals)
 
+    def _action_done(self):
+        self.move_line_ids.filtered(
+            lambda ml: ml.picked and ml.quantity and ml.state not in ("done", "cancel")
+        )._check_manual_lines_on_done()
+        return super()._action_done()
+
     def button_validate(self):
         """Valida que no se transfiera más de la demanda inicial."""
         for picking in self:

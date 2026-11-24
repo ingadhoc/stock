@@ -4,6 +4,7 @@
 ##############################################################################
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
+from odoo.tools.float_utils import float_compare
 
 
 class StockMoveLine(models.Model):
@@ -85,6 +86,38 @@ class StockMoveLine(models.Model):
             return
 
         raise ValidationError(_("You can't transfer more quantity than the quantity on stock!"))
+
+    def _check_manual_lines_on_done(self):
+        """Raising the quantity of an existing line skips _check_manual_lines (create only).
+        On done, Odoo would then take the missing stock from other reservations
+        (_free_reservation), so block it with the same strict availability check."""
+        if self.env.is_superuser():
+            return
+        Quant = self.env["stock.quant"]
+        invalid_lines = self.filtered(
+            lambda ml: ml.picking_id.picking_type_id.block_manual_lines
+            and not ml.move_id._should_bypass_reservation(ml.location_id)
+            and float_compare(
+                Quant._get_available_quantity(
+                    ml.product_id,
+                    ml.location_id,
+                    lot_id=ml.lot_id,
+                    package_id=ml.package_id,
+                    owner_id=ml.owner_id,
+                    strict=True,
+                    allow_negative=True,
+                ),
+                0,
+                precision_rounding=ml.product_id.uom_id.rounding,
+            )
+            < 0
+        )
+        if invalid_lines:
+            raise ValidationError(
+                _("You can't transfer more quantity than the quantity on stock!")
+                + "\n"
+                + ", ".join(invalid_lines.product_id.mapped("display_name"))
+            )
 
     def _check_quantity_available(self):
         self.ensure_one()
