@@ -39,6 +39,22 @@ class StockLandedCost(models.Model):
             else:
                 rec.valuation_currency_id = False
 
+    def get_valuation_lines(self):
+        """Take the original value in currency off the move, as the core takes ``former_cost``.
+
+        The move already holds its value in the secondary currency, valued at the rate of its
+        receipt (plus the landed costs validated before). Converting ``former_cost`` with the
+        rate of this landed cost instead would value the receipt again at another rate.
+        """
+        lines = super().get_valuation_lines()
+        moves = self.env["stock.move"].browse([vals["move_id"] for vals in lines])
+        for vals, move in zip(lines, moves, strict=True):
+            if move.with_company(self.company_id).valuation_currency_id:
+                vals["former_cost_in_currency"] = move.value_in_currency
+            else:
+                vals["former_cost_in_currency"] = vals["former_cost"]
+        return lines
+
 
 class StockValuationAdjustmentLines(models.Model):
     _inherit = "stock.valuation.adjustment.lines"
@@ -48,11 +64,12 @@ class StockValuationAdjustmentLines(models.Model):
         related="cost_id.valuation_currency_id",
         store=True,
     )
+    # Not computed: set by ``stock.landed.cost.get_valuation_lines`` from the move, like the
+    # core's ``former_cost``. Recomputing it later would read a move that already includes
+    # this landed cost.
     former_cost_in_currency = fields.Monetary(
         string="Original Value in Currency",
         currency_field="valuation_currency_id",
-        compute="_compute_amounts_in_currency",
-        store=True,
     )
     additional_landed_cost_in_currency = fields.Monetary(
         string="Additional Landed Cost in Currency",
@@ -91,7 +108,7 @@ class StockValuationAdjustmentLines(models.Model):
         return rate
 
     @api.depends(
-        "former_cost",
+        "former_cost_in_currency",
         "additional_landed_cost",
         "final_cost",
         "valuation_currency_id",
@@ -99,16 +116,16 @@ class StockValuationAdjustmentLines(models.Model):
         "cost_id.date",
     )
     def _compute_amounts_in_currency(self):
+        """Only the additional cost is converted, with the rate of the landed cost: the
+        original value is the move's own (see ``get_valuation_lines``)."""
         for line in self:
             if not line.valuation_currency_id or line.valuation_currency_id == line.currency_id:
-                line.former_cost_in_currency = line.former_cost
                 line.additional_landed_cost_in_currency = line.additional_landed_cost
                 line.final_cost_in_currency = line.final_cost
                 continue
             rate = line._get_currency_rate()
             rounding = line.valuation_currency_id.rounding
-            line.former_cost_in_currency = float_round(line.former_cost * rate, precision_rounding=rounding)
             line.additional_landed_cost_in_currency = float_round(
                 line.additional_landed_cost * rate, precision_rounding=rounding
             )
-            line.final_cost_in_currency = float_round(line.final_cost * rate, precision_rounding=rounding)
+            line.final_cost_in_currency = line.former_cost_in_currency + line.additional_landed_cost_in_currency
