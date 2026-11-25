@@ -79,6 +79,26 @@ class StockMove(models.Model):
         adjustment = self.env["product.value"].sudo().search(domain, order="date desc, id desc", limit=1)
         return adjustment.value_in_currency if adjustment else None
 
+    def _is_valued_from_foreign_quotation(self):
+        """Whether the core values this move from a purchase order in a foreign currency,
+        with no vendor bill yet.
+
+        Then the company currency value is the order amount converted at the rate of the
+        move date (see purchase_stock ``_get_value_from_quotation``), not at the rate of the
+        receipt. Applying the receipt rate to it would mix two rates: the value in currency
+        has to undo the same conversion instead, which gives back the order amount when the
+        order is in the valuation currency. Once the bill is posted, the value comes from it
+        and the receipt rate applies again.
+        """
+        self.ensure_one()
+        # purchase_stock is not a dependency of this module.
+        if "purchase_line_id" not in self._fields:
+            return False
+        order = self.purchase_line_id.order_id
+        if not order or order.currency_id == self.company_id.currency_id:
+            return False
+        return not self._get_value_from_account_move(self._get_valued_qty())["quantity"]
+
     def _set_value(self, correction_quantity=None):
         # AVCO en moneda secundaria ANTES de que super() dispare _update_standard_price.
         # Los OUT (con o sin picking) y los ajustes de entrada sin picking valúan
@@ -142,7 +162,7 @@ class StockMove(models.Model):
                     std_price_in_currency = std_price_in_currency_before.get(move.product_id.id, 0)
                     base_value_in_currency = move._get_valued_qty() * std_price_in_currency
                     move.value_in_currency = base_value_in_currency
-                elif move.picking_id.currency_rate:
+                elif move.picking_id.currency_rate and not move._is_valued_from_foreign_quotation():
                     base_value_in_currency = base_value * move.picking_id.currency_rate
                     move.value_in_currency = base_value_in_currency + lc_value_in_currency
                 else:
