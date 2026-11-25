@@ -1,4 +1,4 @@
-from odoo import fields
+from odoo import Command, fields
 from odoo.addons.stock_landed_costs.tests.test_stockvaluationlayer import TestStockValuationLCCommon
 from odoo.tests import Form, new_test_user, tagged
 
@@ -42,3 +42,33 @@ class TestLandedCostEntries(TestStockValuationLCCommon):
             self.env, "lc_entries_reader", groups="stock.group_stock_user,account.group_account_readonly"
         )
         self.assertEqual(set(move.with_user(reader).all_account_move_ids.ids), set(expected.ids))
+
+    def test_landed_cost_entry_not_in_periodic_move(self):
+        """On a receipt mixing perpetual and periodic products, the landed cost entry books
+        only the perpetual one, so only its move lists it."""
+        periodic_categ = self.stock_account_product_categ.copy({"property_valuation": "periodic"})
+        periodic_product = self.env["product.product"].create(
+            {"name": "periodic product", "is_storable": True, "categ_id": periodic_categ.id}
+        )
+        order = self.env["purchase.order"].create(
+            {
+                "partner_id": self.partner_a.id,
+                "order_line": [
+                    Command.create({"product_id": product.id, "product_qty": 2, "price_unit": 100})
+                    for product in self.product1 | periodic_product
+                ],
+            }
+        )
+        order.button_confirm()
+        receipt = order.picking_ids
+        receipt.move_ids.quantity = 2
+        receipt.button_validate()
+        perpetual_move = receipt.move_ids.filtered(lambda move: move.product_id == self.product1)
+        periodic_move = receipt.move_ids - perpetual_move
+
+        lc = self._make_lc(perpetual_move, 100)
+        self.assertTrue(lc.account_move_id)
+        receipt.move_ids.invalidate_recordset()
+
+        self.assertIn(lc.account_move_id, perpetual_move.all_account_move_ids)
+        self.assertNotIn(lc.account_move_id, periodic_move.all_account_move_ids)

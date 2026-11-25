@@ -37,7 +37,9 @@ Usage
 
 To use this module, you need to:
 
-#. Go to ...
+#. Validate a landed cost on a receipt whose products are valued perpetually.
+#. Go to Inventory > Reporting > Moves Analysis (or any stock moves list) and open the journal entries button of one of the receipt's moves.
+#. The list shows the landed cost entry next to the move's vendor bill and other entries. Moves of products valued periodically do not list it, since the entry books nothing for them.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
