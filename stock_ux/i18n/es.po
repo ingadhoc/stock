@@ -82,11 +82,6 @@ msgid "Advance Configuration"
 msgstr "Configuración Avanzada"
 
 #. module: stock_ux
-#: model:ir.model.fields,field_description:stock_ux.field_res_config_settings__delivery_slip_add_product_name
-msgid "Agregar el nombre del producto a la descripción de origen"
-msgstr ""
-
-#. module: stock_ux
 #: model:res.groups,name:stock_ux.allow_picking_cancellation
 msgid "Allow picking cancellation"
 msgstr "Permitir cancelar transferencias"
@@ -545,6 +540,11 @@ msgid "Import Template for Products"
 msgstr "Plantilla de importación de productos"
 
 #. module: stock_ux
+#: model:ir.model.fields,field_description:stock_ux.field_res_config_settings__delivery_slip_origin_only
+msgid "Imprimir solo la descripción de origen"
+msgstr ""
+
+#. module: stock_ux
 #: model:ir.model.fields,field_description:stock_ux.field_stock_warehouse__reception_steps
 msgid "Incoming Shipments"
 msgstr ""
@@ -886,6 +886,14 @@ msgid ""
 "producto, si marca esta opción en su lugar se utilizará la descripción de "
 "origen (la descripción de origen suele ser la descripción de venta o la "
 "descripción de la compra)"
+msgstr ""
+
+#. module: stock_ux
+#: model_terms:ir.ui.view,arch_db:stock_ux.res_config_settings_view_form
+msgid ""
+"Por defecto se imprime el producto con su código y, debajo, lo que la "
+"descripción de origen agrega al producto. Si marca esta opción, se imprime "
+"solo la descripción de origen."
 msgstr ""
 
 #. module: stock_ux
