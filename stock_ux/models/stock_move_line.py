@@ -174,38 +174,34 @@ class StockMoveLine(models.Model):
         """Con delivery_slip_use_origin mostramos la descripción de origen en vez de la de la
         operación, pisando solo lo necesario sobre el dict del super."""
         properties = super()._get_aggregated_properties(move_line=move_line, move=move)
-        use_origin = self.env["ir.config_parameter"].sudo().get_bool("stock_ux.delivery_slip_use_origin")
+        params = self.env["ir.config_parameter"].sudo()
+        use_origin = params.get_bool("stock_ux.delivery_slip_use_origin")
         picking = move_line.picking_id if move_line else (move.picking_id if move else False)
         move = move or move_line.move_id
         if not use_origin or not picking or not picking.origin or not move.origin_description:
             return properties
 
-        product = move.product_id
-        reference = product.display_name
         origin_description = move.origin_description
-
-        add_product_name = self.env["ir.config_parameter"].sudo().get_bool("stock_ux.delivery_slip_add_product_name")
-
-        # Clean the origin_description by removing product name prefix
-        clean_description = origin_description
-        if origin_description != reference:
-            if origin_description.startswith(reference):
-                clean_description = origin_description.removeprefix(reference).strip()
-            elif origin_description.startswith(product.name):
-                clean_description = origin_description.removeprefix(product.name).strip()
-
-        if add_product_name and clean_description and clean_description != origin_description:
-            name = f"{product.name} - {clean_description}"
+        if params.get_bool("stock_ux.delivery_slip_origin_only"):
+            # the first line goes as the name so the template keeps the line breaks of the rest
+            name, _sep, description = origin_description.partition("\n")
+            description = description.strip()
         else:
-            name = clean_description or origin_description
+            # product with its code, and below the part of the origin that does not repeat it
+            product = move.product_id
+            name = product.display_name
+            description = origin_description
+            if description.startswith(name):
+                description = description.removeprefix(name).strip()
+            elif description.startswith(product.name):
+                description = description.removeprefix(product.name).strip()
 
         properties.update(
             {
                 "name": name,
-                # el origen ya viaja en el nombre, no lo repetimos abajo
-                "description": "",
+                "description": description,
                 # sumamos el origen a la clave del super para no fusionar orígenes distintos
-                "line_key": f"{properties['line_key']}_{name}",
+                "line_key": f"{properties['line_key']}_{origin_description}",
             }
         )
         return properties
