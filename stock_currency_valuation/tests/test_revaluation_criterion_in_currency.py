@@ -16,7 +16,7 @@ class TestRevaluationCriterionInCurrency(TestStockCurrencyValuationCommon):
 
     def setUp(self):
         super().setUp()
-        self.report = self.env["stock_account.stock.valuation.report"]
+        self.report = self.env["account.stock.valuation.report"]
         _picking, self.move = self._purchase_receipt(4, 25.0, self.INVERSE_D1, self.DAY_1)
 
     def _is_revalued(self):
@@ -42,7 +42,7 @@ class TestRevaluationCriterionInCurrency(TestStockCurrencyValuationCommon):
         currency_before = self.move.value_in_currency
         adjustment = self._adjust(value_before, currency_before + 5.0)
 
-        self._assert_almost(adjustment.delta, 0.0)
+        self._assert_almost(adjustment.adjustment, 0.0)
         self._assert_almost(adjustment.delta_in_currency, 5.0)
         self.assertTrue(self._is_revalued())
 
@@ -55,6 +55,6 @@ class TestRevaluationCriterionInCurrency(TestStockCurrencyValuationCommon):
         """An adjustment that moved nothing in either currency moved nothing, full stop."""
         adjustment = self._adjust(self.move.value, self.move.value_in_currency)
 
-        self._assert_almost(adjustment.delta, 0.0)
+        self._assert_almost(adjustment.adjustment, 0.0)
         self._assert_almost(adjustment.delta_in_currency, 0.0)
         self.assertFalse(self._is_revalued())

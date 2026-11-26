@@ -15,3 +15,4 @@ from . import test_fifo_value_in_currency
 from . import test_wizard_amount_currency
 from . import test_closing_amount_currency
 from . import test_inert_without_valuation_currency
+from . import test_correction_in_currency

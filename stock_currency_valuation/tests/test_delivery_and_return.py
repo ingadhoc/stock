@@ -27,10 +27,10 @@ class TestDeliveryAndReturn(TestStockCurrencyValuationCommon):
         self._seed_two_receipts()
         picking, move = self._delivery(qty=5, date_str=self.DAY_2)
 
-        # Odoo 19: move.value es magnitud positiva (la dirección la da is_out).
-        self.assertAlmostEqual(move.value, 8550, places=2)
+        # Odoo 20: el valor de una salida es negativo, en las dos monedas.
+        self.assertAlmostEqual(move.value, -8550, places=2)
         # AVCO vigente: 5 × 1.508335 ≈ 7.54
-        self.assertAlmostEqual(move.value_in_currency, 7.54, places=2)
+        self.assertAlmostEqual(move.value_in_currency, -7.54, places=2)
 
         product = self._product()
         self.assertEqual(product.qty_available, 15)
@@ -50,7 +50,7 @@ class TestDeliveryAndReturn(TestStockCurrencyValuationCommon):
         _picking, move = self._delivery(qty=5, date_str=self.DAY_2)
         product = self._product()
 
-        self.assertAlmostEqual(move.value_in_currency, 5 * avg_before, places=2)
+        self.assertAlmostEqual(move.value_in_currency, -5 * avg_before, places=2)
         # OUT vía AVCO: total = 30.17 - 5 × avg_before ≈ 30.17 - 5 × 1.5085 ≈ 22.6275
         expected_total = 30.17 - 5 * avg_before
         self.assertAlmostEqual(product.total_value_in_currency, expected_total, places=2)

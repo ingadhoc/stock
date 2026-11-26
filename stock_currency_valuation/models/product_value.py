@@ -18,18 +18,18 @@ class ProductValue(models.Model):
         string="Delta in Currency",
         currency_field="valuation_currency_id",
         compute="_compute_delta_in_currency",
-        help="Variation this adjustment introduced in the secondary currency, in the SAME "
-        "unit as the Value in Currency field: the move total when the adjustment is on a "
-        "move, the unit price when it is a product or lot price change.",
+        help="Variation this adjustment introduced in the secondary currency: the move total "
+        "when the adjustment is on a move, cost variation by quantity when it is a product or "
+        "lot price change, like the native Adjustment.",
     )
 
-    @api.depends("value_in_currency", "previous_value_in_currency")
+    @api.depends("value_in_currency", "previous_value_in_currency", "quantity", "move_id")
     def _compute_delta_in_currency(self):
-        """Twin of ``delta`` in the secondary currency. Same reason for keeping a captured
-        ``previous_value_in_currency`` instead of deriving it: once the record is saved the
-        adjustment has already been applied, so there is nothing left to subtract from."""
+        """Twin of ``adjustment`` in the secondary currency. ``previous_value_in_currency`` is
+        captured because once the record is saved the adjustment has already been applied."""
         for product_value in self:
-            product_value.delta_in_currency = product_value.value_in_currency - product_value.previous_value_in_currency
+            delta = product_value.value_in_currency - product_value.previous_value_in_currency
+            product_value.delta_in_currency = delta if product_value.move_id else delta * product_value.quantity
 
     @api.depends("company_id", "move_id", "lot_id", "product_id")
     def _compute_valuation_currency_id(self):
@@ -109,14 +109,17 @@ class ProductValue(models.Model):
 
     @api.model
     def _get_previous_value_in_currency(self, vals):
-        """Secondary-currency twin of ``product.value._get_previous_value``.
-
-        For a price change it reads the amount off the RECORD that
-        ``_get_previous_product_value`` returns, which is what that seam exists for (task
-        58212): the company scope and the date bound of that search are not repeated here.
-        For an adjustment on a move the previous value is the move's own, as there is no
-        earlier adjustment to read it off.
-        """
+        """Amount in force before this adjustment: the move's own for an adjustment on a move,
+        the last recorded one for a price change."""
         if vals.get("move_id"):
             return self.env["stock.move"].browse(vals["move_id"]).value_in_currency
-        return self._get_previous_product_value(vals).value_in_currency
+        product = self.env["product.product"].browse(vals.get("product_id"))
+        lot = self.env["stock.lot"].browse(vals.get("lot_id"))
+        if lot:
+            product = lot.product_id
+        if not product:
+            return 0.0
+        company = self.env["res.company"].browse(vals.get("company_id")) or self.env.company
+        date = vals.get("date") or fields.Datetime.now()
+        last_values = product.with_company(company)._get_last_product_value(date, lot=lot)
+        return last_values[product].value_in_currency if product in last_values else 0.0

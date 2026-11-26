@@ -69,34 +69,41 @@ class StockMoveValuation(models.TransientModel):
             counterpart = valuation_account.account_stock_variation_id or self.company_id.expense_account_id
             if not counterpart:
                 continue
-            value = move._get_inventory_value_in_currency()
             key = self._get_balance_key(move, valuation_account, counterpart)
-            balances[key] += value if move.is_in else -value
+            balances[key] += move._get_inventory_value_in_currency()
+        for product_value in self.product_value_ids:
+            product = product_value._get_valuation_product()
+            if product.id not in accounts_by_product:
+                accounts_by_product[product.id] = product.with_company(self.company_id)._get_product_accounts()
+            valuation_account = accounts_by_product[product.id].get("stock_valuation")
+            if not valuation_account:
+                continue
+            counterpart = valuation_account.account_stock_variation_id or self.company_id.expense_account_id
+            if not counterpart:
+                continue
+            key = self._get_product_value_balance_key(product_value, valuation_account, counterpart)
+            balances[key] += product_value.delta_in_currency
         return balances
 
-    # def _get_aml_vals_for_key(self, key, balance):
-    #     """Add the secondary-currency amount to the journal items of this key.
-
-    #     ``_prepare_inventory_aml_vals`` swaps the legs when the balance is negative, so the
-    #     sign of each line is read off its own ``debit`` / ``credit`` instead of being
-    #     assumed: the valuation leg and its counterpart carry the amount with opposite
-    #     signs, exactly as ``balance`` and its mirror do, so the entry adds up to zero in
-    #     both currencies.
-    #     """
-    #     aml_vals = super()._get_aml_vals_for_key(key, balance)
-    #     currency = self._get_key_valuation_currency(key)
-    #     if not currency:
-    #         return aml_vals
-    #     balance_in_currency = self._get_balances_by_accounts_in_currency().get(key, 0.0)
-    #     if currency.is_zero(balance_in_currency):
-    #         return aml_vals
-    #     # The company-currency balance tells which leg is which: the line whose ``debit``
-    #     # matches its absolute value is the one carrying the same sign as ``balance``.
-    #     for vals in aml_vals:
-    #         same_sign_as_balance = bool(vals["debit"]) == (balance > 0)
-    #         vals["currency_id"] = currency.id
-    #         vals["amount_currency"] = balance_in_currency if same_sign_as_balance else -balance_in_currency
-    #     return aml_vals
+    def _get_aml_vals_for_key(self, key, balance):
+        """Add the secondary-currency amount to the journal items of this key: the
+        valuation line carries the balance in currency and the counterpart its opposite,
+        so the entry adds up to zero in both currencies."""
+        aml_vals = super()._get_aml_vals_for_key(key, balance)
+        currency = self._get_key_valuation_currency(key)
+        if not currency or currency == self.company_id.currency_id:
+            return aml_vals
+        balance_in_currency = self._get_balances_by_accounts_in_currency().get(key, 0.0)
+        if currency.is_zero(balance_in_currency):
+            return aml_vals
+        valuation_account = key[0]
+        for vals in aml_vals:
+            vals["currency_id"] = currency.id
+            if vals["account_id"] == valuation_account.id:
+                vals["amount_currency"] = balance_in_currency
+            else:
+                vals["amount_currency"] = -balance_in_currency
+        return aml_vals
 
     def _get_key_valuation_currency(self, key):
         """Valuation currency of a grouped balance, taken off its product — the third slot

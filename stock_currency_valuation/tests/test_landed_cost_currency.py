@@ -114,17 +114,17 @@ class TestLandedCostCurrency(TestStockCurrencyValuationCommon):
         self.assertAlmostEqual(avg_before, 1.00, places=2)
 
         delivery, move = self._delivery(qty=4, date_str=self.DAY_1)
-        expected_value_in_currency = 4 * avg_before
-        self.assertAlmostEqual(move.value, 4000, places=2)
+        expected_value_in_currency = -4 * avg_before
+        self.assertAlmostEqual(move.value, -4000, places=2)
         self.assertAlmostEqual(move.value_in_currency, expected_value_in_currency, places=2)
 
         # LC de 200 ARS sobre el picking de la entrega (rate Día 1 -> 0.20 USD si se sumara).
         self._landed_cost(picking=delivery, amount=200, inverse_rate=self.INVERSE_D1, date_str=self.DAY_1)
 
         # move.value en ARS no cambia (paridad con el core) y value_in_currency tampoco.
-        self.assertAlmostEqual(move.value, 4000, places=2)
+        self.assertAlmostEqual(move.value, -4000, places=2)
         self.assertAlmostEqual(move.value_in_currency, expected_value_in_currency, places=2)
 
         product = self._product()
-        self.assertAlmostEqual(product.total_value_in_currency, 10.00 - expected_value_in_currency, places=2)
+        self.assertAlmostEqual(product.total_value_in_currency, 10.00 + expected_value_in_currency, places=2)
         self.assertAlmostEqual(product.standard_price_in_currency, avg_before, places=2)

@@ -2,7 +2,7 @@ from odoo import models
 
 
 class StockValuationReport(models.AbstractModel):
-    _inherit = "stock_account.stock.valuation.report"
+    _inherit = "account.stock.valuation.report"
 
     def _is_revaluation(self, product_value):
         """Also count an adjustment that only moved the amount in the SECONDARY currency.

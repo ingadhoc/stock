@@ -1,6 +1,6 @@
 {
     "name": "Stock currency valuation",
-    "version": "19.0.1.2.0",
+    "version": "20.0.1.0.0",
     "category": "Warehouse Management",
     "sequence": 14,
     "summary": "Valuá el inventario en una segunda moneda (por ejemplo, dólares) además de la moneda de la compañía.",
@@ -27,7 +27,7 @@
     "demo": [
         "demo/stock_currency_valuation_demo.xml",
     ],
-    "installable": False,
+    "installable": True,
     "auto_install": False,
     "application": False,
     "assets": {},
