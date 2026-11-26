@@ -24,8 +24,13 @@ class TestDeliverySlipOriginDescription(TransactionCase):
                 "is_storable": True,
             }
         )
+        cls.picking_type = cls.env.ref("stock.picking_type_out")
+        cls.stock_location = cls.env.ref("stock.stock_location_stock")
+        cls.customer_location = cls.env.ref("stock.stock_location_customers")
 
     def _get_properties(self, line_name):
+        # the transfer is built by hand: sale exception rules of other modules can stop
+        # action_confirm, and then no delivery would be created
         order = self.env["sale.order"].create(
             {
                 "partner_id": self.partner.id,
@@ -42,10 +47,35 @@ class TestDeliverySlipOriginDescription(TransactionCase):
                 ],
             }
         )
-        order.action_confirm()
-        move = order.picking_ids.move_ids
-        move.quantity = 1
-        move_line = move.move_line_ids
+        picking = self.env["stock.picking"].create(
+            {
+                "picking_type_id": self.picking_type.id,
+                "partner_id": self.partner.id,
+                "origin": order.name,
+                "location_id": self.stock_location.id,
+                "location_dest_id": self.customer_location.id,
+            }
+        )
+        move = self.env["stock.move"].create(
+            {
+                "picking_id": picking.id,
+                "product_id": self.product.id,
+                "product_uom_qty": 1,
+                "sale_line_id": order.order_line.id,
+                "location_id": self.stock_location.id,
+                "location_dest_id": self.customer_location.id,
+            }
+        )
+        move_line = self.env["stock.move.line"].create(
+            {
+                "move_id": move.id,
+                "picking_id": picking.id,
+                "product_id": self.product.id,
+                "quantity": 1,
+                "location_id": self.stock_location.id,
+                "location_dest_id": self.customer_location.id,
+            }
+        )
         return move_line._get_aggregated_properties(move_line=move_line)
 
     def test_line_with_note_keeps_the_product(self):
