@@ -1,5 +1,9 @@
 from odoo import fields
-from odoo.addons.stock_currency_valuation.tests.common import bill_with_price_difference, has_purchase_journal
+from odoo.addons.stock_currency_valuation.tests.common import (
+    bill_with_price_difference,
+    has_purchase_journal,
+    receive_purchase,
+)
 from odoo.exceptions import UserError
 from odoo.tests.common import TransactionCase, tagged
 from odoo.tools import mute_logger
@@ -258,6 +262,86 @@ class TestLayerRecompute(TransactionCase):
         # (46 - 52.02) x 6, not (46 - 60) x 6 against the wrong receipt
         self.assertAlmostEqual(pdiff_line.new_value_in_currency, -36.12, places=2)
         self.assertAlmostEqual(recompute.final_amount_in_currency, 46.0, places=2)
+
+    def test_price_difference_stores_the_quantity_it_corrected(self):
+        """The bill stores on its price difference the quantity on hand it corrected."""
+        if not has_purchase_journal(self.env):
+            self.skipTest("La compañia no tiene diario de compras")
+        product = self._make_product("Producto con cantidad corregida guardada")
+        pdiff = bill_with_price_difference(self.env, product).stock_valuation_layer_ids
+        self.assertEqual(pdiff.pdiff_quantity, 6.0)
+
+    def test_old_price_difference_is_guessed_once_and_kept(self):
+        """An old price difference guesses its quantity once; the next run reads it even if the receipt changed."""
+        if not has_purchase_journal(self.env):
+            self.skipTest("La compañia no tiene diario de compras")
+        product = self._make_product("Producto con diferencia anterior al campo")
+        pdiff = bill_with_price_difference(self.env, product).stock_valuation_layer_ids
+        receipt = pdiff.stock_valuation_layer_id
+        # created before the field existed, and badly valued in currency
+        pdiff.pdiff_quantity = 0.0
+        pdiff.value_in_currency = 36.40
+
+        recompute = self.env["stock.valuation.layer.recompute"].create(
+            {"company_id": self.env.company.id, "product_id": product.id}
+        )
+        recompute.action_compute_lines()
+        recompute.action_manual_slv_revaluation()
+        self.assertEqual(pdiff.pdiff_quantity, 6.0)
+        self.assertAlmostEqual(pdiff.value_in_currency, -36.12, places=2)
+
+        # a later rewrite of the receipt would change a guessed quantity
+        receipt.value = receipt.value * 0.9
+        again = self.env["stock.valuation.layer.recompute"].create(
+            {"company_id": self.env.company.id, "product_id": product.id}
+        )
+        again.action_compute_lines()
+        pdiff_line = again.line_ids.filtered(lambda x: x.layer_id == pdiff)
+        self.assertAlmostEqual(pdiff_line.new_value_in_currency, -36.12, places=2)
+        self.assertFalse(pdiff_line.need_changes)
+
+    def test_small_unit_difference_is_rounded_on_the_total(self):
+        """A unit difference below a cent over many units keeps its value, as on creation."""
+        self._use_ars_company()
+        product = self._make_product("Producto con diferencia chica por unidad")
+        order = receive_purchase(self.env, product, 1000.0, 52.02, self.env.ref("base.USD"))
+        order.action_create_invoice()
+        bill = order.invoice_ids
+        bill.invoice_date = fields.Date.today()
+        # 52.03 with 0.01% off: 52.024797 per unit, 0.004797 above the receipt
+        bill.invoice_line_ids.write({"price_unit": 52.03, "discount": 0.01, "tax_ids": [(5,)]})
+        bill.action_post()
+        pdiff = bill.stock_valuation_layer_ids
+        self.assertTrue(pdiff, "The bill must create a price difference")
+        self.assertAlmostEqual(pdiff.value_in_currency, 4.80, places=2)
+
+        recompute = self.env["stock.valuation.layer.recompute"].create(
+            {"company_id": self.env.company.id, "product_id": product.id}
+        )
+        recompute.action_compute_lines()
+        pdiff_line = recompute.line_ids.filtered(lambda x: x.layer_id == pdiff)
+        self.assertAlmostEqual(pdiff_line.new_value_in_currency, 4.80, places=2)
+        self.assertFalse(pdiff_line.need_changes)
+
+    def _use_ars_company(self):
+        """Switch to a new company in ARS with 1 USD = 1000 ARS, as customers value in USD."""
+        ars = self.env.ref("base.ARS")
+        ars.active = True
+        company = self.env["res.company"].create({"name": "Compañía en ARS"})
+        self.env.user.company_ids |= company
+        self.env = self.env(context=dict(self.env.context, allowed_company_ids=[company.id]))
+        self.env["account.chart.template"].try_loading("generic_coa", company)
+        # the generic chart leaves the company in USD
+        company.write({"country_id": self.env.ref("base.ar").id, "currency_id": ars.id})
+        self.env["stock.warehouse"].create({"name": "Depósito ARS", "code": "WARS", "company_id": company.id})
+        self.env["res.currency.rate"].create(
+            {
+                "currency_id": self.env.ref("base.USD").id,
+                "company_id": company.id,
+                "name": fields.Date.today(),
+                "rate": 0.001,
+            }
+        )
 
     def _close_period_up_to(self, lock_date):
         """Cierra el ejercicio hasta esa fecha, escribiendo el campo directo.

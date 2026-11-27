@@ -3,6 +3,7 @@ import time
 
 from odoo import Command, _, api, fields, models
 from odoo.exceptions import UserError
+from odoo.tools import float_round
 
 _logger = logging.getLogger(__name__)
 
@@ -144,8 +145,25 @@ class StockValuationLayerRecompute(models.Model):
             rate_type,
         ]
 
-    def _get_pdiff_value_in_currency(self, svl, lines):
-        """Value in currency of an existing price difference, rebuilt from its bill line and parent layer."""
+    def _get_pdiff_quantity(self, svl):
+        """Quantity a vendor bill corrected; guessed from company values for layers created before it was stored."""
+        if svl.pdiff_quantity:
+            return svl.pdiff_quantity
+        aml = svl.account_move_line_id
+        parent = svl.stock_valuation_layer_id
+        if not aml.currency_rate:
+            return 0.0
+        unit_difference = parent._get_bill_unit_price(aml) / aml.currency_rate - parent.value / parent.quantity
+        if self.currency_id.is_zero(unit_difference):
+            return 0.0
+        return float_round(svl.value / unit_difference, precision_rounding=parent.product_id.uom_id.rounding)
+
+    def _get_pdiff_value_in_currency(self, svl, new_values_in_currency):
+        """Value in currency of an existing price difference and the quantity it corrected.
+
+        Rebuilt from its bill line and parent layer. The parent may already be corrected in this
+        same run, so the bill is measured against its new value.
+        """
         aml = svl.account_move_line_id
         parent = svl.stock_valuation_layer_id.with_company(svl.company_id)
         if (
@@ -153,21 +171,12 @@ class StockValuationLayerRecompute(models.Model):
             or not parent.quantity
             or aml.currency_id != parent.valuation_currency_id
         ):
-            return svl.value_in_currency
-        # the parent may already be corrected in this same run: measure the bill against its new value
-        parent_value_in_currency = next(
-            (vals["new_value_in_currency"] for _cmd, _id, vals in lines if vals and vals["layer_id"] == parent.id),
-            parent.value_in_currency,
-        )
-        unit_cost = parent_value_in_currency / parent.quantity
-        bill_unit = parent._get_bill_unit_price(aml)
-        if parent.valuation_currency_id.is_zero(bill_unit - unit_cost):
-            return 0.0
-        # on-hand quantity the bill corrected, derived from the value stock_account gave the layer
-        unit_difference = (bill_unit / aml.currency_rate if aml.currency_rate else 0.0) - parent.value / parent.quantity
-        if self.currency_id.is_zero(unit_difference):
-            return svl.value_in_currency
-        return parent._get_pdiff_value_in_currency(aml, svl.value / unit_difference, unit_cost)
+            return svl.value_in_currency, 0.0
+        quantity = self._get_pdiff_quantity(svl)
+        if not quantity:
+            return svl.value_in_currency, 0.0
+        unit_cost = new_values_in_currency.get(parent.id, parent.value_in_currency) / parent.quantity
+        return parent._get_pdiff_value_in_currency(aml, quantity, unit_cost), quantity
 
     def _get_standard_price(self, new_value, standard_price, quantity_at_time, quantity):
         if not quantity_at_time:
@@ -238,11 +247,13 @@ class StockValuationLayerRecompute(models.Model):
         standard_price_in_currency = 0
         standard_price = 0
         description = ""
+        new_values_in_currency = {}
 
         self.initial_amount_in_currency = self.product_id.with_company(self.company_id.id).standard_price_in_currency
         self.initial_amount = self.product_id.with_company(self.company_id.id).standard_price
         for svl_id in svl_ids:
             svl_type = ""
+            pdiff_quantity = 0.0
             vals = {
                 "layer_id": svl_id.id,
                 "layer_unit_cost": svl_id.unit_cost,
@@ -309,12 +320,12 @@ class StockValuationLayerRecompute(models.Model):
                 is_price_difference = svl_id._is_price_difference()
                 new_value = svl_id.value
                 new_unit_cost = svl_id.unit_cost
+                new_value_in_currency = svl_id.value_in_currency
                 # vendor bill price differences are rebuilt from the bill
-                new_value_in_currency = (
-                    self._get_pdiff_value_in_currency(svl_id, lines)
-                    if is_price_difference
-                    else svl_id.value_in_currency
-                )
+                if is_price_difference:
+                    new_value_in_currency, pdiff_quantity = self._get_pdiff_value_in_currency(
+                        svl_id, new_values_in_currency
+                    )
                 new_unit_cost_in_currency = svl_id.unit_cost_in_currency
                 standard_price_in_currency = self._get_standard_price(
                     new_value_in_currency, standard_price_in_currency, quantity_at_time, svl_id.quantity
@@ -436,6 +447,8 @@ class StockValuationLayerRecompute(models.Model):
             vals["standard_price"] = standard_price
 
             vals["new_value_in_currency"] = new_value_in_currency
+            vals["pdiff_quantity"] = pdiff_quantity
+            new_values_in_currency[svl_id.id] = new_value_in_currency
             vals["new_unit_cost_in_currency"] = new_unit_cost_in_currency
             vals["standard_price_in_currency"] = standard_price_in_currency
             vals["quantity_at_time"] = quantity_at_time
@@ -534,6 +547,10 @@ class StockValuationLayerRecompute(models.Model):
         if product_id.standard_price != self.final_amount:
             product_id.with_context(disable_auto_svl=True).sudo().write({"standard_price": self.final_amount})
             self.amount_changed = True
+
+        # also price differences without changes: the next run must not guess again after the receipt is rewritten
+        for line_id in self.line_ids.filtered(lambda line: line.pdiff_quantity and not line.layer_id.pdiff_quantity):
+            line_id.layer_id.pdiff_quantity = line_id.pdiff_quantity
 
         self.slv_changed = slv_changed
         for to_reconciled_lines in to_reconciled_line_ids:
@@ -644,3 +661,4 @@ class StockValuationLayerRecomputeLine(models.Model):
     standard_price_in_currency = fields.Monetary()
     need_changes = fields.Boolean()
     svl_type = fields.Char()
+    pdiff_quantity = fields.Float(digits="Product Unit of Measure")
