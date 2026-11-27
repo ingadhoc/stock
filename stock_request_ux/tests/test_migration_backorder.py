@@ -112,6 +112,32 @@ class TestMigrationBackorder(TransactionCase):
         self.assertEqual(request.state, "done")
         self.assertEqual(request.qty_done, 5)
 
+    def test_backorder_chain_linked(self):
+        request = self._request(self.product, 5)
+        picking = request.picking_ids
+        backorder = self._receive_part(picking, 2)
+        self._break_like_before(request, picking, backorder)
+        # With the patch the backorder of the backorder had no allocation either
+        backorder_2 = self._receive_part(backorder, 1)
+        self.assertFalse(backorder_2.move_ids.allocation_ids)
+        self.env.flush_all()
+
+        self.migration.migrate(self.env.cr, "19.0.1.1.1")
+
+        allocs = (picking | backorder | backorder_2).move_ids.allocation_ids
+        self.assertEqual(allocs.stock_request_id, request)
+        self.assertEqual(
+            [(a.requested_product_uom_qty, a.allocated_product_qty) for a in allocs.sorted("stock_move_id")],
+            [(2, 2), (1, 1), (2, 0)],
+        )
+        self.assertEqual(request.state, "open")
+        self.assertEqual((request.qty_done, request.qty_in_progress, request.qty_cancelled), (3, 2, 0))
+
+        backorder_2.move_ids.write({"quantity": 2, "picked": True})
+        backorder_2.button_validate()
+        self.assertEqual(request.state, "done")
+        self.assertEqual(request.qty_done, 5)
+
     def test_same_product_twice_left_alone(self):
         request = self._request(self.product, 5)
         request.copy({"order_id": request.order_id.id})
@@ -147,3 +173,28 @@ class TestMigrationBackorder(TransactionCase):
         self.migration.migrate(self.env.cr, "19.0.1.1.1")
 
         self.assertEqual(alloc.requested_product_uom_qty, 96)
+
+    def test_kit_state_left_to_stock_request_mrp(self):
+        if "bom_line_id" not in self.env["stock.move"]._fields:
+            self.skipTest("mrp is not installed")
+        self.env["ir.module.module"].search([("name", "=", "stock_request_mrp")]).state = "uninstalled"
+        can = self.env["product.product"].create({"name": "Can", "type": "consu", "is_storable": True})
+        pack = self.env["product.product"].create({"name": "Pack of 12", "type": "consu", "is_storable": True})
+        self.env["stock.quant"]._update_available_quantity(can, self.source_loc, 500)
+        self.env["mrp.bom"].create(
+            {
+                "product_tmpl_id": pack.product_tmpl_id.id,
+                "type": "phantom",
+                "product_qty": 1.0,
+                "bom_line_ids": [Command.create({"product_id": can.id, "product_qty": 12})],
+            }
+        )
+        request = self._request(pack, 8)
+        request.allocation_ids.requested_product_uom_qty = 8
+        request.action_done()
+        self.env.flush_all()
+
+        self.migration.migrate(self.env.cr, "19.0.1.1.1")
+
+        self.assertEqual(request.allocation_ids.requested_product_uom_qty, 96)
+        self.assertEqual(request.state, "done")

@@ -61,69 +61,88 @@ def link_backorder_moves(env):
 
     Up to now stock_request_ux did not let the split copy the allocations, so the move that waits
     for the rest of a partial receipt was not part of its request. It takes what was still open on
-    the allocation of its source move, which keeps only what it received. A move is left alone when
-    its source move belongs to more than one request, or when the order asks for the same product
-    twice: there it is not clear which line it belongs to.
+    the allocation of its source move, which keeps only what it received. A move already received
+    takes all that was open and keeps as allocated what it moved, so its own backorder takes the
+    rest in the next pass: a chain of backorders is linked one link per pass. A move is left alone
+    when its source move belongs to more than one request, or when the order asks for the same
+    product twice: there it is not clear which line it belongs to.
     """
-    moves = env["stock.move"].search(
-        [
-            ("picking_id.backorder_id", "!=", False),
-            ("allocation_ids", "=", False),
-            ("state", "!=", "cancel"),
-            ("origin_returned_move_id", "=", False),
-            ("picking_id.backorder_id.move_ids.allocation_ids", "!=", False),
-        ]
-    )
+    domain = [
+        ("picking_id.backorder_id", "!=", False),
+        ("allocation_ids", "=", False),
+        ("state", "!=", "cancel"),
+        ("origin_returned_move_id", "=", False),
+        ("picking_id.backorder_id.move_ids.allocation_ids", "!=", False),
+    ]
     requests = env["stock.request"]
-    left = 0
-    for move in moves:
-        sources = move.picking_id.backorder_id.move_ids.filtered(
-            lambda m, mv=move: m.product_id == mv.product_id
-            and m.allocation_ids
-            and m.state == "done"
-            and ("bom_line_id" not in m._fields or m.bom_line_id == mv.bom_line_id)
-        )
-        source_allocs = sources.allocation_ids
-        request = source_allocs.stock_request_id
-        if len(sources) != 1 or len(request) != 1:
-            left += 1
-            continue
-        if request.order_id and env["stock.request"].search_count(
-            [
-                ("order_id", "=", request.order_id.id),
-                ("product_id", "=", request.product_id.id),
-                ("id", "!=", request.id),
-            ]
-        ):
-            left += 1
-            continue
-        product_uom = move.product_id.uom_id
-        open_qty = source_allocs.requested_product_qty - source_allocs.allocated_product_qty
-        qty = min(move.product_qty, open_qty)
-        if float_compare(qty, 0.0, precision_rounding=product_uom.rounding) <= 0:
-            left += 1
-            continue
-        env["stock.request.allocation"].create(
-            {
-                "stock_request_id": request.id,
-                "stock_move_id": move.id,
-                "requested_product_uom_qty": product_uom._compute_quantity(qty, request.product_uom_id, round=False),
-            }
-        )
-        source_allocs.requested_product_uom_qty = product_uom._compute_quantity(
-            source_allocs.requested_product_qty - qty, source_allocs.product_uom_id, round=False
-        )
-        requests |= request
+    seen = env["stock.move"]
+    left = env["stock.move"]
+    while True:
+        moves = env["stock.move"].search(domain + [("id", "not in", seen.ids)], order="id")
+        if not moves:
+            break
+        seen |= moves
+        for move in moves:
+            sources = move.picking_id.backorder_id.move_ids.filtered(
+                lambda m, mv=move: m.product_id == mv.product_id
+                and m.allocation_ids
+                and m.state == "done"
+                and ("bom_line_id" not in m._fields or m.bom_line_id == mv.bom_line_id)
+            )
+            source_allocs = sources.allocation_ids
+            request = source_allocs.stock_request_id
+            if len(sources) != 1 or len(request) != 1:
+                left |= move
+                continue
+            if request.order_id and env["stock.request"].search_count(
+                [
+                    ("order_id", "=", request.order_id.id),
+                    ("product_id", "=", request.product_id.id),
+                    ("id", "!=", request.id),
+                ]
+            ):
+                left |= move
+                continue
+            product_uom = move.product_id.uom_id
+            open_qty = source_allocs.requested_product_qty - source_allocs.allocated_product_qty
+            done = move.state == "done"
+            qty = open_qty if done else min(move.product_qty, open_qty)
+            if float_compare(qty, 0.0, precision_rounding=product_uom.rounding) <= 0:
+                left |= move
+                continue
+            env["stock.request.allocation"].create(
+                {
+                    "stock_request_id": request.id,
+                    "stock_move_id": move.id,
+                    "requested_product_uom_qty": product_uom._compute_quantity(
+                        qty, request.product_uom_id, round=False
+                    ),
+                    "allocated_product_qty": min(qty, move.product_qty) if done else 0.0,
+                }
+            )
+            source_allocs.requested_product_uom_qty = product_uom._compute_quantity(
+                source_allocs.requested_product_qty - qty, source_allocs.product_uom_id, round=False
+            )
+            requests |= request
+        env.flush_all()
     _logger.info(
         "Linked the backorder moves of %s stock requests; %s moves were left without allocation",
         len(requests),
-        left,
+        len(left),
     )
     return requests
 
 
-def settle_states(requests):
-    """A request closed because of a missing allocation follows its quantities again."""
+def settle_states(env, requests):
+    """A request closed because of a missing allocation follows its quantities again.
+
+    Without stock_request_mrp a request of a kit counts the units of its components, so its state
+    is left to the install of that module, which settles the requests of kits.
+    """
+    if not env["ir.module.module"].search_count([("name", "=", "stock_request_mrp"), ("state", "=", "installed")]):
+        requests = requests.filtered(
+            lambda r: not r.product_id.product_tmpl_id.bom_ids.filtered(lambda b: b.type == "phantom")
+        )
     precision = requests.env["decimal.precision"].precision_get("Product Unit")
     closed = requests.filtered(lambda r: r.state in ("done", "cancel"))
     reopened = closed.filtered(lambda r: float_compare(r.qty_in_progress, 0, precision_digits=precision) > 0)
@@ -138,4 +157,4 @@ def migrate(cr, version):
     env.flush_all()
     requests |= link_backorder_moves(env)
     env.flush_all()
-    settle_states(requests)
+    settle_states(env, requests)
