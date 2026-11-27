@@ -19,7 +19,13 @@
 ##############################################################################
 {
     "name": "Stock Usability with Batch Picking",
+<<<<<<< 8883923bbd1c6ec51e71a38828f621eb08fc4eb1
     "version": "20.0.1.0.0",
+||||||| ea63eb8c960ec58aaf4ee2d68a2fcec0bc5854e8
+    "version": "19.0.1.5.0",
+=======
+    "version": "19.0.1.6.0",
+>>>>>>> a93b0c07f109c1a96d7a83b13b46d103db3dbec5
     "category": "Warehouse Management",
     "sequence": 14,
     "summary": "",
