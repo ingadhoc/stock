@@ -4,3 +4,4 @@
 ##############################################################################
 from . import test_reassign_once
 from . import test_partial_receipt
+from . import test_migration_backorder
