@@ -19,3 +19,4 @@ from . import test_change_locations
 from . import test_orderpoint_qty_to_order_update
 from . import test_template_free_qty
 from . import test_inventory_location_moves
+from . import test_product_is_storable_default
