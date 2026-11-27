@@ -63,3 +63,15 @@ class TestOutgoingAndReturns(CurrencyValuationCommon):
             order = self._purchase([(product, 10, 100.0)], self.usd)
             # the receipt enters at 1000 and the 5 sold are revalued from 80 to 100
             self._check_step(product, lambda: self._receive(order), 900.0, 100.0)
+
+    def test_return_of_a_purchase_return(self):
+        """Returning goods sent back to the vendor brings them in at the USD cost they left with."""
+        product = self._new_product("Producto devuelto dos veces")
+        order = self._purchase([(product, 10, 100.0)], self.usd)
+        receipt = self._receive(order, rate=PICKING_RATE)
+        returned = self.env["stock.picking"]
+
+        with self.subTest("devolucion de 4 al proveedor"):
+            returned = self._check_step(product, lambda: self._return(receipt, 4), -400.0, 100.0)
+        with self.subTest("devolucion de esa devolucion"):
+            self._check_step(product, lambda: self._return(returned, 4), 400.0, 100.0)

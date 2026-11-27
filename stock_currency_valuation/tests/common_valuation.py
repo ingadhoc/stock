@@ -264,18 +264,20 @@ class CurrencyValuationCommon(ValuationReconciliationTestCommon):
         ).action_validate_revaluation()
         return self._layers(product).sorted("id")[-1]
 
-    def _layers(self, product):
+    def _layers(self, product, company=None):
         return self.env["stock.valuation.layer"].search(
-            [("product_id", "=", product.id), ("company_id", "=", self.company.id)]
+            [("product_id", "=", product.id), ("company_id", "=", (company or self.company).id)]
         )
 
     # ------------------------------------------------------------ controls
 
-    def assert_currency_valuation(self, products):
+    def assert_currency_valuation(self, products, company=None):
         """The three controls of the module, valid after any stock operation."""
+        company = company or self.company
         for product in products:
-            product = product.with_company(self.company)
-            layers = self._layers(product)
+            product = product.with_company(company)
+            valuation_account = product.categ_id.property_stock_valuation_account_id
+            layers = self._layers(product, company)
             # each layer rounds its USD value to the cent
             delta = 0.01 * max(len(layers), 1)
             layers_usd = sum(layers.mapped("value_in_currency"))
@@ -293,7 +295,7 @@ class CurrencyValuationCommon(ValuationReconciliationTestCommon):
             valuation_lines = self.env["account.move.line"].search(
                 [
                     ("product_id", "=", product.id),
-                    ("account_id", "=", self.valuation_account.id),
+                    ("account_id", "=", valuation_account.id),
                     ("parent_state", "=", "posted"),
                 ]
             )

@@ -86,3 +86,25 @@ class TestPurchaseReceipt(CurrencyValuationCommon):
         # (10 x 100 + 5 x 100 + 5 x 120) / 20
         self.assertAlmostEqual(product.standard_price_in_currency, 105.0, places=2)
         self.assert_currency_valuation(product)
+
+    def test_receipts_validated_together(self):
+        """Two receipts validated at once, one with a manual rate and one without, enter each at its own USD price."""
+        product = self._new_product("Producto recibido en lote")
+        order_manual = self._purchase([(product, 10, 100.0)], self.usd)
+        order_auto = self._purchase([(product, 10, 120.0)], self.usd)
+        order_manual.picking_ids.inverse_currency_rate = PICKING_RATE
+        pickings = order_manual.picking_ids | order_auto.picking_ids
+        for move in pickings.move_ids:
+            move.quantity = move.product_uom_qty
+        pickings.move_ids.picked = True
+        pickings.with_context(skip_backorder=True).button_validate()
+
+        self.assertAlmostEqual(
+            order_manual.picking_ids.move_ids.stock_valuation_layer_ids.value_in_currency, 1000.0, places=2
+        )
+        self.assertAlmostEqual(
+            order_auto.picking_ids.move_ids.stock_valuation_layer_ids.value_in_currency, 1200.0, places=2
+        )
+        # (10 x 100 + 10 x 120) / 20
+        self.assertAlmostEqual(product.standard_price_in_currency, 110.0, places=2)
+        self.assert_currency_valuation(product)
