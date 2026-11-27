@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Count sheet: when the expected quantity may be shown (the "Show expected
+         quantity" option of the count request), print it as in 18.0, with the
+         available and on hand quantities apart and a blank column to write the
+         count in. With the option off, the blind sheet of core stays as is. -->
+    <template id="report_inventory" inherit_id="stock.report_inventory">
+        <xpath expr="//t[@t-set='locations']" position="after">
+            <t t-set="show_expected_qty" t-value="docs.env['ir.config_parameter'].sudo().get_param('stock.show_expected_quantity_count', default='False') == 'True'"/>
+        </xpath>
+        <xpath expr="//thead/tr/th[last()]" position="replace">
+            <th t-if="show_expected_qty" class="text-end">Available Quantity</th>
+            <th class="text-end">
+                <t t-if="show_expected_qty">On Hand Quantity</t>
+                <t t-else="">Quantity</t>
+            </th>
+            <th t-if="show_expected_qty" class="text-end">Counted Quantity</th>
+        </xpath>
+        <xpath expr="//tbody//tr[@groups='stock.group_stock_multi_locations']/td[last()]" position="after">
+            <td t-if="show_expected_qty"/>
+            <td t-if="show_expected_qty"/>
+        </xpath>
+        <xpath expr="//td[hasclass('o_td_quantity')]" position="before">
+            <td t-if="show_expected_qty" class="o_td_available_quantity text-end">
+                <span t-field="line.available_quantity" class="text-nowrap">5</span>
+                <span t-field="line.product_uom_id" groups="uom.group_uom">Units</span>
+            </td>
+        </xpath>
+        <xpath expr="//td[hasclass('o_td_quantity')]" position="after">
+            <td t-if="show_expected_qty" class="o_td_counted_quantity text-end">
+                <t t-if="line.inventory_quantity_set">
+                    <span t-field="line.inventory_quantity" class="text-nowrap">7</span>
+                    <span t-field="line.product_uom_id" groups="uom.group_uom">Units</span>
+                </t>
+            </td>
+        </xpath>
+    </template>
+</odoo>
