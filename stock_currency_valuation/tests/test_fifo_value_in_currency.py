@@ -45,3 +45,75 @@ class TestFifoValueInCurrency(TestStockCurrencyValuationCommon):
             places=2,
             msg="The secondary value is the company-currency amount copied verbatim: rate 1 was applied.",
         )
+
+    def test_layers_keep_their_own_value_in_currency(self):
+        self._purchase_receipt(10, 1000.0, 1000.0, self.DAY_1)
+        self._purchase_receipt(10, 1300.0, 1300.0, self.DAY_2)
+
+        # Today's rate (1500) differs from both receipts: nothing below may depend on it.
+        with freeze_time(self.DAY_3):
+            product = self._product()
+            product.invalidate_recordset(["avg_cost_in_currency", "total_value_in_currency"])
+            self._assert_almost(product.standard_price_in_currency, 1.0)
+            self._assert_almost(product.total_value_in_currency, 20.0)
+
+            _picking, delivery = self._delivery(15, self.DAY_3)
+
+            # The whole first layer (USD 10) plus 5 units of the second one (USD 5).
+            self._assert_almost(delivery.value, 16500.0)
+            self._assert_almost(delivery.value_in_currency, 15.0)
+
+            product.invalidate_recordset(["avg_cost_in_currency", "total_value_in_currency"])
+            self._assert_almost(product.total_value_in_currency, 5.0)
+            self._assert_almost(product.avg_cost_in_currency, 1.0)
+            self._assert_almost(product.standard_price_in_currency, 1.0)
+
+    def _quants_secondary_value(self):
+        quants = self.env["stock.quant"].search(
+            [
+                ("product_id", "=", self.product.id),
+                ("location_id.usage", "=", "internal"),
+                ("company_id", "=", self.company.id),
+            ]
+        )
+        quants.invalidate_recordset(["secondary_value"])
+        return sum(quants.mapped("secondary_value"))
+
+    def test_quants_match_the_product_value_in_currency(self):
+        self._purchase_receipt(10, 1000.0, 1000.0, self.DAY_1)
+        _picking, second_in = self._purchase_receipt(10, 2000.0, 1300.0, self.DAY_2)
+
+        with freeze_time(self.DAY_3):
+            product = self._product()
+            # USD 10 + USD 15.3846: an amount that does not round to cents per unit.
+            product.invalidate_recordset(["total_value_in_currency"])
+            self._assert_almost(product.total_value_in_currency, 25.38)
+            self._assert_almost(self._quants_secondary_value(), product.total_value_in_currency)
+
+            self._delivery(15, self.DAY_3)
+            product.invalidate_recordset(["total_value_in_currency"])
+            self._assert_almost(product.total_value_in_currency, 7.69)
+            self._assert_almost(self._quants_secondary_value(), product.total_value_in_currency)
+
+            # A manual adjustment in currency on the remaining layer reaches the quants too.
+            self.env["product.value"].create(
+                {
+                    "move_id": second_in.id,
+                    "value": second_in.value,
+                    "value_in_currency": 20.0,
+                    "company_id": self.company.id,
+                }
+            )
+            product.invalidate_recordset(["total_value_in_currency"])
+            self._assert_almost(product.total_value_in_currency, 10.0)
+            self._assert_almost(self._quants_secondary_value(), product.total_value_in_currency)
+
+    def test_inventory_decrease_consumes_the_oldest_layer(self):
+        self._purchase_receipt(10, 1000.0, 1000.0, self.DAY_1)
+        self._purchase_receipt(10, 2600.0, 1300.0, self.DAY_2)
+
+        with freeze_time(self.DAY_3):
+            _quant, move = self._inventory_adjustment(19, self.DAY_3)
+
+        self._assert_almost(move.value, 1000.0)
+        self._assert_almost(move.value_in_currency, 1.0)
