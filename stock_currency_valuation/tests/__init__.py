@@ -4,3 +4,8 @@ from . import test_currency_cost_paths
 from . import test_currency_valuation_controls
 from . import test_purchase_receipt
 from . import test_landed_cost
+from . import test_vendor_bill
+from . import test_outgoing_and_returns
+from . import test_revaluation_real_time
+from . import test_without_valuation_currency
+from . import test_cost_method_change
