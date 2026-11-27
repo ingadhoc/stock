@@ -34,8 +34,11 @@
                             </div>
                             <div class="content-group mt-3" invisible="not delivery_slip_use_origin">
                                 <div class="row mt-2">
-                                    <label for="delivery_slip_add_product_name" class="o_light_label col-form-label fw-bold"/>
-                                    <field name="delivery_slip_add_product_name" class="ms-2"/>
+                                    <label for="delivery_slip_origin_only" class="o_light_label col-form-label fw-bold"/>
+                                    <field name="delivery_slip_origin_only" class="ms-2"/>
+                                </div>
+                                <div class="text-muted">
+                                    Por defecto se imprime el producto con su código y, debajo, lo que la descripción de origen agrega al producto. Si marca esta opción, se imprime solo la descripción de origen.
                                 </div>
                             </div>
                         </div>
