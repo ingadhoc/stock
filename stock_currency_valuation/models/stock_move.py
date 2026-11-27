@@ -25,10 +25,43 @@ class StockMove(models.Model):
         compute="_compute_standard_price_in_currency",
     )
 
+<<<<<<< 8521d5cada85e37915fe3c4cee3dc7ab2c444f51
     @api.depends("product_id.standard_price_in_currency")
     def _compute_standard_price_in_currency(self):
         for move in self:
             move.standard_price_in_currency = move.product_id.with_company(move.company_id).standard_price_in_currency
+||||||| 96cbf110b6e876ab83442422af040d5683ff16ef
+    def _account_entry_move(self, qty, description, svl_id, cost):
+        am_vals_list = super()._account_entry_move(qty, description, svl_id, cost)
+        layer = self.env["stock.valuation.layer"].browse(svl_id)
+        if layer.valuation_currency_id:
+            for am_vals in am_vals_list:
+                for line_id in am_vals["line_ids"]:
+                    sign = -1 if line_id[2]["balance"] < 0 else 1
+                    line_id[2].update(
+                        {
+                            "currency_id": layer.valuation_currency_id.id,
+                            "amount_currency": abs(layer.value_in_currency) * sign,
+                        }
+                    )
+        return am_vals_list
+=======
+    def _account_entry_move(self, qty, description, svl_id, cost):
+        am_vals_list = super()._account_entry_move(qty, description, svl_id, cost)
+        layer = self.env["stock.valuation.layer"].browse(svl_id)
+        if layer.valuation_currency_id:
+            for am_vals in am_vals_list:
+                for line_id in am_vals["line_ids"]:
+                    # 0 for native exchange difference lines: the main lines carry the amount
+                    sign = self.company_id.currency_id.compare_amounts(line_id[2]["balance"], 0.0)
+                    line_id[2].update(
+                        {
+                            "currency_id": layer.valuation_currency_id.id,
+                            "amount_currency": abs(layer.value_in_currency) * sign,
+                        }
+                    )
+        return am_vals_list
+>>>>>>> 7de415e360c4da528dc8cfa47a8aa57a55a87092
 
     def _inverse_value_in_currency_manual(self):
         for move in self:
