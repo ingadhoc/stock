@@ -33,6 +33,32 @@ class TestLandedCostCurrency(TestStockCurrencyValuationCommon):
         self.assertAlmostEqual(product.total_value_in_currency, 10.17, places=2)
         self.assertAlmostEqual(product.standard_price_in_currency, 1.02, places=2)
 
+    def test_lc_original_value_in_currency_is_the_move_value(self):
+        """The "Valuation Adjustments" table shows, in currency, the value the move had:
+        the receipt at its own rate, not the receipt converted again at the rate of the
+        landed cost. A second landed cost starts from the value left by the first one.
+        """
+        picking, move = self._purchase_receipt(
+            qty=10, price_unit=1000, inverse_rate=self.INVERSE_D1, date_str=self.DAY_1
+        )
+        lc_1 = self._landed_cost(picking=picking, amount=200, inverse_rate=self.INVERSE_D2, date_str=self.DAY_2)
+        line_1 = lc_1.valuation_adjustment_lines
+        self.assertAlmostEqual(line_1.former_cost_in_currency, 10.00, places=2)
+        self.assertAlmostEqual(line_1.additional_landed_cost_in_currency, 0.17, places=2)
+        self.assertAlmostEqual(line_1.final_cost_in_currency, 10.17, places=2)
+        self.assertAlmostEqual(line_1.final_cost_in_currency, move.value_in_currency, places=2)
+
+        lc_2 = self._landed_cost(picking=picking, amount=300, inverse_rate=self.INVERSE_D3, date_str=self.DAY_3)
+        line_2 = lc_2.valuation_adjustment_lines
+        self.assertAlmostEqual(line_2.former_cost_in_currency, 10.17, places=2)
+        self.assertAlmostEqual(line_2.additional_landed_cost_in_currency, 0.20, places=2)
+        self.assertAlmostEqual(line_2.final_cost_in_currency, 10.37, places=2)
+        self.assertAlmostEqual(line_2.final_cost_in_currency, move.value_in_currency, places=2)
+
+        # Validating the second one does not rewrite the table of the first.
+        self.assertAlmostEqual(line_1.former_cost_in_currency, 10.00, places=2)
+        self.assertAlmostEqual(line_1.final_cost_in_currency, 10.17, places=2)
+
     def test_lc_with_rate_equal_to_picking(self):
         """Caso de control: si se setea la misma cotización en el LC que en el picking,
         no hay disparidad y el resultado es consistente (10.00 + 0.20 = 10.20).
